@@ -19,7 +19,12 @@
   - ✅ RefundPaymentCommand and RefundTicketCommand handlers
   - ✅ SplitTicketCommand handler
   - ✅ 14 comprehensive refund/split tests passing
-  - ✅ **Total: 90 tests passing**
+- **Phase 3 Week 10: COMPLETE** ✅ (Service Charges & Adjustments)
+  - ✅ Ticket methods: SetServiceCharge, SetDeliveryCharge, SetAdjustment, SetAdvancePayment
+  - ✅ ServiceChargeDomainService for percentage and per-guest calculations
+  - ✅ Commands and handlers for all charges/adjustments
+  - ✅ 15 comprehensive service charge/adjustment tests passing
+  - ✅ **Total: 105 tests passing**
 
 ## Recent Changes
 - ✅ Phase 1 COMPLETE: Foundation & Core Transaction Flow
