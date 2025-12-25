@@ -32,15 +32,24 @@ public class TicketDomainService
             Money.Zero(),
             (sum, line) => sum + line.TotalAmount);
 
-        // Calculate tax using TaxDomainService
-        var taxAmount = _taxDomainService.CalculateTax(
-            subtotal,
-            taxGroup,
-            ticket.IsTaxExempt);
+        Money taxAmount;
 
-        // If price includes tax, we need to adjust the calculation
-        // For now, we'll use the standard calculation
-        // Enhanced price-includes-tax logic will be added later
+        if (ticket.PriceIncludesTax)
+        {
+            // When price includes tax, we need to extract the tax from the subtotal
+            // Formula: baseAmount = totalAmount / (1 + taxRate)
+            // Then: taxAmount = totalAmount - baseAmount
+            var baseAmount = _taxDomainService.CalculateBaseAmountFromInclusivePrice(subtotal, taxGroup);
+            taxAmount = subtotal - baseAmount;
+        }
+        else
+        {
+            // Standard calculation: tax is added to subtotal
+            taxAmount = _taxDomainService.CalculateTax(
+                subtotal,
+                taxGroup,
+                ticket.IsTaxExempt);
+        }
 
         ticket.CalculateTotalsWithTax(taxAmount);
     }

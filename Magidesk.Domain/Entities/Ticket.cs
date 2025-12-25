@@ -360,6 +360,8 @@ public class Ticket
 
     /// <summary>
     /// Recalculates all ticket totals.
+    /// Note: This method uses a simplified tax calculation.
+    /// For enhanced tax calculations (tax groups, price-includes-tax), use TicketDomainService.CalculateTotals().
     /// </summary>
     public void CalculateTotals()
     {
@@ -368,7 +370,8 @@ public class Ticket
             Money.Zero(),
             (sum, line) => sum + line.TotalAmount);
 
-        // Calculate tax (simplified - will be enhanced later)
+        // Calculate tax (simplified - default 10% if not tax exempt)
+        // For enhanced calculations, use TicketDomainService.CalculateTotals()
         TaxAmount = IsTaxExempt 
             ? Money.Zero() 
             : SubtotalAmount * 0.10m; // Default 10% tax (domain service will override)
@@ -379,12 +382,27 @@ public class Ticket
             (sum, d) => sum + d.Amount);
 
         // Calculate total
-        TotalAmount = SubtotalAmount 
-            + TaxAmount 
-            + ServiceChargeAmount 
-            + DeliveryChargeAmount 
-            + AdjustmentAmount 
-            - DiscountAmount;
+        // Note: When PriceIncludesTax is true, the tax is already included in SubtotalAmount
+        // So we don't add it again here
+        if (PriceIncludesTax)
+        {
+            // Tax is already included in subtotal, so total = subtotal + charges - discounts
+            TotalAmount = SubtotalAmount 
+                + ServiceChargeAmount 
+                + DeliveryChargeAmount 
+                + AdjustmentAmount 
+                - DiscountAmount;
+        }
+        else
+        {
+            // Standard calculation: add tax to subtotal
+            TotalAmount = SubtotalAmount 
+                + TaxAmount 
+                + ServiceChargeAmount 
+                + DeliveryChargeAmount 
+                + AdjustmentAmount 
+                - DiscountAmount;
+        }
 
         // Add gratuity if present and paid
         if (Gratuity != null && Gratuity.Paid)
@@ -417,12 +435,27 @@ public class Ticket
             (sum, d) => sum + d.Amount);
 
         // Calculate total
-        TotalAmount = SubtotalAmount 
-            + TaxAmount 
-            + ServiceChargeAmount 
-            + DeliveryChargeAmount 
-            + AdjustmentAmount 
-            - DiscountAmount;
+        // When PriceIncludesTax is true, tax is already included in SubtotalAmount
+        // So we don't add TaxAmount again
+        if (PriceIncludesTax)
+        {
+            // Tax is already included in subtotal, so total = subtotal + charges - discounts
+            TotalAmount = SubtotalAmount 
+                + ServiceChargeAmount 
+                + DeliveryChargeAmount 
+                + AdjustmentAmount 
+                - DiscountAmount;
+        }
+        else
+        {
+            // Standard calculation: add tax to subtotal
+            TotalAmount = SubtotalAmount 
+                + TaxAmount 
+                + ServiceChargeAmount 
+                + DeliveryChargeAmount 
+                + AdjustmentAmount 
+                - DiscountAmount;
+        }
 
         // Add gratuity if present and paid
         if (Gratuity != null && Gratuity.Paid)

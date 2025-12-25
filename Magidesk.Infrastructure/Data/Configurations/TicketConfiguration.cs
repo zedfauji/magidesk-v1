@@ -216,6 +216,10 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
             .IsRequired()
             .HasDefaultValue(false);
 
+        builder.Property(t => t.PriceIncludesTax)
+            .IsRequired()
+            .HasDefaultValue(false);
+
         builder.Property(t => t.IsBarTab)
             .IsRequired()
             .HasDefaultValue(false);

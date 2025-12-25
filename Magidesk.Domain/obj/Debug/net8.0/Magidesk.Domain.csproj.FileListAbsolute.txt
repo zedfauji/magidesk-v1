@@ -9,3 +9,4 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.D
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\obj\Debug\net8.0\refint\Magidesk.Domain.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\obj\Debug\net8.0\Magidesk.Domain.pdb
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\obj\Debug\net8.0\ref\Magidesk.Domain.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\obj\Debug\net8.0\Magidesk.Domain.sourcelink.json

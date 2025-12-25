@@ -2,13 +2,15 @@
 
 ## Current Work Focus
 - **Phase 2 COMPLETE** ✅ (Payment Expansion - Weeks 5-7)
-- **Phase 3 Week 8: IN PROGRESS** - Discounts & Tax
+- **Phase 3 Week 8: COMPLETE** - Discounts & Tax
   - ✅ Created TaxRate and TaxGroup value objects
   - ✅ Created TaxDomainService for tax calculations
   - ✅ Enhanced TicketDomainService to use TaxDomainService
   - ✅ Ticket.cs file restored (all properties, methods, and behaviors)
   - ✅ Added PriceIncludesTax property to Ticket
-  - ⏳ Need to complete tax calculation integration and price-includes-tax logic
+  - ✅ Completed tax calculation integration with price-includes-tax mode
+  - ✅ Tax-exempt support implemented
+  - ✅ EF Core configuration updated for PriceIncludesTax
 
 ## Recent Changes
 - ✅ Phase 1 COMPLETE: Foundation & Core Transaction Flow
