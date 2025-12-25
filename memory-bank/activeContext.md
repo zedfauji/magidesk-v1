@@ -2,7 +2,7 @@
 
 ## Current Work Focus
 - **Phase 2 COMPLETE** ✅ (Payment Expansion - Weeks 5-7)
-- **Phase 3 Week 8: COMPLETE** - Discounts & Tax
+- **Phase 3 Week 8: COMPLETE** ✅ (Discounts & Tax)
   - ✅ Created TaxRate and TaxGroup value objects
   - ✅ Created TaxDomainService for tax calculations
   - ✅ Enhanced TicketDomainService to use TaxDomainService
@@ -11,6 +11,15 @@
   - ✅ Completed tax calculation integration with price-includes-tax mode
   - ✅ Tax-exempt support implemented
   - ✅ EF Core configuration updated for PriceIncludesTax
+  - ✅ 40 comprehensive tax tests passing
+- **Phase 3 Week 9: COMPLETE** ✅ (Refunds & Ticket Splitting)
+  - ✅ Payment.CreateRefund() factory method for all payment types
+  - ✅ Ticket.ProcessRefund() method
+  - ✅ Updated RecalculatePaidAmount() to handle Debit transactions
+  - ✅ RefundPaymentCommand and RefundTicketCommand handlers
+  - ✅ SplitTicketCommand handler
+  - ✅ 14 comprehensive refund/split tests passing
+  - ✅ **Total: 90 tests passing**
 
 ## Recent Changes
 - ✅ Phase 1 COMPLETE: Foundation & Core Transaction Flow
