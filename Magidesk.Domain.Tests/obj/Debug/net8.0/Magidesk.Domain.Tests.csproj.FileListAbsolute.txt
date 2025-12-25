@@ -101,3 +101,4 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.D
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain.Tests\obj\Debug\net8.0\Magidesk.Domain.Tests.pdb
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain.Tests\obj\Debug\net8.0\Magidesk.Domain.Tests.genruntimeconfig.cache
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain.Tests\obj\Debug\net8.0\ref\Magidesk.Domain.Tests.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain.Tests\obj\Debug\net8.0\Magidesk.Domain.Tests.sourcelink.json
