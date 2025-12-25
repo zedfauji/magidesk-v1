@@ -31,6 +31,13 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.RefundTicketCommand, Commands.RefundTicketResult>, RefundTicketCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.SplitTicketCommand, Commands.SplitTicketResult>, SplitTicketCommandHandler>();
         
+        // Service charges and adjustments command handlers
+        services.AddScoped<ICommandHandler<Commands.SetServiceChargeCommand, Commands.SetServiceChargeResult>, SetServiceChargeCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.CalculateServiceChargeCommand, Commands.CalculateServiceChargeResult>, CalculateServiceChargeCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.SetDeliveryChargeCommand, Commands.SetDeliveryChargeResult>, SetDeliveryChargeCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.SetAdjustmentCommand, Commands.SetAdjustmentResult>, SetAdjustmentCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.SetAdvancePaymentCommand, Commands.SetAdvancePaymentResult>, SetAdvancePaymentCommandHandler>();
+        
         // Handlers without results
         services.AddScoped<ICommandHandler<Commands.RemoveOrderLineCommand>, RemoveOrderLineCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.ModifyOrderLineCommand>, ModifyOrderLineCommandHandler>();

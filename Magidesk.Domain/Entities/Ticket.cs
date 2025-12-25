@@ -582,5 +582,88 @@ public class Ticket
         Gratuity.MarkAsRefunded();
         CalculateTotals();
     }
+
+    /// <summary>
+    /// Sets the service charge amount.
+    /// Service charge is typically calculated as a percentage of subtotal (after discounts).
+    /// </summary>
+    public void SetServiceCharge(Money amount)
+    {
+        if (amount < Money.Zero())
+        {
+            throw new BusinessRuleViolationException("Service charge cannot be negative.");
+        }
+
+        if (Status == TicketStatus.Closed || Status == TicketStatus.Voided || Status == TicketStatus.Refunded)
+        {
+            throw new DomainInvalidOperationException($"Cannot modify service charge on ticket in {Status} status.");
+        }
+
+        ServiceChargeAmount = amount;
+        ActiveDate = DateTime.UtcNow;
+        CalculateTotals();
+    }
+
+    /// <summary>
+    /// Sets the delivery charge amount.
+    /// </summary>
+    public void SetDeliveryCharge(Money amount)
+    {
+        if (amount < Money.Zero())
+        {
+            throw new BusinessRuleViolationException("Delivery charge cannot be negative.");
+        }
+
+        if (Status == TicketStatus.Closed || Status == TicketStatus.Voided || Status == TicketStatus.Refunded)
+        {
+            throw new DomainInvalidOperationException($"Cannot modify delivery charge on ticket in {Status} status.");
+        }
+
+        DeliveryChargeAmount = amount;
+        ActiveDate = DateTime.UtcNow;
+        CalculateTotals();
+    }
+
+    /// <summary>
+    /// Sets the adjustment amount (positive only - for price increases).
+    /// Used for manual price adjustments, rounding, or corrections.
+    /// Note: For price reductions, use discounts instead.
+    /// </summary>
+    public void SetAdjustment(Money amount)
+    {
+        if (amount < Money.Zero())
+        {
+            throw new BusinessRuleViolationException("Adjustment amount cannot be negative. Use discounts for price reductions.");
+        }
+
+        if (Status == TicketStatus.Closed || Status == TicketStatus.Voided || Status == TicketStatus.Refunded)
+        {
+            throw new DomainInvalidOperationException($"Cannot modify adjustment on ticket in {Status} status.");
+        }
+
+        AdjustmentAmount = amount;
+        ActiveDate = DateTime.UtcNow;
+        CalculateTotals();
+    }
+
+    /// <summary>
+    /// Sets the advance payment amount (prepayment before order completion).
+    /// </summary>
+    public void SetAdvancePayment(Money amount)
+    {
+        if (amount < Money.Zero())
+        {
+            throw new BusinessRuleViolationException("Advance payment cannot be negative.");
+        }
+
+        if (Status == TicketStatus.Closed || Status == TicketStatus.Voided || Status == TicketStatus.Refunded)
+        {
+            throw new DomainInvalidOperationException($"Cannot modify advance payment on ticket in {Status} status.");
+        }
+
+        AdvanceAmount = amount;
+        ActiveDate = DateTime.UtcNow;
+        CalculateTotals();
+    }
 }
 

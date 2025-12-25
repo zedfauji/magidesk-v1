@@ -36,6 +36,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<PaymentDomainService>();
         services.AddScoped<CashSessionDomainService>();
         services.AddScoped<DiscountDomainService>();
+        services.AddScoped<ServiceChargeDomainService>();
 
         // Register payment gateway (using mock for development)
         services.AddScoped<IPaymentGateway, MockPaymentGateway>();
