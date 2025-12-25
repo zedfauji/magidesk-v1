@@ -310,11 +310,14 @@ public class ServiceChargeTests
         var ticket = Ticket.Create(1, userId, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
 
         // Act
+        // Note: Money constructor throws ArgumentException for negative values
+        // SetAdvancePayment also validates, but Money constructor throws first
         var act = () => ticket.SetAdvancePayment(new Money(-10m));
 
         // Assert
-        act.Should().Throw<Domain.Exceptions.BusinessRuleViolationException>()
-            .WithMessage("*Advance payment cannot be negative*");
+        // Money constructor throws ArgumentException before SetAdvancePayment validation
+        act.Should().Throw<ArgumentException>()
+            .WithMessage("*Money amount cannot be negative*");
     }
 }
 
