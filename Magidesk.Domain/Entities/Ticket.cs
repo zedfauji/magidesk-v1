@@ -325,6 +325,44 @@ public class Ticket
     }
 
     /// <summary>
+    /// Processes a refund on the ticket.
+    /// Adds a refund payment (TransactionType.Debit) and updates ticket status.
+    /// </summary>
+    public void ProcessRefund(Payment refundPayment)
+    {
+        if (refundPayment == null)
+        {
+            throw new ArgumentNullException(nameof(refundPayment));
+        }
+
+        if (!CanRefund())
+        {
+            throw new DomainInvalidOperationException($"Cannot refund ticket in {Status} status.");
+        }
+
+        if (refundPayment.TicketId != Id)
+        {
+            throw new BusinessRuleViolationException("Refund payment does not belong to this ticket.");
+        }
+
+        if (refundPayment.TransactionType != TransactionType.Debit)
+        {
+            throw new BusinessRuleViolationException("Refund payment must have TransactionType.Debit.");
+        }
+
+        // Add refund payment (debit transaction)
+        _payments.Add(refundPayment);
+        ActiveDate = DateTime.UtcNow;
+        RecalculatePaidAmount();
+
+        // If fully refunded (PaidAmount <= 0), mark as refunded
+        if (PaidAmount <= Money.Zero())
+        {
+            Status = TicketStatus.Refunded;
+        }
+    }
+
+    /// <summary>
     /// Validates if the ticket can be split.
     /// </summary>
     public bool CanSplit()
@@ -470,12 +508,16 @@ public class Ticket
 
     /// <summary>
     /// Recalculates the paid amount from payments.
+    /// Credits (payments) increase PaidAmount, Debits (refunds) decrease it.
     /// </summary>
     private void RecalculatePaidAmount()
     {
         PaidAmount = _payments
             .Where(p => !p.IsVoided)
-            .Aggregate(Money.Zero(), (sum, p) => sum + p.Amount);
+            .Aggregate(Money.Zero(), (sum, p) => 
+                p.TransactionType == TransactionType.Credit 
+                    ? sum + p.Amount 
+                    : sum - p.Amount); // Refunds (Debit) reduce paid amount
     }
 
     /// <summary>

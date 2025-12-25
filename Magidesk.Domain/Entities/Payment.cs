@@ -133,5 +133,100 @@ public abstract class Payment
 
         SetTipsAmount(tipsAmount);
     }
+
+    /// <summary>
+    /// Creates a refund payment for this payment.
+    /// Refunds are represented as Payment entities with TransactionType.Debit.
+    /// </summary>
+    public static Payment CreateRefund(
+        Payment originalPayment,
+        Money refundAmount,
+        UserId processedBy,
+        Guid terminalId,
+        string? reason = null,
+        string? globalId = null)
+    {
+        if (originalPayment == null)
+        {
+            throw new ArgumentNullException(nameof(originalPayment));
+        }
+
+        if (refundAmount <= Money.Zero())
+        {
+            throw new Exceptions.BusinessRuleViolationException("Refund amount must be greater than zero.");
+        }
+
+        if (refundAmount > originalPayment.Amount)
+        {
+            throw new Exceptions.BusinessRuleViolationException(
+                $"Refund amount ({refundAmount}) cannot exceed original payment amount ({originalPayment.Amount}).");
+        }
+
+        if (originalPayment.IsVoided)
+        {
+            throw new Exceptions.InvalidOperationException("Cannot refund a voided payment.");
+        }
+
+        // Create refund payment based on original payment type
+        // Use reflection to set TransactionType to Debit after creation
+        Payment refundPayment = originalPayment.PaymentType switch
+        {
+            PaymentType.Cash => CashPayment.Create(
+                originalPayment.TicketId,
+                refundAmount,
+                processedBy,
+                terminalId,
+                globalId),
+            PaymentType.CreditCard => CreditCardPayment.Create(
+                originalPayment.TicketId,
+                refundAmount,
+                processedBy,
+                terminalId,
+                globalId: globalId),
+            PaymentType.DebitCard => DebitCardPayment.Create(
+                originalPayment.TicketId,
+                refundAmount,
+                processedBy,
+                terminalId,
+                globalId: globalId),
+            PaymentType.GiftCertificate => 
+                originalPayment is GiftCertificatePayment gcPayment
+                    ? GiftCertificatePayment.Create(
+                        originalPayment.TicketId,
+                        refundAmount,
+                        processedBy,
+                        terminalId,
+                        gcPayment.GiftCertificateNumber,
+                        gcPayment.OriginalAmount,
+                        gcPayment.RemainingBalance + refundAmount, // Restore balance
+                        globalId)
+                    : throw new Exceptions.InvalidOperationException("Cannot refund gift certificate payment without certificate details."),
+            PaymentType.CustomPayment =>
+                originalPayment is CustomPayment customPayment
+                    ? CustomPayment.Create(
+                        originalPayment.TicketId,
+                        refundAmount,
+                        processedBy,
+                        terminalId,
+                        customPayment.PaymentName,
+                        null,
+                        null,
+                        globalId)
+                    : throw new Exceptions.InvalidOperationException("Cannot refund custom payment without payment details."),
+            _ => throw new Exceptions.InvalidOperationException($"Refund not supported for payment type {originalPayment.PaymentType}.")
+        };
+
+        // Set transaction type to Debit for refund
+        var transactionTypeProperty = typeof(Payment).GetProperty("TransactionType",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
+        transactionTypeProperty?.SetValue(refundPayment, TransactionType.Debit);
+
+        // Set note with refund information
+        var noteProperty = typeof(Payment).GetProperty("Note",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
+        noteProperty?.SetValue(refundPayment, $"Refund of payment {originalPayment.Id}. Reason: {reason ?? "N/A"}");
+
+        return refundPayment;
+    }
 }
 

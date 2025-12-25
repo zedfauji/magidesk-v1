@@ -13,3 +13,4 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.A
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\obj\Debug\net8.0\refint\Magidesk.Application.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\obj\Debug\net8.0\Magidesk.Application.pdb
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\obj\Debug\net8.0\ref\Magidesk.Application.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\obj\Debug\net8.0\Magidesk.Application.sourcelink.json

@@ -26,6 +26,11 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.VoidCardPaymentCommand, Commands.VoidCardPaymentResult>, VoidCardPaymentCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.AddTipsToCardPaymentCommand, Commands.AddTipsToCardPaymentResult>, AddTipsToCardPaymentCommandHandler>();
         
+        // Refund command handlers
+        services.AddScoped<ICommandHandler<Commands.RefundPaymentCommand, Commands.RefundPaymentResult>, RefundPaymentCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.RefundTicketCommand, Commands.RefundTicketResult>, RefundTicketCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.SplitTicketCommand, Commands.SplitTicketResult>, SplitTicketCommandHandler>();
+        
         // Handlers without results
         services.AddScoped<ICommandHandler<Commands.RemoveOrderLineCommand>, RemoveOrderLineCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.ModifyOrderLineCommand>, ModifyOrderLineCommandHandler>();
