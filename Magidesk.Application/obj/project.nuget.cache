@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Y15neEDoulY=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\giris\\Documents\\Code\\Redesign-POS\\Windows Based POS\\Magidesk\\Magidesk.Application\\Magidesk.Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\giris\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.1\\microsoft.extensions.dependencyinjection.abstractions.10.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

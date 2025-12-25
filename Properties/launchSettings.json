@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Magidesk.Presentation (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Magidesk.Presentation (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

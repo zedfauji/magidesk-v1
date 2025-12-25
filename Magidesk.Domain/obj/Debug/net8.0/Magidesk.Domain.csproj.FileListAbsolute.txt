@@ -1,0 +1,11 @@
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\obj\Debug\net8.0\Magidesk.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\obj\Debug\net8.0\Magidesk.Domain.AssemblyInfoInputs.cache
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\obj\Debug\net8.0\Magidesk.Domain.AssemblyInfo.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\obj\Debug\net8.0\Magidesk.Domain.csproj.CoreCompileInputs.cache
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\bin\Debug\net8.0\Magidesk.Domain.deps.json
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\bin\Debug\net8.0\Magidesk.Domain.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\bin\Debug\net8.0\Magidesk.Domain.pdb
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\obj\Debug\net8.0\Magidesk.Domain.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\obj\Debug\net8.0\refint\Magidesk.Domain.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\obj\Debug\net8.0\Magidesk.Domain.pdb
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\obj\Debug\net8.0\ref\Magidesk.Domain.dll

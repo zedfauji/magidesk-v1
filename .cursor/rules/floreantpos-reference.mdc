@@ -1,0 +1,171 @@
+# FloreantPOS Reference Control Rules
+
+## Reference System Location
+- **Path**: `/projects/Code/Redesign-POS/floreantpos`
+- **Purpose**: Behavioral reference ONLY
+- **Status**: READ-ONLY
+
+## Usage Rules
+
+### ALLOWED Uses
+- ✅ **Read** FloreantPOS code to understand behaviors
+- ✅ **Analyze** workflows and business rules
+- ✅ **Document** behaviors found in FloreantPOS
+- ✅ **Reference** when designing domain model
+- ✅ **Compare** our implementation with FloreantPOS behaviors
+- ✅ **Learn** from edge cases and scenarios
+
+### PROHIBITED Uses
+- ❌ **Copy** any code from FloreantPOS
+- ❌ **Port** Java code to C#
+- ❌ **Translate** PHP code to C#
+- ❌ **Reuse** any existing code
+- ❌ **Import** any files from FloreantPOS
+- ❌ **Depend** on FloreantPOS in any way
+
+## Behavioral Reference Only
+
+### What to Extract
+- **Workflows**: How tickets are created, paid, voided
+- **Business Rules**: What can/cannot be done
+- **Edge Cases**: Unusual scenarios handled
+- **User Flows**: Step-by-step user interactions
+- **State Transitions**: How entities change state
+- **Calculations**: How totals, taxes, discounts are calculated
+
+### What NOT to Extract
+- **Code Structure**: Don't copy class structure
+- **Implementation Details**: Don't copy algorithms
+- **Database Schema**: Don't copy table structure
+- **API Design**: Don't copy API patterns
+- **UI Design**: Don't copy UI layouts
+
+## Analysis Process
+
+### When Examining FloreantPOS
+1. **Read** the code to understand behavior
+2. **Document** the behavior in our analysis
+3. **Design** our solution based on behavior (not code)
+4. **Implement** using our architecture
+5. **Verify** our implementation matches behavior
+
+### Documentation
+- All findings documented in `FLOREANTPOS_ANALYSIS.md`
+- Behaviors to replicate documented
+- Behaviors to reject documented
+- Improvements over FloreantPOS documented
+
+## Comparison Rules
+
+### Behavioral Comparison
+- Compare **what** the system does, not **how**
+- Compare workflows, not code
+- Compare business rules, not implementation
+- Compare user experience, not UI code
+
+### Implementation Comparison
+- Our implementation will be different (C# vs Java)
+- Our architecture will be different (Clean Architecture)
+- Our patterns will be different (modern .NET)
+- Our design will be better (fixing legacy issues)
+
+## Legacy Behavior Rejection
+
+### Behaviors to Reject
+- String-based status → Use enums
+- Multiple boolean flags → Use state machine
+- Implicit cash sessions → Make explicit
+- Complex price calculation → Simplify
+- Re-voiding tickets → Question and justify
+- Manual total override → Use adjustments (audited)
+
+### When Rejecting
+- Document why behavior is rejected
+- Document what we do instead
+- Ensure our solution is better
+- Maintain auditability
+
+## Reference Access
+
+### MCP Filesystem Tools
+- Use MCP filesystem tools to read FloreantPOS
+- Path: `/projects/Code/Redesign-POS/floreantpos`
+- Read files to understand behaviors
+- Never copy files to our project
+
+### Code Reading
+- Read Java files to understand logic
+- Read PHP files if present
+- Understand database structure (for reference only)
+- Understand UI flows (for reference only)
+
+## Documentation Requirements
+
+### Analysis Documentation
+- Document all examined files
+- Document behaviors found
+- Document workflows understood
+- Document edge cases discovered
+- Document improvements planned
+
+### Update Process
+- Update `FLOREANTPOS_ANALYSIS.md` when new behaviors found
+- Document decisions to reject behaviors
+- Document improvements over FloreantPOS
+- Keep analysis current
+
+## Verification
+
+### Behavior Verification
+- Verify our implementation matches FloreantPOS behaviors (where appropriate)
+- Test edge cases found in FloreantPOS
+- Ensure we handle scenarios FloreantPOS handles
+- Improve on FloreantPOS where it's flawed
+
+### Code Verification
+- Verify we did NOT copy any code
+- Verify our implementation is original
+- Verify our architecture is different
+- Verify our design is better
+
+## Prohibited Actions
+
+### NEVER:
+- Copy any code from FloreantPOS
+- Import any files from FloreantPOS
+- Reference FloreantPOS in our code
+- Depend on FloreantPOS in any way
+- Use FloreantPOS as a library
+- Port FloreantPOS code to C#
+- Translate FloreantPOS code
+
+### ALWAYS:
+- Reference FloreantPOS for behavior only
+- Document behaviors found
+- Design our own solution
+- Implement using our architecture
+- Improve on FloreantPOS
+
+## Access Logging
+
+### When Accessing FloreantPOS
+- Document which files were read
+- Document what behaviors were found
+- Document how behaviors influenced design
+- Keep record of reference usage
+
+## Comparison Checklist
+
+### Before Implementation
+- [ ] Understand FloreantPOS behavior
+- [ ] Document behavior in analysis
+- [ ] Design our solution
+- [ ] Verify we're not copying code
+- [ ] Plan improvements
+
+### After Implementation
+- [ ] Verify behavior matches (where appropriate)
+- [ ] Verify code is original
+- [ ] Verify architecture is different
+- [ ] Verify design is better
+- [ ] Document any deviations

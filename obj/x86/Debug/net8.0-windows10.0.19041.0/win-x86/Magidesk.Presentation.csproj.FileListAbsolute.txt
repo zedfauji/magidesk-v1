@@ -1,0 +1,12 @@
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Magidesk.Presentation.csproj.AssemblyReference.cache
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\App.g.i.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\App.g.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\MainPage.g.i.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\MainPage.g.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\XamlTypeInfo.g.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\App.xaml
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\MainPage.xaml
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\App.xbf
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\MainPage.xbf
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\XamlSaveStateFile.xml
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Magidesk.Presentation.GeneratedMSBuildEditorConfig.editorconfig
