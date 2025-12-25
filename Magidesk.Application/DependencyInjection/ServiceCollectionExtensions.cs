@@ -38,6 +38,13 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.SetAdjustmentCommand, Commands.SetAdjustmentResult>, SetAdjustmentCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.SetAdvancePaymentCommand, Commands.SetAdvancePaymentResult>, SetAdvancePaymentCommandHandler>();
         
+        // Cash session command handlers
+        services.AddScoped<ICommandHandler<Commands.OpenCashSessionCommand, Commands.OpenCashSessionResult>, OpenCashSessionCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.CloseCashSessionCommand, Commands.CloseCashSessionResult>, CloseCashSessionCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.AddPayoutCommand, Commands.AddPayoutResult>, AddPayoutCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.AddCashDropCommand, Commands.AddCashDropResult>, AddCashDropCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.AddDrawerBleedCommand, Commands.AddDrawerBleedResult>, AddDrawerBleedCommandHandler>();
+        
         // Handlers without results
         services.AddScoped<ICommandHandler<Commands.RemoveOrderLineCommand>, RemoveOrderLineCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.ModifyOrderLineCommand>, ModifyOrderLineCommandHandler>();
@@ -49,6 +56,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IQueryHandler<Queries.GetTicketQuery, DTOs.TicketDto>, GetTicketQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetTicketByNumberQuery, DTOs.TicketDto>, GetTicketByNumberQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetOpenTicketsQuery, IEnumerable<DTOs.TicketDto>>, GetOpenTicketsQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.GetCurrentCashSessionQuery, Queries.GetCurrentCashSessionResult>, GetCurrentCashSessionQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.GetCashSessionQuery, Queries.GetCashSessionResult>, GetCashSessionQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.GetDrawerPullReportQuery, Queries.GetDrawerPullReportResult>, GetDrawerPullReportQueryHandler>();
         // GetMenuItemsQuery handler will be implemented in Phase 2 when menu management is added
 
         return services;

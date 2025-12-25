@@ -156,5 +156,77 @@ public class CashSession
         _payments.Add(payment);
         CalculateExpectedCash();
     }
+
+    /// <summary>
+    /// Adds a payout to the session.
+    /// </summary>
+    public void AddPayout(Payout payout)
+    {
+        if (payout == null)
+        {
+            throw new ArgumentNullException(nameof(payout));
+        }
+
+        if (Status == CashSessionStatus.Closed)
+        {
+            throw new Exceptions.InvalidOperationException("Cannot add payout to closed session.");
+        }
+
+        if (payout.CashSessionId != Id)
+        {
+            throw new BusinessRuleViolationException("Payout does not belong to this cash session.");
+        }
+
+        _payouts.Add(payout);
+        CalculateExpectedCash();
+    }
+
+    /// <summary>
+    /// Adds a cash drop to the session.
+    /// </summary>
+    public void AddCashDrop(CashDrop cashDrop)
+    {
+        if (cashDrop == null)
+        {
+            throw new ArgumentNullException(nameof(cashDrop));
+        }
+
+        if (Status == CashSessionStatus.Closed)
+        {
+            throw new Exceptions.InvalidOperationException("Cannot add cash drop to closed session.");
+        }
+
+        if (cashDrop.CashSessionId != Id)
+        {
+            throw new BusinessRuleViolationException("Cash drop does not belong to this cash session.");
+        }
+
+        _cashDrops.Add(cashDrop);
+        CalculateExpectedCash();
+    }
+
+    /// <summary>
+    /// Adds a drawer bleed to the session.
+    /// </summary>
+    public void AddDrawerBleed(DrawerBleed drawerBleed)
+    {
+        if (drawerBleed == null)
+        {
+            throw new ArgumentNullException(nameof(drawerBleed));
+        }
+
+        if (Status == CashSessionStatus.Closed)
+        {
+            throw new Exceptions.InvalidOperationException("Cannot add drawer bleed to closed session.");
+        }
+
+        if (drawerBleed.CashSessionId != Id)
+        {
+            throw new BusinessRuleViolationException("Drawer bleed does not belong to this cash session.");
+        }
+
+        _drawerBleeds.Add(drawerBleed);
+        CalculateExpectedCash();
+    }
 }
 

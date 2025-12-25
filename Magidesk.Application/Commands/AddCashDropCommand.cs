@@ -1,0 +1,26 @@
+using Magidesk.Domain.ValueObjects;
+
+namespace Magidesk.Application.Commands;
+
+/// <summary>
+/// Command to add a cash drop to a cash session.
+/// </summary>
+public class AddCashDropCommand
+{
+    public Guid CashSessionId { get; set; }
+    public Money Amount { get; set; } = null!;
+    public UserId ProcessedBy { get; set; } = null!;
+    public string? Reason { get; set; }
+}
+
+/// <summary>
+/// Result of adding a cash drop.
+/// </summary>
+public class AddCashDropResult
+{
+    public Guid CashDropId { get; set; }
+    public Guid CashSessionId { get; set; }
+    public Money Amount { get; set; } = null!;
+    public Money UpdatedExpectedCash { get; set; } = null!;
+}
+
