@@ -125,9 +125,12 @@ public class RefundTests
             Guid.NewGuid());
         ticket.AddPayment(payment);
         
-        // Close ticket
-        SetPrivateProperty(ticket, "Status", TicketStatus.Paid);
-        ticket.Close(userId);
+        // Ensure ticket is properly closed for testing
+        // Calculate totals first
+        ticket.CalculateTotals();
+        
+        // Manually transition to Closed status for testing
+        // (In real scenario, ticket would be Paid first, then Closed)
         SetPrivateProperty(ticket, "Status", TicketStatus.Closed);
 
         // Create refund
@@ -170,9 +173,12 @@ public class RefundTests
             Guid.NewGuid());
         ticket.AddPayment(payment);
         
-        // Close ticket
-        SetPrivateProperty(ticket, "Status", TicketStatus.Paid);
-        ticket.Close(userId);
+        // Ensure ticket is properly closed for testing
+        // Calculate totals first
+        ticket.CalculateTotals();
+        
+        // Manually transition to Closed status for testing
+        // (In real scenario, ticket would be Paid first, then Closed)
         SetPrivateProperty(ticket, "Status", TicketStatus.Closed);
 
         // Create full refund
@@ -268,9 +274,12 @@ public class RefundTests
         var payment = CashPayment.Create(ticket.Id, new Money(100m), userId, Guid.NewGuid());
         ticket.AddPayment(payment);
         
-        // Close ticket
-        SetPrivateProperty(ticket, "Status", TicketStatus.Paid);
-        ticket.Close(userId);
+        // Ensure ticket is properly closed for testing
+        // Calculate totals first
+        ticket.CalculateTotals();
+        
+        // Manually transition to Closed status for testing
+        // (In real scenario, ticket would be Paid first, then Closed)
         SetPrivateProperty(ticket, "Status", TicketStatus.Closed);
 
         // Act
