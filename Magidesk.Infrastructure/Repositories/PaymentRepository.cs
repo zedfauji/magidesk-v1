@@ -48,5 +48,15 @@ public class PaymentRepository : IPaymentRepository
         _context.Payments.Update(payment);
         await _context.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<IEnumerable<Payment>> GetUnbatchedCapturedPaymentsAsync(Guid terminalId, CancellationToken cancellationToken = default)
+    {
+        return await _context.Payments
+            .Where(p => p.TerminalId == terminalId 
+                        && p.IsCaptured 
+                        && !p.IsVoided 
+                        && p.BatchId == null)
+            .ToListAsync(cancellationToken);
+    }
 }
 

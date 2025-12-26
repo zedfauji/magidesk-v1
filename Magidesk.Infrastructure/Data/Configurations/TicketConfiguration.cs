@@ -260,7 +260,8 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
 
         builder.Property(t => t.Version)
             .IsRequired()
-            .HasDefaultValue(1);
+            .HasDefaultValue(1)
+            .IsConcurrencyToken();
 
         builder.Property(t => t.Properties)
             .HasConversion(

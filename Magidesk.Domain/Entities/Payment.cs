@@ -57,7 +57,16 @@ public abstract class Payment
     public bool IsVoided { get; protected set; }
     public bool IsAuthorizable { get; protected set; }
     public Guid? CashSessionId { get; protected set; }
+    public Guid? BatchId { get; protected set; }
     public string? Note { get; protected set; }
+
+    /// <summary>
+    /// Sets the batch ID for this payment (when included in a merchant batch).
+    /// </summary>
+    public void SetBatchId(Guid batchId)
+    {
+        BatchId = batchId;
+    }
 
     protected Payment()
     {

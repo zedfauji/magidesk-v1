@@ -18,6 +18,11 @@ public interface ICashSessionRepository
     Task<CashSession?> GetOpenSessionByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Gets the open cash session for a terminal.
+    /// </summary>
+    Task<CashSession?> GetOpenSessionByTerminalIdAsync(Guid terminalId, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Gets all cash sessions for a shift.
     /// </summary>
     Task<IEnumerable<CashSession>> GetByShiftIdAsync(Guid shiftId, CancellationToken cancellationToken = default);

@@ -40,6 +40,18 @@ public class CashSessionRepository : ICashSessionRepository
                 cancellationToken);
     }
 
+    public async Task<CashSession?> GetOpenSessionByTerminalIdAsync(Guid terminalId, CancellationToken cancellationToken = default)
+    {
+        return await _context.CashSessions
+            .Include(cs => cs.Payments)
+            .Include(cs => cs.Payouts)
+            .Include(cs => cs.CashDrops)
+            .Include(cs => cs.DrawerBleeds)
+            .FirstOrDefaultAsync(
+                cs => cs.TerminalId == terminalId && cs.Status == CashSessionStatus.Open,
+                cancellationToken);
+    }
+
     public async Task<IEnumerable<CashSession>> GetByShiftIdAsync(Guid shiftId, CancellationToken cancellationToken = default)
     {
         return await _context.CashSessions

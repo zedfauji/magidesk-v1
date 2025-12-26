@@ -26,10 +26,22 @@ public class MenuModifier
     public int Version { get; private set; }
 
     // Private constructor for EF Core
-    private MenuModifier()
+    // Protected constructor for EF Core and Inheritance
+    protected MenuModifier()
     {
         Name = string.Empty;
         BasePrice = Money.Zero();
+    }
+
+    protected MenuModifier(string name, Money basePrice, int displayOrder)
+    {
+        Id = Guid.NewGuid();
+        Name = name;
+        BasePrice = basePrice;
+        DisplayOrder = displayOrder;
+        ModifierType = ModifierType.Normal;
+        IsActive = true;
+        Version = 1;
     }
 
     /// <summary>

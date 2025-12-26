@@ -33,6 +33,16 @@ public class ApplicationDbContext : DbContext
     public DbSet<Table> Tables { get; set; } = null!;
     public DbSet<MenuModifier> MenuModifiers { get; set; } = null!;
     public DbSet<ModifierGroup> ModifierGroups { get; set; } = null!;
+    public DbSet<KitchenOrder> KitchenOrders { get; set; } = null!;
+    public DbSet<KitchenOrderItem> KitchenOrderItems { get; set; } = null!;
+    public DbSet<TerminalTransaction> TerminalTransactions { get; set; } = null!;
+    public DbSet<PaymentBatch> PaymentBatches { get; set; } = null!;
+    public DbSet<GroupSettlement> GroupSettlements { get; set; } = null!;
+    public DbSet<ComboDefinition> ComboDefinitions { get; set; } = null!;
+    public DbSet<ComboGroup> ComboGroups { get; set; } = null!;
+    public DbSet<ComboGroupItem> ComboGroupItems { get; set; } = null!;
+    public DbSet<MerchantGatewayConfiguration> MerchantGatewayConfigurations { get; set; } = null!;
+    // FractionalModifier is part of Set<MenuModifier> via Inheritance
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -62,6 +72,16 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new TableConfiguration());
         modelBuilder.ApplyConfiguration(new MenuModifierConfiguration());
         modelBuilder.ApplyConfiguration(new ModifierGroupConfiguration());
+        modelBuilder.ApplyConfiguration(new KitchenOrderConfiguration());
+        modelBuilder.ApplyConfiguration(new KitchenOrderItemConfiguration());
+        modelBuilder.ApplyConfiguration(new TerminalTransactionConfiguration());
+        modelBuilder.ApplyConfiguration(new PaymentBatchConfiguration());
+        modelBuilder.ApplyConfiguration(new GroupSettlementConfiguration());
+        modelBuilder.ApplyConfiguration(new ComboDefinitionConfiguration());
+        modelBuilder.ApplyConfiguration(new ComboGroupConfiguration());
+        modelBuilder.ApplyConfiguration(new ComboGroupItemConfiguration());
+        modelBuilder.ApplyConfiguration(new FractionalModifierConfiguration());
+        modelBuilder.ApplyConfiguration(new MerchantGatewayConfigurationConfiguration());
     }
 }
 

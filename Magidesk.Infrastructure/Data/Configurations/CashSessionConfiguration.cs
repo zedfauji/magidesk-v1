@@ -118,6 +118,11 @@ public class CashSessionConfiguration : IEntityTypeConfiguration<CashSession>
             .HasForeignKey(db => db.CashSessionId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        builder.HasMany(cs => cs.TerminalTransactions)
+            .WithOne()
+            .HasForeignKey(tt => tt.CashSessionId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         // Indexes
         builder.HasIndex(cs => cs.ShiftId);
         builder.HasIndex(cs => cs.Status)

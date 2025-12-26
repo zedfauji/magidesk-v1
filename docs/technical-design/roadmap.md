@@ -5,10 +5,10 @@ This roadmap defines the execution order for implementing the "Missing" backend 
 
 ## Phase 3.1: Foundation (Entities & Database)
 *Goal: Establish the data structures required for the new subsystems.*
-- [ ] **Migration 1**: Create `KitchenOrder` and `KitchenRouting` tables (TDD-001).
-- [ ] **Migration 2**: Create `DrawerAssignment` and `TerminalTransaction` tables (TDD-002).
-- [ ] **Migration 3**: Create `PaymentBatch` and `GroupSettlement` tables (TDD-003).
-- [ ] **Migration 4**: Update Menu Schema for `FractonalModifier` and `Combos` (TDD-004).
+- [x] **Migration 1**: Create `KitchenOrder` and `KitchenRouting` tables (TDD-001).
+- [x] **Migration 2**: Create `DrawerAssignment` and `TerminalTransaction` tables (TDD-002).
+- [x] **Migration 3**: Create `PaymentBatch` and `GroupSettlement` tables (TDD-003).
+- [x] **Migration 4**: Update Menu Schema for `FractonalModifier` and `Combos` (TDD-004).
 
 ## Phase 3.2: Core Services (Business Logic)
 *Goal: Implement the services logic sans UI.*

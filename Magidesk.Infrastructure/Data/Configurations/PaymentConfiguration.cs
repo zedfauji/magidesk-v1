@@ -140,6 +140,8 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
             .HasDefaultValue(false);
 
         builder.Property(p => p.CashSessionId);
+        
+        builder.Property(p => p.BatchId);
 
         builder.Property(p => p.Note)
             .HasMaxLength(1000);
@@ -148,6 +150,8 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
         builder.HasIndex(p => p.TicketId);
         builder.HasIndex(p => p.CashSessionId)
             .HasFilter("\"CashSessionId\" IS NOT NULL");
+        builder.HasIndex(p => p.BatchId)
+            .HasFilter("\"BatchId\" IS NOT NULL");
         builder.HasIndex(p => p.GlobalId)
             .IsUnique()
             .HasFilter("\"GlobalId\" IS NOT NULL");

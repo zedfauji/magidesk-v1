@@ -31,5 +31,10 @@ public interface IPaymentRepository
     /// Updates an existing payment.
     /// </summary>
     Task UpdateAsync(Payment payment, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Gets all captured payments that are not yet part of a batch.
+    /// </summary>
+    Task<IEnumerable<Payment>> GetUnbatchedCapturedPaymentsAsync(Guid terminalId, CancellationToken cancellationToken = default);
 }
 

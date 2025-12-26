@@ -4,6 +4,7 @@ using System.Linq;
 using Magidesk.Domain.Enumerations;
 using Magidesk.Domain.Exceptions;
 using Magidesk.Domain.ValueObjects;
+using Magidesk.Domain.Entities;
 
 namespace Magidesk.Domain.Entities;
 
@@ -226,6 +227,18 @@ public class CashSession
         }
 
         _drawerBleeds.Add(drawerBleed);
+        CalculateExpectedCash();
+    }
+    private readonly List<TerminalTransaction> _terminalTransactions = new();
+    public IReadOnlyCollection<TerminalTransaction> TerminalTransactions => _terminalTransactions.AsReadOnly();
+
+    public void AddTransaction(TerminalTransaction transaction)
+    {
+        if (transaction == null) throw new ArgumentNullException(nameof(transaction));
+        if (Status == CashSessionStatus.Closed) throw new Exceptions.InvalidOperationException("Cannot add transaction to closed session.");
+        if (transaction.CashSessionId != Id) throw new BusinessRuleViolationException("Transaction does not belong to this session.");
+
+        _terminalTransactions.Add(transaction);
         CalculateExpectedCash();
     }
 }

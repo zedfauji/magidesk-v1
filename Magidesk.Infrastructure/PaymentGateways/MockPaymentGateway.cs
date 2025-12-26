@@ -254,5 +254,19 @@ public class MockPaymentGateway : IPaymentGateway
             _ => "Unknown"
         };
     }
+
+    public Task<BatchCloseResult> CloseBatchAsync(Guid terminalId, CancellationToken cancellationToken = default)
+    {
+        // Simulate network delay
+        Thread.Sleep(500);
+
+        return Task.FromResult(new BatchCloseResult
+        {
+             Success = true,
+             GatewayBatchId = $"BATCH-{DateTime.UtcNow:yyyyMMdd}-{_random.Next(1000, 9999)}",
+             TotalAmount = Money.Zero(), // In a real mock, we might track this?
+             TransactionCount = 0
+        });
+    }
 }
 

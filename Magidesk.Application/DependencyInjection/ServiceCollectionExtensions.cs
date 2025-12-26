@@ -57,6 +57,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.CreateTableCommand, Commands.CreateTableResult>, CreateTableCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.UpdateTableCommand, Commands.UpdateTableResult>, UpdateTableCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.AssignTableToTicketCommand, Commands.AssignTableToTicketResult>, AssignTableToTicketCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.TransferTicketToTableCommand, Commands.TransferTicketToTableResult>, TransferTicketToTableCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.ReleaseTableCommand, Commands.ReleaseTableResult>, ReleaseTableCommandHandler>();
         
         // Print command handlers
@@ -87,7 +88,15 @@ public static class ServiceCollectionExtensions
         // Table query handlers
         services.AddScoped<IQueryHandler<Queries.GetTableQuery, Queries.GetTableResult>, GetTableQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetAvailableTablesQuery, Queries.GetAvailableTablesResult>, GetAvailableTablesQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.GetAvailableTablesQuery, Queries.GetAvailableTablesResult>, GetAvailableTablesQueryHandler>();
         // GetMenuItemsQuery handler will be implemented in Phase 2 when menu management is added
+        
+        // Services
+        services.AddScoped<IKitchenRoutingService, KitchenRoutingService>();
+        services.AddScoped<IKitchenStatusService, KitchenStatusService>();
+        services.AddScoped<ICashSessionService, CashSessionService>();
+        services.AddScoped<IGroupSettleService, GroupSettleService>();
+        services.AddScoped<IMerchantBatchService, MerchantBatchService>();
 
         return services;
     }

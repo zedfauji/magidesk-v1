@@ -33,6 +33,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IOrderTypeRepository, OrderTypeRepository>();
         services.AddScoped<ITableRepository, TableRepository>();
         services.AddScoped<IAuditEventRepository, AuditEventRepository>();
+        services.AddScoped<IKitchenOrderRepository, KitchenOrderRepository>();
+        services.AddScoped<IGroupSettlementRepository, GroupSettlementRepository>();
+        services.AddScoped<IPaymentBatchRepository, PaymentBatchRepository>();
+        services.AddScoped<IMerchantGatewayConfigurationRepository, MerchantGatewayConfigurationRepository>();
 
         // Register domain services (stateless, can be singleton or scoped)
         services.AddScoped<TaxDomainService>();
@@ -48,6 +52,9 @@ public static class ServiceCollectionExtensions
         // Register print services (using mock for development)
         services.AddScoped<IKitchenPrintService, MockKitchenPrintService>();
         services.AddScoped<IReceiptPrintService, MockReceiptPrintService>();
+
+        // Register Security Services
+        services.AddSingleton<IAesEncryptionService, Security.AesEncryptionService>();
 
         return services;
     }

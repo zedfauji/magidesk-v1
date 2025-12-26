@@ -49,6 +49,11 @@ public interface IPaymentGateway
         CreditCardPayment payment,
         Money tipsAmount,
         CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Closes the current batch on the gateway.
+    /// </summary>
+    Task<BatchCloseResult> CloseBatchAsync(Guid terminalId, CancellationToken cancellationToken = default);
 }
 
 /// <summary>
@@ -104,5 +109,17 @@ public class AddTipsResult
     public bool Success { get; set; }
     public string? AuthorizationCode { get; set; }
     public string? ErrorMessage { get; set; }
+}
+
+/// <summary>
+/// Result of a batch close operation.
+/// </summary>
+public class BatchCloseResult
+{
+    public bool Success { get; set; }
+    public string? GatewayBatchId { get; set; }
+    public string? ErrorMessage { get; set; }
+    public Money TotalAmount { get; set; } = Money.Zero();
+    public int TransactionCount { get; set; }
 }
 

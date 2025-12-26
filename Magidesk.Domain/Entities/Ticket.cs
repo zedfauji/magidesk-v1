@@ -69,6 +69,8 @@ public class Ticket
     public string? DeliveryAddress { get; private set; }
     public string? ExtraDeliveryInfo { get; private set; }
     public bool CustomerWillPickup { get; private set; }
+    public DateTime? DispatchedTime { get; private set; }
+    public DateTime? ReadyTime { get; private set; }
     
     // Collections
     public IReadOnlyCollection<OrderLine> OrderLines => _orderLines.AsReadOnly();
@@ -138,6 +140,7 @@ public class Ticket
         Status = TicketStatus.Open;
         OpenedAt = DateTime.UtcNow;
         ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
     }
 
     /// <summary>
@@ -162,6 +165,7 @@ public class Ticket
 
         _orderLines.Add(orderLine);
         ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
 
         // Auto-open if still in Draft
         if (Status == TicketStatus.Draft)
@@ -190,6 +194,7 @@ public class Ticket
 
         _orderLines.Remove(orderLine);
         ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
         CalculateTotals();
     }
 
@@ -215,6 +220,7 @@ public class Ticket
 
         _payments.Add(payment);
         ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
         RecalculatePaidAmount();
 
         // Keep DueAmount consistent when payments are added.
@@ -267,6 +273,7 @@ public class Ticket
         ClosedAt = DateTime.UtcNow;
         ClosedBy = closedBy;
         ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
     }
 
     /// <summary>
@@ -300,6 +307,7 @@ public class Ticket
         Status = TicketStatus.Voided;
         VoidedBy = voidedBy;
         ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
     }
 
     /// <summary>
@@ -359,6 +367,7 @@ public class Ticket
         // Add refund payment (debit transaction)
         _payments.Add(refundPayment);
         ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
         RecalculatePaidAmount();
 
         // Recalculate due (refunds increase due again if ticket is not fully refunded)
@@ -405,6 +414,7 @@ public class Ticket
         ClosedAt = null;
         ClosedBy = null;
         ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
     }
 
     /// <summary>
@@ -544,6 +554,18 @@ public class Ticket
         if (!_tableNumbers.Contains(tableNumber))
         {
             _tableNumbers.Add(tableNumber);
+            IncrementVersion();
+        }
+    }
+
+    /// <summary>
+    /// Removes a table number from the ticket.
+    /// </summary>
+    public void RemoveTableNumber(int tableNumber)
+    {
+        if (_tableNumbers.Remove(tableNumber))
+        {
+            IncrementVersion();
         }
     }
 
@@ -675,6 +697,53 @@ public class Ticket
         AdvanceAmount = amount;
         ActiveDate = DateTime.UtcNow;
         CalculateTotals();
+    }
+
+    /// <summary>
+    /// Marks the ticket as ready for pickup or delivery.
+    /// </summary>
+    public void MarkAsReady()
+    {
+        if (Status == TicketStatus.Closed || Status == TicketStatus.Voided || Status == TicketStatus.Refunded)
+        {
+            throw new DomainInvalidOperationException($"Cannot mark ticket as ready in {Status} status.");
+        }
+
+        ReadyTime = DateTime.UtcNow;
+        ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
+    }
+
+    /// <summary>
+    /// Marks the ticket as dispatched for delivery.
+    /// </summary>
+    public void MarkAsDispatched(Guid? driverId)
+    {
+        if (Status == TicketStatus.Closed || Status == TicketStatus.Voided || Status == TicketStatus.Refunded)
+        {
+            throw new DomainInvalidOperationException($"Cannot mark ticket as dispatched in {Status} status.");
+        }
+
+        if (CustomerWillPickup)
+        {
+             throw new DomainInvalidOperationException("Cannot dispatch a pickup ticket.");
+        }
+
+        DispatchedTime = DateTime.UtcNow;
+        AssignedDriverId = driverId;
+        ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
+    }
+
+    /// <summary>
+    /// Intecrements the version number.
+    /// Should be called by any method that modifies the ticket state.
+    /// Note: EF Core would also handle this if we configured RowVersion/Timestamp,
+    /// but for integer usage manual increment is safer for domain events.
+    /// </summary>
+    private void IncrementVersion()
+    {
+        Version++;
     }
 }
 
