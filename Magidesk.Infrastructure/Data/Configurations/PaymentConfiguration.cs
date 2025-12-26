@@ -53,6 +53,8 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
             a.Property(am => am.Currency)
                 .HasColumnName("AmountCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -65,6 +67,8 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
             ta.Property(t => t.Currency)
                 .HasColumnName("TipsCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -77,6 +81,8 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
             tea.Property(t => t.Currency)
                 .HasColumnName("TipsExceedCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -89,6 +95,8 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
             ta.Property(t => t.Currency)
                 .HasColumnName("TenderCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -101,18 +109,20 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
             ca.Property(c => c.Currency)
                 .HasColumnName("ChangeCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
         builder.Property(p => p.TransactionTime)
             .IsRequired();
 
-        builder.OwnsOne(p => p.ProcessedBy, pb =>
-        {
-            pb.Property(p => p.Value)
-                .HasColumnName("ProcessedBy")
-                .IsRequired();
-        });
+        builder.Property(p => p.ProcessedBy)
+            .HasConversion(
+                v => v.Value,
+                v => new UserId(v))
+            .HasColumnName("ProcessedBy")
+            .IsRequired();
 
         builder.Property(p => p.TerminalId)
             .IsRequired();

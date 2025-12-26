@@ -129,7 +129,66 @@ public class TicketRepository : ITicketRepository
     {
         try
         {
-            _context.Tickets.Update(ticket);
+            // IMPORTANT:
+            // DbSet.Update() marks the entire graph as Modified, which can incorrectly mark newly-added
+            // child entities (OrderLines/Payments) as Modified and cause "0 rows affected" concurrency errors.
+            // In our unit-of-work pattern, aggregates are typically loaded/tracked before mutation, so
+            // SaveChanges will correctly insert new children and update existing rows.
+            if (_context.Entry(ticket).State == EntityState.Detached)
+            {
+                _context.Tickets.Attach(ticket);
+                _context.Entry(ticket).State = EntityState.Modified;
+            }
+
+            // Ensure newly-added children are inserted (not updated).
+            // IDs are generated in the domain layer, so we must check DB existence to decide Added vs Modified.
+            var orderLines = ticket.OrderLines.ToList();
+            if (orderLines.Count > 0)
+            {
+                var ids = orderLines.Select(ol => ol.Id).ToList();
+                var existingIds = await _context.OrderLines
+                    .Where(ol => ids.Contains(ol.Id))
+                    .Select(ol => ol.Id)
+                    .ToListAsync(cancellationToken);
+
+                var existing = existingIds.ToHashSet();
+                foreach (var orderLine in orderLines)
+                {
+                    var entry = _context.Entry(orderLine);
+                    if (!existing.Contains(orderLine.Id))
+                    {
+                        entry.State = EntityState.Added;
+                    }
+                    else if (entry.State == EntityState.Detached)
+                    {
+                        _context.OrderLines.Attach(orderLine);
+                    }
+                }
+            }
+
+            var payments = ticket.Payments.ToList();
+            if (payments.Count > 0)
+            {
+                var ids = payments.Select(p => p.Id).ToList();
+                var existingIds = await _context.Payments
+                    .Where(p => ids.Contains(p.Id))
+                    .Select(p => p.Id)
+                    .ToListAsync(cancellationToken);
+
+                var existing = existingIds.ToHashSet();
+                foreach (var payment in payments)
+                {
+                    var entry = _context.Entry(payment);
+                    if (!existing.Contains(payment.Id))
+                    {
+                        entry.State = EntityState.Added;
+                    }
+                    else if (entry.State == EntityState.Detached)
+                    {
+                        _context.Payments.Attach(payment);
+                    }
+                }
+            }
             await _context.SaveChangesAsync(cancellationToken);
         }
         catch (DbUpdateConcurrencyException ex)

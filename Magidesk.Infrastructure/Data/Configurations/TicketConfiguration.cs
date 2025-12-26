@@ -43,25 +43,25 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
             .HasConversion<int>()
             .IsRequired();
 
-        // Value Objects - stored as owned types
-        builder.OwnsOne(t => t.CreatedBy, cb =>
-        {
-            cb.Property(c => c.Value)
-                .HasColumnName("CreatedBy")
-                .IsRequired();
-        });
+        // Value Objects - simple conversions (avoid owned-type instance tracking issues for UserId)
+        builder.Property(t => t.CreatedBy)
+            .HasConversion(
+                v => v.Value,
+                v => new UserId(v))
+            .HasColumnName("CreatedBy")
+            .IsRequired();
 
-        builder.OwnsOne(t => t.ClosedBy, cb =>
-        {
-            cb.Property(c => c.Value)
-                .HasColumnName("ClosedBy");
-        });
+        builder.Property(t => t.ClosedBy)
+            .HasConversion(
+                v => v != null ? v.Value : (Guid?)null,
+                v => v.HasValue ? new UserId(v.Value) : null)
+            .HasColumnName("ClosedBy");
 
-        builder.OwnsOne(t => t.VoidedBy, vb =>
-        {
-            vb.Property(v => v.Value)
-                .HasColumnName("VoidedBy");
-        });
+        builder.Property(t => t.VoidedBy)
+            .HasConversion(
+                v => v != null ? v.Value : (Guid?)null,
+                v => v.HasValue ? new UserId(v.Value) : null)
+            .HasColumnName("VoidedBy");
 
         // Money value objects - stored as decimal with currency
         builder.OwnsOne(t => t.SubtotalAmount, sa =>
@@ -73,6 +73,8 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
             sa.Property(s => s.Currency)
                 .HasColumnName("SubtotalCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -85,6 +87,8 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
             da.Property(d => d.Currency)
                 .HasColumnName("DiscountCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -97,6 +101,8 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
             ta.Property(t => t.Currency)
                 .HasColumnName("TaxCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -109,6 +115,8 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
             sca.Property(s => s.Currency)
                 .HasColumnName("ServiceChargeCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -121,6 +129,8 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
             dca.Property(d => d.Currency)
                 .HasColumnName("DeliveryChargeCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -133,6 +143,8 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
             aa.Property(a => a.Currency)
                 .HasColumnName("AdjustmentCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -145,6 +157,8 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
             ta.Property(t => t.Currency)
                 .HasColumnName("TotalCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -157,6 +171,8 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
             pa.Property(p => p.Currency)
                 .HasColumnName("PaidCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -169,6 +185,8 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
             da.Property(d => d.Currency)
                 .HasColumnName("DueCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -181,6 +199,8 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
             aa.Property(a => a.Currency)
                 .HasColumnName("AdvanceCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -240,7 +260,6 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
 
         builder.Property(t => t.Version)
             .IsRequired()
-            .IsRowVersion()
             .HasDefaultValue(1);
 
         builder.Property(t => t.Properties)

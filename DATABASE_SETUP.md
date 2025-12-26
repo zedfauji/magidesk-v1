@@ -3,8 +3,9 @@
 ## PostgreSQL Configuration
 
 ### Current Status
-- **Database**: `magidesk_pos` (already exists)
-- **User**: `postgres` (passwordless)
+- **Primary dev DB**: `magidesk_pos` (exists)
+- **Integration-test DB**: `magidesk_test` (tests create/drop as needed)
+- **User**: `postgres` (password-based in tests by default)
 - **Connection**: Local PostgreSQL server
 
 ### Existing Tables
@@ -78,6 +79,16 @@ The database already contains some tables:
 3. **Data Migrations**: Seed initial data (order types, shifts, admin user)
 
 ## Connection String
+
+### Integration Tests (Magidesk.Infrastructure.Tests)
+
+The repository integration tests use a local Postgres database named `magidesk_test` and will recreate schema during runs.
+
+```
+Host=localhost;Port=5432;Database=magidesk_test;Username=postgres;Password=postgres;
+```
+
+### Dev DB (local)
 
 ```
 Host=localhost;Port=5432;Database=magidesk_pos;Username=postgres;Password=;

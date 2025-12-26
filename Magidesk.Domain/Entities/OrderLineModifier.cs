@@ -43,7 +43,12 @@ public class OrderLineModifier
         ModifierType modifierType,
         int itemCount,
         Money unitPrice,
-        decimal taxRate = 0m)
+        decimal taxRate = 0m,
+        Guid? menuItemModifierGroupId = null,
+        bool shouldPrintToKitchen = true,
+        string? sectionName = null,
+        string? multiplierName = null,
+        bool isSectionWisePrice = false)
     {
         if (itemCount <= 0)
         {
@@ -60,11 +65,16 @@ public class OrderLineModifier
             Id = Guid.NewGuid(),
             OrderLineId = orderLineId,
             ModifierId = modifierId,
+            MenuItemModifierGroupId = menuItemModifierGroupId,
             Name = name,
             ModifierType = modifierType,
             ItemCount = itemCount,
             UnitPrice = unitPrice,
             TaxRate = taxRate,
+            ShouldPrintToKitchen = shouldPrintToKitchen,
+            SectionName = sectionName,
+            MultiplierName = multiplierName,
+            IsSectionWisePrice = isSectionWisePrice,
             CreatedAt = DateTime.UtcNow
         };
 
@@ -72,11 +82,54 @@ public class OrderLineModifier
         return modifier;
     }
 
+    /// <summary>
+    /// Creates a pizza-style section modifier (e.g., "Full", "Half", "Quarter").
+    /// </summary>
+    public static OrderLineModifier CreatePizzaSectionModifier(
+        Guid orderLineId,
+        Guid modifierId,
+        string name,
+        ModifierType modifierType,
+        int itemCount,
+        Money unitPrice,
+        string sectionName,
+        string multiplierName,
+        decimal taxRate = 0m,
+        Guid? menuItemModifierGroupId = null)
+    {
+        return Create(
+            orderLineId,
+            modifierId,
+            name,
+            modifierType,
+            itemCount,
+            unitPrice,
+            taxRate,
+            menuItemModifierGroupId,
+            shouldPrintToKitchen: true,
+            sectionName: sectionName,
+            multiplierName: multiplierName,
+            isSectionWisePrice: true);
+    }
+
     private void CalculateTotals()
     {
         SubtotalAmount = UnitPrice * ItemCount;
         TaxAmount = SubtotalAmount * TaxRate;
         TotalAmount = SubtotalAmount + TaxAmount;
+    }
+
+    /// <summary>
+    /// Marks this modifier as printed to kitchen.
+    /// </summary>
+    public void MarkPrintedToKitchen()
+    {
+        if (!ShouldPrintToKitchen)
+        {
+            throw new Exceptions.BusinessRuleViolationException("Modifier is not configured to print to kitchen.");
+        }
+
+        PrintedToKitchen = true;
     }
 }
 

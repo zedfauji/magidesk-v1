@@ -45,6 +45,24 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.AddCashDropCommand, Commands.AddCashDropResult>, AddCashDropCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.AddDrawerBleedCommand, Commands.AddDrawerBleedResult>, AddDrawerBleedCommandHandler>();
         
+        // Shift command handlers
+        services.AddScoped<ICommandHandler<Commands.CreateShiftCommand, Commands.CreateShiftResult>, CreateShiftCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.UpdateShiftCommand, Commands.UpdateShiftResult>, UpdateShiftCommandHandler>();
+        
+        // Order type command handlers
+        services.AddScoped<ICommandHandler<Commands.CreateOrderTypeCommand, Commands.CreateOrderTypeResult>, CreateOrderTypeCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.UpdateOrderTypeCommand, Commands.UpdateOrderTypeResult>, UpdateOrderTypeCommandHandler>();
+        
+        // Table command handlers
+        services.AddScoped<ICommandHandler<Commands.CreateTableCommand, Commands.CreateTableResult>, CreateTableCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.UpdateTableCommand, Commands.UpdateTableResult>, UpdateTableCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.AssignTableToTicketCommand, Commands.AssignTableToTicketResult>, AssignTableToTicketCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.ReleaseTableCommand, Commands.ReleaseTableResult>, ReleaseTableCommandHandler>();
+        
+        // Print command handlers
+        services.AddScoped<ICommandHandler<Commands.PrintToKitchenCommand, Commands.PrintToKitchenResult>, PrintToKitchenCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.PrintReceiptCommand, Commands.PrintReceiptResult>, PrintReceiptCommandHandler>();
+        
         // Handlers without results
         services.AddScoped<ICommandHandler<Commands.RemoveOrderLineCommand>, RemoveOrderLineCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.ModifyOrderLineCommand>, ModifyOrderLineCommandHandler>();
@@ -53,12 +71,22 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.VoidTicketCommand>, VoidTicketCommandHandler>();
 
         // Register query handlers
-        services.AddScoped<IQueryHandler<Queries.GetTicketQuery, DTOs.TicketDto>, GetTicketQueryHandler>();
-        services.AddScoped<IQueryHandler<Queries.GetTicketByNumberQuery, DTOs.TicketDto>, GetTicketByNumberQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.GetTicketQuery, DTOs.TicketDto?>, GetTicketQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.GetTicketByNumberQuery, DTOs.TicketDto?>, GetTicketByNumberQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetOpenTicketsQuery, IEnumerable<DTOs.TicketDto>>, GetOpenTicketsQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetCurrentCashSessionQuery, Queries.GetCurrentCashSessionResult>, GetCurrentCashSessionQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetCashSessionQuery, Queries.GetCashSessionResult>, GetCashSessionQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetDrawerPullReportQuery, Queries.GetDrawerPullReportResult>, GetDrawerPullReportQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.GetShiftQuery, Queries.GetShiftResult>, GetShiftQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.GetCurrentShiftQuery, Queries.GetCurrentShiftResult>, GetCurrentShiftQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.GetShiftReportQuery, Queries.GetShiftReportResult>, GetShiftReportQueryHandler>();
+        
+        // Order type query handlers
+        services.AddScoped<IQueryHandler<Queries.GetOrderTypeQuery, Queries.GetOrderTypeResult>, GetOrderTypeQueryHandler>();
+        
+        // Table query handlers
+        services.AddScoped<IQueryHandler<Queries.GetTableQuery, Queries.GetTableResult>, GetTableQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.GetAvailableTablesQuery, Queries.GetAvailableTablesResult>, GetAvailableTablesQueryHandler>();
         // GetMenuItemsQuery handler will be implemented in Phase 2 when menu management is added
 
         return services;

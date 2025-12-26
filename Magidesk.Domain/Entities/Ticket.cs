@@ -217,6 +217,12 @@ public class Ticket
         ActiveDate = DateTime.UtcNow;
         RecalculatePaidAmount();
 
+        // Keep DueAmount consistent when payments are added.
+        // Money subtraction cannot go negative, so clamp at zero when fully paid (or slightly overpaid).
+        DueAmount = PaidAmount >= TotalAmount
+            ? Money.Zero(TotalAmount.Currency)
+            : TotalAmount - PaidAmount;
+
         // Auto-transition to Paid if fully paid
         if (PaidAmount >= TotalAmount && Status == TicketStatus.Open)
         {
@@ -354,6 +360,11 @@ public class Ticket
         _payments.Add(refundPayment);
         ActiveDate = DateTime.UtcNow;
         RecalculatePaidAmount();
+
+        // Recalculate due (refunds increase due again if ticket is not fully refunded)
+        DueAmount = PaidAmount >= TotalAmount
+            ? Money.Zero(TotalAmount.Currency)
+            : TotalAmount - PaidAmount;
 
         // If fully refunded (PaidAmount <= 0), mark as refunded
         if (PaidAmount <= Money.Zero())

@@ -56,8 +56,8 @@ public class CloseCashSessionCommandHandler : ICommandHandler<CloseCashSessionCo
             {
                 Status = cashSession.Status,
                 ExpectedCash = cashSession.ExpectedCash.Amount,
-                ActualCash = cashSession.ActualCash!.Value.Amount,
-                Difference = cashSession.Difference!.Value.Amount
+                ActualCash = cashSession.ActualCash!.Amount,
+                Difference = cashSession.Difference!.Amount
             }),
             $"Cash session closed. Expected: {cashSession.ExpectedCash}, Actual: {cashSession.ActualCash}, Difference: {cashSession.Difference}",
             correlationId: correlationId);
@@ -68,8 +68,8 @@ public class CloseCashSessionCommandHandler : ICommandHandler<CloseCashSessionCo
         {
             CashSessionId = cashSession.Id,
             ExpectedCash = cashSession.ExpectedCash,
-            ActualCash = cashSession.ActualCash!.Value,
-            Difference = cashSession.Difference!.Value,
+            ActualCash = cashSession.ActualCash!,
+            Difference = cashSession.Difference!,
             ClosedAt = cashSession.ClosedAt!.Value
         };
     }

@@ -4,9 +4,9 @@ A modern, ground-up rebuild of a Windows-based Point of Sale system using Clean 
 
 ## Project Status
 
-**Current Phase**: ✅ Architecture & Design Complete, Ready for Implementation
+**Current Phase**: ✅ Phase 7 (Testing & Refinement) Complete
 
-All design documentation has been completed based on thorough analysis of the FloreantPOS reference system. See [PROJECT_STATUS.md](./PROJECT_STATUS.md) for details.
+The core POS domain/application/infrastructure layers and the WinUI 3 shell UI are implemented, with passing unit + integration tests. See [PROJECT_STATUS.md](./PROJECT_STATUS.md) for details.
 
 ## Architecture Overview
 
@@ -56,10 +56,10 @@ Magidesk/
 
 - **.NET**: 8.0
 - **UI Framework**: WinUI 3
-- **MVVM Framework**: CommunityToolkit.Mvvm (to be added)
-- **ORM**: EF Core (to be added)
-- **Database**: PostgreSQL (local, passwordless)
-- **Testing**: xUnit
+- **MVVM**: Lightweight MVVM base + commands (in `ViewModels/`)
+- **ORM**: EF Core (Npgsql)
+- **Database**: PostgreSQL (local)
+- **Testing**: xUnit, FluentAssertions
 
 ## Getting Started
 
@@ -67,20 +67,36 @@ Magidesk/
 
 - .NET 8 SDK
 - Windows 10/11
-- PostgreSQL (local server, passwordless)
-- Visual Studio 2022 or VS Code with C# extension
+- Local PostgreSQL
+- Visual Studio 2022
+
+### Configure DB
+
+Set `MAGIDESK_CONNECTION_STRING`:
+
+```powershell
+$env:MAGIDESK_CONNECTION_STRING = "Host=localhost;Port=5432;Database=magidesk_pos;Username=postgres;Password="
+```
+
+### Apply EF Core migrations
+
+```powershell
+dotnet run --project Magidesk.Migrations
+```
 
 ### Building
 
-```bash
+```powershell
 dotnet build
 ```
 
 ### Running Tests
 
-```bash
-dotnet test
+```powershell
+dotnet test Magidesk.sln
 ```
+
+See `RUNBOOK.md` for more details.
 
 ## Full POS Scope
 
@@ -122,23 +138,13 @@ See [SCOPE.md](./SCOPE.md) for complete feature list.
 
 ## Next Steps
 
-See [EXECUTION_PLAN.md](./EXECUTION_PLAN.md) for the detailed 24-week implementation plan.
-
-**Immediate next steps** (Phase 1, Week 1):
-1. Implement Money value object
-2. Implement Ticket entity (full model)
-3. Implement OrderLine entity
-4. Implement Payment entity (base)
-5. Implement domain services
-6. Set up EF Core with PostgreSQL
-7. Create initial database migration
+See [NEXT_STEPS.md](./NEXT_STEPS.md) and [EXECUTION_PLAN.md](./EXECUTION_PLAN.md).
 
 ## Database
 
-- **Database**: `magidesk_pos` (exists)
-- **Schema**: `magidesk` (created, empty)
-- **Connection**: Local PostgreSQL (passwordless)
-- **ORM**: EF Core (migrations for schema management)
+- **Primary dev DB**: `magidesk_pos`
+- **Integration-test DB**: `magidesk_test` (created/dropped by tests)
+- **ORM**: EF Core migrations (see `Magidesk.Infrastructure/Migrations/`)
 
 ## License
 

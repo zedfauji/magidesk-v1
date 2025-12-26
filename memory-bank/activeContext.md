@@ -71,3 +71,7 @@
 - CQRS for commands and queries
 - Domain events for audit trail
 
+## Workspace / MCP Filesystem Path (Source of Truth)
+- **MCP filesystem root**: `/projects`
+- **Repository path (use for MCP file tools)**: `/projects/Code/Redesign-POS/Windows Based POS/Magidesk`
+

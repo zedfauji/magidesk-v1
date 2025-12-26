@@ -35,12 +35,12 @@ public class PayoutConfiguration : IEntityTypeConfiguration<Payout>
                 .IsRequired();
         });
 
-        builder.OwnsOne(po => po.ProcessedBy, pb =>
-        {
-            pb.Property(p => p.Value)
-                .HasColumnName("ProcessedBy")
-                .IsRequired();
-        });
+        builder.Property(po => po.ProcessedBy)
+            .HasConversion(
+                v => v.Value,
+                v => new UserId(v))
+            .HasColumnName("ProcessedBy")
+            .IsRequired();
 
         builder.Property(po => po.Reason)
             .HasMaxLength(500);

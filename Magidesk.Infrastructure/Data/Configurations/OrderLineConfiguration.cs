@@ -60,6 +60,8 @@ public class OrderLineConfiguration : IEntityTypeConfiguration<OrderLine>
             up.Property(u => u.Currency)
                 .HasColumnName("UnitPriceCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -72,6 +74,8 @@ public class OrderLineConfiguration : IEntityTypeConfiguration<OrderLine>
             sa.Property(s => s.Currency)
                 .HasColumnName("SubtotalCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -84,6 +88,8 @@ public class OrderLineConfiguration : IEntityTypeConfiguration<OrderLine>
             sawm.Property(s => s.Currency)
                 .HasColumnName("SubtotalWithoutModifiersCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -96,6 +102,8 @@ public class OrderLineConfiguration : IEntityTypeConfiguration<OrderLine>
             da.Property(d => d.Currency)
                 .HasColumnName("DiscountCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -113,6 +121,8 @@ public class OrderLineConfiguration : IEntityTypeConfiguration<OrderLine>
             ta.Property(t => t.Currency)
                 .HasColumnName("TaxCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -125,6 +135,8 @@ public class OrderLineConfiguration : IEntityTypeConfiguration<OrderLine>
             tam.Property(t => t.Currency)
                 .HasColumnName("TaxWithoutModifiersCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -137,6 +149,8 @@ public class OrderLineConfiguration : IEntityTypeConfiguration<OrderLine>
             ta.Property(t => t.Currency)
                 .HasColumnName("TotalCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 
@@ -149,6 +163,8 @@ public class OrderLineConfiguration : IEntityTypeConfiguration<OrderLine>
             tawm.Property(t => t.Currency)
                 .HasColumnName("TotalWithoutModifiersCurrency")
                 .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
                 .IsRequired();
         });
 

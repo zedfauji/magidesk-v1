@@ -227,5 +227,29 @@ public class OrderLine
         ItemCount += other.ItemCount;
         CalculatePrice();
     }
+
+    /// <summary>
+    /// Marks this order line as printed to kitchen.
+    /// </summary>
+    public void MarkPrintedToKitchen()
+    {
+        if (!ShouldPrintToKitchen)
+        {
+            throw new BusinessRuleViolationException("Order line is not configured to print to kitchen.");
+        }
+
+        PrintedToKitchen = true;
+
+        // Also mark modifiers as printed
+        foreach (var modifier in _modifiers.Where(m => m.ShouldPrintToKitchen))
+        {
+            modifier.MarkPrintedToKitchen();
+        }
+
+        foreach (var addOn in _addOns.Where(a => a.ShouldPrintToKitchen))
+        {
+            addOn.MarkPrintedToKitchen();
+        }
+    }
 }
 

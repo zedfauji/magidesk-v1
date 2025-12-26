@@ -28,6 +28,11 @@ public class ApplicationDbContext : DbContext
     public DbSet<CashDrop> CashDrops { get; set; } = null!;
     public DbSet<DrawerBleed> DrawerBleeds { get; set; } = null!;
     public DbSet<Discount> Discounts { get; set; } = null!;
+    public DbSet<Shift> Shifts { get; set; } = null!;
+    public DbSet<OrderType> OrderTypes { get; set; } = null!;
+    public DbSet<Table> Tables { get; set; } = null!;
+    public DbSet<MenuModifier> MenuModifiers { get; set; } = null!;
+    public DbSet<ModifierGroup> ModifierGroups { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -52,6 +57,11 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new CashDropConfiguration());
         modelBuilder.ApplyConfiguration(new DrawerBleedConfiguration());
         modelBuilder.ApplyConfiguration(new DiscountConfiguration());
+        modelBuilder.ApplyConfiguration(new ShiftConfiguration());
+        modelBuilder.ApplyConfiguration(new OrderTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new TableConfiguration());
+        modelBuilder.ApplyConfiguration(new MenuModifierConfiguration());
+        modelBuilder.ApplyConfiguration(new ModifierGroupConfiguration());
     }
 }
 

@@ -41,25 +41,25 @@ public class MoneyTests
     }
 
     [Fact]
-    public void Constructor_WithNullCurrency_ShouldThrowArgumentException()
+    public void Constructor_WithNullCurrency_ShouldDefaultToUsd()
     {
         // Arrange & Act
-        var act = () => new Money(100m, null!);
+        var money = new Money(100m, null!);
 
         // Assert
-        act.Should().Throw<ArgumentException>()
-            .WithMessage("Currency cannot be null or empty.*");
+        money.Amount.Should().Be(100m);
+        money.Currency.Should().Be("USD");
     }
 
     [Fact]
-    public void Constructor_WithEmptyCurrency_ShouldThrowArgumentException()
+    public void Constructor_WithEmptyCurrency_ShouldDefaultToUsd()
     {
         // Arrange & Act
-        var act = () => new Money(100m, "");
+        var money = new Money(100m, "");
 
         // Assert
-        act.Should().Throw<ArgumentException>()
-            .WithMessage("Currency cannot be null or empty.*");
+        money.Amount.Should().Be(100m);
+        money.Currency.Should().Be("USD");
     }
 
     [Fact]

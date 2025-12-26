@@ -25,7 +25,8 @@ public class TicketRepositoryTests : IDisposable
         _context = new ApplicationDbContext(options);
         _repository = new TicketRepository(_context);
 
-        // Ensure database is created
+        // Ensure a clean schema for each test run (model changes frequently)
+        _context.Database.EnsureDeleted();
         _context.Database.EnsureCreated();
     }
 
@@ -109,7 +110,7 @@ public class TicketRepositoryTests : IDisposable
         Assert.Equal(ticketNumber, retrieved.TicketNumber);
     }
 
-    [Fact(Skip = "EF Core tracking issue with Money value objects in payments - to be refined")]
+    [Fact]
     public async Task GetOpenTicketsAsync_ShouldReturnOnlyOpenTickets()
     {
         // Arrange
@@ -179,7 +180,7 @@ public class TicketRepositoryTests : IDisposable
         Assert.DoesNotContain(openTickets, t => t.Id == closedTicket.Id);
     }
 
-    [Fact(Skip = "EF Core concurrency tracking issue - to be refined")]
+    [Fact]
     public async Task UpdateAsync_ShouldUpdateTicket()
     {
         // Arrange

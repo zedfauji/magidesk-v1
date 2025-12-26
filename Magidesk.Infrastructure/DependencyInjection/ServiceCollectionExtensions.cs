@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Magidesk.Application.Interfaces;
 using Magidesk.Infrastructure.Data;
 using Magidesk.Infrastructure.PaymentGateways;
+using Magidesk.Infrastructure.Printing;
 using Magidesk.Infrastructure.Repositories;
 using Magidesk.Domain.DomainServices;
 
@@ -28,6 +29,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ITicketRepository, TicketRepository>();
         services.AddScoped<IPaymentRepository, PaymentRepository>();
         services.AddScoped<ICashSessionRepository, CashSessionRepository>();
+        services.AddScoped<IShiftRepository, ShiftRepository>();
+        services.AddScoped<IOrderTypeRepository, OrderTypeRepository>();
+        services.AddScoped<ITableRepository, TableRepository>();
         services.AddScoped<IAuditEventRepository, AuditEventRepository>();
 
         // Register domain services (stateless, can be singleton or scoped)
@@ -40,6 +44,10 @@ public static class ServiceCollectionExtensions
 
         // Register payment gateway (using mock for development)
         services.AddScoped<IPaymentGateway, MockPaymentGateway>();
+
+        // Register print services (using mock for development)
+        services.AddScoped<IKitchenPrintService, MockKitchenPrintService>();
+        services.AddScoped<IReceiptPrintService, MockReceiptPrintService>();
 
         return services;
     }

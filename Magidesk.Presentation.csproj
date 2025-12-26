@@ -16,6 +16,27 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>Magidesk.Presentation</RootNamespace>
 
+        <!--
+          IMPORTANT:
+          This project file lives at the repository root, so SDK default item globbing would
+          unintentionally include source from other projects (Domain/Application/Infrastructure/Tests).
+        -->
+        <DefaultItemExcludes>
+          $(DefaultItemExcludes);
+          Magidesk.Application\**;
+          Magidesk.Domain\**;
+          Magidesk.Infrastructure\**;
+          Magidesk.Migrations\**;
+          Magidesk.Application.Tests\**;
+          Magidesk.Domain.Tests\**;
+          Magidesk.Infrastructure.Tests\**;
+          Magidesk.Presentation\**;
+          terminals\**;
+          memory-bank\**;
+          bin\**;
+          obj\**
+        </DefaultItemExcludes>
+
         <!-- App Options -->
         <UseRidGraph>true</UseRidGraph>
         <Platforms>x86;x64;ARM64</Platforms>
@@ -39,6 +60,7 @@
         <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.*" />
         <PackageReference Include="Microsoft.Web.WebView2" Version="1.*" />
         <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.*" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
 
         <Manifest Include="$(ApplicationManifest)" />
     </ItemGroup>
@@ -53,6 +75,7 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="Magidesk.Application\Magidesk.Application.csproj" />
+      <ProjectReference Include="Magidesk.Infrastructure\Magidesk.Infrastructure.csproj" />
     </ItemGroup>
 
     <!-- 

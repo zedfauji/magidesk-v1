@@ -35,12 +35,12 @@ public class DrawerBleedConfiguration : IEntityTypeConfiguration<DrawerBleed>
                 .IsRequired();
         });
 
-        builder.OwnsOne(db => db.ProcessedBy, pb =>
-        {
-            pb.Property(p => p.Value)
-                .HasColumnName("ProcessedBy")
-                .IsRequired();
-        });
+        builder.Property(db => db.ProcessedBy)
+            .HasConversion(
+                v => v.Value,
+                v => new UserId(v))
+            .HasColumnName("ProcessedBy")
+            .IsRequired();
 
         builder.Property(db => db.Reason)
             .HasMaxLength(500);

@@ -35,12 +35,12 @@ public class CashDropConfiguration : IEntityTypeConfiguration<CashDrop>
                 .IsRequired();
         });
 
-        builder.OwnsOne(cd => cd.ProcessedBy, pb =>
-        {
-            pb.Property(p => p.Value)
-                .HasColumnName("ProcessedBy")
-                .IsRequired();
-        });
+        builder.Property(cd => cd.ProcessedBy)
+            .HasConversion(
+                v => v.Value,
+                v => new UserId(v))
+            .HasColumnName("ProcessedBy")
+            .IsRequired();
 
         builder.Property(cd => cd.Reason)
             .HasMaxLength(500);

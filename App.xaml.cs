@@ -1,51 +1,56 @@
-using Microsoft.UI.Xaml.Navigation;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.UI.Xaml;
+using Magidesk.Application.DependencyInjection;
+using Magidesk.Infrastructure.DependencyInjection;
+using Magidesk.Presentation.Services;
 
-namespace Magidesk.Presentation
+namespace Magidesk.Presentation;
+
+/// <summary>
+/// Provides application-specific behavior to supplement the default Application class.
+/// </summary>
+public partial class App : Microsoft.UI.Xaml.Application
 {
-    /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
-    /// </summary>
-    public partial class App : Application
+    private Window? _window;
+
+    public static IHost Host { get; private set; } = null!;
+
+    public static IServiceProvider Services => Host.Services;
+
+    public App()
     {
-        private Window window = Window.Current;
+        InitializeComponent();
 
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
-        public App()
-        {
-            this.InitializeComponent();
-        }
-
-        /// <summary>
-        /// Invoked when the application is launched normally by the end user.  Other entry points
-        /// will be used such as when the application is launched to open a specific file.
-        /// </summary>
-        /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
-        {
-            window ??= new Window();
-
-            if (window.Content is not Frame rootFrame)
+        Host = Microsoft.Extensions.Hosting.Host
+            .CreateDefaultBuilder()
+            .ConfigureServices(services =>
             {
-                rootFrame = new Frame();
-                rootFrame.NavigationFailed += OnNavigationFailed;
-                window.Content = rootFrame;
-            }
+                // Application + Infrastructure composition root
+                services.AddApplication();
+                services.AddInfrastructure();
 
-            _ = rootFrame.Navigate(typeof(MainPage), e.Arguments);
-            window.Activate();
-        }
+                // UI services
+                services.AddSingleton<NavigationService>();
 
-        /// <summary>
-        /// Invoked when Navigation to a certain page fails
-        /// </summary>
-        /// <param name="sender">The Frame which failed navigation</param>
-        /// <param name="e">Details about the navigation failure</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
-        {
-            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
-        }
+                // ViewModels
+                services.AddTransient<Magidesk.Presentation.ViewModels.CashSessionViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.TicketViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.PaymentViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.DiscountTaxViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.PrintViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.TicketManagementViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.DrawerPullReportViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.SalesReportsViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.UserManagementViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.SettingsViewModel>();
+            })
+            .Build();
+    }
+
+    protected override void OnLaunched(LaunchActivatedEventArgs args)
+    {
+        _window = new MainWindow();
+        _window.Activate();
     }
 }

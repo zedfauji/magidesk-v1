@@ -34,9 +34,12 @@ public sealed record Money
             throw new ArgumentException("Money amount cannot be negative.", nameof(amount));
         }
 
+        // NOTE:
+        // We default missing/blank currency to USD. This prevents persistence/materialization issues
+        // (e.g., older rows with NULL/blank currency) from crashing the domain at read time.
         if (string.IsNullOrWhiteSpace(currency))
         {
-            throw new ArgumentException("Currency cannot be null or empty.", nameof(currency));
+            currency = DefaultCurrency;
         }
 
         // Round to 2 decimal places

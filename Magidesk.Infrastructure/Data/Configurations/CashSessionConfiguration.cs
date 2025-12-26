@@ -20,12 +20,12 @@ public class CashSessionConfiguration : IEntityTypeConfiguration<CashSession>
         builder.Property(cs => cs.Id)
             .IsRequired();
 
-        builder.OwnsOne(cs => cs.UserId, u =>
-        {
-            u.Property(us => us.Value)
-                .HasColumnName("UserId")
-                .IsRequired();
-        });
+        builder.Property(cs => cs.UserId)
+            .HasConversion(
+                v => v.Value,
+                v => new UserId(v))
+            .HasColumnName("UserId")
+            .IsRequired();
 
         builder.Property(cs => cs.TerminalId)
             .IsRequired();
@@ -38,11 +38,11 @@ public class CashSessionConfiguration : IEntityTypeConfiguration<CashSession>
 
         builder.Property(cs => cs.ClosedAt);
 
-        builder.OwnsOne(cs => cs.ClosedBy, cb =>
-        {
-            cb.Property(c => c.Value)
-                .HasColumnName("ClosedBy");
-        });
+        builder.Property(cs => cs.ClosedBy)
+            .HasConversion(
+                v => v != null ? v.Value : (Guid?)null,
+                v => v.HasValue ? new UserId(v.Value) : null)
+            .HasColumnName("ClosedBy");
 
         // Money value objects
         builder.OwnsOne(cs => cs.OpeningBalance, ob =>
@@ -95,7 +95,6 @@ public class CashSessionConfiguration : IEntityTypeConfiguration<CashSession>
 
         builder.Property(cs => cs.Version)
             .IsRequired()
-            .IsRowVersion()
             .HasDefaultValue(1);
 
         // Relationships

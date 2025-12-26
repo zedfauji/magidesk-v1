@@ -25,6 +25,31 @@ public abstract class Payment
     {
         TipsAmount = tipsAmount;
     }
+
+    /// <summary>
+    /// Sets tender amount for cash payments.
+    /// Kept as a protected method so Application layer can set via domain behavior (used by ProcessPaymentCommandHandler).
+    /// </summary>
+    protected void SetTenderAmount(Money tenderAmount)
+    {
+        TenderAmount = tenderAmount;
+    }
+
+    /// <summary>
+    /// Sets calculated change amount for cash payments.
+    /// </summary>
+    protected void SetChangeAmount(Money changeAmount)
+    {
+        ChangeAmount = changeAmount;
+    }
+
+    /// <summary>
+    /// Associates this payment with a cash session.
+    /// </summary>
+    protected void SetCashSessionId(Guid cashSessionId)
+    {
+        CashSessionId = cashSessionId;
+    }
     public DateTime TransactionTime { get; protected set; }
     public UserId ProcessedBy { get; protected set; } = null!;
     public Guid TerminalId { get; protected set; }

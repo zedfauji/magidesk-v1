@@ -64,8 +64,10 @@ public class RefundTicketCommandHandler : ICommandHandler<RefundTicketCommand, R
 
         int refundPaymentsCreated = 0;
 
-        // Refund each payment
-        foreach (var payment in ticket.Payments.Where(p => !p.IsVoided && p.TransactionType == TransactionType.Credit))
+        // Refund each payment (snapshot list because we'll add refund payments to the ticket during processing)
+        foreach (var payment in ticket.Payments
+                     .Where(p => !p.IsVoided && p.TransactionType == TransactionType.Credit)
+                     .ToList())
         {
             // Validate refund
             if (!_paymentDomainService.CanRefundPayment(payment, payment.Amount))
