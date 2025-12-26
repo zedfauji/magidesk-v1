@@ -1,40 +1,28 @@
 # Active Context
 
 ## Current Work Focus
-- **Phase 2 COMPLETE** ✅ (Payment Expansion - Weeks 5-7)
-- **Phase 3 Week 8: COMPLETE** ✅ (Discounts & Tax)
-  - ✅ Created TaxRate and TaxGroup value objects
-  - ✅ Created TaxDomainService for tax calculations
-  - ✅ Enhanced TicketDomainService to use TaxDomainService
-  - ✅ Ticket.cs file restored (all properties, methods, and behaviors)
-  - ✅ Added PriceIncludesTax property to Ticket
-  - ✅ Completed tax calculation integration with price-includes-tax mode
-  - ✅ Tax-exempt support implemented
-  - ✅ EF Core configuration updated for PriceIncludesTax
-  - ✅ 40 comprehensive tax tests passing
-- **Phase 3 Week 9: COMPLETE** ✅ (Refunds & Ticket Splitting)
-  - ✅ Payment.CreateRefund() factory method for all payment types
-  - ✅ Ticket.ProcessRefund() method
-  - ✅ Updated RecalculatePaidAmount() to handle Debit transactions
-  - ✅ RefundPaymentCommand and RefundTicketCommand handlers
-  - ✅ SplitTicketCommand handler
-  - ✅ 14 comprehensive refund/split tests passing
-- **Phase 3 Week 10: COMPLETE** ✅ (Service Charges & Adjustments)
-  - ✅ Ticket methods: SetServiceCharge, SetDeliveryCharge, SetAdjustment, SetAdvancePayment
-  - ✅ ServiceChargeDomainService for percentage and per-guest calculations
-  - ✅ Commands and handlers for all charges/adjustments
-  - ✅ 15 comprehensive service charge/adjustment tests passing
-  - ✅ **Total: 105 tests passing**
+- **Backend Forensic Audit** 🔍
+  - We are shifting from UI Audit to Backend Audit.
+  - Objective: Document backend invariants, forbidden states, and concurrency guarantees for all 132 features.
+  - Output: `docs/forensic-backend-audit/F-XXXX-backend.md` for each feature.
+
+## Guardrails (See .clinerules for full list)
+- **FORENSIC PARITY**: `docs/forensic-ui-audit/features/F-XXXX.md` is the Source of Truth.
+- **FINANCIAL INTEGRITY**: `decimal` only. Domain-layer naming only.
+- **ARCHITECTURE**: Clean Architecture (Domain -> Application -> Infrastructure -> Presentation).
+- **MEMORY BANK**: Keep this directory updated.
 
 ## Recent Changes
-- ✅ Phase 1 COMPLETE: Foundation & Core Transaction Flow
-- ✅ Phase 2 Week 5: Multiple Payment Types (TPH implementation)
-  - Created payment type hierarchy (CashPayment, CreditCardPayment, DebitCardPayment, GiftCertificatePayment, CustomPayment)
-  - Configured EF Core TPH for payment types
-  - Created migration `PaymentTypesTPH`
-- ✅ Phase 2 Week 6: Split Payments & Tips
-  - Enhanced payment validation for split payments
-  - Added tips support on card transactions
+- ✅ **Forensic UI Audit COMPLETE**: All 132 features mapped to Linear Documents.
+- ✅ **Memory Bank Initialized**: Guardrails and Context files established.
+- ✅ Phase 2 COMPLETE (Payment Expansion).
+- ✅ Phase 3 Weeks 8-10 COMPLETE (Tax, Refunds, Service Charges).
+
+## Active Documents
+- `docs/forensic-ui-audit/features/` (Reference)
+- `docs/forensic-backend-audit/` (Target Output)
+- `.clinerules` (Rules)
+nsactions
   - Added gratuity workflow methods to Ticket
   - Enhanced PaymentDomainService with tip validation and calculation
 - ✅ Phase 2 Week 7: Card Processing Integration
