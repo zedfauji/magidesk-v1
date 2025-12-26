@@ -11,13 +11,16 @@ namespace Magidesk.Application.Services;
 public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, AddOrderLineResult>
 {
     private readonly ITicketRepository _ticketRepository;
+    private readonly IMenuRepository _menuRepository;
     private readonly IAuditEventRepository _auditEventRepository;
 
     public AddOrderLineCommandHandler(
         ITicketRepository ticketRepository,
+        IMenuRepository menuRepository,
         IAuditEventRepository auditEventRepository)
     {
         _ticketRepository = ticketRepository;
+        _menuRepository = menuRepository;
         _auditEventRepository = auditEventRepository;
     }
 
@@ -41,6 +44,13 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
             command.CategoryName,
             command.GroupName);
 
+        // Populate PrinterGroupId (F-0014)
+        var menuItem = await _menuRepository.GetByIdAsync(command.MenuItemId, cancellationToken);
+        if (menuItem != null)
+        {
+            orderLine.SetPrinterGroup(menuItem.PrinterGroupId);
+        }
+
         // Add to ticket
         ticket.AddOrderLine(orderLine);
 
@@ -48,14 +58,22 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
         await _ticketRepository.UpdateAsync(ticket, cancellationToken);
 
         // Create audit event
+        var userId = command.AddedBy?.Value ?? Guid.Empty;
+        var isMisc = (command.CategoryName?.Contains("Misc", StringComparison.OrdinalIgnoreCase) == true) || 
+                     (command.MenuItemName.Contains("Misc", StringComparison.OrdinalIgnoreCase));
+        
+        var action = isMisc ? "Misc Item Added" : "Item Added";
+        var details = isMisc ? $"Misc/Ad-hoc item '{command.MenuItemName}' equal to {command.UnitPrice} added to ticket {ticket.TicketNumber}" 
+                             : $"Order line added to ticket {ticket.TicketNumber}";
+
         var correlationId = Guid.NewGuid();
         var auditEvent = AuditEvent.Create(
             AuditEventType.Modified,
             nameof(Ticket),
             ticket.Id,
-            Guid.Empty, // Would need to get from context
-            System.Text.Json.JsonSerializer.Serialize(new { OrderLineId = orderLine.Id, Action = "Added" }),
-            $"Order line added to ticket {ticket.TicketNumber}",
+            userId,
+            System.Text.Json.JsonSerializer.Serialize(new { OrderLineId = orderLine.Id, Action = action, IsMisc = isMisc }),
+            details,
             correlationId: correlationId);
 
         await _auditEventRepository.AddAsync(auditEvent, cancellationToken);

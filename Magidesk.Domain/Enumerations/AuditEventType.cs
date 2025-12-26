@@ -11,6 +11,7 @@ public enum AuditEventType
     StatusChanged = 3,
     PaymentProcessed = 4,
     RefundProcessed = 5,
-    Voided = 6
+    Voided = 6,
+    SystemShutdown = 7
 }
 

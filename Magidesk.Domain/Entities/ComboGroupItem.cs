@@ -10,7 +10,10 @@ public class ComboGroupItem
     public Guid MenuItemId { get; private set; }
     public Money Upcharge { get; private set; }
 
-    protected ComboGroupItem() { }
+    protected ComboGroupItem() 
+    {
+        Upcharge = Money.Zero(); // Initialize defaults
+    }
 
     public ComboGroupItem(Guid comboGroupId, Guid menuItemId, Money upcharge)
     {

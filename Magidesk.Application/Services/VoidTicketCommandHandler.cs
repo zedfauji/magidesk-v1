@@ -13,15 +13,18 @@ public class VoidTicketCommandHandler : ICommandHandler<VoidTicketCommand>
     private readonly ITicketRepository _ticketRepository;
     private readonly IAuditEventRepository _auditEventRepository;
     private readonly Domain.DomainServices.TicketDomainService _ticketDomainService;
+    private readonly ISecurityService _securityService;
 
     public VoidTicketCommandHandler(
         ITicketRepository ticketRepository,
         IAuditEventRepository auditEventRepository,
-        Domain.DomainServices.TicketDomainService ticketDomainService)
+        Domain.DomainServices.TicketDomainService ticketDomainService,
+        ISecurityService securityService)
     {
         _ticketRepository = ticketRepository;
         _auditEventRepository = auditEventRepository;
         _ticketDomainService = ticketDomainService;
+        _securityService = securityService;
     }
 
     public async Task HandleAsync(VoidTicketCommand command, CancellationToken cancellationToken = default)
@@ -31,6 +34,12 @@ public class VoidTicketCommandHandler : ICommandHandler<VoidTicketCommand>
         if (ticket == null)
         {
             throw new Domain.Exceptions.BusinessRuleViolationException($"Ticket {command.TicketId} not found.");
+        }
+
+        // Check Permissions
+        if (!await _securityService.HasPermissionAsync(command.VoidedBy, Domain.Enumerations.UserPermission.VoidTicket, cancellationToken))
+        {
+             throw new Domain.Exceptions.BusinessRuleViolationException("User does not have permission to void tickets.");
         }
 
         // Validate can void

@@ -1,9 +1,4 @@
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\CoverletSourceRootsMapping_Magidesk.Infrastructure.Tests
-C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.csproj.AssemblyReference.cache
-C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.AssemblyInfoInputs.cache
-C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.AssemblyInfo.cs
-C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.csproj.CoreCompileInputs.cache
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\testhost.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\testhost.exe
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll
@@ -112,10 +107,15 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.I
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Magidesk.Infrastructure.pdb
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Magidesk.Domain.pdb
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Magidesk.Application.pdb
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.csproj.AssemblyReference.cache
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.AssemblyInfoInputs.cache
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.AssemblyInfo.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.csproj.CoreCompileInputs.cache
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.sourcelink.json
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.E2EFB637.Up2Date
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\refint\Magidesk.Infrastructure.Tests.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.pdb
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.genruntimeconfig.cache
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\ref\Magidesk.Infrastructure.Tests.dll
-C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.sourcelink.json

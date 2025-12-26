@@ -33,6 +33,11 @@ public enum TicketStatus
     /// <summary>
     /// Closed ticket that was refunded.
     /// </summary>
-    Refunded = 5
+    Refunded = 5,
+
+    /// <summary>
+    /// Ticket is scheduled for future delivery/pickup.
+    /// </summary>
+    Scheduled = 6
 }
 

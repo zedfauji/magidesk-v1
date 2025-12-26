@@ -60,8 +60,17 @@ public class DiscountConfiguration : IEntityTypeConfiguration<Discount>
             .IsRequired()
             .HasDefaultValue(true);
 
+        builder.Property(d => d.CouponCode)
+            .HasMaxLength(50);
+
+        builder.Property(d => d.ExpirationDate);
+
         // Indexes
         builder.HasIndex(d => d.IsActive);
+        
+        builder.HasIndex(d => d.CouponCode)
+            .IsUnique()
+            .HasFilter("\"CouponCode\" IS NOT NULL");
     }
 }
 

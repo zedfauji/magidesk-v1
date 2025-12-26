@@ -18,6 +18,8 @@ public class Discount
     public ApplicationType ApplicationType { get; private set; }
     public bool AutoApply { get; private set; }
     public bool IsActive { get; private set; }
+    public string? CouponCode { get; private set; }
+    public DateTime? ExpirationDate { get; private set; }
 
     // Private constructor for EF Core
     private Discount()
@@ -35,7 +37,9 @@ public class Discount
         ApplicationType applicationType,
         Money? minimumBuy = null,
         int? minimumQuantity = null,
-        bool autoApply = false)
+        bool autoApply = false,
+        string? couponCode = null,
+        DateTime? expirationDate = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -58,6 +62,8 @@ public class Discount
             QualificationType = qualificationType,
             ApplicationType = applicationType,
             AutoApply = autoApply,
+            CouponCode = couponCode,
+            ExpirationDate = expirationDate,
             IsActive = true
         };
     }

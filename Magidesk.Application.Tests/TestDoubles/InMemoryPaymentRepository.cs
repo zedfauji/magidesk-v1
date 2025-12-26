@@ -36,4 +36,21 @@ internal sealed class InMemoryPaymentRepository : IPaymentRepository
         var result = _payments.Values.Where(p => p.CashSessionId == cashSessionId).ToList();
         return Task.FromResult<IEnumerable<Payment>>(result);
     }
+
+    public Task<IEnumerable<Payment>> GetUnbatchedCapturedPaymentsAsync(Guid terminalId, CancellationToken cancellationToken = default)
+    {
+        // Simplistic assuming Capture means PaymentStatus.Paid and CardPayment.
+        // And unbatched means BatchId is null.
+        // Assuming Payment entity has TerminalId or relies on Session.
+        // For Stub, simply return empty or mock data.
+        // Actually, let's see Payment entity properties if needed?
+        // Stub implementation:
+        var result = _payments.Values
+            .OfType<CreditCardPayment>()
+            .Where(p => p.IsCaptured && p.BatchId == null)
+             .Cast<Payment>()
+            .ToList();
+            
+        return Task.FromResult<IEnumerable<Payment>>(result);
+    }
 }

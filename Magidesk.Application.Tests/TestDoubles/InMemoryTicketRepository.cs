@@ -40,6 +40,13 @@ internal sealed class InMemoryTicketRepository : ITicketRepository
         return Task.FromResult<IEnumerable<Ticket>>(open);
     }
 
+    public Task<IEnumerable<Ticket>> GetScheduledTicketsDueAsync(DateTime dueBy, CancellationToken cancellationToken = default)
+    {
+        // Simplistic implementation for in-memory stub
+        var due = _tickets.Values.Where(t => t.DeliveryDate != null && t.DeliveryDate <= dueBy).ToList();
+        return Task.FromResult<IEnumerable<Ticket>>(due);
+    }
+
     public Task<IEnumerable<Ticket>> GetByShiftIdAsync(Guid shiftId, CancellationToken cancellationToken = default)
     {
         var result = _tickets.Values.Where(t => t.ShiftId == shiftId).ToList();

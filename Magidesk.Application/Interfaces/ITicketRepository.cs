@@ -28,6 +28,11 @@ public interface ITicketRepository
     Task<IEnumerable<Ticket>> GetOpenTicketsAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Gets scheduled tickets that are due for firing (DeliveryDate <= dueBy).
+    /// </summary>
+    Task<IEnumerable<Ticket>> GetScheduledTicketsDueAsync(DateTime dueBy, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Adds a new ticket.
     /// </summary>
     Task AddAsync(Ticket ticket, CancellationToken cancellationToken = default);

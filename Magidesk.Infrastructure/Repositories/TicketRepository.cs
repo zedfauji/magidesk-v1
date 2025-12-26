@@ -119,6 +119,30 @@ public class TicketRepository : ITicketRepository
         return tickets;
     }
 
+    public async Task<IEnumerable<Ticket>> GetScheduledTicketsDueAsync(DateTime dueBy, CancellationToken cancellationToken = default)
+    {
+        var tickets = await _context.Tickets
+            .Where(t => t.Status == Domain.Enumerations.TicketStatus.Scheduled && t.DeliveryDate <= dueBy)
+            .Include(t => t.OrderLines)
+            .Include(t => t.Payments)
+            .Include(t => t.Discounts)
+            .ToListAsync(cancellationToken);
+
+        // Load modifiers
+        foreach (var ticket in tickets)
+        {
+            foreach (var orderLine in ticket.OrderLines)
+            {
+                await _context.Entry(orderLine)
+                    .Collection(ol => ol.Modifiers)
+                    .LoadAsync(cancellationToken);
+            }
+            SplitModifiersForOrderLines(ticket.OrderLines);
+        }
+
+        return tickets;
+    }
+
     public async Task AddAsync(Ticket ticket, CancellationToken cancellationToken = default)
     {
         await _context.Tickets.AddAsync(ticket, cancellationToken);

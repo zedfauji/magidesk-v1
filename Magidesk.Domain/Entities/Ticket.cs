@@ -418,6 +418,111 @@ public class Ticket
     }
 
     /// <summary>
+    /// Applies a discount to the ticket.
+    /// </summary>
+    public void ApplyDiscount(TicketDiscount discount)
+    {
+        if (discount == null)
+        {
+            throw new ArgumentNullException(nameof(discount));
+        }
+
+        if (Status == TicketStatus.Closed || Status == TicketStatus.Voided || Status == TicketStatus.Refunded)
+        {
+            throw new DomainInvalidOperationException($"Cannot apply discount to ticket in {Status} status.");
+        }
+
+        if (discount.TicketId != Id)
+        {
+            throw new BusinessRuleViolationException("Discount does not belong to this ticket.");
+        }
+
+        _discounts.Add(discount);
+        ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
+        CalculateTotals();
+    }
+
+    /// <summary>
+    /// Schedules the ticket for future fulfillment.
+    /// </summary>
+    public void Schedule(DateTime deliveryDate)
+    {
+        if (deliveryDate <= DateTime.UtcNow)
+        {
+            throw new BusinessRuleViolationException("Delivery date must be in the future to schedule.");
+        }
+
+        if (Status != TicketStatus.Draft && Status != TicketStatus.Open)
+        {
+             throw new DomainInvalidOperationException($"Cannot schedule ticket in {Status} status.");
+        }
+
+        DeliveryDate = deliveryDate;
+        Status = TicketStatus.Scheduled;
+        ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
+    }
+
+    /// <summary>
+    /// Fires a scheduled ticket, moving it to Open status for processing.
+    /// </summary>
+    public void Fire()
+    {
+        if (Status != TicketStatus.Scheduled)
+        {
+            throw new DomainInvalidOperationException($"Cannot fire ticket. Expected Scheduled status, but was {Status}.");
+        }
+
+        Status = TicketStatus.Open;
+        ActiveDate = DateTime.UtcNow;
+        // Logic to update CreatedAt/OpenedAt? Keep original.
+        IncrementVersion();
+    }
+
+    /// <summary>
+    /// Changes the order type of the ticket with validation.
+    /// </summary>
+    public void ChangeOrderType(OrderType orderType)
+    {
+        if (orderType == null) throw new ArgumentNullException(nameof(orderType));
+        if (orderType.Id == OrderTypeId) return;
+
+        // F-0068: Validate switch requirements
+        if (orderType.Name.Contains("Delivery", StringComparison.OrdinalIgnoreCase))
+        {
+             if (CustomerId == null)
+                 throw new BusinessRuleViolationException("Delivery orders require a customer.");
+             if (string.IsNullOrWhiteSpace(DeliveryAddress))
+                 throw new BusinessRuleViolationException("Delivery orders require a delivery address.");
+        }
+
+        OrderTypeId = orderType.Id;
+        IsBarTab = orderType.IsBarTab;
+        ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
+    }
+
+    /// <summary>
+    /// Sets the customer and delivery info for the ticket.
+    /// </summary>
+    public void SetCustomer(Guid? customerId, string? address = null, string? extraInfo = null)
+    {
+        CustomerId = customerId;
+        DeliveryAddress = address;
+        ExtraDeliveryInfo = extraInfo;
+        ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
+
+        // Re-validate current type requirements if removing customer
+        if (CustomerId == null && !string.IsNullOrWhiteSpace(address))
+        {
+             // If address is present but customer is null, that's weird but maybe allowed for Guest Delivery?
+             // Usually Customer is required for tracking.
+        }
+    }
+
+    /// <summary>
     /// Recalculates all ticket totals.
     /// Note: This method uses a simplified tax calculation.
     /// For enhanced tax calculations (tax groups, price-includes-tax), use TicketDomainService.CalculateTotals().

@@ -13,6 +13,7 @@ public class AuthorizeCardPaymentCommand
     public string? ExpirationDate { get; set; }
     public string? Cvv { get; set; }
     public UserId ProcessedBy { get; set; } = null!;
+    public string? ManualAuthCode { get; set; } // F-0017: Manual Auth Code Bypass
 }
 
 /// <summary>

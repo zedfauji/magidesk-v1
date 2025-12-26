@@ -41,7 +41,11 @@ public class ApplicationDbContext : DbContext
     public DbSet<ComboDefinition> ComboDefinitions { get; set; } = null!;
     public DbSet<ComboGroup> ComboGroups { get; set; } = null!;
     public DbSet<ComboGroupItem> ComboGroupItems { get; set; } = null!;
+    public DbSet<MenuItem> MenuItems { get; set; } = null!;
+    public DbSet<MenuItemModifierGroup> MenuItemModifierGroups { get; set; } = null!;
     public DbSet<MerchantGatewayConfiguration> MerchantGatewayConfigurations { get; set; } = null!;
+    public DbSet<User> Users { get; set; } = null!;
+    public DbSet<Role> Roles { get; set; } = null!;
     // FractionalModifier is part of Set<MenuModifier> via Inheritance
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -82,6 +86,10 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ComboGroupItemConfiguration());
         modelBuilder.ApplyConfiguration(new FractionalModifierConfiguration());
         modelBuilder.ApplyConfiguration(new MerchantGatewayConfigurationConfiguration());
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new RoleConfiguration());
+        modelBuilder.ApplyConfiguration(new MenuItemConfiguration());
+        modelBuilder.ApplyConfiguration(new MenuItemModifierGroupConfiguration());
     }
 }
 

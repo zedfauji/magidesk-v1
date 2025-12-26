@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Magidesk.Application.Interfaces;
@@ -33,5 +34,15 @@ public class KitchenOrderRepository : IKitchenOrderRepository
     {
         _context.KitchenOrders.Update(kitchenOrder);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<System.Collections.Generic.IEnumerable<KitchenOrder>> GetActiveOrdersAsync()
+    {
+        return await _context.KitchenOrders
+            .Include(ko => ko.Items)
+            .Where(ko => ko.Status != Magidesk.Domain.Enumerations.KitchenStatus.Done 
+                         && ko.Status != Magidesk.Domain.Enumerations.KitchenStatus.Void)
+            .OrderBy(ko => ko.Timestamp) // Oldest first
+            .ToListAsync();
     }
 }

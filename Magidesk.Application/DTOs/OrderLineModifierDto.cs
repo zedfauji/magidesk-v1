@@ -9,7 +9,7 @@ public class OrderLineModifierDto
 {
     public Guid Id { get; set; }
     public Guid OrderLineId { get; set; }
-    public Guid ModifierId { get; set; }
+    public Guid? ModifierId { get; set; }
     public string Name { get; set; } = string.Empty;
     public ModifierType ModifierType { get; set; }
     public int ItemCount { get; set; }

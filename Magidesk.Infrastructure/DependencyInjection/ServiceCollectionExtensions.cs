@@ -1,11 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Magidesk.Application.Interfaces;
+using Magidesk.Application.Services.Reports;
 using Magidesk.Infrastructure.Data;
 using Magidesk.Infrastructure.PaymentGateways;
 using Magidesk.Infrastructure.Printing;
 using Magidesk.Infrastructure.Repositories;
 using Magidesk.Domain.DomainServices;
+using Magidesk.Application.Services;
+using Magidesk.Infrastructure.Security;
 
 namespace Magidesk.Infrastructure.DependencyInjection;
 
@@ -37,6 +40,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IGroupSettlementRepository, GroupSettlementRepository>();
         services.AddScoped<IPaymentBatchRepository, PaymentBatchRepository>();
         services.AddScoped<IMerchantGatewayConfigurationRepository, MerchantGatewayConfigurationRepository>();
+        services.AddScoped<IDiscountRepository, DiscountRepository>();
+        services.AddScoped<IMenuRepository, MenuRepository>();
+        services.AddScoped<ISalesReportRepository, SalesReportRepository>();
 
         // Register domain services (stateless, can be singleton or scoped)
         services.AddScoped<TaxDomainService>();
@@ -45,6 +51,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<CashSessionDomainService>();
         services.AddScoped<DiscountDomainService>();
         services.AddScoped<ServiceChargeDomainService>();
+        services.AddScoped<PriceCalculator>();
 
         // Register payment gateway (using mock for development)
         services.AddScoped<IPaymentGateway, MockPaymentGateway>();
@@ -55,6 +62,8 @@ public static class ServiceCollectionExtensions
 
         // Register Security Services
         services.AddSingleton<IAesEncryptionService, Security.AesEncryptionService>();
+        services.AddScoped<ISecurityService, SecurityService>();
+        services.AddScoped<ISystemService, SystemService>();
 
         return services;
     }

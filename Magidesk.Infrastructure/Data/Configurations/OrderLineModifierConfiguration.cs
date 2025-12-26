@@ -23,8 +23,17 @@ public class OrderLineModifierConfiguration : IEntityTypeConfiguration<OrderLine
         builder.Property(olm => olm.OrderLineId)
             .IsRequired();
 
-        builder.Property(olm => olm.ModifierId)
-            .IsRequired();
+        builder.Property(olm => olm.ModifierId); // Nullable for ad-hoc/instructions
+
+        builder.Property(olm => olm.ModifierGroupId); // Nullable default OK
+        
+        builder.Property(olm => olm.ParentOrderLineModifierId)
+            .IsRequired(false);
+
+        builder.HasOne<OrderLineModifier>()
+            .WithMany()
+            .HasForeignKey(olm => olm.ParentOrderLineModifierId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.Property(olm => olm.Name)
             .IsRequired()
@@ -48,6 +57,25 @@ public class OrderLineModifierConfiguration : IEntityTypeConfiguration<OrderLine
                 .HasMaxLength(3)
                 .IsRequired();
         });
+
+        builder.OwnsOne(olm => olm.BasePrice, bp =>
+        {
+            bp.Property(b => b.Amount)
+                .HasColumnName("BasePrice")
+                .HasPrecision(18, 2)
+                .IsRequired()
+                .HasDefaultValue(0m);
+            bp.Property(b => b.Currency)
+                .HasColumnName("BasePriceCurrency")
+                .HasMaxLength(3)
+                .IsRequired()
+                .HasDefaultValue("USD");
+        });
+
+        builder.Property(olm => olm.PortionValue)
+            .HasPrecision(5, 4)
+            .IsRequired()
+            .HasDefaultValue(1.0m);
 
         builder.Property(olm => olm.TaxRate)
             .HasPrecision(5, 4)
@@ -77,6 +105,10 @@ public class OrderLineModifierConfiguration : IEntityTypeConfiguration<OrderLine
                 .HasMaxLength(3)
                 .IsRequired();
         });
+
+        builder.Property(olm => olm.PriceStrategy)
+            .HasConversion<int?>()
+            .IsRequired(false);
 
         builder.OwnsOne(olm => olm.TotalAmount, ta =>
         {

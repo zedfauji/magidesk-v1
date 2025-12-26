@@ -6,7 +6,7 @@ namespace Magidesk.Domain.ValueObjects;
 /// Represents a monetary amount with currency.
 /// Immutable value object that enforces 2 decimal places precision.
 /// </summary>
-public sealed record Money
+public sealed record Money : IComparable<Money>, IComparable
 {
     private const int DecimalPlaces = 2;
     private const string DefaultCurrency = "USD";
@@ -177,4 +177,19 @@ public sealed record Money
     /// Returns a string representation of the Money instance.
     /// </summary>
     public override string ToString() => $"{Currency} {Amount:F2}";
+
+    public int CompareTo(Money? other)
+    {
+        if (other is null) return 1;
+        if (Currency != other.Currency)
+            throw new ArgumentException($"Cannot compare money with different currencies: {Currency} and {other.Currency}.");
+        return Amount.CompareTo(other.Amount);
+    }
+
+    public int CompareTo(object? obj)
+    {
+        if (obj is null) return 1;
+        if (obj is Money other) return CompareTo(other);
+        throw new ArgumentException($"Object must be of type {nameof(Money)}");
+    }
 }

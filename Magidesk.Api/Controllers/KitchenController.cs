@@ -11,11 +11,30 @@ public class KitchenController : ControllerBase
 {
     private readonly IKitchenRoutingService _routingService;
     private readonly IKitchenStatusService _statusService;
+    private readonly IKitchenOrderRepository _orderRepository;
 
-    public KitchenController(IKitchenRoutingService routingService, IKitchenStatusService statusService)
+    public KitchenController(
+        IKitchenRoutingService routingService, 
+        IKitchenStatusService statusService,
+        IKitchenOrderRepository orderRepository)
     {
         _routingService = routingService;
         _statusService = statusService;
+        _orderRepository = orderRepository;
+    }
+
+    [HttpGet("orders")]
+    public async Task<IActionResult> GetOrders()
+    {
+        try
+        {
+            var orders = await _orderRepository.GetActiveOrdersAsync();
+            return Ok(orders);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpPost("orders/{id}/bump")]

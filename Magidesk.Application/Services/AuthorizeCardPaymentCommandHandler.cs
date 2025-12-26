@@ -70,14 +70,32 @@ public class AuthorizeCardPaymentCommandHandler : ICommandHandler<AuthorizeCardP
             };
         }
 
-        // Call payment gateway
-        var gatewayResult = await _paymentGateway.AuthorizeAsync(
-            creditCardPayment,
-            command.CardNumber,
-            command.CardHolderName,
-            command.ExpirationDate,
-            command.Cvv,
-            cancellationToken);
+        // Call payment gateway or process manual auth
+        AuthorizationResult gatewayResult;
+
+        if (!string.IsNullOrWhiteSpace(command.ManualAuthCode))
+        {
+             // F-0017: Manual Auth Code Bypass
+             gatewayResult = new AuthorizationResult
+             {
+                 Success = true,
+                 AuthorizationCode = command.ManualAuthCode,
+                 ReferenceNumber = $"MANUAL-{Guid.NewGuid().ToString("N")[..8]}",
+                 CardType = "Manual",
+                 ErrorMessage = null,
+                 LastFourDigits = command.CardNumber.Length >= 4 ? command.CardNumber.Substring(command.CardNumber.Length - 4) : "XXXX"
+             };
+        }
+        else
+        {
+            gatewayResult = await _paymentGateway.AuthorizeAsync(
+                creditCardPayment,
+                command.CardNumber,
+                command.CardHolderName,
+                command.ExpirationDate,
+                command.Cvv,
+                cancellationToken);
+        }
 
         if (!gatewayResult.Success)
         {

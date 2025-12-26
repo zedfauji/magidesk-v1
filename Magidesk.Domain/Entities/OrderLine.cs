@@ -229,6 +229,44 @@ public class OrderLine
     }
 
     /// <summary>
+    /// Adds a modifier to the order line.
+    /// </summary>
+    public void AddModifier(OrderLineModifier modifier)
+    {
+        if (modifier == null) throw new ArgumentNullException(nameof(modifier));
+
+        if (modifier.ModifierType == Enumerations.ModifierType.Extra)
+        {
+            _addOns.Add(modifier);
+        }
+        else
+        {
+            _modifiers.Add(modifier);
+        }
+
+        CalculatePrice();
+    }
+
+    /// <summary>
+    /// Removes a modifier from the order line.
+    /// </summary>
+    public void RemoveModifier(OrderLineModifier modifier)
+    {
+         if (modifier == null) throw new ArgumentNullException(nameof(modifier));
+
+        if (modifier.ModifierType == Enumerations.ModifierType.Extra)
+        {
+            _addOns.Remove(modifier);
+        }
+        else
+        {
+            _modifiers.Remove(modifier);
+        }
+
+        CalculatePrice();
+    }
+
+    /// <summary>
     /// Marks this order line as printed to kitchen.
     /// </summary>
     public void MarkPrintedToKitchen()
@@ -250,6 +288,14 @@ public class OrderLine
         {
             addOn.MarkPrintedToKitchen();
         }
+    }
+
+    /// <summary>
+    /// Sets the printer group for kitchen routing.
+    /// </summary>
+    public void SetPrinterGroup(Guid? printerGroupId)
+    {
+        PrinterGroupId = printerGroupId;
     }
 }
 

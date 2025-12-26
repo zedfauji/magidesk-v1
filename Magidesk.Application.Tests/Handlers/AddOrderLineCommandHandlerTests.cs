@@ -13,8 +13,9 @@ public class AddOrderLineCommandHandlerTests
     public async Task HandleAsync_ShouldAddOrderLine_AndWriteAuditEvent()
     {
         var tickets = new InMemoryTicketRepository();
+        var menu = new InMemoryMenuRepository();
         var audits = new InMemoryAuditEventRepository();
-        var handler = new AddOrderLineCommandHandler(tickets, audits);
+        var handler = new AddOrderLineCommandHandler(tickets, menu, audits);
 
         var userId = new UserId(Guid.NewGuid());
         var ticketNumber = await tickets.GetNextTicketNumberAsync();
@@ -45,8 +46,9 @@ public class AddOrderLineCommandHandlerTests
     public async Task HandleAsync_WithMissingTicket_ShouldThrow()
     {
         var tickets = new InMemoryTicketRepository();
+        var menu = new InMemoryMenuRepository();
         var audits = new InMemoryAuditEventRepository();
-        var handler = new AddOrderLineCommandHandler(tickets, audits);
+        var handler = new AddOrderLineCommandHandler(tickets, menu, audits);
 
         var cmd = new AddOrderLineCommand
         {

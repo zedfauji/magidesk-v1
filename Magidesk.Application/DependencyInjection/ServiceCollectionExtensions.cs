@@ -59,6 +59,14 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.AssignTableToTicketCommand, Commands.AssignTableToTicketResult>, AssignTableToTicketCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.TransferTicketToTableCommand, Commands.TransferTicketToTableResult>, TransferTicketToTableCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.ReleaseTableCommand, Commands.ReleaseTableResult>, ReleaseTableCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.ChangeTicketOrderTypeCommand>, ChangeTicketOrderTypeCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.SetTicketCustomerCommand>, SetTicketCustomerCommandHandler>();
+        
+        // Delivery command handlers
+        services.AddScoped<ICommandHandler<Commands.MarkTicketAsReadyCommand>, MarkTicketAsReadyCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.DispatchTicketCommand>, DispatchTicketCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.ScheduleTicketCommand>, ScheduleTicketCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.FireScheduledTicketsCommand>, FireScheduledTicketsCommandHandler>();
         
         // Print command handlers
         services.AddScoped<ICommandHandler<Commands.PrintToKitchenCommand, Commands.PrintToKitchenResult>, PrintToKitchenCommandHandler>();
@@ -67,7 +75,12 @@ public static class ServiceCollectionExtensions
         // Handlers without results
         services.AddScoped<ICommandHandler<Commands.RemoveOrderLineCommand>, RemoveOrderLineCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.ModifyOrderLineCommand>, ModifyOrderLineCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.AddOrderLineModifierCommand>, AddOrderLineModifierCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.RemoveOrderLineModifierCommand>, RemoveOrderLineModifierCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.AddOrderLineInstructionCommand>, AddOrderLineInstructionCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.ApplyDiscountCommand>, ApplyDiscountCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.ApplyCouponCommand>, ApplyCouponCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.AddOrderLineComboCommand>, AddOrderLineComboCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.CloseTicketCommand>, CloseTicketCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.VoidTicketCommand>, VoidTicketCommandHandler>();
 
@@ -88,7 +101,8 @@ public static class ServiceCollectionExtensions
         // Table query handlers
         services.AddScoped<IQueryHandler<Queries.GetTableQuery, Queries.GetTableResult>, GetTableQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetAvailableTablesQuery, Queries.GetAvailableTablesResult>, GetAvailableTablesQueryHandler>();
-        services.AddScoped<IQueryHandler<Queries.GetAvailableTablesQuery, Queries.GetAvailableTablesResult>, GetAvailableTablesQueryHandler>();
+
+        services.AddScoped<IQueryHandler<Queries.GetSalesBalanceQuery, DTOs.Reports.SalesBalanceReportDto>, Services.Reports.GetSalesBalanceQueryHandler>();
         // GetMenuItemsQuery handler will be implemented in Phase 2 when menu management is added
         
         // Services

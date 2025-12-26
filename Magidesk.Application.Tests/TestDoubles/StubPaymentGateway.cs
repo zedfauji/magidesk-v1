@@ -20,4 +20,7 @@ internal sealed class StubPaymentGateway : IPaymentGateway
 
     public Task<AddTipsResult> AddTipsAsync(CreditCardPayment payment, Money tipsAmount, CancellationToken cancellationToken = default)
         => Task.FromResult(new AddTipsResult { Success = true, AuthorizationCode = "AUTH" });
+
+    public Task<BatchCloseResult> CloseBatchAsync(Guid terminalId, CancellationToken cancellationToken = default)
+        => Task.FromResult(new BatchCloseResult { Success = true, GatewayBatchId = "BATCH123", TransactionCount = 10, TotalAmount = new Money(500.00m) });
 }

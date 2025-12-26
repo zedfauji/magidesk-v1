@@ -15,6 +15,7 @@ public class AddOrderLineCommand
     public decimal TaxRate { get; set; }
     public string? CategoryName { get; set; }
     public string? GroupName { get; set; }
+    public UserId? AddedBy { get; set; }
 }
 
 /// <summary>

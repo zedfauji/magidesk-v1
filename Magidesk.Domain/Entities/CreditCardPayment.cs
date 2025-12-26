@@ -33,7 +33,8 @@ public class CreditCardPayment : Payment
         string? globalId = null)
         : base(ticketId, PaymentType.CreditCard, amount, processedBy, terminalId, globalId)
     {
-        CardNumber = cardNumber;
+        // F-0016: Always mask the card number to ensure full PAN is never stored
+        CardNumber = MaskCardNumber(cardNumber);
         CardHolderName = cardHolderName;
         AuthorizationCode = authorizationCode;
         ReferenceNumber = referenceNumber;
@@ -130,5 +131,25 @@ public class CreditCardPayment : Payment
     }
 
     // AddTips is inherited from Payment base class
+
+    /// <summary>
+    /// Masks the credit card number, keeping only the last 4 digits.
+    /// Handles null, empty, or short strings gracefully.
+    /// </summary>
+    private static string? MaskCardNumber(string? cardNumber)
+    {
+        if (string.IsNullOrWhiteSpace(cardNumber))
+            return null;
+
+        // If it's already masked (contains *), assume it's safe or return as is
+        if (cardNumber.Contains('*'))
+            return cardNumber;
+
+        if (cardNumber.Length <= 4)
+            return cardNumber; // Too short to mask meaningful parts
+
+        var last4 = cardNumber.Substring(cardNumber.Length - 4);
+        return new string('*', cardNumber.Length - 4) + last4;
+    }
 }
 

@@ -31,6 +31,12 @@ internal sealed class InMemoryCashSessionRepository : ICashSessionRepository
         return Task.FromResult(session);
     }
 
+    public Task<CashSession?> GetOpenSessionByTerminalIdAsync(Guid terminalId, CancellationToken cancellationToken = default)
+    {
+        var session = _sessions.Values.FirstOrDefault(s => s.TerminalId == terminalId && s.ClosedAt == null);
+        return Task.FromResult(session);
+    }
+
     public Task<IEnumerable<CashSession>> GetByShiftIdAsync(Guid shiftId, CancellationToken cancellationToken = default)
     {
         var result = _sessions.Values.Where(s => s.ShiftId == shiftId).ToList();

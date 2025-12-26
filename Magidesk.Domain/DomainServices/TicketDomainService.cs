@@ -75,15 +75,20 @@ public class TicketDomainService
         }
 
         // Validate that adding this payment won't exceed the ticket total (allowing for small rounding differences)
-        var newPaidAmount = ticket.PaidAmount + payment.Amount;
-        var tolerance = new Money(0.01m); // Allow 1 cent tolerance for rounding
-        
-        if (newPaidAmount > ticket.TotalAmount + tolerance)
+        // Exception: Cash payments can exceed total (change due)
+        // F-0007: Enforce non-cash overpayment rules
+        if (payment.PaymentType != Enumerations.PaymentType.Cash)
         {
-            throw new BusinessRuleViolationException(
-                $"Payment amount ({payment.Amount}) would exceed ticket total. " +
-                $"Current paid: {ticket.PaidAmount}, Total: {ticket.TotalAmount}, " +
-                $"Remaining due: {ticket.DueAmount}");
+            var newPaidAmount = ticket.PaidAmount + payment.Amount;
+            var tolerance = new Money(0.01m); // Allow 1 cent tolerance for rounding
+            
+            if (newPaidAmount > ticket.TotalAmount + tolerance)
+            {
+                throw new BusinessRuleViolationException(
+                    $"Payment amount ({payment.Amount}) would exceed ticket total. " +
+                    $"Current paid: {ticket.PaidAmount}, Total: {ticket.TotalAmount}, " +
+                    $"Remaining due: {ticket.DueAmount}");
+            }
         }
 
         return true;
@@ -211,6 +216,75 @@ public class TicketDomainService
 
         // Only closed tickets can be reopened
         return ticket.Status == Enumerations.TicketStatus.Closed;
+    }
+    /// <summary>
+    /// Validates if a coupon can be applied to the ticket.
+    /// </summary>
+    public void ValidateCouponApplication(Ticket ticket, Discount coupon)
+    {
+        if (ticket == null) throw new ArgumentNullException(nameof(ticket));
+        if (coupon == null) throw new ArgumentNullException(nameof(coupon));
+
+        if (!coupon.IsActive)
+        {
+             throw new BusinessRuleViolationException($"Coupon '{coupon.Name}' is not active.");
+        }
+
+        if (coupon.ExpirationDate.HasValue && coupon.ExpirationDate.Value < DateTime.UtcNow)
+        {
+             throw new BusinessRuleViolationException($"Coupon '{coupon.Name}' has expired.");
+        }
+
+        // Check if already applied
+        if (ticket.Discounts.Any(d => d.DiscountId == coupon.Id))
+        {
+             throw new BusinessRuleViolationException($"Coupon '{coupon.Name}' is already applied to this ticket.");
+        }
+
+        // Minimum Buy Validation
+        // Note: Using SubtotalAmount which excludes tax
+        if (coupon.MinimumBuy != null && ticket.SubtotalAmount < coupon.MinimumBuy)
+        {
+             throw new BusinessRuleViolationException($"Ticket subtotal ({ticket.SubtotalAmount}) is less than minimum buy requirement ({coupon.MinimumBuy}) for coupon '{coupon.Name}'.");
+        }
+
+
+        // Minimum Quantity Validation (Simple count of items)
+        if (coupon.MinimumQuantity.HasValue)
+        {
+            var totalItems = ticket.OrderLines.Sum(l => l.ItemCount);
+            if (totalItems < coupon.MinimumQuantity.Value)
+            {
+                 throw new BusinessRuleViolationException($"Ticket item count ({totalItems}) is less than minimum quantity ({coupon.MinimumQuantity}) for coupon '{coupon.Name}'.");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Calculates the discount amount based on the discount type and ticket subtotal.
+    /// </summary>
+    public Money CalculateDiscountAmount(Ticket ticket, Discount discount)
+    {
+        if (ticket == null) throw new ArgumentNullException(nameof(ticket));
+        if (discount == null) throw new ArgumentNullException(nameof(discount));
+
+        if (discount.Type == Enumerations.DiscountType.Amount)
+        {
+            return new Money(discount.Value, ticket.SubtotalAmount.Currency);
+        }
+        else if (discount.Type == Enumerations.DiscountType.Percentage)
+        {
+            // Percentage (e.g., 10 means 10%)
+            var percentage = discount.Value / 100m;
+            return ticket.SubtotalAmount * percentage;
+        }
+        else
+        {
+            // Reprice/AltPrice usually apply to items, not whole tickets broadly yet.
+            // For now, treat others as zero or throw not supported for ticket-level coupons.
+            // Assuming simplified Coupon logic: Amount or Percentage off total.
+            return Money.Zero(ticket.SubtotalAmount.Currency);
+        }
     }
 }
 
