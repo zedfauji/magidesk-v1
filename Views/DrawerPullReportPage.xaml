@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Magidesk.Presentation.Views.DrawerPullReportPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer>
+        <StackPanel Spacing="12" Padding="16" MaxWidth="1000">
+            <TextBlock Text="Drawer Pull Report" FontSize="24" />
+
+            <InfoBar IsOpen="{Binding HasError}" IsClosable="True" Severity="Error" Message="{Binding Error}" />
+
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBox Header="CashSessionId" Width="420" Text="{Binding CashSessionIdText, Mode=TwoWay}" />
+                <Button Content="Load" Command="{Binding LoadReportCommand}" />
+            </StackPanel>
+
+            <TextBlock Text="{Binding HeaderText}" FontSize="14" />
+            <TextBlock Text="{Binding SummaryText}" FontSize="14" />
+
+            <TextBlock Text="Payouts" FontSize="18" />
+            <ListView ItemsSource="{Binding Payouts}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <TextBlock Text="{Binding Amount}" Width="120" />
+                            <TextBlock Text="{Binding Reason}" Width="320" />
+                            <TextBlock Text="{Binding ProcessedAt}" Width="220" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <TextBlock Text="Cash Drops" FontSize="18" />
+            <ListView ItemsSource="{Binding CashDrops}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <TextBlock Text="{Binding Amount}" Width="120" />
+                            <TextBlock Text="{Binding Reason}" Width="320" />
+                            <TextBlock Text="{Binding ProcessedAt}" Width="220" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <TextBlock Text="Drawer Bleeds" FontSize="18" />
+            <ListView ItemsSource="{Binding DrawerBleeds}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <TextBlock Text="{Binding Amount}" Width="120" />
+                            <TextBlock Text="{Binding Reason}" Width="320" />
+                            <TextBlock Text="{Binding ProcessedAt}" Width="220" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

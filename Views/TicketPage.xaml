@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Magidesk.Presentation.Views.TicketPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer>
+        <StackPanel Spacing="12" Padding="16" MaxWidth="900">
+            <TextBlock Text="Ticket Entry" FontSize="24" />
+
+            <InfoBar IsOpen="{Binding HasError}" IsClosable="True" Severity="Error" Message="{Binding Error}" />
+
+            <TextBlock Text="Create Ticket" FontSize="18" />
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBox Header="CreatedBy (UserId)" Width="260" Text="{Binding CreatedByText, Mode=TwoWay}" />
+                <TextBox Header="TerminalId" Width="220" Text="{Binding TerminalIdText, Mode=TwoWay}" />
+                <TextBox Header="ShiftId" Width="220" Text="{Binding ShiftIdText, Mode=TwoWay}" />
+                <TextBox Header="OrderTypeId" Width="220" Text="{Binding OrderTypeIdText, Mode=TwoWay}" />
+                <Button Content="Create" Command="{Binding CreateTicketCommand}" />
+            </StackPanel>
+
+            <TextBlock Text="Load Ticket" FontSize="18" />
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBox Header="TicketId" Width="420" Text="{Binding TicketIdText, Mode=TwoWay}" />
+                <Button Content="Load" Command="{Binding LoadTicketCommand}" />
+            </StackPanel>
+
+            <TextBlock Text="{Binding TicketHeaderText}" FontSize="14" />
+            <TextBlock Text="{Binding TotalsText}" FontSize="14" />
+
+            <TextBlock Text="Add Order Line (manual)" FontSize="18" />
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBox Header="MenuItemId" Width="260" Text="{Binding MenuItemIdText, Mode=TwoWay}" />
+                <TextBox Header="Name" Width="220" Text="{Binding MenuItemName, Mode=TwoWay}" />
+                <TextBox Header="Qty" Width="80" Text="{Binding QuantityText, Mode=TwoWay}" />
+                <TextBox Header="Unit Price" Width="120" Text="{Binding UnitPriceText, Mode=TwoWay}" />
+                <TextBox Header="TaxRate" Width="100" Text="{Binding TaxRateText, Mode=TwoWay}" />
+                <Button Content="Add" Command="{Binding AddOrderLineUiCommand}" />
+            </StackPanel>
+
+            <TextBlock Text="Order Lines" FontSize="18" />
+            <ListView ItemsSource="{Binding OrderLines}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <TextBlock Text="{Binding MenuItemName}" Width="240" />
+                            <TextBlock Text="{Binding Quantity}" Width="60" />
+                            <TextBlock Text="{Binding UnitPrice}" Width="90" />
+                            <TextBlock Text="{Binding TotalAmount}" Width="90" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

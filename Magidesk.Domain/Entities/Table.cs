@@ -1,0 +1,240 @@
+using System;
+using Magidesk.Domain.Enumerations;
+
+namespace Magidesk.Domain.Entities;
+
+/// <summary>
+/// Represents a restaurant table.
+/// Used for table management and assignment to tickets.
+/// </summary>
+public class Table
+{
+    public Guid Id { get; private set; }
+    public int TableNumber { get; private set; }
+    public Guid? FloorId { get; private set; }
+    public int Capacity { get; private set; }
+    public int X { get; private set; }
+    public int Y { get; private set; }
+    public TableStatus Status { get; private set; }
+    public Guid? CurrentTicketId { get; private set; }
+    public bool IsActive { get; private set; }
+    public int Version { get; private set; }
+
+    // Private constructor for EF Core
+    private Table()
+    {
+    }
+
+    /// <summary>
+    /// Creates a new table.
+    /// </summary>
+    public static Table Create(
+        int tableNumber,
+        int capacity,
+        int x = 0,
+        int y = 0,
+        Guid? floorId = null,
+        bool isActive = true)
+    {
+        if (tableNumber <= 0)
+        {
+            throw new Exceptions.BusinessRuleViolationException("Table number must be greater than zero.");
+        }
+
+        if (capacity <= 0)
+        {
+            throw new Exceptions.BusinessRuleViolationException("Table capacity must be greater than zero.");
+        }
+
+        return new Table
+        {
+            Id = Guid.NewGuid(),
+            TableNumber = tableNumber,
+            FloorId = floorId,
+            Capacity = capacity,
+            X = x,
+            Y = y,
+            Status = TableStatus.Available,
+            CurrentTicketId = null,
+            IsActive = isActive,
+            Version = 1
+        };
+    }
+
+    /// <summary>
+    /// Updates the table number.
+    /// </summary>
+    public void UpdateTableNumber(int tableNumber)
+    {
+        if (tableNumber <= 0)
+        {
+            throw new Exceptions.BusinessRuleViolationException("Table number must be greater than zero.");
+        }
+
+        TableNumber = tableNumber;
+    }
+
+    /// <summary>
+    /// Updates the table capacity.
+    /// </summary>
+    public void UpdateCapacity(int capacity)
+    {
+        if (capacity <= 0)
+        {
+            throw new Exceptions.BusinessRuleViolationException("Table capacity must be greater than zero.");
+        }
+
+        Capacity = capacity;
+    }
+
+    /// <summary>
+    /// Updates the table position.
+    /// </summary>
+    public void UpdatePosition(int x, int y)
+    {
+        X = x;
+        Y = y;
+    }
+
+    /// <summary>
+    /// Updates the floor assignment.
+    /// </summary>
+    public void UpdateFloor(Guid? floorId)
+    {
+        FloorId = floorId;
+    }
+
+    /// <summary>
+    /// Assigns a ticket to this table.
+    /// </summary>
+    public void AssignTicket(Guid ticketId)
+    {
+        // If already assigned to the same ticket, no-op
+        if (CurrentTicketId.HasValue && CurrentTicketId.Value == ticketId)
+        {
+            return;
+        }
+
+        if (Status != TableStatus.Available && Status != TableStatus.Booked)
+        {
+            throw new Exceptions.InvalidOperationException($"Cannot assign ticket to table with status {Status}.");
+        }
+
+        if (CurrentTicketId.HasValue && CurrentTicketId.Value != ticketId)
+        {
+            throw new Exceptions.InvalidOperationException("Table already has an assigned ticket.");
+        }
+
+        CurrentTicketId = ticketId;
+        Status = TableStatus.Seat;
+    }
+
+    /// <summary>
+    /// Releases the ticket from this table.
+    /// </summary>
+    public void ReleaseTicket()
+    {
+        if (!CurrentTicketId.HasValue)
+        {
+            throw new Exceptions.InvalidOperationException("Table does not have an assigned ticket.");
+        }
+
+        CurrentTicketId = null;
+        Status = TableStatus.Available;
+    }
+
+    /// <summary>
+    /// Books the table (reserves it).
+    /// </summary>
+    public void Book()
+    {
+        if (Status != TableStatus.Available)
+        {
+            throw new Exceptions.InvalidOperationException($"Cannot book table with status {Status}.");
+        }
+
+        Status = TableStatus.Booked;
+    }
+
+    /// <summary>
+    /// Marks the table as dirty (needs cleaning).
+    /// </summary>
+    public void MarkDirty()
+    {
+        if (Status != TableStatus.Available)
+        {
+            throw new Exceptions.InvalidOperationException($"Cannot mark table as dirty with status {Status}.");
+        }
+
+        Status = TableStatus.Dirty;
+    }
+
+    /// <summary>
+    /// Marks the table as clean (available).
+    /// </summary>
+    public void MarkClean()
+    {
+        if (Status != TableStatus.Dirty)
+        {
+            throw new Exceptions.InvalidOperationException($"Cannot mark table as clean with status {Status}.");
+        }
+
+        Status = TableStatus.Available;
+    }
+
+    /// <summary>
+    /// Disables the table.
+    /// </summary>
+    public void Disable()
+    {
+        if (Status == TableStatus.Seat)
+        {
+            throw new Exceptions.InvalidOperationException("Cannot disable table with active ticket.");
+        }
+
+        Status = TableStatus.Disable;
+    }
+
+    /// <summary>
+    /// Enables the table (makes it available).
+    /// </summary>
+    public void Enable()
+    {
+        if (Status != TableStatus.Disable)
+        {
+            throw new Exceptions.InvalidOperationException($"Cannot enable table with status {Status}.");
+        }
+
+        Status = TableStatus.Available;
+    }
+
+    /// <summary>
+    /// Activates the table.
+    /// </summary>
+    public void Activate()
+    {
+        IsActive = true;
+    }
+
+    /// <summary>
+    /// Deactivates the table.
+    /// </summary>
+    public void Deactivate()
+    {
+        if (Status == TableStatus.Seat)
+        {
+            throw new Exceptions.InvalidOperationException("Cannot deactivate table with active ticket.");
+        }
+
+        IsActive = false;
+    }
+
+    /// <summary>
+    /// Checks if the table is available for assignment.
+    /// </summary>
+    public bool IsAvailable()
+    {
+        return IsActive && Status == TableStatus.Available;
+    }
+}
+

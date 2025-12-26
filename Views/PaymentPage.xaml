@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Magidesk.Presentation.Views.PaymentPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer>
+        <StackPanel Spacing="12" Padding="16" MaxWidth="900">
+            <TextBlock Text="Payments" FontSize="24" />
+
+            <InfoBar IsOpen="{Binding HasError}" IsClosable="True" Severity="Error" Message="{Binding Error}" />
+
+            <TextBlock Text="Load Ticket" FontSize="18" />
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBox Header="TicketId" Width="420" Text="{Binding TicketIdText, Mode=TwoWay}" />
+                <Button Content="Load" Command="{Binding LoadTicketCommand}" />
+            </StackPanel>
+
+            <TextBlock Text="{Binding TicketHeaderText}" FontSize="14" />
+            <TextBlock Text="{Binding TotalsText}" FontSize="14" />
+
+            <TextBlock Text="Existing Payments" FontSize="18" />
+            <ListView ItemsSource="{Binding Payments}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <TextBlock Text="{Binding PaymentType}" Width="140" />
+                            <TextBlock Text="{Binding TransactionType}" Width="100" />
+                            <TextBlock Text="{Binding Amount}" Width="90" />
+                            <TextBlock Text="{Binding TipsAmount}" Width="90" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <TextBlock Text="Cash Payment" FontSize="18" />
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBox Header="ProcessedBy (UserId)" Width="260" Text="{Binding ProcessedByText, Mode=TwoWay}" />
+                <TextBox Header="TerminalId" Width="220" Text="{Binding TerminalIdText, Mode=TwoWay}" />
+                <TextBox Header="CashSessionId (optional)" Width="260" Text="{Binding CashSessionIdText, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBox Header="Amount" Width="120" Text="{Binding AmountText, Mode=TwoWay}" />
+                <TextBox Header="Tender" Width="120" Text="{Binding TenderText, Mode=TwoWay}" />
+                <TextBox Header="Tips" Width="120" Text="{Binding TipsText, Mode=TwoWay}" />
+                <TextBox Header="Note" Width="260" Text="{Binding Note, Mode=TwoWay}" />
+                <Button Content="Cash Pay" Command="{Binding CashPayCommand}" />
+            </StackPanel>
+
+            <TextBlock Text="Card payments UI will be enabled once the ticket payment creation flow supports card types in ProcessPaymentCommand (currently cash-only)." Opacity="0.7" />
+        </StackPanel>
+    </ScrollViewer>
+</Page>

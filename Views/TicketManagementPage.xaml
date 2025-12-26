@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Magidesk.Presentation.Views.TicketManagementPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Padding="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Spacing="8">
+            <TextBlock Text="Ticket Management" FontSize="24" />
+            <InfoBar IsOpen="{Binding HasError}" IsClosable="True" Severity="Error" Message="{Binding Error}" />
+            <TextBlock Text="{Binding LastResult}" />
+            <Button Content="Refresh Open Tickets" Command="{Binding RefreshCommand}" Width="200" />
+        </StackPanel>
+
+        <Grid Grid.Row="1" ColumnSpacing="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Spacing="8">
+                <TextBlock Text="Open Tickets" FontSize="18" />
+                <ListView ItemsSource="{Binding OpenTickets}" SelectedItem="{Binding SelectedTicket, Mode=TwoWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding TicketNumber}" />
+                                <TextBlock Opacity="0.7" Text="{Binding Status}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+
+            <ScrollViewer Grid.Column="1">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Selected" FontSize="18" />
+                    <TextBlock Text="{Binding SelectedSummaryText}" />
+
+                    <TextBlock Text="Void" FontSize="18" />
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <TextBox Header="VoidedBy (UserId)" Width="260" Text="{Binding VoidedByText, Mode=TwoWay}" />
+                        <Button Content="Void Selected" Command="{Binding VoidSelectedCommand}" />
+                    </StackPanel>
+
+                    <TextBlock Text="Refund (entire ticket)" FontSize="18" />
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <TextBox Header="ProcessedBy (UserId)" Width="260" Text="{Binding RefundProcessedByText, Mode=TwoWay}" />
+                        <TextBox Header="TerminalId" Width="260" Text="{Binding RefundTerminalIdText, Mode=TwoWay}" />
+                    </StackPanel>
+                    <TextBox Header="Reason" Text="{Binding RefundReason, Mode=TwoWay}" />
+                    <Button Content="Refund Selected" Command="{Binding RefundSelectedCommand}" Width="160" />
+
+                    <TextBlock Text="Split (basic: moves first order line)" FontSize="18" />
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <TextBox Header="SplitBy (UserId)" Width="260" Text="{Binding SplitByText, Mode=TwoWay}" />
+                        <TextBox Header="TerminalId" Width="260" Text="{Binding SplitTerminalIdText, Mode=TwoWay}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <TextBox Header="ShiftId" Width="260" Text="{Binding SplitShiftIdText, Mode=TwoWay}" />
+                        <TextBox Header="OrderTypeId" Width="260" Text="{Binding SplitOrderTypeIdText, Mode=TwoWay}" />
+                        <Button Content="Split Selected" Command="{Binding SplitSelectedCommand}" />
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Page>

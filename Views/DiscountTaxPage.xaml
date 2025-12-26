@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Magidesk.Presentation.Views.DiscountTaxPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer>
+        <StackPanel Spacing="12" Padding="16" MaxWidth="900">
+            <TextBlock Text="Discount &amp; Tax" FontSize="24" />
+
+            <InfoBar IsOpen="{Binding HasError}" IsClosable="True" Severity="Error" Message="{Binding Error}" />
+
+            <TextBlock Text="Load Ticket" FontSize="18" />
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBox Header="TicketId" Width="420" Text="{Binding TicketIdText, Mode=TwoWay}" />
+                <TextBox Header="ProcessedBy (UserId)" Width="260" Text="{Binding ProcessedByText, Mode=TwoWay}" />
+                <Button Content="Load" Command="{Binding LoadTicketCommand}" />
+            </StackPanel>
+
+            <TextBlock Text="{Binding HeaderText}" FontSize="14" />
+            <TextBlock Text="{Binding TotalsText}" FontSize="14" />
+
+            <TextBlock Text="Charges / Adjustments" FontSize="18" />
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBox Header="Service Charge" Width="140" Text="{Binding ServiceChargeText, Mode=TwoWay}" />
+                <Button Content="Set" Command="{Binding SetServiceChargeUiCommand}" />
+
+                <TextBox Header="Delivery Charge" Width="140" Text="{Binding DeliveryChargeText, Mode=TwoWay}" />
+                <Button Content="Set" Command="{Binding SetDeliveryChargeUiCommand}" />
+
+                <TextBox Header="Advance" Width="140" Text="{Binding AdvanceText, Mode=TwoWay}" />
+                <Button Content="Set" Command="{Binding SetAdvanceUiCommand}" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBox Header="Adjustment" Width="140" Text="{Binding AdjustmentText, Mode=TwoWay}" />
+                <TextBox Header="Reason" Width="320" Text="{Binding AdjustmentReason, Mode=TwoWay}" />
+                <Button Content="Set Adjustment" Command="{Binding SetAdjustmentUiCommand}" />
+            </StackPanel>
+
+            <TextBlock Text="Discounts" FontSize="18" />
+            <TextBlock Opacity="0.7" Text="Discount apply UI is a stub until we add a discount list/query + selection dialog." />
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -1,0 +1,251 @@
+# Database Rules
+
+## PostgreSQL Configuration
+
+### Connection
+- **Database**: `magidesk_pos`
+- **Schema**: `magidesk` (use this for all tables)
+- **Connection**: Local passwordless PostgreSQL
+- **Connection String**: `Host=localhost;Port=5432;Database=magidesk_pos;Username=postgres;Password=;`
+
+### Schema Management
+- All tables in `magidesk` schema
+- Use EF Core migrations for all schema changes
+- Never modify database directly
+- Test migrations before applying
+
+## EF Core Rules
+
+### DbContext
+- One DbContext per application
+- DbContext in Infrastructure layer only
+- Use DbContextFactory for multi-threaded scenarios
+- Dispose DbContext properly
+
+### Entity Configurations
+- Separate configuration class per entity
+- Use Fluent API for configurations
+- Configure value objects properly
+- Configure relationships properly
+- Configure indexes
+
+### Migrations
+- Create migrations for all schema changes
+- Test migrations on development database
+- Review migration SQL before applying
+- Keep migrations reversible
+- Don't modify existing migrations
+
+## Naming Conventions
+
+### Tables
+- PascalCase: `Tickets`, `OrderLines`, `Payments`
+- Singular or plural (be consistent)
+- Clear, descriptive names
+
+### Columns
+- PascalCase: `Id`, `TicketNumber`, `CreatedAt`
+- Foreign keys: `{Entity}Id` (e.g., `TicketId`, `UserId`)
+- Boolean: `Is{Property}` or `Has{Property}` (e.g., `IsPaid`, `HasModifiers`)
+
+### Indexes
+- Format: `IX_{Table}_{Columns}`
+- Example: `IX_Tickets_TicketNumber`, `IX_OrderLines_TicketId`
+
+### Constraints
+- Primary keys: `PK_{Table}`
+- Foreign keys: `FK_{Table}_{ReferencedTable}`
+- Unique: `UQ_{Table}_{Columns}`
+- Check: `CK_{Table}_{Condition}`
+
+## Data Types
+
+### Identifiers
+- Use `Guid` for primary keys
+- Use `Guid?` for nullable foreign keys
+- Use `int` for sequential numbers (TicketNumber)
+
+### Money
+- Use `decimal(18,2)` for money amounts
+- Never use `float` or `double` for money
+- Use Money value object in domain, map to decimal in database
+
+### Dates
+- Use `timestamp with time zone` for all dates
+- Store UTC in database
+- Convert to local time in application
+
+### Strings
+- Use `varchar(n)` with appropriate length
+- Use `text` for long strings
+- Consider max length constraints
+
+### Booleans
+- Use `boolean` type
+- Default to `false` for nullable booleans
+
+## Constraints
+
+### Primary Keys
+- All tables have primary key
+- Use `Guid` for primary keys
+- Name: `PK_{Table}`
+
+### Foreign Keys
+- All foreign keys have constraints
+- Cascade delete appropriately
+- Name: `FK_{Table}_{ReferencedTable}`
+
+### Unique Constraints
+- Ticket numbers must be unique
+- Payment transaction IDs must be unique
+- Other business-unique fields
+
+### Check Constraints
+- Amounts >= 0
+- Quantities > 0
+- Valid status values
+- Valid date ranges
+
+### Not Null Constraints
+- Required fields are NOT NULL
+- Use nullable only when truly optional
+- Document nullable fields
+
+## Indexes
+
+### Required Indexes
+- Primary keys (automatic)
+- Foreign keys (for performance)
+- Frequently queried columns
+- Unique constraint columns
+
+### Index Strategy
+- Index foreign keys
+- Index status columns (for filtering)
+- Index date columns (for queries)
+- Composite indexes for common queries
+- Don't over-index (affects write performance)
+
+## Relationships
+
+### One-to-Many
+- Foreign key on "many" side
+- Cascade delete appropriately
+- Index foreign keys
+
+### Many-to-Many
+- Use junction table
+- Composite primary key
+- Index both foreign keys
+
+### Optional Relationships
+- Nullable foreign keys
+- Handle nulls in queries
+- Document optional relationships
+
+## Transactions
+
+### Transaction Boundaries
+- Use transactions for related operations
+- Keep transactions short
+- Handle deadlocks
+- Use appropriate isolation level
+
+### EF Core Transactions
+- Use DbContext transactions
+- Use Unit of Work pattern
+- Commit or rollback explicitly
+- Handle transaction errors
+
+## Query Performance
+
+### Query Optimization
+- Use appropriate indexes
+- Avoid N+1 queries
+- Use Include() for related data
+- Use projection for read-only queries
+- Use async queries
+
+### Pagination
+- Always paginate large result sets
+- Use Skip/Take or cursor-based pagination
+- Don't load all data into memory
+
+## Data Migration
+
+### Migration Strategy
+- Use EF Core migrations
+- Test migrations on development
+- Backup before production migration
+- Plan rollback strategy
+- Test rollback
+
+### Seed Data
+- Use seed data migrations
+- Seed initial data (order types, shifts, admin user)
+- Seed test data separately
+- Make seed data idempotent
+
+## Backup and Recovery
+
+### Backup Strategy
+- Regular backups
+- Test restore process
+- Keep backup history
+- Document backup process
+
+### Recovery
+- Test recovery process
+- Document recovery steps
+- Keep recovery scripts
+- Plan for disaster recovery
+
+## Prohibited Practices
+
+### NEVER:
+- Modify database directly (use migrations)
+- Hard-code connection strings
+- Store secrets in code
+- Skip foreign key constraints
+- Skip indexes on foreign keys
+- Use SELECT * in production code
+- Skip transaction boundaries
+- Ignore migration errors
+
+### ALWAYS:
+- Use EF Core migrations
+- Use parameterized queries
+- Use transactions for related operations
+- Index foreign keys
+- Test migrations
+- Backup before major changes
+- Document schema changes
+
+## Database Access Rules
+
+### Repository Pattern
+- All database access through repositories
+- Repositories in Infrastructure layer
+- Return domain entities, not DTOs
+- No business logic in repositories
+
+### Direct Database Access
+- NEVER access database from Presentation layer
+- NEVER access database from ViewModels
+- NEVER use DbContext in Domain layer
+- ALWAYS use Application layer interfaces
+
+## Connection Management
+
+### Connection Pooling
+- Use connection pooling (EF Core default)
+- Configure pool size appropriately
+- Monitor connection usage
+- Handle connection errors
+
+### Connection Strings
+- Store in configuration
+- Never hard-code
+- Use different strings for dev/test/prod
+- Never commit secrets

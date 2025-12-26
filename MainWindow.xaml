@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="Magidesk.Presentation.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <NavigationView
+            x:Name="RootNavigationView"
+            IsBackButtonVisible="Visible"
+            IsBackEnabled="True"
+            PaneDisplayMode="Left"
+            ItemInvoked="OnItemInvoked"
+            BackRequested="OnBackRequested">
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Home" Tag="home" Icon="Home" />
+                <NavigationViewItem Content="Cash Session" Tag="cashSession" />
+                <NavigationViewItem Content="Ticket Entry" Tag="ticket" />
+                <NavigationViewItem Content="Payments" Tag="payments" />
+                <NavigationViewItem Content="Discount &amp; Tax" Tag="discountTax" />
+                <NavigationViewItem Content="Printing" Tag="printing" />
+                <NavigationViewItem Content="Ticket Management" Tag="ticketMgmt" />
+                <NavigationViewItem Content="Drawer Pull Report" Tag="drawerPull" />
+                <NavigationViewItem Content="Sales Reports" Tag="salesReports" />
+                <NavigationViewItem Content="User Management" Tag="userMgmt" />
+                <NavigationViewItem Content="Settings" Tag="settings" />
+            </NavigationView.MenuItems>
+
+            <Frame x:Name="ContentFrame" />
+        </NavigationView>
+    </Grid>
+</Window>

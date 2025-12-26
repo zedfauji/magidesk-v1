@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Magidesk.Presentation.Views.PrintPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer>
+        <StackPanel Spacing="12" Padding="16" MaxWidth="900">
+            <TextBlock Text="Kitchen &amp; Receipt Printing" FontSize="24" />
+
+            <InfoBar IsOpen="{Binding HasError}" IsClosable="True" Severity="Error" Message="{Binding Error}" />
+
+            <TextBlock Text="Target" FontSize="18" />
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBox Header="TicketId" Width="420" Text="{Binding TicketIdText, Mode=TwoWay}" />
+                <TextBox Header="OrderLineId (optional)" Width="320" Text="{Binding OrderLineIdText, Mode=TwoWay}" />
+            </StackPanel>
+
+            <Button Content="Print to Kitchen" Command="{Binding PrintKitchenCommand}" Width="180" />
+
+            <TextBlock Text="Receipt" FontSize="18" />
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <ComboBox Header="Receipt Type" Width="180"
+                          ItemsSource="{Binding ReceiptTypes}"
+                          SelectedItem="{Binding SelectedReceiptType, Mode=TwoWay}" />
+                <TextBox Header="PaymentId (optional)" Width="320" Text="{Binding PaymentIdText, Mode=TwoWay}" />
+                <Button Content="Print Receipt" Command="{Binding PrintReceiptCommand}" />
+            </StackPanel>
+
+            <TextBlock Text="{Binding LastResult}" FontSize="14" />
+        </StackPanel>
+    </ScrollViewer>
+</Page>
