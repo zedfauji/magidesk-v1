@@ -1,0 +1,25 @@
+# Guardrails & Rules
+
+## FORENSIC PARITY
+- **Source of Truth**: The `docs/forensic-ui-audit/features/F-XXXX.md` files are the absolute authority on behavior.
+- **Reference System**: FloreantPOS behavior MUST be replicated unless explicitly marked for "Modernization".
+- **Check First**: Before implementing ANY feature, read its corresponding `F-XXXX` document.
+
+## FINANCIAL INTEGRITY
+- **Data Types**: ALWAYS use `decimal` for currency. NEVER use `double` or `float`.
+- **Rounding**: Adhere strictly to defined rounding rules (Banker's rounding vs Half-Up).
+- **Invariants**: Financial calculations (Tax, Discounts, Totals) must happen in the Domain Layer, NOT in the UI or Database.
+
+## ARCHITECTURE BOUNDARIES
+- **Pure Domain**: The Domain Layer (Core) must have NO dependencies on Entity Framework, WinUI, or Infrastructure.
+- **MVVM**: UI logic belongs in ViewModels. Code-behind should be minimal.
+- **CQRS**: Use Commands for writes and Queries for reads.
+
+## AUDIT & SAFETY
+- **Logging**: All financial and security-critical actions (including Printing) must be logged to `AuditEvent` table using `IAuditEventRepository`.
+- **Confirmation**: Destructive actions (Void, Delete) require confirmation steps.
+- **Guarantees**: Backend must enforce invariants regardless of UI inputs.
+
+## MEMORY BANK HYGIENE
+- **Update**: Update `activeContext.md` and `progress.md` at the end of every significant task.
+- **Read**: Read `projectbrief.md` and `systemPatterns.md` when starting a new session.

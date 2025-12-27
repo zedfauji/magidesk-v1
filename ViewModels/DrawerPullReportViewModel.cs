@@ -7,17 +7,51 @@ namespace Magidesk.Presentation.ViewModels;
 public sealed class DrawerPullReportViewModel : ViewModelBase
 {
     private readonly IQueryHandler<GetDrawerPullReportQuery, GetDrawerPullReportResult> _getReport;
+    private readonly IQueryHandler<GetCurrentCashSessionQuery, GetCurrentCashSessionResult> _getSession;
 
     private string _cashSessionIdText = string.Empty;
     private DrawerPullReportDto? _report;
     private string? _error;
 
-    public DrawerPullReportViewModel(IQueryHandler<GetDrawerPullReportQuery, GetDrawerPullReportResult> getReport)
+    public DrawerPullReportViewModel(
+        IQueryHandler<GetDrawerPullReportQuery, GetDrawerPullReportResult> getReport,
+        IQueryHandler<GetCurrentCashSessionQuery, GetCurrentCashSessionResult> getSession)
     {
         _getReport = getReport;
+        _getSession = getSession;
         Title = "Drawer Pull Report";
 
         LoadReportCommand = new AsyncRelayCommand(LoadReportAsync);
+    }
+
+    public async Task InitializeAsync()
+    {
+        IsBusy = true;
+        Error = null;
+        try
+        {
+             // TODO: Get actual logged in user
+            var userId = Guid.Parse("00000000-0000-0000-0000-000000000001");
+            var result = await _getSession.HandleAsync(new GetCurrentCashSessionQuery { UserId = userId });
+            
+            if (result.CashSession != null)
+            {
+                CashSessionIdText = result.CashSession.Id.ToString();
+                await LoadReportAsync();
+            }
+            else
+            {
+                Error = "No active cash session found for this user.";
+            }
+        }
+        catch (Exception ex)
+        {
+            Error = ex.Message;
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     public string CashSessionIdText

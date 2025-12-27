@@ -1,0 +1,75 @@
+<Page
+    x:Class="Magidesk.Presentation.Views.TableMapPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Magidesk.Presentation.ViewModels"
+    xmlns:dto="using:Magidesk.Application.DTOs"
+    xmlns:converters="using:Magidesk.Presentation.Converters"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <converters:TableStatusToBrushConverter x:Key="TableStatusConverter"/>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <CommandBar DefaultLabelPosition="Right" Background="Transparent">
+            <!-- Back / Refresh buttons can go here -->
+            <AppBarButton Icon="Refresh" Label="Refresh" Command="{x:Bind ViewModel.LoadTablesCommand}"/>
+        </CommandBar>
+
+        <!-- Map Area -->
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{x:Bind ViewModel.Tables, Mode=OneWay}">
+                <!-- Panel is a Canvas for absolute positioning -->
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas Width="2000" Height="2000" Background="#f3f3f3"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <!-- Bind Canvas.Left/Top to X/Y properties -->
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                        <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+
+                <!-- Item Template: The Table Button -->
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="dto:TableDto">
+                        <Button Width="100" Height="100" 
+                                Command="{Binding ElementName=RootPage, Path=ViewModel.SelectTableCommand}"
+                                CommandParameter="{x:Bind}">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                        <!-- Visual Representation -->
+                                        <Border x:Name="TableShape" 
+                                                CornerRadius="8" 
+                                                BorderThickness="2"
+                                                BorderBrush="Gray"
+                                                Background="{Binding Status, Converter={StaticResource TableStatusConverter}}"> 
+                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <TextBlock Text="{Binding TableNumber}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                                <TextBlock Text="{Binding Capacity}" FontSize="12" Foreground="Gray" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Page>

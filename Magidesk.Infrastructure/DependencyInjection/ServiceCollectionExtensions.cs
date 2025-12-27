@@ -7,6 +7,7 @@ using Magidesk.Infrastructure.PaymentGateways;
 using Magidesk.Infrastructure.Printing;
 using Magidesk.Infrastructure.Repositories;
 using Magidesk.Domain.DomainServices;
+using Magidesk.Domain.Services;
 using Magidesk.Application.Services;
 using Magidesk.Infrastructure.Security;
 
@@ -64,6 +65,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IAesEncryptionService, Security.AesEncryptionService>();
         services.AddScoped<ISecurityService, SecurityService>();
         services.AddScoped<ISystemService, SystemService>();
+        services.AddScoped<IBackupService, Services.PostgresBackupService>();
 
         return services;
     }

@@ -2,10 +2,8 @@ obj/*
 bin/*
 .vs/*
 *.binlog
-*.log
 *.dll
 *.exe
-*.txt
 */bin
 Magidesk.Domain.Tests/obj
 obj/

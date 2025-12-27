@@ -11,6 +11,7 @@ namespace Magidesk.Infrastructure.Tests.Repositories;
 /// <summary>
 /// Integration tests for TicketRepository.
 /// </summary>
+[Collection("Database Tests")]
 public class TicketRepositoryTests : IDisposable
 {
     private readonly ApplicationDbContext _context;

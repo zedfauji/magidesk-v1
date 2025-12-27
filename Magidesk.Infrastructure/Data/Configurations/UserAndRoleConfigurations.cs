@@ -32,6 +32,21 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(u => u.EncryptedPassword)
             .HasMaxLength(256);
+
+        builder.OwnsOne(u => u.HourlyRate, hr =>
+        {
+            hr.Property(m => m.Amount)
+                .HasColumnName("HourlyRate")
+                .HasPrecision(18, 2)
+                .IsRequired()
+                .HasDefaultValue(0m);
+
+            hr.Property(m => m.Currency)
+                .HasColumnName("HourlyRateCurrency")
+                .HasMaxLength(3)
+                .IsRequired()
+                .HasDefaultValue("USD");
+        });
             
         // Assuming relationship with Role is enforced at app layer for now, OR enforce FK
         // builder.HasOne<Role>().WithMany().HasForeignKey(u => u.RoleId); 

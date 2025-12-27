@@ -12,6 +12,7 @@ public enum AuditEventType
     PaymentProcessed = 4,
     RefundProcessed = 5,
     Voided = 6,
-    SystemShutdown = 7
+    SystemShutdown = 7,
+    Printed = 8
 }
 

@@ -19,4 +19,7 @@ Magidesk is a Point-of-Sale (POS) system designed for restaurants and retail env
 -   **Order Entry**: Creating and modifying tickets.
 -   **Payment Processing**: Accepting various tender types, splitting tickets, handling tips.
 -   **Shift Management**: Clock-in/out, drawer pulls, end-of-day closing.
--   **Back Office**: Menu management, reporting, configuration.
+-   **Back Office**: 
+    -   Menu management (Complex Modifiers, Pizza, Combos).
+    -   Reporting (Sales, Labor, Delivery, Productivity, Logs).
+    -   Configuration (Backup/Restore, Fiscal Logging).

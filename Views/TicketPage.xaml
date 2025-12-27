@@ -45,15 +45,53 @@
             <ListView ItemsSource="{Binding OrderLines}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <TextBlock Text="{Binding MenuItemName}" Width="240" />
-                            <TextBlock Text="{Binding Quantity}" Width="60" />
-                            <TextBlock Text="{Binding UnitPrice}" Width="90" />
-                            <TextBlock Text="{Binding TotalAmount}" Width="90" />
-                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <TextBlock Text="{Binding MenuItemName}" Width="240" />
+                                <TextBlock Text="{Binding Quantity}" Width="60" />
+                                <TextBlock Text="{Binding UnitPrice}" Width="90" />
+                                <TextBlock Text="{Binding TotalAmount}" Width="90" />
+                            </StackPanel>
+                            
+                            <TextBlock Grid.Column="1" Text="SENT" Foreground="Green" FontWeight="Bold" 
+                                       Visibility="{Binding PrintedToKitchen, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                       VerticalAlignment="Center" Margin="12,0,0,0"/>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                <Button Content="Split Ticket" 
+                        Command="{Binding SplitTicketUiCommand}" 
+                        IsEnabled="{Binding HasTicket}"
+                        HorizontalAlignment="Right" 
+                        FontSize="16" Padding="12,8"/>
+
+                <Button Content="Move Table" 
+                        Command="{Binding MoveTableUiCommand}" 
+                        IsEnabled="{Binding HasTicket}"
+                        HorizontalAlignment="Right" 
+                        FontSize="16" Padding="12,8"/>
+
+                <Button Content="Settle" 
+                        Command="{Binding SettleUiCommand}" 
+                        IsEnabled="{Binding HasTicket}"
+                        HorizontalAlignment="Right" 
+                        FontSize="16" Padding="12,8"/>
+
+                <Button Content="Send to Kitchen" 
+                        Command="{Binding SendToKitchenCommand}" 
+                        IsEnabled="{Binding HasUnsentItems}"
+                        HorizontalAlignment="Right" 
+                        Style="{StaticResource AccentButtonStyle}"
+                        FontSize="16" Padding="12,8"/>
+            </StackPanel>
         </StackPanel>
     </ScrollViewer>
 </Page>

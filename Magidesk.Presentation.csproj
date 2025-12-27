@@ -23,6 +23,7 @@
         -->
         <DefaultItemExcludes>
           $(DefaultItemExcludes);
+          Magidesk.Api\**;
           Magidesk.Application\**;
           Magidesk.Domain\**;
           Magidesk.Infrastructure\**;

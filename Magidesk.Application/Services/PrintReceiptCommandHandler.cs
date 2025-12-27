@@ -37,7 +37,7 @@ public class PrintReceiptCommandHandler : ICommandHandler<PrintReceiptCommand, P
         if (command.ReceiptType == ReceiptType.Ticket || !command.PaymentId.HasValue)
         {
             // Print ticket receipt
-            success = await _receiptPrintService.PrintTicketReceiptAsync(ticket, cancellationToken);
+            success = await _receiptPrintService.PrintTicketReceiptAsync(ticket, userId: null, cancellationToken: cancellationToken);
         }
         else if (command.PaymentId.HasValue)
         {
@@ -51,12 +51,12 @@ public class PrintReceiptCommandHandler : ICommandHandler<PrintReceiptCommand, P
             if (command.ReceiptType == ReceiptType.Refund && payment.TransactionType == Domain.Enumerations.TransactionType.Debit)
             {
                 // Print refund receipt
-                success = await _receiptPrintService.PrintRefundReceiptAsync(payment, ticket, cancellationToken);
+                success = await _receiptPrintService.PrintRefundReceiptAsync(payment, ticket, userId: null, cancellationToken: cancellationToken);
             }
             else
             {
                 // Print payment receipt
-                success = await _receiptPrintService.PrintPaymentReceiptAsync(payment, ticket, cancellationToken);
+                success = await _receiptPrintService.PrintPaymentReceiptAsync(payment, ticket, userId: null, cancellationToken: cancellationToken);
             }
         }
 

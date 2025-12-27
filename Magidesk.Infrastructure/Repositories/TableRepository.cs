@@ -24,6 +24,12 @@ public class TableRepository : ITableRepository
             .FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
     }
 
+    public async Task<Table?> GetByTicketIdAsync(Guid ticketId, CancellationToken cancellationToken = default)
+    {
+        return await _context.Tables
+            .FirstOrDefaultAsync(t => t.CurrentTicketId == ticketId, cancellationToken);
+    }
+
     public async Task<Table?> GetByTableNumberAsync(int tableNumber, CancellationToken cancellationToken = default)
     {
         return await _context.Tables

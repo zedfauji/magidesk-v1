@@ -25,6 +25,8 @@ The project follows **Clean Architecture** with **Domain-Driven Design (DDD)** p
 -   **Result Pattern**: Use a Result<T> wrapper for unified error handling.
 -   **Factory Pattern**: Use factories for complex entity creation (e.g., TicketFactory).
 -   **Value Objects**: Use for immutable concepts like `Money`, `TaxRate`.
+-   **Audit Service**: `AuditEvent` entity captures all financial mutations. Printing is audited via `IReceiptPrintService` → `IAuditEventRepository`.
+-   **Reporting Strategy**: Reports use optimized Read-Only queries (often bypassing Domain Entities for performance) via `ISalesReportRepository` to aggregate massive datasets efficiently.
 
 ## Development Guardrails
 -   **Forensic Verification**: Every PR/Commit must reference the specific F-XXXX feature it implements or verifies.

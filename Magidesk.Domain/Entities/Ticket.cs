@@ -675,6 +675,26 @@ public class Ticket
     }
 
     /// <summary>
+    /// Assigns the ticket to a specific table, removing any previous assignments.
+    /// </summary>
+    public void AssignTable(int tableNumber)
+    {
+        if (tableNumber <= 0)
+        {
+            throw new BusinessRuleViolationException("Table number must be greater than zero.");
+        }
+
+        if (_tableNumbers.Count == 1 && _tableNumbers[0] == tableNumber)
+        {
+            return;
+        }
+
+        _tableNumbers.Clear();
+        _tableNumbers.Add(tableNumber);
+        IncrementVersion();
+    }
+
+    /// <summary>
     /// Adds or updates gratuity on the ticket.
     /// </summary>
     public void AddGratuity(Gratuity gratuity)
@@ -758,6 +778,28 @@ public class Ticket
         }
 
         DeliveryChargeAmount = amount;
+        ActiveDate = DateTime.UtcNow;
+        CalculateTotals();
+    }
+
+    /// <summary>
+    /// Sets the adjustment amount (positive only - for price increases).
+    /// Used for manual price adjustments, rounding, or corrections.
+    /// Note: For price reductions, use discounts instead.
+    /// </summary>
+    /// <summary>
+    /// Sets the tax exempt status of the ticket.
+    /// </summary>
+    public void SetTaxExempt(bool isTaxExempt)
+    {
+        if (Status == TicketStatus.Closed || Status == TicketStatus.Voided || Status == TicketStatus.Refunded)
+        {
+            throw new DomainInvalidOperationException($"Cannot modify tax exempt status on ticket in {Status} status.");
+        }
+
+        if (IsTaxExempt == isTaxExempt) return;
+
+        IsTaxExempt = isTaxExempt;
         ActiveDate = DateTime.UtcNow;
         CalculateTotals();
     }

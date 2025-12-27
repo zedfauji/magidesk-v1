@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Magidesk.Application.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+709bc7eb1bdcbec166a61c120811cc07539dc10d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2454a40756ccc5e77b52ad7a7f95a453b012539e")]
 [assembly: System.Reflection.AssemblyProductAttribute("Magidesk.Application.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Magidesk.Application.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -24,6 +24,7 @@ public class MenuRepository : IMenuRepository
         return await _context.MenuItems
             .Include(m => m.ModifierGroups)
                 .ThenInclude(mmg => mmg.ModifierGroup)
+                    .ThenInclude(mg => mg.Modifiers)
             .FirstOrDefaultAsync(m => m.Id == id, cancellationToken);
     }
 

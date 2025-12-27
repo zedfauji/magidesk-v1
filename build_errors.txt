@@ -1,0 +1,22 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Magidesk.Domain -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\bin\Debug\net8.0\Magidesk.Domain.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Services\AddOrderLineComboCommandHandler.cs(12,7): warning CS0105: The using directive for 'Magidesk.Domain.Entities' appeared previously in this namespace [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Magidesk.Application.csproj]
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Services\DeliveryCommandHandlers.cs(155,30): warning CS0168: The variable 'ex' is declared but never used [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Magidesk.Application.csproj]
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Services\AddOrderLineCommandHandler.cs(48,13): error CS0103: The name 'menuItem' does not exist in the current context [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Magidesk.Application.csproj]
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Services\AddOrderLineCommandHandler.cs(50,39): error CS0103: The name 'menuItem' does not exist in the current context [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Magidesk.Application.csproj]
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Services\GroupSettleService.cs(106,71): warning CS8602: Dereference of a possibly null reference. [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Magidesk.Application.csproj]
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Services\GroupSettleService.cs(108,18): warning CS8602: Dereference of a possibly null reference. [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Magidesk.Application.csproj]
+
+Build FAILED.
+
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Services\AddOrderLineComboCommandHandler.cs(12,7): warning CS0105: The using directive for 'Magidesk.Domain.Entities' appeared previously in this namespace [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Magidesk.Application.csproj]
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Services\DeliveryCommandHandlers.cs(155,30): warning CS0168: The variable 'ex' is declared but never used [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Magidesk.Application.csproj]
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Services\GroupSettleService.cs(106,71): warning CS8602: Dereference of a possibly null reference. [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Magidesk.Application.csproj]
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Services\GroupSettleService.cs(108,18): warning CS8602: Dereference of a possibly null reference. [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Magidesk.Application.csproj]
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Services\AddOrderLineCommandHandler.cs(48,13): error CS0103: The name 'menuItem' does not exist in the current context [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Magidesk.Application.csproj]
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Services\AddOrderLineCommandHandler.cs(50,39): error CS0103: The name 'menuItem' does not exist in the current context [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Magidesk.Application.csproj]
+    4 Warning(s)
+    2 Error(s)
+
+Time Elapsed 00:00:00.73

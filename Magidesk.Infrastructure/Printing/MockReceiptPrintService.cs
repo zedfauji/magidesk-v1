@@ -13,14 +13,37 @@ namespace Magidesk.Infrastructure.Printing;
 public class MockReceiptPrintService : IReceiptPrintService
 {
     private readonly ILogger<MockReceiptPrintService>? _logger;
+    private readonly IAuditEventRepository _auditRepo;
 
-    public MockReceiptPrintService(ILogger<MockReceiptPrintService>? logger = null)
+    public MockReceiptPrintService(IAuditEventRepository auditRepo, ILogger<MockReceiptPrintService>? logger = null)
     {
+        _auditRepo = auditRepo;
         _logger = logger;
     }
 
-    public Task<bool> PrintTicketReceiptAsync(Ticket ticket, CancellationToken cancellationToken = default)
+    public async Task<bool> PrintTicketReceiptAsync(Ticket ticket, Guid? userId = null, CancellationToken cancellationToken = default)
     {
+        // 1. Audit Log
+        try 
+        {
+            var audit = AuditEvent.Create(
+                AuditEventType.Printed,
+                "Ticket",
+                ticket.Id,
+                userId ?? Guid.Empty,
+                $"Ticket #{ticket.TicketNumber} Printed",
+                $"Receipt printed. Total: {ticket.TotalAmount}",
+                null,
+                ticket.Id
+            );
+            await _auditRepo.AddAsync(audit, cancellationToken);
+        }
+        catch(Exception ex)
+        {
+             _logger?.LogError(ex, "Failed to log audit event for print.");
+        }
+
+        // 2. Mock Print Log
         _logger?.LogInformation(
             "RECEIPT PRINT: Ticket #{TicketNumber} - Total: {TotalAmount}",
             ticket.TicketNumber,
@@ -52,11 +75,31 @@ public class MockReceiptPrintService : IReceiptPrintService
             ticket.TaxAmount,
             ticket.TotalAmount);
 
-        return Task.FromResult(true);
+        return true;
     }
 
-    public Task<bool> PrintPaymentReceiptAsync(Payment payment, Ticket ticket, CancellationToken cancellationToken = default)
+    public async Task<bool> PrintPaymentReceiptAsync(Payment payment, Ticket ticket, Guid? userId = null, CancellationToken cancellationToken = default)
     {
+         // Audit
+         try
+         {
+             var audit = AuditEvent.Create(
+                AuditEventType.Printed,
+                "Payment",
+                payment.Id,
+                userId ?? Guid.Empty,
+                $"Payment ({payment.PaymentType}) Receipt Printed",
+                $"Amount: {payment.Amount}",
+                null,
+                ticket.Id
+            );
+            await _auditRepo.AddAsync(audit, cancellationToken);
+         }
+         catch(Exception ex)
+         {
+             _logger?.LogError(ex, "Failed to log audit event for payment print.");
+         }
+
         _logger?.LogInformation(
             "PAYMENT RECEIPT: Payment {PaymentId} - {PaymentType} {Amount} (Ticket #{TicketNumber})",
             payment.Id,
@@ -77,11 +120,31 @@ public class MockReceiptPrintService : IReceiptPrintService
             _logger?.LogInformation("  Tips: {TipsAmount}", payment.TipsAmount);
         }
 
-        return Task.FromResult(true);
+        return true;
     }
 
-    public Task<bool> PrintRefundReceiptAsync(Payment refundPayment, Ticket ticket, CancellationToken cancellationToken = default)
+    public async Task<bool> PrintRefundReceiptAsync(Payment refundPayment, Ticket ticket, Guid? userId = null, CancellationToken cancellationToken = default)
     {
+         // Audit
+         try
+         {
+             var audit = AuditEvent.Create(
+                AuditEventType.Printed,
+                "Refund",
+                refundPayment.Id,
+                userId ?? Guid.Empty,
+                $"Refund ({refundPayment.PaymentType}) Receipt Printed",
+                $"Amount: {refundPayment.Amount}",
+                null,
+                ticket.Id
+            );
+            await _auditRepo.AddAsync(audit, cancellationToken);
+         }
+         catch(Exception ex)
+         {
+             _logger?.LogError(ex, "Failed to log audit event for refund print.");
+         }
+
         _logger?.LogInformation(
             "REFUND RECEIPT: Refund {RefundId} - {PaymentType} {Amount} (Ticket #{TicketNumber})",
             refundPayment.Id,
@@ -94,7 +157,6 @@ public class MockReceiptPrintService : IReceiptPrintService
             _logger?.LogInformation("  Reason: {Reason}", refundPayment.Note);
         }
 
-        return Task.FromResult(true);
+        return true;
     }
 }
-

@@ -45,10 +45,29 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
             command.GroupName);
 
         // Populate PrinterGroupId (F-0014)
+        // Populate PrinterGroupId (F-0014)
         var menuItem = await _menuRepository.GetByIdAsync(command.MenuItemId, cancellationToken);
         if (menuItem != null)
         {
             orderLine.SetPrinterGroup(menuItem.PrinterGroupId);
+        }
+
+        // Add Modifiers
+        foreach (var mod in command.Modifiers)
+        {
+            var orderLineModifier = OrderLineModifier.Create(
+                orderLineId: orderLine.Id,
+                modifierId: mod.Id,
+                name: mod.Name,
+                modifierType: mod.ModifierType,
+                itemCount: 1, // Default to 1 for now
+                unitPrice: mod.BasePrice,
+                basePrice: mod.BasePrice,
+                taxRate: mod.TaxRate,
+                modifierGroupId: mod.ModifierGroupId,
+                shouldPrintToKitchen: mod.ShouldPrintToKitchen
+            );
+            orderLine.AddModifier(orderLineModifier);
         }
 
         // Add to ticket

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Magidesk.Presentation.Views.SwitchboardPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:Magidesk.Presentation.ViewModels"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Header -->
+            <RowDefinition Height="*"/>    <!-- Quick Access Grid -->
+            <RowDefinition Height="Auto"/> <!-- Status Bar -->
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Text="Quick Actions" Style="{StaticResource TitleTextBlockStyle}" Margin="24,24,0,0"/>
+
+        <!-- Main Switchboard Grid -->
+        <ScrollViewer Grid.Row="1" Padding="24">
+            <GridView SelectionMode="None">
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="4"/>
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+                
+                <!-- New Ticket -->
+                <Button Command="{x:Bind ViewModel.NewTicketCommand}" 
+                        Width="200" Height="150" Margin="8" Background="#2E7D32" CornerRadius="8">
+                    <StackPanel Spacing="12">
+                        <FontIcon Glyph="&#xE710;" FontSize="40" Foreground="White"/>
+                        <TextBlock Text="New Ticket" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Edit Ticket / Open Tickets -->
+                <Button Command="{x:Bind ViewModel.EditTicketCommand}" 
+                        Width="200" Height="150" Margin="8" Background="#1565C0" CornerRadius="8">
+                    <StackPanel Spacing="12">
+                        <FontIcon Glyph="&#xE8F4;" FontSize="40" Foreground="White"/>
+                        <TextBlock Text="Edit Ticket" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Settle Ticket -->
+                <Button Command="{x:Bind ViewModel.SettleTicketCommand}" 
+                        Width="200" Height="150" Margin="8" Background="#6A1B9A" CornerRadius="8">
+                    <StackPanel Spacing="12">
+                        <FontIcon Glyph="&#xE8C7;" FontSize="40" Foreground="White"/>
+                        <TextBlock Text="Settle" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Manager Functions -->
+                <Button Command="{x:Bind ViewModel.ManagerFunctionsCommand}" 
+                        Width="200" Height="150" Margin="8" Background="#FF6F00" CornerRadius="8">
+                    <StackPanel Spacing="12">
+                        <FontIcon Glyph="&#xE77B;" FontSize="40" Foreground="White"/>
+                        <TextBlock Text="Manager" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                
+                <!-- Drawer Pull -->
+                 <Button Command="{x:Bind ViewModel.DrawerPullCommand}" 
+                        Width="200" Height="150" Margin="8" Background="#455A64" CornerRadius="8">
+                    <StackPanel Spacing="12">
+                        <FontIcon Glyph="&#xE80C;" FontSize="40" Foreground="White"/>
+                        <TextBlock Text="Drawer Pull" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Tables -->
+                 <Button Command="{x:Bind ViewModel.TablesCommand}" 
+                        Width="200" Height="150" Margin="8" Background="#00838F" CornerRadius="8">
+                    <StackPanel Spacing="12">
+                        <FontIcon Glyph="&#xE7C2;" FontSize="40" Foreground="White"/> <!-- E7C2 = MapDrive or similar? Let's use generic placeholder or E8F1 (Map) -->
+                        <TextBlock Text="Tables" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Reports -->
+                 <Button Command="{x:Bind ViewModel.ReportsCommand}" 
+                        Width="200" Height="150" Margin="8" Background="#283593" CornerRadius="8">
+                    <StackPanel Spacing="12">
+                        <FontIcon Glyph="&#xE9F5;" FontSize="40" Foreground="White"/>
+                        <TextBlock Text="Reports" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Settings -->
+                 <Button Command="{x:Bind ViewModel.SettingsCommand}" 
+                        Width="200" Height="150" Margin="8" Background="#546E7A" CornerRadius="8">
+                    <StackPanel Spacing="12">
+                        <FontIcon Glyph="&#xE713;" FontSize="40" Foreground="White"/>
+                        <TextBlock Text="System" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+
+            </GridView>
+        </ScrollViewer>
+
+        <!-- Footer / Clock / Info -->
+        <Border Grid.Row="2" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Padding="12">
+            <StackPanel Orientation="Horizontal" Spacing="20" HorizontalAlignment="Right">
+                <TextBlock Text="Terminal: 01" VerticalAlignment="Center"/>
+                <TextBlock Text="Server: Admin" VerticalAlignment="Center"/>
+                <TextBlock Text="Online" Foreground="Green" VerticalAlignment="Center" FontWeight="Bold"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

@@ -14,6 +14,11 @@ public interface ITableRepository
     Task<Table?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Gets a table by the ticket currently assigned to it.
+    /// </summary>
+    Task<Table?> GetByTicketIdAsync(Guid ticketId, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Gets a table by table number.
     /// </summary>
     Task<Table?> GetByTableNumberAsync(int tableNumber, CancellationToken cancellationToken = default);

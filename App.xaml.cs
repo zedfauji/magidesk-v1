@@ -44,6 +44,13 @@ public partial class App : Microsoft.UI.Xaml.Application
                 services.AddTransient<Magidesk.Presentation.ViewModels.SalesReportsViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.UserManagementViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.SettingsViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.SwitchboardViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.OrderTypeSelectionViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.ModifierSelectionViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.SplitTicketViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.TableMapViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.SettleViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.SystemConfigViewModel>();
             })
             .Build();
     }

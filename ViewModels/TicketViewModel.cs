@@ -10,7 +10,10 @@ public sealed class TicketViewModel : ViewModelBase
 {
     private readonly ICommandHandler<CreateTicketCommand, CreateTicketResult> _createTicket;
     private readonly ICommandHandler<AddOrderLineCommand, AddOrderLineResult> _addOrderLine;
+    private readonly ICommandHandler<PrintToKitchenCommand, PrintToKitchenResult> _printToKitchen;
     private readonly IQueryHandler<GetTicketQuery, TicketDto?> _getTicket;
+    private readonly IMenuRepository _menuRepository;
+    private readonly Services.NavigationService _navigationService;
 
     private TicketDto? _ticket;
     private string _createdByText = Guid.Empty.ToString();
@@ -30,17 +33,38 @@ public sealed class TicketViewModel : ViewModelBase
     public TicketViewModel(
         ICommandHandler<CreateTicketCommand, CreateTicketResult> createTicket,
         ICommandHandler<AddOrderLineCommand, AddOrderLineResult> addOrderLine,
-        IQueryHandler<GetTicketQuery, TicketDto?> getTicket)
+        ICommandHandler<PrintToKitchenCommand, PrintToKitchenResult> printToKitchen,
+        IQueryHandler<GetTicketQuery, TicketDto?> getTicket,
+        IMenuRepository menuRepository,
+        Services.NavigationService navigationService)
     {
         _createTicket = createTicket;
         _addOrderLine = addOrderLine;
+        _printToKitchen = printToKitchen;
         _getTicket = getTicket;
+        _menuRepository = menuRepository;
+        _navigationService = navigationService;
 
         Title = "Ticket";
 
         CreateTicketCommand = new AsyncRelayCommand(CreateTicketAsync);
         LoadTicketCommand = new AsyncRelayCommand(LoadTicketAsync);
         AddOrderLineUiCommand = new AsyncRelayCommand(AddOrderLineAsync);
+        SendToKitchenCommand = new AsyncRelayCommand(SendToKitchenAsync);
+        SplitTicketUiCommand = new AsyncRelayCommand(SplitTicketAsync);
+        MoveTableUiCommand = new RelayCommand(MoveTable);
+        SettleUiCommand = new RelayCommand(Settle);
+    }
+
+    private void MoveTable()
+    {
+        if (Ticket == null)
+        {
+            Error = "No active ticket to move.";
+            return;
+        }
+
+        _navigationService.Navigate(typeof(Magidesk.Presentation.Views.TableMapPage), Ticket.Id);
     }
 
     public TicketDto? Ticket
@@ -54,11 +78,14 @@ public sealed class TicketViewModel : ViewModelBase
                 OnPropertyChanged(nameof(TicketHeaderText));
                 OnPropertyChanged(nameof(TotalsText));
                 OnPropertyChanged(nameof(OrderLines));
+                OnPropertyChanged(nameof(HasUnsentItems));
             }
         }
     }
 
     public bool HasTicket => Ticket != null;
+    
+    public bool HasUnsentItems => Ticket?.OrderLines.Any(ol => ol.ShouldPrintToKitchen && !ol.PrintedToKitchen) ?? false;
 
     public string TicketHeaderText => Ticket == null
         ? "No ticket loaded"
@@ -147,6 +174,77 @@ public sealed class TicketViewModel : ViewModelBase
     public AsyncRelayCommand CreateTicketCommand { get; }
     public AsyncRelayCommand LoadTicketCommand { get; }
     public AsyncRelayCommand AddOrderLineUiCommand { get; }
+    public AsyncRelayCommand SendToKitchenCommand { get; }
+    public AsyncRelayCommand SplitTicketUiCommand { get; }
+    public RelayCommand MoveTableUiCommand { get; }
+    public RelayCommand SettleUiCommand { get; }
+
+    private void Settle()
+    {
+        if (Ticket == null)
+        {
+            Error = "No active ticket to settle.";
+            return;
+        }
+
+        _navigationService.Navigate(typeof(Magidesk.Presentation.Views.SettlePage), Ticket.Id);
+    }
+
+    private async Task SplitTicketAsync()
+    {
+        Error = null;
+        if (Ticket == null) return;
+        
+        IsBusy = true;
+        try 
+        {
+             var dialog = new Magidesk.Presentation.Views.SplitTicketDialog(Ticket);
+             var result = await _navigationService.ShowDialogAsync(dialog);
+             
+             if (result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
+             {
+                 // Split was executed successfully inside the dialog's closing event (via ViewModel)
+                 // We just need to reload the current ticket (which should now have fewer items)
+                 await LoadTicketAsync();
+             }
+        }
+        catch (Exception ex)
+        {
+            Error = ex.Message;
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    private async Task SendToKitchenAsync()
+    {
+        Error = null;
+        IsBusy = true;
+        try
+        {
+            if (Ticket == null) return;
+            
+            var result = await _printToKitchen.HandleAsync(new PrintToKitchenCommand 
+            { 
+               TicketId = Ticket.Id 
+            });
+
+            if (result.Success)
+            {
+               await LoadTicketAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            Error = ex.Message;
+        }
+        finally 
+        {
+            IsBusy = false;
+        }
+    }
 
     private async Task CreateTicketAsync()
     {
@@ -217,6 +315,31 @@ public sealed class TicketViewModel : ViewModelBase
             if (!decimal.TryParse(UnitPriceText, out var unitPrice)) { Error = "Invalid Unit Price."; return; }
             if (!decimal.TryParse(TaxRateText, out var taxRate)) { Error = "Invalid Tax Rate."; return; }
 
+            // Fetch Menu Item to check for modifiers
+            var menuItem = await _menuRepository.GetByIdAsync(menuItemId);
+            if (menuItem == null) { Error = "Menu Item not found."; return; }
+
+            List<Magidesk.Domain.Entities.MenuModifier> selectedModifiers = new();
+
+            // Check for active modifier groups
+            if (menuItem.ModifierGroups.Any(mg => mg.ModifierGroup.IsActive))
+            {
+                 // We need to run this on UI thread, which we are.
+                 // Instantiate Dialog
+                 var dialog = new Magidesk.Presentation.Views.ModifierSelectionDialog(menuItem);
+                 
+                 // Show Dialog
+                 var result = await _navigationService.ShowDialogAsync(dialog);
+
+                 if (result != Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
+                 {
+                     // User cancelled (clicked Cancel or clicked outside if explicit cancel allowed)
+                     return; 
+                 }
+                 
+                 selectedModifiers = dialog.ViewModel.GetSelectedModifiers();
+            }
+
             await _addOrderLine.HandleAsync(new AddOrderLineCommand
             {
                 TicketId = Ticket.Id,
@@ -224,7 +347,8 @@ public sealed class TicketViewModel : ViewModelBase
                 MenuItemName = MenuItemName,
                 Quantity = qty,
                 UnitPrice = new Money(unitPrice),
-                TaxRate = taxRate
+                TaxRate = taxRate,
+                Modifiers = selectedModifiers
             });
 
             await LoadTicketAsync();

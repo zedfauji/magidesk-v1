@@ -18,6 +18,10 @@ public class ModifierGroup
     public int DisplayOrder { get; private set; }
     public bool IsActive { get; private set; }
     public int Version { get; private set; }
+    
+    // Navigation
+    private readonly List<MenuModifier> _modifiers = new();
+    public IReadOnlyCollection<MenuModifier> Modifiers => _modifiers.AsReadOnly();
 
     // Private constructor for EF Core
     private ModifierGroup()

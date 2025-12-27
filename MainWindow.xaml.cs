@@ -17,7 +17,7 @@ public sealed partial class MainWindow : Window
         _navigation.Initialize(ContentFrame);
 
         // Default route
-        _navigation.Navigate(typeof(Views.MainPage));
+        _navigation.Navigate(typeof(Views.SwitchboardPage));
     }
 
     private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
@@ -38,7 +38,7 @@ public sealed partial class MainWindow : Window
         var tag = item.Tag?.ToString();
         if (tag == "home")
         {
-            _navigation.Navigate(typeof(Views.MainPage));
+            _navigation.Navigate(typeof(Views.SwitchboardPage));
             return;
         }
 

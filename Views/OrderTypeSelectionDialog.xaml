@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.OrderTypeSelectionDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:Magidesk.Presentation.ViewModels"
+    xmlns:converters="using:Magidesk.Presentation.Converters"
+    mc:Ignorable="d"
+    Title="Select Order Type"
+    PrimaryButtonText="Cancel"
+    DefaultButton="None"
+    CornerRadius="8">
+
+    <ContentDialog.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </ContentDialog.Resources>
+
+    <Grid>
+        <GridView ItemsSource="{x:Bind ViewModel.OrderTypes}" 
+                  SelectionMode="Single"
+                  SelectionChanged="GridView_SelectionChanged"
+                  IsItemClickEnabled="True"
+                  ItemClick="GridView_ItemClick">
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="150" Height="100" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" CornerRadius="4" Padding="8">
+                        <TextBlock Text="{Binding Name}" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center" 
+                                   TextWrapping="Wrap" 
+                                   FontSize="16" FontWeight="SemiBold"/>
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+        
+        <ProgressBar IsIndeterminate="True" 
+                     Visibility="{x:Bind ViewModel.IsBusy, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                     VerticalAlignment="Center" HorizontalAlignment="Center" Width="100"/>
+    </Grid>
+</ContentDialog>

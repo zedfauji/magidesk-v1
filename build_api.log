@@ -1,0 +1,13 @@
+  Determining projects to restore...
+  Restored C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Api\Magidesk.Api.csproj (in 1.23 sec).
+  3 of 4 projects are up-to-date for restore.
+  Magidesk.Domain -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\bin\Debug\net8.0\Magidesk.Domain.dll
+  Magidesk.Application -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\bin\Debug\net8.0\Magidesk.Application.dll
+  Magidesk.Infrastructure -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure\bin\Debug\net8.0\Magidesk.Infrastructure.dll
+  Magidesk.Api -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Api\bin\Debug\net8.0\Magidesk.Api.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.98

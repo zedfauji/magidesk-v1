@@ -14,24 +14,26 @@ public interface IReceiptPrintService
     /// <param name="ticket">The ticket to print receipt for.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>True if printing was successful, false otherwise.</returns>
-    Task<bool> PrintTicketReceiptAsync(Ticket ticket, CancellationToken cancellationToken = default);
+    Task<bool> PrintTicketReceiptAsync(Ticket ticket, Guid? userId = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Prints a payment receipt.
     /// </summary>
     /// <param name="payment">The payment to print receipt for.</param>
     /// <param name="ticket">The ticket associated with the payment.</param>
+    /// <param name="userId">The user initiating the print.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>True if printing was successful, false otherwise.</returns>
-    Task<bool> PrintPaymentReceiptAsync(Payment payment, Ticket ticket, CancellationToken cancellationToken = default);
+    Task<bool> PrintPaymentReceiptAsync(Payment payment, Ticket ticket, Guid? userId = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Prints a refund receipt.
     /// </summary>
     /// <param name="refundPayment">The refund payment to print receipt for.</param>
     /// <param name="ticket">The ticket associated with the refund.</param>
+    /// <param name="userId">The user initiating the print.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>True if printing was successful, false otherwise.</returns>
-    Task<bool> PrintRefundReceiptAsync(Payment refundPayment, Ticket ticket, CancellationToken cancellationToken = default);
+    Task<bool> PrintRefundReceiptAsync(Payment refundPayment, Ticket ticket, Guid? userId = null, CancellationToken cancellationToken = default);
 }
 

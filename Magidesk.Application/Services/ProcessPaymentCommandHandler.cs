@@ -110,6 +110,47 @@ public class ProcessPaymentCommandHandler : ICommandHandler<ProcessPaymentComman
             payment = cashPayment;
             changeAmount = _paymentDomainService.CalculateChange(payment);
         }
+        else if (command.PaymentType == PaymentType.CreditCard || command.PaymentType == PaymentType.DebitCard)
+        {
+            // Create card payment
+            var cardPayment = CreditCardPayment.Create(
+                command.TicketId,
+                command.Amount,
+                command.ProcessedBy,
+                command.TerminalId,
+                cardNumber: command.Last4, // Storing Last4 as CardNumber for simulation
+                cardHolderName: "Simulated User",
+                authorizationCode: command.AuthCode ?? "AUTH" + DateTime.Now.Ticks.ToString()[^6..],
+                referenceNumber: "REF" + DateTime.Now.Ticks.ToString()[^8..],
+                cardType: command.CardType ?? "Generic",
+                globalId: command.GlobalId);
+
+            payment = cardPayment;
+        }
+        else if (command.PaymentType == PaymentType.GiftCertificate)
+        {
+             // Validate GC Number
+             if (string.IsNullOrWhiteSpace(command.GiftCardNumber))
+             {
+                 throw new Domain.Exceptions.BusinessRuleViolationException("Gift Certificate Number is required.");
+             }
+
+             // Simulated GC check: Assume it has enough balance if it's being processed
+             // In real world, we'd query a GiftCertificateService here.
+             var simulatedBalance = command.Amount + new Money(10.00m, command.Amount.Currency); 
+
+             var gcPayment = GiftCertificatePayment.Create(
+                 command.TicketId,
+                 command.Amount,
+                 command.ProcessedBy,
+                 command.TerminalId,
+                 command.GiftCardNumber,
+                 originalAmount: simulatedBalance, // Simulating original amount > payment
+                 remainingBalance: simulatedBalance - command.Amount,
+                 globalId: command.GlobalId);
+
+             payment = gcPayment;
+        }
         else
         {
             // For Phase 2, other payment types will be supported

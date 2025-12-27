@@ -16,6 +16,7 @@ public class AddOrderLineCommand
     public string? CategoryName { get; set; }
     public string? GroupName { get; set; }
     public UserId? AddedBy { get; set; }
+    public List<Magidesk.Domain.Entities.MenuModifier> Modifiers { get; set; } = new();
 }
 
 /// <summary>

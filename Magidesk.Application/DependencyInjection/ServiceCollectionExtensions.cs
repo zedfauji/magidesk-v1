@@ -1,6 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Magidesk.Application.Services;
 using Magidesk.Application.Interfaces;
+using Magidesk.Application.Interfaces;
+using Magidesk.Application.Commands.SystemConfig;
+using Magidesk.Application.Queries.SystemConfig;
+using Magidesk.Application.DTOs.SystemConfig;
+using Magidesk.Application.Services.SystemConfig;
 
 namespace Magidesk.Application.DependencyInjection;
 
@@ -58,7 +63,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.UpdateTableCommand, Commands.UpdateTableResult>, UpdateTableCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.AssignTableToTicketCommand, Commands.AssignTableToTicketResult>, AssignTableToTicketCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.TransferTicketToTableCommand, Commands.TransferTicketToTableResult>, TransferTicketToTableCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.TransferTicketToTableCommand, Commands.TransferTicketToTableResult>, TransferTicketToTableCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.ReleaseTableCommand, Commands.ReleaseTableResult>, ReleaseTableCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.ChangeTableCommand, Commands.ChangeTableResult>, ChangeTableCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.SetTaxExemptCommand, Commands.SetTaxExemptResult>, SetTaxExemptCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.ChangeTicketOrderTypeCommand>, ChangeTicketOrderTypeCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.SetTicketCustomerCommand>, SetTicketCustomerCommandHandler>();
         
@@ -103,9 +111,20 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IQueryHandler<Queries.GetAvailableTablesQuery, Queries.GetAvailableTablesResult>, GetAvailableTablesQueryHandler>();
 
         services.AddScoped<IQueryHandler<Queries.GetSalesBalanceQuery, DTOs.Reports.SalesBalanceReportDto>, Services.Reports.GetSalesBalanceQueryHandler>();
-        // GetMenuItemsQuery handler will be implemented in Phase 2 when menu management is added
+        services.AddScoped<IQueryHandler<Queries.GetSalesSummaryQuery, DTOs.Reports.SalesSummaryReportDto>, Services.Reports.GetSalesSummaryQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.Reports.GetExceptionsReportQuery, DTOs.Reports.ExceptionsReportDto>, Services.Reports.GetExceptionsReportQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.Reports.GetJournalReportQuery, DTOs.Reports.JournalReportDto>, Services.Reports.GetJournalReportQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.Reports.GetProductivityReportQuery, DTOs.Reports.ProductivityReportDto>, Services.Reports.GetProductivityReportQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.Reports.GetLaborReportQuery, DTOs.Reports.LaborReportDto>, Services.Reports.GetLaborReportQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.Reports.GetDeliveryReportQuery, DTOs.Reports.DeliveryReportDto>, Services.Reports.GetDeliveryReportQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.Reports.GetDeliveryReportQuery, DTOs.Reports.DeliveryReportDto>, Services.Reports.GetDeliveryReportQueryHandler>();
         
-        // Services
+        // System Config query handlers
+        services.AddScoped<IQueryHandler<GetSystemBackupsQuery, GetSystemBackupsResult>, GetSystemBackupsQueryHandler>();
+
+        // System Config command handlers
+        services.AddScoped<ICommandHandler<CreateSystemBackupCommand, CreateSystemBackupResult>, CreateSystemBackupCommandHandler>();
+        services.AddScoped<ICommandHandler<RestoreSystemBackupCommand, RestoreSystemBackupResult>, RestoreSystemBackupCommandHandler>();
         services.AddScoped<IKitchenRoutingService, KitchenRoutingService>();
         services.AddScoped<IKitchenStatusService, KitchenStatusService>();
         services.AddScoped<ICashSessionService, CashSessionService>();

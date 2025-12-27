@@ -2,15 +2,21 @@
 
 ## Project Status
 -   **Forensic UI Audit**: [Complete] (F-0001 to F-0132 verified and synced to Linear).
--   **Backend Forensic Audit**: [In-Progress] (Analyzing backend invariants for each feature).
--   **Implementation (Phase 3)**: [Planned] (Pending Backend Audit results).
+-   **Backend Forensic Audit**: [Complete] (Integrated into Implementation).
+-   **Implementation (Phase 3 Backend)**: [Complete] (Complex Menus, Reporting, Services).
+-   **Implementation (Phase 4 Frontend)**: [Pending] (UI Wiring).
 
 ## Milestones
 -   [x] Phase 1: Foundation & Core Transaction Flow
--   [x] Phase 2: Payment Expansion (Weeks 5-7)
+-   [x] Phase 2: Payment Expansion
 -   [x] Forensic UI Audit (F-0001 - F-0132)
--   [ ] Backend Forensic Audit (Features F-0001 - F-0132)
--   [ ] Implementation Phase 3 (Gap Closure & Modernization)
+-   [x] Phase 3: Backend Implementation (Reports, Modifiers, Services)
+-   [ ] Phase 4: Frontend Integration & Polish
+
+## Completed Features (Phase 3)
+-   **Complex Menus**: Pizza Builder, Fractions, Combos.
+-   **Reporting**: Sales Balance, Summary, Exceptions, Journal, Productivity, Labor, Delivery.
+-   **System Services**: DB Backup (`pg_dump`), Fiscal/Audit Logging (Ticket Printing).
 
 ## Current Focus
-Conducting a feature-bound Backend Forensic Audit. For each UI feature (F-XXXX), we are documenting the required backend invariants, forbidden states, and concurrency rules.
+Transitioning to Phase 4: Integrating the newly built backend features into the WinUI frontend.

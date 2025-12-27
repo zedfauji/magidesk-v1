@@ -18,6 +18,12 @@ public class ProcessPaymentCommand
     public Guid? CashSessionId { get; set; } // For cash payments
     public string? Note { get; set; }
     public string? GlobalId { get; set; }
+    
+    // Card Properties (Simulated for Phase 4)
+    public string? CardType { get; set; } // Visa, MasterCard, etc.
+    public string? Last4 { get; set; }
+    public string? AuthCode { get; set; }
+    public string? GiftCardNumber { get; set; }
 }
 
 /// <summary>
