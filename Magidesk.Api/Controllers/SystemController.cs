@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Magidesk.Application.DTOs.System;
+using Magidesk.Application.DTOs.SystemConfig;
 using Magidesk.Application.Interfaces;
 
 namespace Magidesk.Api.Controllers;

@@ -43,6 +43,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<ComboGroupItem> ComboGroupItems { get; set; } = null!;
     public DbSet<MenuItem> MenuItems { get; set; } = null!;
     public DbSet<MenuItemModifierGroup> MenuItemModifierGroups { get; set; } = null!;
+    public DbSet<MenuCategory> MenuCategories { get; set; } = null!;
+    public DbSet<MenuGroup> MenuGroups { get; set; } = null!;
     public DbSet<MerchantGatewayConfiguration> MerchantGatewayConfigurations { get; set; } = null!;
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Role> Roles { get; set; } = null!;
@@ -90,6 +92,8 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new RoleConfiguration());
         modelBuilder.ApplyConfiguration(new MenuItemConfiguration());
         modelBuilder.ApplyConfiguration(new MenuItemModifierGroupConfiguration());
+        modelBuilder.ApplyConfiguration(new MenuCategoryConfiguration());
+        modelBuilder.ApplyConfiguration(new MenuGroupConfiguration());
     }
 }
 

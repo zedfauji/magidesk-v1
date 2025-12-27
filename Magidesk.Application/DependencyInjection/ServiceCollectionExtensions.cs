@@ -93,6 +93,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.VoidTicketCommand>, VoidTicketCommandHandler>();
 
         // Register query handlers
+        services.AddScoped<GetTicketQueryHandler>(); // Concrete class needed by other handlers
         services.AddScoped<IQueryHandler<Queries.GetTicketQuery, DTOs.TicketDto?>, GetTicketQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetTicketByNumberQuery, DTOs.TicketDto?>, GetTicketByNumberQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetOpenTicketsQuery, IEnumerable<DTOs.TicketDto>>, GetOpenTicketsQueryHandler>();

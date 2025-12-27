@@ -43,7 +43,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IMerchantGatewayConfigurationRepository, MerchantGatewayConfigurationRepository>();
         services.AddScoped<IDiscountRepository, DiscountRepository>();
         services.AddScoped<IMenuRepository, MenuRepository>();
+        services.AddScoped<IMenuCategoryRepository, MenuCategoryRepository>();
+        services.AddScoped<IMenuGroupRepository, MenuGroupRepository>();
         services.AddScoped<ISalesReportRepository, SalesReportRepository>();
+
 
         // Register domain services (stateless, can be singleton or scoped)
         services.AddScoped<TaxDomainService>();
