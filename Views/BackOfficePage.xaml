@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Magidesk.Presentation.Views.BackOfficePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Magidesk.Presentation.ViewModels"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+             <RowDefinition Height="Auto"/>
+             <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <CommandBar DefaultLabelPosition="Right" Background="Transparent">
+            <AppBarButton Icon="Back" Label="Back" Command="{x:Bind ViewModel.GoBackCommand}"/>
+            <AppBarElementContainer>
+                 <TextBlock Text="{x:Bind ViewModel.HeaderText, Mode=OneWay}" VerticalAlignment="Center" Margin="12,0,0,0" Style="{StaticResource TitleTextBlockStyle}"/>
+            </AppBarElementContainer>
+        </CommandBar>
+
+        <!-- Split View for Navigation -->
+        <NavigationView Grid.Row="1" 
+                        PaneDisplayMode="Left" 
+                        IsBackButtonVisible="Collapsed" 
+                        IsSettingsVisible="False"
+                        MenuItemsSource="{x:Bind ViewModel.NavigationItems}"
+                        SelectedItem="{x:Bind ViewModel.CurrentPageType, Mode=OneWay}"> <!-- Binding SelectedItem is tricky with Type, handling via Event is oftentimes easier in WinUI -->
+            
+            <NavigationView.MenuItemTemplate>
+                <DataTemplate x:DataType="vm:NavigationItem">
+                     <StackPanel Orientation="Horizontal" Spacing="12">
+                        <FontIcon Glyph="{x:Bind IconData}" VerticalAlignment="Center"/>
+                        <TextBlock Text="{x:Bind Title}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </DataTemplate>
+            </NavigationView.MenuItemTemplate>
+
+            <Frame x:Name="ContentFrame"/>
+        </NavigationView>
+    </Grid>
+</Page>

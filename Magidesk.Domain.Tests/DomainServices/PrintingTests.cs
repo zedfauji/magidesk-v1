@@ -85,6 +85,7 @@ public class PrintingTests
             ModifierType.Extra,
             1,
             new Money(2m),
+            basePrice: new Money(2m),
             shouldPrintToKitchen: true);
         
         SetPrivateProperty(modifier, "PrintedToKitchen", false);
@@ -113,6 +114,7 @@ public class PrintingTests
             ModifierType.Extra,
             1,
             new Money(2m),
+            basePrice: new Money(2m),
             shouldPrintToKitchen: true);
         
         SetPrivateProperty(modifier, "PrintedToKitchen", false);
@@ -135,6 +137,7 @@ public class PrintingTests
             ModifierType.Extra,
             1,
             new Money(2m),
+            basePrice: new Money(2m),
             shouldPrintToKitchen: false);
 
         // Act

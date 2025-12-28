@@ -8,11 +8,18 @@ public class BooleanToVisibilityConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, string language)
     {
+        bool flag = false;
         if (value is bool boolValue)
         {
-            return boolValue ? Visibility.Visible : Visibility.Collapsed;
+            flag = boolValue;
         }
-        return Visibility.Collapsed;
+        
+        if (parameter is string paramStr && paramStr.Equals("Reverse", StringComparison.OrdinalIgnoreCase))
+        {
+             flag = !flag;
+        }
+
+        return flag ? Visibility.Visible : Visibility.Collapsed;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)

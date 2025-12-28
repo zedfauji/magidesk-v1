@@ -1,0 +1,11 @@
+--------------------------------
+# RULES: UPDATE OBLIGATION
+--------------------------------
+
+1. Any of the following REQUIRES a system_state update:
+   - Build break/fix
+   - Blocker discovery
+   - Feature completion
+   - Phase change
+   - Decision made
+2. No update → action is INVALID

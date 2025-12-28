@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "Magidesk.Presentation.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Magidesk.Api\\Magidesk.Api.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

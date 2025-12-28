@@ -48,6 +48,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<MerchantGatewayConfiguration> MerchantGatewayConfigurations { get; set; } = null!;
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Role> Roles { get; set; } = null!;
+    public DbSet<InventoryItem> InventoryItems { get; set; } = null!;
     // FractionalModifier is part of Set<MenuModifier> via Inheritance
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -94,6 +95,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new MenuItemModifierGroupConfiguration());
         modelBuilder.ApplyConfiguration(new MenuCategoryConfiguration());
         modelBuilder.ApplyConfiguration(new MenuGroupConfiguration());
+        modelBuilder.ApplyConfiguration(new InventoryItemConfiguration());
     }
 }
 

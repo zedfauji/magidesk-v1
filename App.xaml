@@ -47,8 +47,9 @@
             </Style>
 
             <!-- Converters -->
-            <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-            <converters:StringToBoolConverter x:Key="StringToBoolConverter" />
+            <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+            <converters:StringFormatConverter x:Key="StringFormatConverter"/>
 
              <!-- Standard Text Styles -->
              <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock">

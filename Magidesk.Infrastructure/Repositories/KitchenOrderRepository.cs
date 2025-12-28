@@ -45,4 +45,14 @@ public class KitchenOrderRepository : IKitchenOrderRepository
             .OrderBy(ko => ko.Timestamp) // Oldest first
             .ToListAsync();
     }
+
+    public async Task<System.Collections.Generic.IEnumerable<KitchenOrder>> GetCompletedOrdersAsync(int limit = 50)
+    {
+        return await _context.KitchenOrders
+            .Include(ko => ko.Items)
+            .Where(ko => ko.Status == Magidesk.Domain.Enumerations.KitchenStatus.Done)
+            .OrderByDescending(ko => ko.Timestamp) // Newest first
+            .Take(limit)
+            .ToListAsync();
+    }
 }

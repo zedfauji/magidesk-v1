@@ -3,8 +3,6 @@ using Magidesk.Application.DTOs;
 using Magidesk.Application.Interfaces;
 using Magidesk.Application.Queries;
 using Magidesk.Application.Commands;
-using Magidesk.Application.Queries;
-using Magidesk.Application.Commands;
 using Magidesk.Domain.Enumerations;
 using Magidesk.Domain.ValueObjects;
 using Magidesk.Presentation.Views;
@@ -19,7 +17,6 @@ public class TableMapViewModel : ViewModelBase
     private readonly IQueryHandler<GetAvailableTablesQuery, GetAvailableTablesResult> _getAvailableTables;
     private readonly ICommandHandler<ChangeTableCommand, ChangeTableResult> _changeTable;
     private readonly NavigationService _navigationService;
-    private readonly TicketViewModel _ticketViewModel;
 
     public ObservableCollection<TableDto> Tables { get; } = new();
 
@@ -46,13 +43,11 @@ public class TableMapViewModel : ViewModelBase
     public TableMapViewModel(
         IQueryHandler<GetAvailableTablesQuery, GetAvailableTablesResult> getAvailableTables,
         ICommandHandler<ChangeTableCommand, ChangeTableResult> changeTable,
-        NavigationService navigationService,
-        TicketViewModel ticketViewModel)
+        NavigationService navigationService)
     {
         _getAvailableTables = getAvailableTables;
         _changeTable = changeTable;
         _navigationService = navigationService;
-        _ticketViewModel = ticketViewModel;
 
         Title = "Table Map";
         LoadTablesCommand = new AsyncRelayCommand(LoadTablesAsync);
@@ -111,9 +106,7 @@ public class TableMapViewModel : ViewModelBase
                 if (result.Success)
                 {
                      // Return to Ticket Page
-                     _ticketViewModel.TicketIdText = SourceTicketId.Value.ToString();
-                     await _ticketViewModel.LoadTicketCommand.ExecuteAsync(null);
-                     _navigationService.Navigate(typeof(TicketPage));
+                     _navigationService.Navigate(typeof(OrderEntryPage), SourceTicketId.Value);
                      
                      // Reset Context
                      SetContext(null);
@@ -135,13 +128,12 @@ public class TableMapViewModel : ViewModelBase
         if (table.Status == TableStatus.Seat && table.CurrentTicketId.HasValue)
         {
              // Resume existing ticket
-             _ticketViewModel.TicketIdText = table.CurrentTicketId.Value.ToString();
-             await _ticketViewModel.LoadTicketCommand.ExecuteAsync(null);
-             _navigationService.Navigate(typeof(TicketPage));
+             _navigationService.Navigate(typeof(OrderEntryPage), table.CurrentTicketId.Value);
         }
         else if (table.Status == TableStatus.Available)
         {
-             _navigationService.Navigate(typeof(TicketPage));
+             // Create new ticket (TODO: Pass TableId to link it?)
+             _navigationService.Navigate(typeof(OrderEntryPage));
         }
     }
 }

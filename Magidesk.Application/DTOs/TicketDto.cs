@@ -10,6 +10,8 @@ public class TicketDto
     public Guid Id { get; set; }
     public int TicketNumber { get; set; }
     public string? GlobalId { get; set; }
+    public string? TableName { get; set; } // Added for UI
+    public string OwnerName { get; set; } = string.Empty; // Added for UI
     public DateTime CreatedAt { get; set; }
     public DateTime? OpenedAt { get; set; }
     public DateTime? ClosedAt { get; set; }

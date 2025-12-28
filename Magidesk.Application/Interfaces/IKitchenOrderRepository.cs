@@ -11,4 +11,5 @@ public interface IKitchenOrderRepository
     Task<KitchenOrder?> GetByIdAsync(Guid id);
     Task UpdateAsync(KitchenOrder kitchenOrder);
     Task<IEnumerable<KitchenOrder>> GetActiveOrdersAsync();
+    Task<IEnumerable<KitchenOrder>> GetCompletedOrdersAsync(int limit = 50);
 }

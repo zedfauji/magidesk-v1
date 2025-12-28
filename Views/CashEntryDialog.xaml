@@ -1,0 +1,26 @@
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.CashEntryDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Cash Operation"
+    PrimaryButtonText="Confirm"
+    CloseButtonText="Cancel"
+    DefaultButton="Primary">
+
+    <StackPanel Spacing="16" Width="300">
+        <TextBlock x:Name="MessageTextBlock" Text="Enter amount for this operation." TextWrapping="Wrap"/>
+        
+        <TextBox x:Name="AmountBox" 
+                   Header="Amount" 
+                   PlaceholderText="0.00"
+                   InputScope="Number"/>
+                   
+        <TextBox x:Name="ReasonBox"
+                 Header="Reason / Vendor"
+                 PlaceholderText="Optional note (e.g. 'Safe Drop', 'Coke Delivery')"
+                 AcceptsReturn="False"/>
+    </StackPanel>
+</ContentDialog>

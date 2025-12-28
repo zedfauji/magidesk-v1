@@ -10,6 +10,7 @@ using Magidesk.Domain.DomainServices;
 using Magidesk.Domain.Services;
 using Magidesk.Application.Services;
 using Magidesk.Infrastructure.Security;
+using Magidesk.Infrastructure.Services.Bootstrap;
 
 namespace Magidesk.Infrastructure.DependencyInjection;
 
@@ -46,6 +47,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IMenuCategoryRepository, MenuCategoryRepository>();
         services.AddScoped<IMenuGroupRepository, MenuGroupRepository>();
         services.AddScoped<ISalesReportRepository, SalesReportRepository>();
+        services.AddScoped<IModifierGroupRepository, ModifierGroupRepository>();
+        services.AddScoped<IMenuModifierRepository, MenuModifierRepository>();
+        services.AddScoped<IInventoryItemRepository, InventoryItemRepository>();
 
 
         // Register domain services (stateless, can be singleton or scoped)
@@ -67,10 +71,12 @@ public static class ServiceCollectionExtensions
         // Register Security Services
         services.AddSingleton<IAesEncryptionService, Security.AesEncryptionService>();
         services.AddScoped<ISecurityService, SecurityService>();
+        services.AddScoped<IGroupSettleService, GroupSettleService>();
+        services.AddScoped<IMerchantBatchService, MerchantBatchService>();
+        services.AddScoped<ISystemInitializationService, SystemInitializationService>();
         services.AddScoped<ISystemService, SystemService>();
         services.AddScoped<IBackupService, Services.PostgresBackupService>();
 
         return services;
     }
 }
-

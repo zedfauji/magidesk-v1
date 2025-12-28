@@ -20,7 +20,7 @@ This document summarizes the implementation status of each UI feature against th
 | F-0002 | POS Main Window Shell | **PARTIAL** |
 | F-0003 | Login Screen | **NOT IMPLEMENTED** |
 | F-0004 | Switchboard View | **PARTIAL** |
-| F-0005 | Order Entry View Container | **NOT IMPLEMENTED** |
+| F-0005 | Order Entry View Container | **IMPLEMENTED** |
 | F-0006 | Ticket Panel | **PARTIAL** |
 | F-0007 | Password Entry Dialog & Payment Keypad | **PARTIAL** |
 | F-0008 | Logout Action & Settle Ticket Dialog | **PARTIAL** |
@@ -29,7 +29,7 @@ This document summarizes the implementation status of each UI feature against th
 | F-0011 | Open Tickets List Dialog | **PARTIAL** |
 | F-0012 | Drawer Pull Report Dialog | **PARTIAL** |
 | F-0013 | Void Ticket Dialog | **PARTIAL** |
-| F-0014 | Split Ticket Dialog | **NOT IMPLEMENTED** |
+| F-0014 | Split Ticket Dialog | **IMPLEMENTED** |
 | F-0015 | Payment Process Wait Dialog | **PARTIAL** |
 | F-0016 | Swipe Card Dialog | **NOT IMPLEMENTED** |
 | F-0017 | Authorization Code Dialog | **NOT IMPLEMENTED** |
@@ -42,7 +42,7 @@ This document summarizes the implementation status of each UI feature against th
 | F-0024 | Quantity Entry Dialog | **PARTIAL** |
 | F-0025 | Print Ticket Action | **PARTIAL** |
 | F-0026 | Increase/Decrease Quantity Action | **NOT IMPLEMENTED** |
-| F-0027 | Send to Kitchen Action | **PARTIAL** |
+| F-0027 | Send to Kitchen Action | **IMPLEMENTED** |
 | F-0028 | Delete Ticket Item Action | **NOT IMPLEMENTED** |
 | F-0029 | Misc Ticket Item Dialog | **NOT IMPLEMENTED** |
 | F-0030 | Ticket Fee Dialog | **NOT IMPLEMENTED** |
@@ -53,7 +53,7 @@ This document summarizes the implementation status of each UI feature against th
 | F-0035 | Price Entry Dialog | **NOT IMPLEMENTED** |
 | F-0036 | Cooking Instruction Dialog | **NOT IMPLEMENTED** |
 | F-0037 | Pizza Modifiers View | **NOT IMPLEMENTED** |
-| F-0038 | Modifier Selection Dialog | **PARTIAL** |
+| F-0038 | Modifier Selection Dialog | **IMPLEMENTED** |
 | F-0039 | Add-On Selection View | **NOT IMPLEMENTED** |
 | F-0040 | Combo Item Selection Dialog | **NOT IMPLEMENTED** |
 | F-0041 | Quick Pay Action | **NOT IMPLEMENTED** |
@@ -67,7 +67,7 @@ This document summarizes the implementation status of each UI feature against th
 | F-0049 | Split by Amount Dialog | **NOT IMPLEMENTED** |
 | F-0050 | Swipe Card Dialog | **NOT IMPLEMENTED** |
 | F-0051 | Refund Button | **PARTIAL** |
-| F-0052 | Check Payment Action | **NOT IMPLEMENTED** |
+| F-0052 | Check Payment Action | **IMPLEMENTED** |
 | F-0053 | House Account Payment Action | **NOT IMPLEMENTED** |
 | F-0054 | Gift Certificate Entry | **PARTIAL** |
 | F-0055 | Gratuity Input | **PARTIAL** |
@@ -97,7 +97,7 @@ This document summarizes the implementation status of each UI feature against th
 | F-0079 | Customer Explorer | **NOT IMPLEMENTED** |
 | F-0080 | Change Table Action | **PARTIAL** |
 | F-0081 | Floor Explorer | **NOT IMPLEMENTED** |
-| F-0082 | Table Map View | **PARTIAL** |
+| F-0082 | Table Map View | **IMPLEMENTED** |
 | F-0083 | Home Delivery View | **NOT IMPLEMENTED** |
 | F-0084 | Pickup Order View | **NOT IMPLEMENTED** |
 | F-0085 | Bar Tab Selection View | **NOT IMPLEMENTED** |
@@ -143,7 +143,7 @@ This document summarizes the implementation status of each UI feature against th
 | F-0125 | Notes Dialog | **NOT IMPLEMENTED** |
 | F-0126 | Delivery Zone Configuration | **NOT IMPLEMENTED** |
 | F-0127 | Printer Group Configuration | **NOT IMPLEMENTED** |
-| F-0128 | Database Backup Dialog | **PARTIAL** |
+| F-0128 | Database Backup Dialog | **IMPLEMENTED** |
 | F-0129 | Message Banner Display | **NOT IMPLEMENTED** |
 | F-0130 | About Dialog | **NOT IMPLEMENTED** |
 | F-0131 | Confirmation Dialog Pattern | **PARTIAL** |

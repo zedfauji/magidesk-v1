@@ -79,6 +79,39 @@ public class MenuItem
         Price = price;
     }
     
+    private readonly List<RecipeLine> _recipeLines = new();
+    public IReadOnlyCollection<RecipeLine> RecipeLines => _recipeLines.AsReadOnly();
+
+    public void AddRecipeLine(Guid inventoryItemId, decimal quantity)
+    {
+        var line = new RecipeLine(inventoryItemId, quantity);
+        _recipeLines.Add(line);
+    }
+
+    public void RemoveRecipeLine(Guid inventoryItemId)
+    {
+        _recipeLines.RemoveAll(x => x.InventoryItemId == inventoryItemId);
+    }
+
+    public void UpdateName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new Exceptions.BusinessRuleViolationException("Name cannot be empty.");
+        Name = name;
+    }
+    
+    public void SetCategory(Guid categoryId)
+    {
+        if (categoryId == Guid.Empty) throw new ArgumentException("Invalid Category ID");
+        CategoryId = categoryId;
+    }
+
+    public void SetGroup(Guid groupId)
+    {
+        if (groupId == Guid.Empty) throw new ArgumentException("Invalid Group ID");
+        GroupId = groupId;
+    }
+    
     public void SetPrinterGroup(Guid? printerGroupId)
     {
         PrinterGroupId = printerGroupId;

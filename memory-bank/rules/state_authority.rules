@@ -1,0 +1,9 @@
+--------------------------------
+# RULES: STATE AUTHORITY
+--------------------------------
+
+1. Memory Bank is the ONLY source of truth.
+2. Conversation context must NEVER override Memory Bank.
+3. No feature work is allowed unless system_state.md allows it.
+4. Drift must be recorded before being fixed.
+5. If state is unclear, STOP.

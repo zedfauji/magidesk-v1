@@ -53,5 +53,20 @@ public class MenuItemConfiguration : IEntityTypeConfiguration<MenuItem>
             .WithOne(x => x.MenuItem)
             .HasForeignKey(x => x.MenuItemId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        // Value Object Collection: RecipeLines
+        builder.OwnsMany(x => x.RecipeLines, ra =>
+        {
+            ra.ToTable("MenuItemRecipeLines");
+            ra.WithOwner().HasForeignKey("MenuItemId");
+            ra.HasKey("MenuItemId", "InventoryItemId"); // Composite Key
+            
+            ra.Property(p => p.InventoryItemId)
+                .IsRequired();
+                
+            ra.Property(p => p.Quantity)
+                .HasColumnType("decimal(18,4)")
+                .IsRequired();
+        });
     }
 }

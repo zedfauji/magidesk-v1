@@ -8,8 +8,14 @@
     mc:Ignorable="d">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
         <NavigationView
             x:Name="RootNavigationView"
+            Grid.Row="0"
             IsBackButtonVisible="Visible"
             IsBackEnabled="True"
             PaneDisplayMode="Left"
@@ -32,5 +38,43 @@
 
             <Frame x:Name="ContentFrame" />
         </NavigationView>
+
+        <!-- Status Bar -->
+        <Grid Grid.Row="1" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" Padding="10,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="0" Spacing="5" Margin="0,0,20,0">
+                <TextBlock Text="TERMINAL:" FontWeight="Bold" Style="{StaticResource CaptionTextBlockStyle}"/>
+                <TextBlock x:Name="StatusTerminalId" Text="----" Style="{StaticResource CaptionTextBlockStyle}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Spacing="5" Margin="0,0,20,0">
+                <TextBlock Text="USER:" FontWeight="Bold" Style="{StaticResource CaptionTextBlockStyle}"/>
+                <TextBlock x:Name="StatusUser" Text="Not Logged In" Style="{StaticResource CaptionTextBlockStyle}"/>
+            </StackPanel>
+
+            <!-- Spacer -->
+
+            <StackPanel Orientation="Horizontal" Grid.Column="3" Spacing="5" Margin="0,0,20,0">
+                 <TextBlock Text="TAX INCLUDED:" FontWeight="Bold" Style="{StaticResource CaptionTextBlockStyle}"/>
+                 <TextBlock x:Name="StatusTaxIncluded" Text="YES" Style="{StaticResource CaptionTextBlockStyle}"/>
+            </StackPanel>
+
+            <TextBlock x:Name="StatusClock" Grid.Column="4" Text="00:00:00" FontWeight="SemiBold" Style="{StaticResource BodyStrongTextBlockStyle}" VerticalAlignment="Center"/>
+        </Grid>
+
+        <!-- Loading Overlay -->
+        <Grid x:Name="LoadingOverlay" Grid.RowSpan="2" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Visibility="Collapsed" Canvas.ZIndex="1000">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
+                <ProgressRing IsActive="True" Width="60" Height="60"/>
+                <TextBlock x:Name="LoadingStatus" Text="Initializing System..." Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

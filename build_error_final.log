@@ -1,0 +1,7 @@
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Services\GetOpenTicketsQueryHandler.cs(44,43): error CS1061: 'Table' does not contain a definition for 'Name' and no accessible extension method 'Name' accepting a first argument of type 'Table' could be found (are you missing a using directive or an assembly reference?) [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application\Magidesk.Application.csproj]
+
+Build FAILED.
+    7 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:00.74

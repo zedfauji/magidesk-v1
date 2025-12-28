@@ -29,8 +29,19 @@ public class GetOpenTicketsQueryHandler : IQueryHandler<GetOpenTicketsQuery, IEn
         {
             var getTicketQuery = new GetTicketQuery { TicketId = ticket.Id };
             var dto = await _getTicketQueryHandler.HandleAsync(getTicketQuery, cancellationToken);
+            
             if (dto != null)
             {
+                // Populate Table Name
+                if (dto.TableNumbers.Any())
+                {
+                    dto.TableName = $"Table {dto.TableNumbers.First()}";
+                }
+
+                // Populate Owner Name (Placeholder until IUserRepository exists)
+                // In future: Use IUserRepository.GetByIdAsync(dto.CreatedBy)
+                dto.OwnerName = "Server"; 
+                
                 result.Add(dto);
             }
         }

@@ -7,5 +7,6 @@ public enum TerminalTransactionType
     Drop,
     Payout,
     Bleed,
-    OpenFloat
+    OpenFloat,
+    NoSale
 }

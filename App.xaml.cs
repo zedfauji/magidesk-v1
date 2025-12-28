@@ -14,6 +14,8 @@ public partial class App : Microsoft.UI.Xaml.Application
 {
     private Window? _window;
 
+    public static Window? MainWindowInstance { get; private set; }
+
     public static IHost Host { get; private set; } = null!;
 
     public static IServiceProvider Services => Host.Services;
@@ -31,6 +33,14 @@ public partial class App : Microsoft.UI.Xaml.Application
                 services.AddInfrastructure();
 
                 // UI services
+                services.AddTransient<Magidesk.Presentation.ViewModels.OrderEntryViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.BackOfficeViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.MenuEditorViewModel>();
+
+                services.AddTransient<Magidesk.Presentation.ViewModels.ModifierEditorViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.InventoryViewModel>();
+
+                // Build the service providers
                 services.AddSingleton<NavigationService>();
 
                 // ViewModels
@@ -51,13 +61,50 @@ public partial class App : Microsoft.UI.Xaml.Application
                 services.AddTransient<Magidesk.Presentation.ViewModels.TableMapViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.SettleViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.SystemConfigViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.KitchenDisplayViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.LoginViewModel>();
+
             })
             .Build();
     }
 
-    protected override void OnLaunched(LaunchActivatedEventArgs args)
+    protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
         _window = new MainWindow();
+        var mainWindow = (MainWindow)_window; // Define mainWindow first
+        MainWindowInstance = mainWindow; // Assign MainWindowInstance after mainWindow is defined
         _window.Activate();
+
+        mainWindow.ShowLoading("Initializing System...");
+
+        try
+        {
+            var initService = Host.Services.GetRequiredService<Magidesk.Application.Interfaces.ISystemInitializationService>();
+            var result = await initService.InitializeSystemAsync();
+
+            if (result.IsSuccess)
+            {
+                // F-0002: Set Terminal ID in Status Bar
+                if (!string.IsNullOrEmpty(result.TerminalId))
+                {
+                    mainWindow.SetTerminalId(result.TerminalId);
+                }
+
+                mainWindow.HideLoading();
+                var navService = Host.Services.GetRequiredService<NavigationService>();
+                // F-0003: Navigate to Login Page first
+                navService.Navigate(typeof(Views.LoginPage));
+            }
+            else
+            {
+                // In a real scenario, we might navigate to a Settings page to fix DB config.
+                // For now, we show the failure in the loading overlay.
+                mainWindow.ShowLoading($"Startup Failed: {result.Message}"); 
+            }
+        }
+        catch (System.Exception ex)
+        {
+             mainWindow.ShowLoading($"Critical Error: {ex.Message}");
+        }
     }
 }

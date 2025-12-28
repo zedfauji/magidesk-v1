@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="using:Magidesk.Presentation.ViewModels"
+    xmlns:dtos="using:Magidesk.Application.DTOs"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -16,92 +17,112 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <TextBlock Text="Quick Actions" Style="{StaticResource TitleTextBlockStyle}" Margin="24,24,0,0"/>
+        <TextBlock Text="Quick Actions" Style="{StaticResource TitleTextBlockStyle}" Margin="24,24,0,12"/>
 
-        <!-- Main Switchboard Grid -->
-        <ScrollViewer Grid.Row="1" Padding="24">
-            <GridView SelectionMode="None">
-                <GridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="4"/>
-                    </ItemsPanelTemplate>
-                </GridView.ItemsPanel>
+        <!-- Main Switchboard Layout -->
+        <Grid Grid.Row="1" Padding="24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/> <!-- Open Tickets List (66%) -->
+                <ColumnDefinition Width="1*"/> <!-- Action Panel (33%) -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Left: Open Tickets List -->
+            <Grid Grid.Column="0" Margin="0,0,24,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
                 
-                <!-- New Ticket -->
-                <Button Command="{x:Bind ViewModel.NewTicketCommand}" 
-                        Width="200" Height="150" Margin="8" Background="#2E7D32" CornerRadius="8">
-                    <StackPanel Spacing="12">
-                        <FontIcon Glyph="&#xE710;" FontSize="40" Foreground="White"/>
-                        <TextBlock Text="New Ticket" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <!-- Edit Ticket / Open Tickets -->
-                <Button Command="{x:Bind ViewModel.EditTicketCommand}" 
-                        Width="200" Height="150" Margin="8" Background="#1565C0" CornerRadius="8">
-                    <StackPanel Spacing="12">
-                        <FontIcon Glyph="&#xE8F4;" FontSize="40" Foreground="White"/>
-                        <TextBlock Text="Edit Ticket" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <!-- Settle Ticket -->
-                <Button Command="{x:Bind ViewModel.SettleTicketCommand}" 
-                        Width="200" Height="150" Margin="8" Background="#6A1B9A" CornerRadius="8">
-                    <StackPanel Spacing="12">
-                        <FontIcon Glyph="&#xE8C7;" FontSize="40" Foreground="White"/>
-                        <TextBlock Text="Settle" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <!-- Manager Functions -->
-                <Button Command="{x:Bind ViewModel.ManagerFunctionsCommand}" 
-                        Width="200" Height="150" Margin="8" Background="#FF6F00" CornerRadius="8">
-                    <StackPanel Spacing="12">
-                        <FontIcon Glyph="&#xE77B;" FontSize="40" Foreground="White"/>
-                        <TextBlock Text="Manager" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
+                <TextBlock Text="Open Tickets" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,12"/>
                 
-                <!-- Drawer Pull -->
-                 <Button Command="{x:Bind ViewModel.DrawerPullCommand}" 
-                        Width="200" Height="150" Margin="8" Background="#455A64" CornerRadius="8">
-                    <StackPanel Spacing="12">
-                        <FontIcon Glyph="&#xE80C;" FontSize="40" Foreground="White"/>
-                        <TextBlock Text="Drawer Pull" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
+                <ListView ItemsSource="{x:Bind ViewModel.OpenTickets, Mode=OneWay}" 
+                          SelectedItem="{x:Bind ViewModel.SelectedTicket, Mode=TwoWay}"
+                          SelectionMode="Single">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="dtos:TicketDto">
+                            <Grid Padding="12" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" CornerRadius="4" Margin="0,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/> <!-- ID Badge -->
+                                    <ColumnDefinition Width="*"/>    <!-- Details -->
+                                    <ColumnDefinition Width="Auto"/> <!-- Total -->
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Background="{ThemeResource SystemControlHighlightAccentBrush}" CornerRadius="4" Padding="8,4">
+                                    <TextBlock Text="{x:Bind TicketNumber}" Foreground="White" FontWeight="Bold"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="12,0">
+                                    <TextBlock Text="{x:Bind TableName, TargetNullValue='No Table'}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{x:Bind OwnerName}" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                </StackPanel>
+                                
+                                <TextBlock Grid.Column="2" Text="{x:Bind TotalAmount}" FontWeight="Bold" VerticalAlignment="Center" Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
 
-                <!-- Tables -->
-                 <Button Command="{x:Bind ViewModel.TablesCommand}" 
-                        Width="200" Height="150" Margin="8" Background="#00838F" CornerRadius="8">
-                    <StackPanel Spacing="12">
-                        <FontIcon Glyph="&#xE7C2;" FontSize="40" Foreground="White"/> <!-- E7C2 = MapDrive or similar? Let's use generic placeholder or E8F1 (Map) -->
-                        <TextBlock Text="Tables" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
+            <!-- Right: Action Buttons -->
+            <ScrollViewer Grid.Column="1">
+                <StackPanel Spacing="12">
+                    <!-- New Ticket -->
+                    <Button Command="{x:Bind ViewModel.NewTicketCommand}" 
+                            HorizontalAlignment="Stretch" Height="80" Background="#2E7D32" CornerRadius="8">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <FontIcon Glyph="&#xE710;" FontSize="24" Foreground="White" VerticalAlignment="Center"/>
+                            <TextBlock Text="New Ticket" Foreground="White" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
 
-                <!-- Reports -->
-                 <Button Command="{x:Bind ViewModel.ReportsCommand}" 
-                        Width="200" Height="150" Margin="8" Background="#283593" CornerRadius="8">
-                    <StackPanel Spacing="12">
-                        <FontIcon Glyph="&#xE9F5;" FontSize="40" Foreground="White"/>
-                        <TextBlock Text="Reports" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
+                    <!-- Edit Ticket -->
+                    <Button Command="{x:Bind ViewModel.EditTicketCommand}" 
+                            HorizontalAlignment="Stretch" Height="80" Background="#1565C0" CornerRadius="8">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <FontIcon Glyph="&#xE70F;" FontSize="24" Foreground="White" VerticalAlignment="Center"/>
+                            <TextBlock Text="Edit Selected" Foreground="White" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
 
-                <!-- Settings -->
-                 <Button Command="{x:Bind ViewModel.SettingsCommand}" 
-                        Width="200" Height="150" Margin="8" Background="#546E7A" CornerRadius="8">
-                    <StackPanel Spacing="12">
-                        <FontIcon Glyph="&#xE713;" FontSize="40" Foreground="White"/>
-                        <TextBlock Text="System" Foreground="White" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
+                    <!-- Tables -->
+                    <Button Command="{x:Bind ViewModel.TablesCommand}" 
+                            HorizontalAlignment="Stretch" Height="60" CornerRadius="4">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <FontIcon Glyph="&#xE90E;" FontSize="20"/>
+                            <TextBlock Text="Table Map" FontSize="16" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
 
+                    <!-- Manager Functions -->
+                    <Button Command="{x:Bind ViewModel.ManagerFunctionsCommand}" 
+                            HorizontalAlignment="Stretch" Height="60" CornerRadius="4" Margin="0,24,0,0">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <FontIcon Glyph="&#xE716;" FontSize="20"/>
+                            <TextBlock Text="Manager" FontSize="16" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
 
-            </GridView>
-        </ScrollViewer>
+                     <!-- Logout -->
+                    <Button Command="{x:Bind ViewModel.LogoutCommand}" 
+                            HorizontalAlignment="Stretch" Height="60" Background="#C62828" CornerRadius="4">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <FontIcon Glyph="&#xE7E8;" FontSize="20" Foreground="White"/>
+                            <TextBlock Text="Logout" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    
+                    <!-- Shutdown -->
+                    <Button Command="{x:Bind ViewModel.ShutdownCommand}" 
+                            HorizontalAlignment="Stretch" Height="60" Background="#424242" CornerRadius="4">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <FontIcon Glyph="&#xE71A;" FontSize="20" Foreground="White"/>
+                            <TextBlock Text="Shutdown" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
 
         <!-- Footer / Clock / Info -->
         <Border Grid.Row="2" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Padding="12">
