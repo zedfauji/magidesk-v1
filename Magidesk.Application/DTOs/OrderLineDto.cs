@@ -24,6 +24,7 @@ public class OrderLineDto
     public bool IsBeverage { get; set; }
     public bool ShouldPrintToKitchen { get; set; }
     public bool PrintedToKitchen { get; set; }
+    public string? Instructions { get; set; } // F-0036
     public int? SeatNumber { get; set; }
     public bool TreatAsSeat { get; set; }
     public List<OrderLineModifierDto> Modifiers { get; set; } = new();

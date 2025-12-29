@@ -198,7 +198,8 @@ public sealed class TicketViewModel : ViewModelBase
         IsBusy = true;
         try 
         {
-             var dialog = new Magidesk.Presentation.Views.SplitTicketDialog(Ticket);
+             var dialog = new Magidesk.Views.SplitTicketDialog();
+             dialog.ViewModel.Initialize(Ticket);
              var result = await _navigationService.ShowDialogAsync(dialog);
              
              if (result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)

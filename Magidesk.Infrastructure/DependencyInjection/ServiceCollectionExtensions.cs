@@ -50,6 +50,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IModifierGroupRepository, ModifierGroupRepository>();
         services.AddScoped<IMenuModifierRepository, MenuModifierRepository>();
         services.AddScoped<IInventoryItemRepository, InventoryItemRepository>();
+        services.AddScoped<IAttendanceRepository, AttendanceRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
 
         // Register domain services (stateless, can be singleton or scoped)

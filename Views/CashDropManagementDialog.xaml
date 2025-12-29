@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.CashDropManagementDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dto="using:Magidesk.Application.DTOs"
+    mc:Ignorable="d"
+    Title="Cash Drops &amp; Bleeds"
+    PrimaryButtonText="Close"
+    DefaultButton="Primary">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8" Margin="0,0,0,12">
+            <Button Content="New Cash Drop" Command="{Binding AddCashDropCommand}" Background="Green" Foreground="White"/>
+            <Button Content="New Drawer Bleed" Command="{Binding AddDrawerBleedCommand}" Background="Orange" Foreground="White"/>
+            <Button Content="Delete Selected" Command="{Binding DeleteCommand}" Background="Red" Foreground="White"/>
+        </StackPanel>
+
+        <ListView Grid.Row="1" ItemsSource="{Binding Transactions}" SelectedItem="{Binding SelectedTransaction, Mode=TwoWay}"
+                  Height="300" Width="500" BorderThickness="1" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}">
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Padding="12,8" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Time" FontWeight="Bold"/>
+                        <TextBlock Grid.Column="1" Text="Type" FontWeight="Bold"/>
+                        <TextBlock Grid.Column="2" Text="Amount" FontWeight="Bold" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="3" Text="Reason" FontWeight="Bold" Margin="12,0,0,0"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="dto:CashTransactionUiDto">
+                    <Grid Padding="0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{x:Bind TimeDisplay}" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{x:Bind Type}" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="{x:Bind Amount}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="3" Text="{x:Bind Reason}" Margin="12,0,0,0" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentDialog>

@@ -97,6 +97,7 @@ public class GetTicketQueryHandler : IQueryHandler<GetTicketQuery, TicketDto?>
             IsBeverage = orderLine.IsBeverage,
             ShouldPrintToKitchen = orderLine.ShouldPrintToKitchen,
             PrintedToKitchen = orderLine.PrintedToKitchen,
+            Instructions = orderLine.Instructions, // F-0036
             SeatNumber = orderLine.SeatNumber,
             TreatAsSeat = orderLine.TreatAsSeat,
             Modifiers = orderLine.Modifiers.Select(MapModifierToDto).ToList(),
@@ -158,6 +159,7 @@ public class GetTicketQueryHandler : IQueryHandler<GetTicketQuery, TicketDto?>
             TaxRate = modifier.TaxRate,
             TaxAmount = modifier.TaxAmount.Amount,
             TotalAmount = modifier.TotalAmount.Amount,
+            SectionName = modifier.SectionName, // F-0037
             ShouldPrintToKitchen = modifier.ShouldPrintToKitchen,
             CreatedAt = modifier.CreatedAt
         };

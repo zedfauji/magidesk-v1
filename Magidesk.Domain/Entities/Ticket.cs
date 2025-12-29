@@ -297,7 +297,7 @@ public class Ticket
     /// <summary>
     /// Voids the ticket (cancels it before payment).
     /// </summary>
-    public void Void(UserId voidedBy)
+    public void Void(UserId voidedBy, string reason, bool waste)
     {
         if (!CanVoid())
         {
@@ -306,6 +306,8 @@ public class Ticket
 
         Status = TicketStatus.Voided;
         VoidedBy = voidedBy;
+        _properties["VoidReason"] = reason;
+        _properties["IsWasted"] = waste.ToString();
         ActiveDate = DateTime.UtcNow;
         IncrementVersion();
     }
@@ -801,8 +803,30 @@ public class Ticket
 
         IsTaxExempt = isTaxExempt;
         ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
         CalculateTotals();
     }
+
+    /// <summary>
+    /// Sets the number of guests for the ticket.
+    /// </summary>
+    public void SetNumberOfGuests(int numberOfGuests)
+    {
+        if (numberOfGuests < 0)
+        {
+             throw new BusinessRuleViolationException("Number of guests cannot be negative.");
+        }
+        
+        // Audit F-0023: Allow 0 if business logic allows "Skip"?
+        // Audit says "Skip guest count: Default to 1". 
+        // We will allow 0 if explicitly set, but UI defaults to 1. 
+
+        NumberOfGuests = numberOfGuests;
+        ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
+    }
+
+
 
     /// <summary>
     /// Sets the adjustment amount (positive only - for price increases).
@@ -878,6 +902,26 @@ public class Ticket
 
         DispatchedTime = DateTime.UtcNow;
         AssignedDriverId = driverId;
+        ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
+    }
+
+    /// <summary>
+    /// Transfers the ticket to a new owner.
+    /// </summary>
+    public void Transfer(UserId newOwner)
+    {
+        if (Status == TicketStatus.Closed || Status == TicketStatus.Voided || Status == TicketStatus.Refunded)
+        {
+            throw new DomainInvalidOperationException($"Cannot transfer ticket in {Status} status.");
+        }
+
+        if (newOwner == null)
+        {
+            throw new ArgumentNullException(nameof(newOwner));
+        }
+
+        CreatedBy = newOwner;
         ActiveDate = DateTime.UtcNow;
         IncrementVersion();
     }

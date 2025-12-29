@@ -91,6 +91,12 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.AddOrderLineComboCommand>, AddOrderLineComboCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.CloseTicketCommand>, CloseTicketCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.VoidTicketCommand>, VoidTicketCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.PayNowCommand>, PayNowCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.LogoutCommand>, LogoutCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.SettleTicketCommand>, SettleTicketCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.ClockInCommand>, ClockInCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.ClockOutCommand>, ClockOutCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.TransferTicketCommand>, TransferTicketCommandHandler>();
 
         // Register query handlers
         services.AddScoped<GetTicketQueryHandler>(); // Concrete class needed by other handlers

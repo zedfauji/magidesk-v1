@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,107 +9,177 @@ using Magidesk.Application.DTOs;
 using Magidesk.Application.Interfaces;
 using Magidesk.Domain.ValueObjects;
 using Magidesk.Presentation.Services;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Magidesk.Presentation.ViewModels;
 
 public class SplitTicketViewModel : ViewModelBase
 {
-    private readonly ICommandHandler<SplitTicketCommand, SplitTicketResult> _splitTicket;
-    private TicketDto _originalTicket = null!;
-    
-    public ObservableCollection<OrderLineDto> OriginalOrderLines { get; } = new();
-    public ObservableCollection<OrderLineDto> NewOrderLines { get; } = new();
-    
-    private OrderLineDto? _selectedOriginalLine;
-    public OrderLineDto? SelectedOriginalLine
+    private readonly ICommandHandler<SplitTicketCommand, SplitTicketResult> _splitTicketHandler;
+    private readonly IUserService _userService;
+
+    private TicketDto _originalTicket;
+    public TicketDto OriginalTicket
     {
-        get => _selectedOriginalLine;
-        set
-        {
-            if (SetProperty(ref _selectedOriginalLine, value))
-            {
-                 MoveRightCommand.RaiseCanExecuteChanged();
-            }
-        }
+        get => _originalTicket;
+        set => SetProperty(ref _originalTicket, value);
     }
 
-    private OrderLineDto? _selectedNewLine;
-    public OrderLineDto? SelectedNewLine
+    private ObservableCollection<OrderLineDto> _originalItems;
+    public ObservableCollection<OrderLineDto> OriginalItems
     {
-        get => _selectedNewLine;
-        set
-        {
-            if (SetProperty(ref _selectedNewLine, value))
-            {
-                MoveLeftCommand.RaiseCanExecuteChanged();
-            }
-        }
+        get => _originalItems;
+        set => SetProperty(ref _originalItems, value);
     }
-    
-    public RelayCommand MoveRightCommand { get; }
-    public RelayCommand MoveLeftCommand { get; }
+
+    private ObservableCollection<OrderLineDto> _splitItems;
+    public ObservableCollection<OrderLineDto> SplitItems
+    {
+        get => _splitItems;
+        set => SetProperty(ref _splitItems, value);
+    }
+
+    public decimal TotalAmountOriginal => OriginalItems?.Sum(i => i.TotalAmount) ?? 0;
+    public decimal TotalAmountSplit => SplitItems?.Sum(i => i.TotalAmount) ?? 0;
+
+    private string _errorMessage;
+    public string ErrorMessage
+    {
+        get => _errorMessage;
+        set => SetProperty(ref _errorMessage, value);
+    }
+
+    private bool _hasError;
+    public bool HasError
+    {
+        get => _hasError;
+        set => SetProperty(ref _hasError, value);
+    }
+
+    public ICommand MoveToSplitCommand { get; }
+    public ICommand MoveToOriginalCommand { get; }
+    public ICommand ConfirmSplitCommand { get; }
 
     public SplitTicketViewModel(
-        ICommandHandler<SplitTicketCommand, SplitTicketResult> splitTicket)
+        ICommandHandler<SplitTicketCommand, SplitTicketResult> splitTicketHandler,
+        IUserService userService)
     {
-        _splitTicket = splitTicket;
-        
-        MoveRightCommand = new RelayCommand(MoveRight, () => SelectedOriginalLine != null);
-        MoveLeftCommand = new RelayCommand(MoveLeft, () => SelectedNewLine != null);
+        _splitTicketHandler = splitTicketHandler;
+        _userService = userService;
+
+        SplitItems = new ObservableCollection<OrderLineDto>();
+        OriginalItems = new ObservableCollection<OrderLineDto>();
+
+        MoveToSplitCommand = new RelayCommand<object?>(MoveToSplit);
+        MoveToOriginalCommand = new RelayCommand<object?>(MoveToOriginal);
+        ConfirmSplitCommand = new AsyncRelayCommand<object?>(ConfirmSplitAsync);
     }
 
     public void Initialize(TicketDto ticket)
     {
-        _originalTicket = ticket;
-        OriginalOrderLines.Clear();
-        NewOrderLines.Clear();
+        OriginalTicket = ticket;
+        // Clone the list so we can manipulate it in UI without affecting the source until confirmed
+        OriginalItems = new ObservableCollection<OrderLineDto>(ticket.OrderLines);
+        SplitItems.Clear();
+        ErrorMessage = string.Empty;
+        HasError = false;
+        
+        RaiseTotalsChanged();
+    }
 
-        foreach (var line in ticket.OrderLines)
+    private void MoveToSplit(object? parameter)
+    {
+        if (parameter is IList<object> selectedItems)
         {
-            OriginalOrderLines.Add(line);
+            var itemsToMove = selectedItems.Cast<OrderLineDto>().ToList();
+            foreach (var item in itemsToMove)
+            {
+                OriginalItems.Remove(item);
+                SplitItems.Add(item);
+            }
+            RaiseTotalsChanged();
         }
     }
 
-    private void MoveRight()
+    private void MoveToOriginal(object? parameter)
     {
-        if (SelectedOriginalLine == null) return;
-        
-        var item = SelectedOriginalLine;
-        OriginalOrderLines.Remove(item);
-        NewOrderLines.Add(item);
-        
-        SelectedOriginalLine = null;
+        if (parameter is IList<object> selectedItems)
+        {
+            var itemsToMove = selectedItems.Cast<OrderLineDto>().ToList();
+            foreach (var item in itemsToMove)
+            {
+                SplitItems.Remove(item);
+                OriginalItems.Add(item);
+            }
+            RaiseTotalsChanged();
+        }
     }
 
-    private void MoveLeft()
+    private void RaiseTotalsChanged()
     {
-        if (SelectedNewLine == null) return;
-        
-        var item = SelectedNewLine;
-        NewOrderLines.Remove(item);
-        OriginalOrderLines.Add(item);
-        
-        SelectedNewLine = null;
+        OnPropertyChanged(nameof(TotalAmountOriginal));
+        OnPropertyChanged(nameof(TotalAmountSplit));
     }
-    
-    public async Task<SplitTicketResult> ExecuteSplitAsync(UserId splitBy)
+
+    private async Task ConfirmSplitAsync(object? parameter)
     {
-        if (NewOrderLines.Count == 0)
+        ErrorMessage = string.Empty;
+        HasError = false;
+
+        if (SplitItems.Count == 0)
         {
-             return new SplitTicketResult { Success = false, ErrorMessage = "No items selected to split." };
+            ErrorMessage = "No items selected for the new ticket.";
+            HasError = true;
+            return;
         }
 
-        var command = new SplitTicketCommand
+        if (OriginalItems.Count == 0)
         {
-            OriginalTicketId = _originalTicket.Id,
-            OrderLineIdsToSplit = NewOrderLines.Select(x => x.Id).ToList(),
-            SplitBy = splitBy,
-            TerminalId = Guid.Parse("00000000-0000-0000-0000-000000000001"), // TODO: proper terminal context
-            ShiftId = Guid.Parse("00000000-0000-0000-0000-000000000001"),    // TODO: proper shift context
-            OrderTypeId = _originalTicket.OrderTypeId
-        };
+            ErrorMessage = "Cannot move all items. Access 'Transfer Ticket' instead if moving everything (Not yet implemented).";
+            HasError = true;
+            return;
+        }
 
-        return await _splitTicket.HandleAsync(command);
+        try
+        {
+            var currentUser = _userService.CurrentUser;
+            if (currentUser == null)
+            {
+                ErrorMessage = "No user logged in.";
+                HasError = true;
+                return;
+            }
+
+            var command = new SplitTicketCommand
+            {
+                OriginalTicketId = OriginalTicket.Id,
+                OrderLineIdsToSplit = SplitItems.Select(x => x.Id).ToList(),
+                SplitBy = new UserId(currentUser.Id),
+                TerminalId = Guid.Empty, // TODO: Get actual Terminal ID
+                ShiftId = Guid.Empty,    // TODO: Get actual Shift ID
+                OrderTypeId = OriginalTicket.OrderTypeId,
+                GlobalId = Guid.NewGuid().ToString()
+            };
+
+            var result = await _splitTicketHandler.HandleAsync(command);
+
+            if (result.Success)
+            {
+                if (parameter is ContentDialog dialog)
+                {
+                    dialog.Hide();
+                }
+            }
+            else
+            {
+                ErrorMessage = result.ErrorMessage ?? "Unknown error during split.";
+                HasError = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+            HasError = true;
+        }
     }
 }

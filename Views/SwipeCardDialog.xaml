@@ -1,0 +1,33 @@
+<ContentDialog
+    x:Class="Magidesk.Views.SwipeCardDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:Magidesk.Presentation.ViewModels"
+    mc:Ignorable="d"
+    Title="{Binding Title}"
+    PrimaryButtonText="Manual Entry"
+    SecondaryButtonText="Enter Auth Code"
+    CloseButtonText="Cancel"
+    DefaultButton="None">
+
+    <Grid>
+        <StackPanel Spacing="20">
+            <TextBlock Text="{Binding InstructionText}" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Center"/>
+            
+            <!-- Hidden Input for Swipe Capture (PasswordBox prevents clipboard copy) -->
+            <!-- We will focus this on load -->
+            <PasswordBox x:Name="SwipeInputBox" 
+                         PasswordChanged="SwipeInputBox_PasswordChanged" 
+                         KeyDown="SwipeInputBox_KeyDown"
+                         PlaceholderText="Ready for Swipe..."
+                         HorizontalAlignment="Stretch"/>
+            
+            <TextBlock Text="Waiting for hardware input..." 
+                       FontStyle="Italic" 
+                       Opacity="0.6" 
+                       HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</ContentDialog>

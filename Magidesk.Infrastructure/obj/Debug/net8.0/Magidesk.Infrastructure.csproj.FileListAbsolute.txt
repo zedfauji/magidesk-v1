@@ -1,6 +1,6 @@
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure\bin\Debug\net8.0\Magidesk.Infrastructure.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure\bin\Debug\net8.0\Magidesk.Infrastructure.deps.json
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure\bin\Debug\net8.0\Magidesk.Infrastructure.runtimeconfig.json
-C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure\bin\Debug\net8.0\Magidesk.Infrastructure.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure\bin\Debug\net8.0\Magidesk.Infrastructure.pdb
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure\bin\Debug\net8.0\Magidesk.Application.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure\bin\Debug\net8.0\Magidesk.Domain.dll

@@ -9,5 +9,7 @@ public class VoidTicketCommand
 {
     public Guid TicketId { get; set; }
     public UserId VoidedBy { get; set; } = null!;
+    public string Reason { get; set; } = "Void";
+    public bool IsWasted { get; set; }
 }
 

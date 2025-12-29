@@ -1,0 +1,52 @@
+<ContentDialog
+    x:Class="Magidesk.Views.Dialogs.TicketFeeDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Magidesk.ViewModels"
+    xmlns:converters="using:Magidesk.Presentation.Converters"
+    mc:Ignorable="d"
+    Title="Add Ticket Fee"
+    PrimaryButtonText="Apply"
+    CloseButtonText="Cancel"
+    DefaultButton="Primary"
+    RequestedTheme="Dark">
+
+    <ContentDialog.Resources>
+        <converters:DecimalToDoubleConverter x:Key="DecimalToDoubleConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </ContentDialog.Resources>
+
+    <Grid RowSpacing="12" Width="300">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Fee Type Selection -->
+        <ComboBox Header="Fee Type" 
+                  ItemsSource="{x:Bind ViewModel.FeeTypes}" 
+                  SelectedItem="{x:Bind ViewModel.SelectedFeeType, Mode=TwoWay}"
+                  HorizontalAlignment="Stretch"/>
+
+        <!-- Amount -->
+        <NumberBox Grid.Row="1" 
+                   Header="Amount"
+                   Value="{x:Bind ViewModel.Amount, Mode=TwoWay, Converter={StaticResource DecimalToDoubleConverter}}"
+                   PlaceholderText="0.00"
+                   SpinButtonPlacementMode="Inline"
+                   LargeChange="1.0"
+                   SmallChange="0.1"
+                   HorizontalAlignment="Stretch"/>
+
+        <!-- Reason (Only for Adjustment) -->
+        <TextBox Grid.Row="2" 
+                 Header="Reason / Note" 
+                 Text="{x:Bind ViewModel.Reason, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 Visibility="{x:Bind ViewModel.IsReasonVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                 PlaceholderText="e.g. Corkage Fee, Correction"/>
+
+    </Grid>
+</ContentDialog>

@@ -175,7 +175,7 @@ public class SalesReportRepositoryTests : IDisposable
         var tVoid = Ticket.Create(2001, new UserId(Guid.NewGuid()), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
         SetProperty(tVoid, "SubtotalAmount", new Money(100m));
         SetProperty(tVoid, "TotalAmount", new Money(110m));
-        tVoid.Void(new UserId(Guid.NewGuid())); // Use public method if possible, or Reflection
+        tVoid.Void(new UserId(Guid.NewGuid()), "Test Reason", false); // Use public method if possible, or Reflection
         // The public Void method sets Status and ActiveDate.
         // Assuming Void method logic is sufficient, but let's ensure properties are set if we use helper
         SetProperty(tVoid, "ActiveDate", start.AddHours(10));

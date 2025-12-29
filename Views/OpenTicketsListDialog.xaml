@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.OpenTicketsListDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dto="using:Magidesk.Application.DTOs"
+    mc:Ignorable="d"
+    Title="Open Tickets Management"
+    PrimaryButtonText="Close"
+    DefaultButton="Primary">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8" Margin="0,0,0,12">
+            <Button Content="Resume" Command="{Binding ResumeCommand}" Background="Green" Foreground="White"/>
+            <Button Content="Transfer" Command="{Binding TransferCommand}" Background="Orange" Foreground="White"/>
+            <Button Content="Void" Command="{Binding VoidCommand}" Background="Red" Foreground="White"/>
+        </StackPanel>
+
+        <ListView Grid.Row="1" ItemsSource="{Binding Tickets}" SelectedItem="{Binding SelectedTicket, Mode=TwoWay}"
+                  Height="400" Width="600" BorderThickness="1" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}">
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Padding="12,8" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Ticket #" FontWeight="Bold"/>
+                        <TextBlock Grid.Column="1" Text="Table" FontWeight="Bold"/>
+                        <TextBlock Grid.Column="2" Text="Owner" FontWeight="Bold"/>
+                        <TextBlock Grid.Column="3" Text="Total" FontWeight="Bold" HorizontalAlignment="Right"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="dto:TicketDto">
+                    <Grid Padding="0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{x:Bind TicketNumber}" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{x:Bind TableName}" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="{x:Bind OwnerName}" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="3" Text="{x:Bind TotalAmount}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentDialog>

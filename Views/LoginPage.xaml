@@ -1,7 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Page
     x:Class="Magidesk.Presentation.Views.LoginPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Magidesk.Presentation.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -19,7 +21,8 @@
             <TextBlock Text="Next Gen Point of Sale" Style="{StaticResource SubtitleTextBlockStyle}" Opacity="0.6" HorizontalAlignment="Center"/>
             
             <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" Margin="0,50,0,0">
-               <Button Content="Shutdown System" Command="{Binding ShutdownCommand}" Background="DarkRed" Foreground="White" />
+               <Button Content="Clock In/Out" Command="{Binding ClockInOutCommand}" Background="#00695C" Foreground="White" Width="150" Height="40" FontSize="16"/>
+               <Button Content="Shutdown System" Command="{Binding ShutdownCommand}" Background="DarkRed" Foreground="White" Width="150" Height="40" FontSize="16"/>
             </StackPanel>
         </StackPanel>
 

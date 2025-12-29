@@ -2,6 +2,7 @@ using Magidesk.Application.Commands;
 using Magidesk.Application.Interfaces;
 using Magidesk.Domain.Entities;
 using Magidesk.Domain.Enumerations;
+using Magidesk.Domain.ValueObjects;
 
 namespace Magidesk.Application.Services;
 
@@ -39,6 +40,32 @@ public class ModifyOrderLineCommandHandler : ICommandHandler<ModifyOrderLineComm
 
         // Update quantity
         orderLine.UpdateQuantity(command.Quantity);
+        
+        // F-0036: Update Instructions
+        if (command.Instructions != null)
+        {
+            orderLine.SetInstructions(command.Instructions);
+        }
+
+        // F-0037: Update Modifiers
+        if (command.Modifiers != null)
+        {
+            var newModifiers = command.Modifiers.Select(m => 
+                OrderLineModifier.CreatePizzaSectionModifier(
+                    orderLine.Id,
+                    m.ModifierId ?? Guid.Empty, // Assuming ID is present for pizza modifiers
+                    m.Name,
+                    m.ModifierType,
+                    m.ItemCount,
+                    new Money(m.UnitPrice, "USD"), // Simplified currency
+                    new Money(m.UnitPrice, "USD"), // Base Price (simplified)
+                    m.SectionName ?? "Whole",
+                    "", // Multiplier Name
+                    m.TaxRate
+                )).ToList();
+            
+            orderLine.UpdateModifiers(newModifiers);
+        }
 
         // Recalculate ticket totals
         ticket.CalculateTotals();

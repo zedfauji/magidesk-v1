@@ -123,6 +123,16 @@
 
                 <!-- Payment Methods -->
                 <StackPanel Grid.Column="1" Spacing="12">
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Next $" Command="{x:Bind ViewModel.NextAmountCommand}" HorizontalAlignment="Stretch" Background="LightSlateGray" Foreground="White"/>
+                        <Button Grid.Column="1" Content="No Sale" Command="{x:Bind ViewModel.NoSaleCommand}" HorizontalAlignment="Stretch" Background="DarkRed" Foreground="White"/>
+                        <Button Grid.Column="0" Grid.ColumnSpan="2" Content="TEST WAIT" Command="{x:Bind ViewModel.TestWaitCommand}" Margin="0,10,0,0" Background="Orange" Foreground="Black"/>
+                    </Grid>
+
                     <Button Command="{x:Bind ViewModel.ProcessPaymentCommand}" 
                             HorizontalAlignment="Stretch" Height="60" Background="Green" Foreground="White"
                             CommandParameter="Cash">
@@ -132,9 +142,8 @@
                         </StackPanel>
                     </Button>
 
-                    <Button Command="{x:Bind ViewModel.ProcessPaymentCommand}" 
-                            HorizontalAlignment="Stretch" Height="60" Background="RoyalBlue" Foreground="White"
-                            CommandParameter="CreditCard">
+                    <Button Command="{x:Bind ViewModel.SwipeCardCommand}" 
+                            HorizontalAlignment="Stretch" Height="60" Background="RoyalBlue" Foreground="White">
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <FontIcon Glyph="&#xE8C9;" />
                             <TextBlock Text="CREDIT CARD" FontSize="18" FontWeight="SemiBold"/>

@@ -1,0 +1,39 @@
+<ContentDialog
+    x:Class="Magidesk.Views.Dialogs.SizeSelectionDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Magidesk.Presentation.ViewModels.Dialogs"
+    xmlns:domain="using:Magidesk.Domain.Entities"
+    mc:Ignorable="d"
+    Title="{x:Bind ViewModel.Title, Mode=OneWay}"
+    PrimaryButtonText="Cancel"
+    IsPrimaryButtonEnabled="True"
+    DefaultButton="None">
+
+    <ContentDialog.Resources>
+        <DataTemplate x:Key="SizeItemTemplate" x:DataType="domain:MenuModifier">
+            <Button Command="{Binding ElementName=RootDialog, Path=ViewModel.SelectSizeCommand}"
+                    CommandParameter="{Binding}"
+                    Width="120" Height="80" Margin="4"
+                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                <StackPanel>
+                    <TextBlock Text="{x:Bind Name}" TextWrapping="Wrap"  TextAlignment="Center" FontWeight="SemiBold" FontSize="16"/>
+                    <TextBlock Text="{Binding BasePrice}" TextAlignment="Center" FontSize="12" Opacity="0.8"/>
+                </StackPanel>
+            </Button>
+        </DataTemplate>
+    </ContentDialog.Resources>
+
+    <Grid x:Name="RootDialog">
+        <ItemsControl ItemsSource="{x:Bind ViewModel.Sizes, Mode=OneWay}"
+                      ItemTemplate="{StaticResource SizeItemTemplate}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </Grid>
+</ContentDialog>

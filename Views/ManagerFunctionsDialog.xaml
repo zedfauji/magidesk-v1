@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.ManagerFunctionsDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Manager Functions"
+    PrimaryButtonText="Close"
+    DefaultButton="Primary">
+
+    <Grid RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <GridView SelectionMode="None">
+            <Button Content="Drawer Pull" Command="{Binding DrawerPullCommand}" Height="100" Width="150" Margin="4"/>
+            <Button Content="Cash Drop" Command="{Binding CashDropCommand}" Height="100" Width="150" Margin="4"/>
+            <Button Content="Open Tickets" Command="{Binding SettleTicketCommand}" Height="100" Width="150" Margin="4"/>
+            <Button Content="Tips Report" Command="{Binding ReportsCommand}" Height="100" Width="150" Margin="4"/>
+            <Button Content="Clock In/Out" Command="{Binding ClockInOutCommand}" Height="100" Width="150" Margin="4"/>
+            <Button Content="System Config" Command="{Binding SettingsCommand}" Height="100" Width="150" Margin="4" Background="SlateGray" Foreground="White"/>
+        </GridView>
+    </Grid>
+</ContentDialog>

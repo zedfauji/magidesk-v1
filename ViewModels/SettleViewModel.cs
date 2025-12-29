@@ -13,6 +13,7 @@ public sealed class SettleViewModel : ViewModelBase
     private readonly IQueryHandler<GetTicketQuery, TicketDto?> _getTicket;
     private readonly ICommandHandler<ProcessPaymentCommand, ProcessPaymentResult> _processPayment;
     private readonly ICommandHandler<SetTaxExemptCommand, SetTaxExemptResult> _setTaxExempt;
+    private readonly ICommandHandler<LogoutCommand> _logoutHandler;
     private readonly Services.NavigationService _navigationService;
 
     private TicketDto? _ticket;
@@ -26,11 +27,13 @@ public sealed class SettleViewModel : ViewModelBase
         IQueryHandler<GetTicketQuery, TicketDto?> getTicket,
         ICommandHandler<ProcessPaymentCommand, ProcessPaymentResult> processPayment,
         ICommandHandler<SetTaxExemptCommand, SetTaxExemptResult> setTaxExempt,
+        ICommandHandler<LogoutCommand> logoutHandler,
         Services.NavigationService navigationService)
     {
         _getTicket = getTicket;
         _processPayment = processPayment;
         _setTaxExempt = setTaxExempt;
+        _logoutHandler = logoutHandler;
         _navigationService = navigationService;
 
         Title = "Settle Ticket";
@@ -41,6 +44,12 @@ public sealed class SettleViewModel : ViewModelBase
         ProcessPaymentCommand = new AsyncRelayCommand<string>(ProcessPaymentAsync);
         ToggleTaxExemptCommand = new AsyncRelayCommand(ToggleTaxExemptAsync);
         CloseCommand = new RelayCommand(OnClose);
+        
+        NextAmountCommand = new RelayCommand(OnNextAmount);
+        NoSaleCommand = new AsyncRelayCommand(OnNoSaleAsync);
+        LogoutUiCommand = new AsyncRelayCommand(OnLogoutAsync);
+        TestWaitCommand = new AsyncRelayCommand(TestWaitAsync);
+        SwipeCardCommand = new AsyncRelayCommand(SwipeCardAsync);
     }
 
     public TicketDto? Ticket
@@ -113,6 +122,59 @@ public sealed class SettleViewModel : ViewModelBase
     public AsyncRelayCommand<string> ProcessPaymentCommand { get; }
     public AsyncRelayCommand ToggleTaxExemptCommand { get; }
     public RelayCommand CloseCommand { get; }
+    public RelayCommand NextAmountCommand { get; }
+    public AsyncRelayCommand NoSaleCommand { get; }
+    public AsyncRelayCommand LogoutUiCommand { get; }
+
+    private async Task OnLogoutAsync()
+    {
+        try
+        {
+            // F-0008: Logout Action
+            // In a real app, we would get the current user from a session service.
+            var userId = Guid.Parse("00000000-0000-0000-0000-000000000001"); 
+            await _logoutHandler.HandleAsync(new LogoutCommand { UserId = userId });
+            _navigationService.Navigate(typeof(Magidesk.Presentation.Views.LoginPage));
+        }
+        catch (Exception ex)
+        {
+            Error = ex.Message;
+        }
+    }
+
+    private void OnNextAmount()
+    {
+        if (DueAmount <= 0) return;
+        
+        // Logic: Round up to next dollar. If 1.00, stays 1.00? Usually "Next Amount" implies next whole dollar if fractional, or next denomination.
+        // Forensic Audit says: "rounds due up to next integer (Math.ceil(dd))".
+        var nextAmt = Math.Ceiling(DueAmount);
+        if (nextAmt == DueAmount) 
+        {
+            // If already exact integer, maybe add 1? Or just keep it. 
+            // Floreant behavior: ceil. So 5.00 -> 5.00. 5.01 -> 6.00.
+        }
+        
+        // Update Numpad Input to reflect this (so user sees it)
+        NumpadInput = nextAmt.ToString("F2");
+        TenderAmount = nextAmt;
+    }
+
+    private async Task OnNoSaleAsync()
+    {
+        // F-0007: NO SALE behavior (drawer kick).
+        // Should trigger drawer kick command (if hardware connected) and log audit.
+        IsBusy = true;
+        try
+        {
+            // TODO: Call backend "OpenDrawerCommand" or similar.
+            // For now, simulated delay.
+            await Task.Delay(100);
+            Error = "Drawer Opened (No Sale)";
+        }
+        catch (Exception ex) { Error = ex.Message; }
+        finally { IsBusy = false; }
+    }
 
     public async Task InitializeAsync(Guid ticketId)
     {
@@ -306,5 +368,87 @@ public sealed class SettleViewModel : ViewModelBase
     private void OnClose()
     {
         _navigationService.GoBack();
+    }
+
+    public AsyncRelayCommand TestWaitCommand { get; }
+    public AsyncRelayCommand SwipeCardCommand { get; }
+
+    private async Task TestWaitAsync()
+    {
+        var dialog = new Magidesk.Views.PaymentProcessWaitDialog();
+        dialog.ViewModel.SetMessage("Testing Wait Dialog (3s)...");
+        
+        // Show dialog without awaiting it to allow background task simulation? 
+        // No, ShowDialogAsync awaits until closed. 
+        // We need a way to close it programmatically.
+        // Since we can't easily reference the dialog instance from VM after showing, 
+        // we usually run the background task BEFORE showing, or pass a unified controller.
+        // FOR THIS TEST: We will fire-and-forget the closer logic before showing.
+        
+        var closeTask = Task.Run(async () =>
+        {
+            await Task.Delay(3000);
+            // Must dispatch to UI thread to close
+            _navigationService.DispatcherQueue.TryEnqueue(() =>
+            {
+                dialog.ViewModel.AllowClose();
+                dialog.Hide(); // ContentDialog.Hide() closes it
+            });
+        });
+
+        await _navigationService.ShowDialogAsync(dialog);
+    }
+
+    private async Task SwipeCardAsync()
+    {
+        var dialog = new Magidesk.Views.SwipeCardDialog();
+        var result = await _navigationService.ShowDialogAsync(dialog);
+
+        // result is ContentDialogResult which is an enum (None, Primary, Secondary)
+        // Primary = Manual Entry
+        // Secondary = Auth Code
+        // None = Cancel or Enter key (if we hide)
+
+        if (result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
+        {
+            // Manual Entry Requested
+        }
+        else if (result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Secondary)
+        {
+            // Auth Code Requested
+            var authDialog = new Magidesk.Views.AuthorizationCodeDialog();
+            var authResult = await _navigationService.ShowDialogAsync(authDialog);
+
+            if (authResult == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
+            {
+                // Proceed with Auth Code
+                // Simulating processing the manual auth
+                var authCode = authDialog.ViewModel.AuthCode;
+                var cardType = authDialog.ViewModel.SelectedCardType;
+                
+                if (!string.IsNullOrWhiteSpace(authCode))
+                {
+                    // Trigger Payment Process with Manual Auth data
+                    // We need to modify ProcessPaymentAsync to accept this extra data or handle it here.
+                    // For now, we'll assume ProcessPaymentAsync can handle generic card logic if passed properly.
+                    // But ProcessPaymentAsync signature is just (string paymentType).
+                    // We must update the state of the command/DTO before calling it, or pass args.
+                    
+                    // Hack for Phase 4: We will log it to error/status for verification
+                    Error = $"Processing Manual Auth: {cardType} - {authCode}";
+                    
+                    // In a real app, we would set these on a "CurrentPaymentContext" or pass as DTO.
+                    // For audit compliance, we should verify the "ManualVoiceAuth" flow.
+                }
+            }
+        }
+        else
+        {
+            // Check for data
+            if (!string.IsNullOrEmpty(dialog.ViewModel.SwipeData))
+            {
+                // Process Swipe Data
+            }
+        }
     }
 }

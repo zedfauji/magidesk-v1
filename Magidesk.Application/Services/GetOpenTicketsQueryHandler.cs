@@ -10,13 +10,16 @@ namespace Magidesk.Application.Services;
 public class GetOpenTicketsQueryHandler : IQueryHandler<GetOpenTicketsQuery, IEnumerable<TicketDto>>
 {
     private readonly ITicketRepository _ticketRepository;
+    private readonly IUserRepository _userRepository;
     private readonly GetTicketQueryHandler _getTicketQueryHandler;
 
     public GetOpenTicketsQueryHandler(
         ITicketRepository ticketRepository,
+        IUserRepository userRepository,
         GetTicketQueryHandler getTicketQueryHandler)
     {
         _ticketRepository = ticketRepository;
+        _userRepository = userRepository;
         _getTicketQueryHandler = getTicketQueryHandler;
     }
 
@@ -38,9 +41,9 @@ public class GetOpenTicketsQueryHandler : IQueryHandler<GetOpenTicketsQuery, IEn
                     dto.TableName = $"Table {dto.TableNumbers.First()}";
                 }
 
-                // Populate Owner Name (Placeholder until IUserRepository exists)
-                // In future: Use IUserRepository.GetByIdAsync(dto.CreatedBy)
-                dto.OwnerName = "Server"; 
+                // Populate Owner Name
+                var owner = await _userRepository.GetByIdAsync(ticket.CreatedBy.Value, cancellationToken);
+                dto.OwnerName = owner != null ? $"{owner.FirstName} {owner.LastName}" : "Unknown";
                 
                 result.Add(dto);
             }

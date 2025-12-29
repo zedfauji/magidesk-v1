@@ -100,7 +100,9 @@ public sealed partial class MainWindow : Window
 
         if (tag == "drawerPull")
         {
-            _navigation.Navigate(typeof(Views.DrawerPullReportPage));
+             var dialog = new Views.DrawerPullReportDialog();
+             dialog.XamlRoot = Content.XamlRoot;
+             _ = dialog.ShowAsync();
             return;
         }
 

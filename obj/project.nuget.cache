@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "9BilovLtL8I=",
+  "dgSpecHash": "uviCB6E83vI=",
   "success": true,
   "projectFilePath": "C:\\Users\\giris\\Documents\\Code\\Redesign-POS\\Windows Based POS\\Magidesk\\Magidesk.Presentation.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\giris\\.nuget\\packages\\communitytoolkit.mvvm\\8.4.0\\communitytoolkit.mvvm.8.4.0.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.0\\microsoft.entityframeworkcore.8.0.0.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.0\\microsoft.entityframeworkcore.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.0\\microsoft.entityframeworkcore.analyzers.8.0.0.nupkg.sha512",

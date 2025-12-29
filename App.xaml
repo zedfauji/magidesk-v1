@@ -50,6 +50,7 @@
             <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
             <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
             <converters:StringFormatConverter x:Key="StringFormatConverter"/>
+            <converters:StringColorToBrushConverter x:Key="StringColorToBrushConverter"/>
 
              <!-- Standard Text Styles -->
              <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock">

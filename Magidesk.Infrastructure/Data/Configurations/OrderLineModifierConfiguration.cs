@@ -106,6 +106,9 @@ public class OrderLineModifierConfiguration : IEntityTypeConfiguration<OrderLine
                 .IsRequired();
         });
 
+        builder.Property(olm => olm.SectionName)
+            .HasMaxLength(50);
+
         builder.Property(olm => olm.PriceStrategy)
             .HasConversion<int?>()
             .IsRequired(false);

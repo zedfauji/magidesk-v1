@@ -145,5 +145,9 @@ public class OrderType
     {
         return _properties.TryGetValue(key, out var value) ? value : null;
     }
+
+    // F-0020 Helpers
+    public bool RequiresTable => GetProperty("RequiresTable")?.ToLower() == "true";
+    public bool RequiresCustomer => GetProperty("RequiresCustomer")?.ToLower() == "true";
 }
 

@@ -17,6 +17,7 @@ public class OrderLineModifierDto
     public decimal TaxRate { get; set; }
     public decimal TaxAmount { get; set; }
     public decimal TotalAmount { get; set; }
+    public string? SectionName { get; set; } // F-0037
     public bool ShouldPrintToKitchen { get; set; }
     public DateTime CreatedAt { get; set; }
 }

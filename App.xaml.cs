@@ -2,7 +2,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 using Magidesk.Application.DependencyInjection;
+using Magidesk.Application.Interfaces;
 using Magidesk.Infrastructure.DependencyInjection;
+using Magidesk.Infrastructure.Repositories;
+using Magidesk.Infrastructure.Services;
 using Magidesk.Presentation.Services;
 
 namespace Magidesk.Presentation;
@@ -41,7 +44,15 @@ public partial class App : Microsoft.UI.Xaml.Application
                 services.AddTransient<Magidesk.Presentation.ViewModels.InventoryViewModel>();
 
                 // Build the service providers
+                // services.AddScoped<IMenuRepository, InMemoryMenuRepository>(); // Using real repo from Infrastructure
+                // services.AddScoped<ITicketRepository, InMemoryTicketRepository>(); // Using real repo from Infrastructure
+                // services.AddScoped<ICashSessionRepository, InMemoryCashSessionRepository>(); // Using real repo from Infrastructure
+                // services.AddScoped<IAttendanceRepository, InMemoryAttendanceRepository>(); // Using real repo from Infrastructure
+                // services.AddScoped<IAuditEventRepository, InMemoryAuditEventRepository>(); // Using real repo from Infrastructure
+
                 services.AddSingleton<NavigationService>();
+                services.AddSingleton<IUserService, UserService>();
+                services.AddSingleton<IPrintingService, PrintingService>();
 
                 // ViewModels
                 services.AddTransient<Magidesk.Presentation.ViewModels.CashSessionViewModel>();
@@ -63,6 +74,15 @@ public partial class App : Microsoft.UI.Xaml.Application
                 services.AddTransient<Magidesk.Presentation.ViewModels.SystemConfigViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.KitchenDisplayViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.LoginViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.CashDropManagementViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.VoidTicketViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.OpenTicketsListViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.PaymentProcessWaitViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.SwipeCardViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.AuthorizationCodeViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.AuthorizationCaptureBatchViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.GuestCountViewModel>();
+
 
             })
             .Build();

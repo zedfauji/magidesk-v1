@@ -1,137 +1,91 @@
 using Magidesk.Application.DTOs;
 using Magidesk.Application.Interfaces;
 using Magidesk.Application.Queries;
+using Magidesk.Presentation.Services; // Ensure NavigationService is available
+using System.Windows.Input;
 
 namespace Magidesk.Presentation.ViewModels;
 
-public sealed class DrawerPullReportViewModel : ViewModelBase
+public class DrawerPullReportViewModel : ViewModelBase
 {
-    private readonly IQueryHandler<GetDrawerPullReportQuery, GetDrawerPullReportResult> _getReport;
-    private readonly IQueryHandler<GetCurrentCashSessionQuery, GetCurrentCashSessionResult> _getSession;
+    private readonly IQueryHandler<GetDrawerPullReportQuery, GetDrawerPullReportResult> _reportQueryHandler;
+    private readonly IQueryHandler<GetCurrentCashSessionQuery, CashSessionDto?> _currentSessionHandler;
+    private readonly NavigationService _navigationService;
 
-    private string _cashSessionIdText = string.Empty;
     private DrawerPullReportDto? _report;
-    private string? _error;
-
-    public DrawerPullReportViewModel(
-        IQueryHandler<GetDrawerPullReportQuery, GetDrawerPullReportResult> getReport,
-        IQueryHandler<GetCurrentCashSessionQuery, GetCurrentCashSessionResult> getSession)
-    {
-        _getReport = getReport;
-        _getSession = getSession;
-        Title = "Drawer Pull Report";
-
-        LoadReportCommand = new AsyncRelayCommand(LoadReportAsync);
-    }
-
-    public async Task InitializeAsync()
-    {
-        IsBusy = true;
-        Error = null;
-        try
-        {
-             // TODO: Get actual logged in user
-            var userId = Guid.Parse("00000000-0000-0000-0000-000000000001");
-            var result = await _getSession.HandleAsync(new GetCurrentCashSessionQuery { UserId = userId });
-            
-            if (result.CashSession != null)
-            {
-                CashSessionIdText = result.CashSession.Id.ToString();
-                await LoadReportAsync();
-            }
-            else
-            {
-                Error = "No active cash session found for this user.";
-            }
-        }
-        catch (Exception ex)
-        {
-            Error = ex.Message;
-        }
-        finally
-        {
-            IsBusy = false;
-        }
-    }
-
-    public string CashSessionIdText
-    {
-        get => _cashSessionIdText;
-        set => SetProperty(ref _cashSessionIdText, value);
-    }
+    private bool _isLoading;
 
     public DrawerPullReportDto? Report
     {
         get => _report;
-        private set
-        {
-            if (SetProperty(ref _report, value))
-            {
-                OnPropertyChanged(nameof(HasReport));
-                OnPropertyChanged(nameof(HeaderText));
-                OnPropertyChanged(nameof(SummaryText));
-                OnPropertyChanged(nameof(Payouts));
-                OnPropertyChanged(nameof(CashDrops));
-                OnPropertyChanged(nameof(DrawerBleeds));
-            }
-        }
+        set => SetProperty(ref _report, value);
     }
 
-    public bool HasReport => Report != null;
-
-    public string HeaderText => Report == null
-        ? "No report loaded"
-        : $"CashSession: {Report.CashSessionId}\nUser: {Report.UserId}\nOpened: {Report.OpenedAt}  Closed: {Report.ClosedAt}";
-
-    public string SummaryText => Report == null
-        ? string.Empty
-        : $"Opening: {Report.OpeningBalance}  Expected: {Report.ExpectedCash}  Actual: {Report.ActualCash}  Diff: {Report.Difference}\n" +
-          $"Cash receipts: {Report.TotalCashReceipts}  Cash refunds: {Report.TotalCashRefunds}  Cash payments: {Report.CashPaymentCount}\n" +
-          $"Payouts: {Report.TotalPayouts}  Drops: {Report.TotalCashDrops}  Bleeds: {Report.TotalDrawerBleeds}";
-
-    public IReadOnlyList<PayoutDto> Payouts => Report?.Payouts ?? new List<PayoutDto>();
-    public IReadOnlyList<CashDropDto> CashDrops => Report?.CashDrops ?? new List<CashDropDto>();
-    public IReadOnlyList<DrawerBleedDto> DrawerBleeds => Report?.DrawerBleeds ?? new List<DrawerBleedDto>();
-
-    public string? Error
+    public bool IsLoading
     {
-        get => _error;
-        private set
-        {
-            if (SetProperty(ref _error, value))
-            {
-                OnPropertyChanged(nameof(HasError));
-            }
-        }
+        get => _isLoading;
+        set => SetProperty(ref _isLoading, value);
     }
 
-    public bool HasError => !string.IsNullOrWhiteSpace(Error);
+    public ICommand PrintCommand { get; }
+    public ICommand CloseCommand { get; }
 
-    public AsyncRelayCommand LoadReportCommand { get; }
-
-    private async Task LoadReportAsync()
+    public DrawerPullReportViewModel(
+        IQueryHandler<GetDrawerPullReportQuery, GetDrawerPullReportResult> reportQueryHandler,
+        IQueryHandler<GetCurrentCashSessionQuery, CashSessionDto?> currentSessionHandler,
+        NavigationService navigationService)
     {
-        Error = null;
-        IsBusy = true;
+        _reportQueryHandler = reportQueryHandler;
+        _currentSessionHandler = currentSessionHandler;
+        _navigationService = navigationService;
 
+        PrintCommand = new AsyncRelayCommand(PrintAsync);
+        CloseCommand = new RelayCommand(Close);
+    }
+
+    public async Task InitializeAsync()
+    {
+        IsLoading = true;
         try
         {
-            if (!Guid.TryParse(CashSessionIdText, out var cashSessionId))
+            var session = await _currentSessionHandler.HandleAsync(new GetCurrentCashSessionQuery());
+            if (session == null)
             {
-                Error = "Invalid CashSessionId.";
+                // No active session. 
+                // In a real scenario, we might want to allow looking up past sessions or report "No active session".
+                // For MVP parity F-0012, we likely assume current session context.
                 return;
             }
 
-            var result = await _getReport.HandleAsync(new GetDrawerPullReportQuery { CashSessionId = cashSessionId });
+            var result = await _reportQueryHandler.HandleAsync(new GetDrawerPullReportQuery { CashSessionId = session.Id });
             Report = result.Report;
         }
         catch (Exception ex)
         {
-            Error = ex.Message;
+             // Log or Handle
+             System.Diagnostics.Debug.WriteLine($"Error loading drawer pull report: {ex.Message}");
         }
         finally
         {
-            IsBusy = false;
+            IsLoading = false;
         }
+    }
+
+    private async Task PrintAsync()
+    {
+        // TODO: Implement Print Service integration (F-0012 Parity Gap: Printing)
+        // For now, this is a placeholder.
+        await Task.Yield(); 
+    }
+
+    private void Close()
+    {
+        // View logic handles dialog closure via binding or code-behind interaction
+        // Typically dialog ViewModels might expose a 'RequestClose' event or similar if strictly MVVM,
+        // or the View just binds the Close button to `DialogResult = Cancel`.
+        // Here, we'll assume the View's Close button handles the ContentDialog result directly for simplicity,
+        // OR we can use the NavigationService to close if it supports it.
+        // For ContentDialogs, usually the command is just bound to the dialog's Primary/Secondary/Close button logic.
+        // We'll leave this empty as the XAML Close Button usually handles this.
     }
 }

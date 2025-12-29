@@ -36,6 +36,9 @@ public class OrderLineConfiguration : IEntityTypeConfiguration<OrderLine>
         builder.Property(ol => ol.GroupName)
             .HasMaxLength(100);
 
+        builder.Property(ol => ol.Instructions)
+            .HasMaxLength(500);
+            
         builder.Property(ol => ol.Quantity)
             .HasPrecision(18, 3)
             .IsRequired();

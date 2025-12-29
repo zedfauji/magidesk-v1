@@ -49,7 +49,7 @@ public class VoidTicketCommandHandler : ICommandHandler<VoidTicketCommand>
         }
 
         // Void ticket
-        ticket.Void(command.VoidedBy);
+        ticket.Void(command.VoidedBy, command.Reason, command.IsWasted);
 
         // Update ticket
         await _ticketRepository.UpdateAsync(ticket, cancellationToken);

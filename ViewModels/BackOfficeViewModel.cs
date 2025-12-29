@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Magidesk.Presentation.Services;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -24,6 +25,7 @@ public partial class BackOfficeViewModel : ViewModelBase
 
     public ICommand NavigateCommand { get; }
     public ICommand GoBackCommand { get; }
+    public ICommand CaptureBatchCommand { get; }
 
     public BackOfficeViewModel(NavigationService navigationService)
     {
@@ -32,6 +34,7 @@ public partial class BackOfficeViewModel : ViewModelBase
         
         NavigateCommand = new RelayCommand<NavigationItem>(Navigate);
         GoBackCommand = new RelayCommand(GoBack);
+        CaptureBatchCommand = new AsyncRelayCommand(CaptureBatchAsync);
         
         // Define Navigation Items
         NavigationItems.Add(new NavigationItem("Menu Editor", "Edit Categories, Groups, Items", "\uE70F", typeof(MenuEditorPage)));
@@ -42,6 +45,12 @@ public partial class BackOfficeViewModel : ViewModelBase
         NavigationItems.Add(new NavigationItem("Settings", "System Configuration", "\uE713", typeof(SystemConfigPage)));
     }
 
+    private async Task CaptureBatchAsync()
+    {
+        var dialog = new Magidesk.Views.AuthorizationCaptureBatchDialog();
+        await _navigationService.ShowDialogAsync(dialog);
+    }
+    
     public ObservableCollection<NavigationItem> NavigationItems { get; } = new();
 
     private void Navigate(NavigationItem? item)

@@ -44,6 +44,9 @@ public class OrderLine
     public bool ShouldPrintToKitchen { get; private set; }
     public bool PrintedToKitchen { get; private set; }
     
+    // F-0036: Cooking Instructions
+    public string? Instructions { get; private set; }
+    
     // Seat
     public int? SeatNumber { get; private set; }
     public bool TreatAsSeat { get; private set; }
@@ -296,6 +299,30 @@ public class OrderLine
     public void SetPrinterGroup(Guid? printerGroupId)
     {
         PrinterGroupId = printerGroupId;
+    }
+
+    /// <summary>
+    /// Sets cooking instructions.
+    /// </summary>
+    public void SetInstructions(string? instructions)
+    {
+        Instructions = instructions;
+    }
+
+    /// <summary>
+    /// Updates the modifiers list (replacing existing ones).
+    /// </summary>
+    public void UpdateModifiers(IEnumerable<OrderLineModifier> newModifiers)
+    {
+        _modifiers.Clear();
+        _addOns.Clear();
+
+        foreach (var modifier in newModifiers)
+        {
+            AddModifier(modifier);
+        }
+        
+        CalculatePrice();
     }
 }
 

@@ -35,6 +35,12 @@ public class CreateTicketCommandHandler : ICommandHandler<CreateTicketCommand, C
             command.OrderTypeId,
             command.GlobalId);
 
+        // Set Guest Count (F-0023)
+        if (command.NumberOfGuests > 0)
+        {
+            ticket.SetNumberOfGuests(command.NumberOfGuests);
+        }
+
         // Set optional properties
         if (command.CustomerId.HasValue)
         {

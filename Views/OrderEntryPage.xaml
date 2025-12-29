@@ -7,17 +7,180 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:dto="using:Magidesk.Application.DTOs"
     xmlns:entities="using:Magidesk.Domain.Entities"
+    xmlns:converters="using:Magidesk.Presentation.Converters"
     mc:Ignorable="d"
+    Name="RootPage"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:InverseBooleanConverter x:Key="InverseBoolConverter"/>
+    </Page.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Left Column: Menu Selection -->
-        <Grid Grid.Column="0" Padding="12">
+        <!-- Left Column: Ticket Panel -->
+        <Grid Grid.Column="0" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" Padding="16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Ticket Header -->
+            <StackPanel Spacing="8">
+                <TextBlock Text="Current Ticket" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                <TextBlock Text="{x:Bind ViewModel.TicketHeaderText, Mode=OneWay}" 
+                           FontSize="14" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                <TextBlock Text="{x:Bind ViewModel.GuestCountText, Mode=OneWay}" 
+                           FontSize="12" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                           Visibility="{x:Bind ViewModel.HasTicket, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                 
+                 <!-- Search Button (Triggers Dialog F-0034) -->
+                 <Button Content="Search Items" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.SearchItemCommand}">
+                    <Button.ContentTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <FontIcon Glyph="&#xE721;"/>
+                                <TextBlock Text="{Binding}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </Button.ContentTemplate>
+                 </Button>
+            </StackPanel>
+
+            <!-- Order Lines -->
+            <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.OrderLines, Mode=OneWay}" Background="White" CornerRadius="4" Margin="0,12,0,0">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="dto:OrderLineDto">
+                        <Grid Padding="12,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Name and Modifiers -->
+                            <StackPanel>
+                                <TextBlock Text="{x:Bind MenuItemName}" FontWeight="SemiBold"/>
+                                 <ItemsControl ItemsSource="{x:Bind Modifiers}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" FontSize="10" Foreground="Gray" Margin="8,0,0,0"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <!-- F-0036: Display Instructions -->
+                                <TextBlock Text="{x:Bind Instructions}" FontSize="10" Foreground="Blue" FontStyle="Italic" Margin="8,2,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            
+                            <!-- Qty Controls -->
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" Margin="8,0">
+                                <Button Content="-" Padding="4,0" Height="24" Width="24" 
+                                        Command="{Binding ElementName=RootPage, Path=ViewModel.DecrementQuantityCommand}" 
+                                        CommandParameter="{x:Bind}"
+                                        IsEnabled="{x:Bind PrintedToKitchen, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"/>
+                                <TextBlock Text="{x:Bind Quantity}" VerticalAlignment="Center" FontWeight="Bold"/>
+                                <Button Content="+" Padding="4,0" Height="24" Width="24"
+                                        Command="{Binding ElementName=RootPage, Path=ViewModel.IncrementQuantityCommand}" 
+                                        CommandParameter="{x:Bind}"
+                                        IsEnabled="{x:Bind PrintedToKitchen, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"/>
+                            </StackPanel>
+
+                            <!-- Price and Actions -->
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
+                                <TextBlock Text="{x:Bind TotalAmount}" VerticalAlignment="Center"/>
+                                
+                                <!-- F-0036: Instructions -->
+                                <Button Background="Transparent" BorderThickness="0" Padding="4"
+                                        ToolTipService.ToolTip="Cooking Instructions"
+                                        Command="{Binding ElementName=RootPage, Path=ViewModel.AddCookingInstructionCommand}"
+                                        CommandParameter="{x:Bind}"
+                                        IsEnabled="{x:Bind PrintedToKitchen, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}">
+                                    <FontIcon Glyph="&#xE70F;" FontFamily="Segoe MDL2 Assets" FontSize="14"/>
+                                </Button>
+                                                                <!-- F-0038: Generic Edit Modifiers Button (Handles Pizza check internally) -->
+                                    <Button Style="{StaticResource IconButtonStyle}"
+                                            Command="{x:Bind ViewModel.EditModifiersCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            ToolTipService.ToolTip="Edit Modifiers"
+                                            IsEnabled="{x:Bind PrintedToKitchen, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}">
+                                        <FontIcon Glyph="&#xE8FD;" />
+                                    </Button>
+
+                                <!-- Delete -->
+                                <Button Background="Transparent" BorderThickness="0" Padding="4" 
+                                        Command="{Binding ElementName=RootPage, Path=ViewModel.RemoveItemCommand}"
+                                        CommandParameter="{x:Bind}"
+                                        IsEnabled="{x:Bind PrintedToKitchen, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}">
+                                    <FontIcon Glyph="&#xE74D;" FontFamily="Segoe MDL2 Assets" FontSize="14" Foreground="Red"/>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!-- Totals and Actions -->
+            <StackPanel Grid.Row="2" Spacing="4" Margin="0,12,0,0">
+                <Grid>
+                    <TextBlock Text="Subtotal" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                    <TextBlock Text="{x:Bind ViewModel.SubTotalText, Mode=OneWay}" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid>
+                    <TextBlock Text="Tax" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                    <TextBlock Text="{x:Bind ViewModel.TaxText, Mode=OneWay}" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid Visibility="{x:Bind ViewModel.HasDiscount, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock Text="Discount" Foreground="Red"/>
+                    <TextBlock Text="{x:Bind ViewModel.DiscountText, Mode=OneWay}" Foreground="Red" HorizontalAlignment="Right"/>
+                </Grid>
+                <Rectangle Height="1" Fill="{ThemeResource SystemControlBackgroundBaseLowBrush}" Margin="0,4"/>
+                <Grid>
+                    <TextBlock Text="Total Due" FontSize="18" FontWeight="Bold"/>
+                    <TextBlock Text="{x:Bind ViewModel.TotalsText, Mode=OneWay}" 
+                               FontSize="18" FontWeight="Bold" HorizontalAlignment="Right"/>
+                </Grid>
+
+                    <Grid ColumnSpacing="8" Margin="0,0,0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Qty" Command="{x:Bind ViewModel.SetQuantityCommand}" Width="60"/>
+                        <Button Grid.Column="1" Content="Fee" Command="{x:Bind ViewModel.AddFeeCommand}" Width="60"/>
+                        <TextBlock Grid.Column="2" Text="{x:Bind ViewModel.PendingQuantityText, Mode=OneWay}" 
+                                   VerticalAlignment="Center" FontWeight="Bold" 
+                                   Visibility="{x:Bind ViewModel.IsPendingQuantityVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    </Grid>
+
+                <Grid ColumnSpacing="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                     <!-- Placeholder actions -->
+                    <Button Content="Misc" Command="{x:Bind ViewModel.AddMiscItemCommand}" HorizontalAlignment="Stretch" IsEnabled="{x:Bind ViewModel.HasTicket, Mode=OneWay}"/>
+                    <Button Grid.Column="1" Content="Settle" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.SettleUiCommand}" IsEnabled="{x:Bind ViewModel.HasTicket, Mode=OneWay}"/>
+                    <Button Grid.Column="2" Content="Pay Now" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.PayNowUiCommand}" IsEnabled="{x:Bind ViewModel.HasTicket, Mode=OneWay}" Background="Green" Foreground="White"/>
+                    <Button Grid.Column="3" Content="Split" Command="{x:Bind ViewModel.SplitTicketUiCommand}" HorizontalAlignment="Stretch" IsEnabled="{x:Bind ViewModel.HasTicket, Mode=OneWay}"/>
+                    <Button Grid.Column="4" Content="Print" Command="{x:Bind ViewModel.PrintTicketCommand}" HorizontalAlignment="Stretch" IsEnabled="{x:Bind ViewModel.HasTicket, Mode=OneWay}"/>
+                    <Button Grid.Column="5" Content="Send" Command="{x:Bind ViewModel.SendToKitchenCommand}" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" IsEnabled="{x:Bind ViewModel.HasUnsentItems, Mode=OneWay}"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+        <!-- Right Column: Menu Selection -->
+        <Grid Grid.Column="1" Padding="12">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -91,7 +254,9 @@
                         <Button Command="{Binding ElementName=RootPage, Path=ViewModel.AddItemCommand}" 
                                 CommandParameter="{Binding}"
                                 Width="150" Height="100" Margin="4"
-                                Background="White" BorderBrush="Gray" BorderThickness="1">
+                                Background="{x:Bind ColorCode, Converter={StaticResource StringColorToBrushConverter}, Mode=OneWay}" 
+                                IsEnabled="{x:Bind IsAvailable, Mode=OneWay}"
+                                BorderBrush="Gray" BorderThickness="1">
                             <StackPanel>
                                 <TextBlock Text="{x:Bind Name}" TextWrapping="Wrap" TextAlignment="Center" FontWeight="SemiBold"/>
                                 <TextBlock Text="{x:Bind Price}" TextAlignment="Center" Margin="0,4,0,0"/>
@@ -100,100 +265,6 @@
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>
-        </Grid>
-
-        <!-- Right Column: Ticket Panel -->
-        <Grid Grid.Column="1" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" Padding="16">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <!-- Ticket Header -->
-            <StackPanel Spacing="8">
-                <TextBlock Text="Current Ticket" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                <TextBlock Text="{x:Bind ViewModel.TicketHeaderText, Mode=OneWay}" 
-                           FontSize="14" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                 
-                 <!-- Search Box -->
-                 <Grid ColumnSpacing="8">
-                     <Grid.ColumnDefinitions>
-                         <ColumnDefinition Width="*"/>
-                         <ColumnDefinition Width="Auto"/>
-                     </Grid.ColumnDefinitions>
-                     <TextBox PlaceholderText="Search Item..." Text="{x:Bind ViewModel.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                         <TextBox.KeyboardAccelerators>
-                             <KeyboardAccelerator Key="Enter" IsEnabled="True"/> <!-- Command trigger on Enter handled by behavior or code-behind usually, simplified here -->
-                         </TextBox.KeyboardAccelerators>
-                     </TextBox>
-                     <Button Grid.Column="1" Content="Add" Command="{x:Bind ViewModel.SearchItemCommand}"/>
-                 </Grid>
-            </StackPanel>
-
-            <!-- Order Lines -->
-            <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.OrderLines, Mode=OneWay}" Background="White" CornerRadius="4" Margin="0,12,0,0">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="dto:OrderLineDto">
-                        <Grid Padding="12,8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            
-                            <!-- Name and Modifiers -->
-                            <StackPanel>
-                                <TextBlock Text="{x:Bind MenuItemName}" FontWeight="SemiBold"/>
-                                 <ItemsControl ItemsSource="{x:Bind Modifiers}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Name}" FontSize="10" Foreground="Gray" Margin="8,0,0,0"/>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
-                            
-                            <!-- Qty Controls -->
-                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" Margin="8,0">
-                                <Button Content="-" Padding="4,0" Height="24" Width="24" 
-                                        Command="{Binding ElementName=RootPage, Path=ViewModel.DecrementQuantityCommand}" CommandParameter="{Binding}"/>
-                                <TextBlock Text="{x:Bind Quantity}" VerticalAlignment="Center" FontWeight="Bold"/>
-                                <Button Content="+" Padding="4,0" Height="24" Width="24"
-                                        Command="{Binding ElementName=RootPage, Path=ViewModel.IncrementQuantityCommand}" CommandParameter="{Binding}"/>
-                            </StackPanel>
-
-                            <!-- Price and Delete -->
-                            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
-                                <TextBlock Text="{x:Bind TotalAmount}" VerticalAlignment="Center"/>
-                                <Button Content="&#xE74D;" FontFamily="Segoe MDL2 Assets" Background="Transparent" BorderThickness="0" Foreground="Red"
-                                        Command="{Binding ElementName=RootPage, Path=ViewModel.RemoveItemCommand}" CommandParameter="{Binding}"/>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <!-- Totals and Actions -->
-            <StackPanel Grid.Row="2" Spacing="12" Margin="0,12,0,0">
-                <Grid>
-                    <TextBlock Text="Total Due" FontSize="18" FontWeight="Bold"/>
-                    <TextBlock Text="{x:Bind ViewModel.TotalsText, Mode=OneWay}" 
-                               FontSize="18" FontWeight="Bold" HorizontalAlignment="Right"/>
-                </Grid>
-
-                <Grid ColumnSpacing="8">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                     <!-- Placeholder actions -->
-                    <Button Content="Settle" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.SettleUiCommand}" IsEnabled="{x:Bind ViewModel.HasTicket, Mode=OneWay}"/>
-                    <Button Grid.Column="1" Content="Split" Command="{x:Bind ViewModel.SplitTicketUiCommand}" HorizontalAlignment="Stretch" IsEnabled="{x:Bind ViewModel.HasTicket, Mode=OneWay}"/>
-                    <Button Grid.Column="2" Content="Send" Command="{x:Bind ViewModel.SendToKitchenCommand}" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" IsEnabled="{x:Bind ViewModel.HasUnsentItems, Mode=OneWay}"/>
-                </Grid>
-            </StackPanel>
         </Grid>
 
     </Grid>

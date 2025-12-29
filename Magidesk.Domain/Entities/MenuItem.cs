@@ -43,6 +43,12 @@ public class MenuItem
     public int Version { get; private set; }
     public bool IsActive { get; private set; }
 
+    // F-0031: Menu Item Button View Support
+    public string? ColorCode => Properties.TryGetValue("ColorCode", out var color) ? color : null;
+    
+    // F-0035: Variable Price Support
+    public bool IsVariablePrice => Properties.TryGetValue("IsVariablePrice", out var val) && bool.TryParse(val, out var result) && result;
+
     // Private constructor for EF Core
     private MenuItem()
     {

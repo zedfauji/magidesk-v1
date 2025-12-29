@@ -45,4 +45,5 @@ public class NavigationService
         dialog.XamlRoot = _frame.XamlRoot;
         return await dialog.ShowAsync();
     }
+    public Microsoft.UI.Dispatching.DispatcherQueue? DispatcherQueue => _frame?.DispatcherQueue;
 }

@@ -3,11 +3,14 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using Magidesk.Application.Interfaces;
+using Magidesk.Application.Commands;
 using Magidesk.Application.DTOs;
 using Magidesk.Application.Queries;
 using Magidesk.Presentation.Services;
 using Magidesk.Presentation.Views;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.Extensions.DependencyInjection;
+using Magidesk.Presentation.Views.Dialogs;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -20,6 +23,11 @@ public class SwitchboardViewModel : ViewModelBase
     private readonly NavigationService _navigationService;
     private readonly ICashSessionRepository _cashSessionRepository;
     private readonly IQueryHandler<GetOpenTicketsQuery, IEnumerable<TicketDto>> _getOpenTicketsHandler;
+    private readonly ICommandHandler<ClockInCommand> _clockInHandler;
+    private readonly ICommandHandler<ClockOutCommand> _clockOutHandler;
+    private readonly IAttendanceRepository _attendanceRepository;
+    private readonly ICommandHandler<CreateTicketCommand, CreateTicketResult> _createTicketHandler;
+    private readonly IUserService _userService;
 
     private ObservableCollection<TicketDto> _openTickets = new();
     public ObservableCollection<TicketDto> OpenTickets
@@ -32,111 +40,174 @@ public class SwitchboardViewModel : ViewModelBase
     public TicketDto? SelectedTicket
     {
         get => _selectedTicket;
-        set
-        {
-            if (SetProperty(ref _selectedTicket, value))
-            {
-               // Optional: Auto-trigger edit if selection changes
-            }
-        }
+        set => SetProperty(ref _selectedTicket, value);
     }
 
     public ICommand LoadTicketsCommand { get; }
     public ICommand NewTicketCommand { get; }
+    public ICommand ClockInCommand { get; }
+    public ICommand ClockOutCommand { get; }
     public ICommand EditTicketCommand { get; }
-    public ICommand SettleTicketCommand { get; }
-    public ICommand ManagerFunctionsCommand { get; }
+    public ICommand SettleCommand { get; }
     public ICommand DrawerPullCommand { get; }
+    public ICommand PerformCashDropCommand { get; }
+    public ICommand PerformPayoutCommand { get; }
+    public ICommand PerformDrawerBleedCommand { get; }
+    public ICommand PerformOpenDrawerCommand { get; }
+    public ICommand ShowDrawerBalanceCommand { get; }
+    
     public ICommand TablesCommand { get; }
-    public ICommand ReportsCommand { get; }
-    public ICommand SettingsCommand { get; }
-    public ICommand KitchenCommand { get; }
-    public ICommand CashDropCommand { get; }
-    public ICommand PayoutCommand { get; }
-    public ICommand DrawerBleedCommand { get; }
-    public ICommand OpenDrawerCommand { get; }
-    public ICommand DrawerBalanceCommand { get; }
+    public ICommand ManagerFunctionsCommand { get; }
     public ICommand LogoutCommand { get; }
     public ICommand ShutdownCommand { get; }
 
     public SwitchboardViewModel(
         NavigationService navigationService,
         ICashSessionRepository cashSessionRepository,
-        IQueryHandler<GetOpenTicketsQuery, IEnumerable<TicketDto>> getOpenTicketsHandler)
+        IQueryHandler<GetOpenTicketsQuery, IEnumerable<TicketDto>> getOpenTicketsHandler,
+        ICommandHandler<ClockInCommand> clockInHandler,
+        ICommandHandler<ClockOutCommand> clockOutHandler,
+        IAttendanceRepository attendanceRepository,
+        ICommandHandler<CreateTicketCommand, CreateTicketResult> createTicketHandler,
+        IUserService userService)
     {
         _navigationService = navigationService;
         _cashSessionRepository = cashSessionRepository;
         _getOpenTicketsHandler = getOpenTicketsHandler;
+        _clockInHandler = clockInHandler;
+        _clockOutHandler = clockOutHandler;
+        _attendanceRepository = attendanceRepository;
+        _createTicketHandler = createTicketHandler;
+        _userService = userService;
         Title = "Magidesk POS";
 
         LoadTicketsCommand = new AsyncRelayCommand(LoadTicketsAsync);
-        NewTicketCommand = new RelayCommand(NewTicket);
+        ClockInCommand = new AsyncRelayCommand(ClockInAsync);
+        ClockOutCommand = new AsyncRelayCommand(ClockOutAsync);
         EditTicketCommand = new RelayCommand(EditTicket);
-        SettleTicketCommand = new RelayCommand(Settle);
-        ManagerFunctionsCommand = new RelayCommand(ManagerFunctions);
+        SettleCommand = new RelayCommand(Settle);
         DrawerPullCommand = new RelayCommand(DrawerPull);
-        TablesCommand = new RelayCommand(ShowTables);
-        ReportsCommand = new RelayCommand(ShowReports);
-        SettingsCommand = new RelayCommand(ShowSettings);
-        KitchenCommand = new RelayCommand(ShowKitchen);
+        PerformCashDropCommand = new AsyncRelayCommand(PerformCashDropAsync);
+        PerformPayoutCommand = new AsyncRelayCommand(PerformPayoutAsync);
+        PerformDrawerBleedCommand = new AsyncRelayCommand(PerformDrawerBleedAsync);
+        PerformOpenDrawerCommand = new AsyncRelayCommand(PerformOpenDrawerAsync);
+        ShowDrawerBalanceCommand = new AsyncRelayCommand(ShowDrawerBalanceAsync);
         
-        LogoutCommand = new RelayCommand(Logout);
-        ShutdownCommand = new RelayCommand(Shutdown);
-        
-        CashDropCommand = new AsyncRelayCommand(PerformCashDropAsync);
-        PayoutCommand = new AsyncRelayCommand(PerformPayoutAsync);
-        DrawerBleedCommand = new AsyncRelayCommand(PerformDrawerBleedAsync);
-        OpenDrawerCommand = new AsyncRelayCommand(PerformOpenDrawerAsync);
-        DrawerBalanceCommand = new AsyncRelayCommand(ShowDrawerBalanceAsync);
-        
-        // Initial load
-        _ = LoadTicketsAsync();
+        TablesCommand = new RelayCommand(() => System.Diagnostics.Debug.WriteLine("Tables Not Implemented"));
+        ManagerFunctionsCommand = new RelayCommand(() => System.Diagnostics.Debug.WriteLine("Manager Not Implemented"));
+        LogoutCommand = new RelayCommand(() => _navigationService.GoBack());
+        ShutdownCommand = new RelayCommand(() => { try { Microsoft.UI.Xaml.Application.Current.Exit(); } catch {} });
+
+        NewTicketCommand = new AsyncRelayCommand(NewTicketAsync);
     }
 
-    private void Logout()
-    {
-        _navigationService.Navigate(typeof(LoginPage));
-    }
+    // ... 
 
-    private void Shutdown()
+    private async Task NewTicketAsync()
     {
-        App.Current.Exit();
-    }
-
-    private void ShowKitchen()
-    {
-        _navigationService.Navigate(typeof(Views.KitchenDisplayPage));
-    }
-
-    private void OpenNewTicket()
-    {
-         _navigationService.Navigate(typeof(Views.OrderEntryPage));
-    }
-
-    private void ShowTables()
-    {
-        _navigationService.Navigate(typeof(TableMapPage));
-    }
-
-    private void ShowReports()
-    {
-        _navigationService.Navigate(typeof(SalesReportsPage));
-    }
-
-    private void ShowSettings()
-    {
-        _navigationService.Navigate(typeof(SystemConfigPage));
-    }
-
-    private async void NewTicket()
-    {
+        // F-0019: New Ticket Action
+        // 1. Order Type Selection
         var dialog = new OrderTypeSelectionDialog();
+        dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot; // Ensure Root
         await _navigationService.ShowDialogAsync(dialog);
 
         if (dialog.SelectedOrderType != null)
         {
-             // Pass the selected OrderType to the TicketPage
-            _navigationService.Navigate(typeof(TicketPage), dialog.SelectedOrderType);
+            // F-0020: Strict Guards
+            if (dialog.SelectedOrderType.RequiresTable)
+            {
+                // Strict: Must have table.
+                // TODO: F-0082 Table Selection
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Action Required",
+                    Content = $"Order Type '{dialog.SelectedOrderType.Name}' requires a Table. Table Selection is not yet linked.",
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                };
+                await _navigationService.ShowDialogAsync(errorDialog);
+                return; // Block creation
+            }
+
+            if (dialog.SelectedOrderType.RequiresCustomer)
+            {
+                // Strict: Must have customer.
+                // TODO: F-0077 Customer Selection
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Action Required",
+                    Content = $"Order Type '{dialog.SelectedOrderType.Name}' requires a Customer. Customer Selection is not yet linked.",
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                };
+                await _navigationService.ShowDialogAsync(errorDialog);
+                await _navigationService.ShowDialogAsync(errorDialog);
+                 return; // Block creation
+            }
+
+            int numberOfGuests = 1;
+
+            if (dialog.SelectedOrderType.Name.ToUpper().Contains("DINE IN"))
+            {
+                // F-0023: Guest Count Entry Dialog
+                // Strict Parity: Prompt for guest count on new Dine In ticket.
+                var guestCountVm = App.Services.GetRequiredService<ViewModels.GuestCountViewModel>();
+                var guestCountDialog = new GuestCountDialog(guestCountVm);
+                guestCountDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                
+                var result = await _navigationService.ShowDialogAsync(guestCountDialog);
+                if (result == ContentDialogResult.Primary)
+                {
+                    if (guestCountVm.GuestCount > 0)
+                    {
+                        numberOfGuests = guestCountVm.GuestCount;
+                    }
+                    else
+                    {
+                        // Decide policy: if 0 entered, default to 1 or block?
+                        // Audit says "Skip guest count: Default to 1".
+                        numberOfGuests = 1; 
+                    }
+                }
+                else
+                {
+                    // Cancelled dialog -> Cancel ticket creation?
+                    return; 
+                }
+            }
+
+            // 2. Resolve Context
+            var userId = _userService.CurrentUser?.Id ?? new Magidesk.Domain.ValueObjects.UserId(Guid.Parse("11111111-1111-1111-1111-111111111111")); // Fallback/Dev
+            // Terminal should ideally come from local config or session.
+            // For MVP, checking open session or defaulting.
+            var terminalId = Guid.Parse("22222222-2222-2222-2222-222222222222"); 
+            
+            // Resolve Shift (Active Session)
+            var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
+            var shiftId = session?.Id ?? Guid.Parse("33333333-3333-3333-3333-333333333333"); // Fallback
+
+            // 3. Create Ticket (Backend Command)
+            var command = new CreateTicketCommand
+            {
+                CreatedBy = userId,
+                TerminalId = terminalId,
+                ShiftId = shiftId,
+                OrderTypeId = dialog.SelectedOrderType.Id,
+                NumberOfGuests = numberOfGuests
+            };
+
+            try 
+            {
+                var result = await _createTicketHandler.HandleAsync(command);
+                
+                // 4. Navigate to Order Entry with New Ticket ID
+                _navigationService.Navigate(typeof(Views.OrderEntryPage), result.TicketId);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Create Ticket Failed: {ex.Message}");
+                // Ideally show error dialog
+            }
         }
     }
 
@@ -172,22 +243,26 @@ public class SwitchboardViewModel : ViewModelBase
 
     private void Settle()
     {
-        _navigationService.Navigate(typeof(TicketManagementPage));
+        // F-0011: Use Open Tickets List Dialog instead of generic management page
+        var dialog = new Magidesk.Presentation.Views.OpenTicketsListDialog();
+        dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        _ = _navigationService.ShowDialogAsync(dialog);
     }
 
-    private void ManagerFunctions()
+    private async void DrawerPull()
     {
-        _navigationService.Navigate(typeof(Views.BackOfficePage)); 
-    }
-
-    private void DrawerPull()
-    {
-        _navigationService.Navigate(typeof(DrawerPullReportPage));
+        // F-0012: Use Drawer Pull Report Dialog
+        var dialog = new Magidesk.Presentation.Views.DrawerPullReportDialog();
+        dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        await _navigationService.ShowDialogAsync(dialog);
     }
 
     private async Task PerformCashDropAsync()
     {
-        await PerformDrawerOperationAsync(isPayout: false);
+        // F-0010: Use Management Dialog
+        var dialog = new Magidesk.Presentation.Views.CashDropManagementDialog();
+        dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        await _navigationService.ShowDialogAsync(dialog);
     }
 
     private async Task PerformPayoutAsync()
@@ -308,5 +383,32 @@ public class SwitchboardViewModel : ViewModelBase
                 System.Diagnostics.Debug.WriteLine($"Drawer Op Error: {ex.Message}");
             }
         }
+    }
+    private async Task ClockInAsync()
+    {
+         var userId = _userService.CurrentUser?.Id ?? new Magidesk.Domain.ValueObjects.UserId(System.Guid.Parse("11111111-1111-1111-1111-111111111111"));
+         var command = new ClockInCommand { UserId = userId };
+         try 
+         {
+             await _clockInHandler.HandleAsync(command);
+         }
+         catch (Exception ex)
+         {
+             System.Diagnostics.Debug.WriteLine($"Clock In Error: {ex.Message}");
+         }
+    }
+
+    private async Task ClockOutAsync()
+    {
+         var userId = _userService.CurrentUser?.Id ?? new Magidesk.Domain.ValueObjects.UserId(System.Guid.Parse("11111111-1111-1111-1111-111111111111"));
+         var command = new ClockOutCommand { UserId = userId };
+         try 
+         {
+             await _clockOutHandler.HandleAsync(command);
+         }
+         catch (Exception ex)
+         {
+             System.Diagnostics.Debug.WriteLine($"Clock Out Error: {ex.Message}");
+         }
     }
 }

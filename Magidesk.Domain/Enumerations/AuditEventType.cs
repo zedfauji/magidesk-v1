@@ -13,6 +13,7 @@ public enum AuditEventType
     RefundProcessed = 5,
     Voided = 6,
     SystemShutdown = 7,
-    Printed = 8
+    Printed = 8,
+    TicketTransferred = 9
 }
 
