@@ -93,6 +93,15 @@
                         </StackPanel>
                     </Button>
 
+                    <!-- Kitchen (KDS) -->
+                    <Button Command="{x:Bind ViewModel.KitchenCommand}" 
+                            HorizontalAlignment="Stretch" Height="60" CornerRadius="4">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <FontIcon Glyph="&#xE99A;" FontSize="20"/>
+                            <TextBlock Text="Kitchen Display" FontSize="16" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
                     <!-- Manager Functions -->
                     <Button Command="{x:Bind ViewModel.ManagerFunctionsCommand}" 
                             HorizontalAlignment="Stretch" Height="60" CornerRadius="4" Margin="0,24,0,0">

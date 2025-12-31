@@ -1,5 +1,6 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Magidesk.Application.Interfaces;
 using Magidesk.Domain.Entities;
 using Magidesk.Infrastructure.Data;
@@ -229,6 +230,40 @@ public class TicketRepository : ITicketRepository
             .MaxAsync(t => (int?)t.TicketNumber, cancellationToken);
 
         return (maxTicketNumber ?? 0) + 1;
+    }
+
+    public async Task<ITransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
+    {
+        var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+        return new EfTransaction(transaction);
+    }
+}
+
+/// <summary>
+/// Entity Framework transaction wrapper.
+/// </summary>
+public class EfTransaction : ITransaction
+{
+    private readonly IDbContextTransaction _transaction;
+
+    public EfTransaction(IDbContextTransaction transaction)
+    {
+        _transaction = transaction;
+    }
+
+    public async Task CommitAsync(CancellationToken cancellationToken = default)
+    {
+        await _transaction.CommitAsync(cancellationToken);
+    }
+
+    public async Task RollbackAsync(CancellationToken cancellationToken = default)
+    {
+        await _transaction.RollbackAsync(cancellationToken);
+    }
+
+    public void Dispose()
+    {
+        _transaction.Dispose();
     }
 }
 

@@ -5,6 +5,7 @@ using Magidesk.Application.Queries;
 using Magidesk.Domain.Enumerations;
 using Magidesk.Domain.ValueObjects;
 using System.Net.Sockets;
+using Magidesk.Presentation.Services;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -15,6 +16,9 @@ public sealed class SettleViewModel : ViewModelBase
     private readonly ICommandHandler<SetTaxExemptCommand, SetTaxExemptResult> _setTaxExempt;
     private readonly ICommandHandler<LogoutCommand> _logoutHandler;
     private readonly Services.NavigationService _navigationService;
+    private readonly IUserService _userService;
+    private readonly ITerminalContext _terminalContext;
+    private readonly ICashSessionRepository _cashSessionRepository;
 
     private TicketDto? _ticket;
     private decimal _tenderAmount;
@@ -28,13 +32,19 @@ public sealed class SettleViewModel : ViewModelBase
         ICommandHandler<ProcessPaymentCommand, ProcessPaymentResult> processPayment,
         ICommandHandler<SetTaxExemptCommand, SetTaxExemptResult> setTaxExempt,
         ICommandHandler<LogoutCommand> logoutHandler,
-        Services.NavigationService navigationService)
+        Services.NavigationService navigationService,
+        IUserService userService,
+        ITerminalContext terminalContext,
+        ICashSessionRepository cashSessionRepository)
     {
         _getTicket = getTicket;
         _processPayment = processPayment;
         _setTaxExempt = setTaxExempt;
         _logoutHandler = logoutHandler;
         _navigationService = navigationService;
+        _userService = userService;
+        _terminalContext = terminalContext;
+        _cashSessionRepository = cashSessionRepository;
 
         Title = "Settle Ticket";
 
@@ -50,6 +60,8 @@ public sealed class SettleViewModel : ViewModelBase
         LogoutUiCommand = new AsyncRelayCommand(OnLogoutAsync);
         TestWaitCommand = new AsyncRelayCommand(TestWaitAsync);
         SwipeCardCommand = new AsyncRelayCommand(SwipeCardAsync);
+        ExactAmountCommand = new RelayCommand(OnExactAmount);
+        QuickCashCommand = new RelayCommand<decimal>(OnQuickCash);
     }
 
     public TicketDto? Ticket
@@ -107,6 +119,8 @@ public sealed class SettleViewModel : ViewModelBase
     public decimal PaidAmount => Ticket?.PaidAmount ?? 0;
     public decimal DueAmount => Ticket?.DueAmount ?? 0;
     public decimal TaxAmount => Ticket?.TaxAmount ?? 0;
+    
+    public bool HasDueAmount => DueAmount > 0;
 
     public string? Error
     {
@@ -125,14 +139,16 @@ public sealed class SettleViewModel : ViewModelBase
     public RelayCommand NextAmountCommand { get; }
     public AsyncRelayCommand NoSaleCommand { get; }
     public AsyncRelayCommand LogoutUiCommand { get; }
+    public RelayCommand ExactAmountCommand { get; }
+    public RelayCommand<decimal> QuickCashCommand { get; }
 
     private async Task OnLogoutAsync()
     {
         try
         {
             // F-0008: Logout Action
-            // In a real app, we would get the current user from a session service.
-            var userId = Guid.Parse("00000000-0000-0000-0000-000000000001"); 
+            if (_userService.CurrentUser == null) return;
+            var userId = _userService.CurrentUser.Id; 
             await _logoutHandler.HandleAsync(new LogoutCommand { UserId = userId });
             _navigationService.Navigate(typeof(Magidesk.Presentation.Views.LoginPage));
         }
@@ -158,6 +174,30 @@ public sealed class SettleViewModel : ViewModelBase
         // Update Numpad Input to reflect this (so user sees it)
         NumpadInput = nextAmt.ToString("F2");
         TenderAmount = nextAmt;
+    }
+
+    private void OnExactAmount()
+    {
+        // F-0042: Exact Due Button - sets tender amount to exact due amount
+        if (DueAmount <= 0) return;
+        
+        // Check for stale amounts by refreshing ticket data
+        // For now, use current DueAmount (backend precision requirement handled by existing ticket refresh)
+        
+        // Set tender amount to exact due amount
+        TenderAmount = DueAmount;
+        NumpadInput = DueAmount.ToString("F2");
+    }
+
+    private void OnQuickCash(decimal amount)
+    {
+        // F-0043: Quick Cash Buttons - adds denomination to tender amount
+        if (amount <= 0) return;
+        
+        // Cumulative mode: add to existing tender amount
+        var newTenderAmount = TenderAmount + amount;
+        TenderAmount = newTenderAmount;
+        NumpadInput = newTenderAmount.ToString("F2");
     }
 
     private async Task OnNoSaleAsync()
@@ -247,7 +287,7 @@ public sealed class SettleViewModel : ViewModelBase
             {
                 TicketId = Ticket.Id,
                 IsTaxExempt = !Ticket.IsTaxExempt,
-                ModifiedBy = new UserId(Guid.Parse("00000000-0000-0000-0000-000000000001")) // TODO: Current User
+                ModifiedBy = _userService.CurrentUser != null ? new UserId(_userService.CurrentUser.Id) : new UserId(Guid.Empty) 
             });
 
             if (result.Success)
@@ -305,20 +345,42 @@ public sealed class SettleViewModel : ViewModelBase
             // DTO amounts are pure decimals, so we use default currency (likely USD)
             var currency = "USD";
 
+            if (_userService.CurrentUser == null || _terminalContext.TerminalId == null)
+            {
+                Error = "User or Terminal context missing.";
+                return;
+            }
+
+            var userId = _userService.CurrentUser.Id;
+            var terminalId = _terminalContext.TerminalId.Value;
+
             var command = new ProcessPaymentCommand
             {
                 TicketId = Ticket.Id,
                 PaymentType = paymentType,
                 Amount = new Money(amountToPay, currency),
-                ProcessedBy = new UserId(Guid.Parse("00000000-0000-0000-0000-000000000001")), // TODO
-                TerminalId = Guid.NewGuid(), // TODO
-                GlobalId = Guid.NewGuid().ToString() // TODO
+                ProcessedBy = new UserId(userId),
+                TerminalId = terminalId,
+                GlobalId = Guid.NewGuid().ToString()
             };
 
             if (paymentType == PaymentType.Cash)
             {
                  command.TenderAmount = new Money(TenderAmount, currency);
-                 // command.CashSessionId = ... // TODO: Get active session
+                 
+                 // Resolve Cash Session
+                 var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
+                 if (session != null)
+                 {
+                     command.CashSessionId = session.Id;
+                 }
+                 else
+                 {
+                     // Strict: Cannot pay cash without open drawer?
+                     // Audit F-0007: "Must have valid cash session"
+                     Error = "No active cash session.";
+                     return;
+                 }
             }
             else if (paymentType == PaymentType.CreditCard)
             {
@@ -401,6 +463,8 @@ public sealed class SettleViewModel : ViewModelBase
 
     private async Task SwipeCardAsync()
     {
+        if (Ticket == null) return;
+        
         var dialog = new Magidesk.Views.SwipeCardDialog();
         var result = await _navigationService.ShowDialogAsync(dialog);
 
@@ -411,44 +475,104 @@ public sealed class SettleViewModel : ViewModelBase
 
         if (result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
         {
-            // Manual Entry Requested
-        }
-        else if (result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Secondary)
-        {
-            // Auth Code Requested
+            // Manual Entry Requested - show Authorization Code Dialog
             var authDialog = new Magidesk.Views.AuthorizationCodeDialog();
             var authResult = await _navigationService.ShowDialogAsync(authDialog);
 
             if (authResult == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
             {
                 // Proceed with Auth Code
-                // Simulating processing the manual auth
                 var authCode = authDialog.ViewModel.AuthCode;
                 var cardType = authDialog.ViewModel.SelectedCardType;
                 
                 if (!string.IsNullOrWhiteSpace(authCode))
                 {
-                    // Trigger Payment Process with Manual Auth data
-                    // We need to modify ProcessPaymentAsync to accept this extra data or handle it here.
-                    // For now, we'll assume ProcessPaymentAsync can handle generic card logic if passed properly.
-                    // But ProcessPaymentAsync signature is just (string paymentType).
-                    // We must update the state of the command/DTO before calling it, or pass args.
-                    
-                    // Hack for Phase 4: We will log it to error/status for verification
-                    Error = $"Processing Manual Auth: {cardType} - {authCode}";
-                    
-                    // In a real app, we would set these on a "CurrentPaymentContext" or pass as DTO.
-                    // For audit compliance, we should verify the "ManualVoiceAuth" flow.
+                    // Process credit card payment with manual auth
+                    await ProcessCreditCardPaymentAsync(cardType, authCode, "Manual Voice Auth");
+                }
+            }
+        }
+        else if (result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Secondary)
+        {
+            // Auth Code Requested - show Authorization Code Dialog
+            var authDialog = new Magidesk.Views.AuthorizationCodeDialog();
+            var authResult = await _navigationService.ShowDialogAsync(authDialog);
+
+            if (authResult == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
+            {
+                // Proceed with Auth Code
+                var authCode = authDialog.ViewModel.AuthCode;
+                var cardType = authDialog.ViewModel.SelectedCardType;
+                
+                if (!string.IsNullOrWhiteSpace(authCode))
+                {
+                    // Process credit card payment with auth code
+                    await ProcessCreditCardPaymentAsync(cardType, authCode, "Phone Auth");
                 }
             }
         }
         else
         {
-            // Check for data
+            // Check for swipe data (None result could be from successful swipe)
             if (!string.IsNullOrEmpty(dialog.ViewModel.SwipeData))
             {
-                // Process Swipe Data
+                // Process swipe data - simulate successful card swipe
+                await ProcessCreditCardPaymentAsync("Visa", "SWIPE" + DateTime.Now.ToString("yyyyMMddHHmmss"), "Card Swipe");
             }
+        }
+    }
+
+    private async Task ProcessCreditCardPaymentAsync(string cardType, string authCode, string authMethod)
+    {
+        IsBusy = true;
+        Error = null;
+        
+        try
+        {
+            // Show processing wait dialog
+            var waitDialog = new Magidesk.Views.PaymentProcessWaitDialog();
+            waitDialog.ViewModel.Message = $"Processing {cardType} payment...";
+            
+            // Start showing dialog (Task)
+            var showDialogTask = _navigationService.ShowDialogAsync(waitDialog);
+            
+            // Simulate processing delay (Background)
+            await Task.Delay(2000);
+            
+            // Close dialog (UI Thread)
+            _navigationService.DispatcherQueue.TryEnqueue(() =>
+            {
+                waitDialog.ViewModel.AllowClose();
+                waitDialog.Hide();
+            });
+
+            // Ensure dialog matches close state
+            await showDialogTask;
+            
+            var success = true; // Simulated success
+            
+            if (success)
+            {
+                // Process the credit card payment using existing ProcessPaymentAsync
+                // We need to pass the card details to simulation state or handling logic before calling
+                // For now, we assume simple card payment trigger
+                await ProcessPaymentAsync("CreditCard");
+                
+                // Store card details for audit (in a real app, this would be handled securely)
+                Error = $"Card Payment Approved: {cardType} ({authMethod})";
+            }
+            else
+            {
+                Error = "Card Payment Declined";
+            }
+        }
+        catch (Exception ex)
+        {
+            Error = $"Card Payment Error: {ex.Message}";
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
 }

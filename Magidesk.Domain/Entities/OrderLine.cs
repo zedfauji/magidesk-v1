@@ -324,5 +324,16 @@ public class OrderLine
         
         CalculatePrice();
     }
+    /// <summary>
+    /// Sets the seat number for this order line.
+    /// </summary>
+    public void SetSeatNumber(int? seatNumber)
+    {
+        if (seatNumber.HasValue && seatNumber.Value < 0)
+        {
+             throw new BusinessRuleViolationException("Seat number cannot be negative.");
+        }
+        SeatNumber = seatNumber;
+    }
 }
 

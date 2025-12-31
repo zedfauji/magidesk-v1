@@ -19,3 +19,24 @@ TIMESTAMP | ACTION | ID | NAME
 F-0035 Price Entry Dialog | 2025-12-29T19:56:00Z | 2025-12-29T20:00:00Z | 00:04:00
 F-0036 Cooking Instruction Dialog | 2025-12-29T20:01:00Z | 2025-12-29T20:08:00Z | 00:07:00
 F-0037 Pizza Modifiers View | 2025-12-29T20:09:00Z | 2025-12-29T20:25:00Z | 00:16:00
+2025-12-29T21:32:00Z | START     | F-0038 | Modifier Selection Dialog
+2025-12-29T21:45:00Z | COMPLETED | F-0038 | Modifier Selection Dialog
+2025-12-29T21:47:00Z | START     | F-0039 | Addon Selection View
+2025-12-29T21:55:00Z | COMPLETED | F-0039 | Addon Selection View
+2025-12-29T21:56:00Z | START     | F-0040 | Combo Item Selection Dialog
+2025-12-29T22:05:00Z | COMPLETED | F-0040 | Combo Item Selection Dialog
+2025-12-29T22:06:00Z | START     | F-0041 | Quick Pay Action
+2025-12-29T22:08:00Z | COMPLETED | F-0041 | Quick Pay Action
+2025-12-29T22:09:00Z | START     | F-0042 | Exact Due Button
+2025-12-29T22:12:00Z | COMPLETED | F-0042 | Exact Due Button
+2025-12-29T22:13:00Z | START     | F-0043 | Quick Cash Buttons
+2025-12-29T22:16:00Z | COMPLETED | F-0043 | Quick Cash Buttons
+2025-12-29T22:17:00Z | START     | F-0044 | Cash Payment Button
+2025-12-29T22:19:00Z | COMPLETED | F-0044 | Cash Payment Button
+2025-12-29T22:20:00Z | START     | F-0045 | Credit Card Payment Button
+2025-12-29T22:23:00Z | COMPLETED | F-0045 | Credit Card Payment Button
+2025-12-30T10:00:00Z | START     | F-0046 | Group Settle Ticket Dialog
+2025-12-30T10:28:00Z | START     | F-0047 | Split by Seat Dialog
+2025-12-30T10:45:00Z | COMPLETED | F-0047 | Split by Seat Dialog
+2025-12-30T17:24:19.4527904Z | START     | F-0048 | Split Even Dialog
+2025-12-30T17:38:42.0231136Z | START     | F-0049 | Split by Amount Dialog

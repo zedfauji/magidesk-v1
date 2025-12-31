@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Magidesk.Domain.Entities;
+using Magidesk.Application.DTOs;
 
 namespace Magidesk.Application.Interfaces;
 
@@ -14,5 +14,5 @@ public interface IKitchenRoutingService
     /// <param name="ticket">The source ticket.</param>
     /// <param name="itemIds">Specific items to fire (if null/empty, routes all un-fired items).</param>
     /// <returns>List of created KitchenOrder IDs.</returns>
-    Task<List<Guid>> RouteToKitchenAsync(Ticket ticket, List<Guid>? itemIds = null);
+    Task<List<Guid>> RouteToKitchenAsync(TicketDto ticket, List<Guid>? itemIds = null);
 }

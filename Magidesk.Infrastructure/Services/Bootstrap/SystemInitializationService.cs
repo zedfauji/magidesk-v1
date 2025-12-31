@@ -44,9 +44,112 @@ namespace Magidesk.Infrastructure.Services.Bootstrap
             _logger.LogInformation($"Resolved Terminal Identity: {terminalIdentity}");
 
             // 3. Load Critical Configuration (Stub for now)
-            // TODO: Load Tax & Currency from DB
+            // 3. Seed Reference Data
+            await SeedReferenceDataAsync();
 
             return InitializationResult.Success(terminalIdentity);
+        }
+
+        private async Task SeedReferenceDataAsync()
+        {
+            try
+            {
+                // Seed Order Types
+                if (!await _dbContext.OrderTypes.AnyAsync())
+                {
+                    _logger.LogInformation("Seeding Order Types...");
+                    var dineIn = Magidesk.Domain.Entities.OrderType.Create("Dine In", isActive: true);
+                    dineIn.SetProperty("RequiresTable", "true");
+                    // dineIn.SetProperty("RequiresCustomer", "false"); // Optional
+
+                    var takeOut = Magidesk.Domain.Entities.OrderType.Create("Take Out", isActive: true);
+                    takeOut.SetProperty("RequiresTable", "false");
+
+                    var quickService = Magidesk.Domain.Entities.OrderType.Create("Quick Service", isActive: true);
+                    quickService.SetProperty("RequiresTable", "false");
+
+                    _dbContext.OrderTypes.AddRange(dineIn, takeOut, quickService);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                // Roles/Users skipped to avoid authentication mismatch. 
+                // Assuming Slice 1 seeded them or they persist.
+
+                // Seed Menu Categories & Items
+                if (!await _dbContext.MenuCategories.AnyAsync())
+                {
+                    _logger.LogInformation("Seeding Menu...");
+                    var bevCat = Magidesk.Domain.Entities.MenuCategory.Create("Beverages", 1, true); // Removed 4th arg
+                    var foodCat = Magidesk.Domain.Entities.MenuCategory.Create("Food", 2, true); // Removed 4th arg (isBeverage default false? No, explicit true/false)
+                    // Wait, Create(name, sort, isBev). Usage: Create("Food", 2, false).
+                    
+                    _dbContext.MenuCategories.AddRange(bevCat, foodCat);
+                    await _dbContext.SaveChangesAsync();
+
+                    var softDrinksGroup = Magidesk.Domain.Entities.MenuGroup.Create("Soft Drinks", bevCat.Id, 1);
+                    var burgersGroup = Magidesk.Domain.Entities.MenuGroup.Create("Burgers", foodCat.Id, 1);
+                    
+                    _dbContext.MenuGroups.AddRange(softDrinksGroup, burgersGroup);
+                    await _dbContext.SaveChangesAsync();
+                    
+                    // Fix MenuItem.Create signature and Value Object usage
+                    // MenuItem.Create(name, Money, taxRate)
+                    var coke = Magidesk.Domain.Entities.MenuItem.Create("Coke", new Magidesk.Domain.ValueObjects.Money(2.50m), 0.08m);
+                    coke.SetCategory(bevCat.Id);
+                    coke.SetGroup(softDrinksGroup.Id);
+
+                    var burger = Magidesk.Domain.Entities.MenuItem.Create("Cheeseburger", new Magidesk.Domain.ValueObjects.Money(12.00m), 0.08m);
+                    burger.SetCategory(foodCat.Id);
+                    burger.SetGroup(burgersGroup.Id);
+                    
+                    _dbContext.MenuItems.AddRange(coke, burger);
+                    await _dbContext.SaveChangesAsync();
+                }
+                // Seed Tables
+                if (!await _dbContext.Tables.AnyAsync())
+                {
+                    _logger.LogInformation("Seeding Tables...");
+                    var tables = new List<Magidesk.Domain.Entities.Table>();
+
+                    // Create 10 Tables
+                    // Layout: Grid of 5x2
+                    // X, Y coordinates: 0-based. Canvas is 2000x2000. 
+                    // Let's space them 200px apart.
+                    
+                    int tablesPerRow = 5;
+                    double startX = 50;
+                    double startY = 50;
+                    double spacingX = 200;
+                    double spacingY = 200;
+
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        // Calculate grid position
+                        int row = (i - 1) / tablesPerRow;
+                        int col = (i - 1) % tablesPerRow;
+
+                        double x = startX + (col * spacingX);
+                        double y = startY + (row * spacingY);
+
+                        var table = Magidesk.Domain.Entities.Table.Create(
+                            i, // Table Number
+                            4, // Capacity
+                            (int)x,
+                            (int)y,
+                            null // FloorId (optional)
+                        );
+                        
+                        tables.Add(table);
+                    }
+
+                    _dbContext.Tables.AddRange(tables);
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                 _logger.LogError(ex, "Error seeding reference data.");
+            }
         }
     }
 }

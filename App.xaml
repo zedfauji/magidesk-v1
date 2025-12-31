@@ -50,6 +50,7 @@
             <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
             <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
             <converters:StringFormatConverter x:Key="StringFormatConverter"/>
+            <converters:StringToBoolConverter x:Key="StringToBoolConverter"/>
             <converters:StringColorToBrushConverter x:Key="StringColorToBrushConverter"/>
 
              <!-- Standard Text Styles -->
@@ -67,6 +68,12 @@
                 <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="CornerRadius" Value="4"/>
+             </Style>
+
+             <Style x:Key="IconButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Padding" Value="4"/>
              </Style>
         </ResourceDictionary>
     </Application.Resources>

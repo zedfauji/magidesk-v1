@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="Manager Functions"
+    Title="{Binding Title}"
     PrimaryButtonText="Close"
     DefaultButton="Primary">
 
@@ -19,10 +19,12 @@
         <GridView SelectionMode="None">
             <Button Content="Drawer Pull" Command="{Binding DrawerPullCommand}" Height="100" Width="150" Margin="4"/>
             <Button Content="Cash Drop" Command="{Binding CashDropCommand}" Height="100" Width="150" Margin="4"/>
-            <Button Content="Open Tickets" Command="{Binding SettleTicketCommand}" Height="100" Width="150" Margin="4"/>
+            <Button Content="Open Tickets" Command="{Binding OpenTicketsCommand}" Height="100" Width="150" Margin="4"/>
+            <Button Content="Group Settle" Command="{Binding GroupSettleCommand}" Height="100" Width="150" Margin="4" Background="DarkOrange" Foreground="White"/>
             <Button Content="Tips Report" Command="{Binding ReportsCommand}" Height="100" Width="150" Margin="4"/>
             <Button Content="Clock In/Out" Command="{Binding ClockInOutCommand}" Height="100" Width="150" Margin="4"/>
             <Button Content="System Config" Command="{Binding SettingsCommand}" Height="100" Width="150" Margin="4" Background="SlateGray" Foreground="White"/>
+            <Button Content="End Shift" Command="{Binding EndShiftCommand}" Height="100" Width="150" Margin="4" Background="DarkRed" Foreground="White"/>
         </GridView>
     </Grid>
 </ContentDialog>

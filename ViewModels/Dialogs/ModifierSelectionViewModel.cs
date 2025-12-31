@@ -36,7 +36,7 @@ public partial class ModifierSelectionViewModel : ObservableObject
     {
         _menuRepository = menuRepository;
         _orderLine = orderLine;
-        _menuItemName = orderLine.ItemName;
+        _menuItemName = orderLine.MenuItemName;
         
         ConfirmCommand = new RelayCommand(Confirm);
         CancelCommand = new RelayCommand(Cancel);

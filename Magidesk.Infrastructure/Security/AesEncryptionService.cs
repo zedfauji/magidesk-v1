@@ -32,12 +32,17 @@ public class AesEncryptionService : IAesEncryptionService
 
         using var aes = Aes.Create();
         aes.Key = _key;
-        aes.GenerateIV(); // Generate a new IV for each encryption
+        
+        // Use a fixed IV for deterministic encryption (required for PIN lookup equality)
+        // We use the first 16 bytes of the key as the IV
+        var iv = new byte[16];
+        Array.Copy(_key, 0, iv, 0, 16);
+        aes.IV = iv;
 
         var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
 
         using var msEncrypt = new MemoryStream();
-        // Write IV first
+        // Write IV first (even though it's fixed, we keep format compatible with existing decrypt which reads it)
         msEncrypt.Write(aes.IV, 0, aes.IV.Length);
 
         using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))

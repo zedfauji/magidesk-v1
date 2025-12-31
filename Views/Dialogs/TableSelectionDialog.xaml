@@ -1,0 +1,38 @@
+<ContentDialog
+    x:Class="Magidesk.Views.Dialogs.TableSelectionDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Magidesk.Presentation.ViewModels.Dialogs"
+    mc:Ignorable="d"
+    Title="Select Table"
+    PrimaryButtonText="Confirm"
+    SecondaryButtonText="Cancel"
+    PrimaryButtonCommand="{x:Bind ViewModel.ConfirmCommand}"
+    SecondaryButtonCommand="{x:Bind ViewModel.CancelCommand}"
+    RequestedTheme="Dark">
+
+    <Grid>
+        <GridView ItemsSource="{x:Bind ViewModel.Tables}"
+                  SelectedItem="{x:Bind ViewModel.SelectedTable, Mode=TwoWay}"
+                  SelectionMode="Single">
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="100" Height="80" Background="#333" CornerRadius="4" Margin="4">
+                        <TextBlock Text="{Binding TableNumber}" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center" 
+                                   FontSize="24"/>
+                        <TextBlock Text="{Binding Name}" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Bottom" 
+                                   FontSize="12" 
+                                   Margin="0,0,0,4"
+                                   Opacity="0.7"/>
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+    </Grid>
+</ContentDialog>

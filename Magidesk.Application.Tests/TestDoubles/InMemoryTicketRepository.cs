@@ -8,6 +8,13 @@ internal sealed class InMemoryTicketRepository : ITicketRepository
     private readonly Dictionary<Guid, Ticket> _tickets = new();
     private int _nextTicketNumber = 1;
 
+    private sealed class NoOpTransaction : ITransaction
+    {
+        public Task CommitAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
+        public Task RollbackAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
+        public void Dispose() { }
+    }
+
     public Task AddAsync(Ticket ticket, CancellationToken cancellationToken = default)
     {
         _tickets[ticket.Id] = ticket;
@@ -56,5 +63,10 @@ internal sealed class InMemoryTicketRepository : ITicketRepository
     public Task<int> GetNextTicketNumberAsync(CancellationToken cancellationToken = default)
     {
         return Task.FromResult(_nextTicketNumber++);
+    }
+
+    public Task<ITransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
+    {
+        return Task.FromResult<ITransaction>(new NoOpTransaction());
     }
 }

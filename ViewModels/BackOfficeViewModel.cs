@@ -42,6 +42,7 @@ public partial class BackOfficeViewModel : ViewModelBase
         NavigationItems.Add(new NavigationItem("Inventory", "Manage Stock & Ingredients", "\uE8F2", typeof(InventoryPage)));
         NavigationItems.Add(new NavigationItem("Tables", "Manage Floor Plan", "\uE8F1", typeof(TableMapPage))); // Resusing Table Map
         NavigationItems.Add(new NavigationItem("Users", "Manage Staff & Permissions", "\uE77B", typeof(object))); // Placeholder
+        NavigationItems.Add(new NavigationItem("Reports", "Sales Summaries", "\uE9F9", typeof(SalesReportsPage)));
         NavigationItems.Add(new NavigationItem("Settings", "System Configuration", "\uE713", typeof(SystemConfigPage)));
     }
 

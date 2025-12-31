@@ -3,6 +3,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 using Magidesk.Application.DependencyInjection;
 using Magidesk.Application.Interfaces;
+using Magidesk.Application.Commands;
+using Magidesk.Application.Services;
 using Magidesk.Infrastructure.DependencyInjection;
 using Magidesk.Infrastructure.Repositories;
 using Magidesk.Infrastructure.Services;
@@ -52,6 +54,7 @@ public partial class App : Microsoft.UI.Xaml.Application
 
                 services.AddSingleton<NavigationService>();
                 services.AddSingleton<IUserService, UserService>();
+                services.AddSingleton<ITerminalContext, TerminalContext>();
                 services.AddSingleton<IPrintingService, PrintingService>();
 
                 // ViewModels
@@ -74,6 +77,7 @@ public partial class App : Microsoft.UI.Xaml.Application
                 services.AddTransient<Magidesk.Presentation.ViewModels.SystemConfigViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.KitchenDisplayViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.LoginViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.ShiftStartViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.CashDropManagementViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.VoidTicketViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.OpenTicketsListViewModel>();
@@ -82,6 +86,23 @@ public partial class App : Microsoft.UI.Xaml.Application
                 services.AddTransient<Magidesk.Presentation.ViewModels.AuthorizationCodeViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.AuthorizationCaptureBatchViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.GuestCountViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.ManagerFunctionsViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.GroupSettleTicketSelectionViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.GroupSettleTicketViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel>();
+
+                // Command handlers
+                services.AddTransient<ICommandHandler<GroupSettleCommand, GroupSettleResult>, GroupSettleCommandHandler>();
+                services.AddTransient<ICommandHandler<SplitBySeatCommand, SplitBySeatResult>, SplitBySeatCommandHandler>();
+                services.AddTransient<ICommandHandler<CloseCashSessionCommand, CloseCashSessionResult>, CloseCashSessionCommandHandler>();
+                services.AddTransient<ICommandHandler<ChangeSeatCommand>, ChangeSeatCommandHandler>();
+                services.AddTransient<ICommandHandler<MergeTicketsCommand>, MergeTicketsCommandHandler>();
+                services.AddTransient<ICommandHandler<ChangeTableCommand, ChangeTableResult>, ChangeTableCommandHandler>();
+                services.AddTransient<ICommandHandler<SetCustomerCommand, SetCustomerResult>, SetCustomerCommandHandler>();
+
+                // Domain services
+                services.AddTransient<BatchPaymentDomainService>();
+                services.AddSingleton<IEventPublisher, EventPublisher>();
 
 
             })
@@ -108,6 +129,9 @@ public partial class App : Microsoft.UI.Xaml.Application
                 if (!string.IsNullOrEmpty(result.TerminalId))
                 {
                     mainWindow.SetTerminalId(result.TerminalId);
+
+                    var terminalContext = Host.Services.GetRequiredService<ITerminalContext>();
+                    terminalContext.SetTerminalIdentity(result.TerminalId);
                 }
 
                 mainWindow.HideLoading();

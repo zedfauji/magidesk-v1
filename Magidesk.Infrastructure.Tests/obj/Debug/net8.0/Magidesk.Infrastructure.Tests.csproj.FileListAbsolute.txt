@@ -14,6 +14,7 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.I
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Microsoft.Extensions.Configuration.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll

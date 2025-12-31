@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Magidesk.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad5d42c395c6b06d62fbe1cc97613bc00d4d923e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0b67c192db3ea3e095ed222296fe7fa4b342d33f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Magidesk.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Magidesk.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

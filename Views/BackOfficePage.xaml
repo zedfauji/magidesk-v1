@@ -29,8 +29,7 @@
                         PaneDisplayMode="Left" 
                         IsBackButtonVisible="Collapsed" 
                         IsSettingsVisible="False"
-                        MenuItemsSource="{x:Bind ViewModel.NavigationItems}"
-                        SelectedItem="{x:Bind ViewModel.CurrentPageType, Mode=OneWay}"> <!-- Binding SelectedItem is tricky with Type, handling via Event is oftentimes easier in WinUI -->
+                        MenuItemsSource="{x:Bind ViewModel.NavigationItems}">
             
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="vm:NavigationItem">

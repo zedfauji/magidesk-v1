@@ -14,6 +14,7 @@ public enum AuditEventType
     Voided = 6,
     SystemShutdown = 7,
     Printed = 8,
-    TicketTransferred = 9
+    TicketTransferred = 9,
+    TicketMerged = 10
 }
 

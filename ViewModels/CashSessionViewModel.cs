@@ -3,6 +3,7 @@ using Magidesk.Application.DTOs;
 using Magidesk.Application.Interfaces;
 using Magidesk.Application.Queries;
 using Magidesk.Domain.ValueObjects;
+using Magidesk.Presentation.Services;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -11,6 +12,8 @@ public sealed class CashSessionViewModel : ViewModelBase
     private readonly IQueryHandler<GetCurrentCashSessionQuery, GetCurrentCashSessionResult> _getCurrent;
     private readonly ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult> _open;
     private readonly ICommandHandler<CloseCashSessionCommand, CloseCashSessionResult> _close;
+    private readonly IUserService _userService;
+    private readonly ITerminalContext _terminalContext;
 
     private CashSessionDto? _current;
     private string _userIdText = Guid.Empty.ToString();
@@ -23,17 +26,31 @@ public sealed class CashSessionViewModel : ViewModelBase
     public CashSessionViewModel(
         IQueryHandler<GetCurrentCashSessionQuery, GetCurrentCashSessionResult> getCurrent,
         ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult> open,
-        ICommandHandler<CloseCashSessionCommand, CloseCashSessionResult> close)
+        ICommandHandler<CloseCashSessionCommand, CloseCashSessionResult> close,
+        IUserService userService,
+        ITerminalContext terminalContext)
     {
         _getCurrent = getCurrent;
         _open = open;
         _close = close;
+        _userService = userService;
+        _terminalContext = terminalContext;
 
         RefreshCommand = new AsyncRelayCommand(RefreshAsync);
         OpenCommand = new AsyncRelayCommand(OpenAsync);
         CloseCommand = new AsyncRelayCommand(CloseAsync);
 
         Title = "Cash Session";
+
+        if (_userService.CurrentUser?.Id != null)
+        {
+            UserIdText = _userService.CurrentUser.Id.ToString();
+        }
+
+        if (_terminalContext.TerminalId != null)
+        {
+            TerminalIdText = _terminalContext.TerminalId.Value.ToString();
+        }
     }
 
     public CashSessionDto? Current

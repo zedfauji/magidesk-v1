@@ -17,6 +17,8 @@ public class CashDropManagementViewModel : ViewModelBase
     private readonly ICashSessionRepository _cashSessionRepository;
     private readonly NavigationService _navigationService;
     private readonly ISecurityService _securityService; // To get usernames if needed
+    private readonly IUserService _userService;
+    private readonly ITerminalContext _terminalContext;
 
     private ObservableCollection<CashTransactionUiDto> _transactions = new();
     public ObservableCollection<CashTransactionUiDto> Transactions
@@ -46,11 +48,15 @@ public class CashDropManagementViewModel : ViewModelBase
     public CashDropManagementViewModel(
         ICashSessionRepository cashSessionRepository,
         NavigationService navigationService,
-        ISecurityService securityService)
+        ISecurityService securityService,
+        IUserService userService,
+        ITerminalContext terminalContext)
     {
         _cashSessionRepository = cashSessionRepository;
         _navigationService = navigationService;
         _securityService = securityService;
+        _userService = userService;
+        _terminalContext = terminalContext;
 
         AddCashDropCommand = new AsyncRelayCommand(AddCashDropAsync);
         AddDrawerBleedCommand = new AsyncRelayCommand(AddDrawerBleedAsync);
@@ -63,8 +69,12 @@ public class CashDropManagementViewModel : ViewModelBase
 
     private async Task LoadTransactionsAsync()
     {
-        // TODO: Get real terminal ID
-        var terminalId = System.Guid.Parse("22222222-2222-2222-2222-222222222222"); 
+        if (_terminalContext.TerminalId == null)
+        {
+            return;
+        }
+
+        var terminalId = _terminalContext.TerminalId.Value;
         var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
 
         if (session != null)
@@ -115,8 +125,13 @@ public class CashDropManagementViewModel : ViewModelBase
 
         if (result == ContentDialogResult.Primary)
         {
-            var terminalId = System.Guid.Parse("22222222-2222-2222-2222-222222222222");
-            var userId = new Magidesk.Domain.ValueObjects.UserId(System.Guid.Parse("11111111-1111-1111-1111-111111111111"));
+            if (_terminalContext.TerminalId == null || _userService.CurrentUser?.Id == null)
+            {
+                return;
+            }
+
+            var terminalId = _terminalContext.TerminalId.Value;
+            var userId = _userService.CurrentUser.Id;
             var amount = new Magidesk.Domain.ValueObjects.Money(dialog.Amount);
             var reason = dialog.Reason;
 

@@ -12,4 +12,6 @@ public class PayNowCommand
     public decimal Amount { get; set; } // If 0, assumes full due amount
     public string TenderType { get; set; } = "CASH"; // Default to Cash
     public bool AutoPrintReceipt { get; set; } = true;
+    public UserId ProcessedBy { get; set; } = null!;
+    public Guid TerminalId { get; set; }
 }

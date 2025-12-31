@@ -21,6 +21,7 @@ public class OpenTicketsListViewModel : ViewModelBase
     private readonly IQueryHandler<GetUsersQuery, IEnumerable<UserDto>> _getUsersHandler;
     private readonly ICommandHandler<TransferTicketCommand> _transferTicketHandler;
     private readonly NavigationService _navigationService;
+    private readonly IUserService _userService;
 
     private ObservableCollection<TicketDto> _tickets = new();
     public ObservableCollection<TicketDto> Tickets
@@ -68,12 +69,14 @@ public class OpenTicketsListViewModel : ViewModelBase
         IQueryHandler<GetOpenTicketsQuery, IEnumerable<TicketDto>> getOpenTicketsHandler,
         IQueryHandler<GetUsersQuery, IEnumerable<UserDto>> getUsersHandler,
         ICommandHandler<TransferTicketCommand> transferTicketHandler,
-        NavigationService navigationService)
+        NavigationService navigationService,
+        IUserService userService)
     {
         _getOpenTicketsHandler = getOpenTicketsHandler;
         _getUsersHandler = getUsersHandler;
         _transferTicketHandler = transferTicketHandler;
         _navigationService = navigationService;
+        _userService = userService;
 
         ResumeCommand = new AsyncRelayCommand(ResumeAsync, () => SelectedTicket != null);
         TransferCommand = new AsyncRelayCommand(TransferAsync, () => SelectedTicket != null);
@@ -134,11 +137,16 @@ public class OpenTicketsListViewModel : ViewModelBase
         {
             try
             {
+                if (_userService.CurrentUser?.Id == null)
+                {
+                    return;
+                }
+
                 var command = new TransferTicketCommand
                 {
                     TicketId = SelectedTicket.Id,
                     NewOwnerId = new UserId(selectedUser.Id),
-                    TransferredBy = new UserId(System.Guid.Parse("11111111-1111-1111-1111-111111111111")) // TODO: Current User
+                    TransferredBy = _userService.CurrentUser.Id
                 };
 
                 await _transferTicketHandler.HandleAsync(command);

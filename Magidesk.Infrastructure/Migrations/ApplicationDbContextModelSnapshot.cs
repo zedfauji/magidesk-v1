@@ -18,10 +18,35 @@ namespace Magidesk.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.AttendanceHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ClockInTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ClockOutTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("ShiftId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AttendanceHistories", (string)null);
+                });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.AuditEvent", b =>
                 {
@@ -352,6 +377,36 @@ namespace Magidesk.Infrastructure.Migrations
                     b.ToTable("GroupSettlements", (string)null);
                 });
 
+            modelBuilder.Entity("Magidesk.Domain.Entities.InventoryItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<decimal>("ReorderPoint")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("StockQuantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InventoryItems");
+                });
+
             modelBuilder.Entity("Magidesk.Domain.Entities.KitchenOrder", b =>
                 {
                     b.Property<Guid>("Id")
@@ -668,7 +723,7 @@ namespace Magidesk.Infrastructure.Migrations
 
                     b.ToTable("MenuModifiers", "magidesk");
 
-                    b.HasDiscriminator().HasValue("MenuModifier");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("MenuModifier");
 
                     b.UseTphMappingStrategy();
                 });
@@ -799,6 +854,10 @@ namespace Magidesk.Infrastructure.Migrations
                     b.Property<string>("GroupName")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Instructions")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<bool>("IsBeverage")
                         .ValueGeneratedOnAdd()
@@ -967,7 +1026,8 @@ namespace Magidesk.Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("SectionName")
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<bool>("ShouldPrintToKitchen")
                         .ValueGeneratedOnAdd()
@@ -1022,9 +1082,6 @@ namespace Magidesk.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
-
-                    b.Property<bool>("IsVisibleInLoginScreen")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -2083,8 +2140,30 @@ namespace Magidesk.Infrastructure.Migrations
                                 .HasForeignKey("MenuItemId");
                         });
 
+                    b.OwnsMany("Magidesk.Domain.ValueObjects.RecipeLine", "RecipeLines", b1 =>
+                        {
+                            b1.Property<Guid>("MenuItemId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<Guid>("InventoryItemId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Quantity")
+                                .HasColumnType("decimal(18,4)");
+
+                            b1.HasKey("MenuItemId", "InventoryItemId");
+
+                            b1.ToTable("MenuItemRecipeLines", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("MenuItemId");
+                        });
+
                     b.Navigation("Price")
                         .IsRequired();
+
+                    b.Navigation("RecipeLines");
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.MenuItemModifierGroup", b =>

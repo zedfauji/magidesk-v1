@@ -10,10 +10,9 @@ public sealed partial class DrawerPullReportDialog : ContentDialog
 
     public DrawerPullReportDialog()
     {
-        this.InitializeComponent();
+        InitializeComponent();
         ViewModel = App.Services.GetRequiredService<DrawerPullReportViewModel>();
         this.DataContext = ViewModel;
-
         this.Loaded += DrawerPullReportDialog_Loaded;
     }
 

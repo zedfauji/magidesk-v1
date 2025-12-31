@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ContentDialog
     x:Class="Magidesk.Presentation.Views.DrawerPullReportDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

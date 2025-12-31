@@ -46,5 +46,26 @@ public interface ITicketRepository
     /// Gets the next ticket number.
     /// </summary>
     Task<int> GetNextTicketNumberAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Begins a database transaction for atomic operations.
+    /// </summary>
+    Task<ITransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
+}
+
+/// <summary>
+/// Represents a database transaction.
+/// </summary>
+public interface ITransaction : IDisposable
+{
+    /// <summary>
+    /// Commits the transaction.
+    /// </summary>
+    Task CommitAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Rolls back the transaction.
+    /// </summary>
+    Task RollbackAsync(CancellationToken cancellationToken = default);
 }
 

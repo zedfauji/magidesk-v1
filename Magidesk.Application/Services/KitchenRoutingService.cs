@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Magidesk.Application.Interfaces;
 using Magidesk.Domain.Entities;
 using Magidesk.Domain.Enumerations;
+using Magidesk.Application.DTOs;
 
 namespace Magidesk.Application.Services;
 
@@ -17,42 +18,36 @@ public class KitchenRoutingService : IKitchenRoutingService
         _kitchenOrderRepository = kitchenOrderRepository;
     }
 
-    public async Task<List<Guid>> RouteToKitchenAsync(Ticket ticket, List<Guid>? itemIds = null)
+    public async Task<List<Guid>> RouteToKitchenAsync(TicketDto ticket, List<Guid>? itemIds = null)
     {
         if (ticket == null) throw new ArgumentNullException(nameof(ticket));
 
         // 1. Identify items to route
         var itemsToRoute = ticket.OrderLines
             .Where(ol => itemIds == null || itemIds.Contains(ol.Id))
-            .Where(ol => ol.ShouldPrintToKitchen) // Basic filter
-            // In a real system, we'd check if already fired, but for now we assume caller handles 'fire' action.
+            .Where(ol => ol.ShouldPrintToKitchen) 
             .ToList();
 
         if (!itemsToRoute.Any()) return new List<Guid>();
 
-        // 2. Group by "Destination" (Printer Group)
-        // MVP: We assume creating one KitchenOrder per "Routing Destination" or just one Big Order?
-        // TDD says: "Group by Destination".
-        // For MVP Foundation, let's assume all items go to a default "Kitchen" if no specific group logic exists yet.
-        // We will group by 'nothing' (Create 1 Order) for now, or simulate grouping.
-        
+        // 2. Fetch Helper Data
+        var serverName = !string.IsNullOrEmpty(ticket.OwnerName) ? ticket.OwnerName : "Unknown Server";
+        var tableNumber = !string.IsNullOrEmpty(ticket.TableName) ? ticket.TableName : "No Table";
+
         var createdOrderIds = new List<Guid>();
 
-        // Create a single Kitchen Order for this batch (Simplest MVP implementation)
-        // In future: Group by Station (Hot, Cold, Bar)
+        // Logic Simplification: Currently treating entire ticket route as one KitchenOrder
+        // In the future, we might split by Station (PrinterGroupId) here.
         
         var kitchenOrder = new KitchenOrder(
             ticket.Id,
-            "Server Name", // Placeholder: Ticket doesn't have ServerName snapshot yet
-            "Table 1"      // Placeholder
+            serverName, 
+            tableNumber 
         );
 
         foreach (var item in itemsToRoute)
         {
             var modifiers = item.Modifiers.Select(m => m.Name).ToList();
-            
-            // Assuming KitchenOrderItem constructor: (kitchenOrderId, ticketItemId, itemName, quantity, modifiers, destinationId)
-            // We need to fetch/determine DestinationId. defaulting to Guid.Empty or a meaningful value.
             
             kitchenOrder.AddItem(
                 item.Id,

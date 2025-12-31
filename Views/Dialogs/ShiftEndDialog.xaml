@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.Dialogs.ShiftEndDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Magidesk.Presentation.Views.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:Magidesk.Presentation.ViewModels.Dialogs"
+    mc:Ignorable="d"
+    Title="End Shift"
+    PrimaryButtonText="Close Shift"
+    SecondaryButtonText="Cancel"
+    DefaultButton="Primary"
+    PrimaryButtonCommand="{Binding ConfirmCommand}"
+    SecondaryButtonCommand="{Binding CancelCommand}"
+    Style="{StaticResource DefaultContentDialogStyle}">
+
+    <Grid RowSpacing="12" MinWidth="350">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <InfoBar Severity="Warning" 
+                 IsOpen="True" 
+                 IsClosable="False" 
+                 Message="This will close the current cash session. Verify your drawer count." />
+
+        <TextBlock Grid.Row="1" Text="Expected Cash:" Foreground="Gray"/>
+        <TextBlock Grid.Row="1" Text="{Binding ExpectedCash}" HorizontalAlignment="Right" FontWeight="Bold"/>
+
+        <NumberBox Grid.Row="2"
+                   Header="Closing Cash (Actual Count)"
+                   Value="{Binding ClosingBalanceDouble, Mode=TwoWay}"
+                   SpinButtonPlacementMode="Inline"
+                   SmallChange="10.00"
+                   PlaceholderText="0.00"/>
+        
+        <ProgressBar Grid.Row="2" 
+                     IsIndeterminate="True" 
+                     Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" 
+                     VerticalAlignment="Bottom"/>
+    </Grid>
+</ContentDialog>

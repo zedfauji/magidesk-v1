@@ -39,7 +39,7 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
             command.MenuItemId,
             command.MenuItemName,
             command.Quantity,
-            command.UnitPrice,
+            new Domain.ValueObjects.Money(command.UnitPrice.Amount, command.UnitPrice.Currency), // Deep Clone
             command.TaxRate,
             command.CategoryName,
             command.GroupName);
@@ -61,8 +61,8 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
                 name: mod.Name,
                 modifierType: mod.ModifierType,
                 itemCount: 1, // Default to 1 for now
-                unitPrice: mod.BasePrice,
-                basePrice: mod.BasePrice,
+                unitPrice: new Domain.ValueObjects.Money(mod.BasePrice.Amount, mod.BasePrice.Currency), // Deep Clone
+                basePrice: new Domain.ValueObjects.Money(mod.BasePrice.Amount, mod.BasePrice.Currency), // Deep Clone
                 taxRate: mod.TaxRate,
                 modifierGroupId: mod.ModifierGroupId,
                 shouldPrintToKitchen: mod.ShouldPrintToKitchen

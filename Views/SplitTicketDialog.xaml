@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ContentDialog
-    x:Class="Magidesk.Views.SplitTicketDialog"
+    x:Class="Magidesk.Presentation.Views.SplitTicketDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -18,81 +19,268 @@
     </ContentDialog.Resources>
 
     <Grid ColumnSpacing="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Left: Original Ticket -->
-        <Grid Grid.Column="0" RowSpacing="10">
-            <TextBlock Text="Original Ticket" Style="{StaticResource SubtitleTextBlockStyle}"/>
-            
-            <ListView ItemsSource="{Binding OriginalItems}" 
-                      SelectionMode="Extended"
-                      Name="OriginalListView">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Quantity}" Margin="0,0,10,0"/>
-                            <TextBlock Grid.Column="1" Text="{Binding MenuItemName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
-                            <TextBlock Grid.Column="2" Text="{Binding TotalAmount, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:C}'}"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
-                <TextBlock Text="Remaining Total:"/>
-                <TextBlock Text="{Binding TotalAmountOriginal, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:C}'}" FontWeight="Bold"/>
-            </StackPanel>
-        </Grid>
-
-        <!-- Middle: Action Buttons -->
-        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="10">
-            <Button Content="Move &gt;" 
-                    Command="{Binding MoveToSplitCommand}"
-                    CommandParameter="{Binding ElementName=OriginalListView, Path=SelectedItems}"/>
-            <Button Content="&lt; Move" 
-                    Command="{Binding MoveToOriginalCommand}"
-                    CommandParameter="{Binding ElementName=NewListView, Path=SelectedItems}"/>
+        <!-- Split Mode Selector -->
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20" Margin="0,0,0,20">
+            <RadioButton Content="Split by Items" IsChecked="{Binding SplitByItemsMode}" GroupName="SplitMode"/>
+            <RadioButton Content="Split Evenly" IsChecked="{Binding SplitEvenlyMode}" GroupName="SplitMode"/>
+            <RadioButton Content="Split by Seat" IsChecked="{Binding SplitBySeatMode}" GroupName="SplitMode"/>
         </StackPanel>
 
-        <!-- Right: New (Split) Ticket -->
-        <Grid Grid.Column="2" RowSpacing="10">
-            <TextBlock Text="New Ticket" Style="{StaticResource SubtitleTextBlockStyle}"/>
+        <!-- Split by Items Mode (Existing) -->
+        <Grid Grid.Row="1" Grid.ColumnSpan="3" x:Name="SplitByItemsPanel">
+            <Grid ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <ListView ItemsSource="{Binding SplitItems}" 
-                      SelectionMode="Extended"
-                      Name="NewListView">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Quantity}" Margin="0,0,10,0"/>
-                            <TextBlock Grid.Column="1" Text="{Binding MenuItemName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
-                            <TextBlock Grid.Column="2" Text="{Binding TotalAmount, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:C}'}"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                <!-- Left: Original Ticket -->
+                <Grid Grid.Column="0" RowSpacing="10">
+                    <TextBlock Text="Original Ticket" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                    
+                    <ListView ItemsSource="{Binding OriginalItems}" 
+                              SelectionMode="Extended"
+                              Name="OriginalListView">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Quantity}" Margin="0,0,10,0"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding MenuItemName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Grid.Column="2">
+                                        <TextBlock.Text>
+                                            <Binding Path="TotalAmount" 
+                                                     Converter="{StaticResource StringFormatConverter}" 
+                                                     ConverterParameter="{}{0:C}"/>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
-                <TextBlock Text="New Total:"/>
-                <TextBlock Text="{Binding TotalAmountSplit, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:C}'}" FontWeight="Bold"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                        <TextBlock Text="Remaining Total:"/>
+                        <TextBlock FontWeight="Bold">
+                            <TextBlock.Text>
+                                <Binding Path="TotalAmountOriginal" 
+                                         Converter="{StaticResource StringFormatConverter}" 
+                                         ConverterParameter="{}{0:C}"/>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Middle: Action Buttons -->
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="10">
+                    <Button Content="Move &gt;" 
+                            Command="{Binding MoveToSplitCommand}"
+                            CommandParameter="{Binding ElementName=OriginalListView, Path=SelectedItems}"/>
+                    <Button Content="&lt; Move" 
+                            Command="{Binding MoveToOriginalCommand}"
+                            CommandParameter="{Binding ElementName=NewListView, Path=SelectedItems}"/>
+                </StackPanel>
+
+                <!-- Right: New (Split) Ticket -->
+                <Grid Grid.Column="2" RowSpacing="10">
+                    <TextBlock Text="New Ticket" Style="{StaticResource SubtitleTextBlockStyle}"/>
+
+                    <ListView ItemsSource="{Binding SplitItems}" 
+                              SelectionMode="Extended"
+                              Name="NewListView">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Quantity}" Margin="0,0,10,0"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding MenuItemName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Grid.Column="2">
+                                        <TextBlock.Text>
+                                            <Binding Path="TotalAmount" 
+                                                     Converter="{StaticResource StringFormatConverter}" 
+                                                     ConverterParameter="{}{0:C}"/>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                        <TextBlock Text="New Total:"/>
+                        <TextBlock FontWeight="Bold">
+                            <TextBlock.Text>
+                                <Binding Path="TotalAmountSplit" 
+                                         Converter="{StaticResource StringFormatConverter}" 
+                                         ConverterParameter="{}{0:C}"/>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <!-- Split Evenly Mode -->
+        <Grid Grid.Row="1" Grid.ColumnSpan="3" x:Name="SplitEvenlyPanel" Visibility="Collapsed">
+            <StackPanel Spacing="20">
+                <TextBlock Text="Enter number of ways to split ticket evenly:" 
+                           Style="{StaticResource SubtitleTextBlockStyle}" 
+                           TextWrapping="Wrap"/>
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+                    <TextBox x:Name="WaysInput" Width="100" Margin="0,0,0,10"/>
+                    <Button Content="Calculate &amp; Split" 
+                            Command="{Binding SplitEvenlyCommand}"/>
+                </StackPanel>
+
+                <TextBlock Text="Preview:" 
+                           Style="{StaticResource SubtitleTextBlockStyle}" 
+                           TextWrapping="Wrap"/>
+                
+                <Border BorderBrush="LightGray" BorderThickness="1" Padding="10" Margin="5">
+                    <ItemsControl ItemsSource="{Binding SplitEvenlyPreview}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,0,0,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding WayDisplay}" FontWeight="Bold"/>
+                                    <ItemsControl ItemsSource="{Binding WayItems}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="20,2,0,0">
+                                                    <TextBlock Text="{Binding Quantity}" Margin="0,0,10,0"/>
+                                                    <TextBlock Text="{Binding Amount}" Margin="0,0,10,0"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Border>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                    <TextBlock Text="Total per ticket:"/>
+                    <TextBlock FontWeight="Bold">
+                        <TextBlock.Text>
+                            <Binding Path="TotalPerTicket" 
+                                     Converter="{StaticResource StringFormatConverter}" 
+                                     ConverterParameter="{}{0:C}"/>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </StackPanel>
+
+                <TextBlock Text="Remainder on original:"/>
+                <TextBlock FontWeight="Bold">
+                    <TextBlock.Text>
+                            <Binding Path="RemainderAmount" 
+                                     Converter="{StaticResource StringFormatConverter}" 
+                                     ConverterParameter="{}{0:C}"/>
+                        </TextBlock.Text>
+                </TextBlock>
+
+                <!-- Error / Info Bar -->
+                <InfoBar Grid.ColumnSpan="3" VerticalAlignment="Bottom"
+                         IsOpen="{Binding HasError}"
+                         Severity="Error"
+                         Message="{Binding ErrorMessage}"
+                         IsClosable="True" />
             </StackPanel>
         </Grid>
 
-        <!-- Error / Info Bar (Botttom overlay or separate row depending on pref, sticking to bottom of grid for now) -->
+        <!-- Split by Seat Mode -->
+        <Grid Grid.Row="1" Grid.ColumnSpan="3" x:Name="SplitBySeatPanel" Visibility="Collapsed">
+            <StackPanel Spacing="20">
+                <TextBlock Text="Items will be grouped by seat number and split into separate tickets:" 
+                           Style="{StaticResource SubtitleTextBlockStyle}" 
+                           TextWrapping="Wrap"/>
+                
+                <ListView ItemsSource="{Binding SeatGroups}" 
+                          SelectionMode="None"
+                          MaxHeight="300">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="LightGray" BorderThickness="1" Padding="10" Margin="5">
+                                <StackPanel Spacing="5">
+                                    <TextBlock Text="{Binding SeatDisplay}" FontWeight="Bold"/>
+                                    <ItemsControl ItemsSource="{Binding Items}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="20,2,0,2">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{Binding Quantity}" Margin="0,0,10,0"/>
+                                                    <TextBlock Grid.Column="1" Text="{Binding MenuItemName}" TextWrapping="NoWrap"/>
+                                                    <TextBlock Grid.Column="2">
+                                                        <TextBlock.Text>
+                                                            <Binding Path="TotalAmount" 
+                                                                     Converter="{StaticResource StringFormatConverter}" 
+                                                                     ConverterParameter="{}{0:C}"/>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <Border BorderBrush="LightGray" BorderThickness="0,1,0,0" Margin="0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                                        <TextBlock Text="Seat Total:"/>
+                                        <TextBlock FontWeight="Bold">
+                                            <TextBlock.Text>
+                                                <Binding Path="TotalAmount" 
+                                                         Converter="{StaticResource StringFormatConverter}" 
+                                                         ConverterParameter="{}{0:C}"/>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <!-- Validation Messages -->
+                <InfoBar IsOpen="{Binding HasUnassignedItems}" 
+                         Severity="Warning" 
+                         Title="Unassigned Items"
+                         Message="Some items are not assigned to seats. They will be grouped together."
+                         IsClosable="False"/>
+                
+                <InfoBar IsOpen="{Binding HasSingleSeat}" 
+                         Severity="Informational" 
+                         Title="Single Seat"
+                         Message="All items are assigned to one seat. No split will be performed."
+                         IsClosable="False"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Error / Info Bar -->
         <InfoBar Grid.ColumnSpan="3" VerticalAlignment="Bottom"
                  IsOpen="{Binding HasError}"
                  Severity="Error"

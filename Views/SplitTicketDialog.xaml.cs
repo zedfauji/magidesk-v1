@@ -2,16 +2,17 @@ using Magidesk.Presentation.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 
-namespace Magidesk.Views;
-
-public sealed partial class SplitTicketDialog : ContentDialog
+namespace Magidesk.Presentation.Views
 {
-    public SplitTicketViewModel ViewModel { get; }
-
-    public SplitTicketDialog()
+    public sealed partial class SplitTicketDialog : ContentDialog
     {
-        this.InitializeComponent();
-        ViewModel = Magidesk.Presentation.App.Services.GetService<SplitTicketViewModel>();
-        this.DataContext = ViewModel;
+        public SplitTicketViewModel ViewModel { get; }
+
+        public SplitTicketDialog()
+        {
+            this.InitializeComponent();
+            ViewModel = App.Services.GetRequiredService<SplitTicketViewModel>();
+            this.DataContext = ViewModel;
+        }
     }
 }

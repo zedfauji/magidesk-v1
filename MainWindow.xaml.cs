@@ -48,7 +48,7 @@ public sealed partial class MainWindow : Window
         }
     }
 
-    private void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+    private async void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
         if (args.InvokedItemContainer is not NavigationViewItem item)
         {
@@ -101,8 +101,7 @@ public sealed partial class MainWindow : Window
         if (tag == "drawerPull")
         {
              var dialog = new Views.DrawerPullReportDialog();
-             dialog.XamlRoot = Content.XamlRoot;
-             _ = dialog.ShowAsync();
+             await _navigation.ShowDialogAsync(dialog);
             return;
         }
 

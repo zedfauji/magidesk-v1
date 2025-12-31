@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Magidesk.Application.Interfaces;
 using Magidesk.Domain.Entities;
 using Magidesk.Domain.Enumerations;
+using Magidesk.Domain.ValueObjects;
 using Magidesk.Infrastructure.Data;
 
 namespace Magidesk.Infrastructure.Repositories;
@@ -36,7 +37,7 @@ public class CashSessionRepository : ICashSessionRepository
             .Include(cs => cs.CashDrops)
             .Include(cs => cs.DrawerBleeds)
             .FirstOrDefaultAsync(
-                cs => cs.UserId.Value == userId && cs.Status == CashSessionStatus.Open,
+                cs => cs.UserId == new UserId(userId) && cs.Status == CashSessionStatus.Open,
                 cancellationToken);
     }
 

@@ -28,6 +28,7 @@ public class SwitchboardViewModel : ViewModelBase
     private readonly IAttendanceRepository _attendanceRepository;
     private readonly ICommandHandler<CreateTicketCommand, CreateTicketResult> _createTicketHandler;
     private readonly IUserService _userService;
+    private readonly ITerminalContext _terminalContext;
 
     private ObservableCollection<TicketDto> _openTickets = new();
     public ObservableCollection<TicketDto> OpenTickets
@@ -55,6 +56,7 @@ public class SwitchboardViewModel : ViewModelBase
     public ICommand PerformDrawerBleedCommand { get; }
     public ICommand PerformOpenDrawerCommand { get; }
     public ICommand ShowDrawerBalanceCommand { get; }
+    public ICommand KitchenCommand { get; }
     
     public ICommand TablesCommand { get; }
     public ICommand ManagerFunctionsCommand { get; }
@@ -69,7 +71,8 @@ public class SwitchboardViewModel : ViewModelBase
         ICommandHandler<ClockOutCommand> clockOutHandler,
         IAttendanceRepository attendanceRepository,
         ICommandHandler<CreateTicketCommand, CreateTicketResult> createTicketHandler,
-        IUserService userService)
+        IUserService userService,
+        ITerminalContext terminalContext)
     {
         _navigationService = navigationService;
         _cashSessionRepository = cashSessionRepository;
@@ -79,6 +82,7 @@ public class SwitchboardViewModel : ViewModelBase
         _attendanceRepository = attendanceRepository;
         _createTicketHandler = createTicketHandler;
         _userService = userService;
+        _terminalContext = terminalContext;
         Title = "Magidesk POS";
 
         LoadTicketsCommand = new AsyncRelayCommand(LoadTicketsAsync);
@@ -93,12 +97,23 @@ public class SwitchboardViewModel : ViewModelBase
         PerformOpenDrawerCommand = new AsyncRelayCommand(PerformOpenDrawerAsync);
         ShowDrawerBalanceCommand = new AsyncRelayCommand(ShowDrawerBalanceAsync);
         
-        TablesCommand = new RelayCommand(() => System.Diagnostics.Debug.WriteLine("Tables Not Implemented"));
-        ManagerFunctionsCommand = new RelayCommand(() => System.Diagnostics.Debug.WriteLine("Manager Not Implemented"));
-        LogoutCommand = new RelayCommand(() => _navigationService.GoBack());
+        ShowDrawerBalanceCommand = new AsyncRelayCommand(ShowDrawerBalanceAsync);
+        KitchenCommand = new RelayCommand(() => _navigationService.Navigate(typeof(Views.KitchenDisplayPage)));
+        
+        TablesCommand = new RelayCommand(() => _navigationService.Navigate(typeof(Views.TableMapPage)));
+        ManagerFunctionsCommand = new RelayCommand(ManagerFunctionsAsync);
+        LogoutCommand = new RelayCommand(() => {
+            _navigationService.Navigate(typeof(Views.LoginPage));
+        });
         ShutdownCommand = new RelayCommand(() => { try { Microsoft.UI.Xaml.Application.Current.Exit(); } catch {} });
 
         NewTicketCommand = new AsyncRelayCommand(NewTicketAsync);
+    }
+
+    private async void ManagerFunctionsAsync()
+    {
+        var dialog = new Views.ManagerFunctionsDialog();
+        await _navigationService.ShowDialogAsync(dialog);
     }
 
     // ... 
@@ -176,15 +191,58 @@ public class SwitchboardViewModel : ViewModelBase
                 }
             }
 
-            // 2. Resolve Context
-            var userId = _userService.CurrentUser?.Id ?? new Magidesk.Domain.ValueObjects.UserId(Guid.Parse("11111111-1111-1111-1111-111111111111")); // Fallback/Dev
-            // Terminal should ideally come from local config or session.
-            // For MVP, checking open session or defaulting.
-            var terminalId = Guid.Parse("22222222-2222-2222-2222-222222222222"); 
-            
-            // Resolve Shift (Active Session)
+            // 2. Resolve Context (no fallback IDs)
+            if (_userService.CurrentUser?.Id == null)
+            {
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Action Required",
+                    Content = "No current user is set. Please login again.",
+                    CloseButtonText = "OK"
+                };
+                await _navigationService.ShowDialogAsync(errorDialog);
+                return;
+            }
+
+            if (_terminalContext.TerminalId == null)
+            {
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Action Required",
+                    Content = "Terminal identity is not initialized. Please restart the application.",
+                    CloseButtonText = "OK"
+                };
+                await _navigationService.ShowDialogAsync(errorDialog);
+                return;
+            }
+
+            var userId = _userService.CurrentUser.Id;
+            var terminalId = _terminalContext.TerminalId.Value;
+
+            // Resolve Shift (Active Session) - must exist
             var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
-            var shiftId = session?.Id ?? Guid.Parse("33333333-3333-3333-3333-333333333333"); // Fallback
+            if (session == null)
+            {
+                // F-0060: Shift Start Dialog
+                var shiftDialog = new Magidesk.Presentation.Views.Dialogs.ShiftStartDialog();
+                shiftDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                var shiftResult = await _navigationService.ShowDialogAsync(shiftDialog);
+
+                if (shiftResult != Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
+                {
+                    return; // Abort if cancelled
+                }
+
+                // Re-fetch session to confirm it started
+                session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
+                if (session == null)
+                {
+                    // If still null, something went wrong
+                    return;
+                }
+            }
+
+            var shiftId = session.Id;
 
             // 3. Create Ticket (Backend Command)
             var command = new CreateTicketCommand
@@ -278,7 +336,12 @@ public class SwitchboardViewModel : ViewModelBase
     private async Task PerformOpenDrawerAsync()
     {
         // "No Sale" operation
-        var terminalId = System.Guid.Parse("22222222-2222-2222-2222-222222222222"); // Harcoded MVP
+        if (_terminalContext.TerminalId == null)
+        {
+            return;
+        }
+
+        var terminalId = _terminalContext.TerminalId.Value;
         try 
         {
             var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
@@ -302,7 +365,12 @@ public class SwitchboardViewModel : ViewModelBase
 
     private async Task ShowDrawerBalanceAsync()
     {
-        var terminalId = System.Guid.Parse("22222222-2222-2222-2222-222222222222"); // Harcoded MVP
+        if (_terminalContext.TerminalId == null)
+        {
+            return;
+        }
+
+        var terminalId = _terminalContext.TerminalId.Value;
         try 
         {
             var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
@@ -351,9 +419,14 @@ public class SwitchboardViewModel : ViewModelBase
         {
             var amount = new Magidesk.Domain.ValueObjects.Money(dialog.Amount);
             var reason = dialog.Reason;
-            
-            var userId = new Magidesk.Domain.ValueObjects.UserId(System.Guid.Parse("11111111-1111-1111-1111-111111111111"));
-            var terminalId = System.Guid.Parse("22222222-2222-2222-2222-222222222222");
+
+            if (_userService.CurrentUser?.Id == null || _terminalContext.TerminalId == null)
+            {
+                return;
+            }
+
+            var userId = _userService.CurrentUser.Id;
+            var terminalId = _terminalContext.TerminalId.Value;
 
             try
             {
@@ -386,7 +459,12 @@ public class SwitchboardViewModel : ViewModelBase
     }
     private async Task ClockInAsync()
     {
-         var userId = _userService.CurrentUser?.Id ?? new Magidesk.Domain.ValueObjects.UserId(System.Guid.Parse("11111111-1111-1111-1111-111111111111"));
+         if (_userService.CurrentUser?.Id == null)
+         {
+             return;
+         }
+
+         var userId = _userService.CurrentUser.Id;
          var command = new ClockInCommand { UserId = userId };
          try 
          {
@@ -400,7 +478,12 @@ public class SwitchboardViewModel : ViewModelBase
 
     private async Task ClockOutAsync()
     {
-         var userId = _userService.CurrentUser?.Id ?? new Magidesk.Domain.ValueObjects.UserId(System.Guid.Parse("11111111-1111-1111-1111-111111111111"));
+         if (_userService.CurrentUser?.Id == null)
+         {
+             return;
+         }
+
+         var userId = _userService.CurrentUser.Id;
          var command = new ClockOutCommand { UserId = userId };
          try 
          {

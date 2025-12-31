@@ -80,6 +80,12 @@
       <ProjectReference Include="Magidesk.Infrastructure\Magidesk.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Page Remove="Views\SplitTicketDialog_Backup.xaml" />
+      <Page Remove="Views\SplitTicketDialog_Minimal.xaml" />
+      <Page Remove="Views\SplitTicketDialog_Fixed.xaml" />
+    </ItemGroup>
+
     <!-- 
         Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution 
         Explorer "Package and Publish" context menu entry to be enabled for this project even if 

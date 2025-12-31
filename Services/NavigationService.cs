@@ -36,10 +36,21 @@ public class NavigationService
 
     public async Task<ContentDialogResult> ShowDialogAsync(ContentDialog dialog)
     {
-        if (_frame?.XamlRoot == null)
+        if (_frame == null)
         {
-             // Fallback or throw? If frame is not loaded, we can't show dialog.
-             throw new InvalidOperationException("Cannot show dialog: Frame's XamlRoot is null.");
+            throw new InvalidOperationException("NavigationService is not initialized. Call Initialize(frame) first.");
+        }
+
+        var attempts = 0;
+        while (_frame.XamlRoot == null && attempts < 40)
+        {
+            await Task.Delay(50);
+            attempts++;
+        }
+
+        if (_frame.XamlRoot == null)
+        {
+            throw new InvalidOperationException("Cannot show dialog: Frame's XamlRoot is null.");
         }
 
         dialog.XamlRoot = _frame.XamlRoot;

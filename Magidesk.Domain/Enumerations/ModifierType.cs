@@ -7,6 +7,7 @@ public enum ModifierType
 {
     Normal = 0,
     Extra = 1,
-    InfoOnly = 2
+    InfoOnly = 2,
+    AddOn = 3
 }
 

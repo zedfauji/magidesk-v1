@@ -47,10 +47,8 @@ public class PayNowCommandHandler : ICommandHandler<PayNowCommand>
         }
 
         // 3. Create Transaction
-        // Using placeholder User/Terminal IDs as they aren't on the command yet. 
-        // In a real app, these would come from ICurrentUserService or the command.
-        var userId = new UserId(Guid.Parse("11111111-1111-1111-1111-111111111111")); 
-        var terminalId = Guid.Empty;
+        var userId = command.ProcessedBy;
+        var terminalId = command.TerminalId;
 
         var payment = Payment.Create(
             ticket.Id,

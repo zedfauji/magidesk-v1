@@ -11,10 +11,13 @@ using Microsoft.UI.Xaml.Controls;
 
 using Magidesk.ViewModels;
 using CommunityToolkit.Mvvm.Input;
+using Magidesk.ViewModels.Dialogs;
+using Magidesk.Domain.Enumerations;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Magidesk.Presentation.ViewModels;
 
-public class OrderEntryViewModel : ViewModelBase
+public partial class OrderEntryViewModel : ViewModelBase
 {
     private readonly IMenuCategoryRepository _categoryRepository;
     private readonly IMenuGroupRepository _groupRepository;
@@ -30,6 +33,14 @@ public class OrderEntryViewModel : ViewModelBase
     private readonly ICommandHandler<SetDeliveryChargeCommand, SetDeliveryChargeResult> _setDeliveryChargeHandler;
     private readonly ICommandHandler<SetAdjustmentCommand, SetAdjustmentResult> _setAdjustmentHandler;
     private readonly NavigationService _navigationService;
+    private readonly IUserService _userService;
+    private readonly ITerminalContext _terminalContext;
+    private readonly ICommandHandler<ChangeSeatCommand> _changeSeatHandler;
+    private readonly ICommandHandler<MergeTicketsCommand> _mergeTicketsHandler;
+    private readonly ICommandHandler<ChangeTableCommand, ChangeTableResult> _changeTableHandler;
+    private readonly ICommandHandler<SetCustomerCommand, SetCustomerResult> _setCustomerHandler;
+    private readonly IServiceProvider _serviceProvider;
+    private readonly IKitchenRoutingService _kitchenRoutingService;
 
     private TicketDto? _ticket;
     private MenuCategory? _selectedCategory;
@@ -48,6 +59,9 @@ public class OrderEntryViewModel : ViewModelBase
             }
         }
     }
+
+    public ICommand SettleCommand { get; }
+    public ICommand QuickPayCommand { get; }
 
     public ObservableCollection<MenuCategory> Categories { get; } = new();
     public ObservableCollection<MenuGroup> Groups { get; } = new();
@@ -95,6 +109,8 @@ public class OrderEntryViewModel : ViewModelBase
     }
     
     public bool HasTicket => Ticket != null;
+    
+    public bool HasTicketWithItems => Ticket != null && Ticket.OrderLines.Any();
     
     public IReadOnlyList<OrderLineDto> OrderLines => Ticket?.OrderLines ?? new List<OrderLineDto>();
     
@@ -179,7 +195,15 @@ public class OrderEntryViewModel : ViewModelBase
         ICommandHandler<SetDeliveryChargeCommand, SetDeliveryChargeResult> setDeliveryChargeHandler,
         ICommandHandler<SetAdjustmentCommand, SetAdjustmentResult> setAdjustmentHandler,
         NavigationService navigationService,
-        IPrintingService printingService) // Injected
+        IPrintingService printingService,
+        IUserService userService,
+        ITerminalContext terminalContext,
+        ICommandHandler<ChangeSeatCommand> changeSeatHandler,
+        ICommandHandler<MergeTicketsCommand> mergeTicketsHandler,
+        ICommandHandler<ChangeTableCommand, ChangeTableResult> changeTableHandler,
+        ICommandHandler<SetCustomerCommand, SetCustomerResult> setCustomerHandler,
+        IServiceProvider serviceProvider,
+        IKitchenRoutingService kitchenRoutingService)
     {
         _categoryRepository = categoryRepository;
         _groupRepository = groupRepository;
@@ -196,6 +220,14 @@ public class OrderEntryViewModel : ViewModelBase
         _setAdjustmentHandler = setAdjustmentHandler;
         _navigationService = navigationService;
         _printingService = printingService;
+        _userService = userService;
+        _terminalContext = terminalContext;
+        _changeSeatHandler = changeSeatHandler;
+        _mergeTicketsHandler = mergeTicketsHandler;
+        _changeTableHandler = changeTableHandler;
+        _setCustomerHandler = setCustomerHandler;
+        _serviceProvider = serviceProvider;
+        _kitchenRoutingService = kitchenRoutingService;
 
         Title = "Order Entry";
 
@@ -211,11 +243,16 @@ public class OrderEntryViewModel : ViewModelBase
         SetQuantityCommand = new AsyncRelayCommand(SetQuantityAsync);
         
         PrintTicketCommand = new AsyncRelayCommand(PrintTicketAsync);
-        PrintTicketCommand = new AsyncRelayCommand(PrintTicketAsync);
         AddMiscItemCommand = new AsyncRelayCommand(AddMiscItemAsync);
         AddFeeCommand = new AsyncRelayCommand(AddFeeAsync);
         AddCookingInstructionCommand = new AsyncRelayCommand<OrderLineDto>(AddCookingInstructionAsync);
         AddPizzaModifiersCommand = new AsyncRelayCommand<OrderLineDto>(AddPizzaModifiersAsync);
+        ChangeSeatCommand = new AsyncRelayCommand<OrderLineDto>(ChangeSeatAsync);
+        MergeTicketsCommand = new AsyncRelayCommand(MergeTicketsAsync);
+        ChangeTableCommand = new AsyncRelayCommand(ChangeTableAsync);
+        AssignCustomerCommand = new AsyncRelayCommand(AssignCustomerAsync);
+        SettleCommand = new AsyncRelayCommand(SettleAsync);
+        QuickPayCommand = new AsyncRelayCommand(QuickPayAsync);
     }
 
     // ... InitializeAsync ...
@@ -225,6 +262,144 @@ public class OrderEntryViewModel : ViewModelBase
     
     // F-0036: Cooking Instructions
     public ICommand AddCookingInstructionCommand { get; }
+    public ICommand ChangeSeatCommand { get; }
+    public ICommand MergeTicketsCommand { get; }
+    public ICommand ChangeTableCommand { get; }
+    public ICommand AssignCustomerCommand { get; }
+
+
+
+    private async Task MergeTicketsAsync()
+    {
+        if (Ticket == null) return;
+        
+        // F-0040: Merge current ticket INTO another ticket.
+        // We need GetOpenTicketsHandler for the dialog, but the VM handles it internally if we instantiate correctly.
+        // The dialog VM needs IQueryHandler<GetOpenTicketsQuery...>. 
+        // We can resolve it from App.Services for the dialog since it's a transient VM inside a dialog.
+        
+        try
+        {
+             var queryHandler = _serviceProvider.GetRequiredService<IQueryHandler<GetOpenTicketsQuery, IEnumerable<TicketDto>>>();
+             var vm = new Magidesk.Presentation.ViewModels.Dialogs.MergeTicketsViewModel(queryHandler, Ticket.Id);
+             
+             var dialog = new Magidesk.Views.Dialogs.MergeTicketsDialog { ViewModel = vm };
+             dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+             
+             vm.CloseAction = () => dialog.Hide();
+             
+             await dialog.ShowAsync();
+             
+             if (vm.IsConfirmed && vm.SelectedTargetTicket != null)
+             {
+                 if (_userService.CurrentUser?.Id == null) return;
+
+                 await _mergeTicketsHandler.HandleAsync(new MergeTicketsCommand
+                 {
+                     SourceTicketId = Ticket.Id,
+                     TargetTicketId = vm.SelectedTargetTicket.Id,
+                     ProcessedBy = _userService.CurrentUser.Id
+                 });
+                 
+                 // Current ticket is now void/merged. Navigate back.
+                 _navigationService.GoBack();
+             }
+        }
+        catch (Exception ex)
+        {
+             var errorDialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+             {
+                 Title = "Merge Error",
+                 Content = ex.Message,
+                 CloseButtonText = "OK",
+                 XamlRoot = App.MainWindowInstance.Content.XamlRoot
+             };
+             await _navigationService.ShowDialogAsync(errorDialog);
+        }
+        }
+
+
+    private async Task AssignCustomerAsync()
+    {
+        if (Ticket == null) return;
+
+        // F-0077: Assign Customer (Stub)
+        var dialog = new Magidesk.Views.Dialogs.CustomerSelectionDialog();
+        dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        // ViewModel is auto-created by the view
+
+        var result = await dialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary && dialog.ViewModel.IsConfirmed)
+        {
+             if (_userService.CurrentUser?.Id == null) return;
+
+             var cmd = new SetCustomerCommand
+             {
+                 TicketId = Ticket.Id,
+                 GuestName = dialog.ViewModel.GuestName,
+                 PhoneNumber = dialog.ViewModel.PhoneNumber,
+                 ModifiedBy = _userService.CurrentUser.Id
+             };
+
+             var outcome = await _setCustomerHandler.HandleAsync(cmd);
+             
+             if (outcome.Success)
+             {
+                 await LoadTicketAsync(Ticket.Id);
+             }
+             else
+             {
+                 // Handle Error
+                 System.Diagnostics.Debug.WriteLine($"Error assigning customer: {outcome.ErrorMessage}");
+             }
+        }
+    }
+
+    private async Task ChangeTableAsync()
+    {
+        if (Ticket == null) return;
+
+        // F-0080: Change Table Action
+        // Use injected ServiceProvider to resolve transient VM with dependencies
+        var vm = _serviceProvider.GetRequiredService<Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel>();
+        await vm.InitializeAsync();
+
+        var dialog = new Magidesk.Views.Dialogs.TableSelectionDialog { ViewModel = vm };
+        dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        
+        vm.CloseAction = () => dialog.Hide();
+
+        await dialog.ShowAsync();
+
+        if (vm.IsConfirmed && vm.SelectedTable != null)
+        {
+            if (_userService.CurrentUser?.Id == null) return;
+
+            var result = await _changeTableHandler.HandleAsync(new ChangeTableCommand
+            {
+                TicketId = Ticket.Id,
+                NewTableId = vm.SelectedTable.Id,
+                UserId = _userService.CurrentUser.Id
+            });
+
+            if (result.Success)
+            {
+                await LoadTicketAsync(Ticket.Id);
+            }
+            else
+            {
+                 var errorDialog = new ContentDialog
+                 {
+                     Title = "Change Table Error",
+                     Content = result.ErrorMessage,
+                     CloseButtonText = "OK",
+                     XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                 };
+                 await _navigationService.ShowDialogAsync(errorDialog);
+            }
+        }
+    }
 
     private async Task AddCookingInstructionAsync(OrderLineDto? line)
     {
@@ -290,10 +465,111 @@ public class OrderEntryViewModel : ViewModelBase
         }
     }
 
+    [RelayCommand]
+    private async Task AddOnSelectionAsync(OrderLineDto? line)
+    {
+        if (line == null || Ticket == null) return;
+
+        // Show add-on selection dialog
+        var vm = new Magidesk.ViewModels.Dialogs.AddOnSelectionViewModel(_menuRepository, line);
+        var dialog = new Magidesk.Views.Dialogs.AddOnSelectionDialog(vm)
+        {
+            XamlRoot = App.MainWindowInstance.Content.XamlRoot
+        };
+
+        vm.CloseAction = () => dialog.Hide();
+
+        await dialog.ShowAsync();
+
+        if (vm.IsConfirmed && vm.ResultAddOns.Any())
+        {
+            // Add selected add-ons as separate order lines
+            foreach (var addOn in vm.ResultAddOns)
+            {
+                if (addOn.ModifierId.HasValue)
+                {
+                    await _addOrderLineHandler.HandleAsync(new AddOrderLineCommand
+                    {
+                        TicketId = Ticket.Id,
+                        MenuItemId = addOn.ModifierId.Value,
+                        MenuItemName = addOn.Name,
+                        Quantity = 1, // Add-ons are typically single quantity
+                        UnitPrice = new Magidesk.Domain.ValueObjects.Money(addOn.UnitPrice),
+                        TaxRate = addOn.TaxRate,
+                        Modifiers = new List<Magidesk.Domain.Entities.MenuModifier>(), // No modifiers on add-ons
+                        CategoryName = "Add-on", // Special category for add-ons
+                        GroupName = "Upsell"
+                    });
+                }
+            }
+
+            await LoadTicketAsync(Ticket.Id);
+        }
+    }
+
+    [RelayCommand]
+    private async Task ComboSelectionAsync(OrderLineDto? line)
+    {
+        if (line == null || Ticket == null) return;
+
+        // Show combo selection dialog
+        var vm = new Magidesk.ViewModels.Dialogs.ComboSelectionViewModel(_menuRepository, line);
+        var dialog = new Magidesk.Views.Dialogs.ComboSelectionDialog(vm)
+        {
+            XamlRoot = App.MainWindowInstance.Content.XamlRoot
+        };
+
+        vm.CloseAction = () => dialog.Hide();
+
+        await dialog.ShowAsync();
+
+        if (vm.IsConfirmed && vm.ResultSelections.Any())
+        {
+            // For now, we'll just add the selected combo items as separate order lines
+            // In a real implementation, this would create a proper combo structure
+            foreach (var selection in vm.ResultSelections)
+            {
+                await _addOrderLineHandler.HandleAsync(new AddOrderLineCommand
+                {
+                    TicketId = Ticket.Id,
+                    MenuItemId = selection.MenuItemId,
+                    MenuItemName = selection.ItemName,
+                    Quantity = 1,
+                    UnitPrice = new Magidesk.Domain.ValueObjects.Money(selection.BasePrice + selection.Upcharge),
+                    TaxRate = 0, // Simplified, would use actual tax rate
+                    Modifiers = new List<Magidesk.Domain.Entities.MenuModifier>(),
+                    CategoryName = "Combo",
+                    GroupName = selection.GroupName
+                });
+            }
+
+            // Remove the original combo item (placeholder implementation)
+            await _removeOrderLineHandler.HandleAsync(new RemoveOrderLineCommand
+            {
+                TicketId = Ticket.Id,
+                OrderLineId = line.Id
+            });
+
+            await LoadTicketAsync(Ticket.Id);
+        }
+    }
+
     private async Task<bool> IsPizza(OrderLineDto line)
     {
         var item = await _menuRepository.GetByIdAsync(line.MenuItemId);
-        return item?.MenuCategory?.Name.Contains("Pizza", StringComparison.OrdinalIgnoreCase) ?? false;
+        if (item == null) return false;
+        
+        var category = Categories.FirstOrDefault(c => c.Id == item.CategoryId);
+        if (category?.Name.Contains("Pizza", StringComparison.OrdinalIgnoreCase) == true) return true;
+
+        var group = Groups.FirstOrDefault(g => g.Id == item.GroupId);
+        // If group not in memory (e.g. browsing another category), fetch it
+        if (group == null && item.GroupId.HasValue)
+        {
+             group = await _groupRepository.GetByIdAsync(item.GroupId.Value);
+        }
+        
+        return group?.Name.Contains("Pizza", StringComparison.OrdinalIgnoreCase) ?? false;
     }
 
     // F-0037: Pizza Modifiers
@@ -339,7 +615,12 @@ public class OrderEntryViewModel : ViewModelBase
             var vm = dialog.ViewModel;
             if (vm.Amount < 0) return; // Basic validation
 
-            var processedBy = new Magidesk.Domain.ValueObjects.UserId(Guid.Parse("11111111-1111-1111-1111-111111111111")); // Placeholder User
+            if (_userService.CurrentUser?.Id == null)
+            {
+                return;
+            }
+
+            var processedBy = _userService.CurrentUser.Id;
 
             switch (vm.SelectedFeeType)
             {
@@ -371,6 +652,46 @@ public class OrderEntryViewModel : ViewModelBase
             }
 
             await LoadTicketAsync(Ticket.Id);
+        }
+    }
+
+    private async Task ChangeSeatAsync(OrderLineDto? line)
+    {
+        if (line == null || Ticket == null) return;
+        
+        // F-0036: Seat Assignment Dialog
+        var vm = new Magidesk.Presentation.ViewModels.Dialogs.SeatSelectionViewModel();
+        var dialog = new Magidesk.Views.Dialogs.SeatSelectionDialog { ViewModel = vm };
+        dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        
+        vm.CloseAction = () => dialog.Hide();
+        
+        await dialog.ShowAsync();
+        
+        if (vm.IsConfirmed && vm.ResultSeatNumber.HasValue)
+        {
+             try 
+            {
+                 await _changeSeatHandler.HandleAsync(new ChangeSeatCommand
+                 {
+                     TicketId = Ticket.Id,
+                     OrderLineId = line.Id,
+                     SeatNumber = vm.ResultSeatNumber.Value
+                 });
+                 
+                 await LoadTicketAsync(Ticket.Id);
+            }
+            catch (Exception ex)
+            {
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Seat Assignment Error",
+                    Content = ex.Message,
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                };
+                await _navigationService.ShowDialogAsync(errorDialog);
+            }
         }
     }
 
@@ -493,6 +814,27 @@ public class OrderEntryViewModel : ViewModelBase
     {
         if (Ticket == null) return;
 
+        if (_userService.CurrentUser?.Id == null || _terminalContext.TerminalId == null)
+        {
+            return;
+        }
+
+        // F-0041: Edge case validation
+        if (!Ticket.OrderLines.Any())
+        {
+            // No items - disable button should prevent this, but add safety check
+            return;
+        }
+
+        if (Ticket.TotalAmount <= 0)
+        {
+            // Zero balance - skip payment view, just close ticket
+            await LoadTicketAsync(Ticket.Id);
+            Ticket = null;
+            _navigationService.GoBack();
+            return;
+        }
+
         IsBusy = true;
         try
         {
@@ -504,7 +846,9 @@ public class OrderEntryViewModel : ViewModelBase
             {
                 TicketId = Ticket.Id,
                 Amount = 0, // Full amount
-                TenderType = "CASH" 
+                TenderType = "CASH",
+                ProcessedBy = _userService.CurrentUser.Id,
+                TerminalId = _terminalContext.TerminalId.Value
             });
 
             // Reload to check status (should be Closed)
@@ -533,7 +877,7 @@ public class OrderEntryViewModel : ViewModelBase
         IsBusy = true;
         try
         {
-             var dialog = new Magidesk.Views.SplitTicketDialog();
+             var dialog = new Magidesk.Presentation.Views.SplitTicketDialog();
              dialog.ViewModel.Initialize(Ticket);
              var result = await _navigationService.ShowDialogAsync(dialog);
 
@@ -557,21 +901,20 @@ public class OrderEntryViewModel : ViewModelBase
         IsBusy = true;
         try
         {
-             var result = await _printToKitchenHandler.HandleAsync(new PrintToKitchenCommand 
-             { 
-                TicketId = Ticket.Id 
-             });
-
-             if (result.Success)
-             {
-                await LoadTicketAsync(Ticket.Id);
-             }
+            // Use Routing Service to create Kitchen Orders
+            await _kitchenRoutingService.RouteToKitchenAsync(Ticket);
+            
+            // In future: Mark items as "Sent" in DB or Ticket state if the routing service doesn't do it implicitly.
+            // For now, we assume successful route is enough to count as "Sent".
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Kitchen Print Error: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"Send To Kitchen Error: {ex.Message}");
         }
-        finally { IsBusy = false; }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     public ICommand SettleUiCommand => new RelayCommand(Settle);
@@ -587,17 +930,15 @@ public class OrderEntryViewModel : ViewModelBase
         IsBusy = true;
         try
         {
-            // Defaults for "Quick Start"
-             var command = new CreateTicketCommand
+            // Ticket creation requires authoritative runtime context (user/terminal/open cash session).
+            // The supported entry point for this is Switchboard -> New Ticket.
+            var dialog = new ContentDialog
             {
-                CreatedBy = new Domain.ValueObjects.UserId(Guid.Parse("11111111-1111-1111-1111-111111111111")), // Placeholder
-                TerminalId = Guid.Parse("22222222-2222-2222-2222-222222222222"), // Placeholder
-                ShiftId = Guid.Parse("33333333-3333-3333-3333-333333333333"), // Placeholder
-                OrderTypeId = Guid.Parse("44444444-4444-4444-4444-444444444444") // Placeholder
+                Title = "Action Required",
+                Content = "Create Ticket is not available from Order Entry. Use Switchboard -> New Ticket.",
+                CloseButtonText = "OK"
             };
-
-            var result = await _createTicketHandler.HandleAsync(command);
-            await LoadTicketAsync(result.TicketId);
+            await _navigationService.ShowDialogAsync(dialog);
         }
         catch (Exception ex)
         {
@@ -621,7 +962,7 @@ public class OrderEntryViewModel : ViewModelBase
 
         List<MenuModifier> selectedModifiers = new();
 
-        Money effectivePrice = fullItem.Price;
+        Money effectivePrice = new Money(fullItem.Price.Amount, fullItem.Price.Currency);
 
         // F-0035: Variable Price Support
         if (fullItem.IsVariablePrice)
@@ -692,9 +1033,65 @@ public class OrderEntryViewModel : ViewModelBase
         // For Beverages, we Skip to enable "One Touch" speed.
         if (!isBeverage)
         {
-             // TODO: F-0038 - Show ModifierSelectionDialog for remaining groups
-             // if (fullItem.ModifierGroups.Any(mg => mg.ModifierGroup.Id != sizeGroup?.Id))
-             // { ... }
+            // Check for remaining modifier groups (excluding size group which was already handled)
+            var remainingGroups = fullItem.ModifierGroups
+                .Where(mg => mg.ModifierGroup != null && 
+                            mg.ModifierGroup.IsActive && 
+                            mg.ModifierGroup.Id != sizeGroup?.Id)
+                .ToList();
+
+            if (remainingGroups.Any())
+            {
+                // Create a temporary OrderLineDto for the dialog
+                var tempLine = new OrderLineDto
+                {
+                    MenuItemId = fullItem.Id,
+                    MenuItemName = fullItem.Name,
+                    Modifiers = selectedModifiers.Select(m => new OrderLineModifierDto
+                    {
+                        ModifierId = m.Id,
+                        Name = m.Name,
+                        ModifierType = ModifierType.Normal,
+                        ItemCount = 1,
+                        UnitPrice = m.BasePrice.Amount,
+                        TaxRate = 0,
+                        ShouldPrintToKitchen = true
+                    }).ToList()
+                };
+
+                // Show modifier selection dialog
+                var vm = new Magidesk.ViewModels.Dialogs.ModifierSelectionViewModel(_menuRepository, tempLine);
+                var dialog = new Magidesk.Views.Dialogs.ModifierSelectionDialog(vm)
+                {
+                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                };
+
+                // Wire interaction
+                vm.CloseAction = () => dialog.Hide();
+
+                await dialog.ShowAsync();
+
+                if (vm.IsConfirmed)
+                {
+                    // Convert dialog results back to MenuModifier list
+                    foreach (var modifierDto in vm.ResultModifiers)
+                    {
+                        if (modifierDto.ModifierId.HasValue)
+                        {
+                            var modifier = await _menuRepository.GetModifierByIdAsync(modifierDto.ModifierId.Value);
+                            if (modifier != null)
+                            {
+                                selectedModifiers.Add(modifier);
+                            }
+                        }
+                    }
+                }
+                else if (remainingGroups.Any(mg => mg.ModifierGroup.IsRequired || mg.ModifierGroup.MinSelections > 0))
+                {
+                    // User cancelled but there were required groups -> Abort item addition
+                    return;
+                }
+            }
         }
 
         await _addOrderLineHandler.HandleAsync(new AddOrderLineCommand
@@ -712,6 +1109,38 @@ public class OrderEntryViewModel : ViewModelBase
         PendingQuantity = 1;
 
         await LoadTicketAsync(Ticket.Id);
+
+        // F-0040: Show combo selection prompt for combo items
+        if (fullItem.ComboDefinitionId.HasValue)
+        {
+            // Get the newly added order line to prompt for combo selections
+            var newOrderLine = Ticket?.OrderLines
+                .OrderByDescending(ol => ol.CreatedAt)
+                .FirstOrDefault(ol => ol.MenuItemId == fullItem.Id);
+                
+            if (newOrderLine != null)
+            {
+                await ComboSelectionAsync(newOrderLine);
+            }
+        }
+
+        // F-0039: Show add-on selection prompt for eligible items
+        // Skip for beverages to maintain quick-add speed
+        var addOnCategory = Categories.FirstOrDefault(c => c.Id == fullItem.CategoryId);
+        bool isAddOnBeverage = addOnCategory?.IsBeverage ?? false;
+        
+        if (!isAddOnBeverage)
+        {
+            // Get the newly added order line to prompt for add-ons
+            var addOnOrderLine = Ticket?.OrderLines
+                .OrderByDescending(ol => ol.CreatedAt)
+                .FirstOrDefault(ol => ol.MenuItemId == fullItem.Id);
+                
+            if (addOnOrderLine != null)
+            {
+                await AddOnSelectionAsync(addOnOrderLine);
+            }
+        }
     }
 
     private async Task SearchItemAsync()
@@ -850,5 +1279,45 @@ public class OrderEntryViewModel : ViewModelBase
              System.Diagnostics.Debug.WriteLine($"Remove Item Error: {ex.Message}");
         }
         finally { IsBusy = false; }
+    }
+
+    private async Task SettleAsync()
+    {
+        if (Ticket == null) return;
+        
+        // Navigate to Settle View with TicketId
+        _navigationService.Navigate(typeof(Magidesk.Presentation.Views.SettlePage), Ticket.Id);
+    }
+
+    private async Task QuickPayAsync()
+    {
+        if (Ticket == null) return;
+        if (Ticket.DueAmount <= 0) return; // Nothing to pay
+
+        IsBusy = true;
+        try
+        {
+            await _payNowHandler.HandleAsync(new PayNowCommand
+            {
+                TicketId = Ticket.Id,
+                ProcessedBy = _userService.CurrentUser!.Id,
+                TerminalId = _terminalContext.TerminalId!.Value
+            });
+
+            // If we reach here, it succeeded (exceptions handled in catch)
+            // Ticket should be closed by the handler if fully paid.
+            
+            // Navigate back
+            _navigationService.GoBack();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Quick Pay Error: {ex.Message}");
+            // Ideally show error dialog
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 }

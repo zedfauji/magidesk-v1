@@ -1,3 +1,5 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+
 namespace Magidesk.Presentation.ViewModels;
 
 /// <summary>

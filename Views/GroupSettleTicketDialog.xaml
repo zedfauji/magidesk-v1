@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.GroupSettleTicketDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:Magidesk.Presentation.ViewModels"
+    mc:Ignorable="d"
+    Title="{Binding Title}"
+    PrimaryButtonText="Process Payment"
+    CloseButtonText="Cancel"
+    DefaultButton="Primary">
+
+    <Grid RowSpacing="16" Padding="20" Width="600" Height="500">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Ticket Summary -->
+        <Border Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" CornerRadius="8" Padding="16">
+            <StackPanel Spacing="8">
+                <TextBlock Text="Selected Tickets:" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                <ItemsControl ItemsSource="{x:Bind ViewModel.SelectedTickets, Mode=OneWay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="viewmodels:GroupSettleTicketDto">
+                            <Grid Padding="8" Margin="0,2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBlock Text="{x:Bind TicketNumber}" Style="{StaticResource BodyTextBlockStyle}"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <TextBlock Text="{x:Bind GuestCount, Mode=OneWay}" Style="{StaticResource BodyTextBlockStyle}"/>
+                                    <TextBlock Text=" guests @ " Style="{StaticResource BodyTextBlockStyle}"/>
+                                    <TextBlock Text="{x:Bind TableNumber, Mode=OneWay}" Style="{StaticResource BodyTextBlockStyle}"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Border>
+
+        <!-- Combined Total -->
+        <Border Grid.Row="0" 
+                Background="{ThemeResource SystemControlBackgroundAccentBrush}" 
+                CornerRadius="8" 
+                Padding="16">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="12">
+                <TextBlock Text="Combined Total:" Style="{StaticResource SubtitleTextBlockStyle}" Foreground="White"/>
+                <TextBlock Text="{x:Bind ViewModel.CombinedTotal, Mode=OneWay}" 
+                           Style="{StaticResource SubtitleTextBlockStyle}" 
+                           Foreground="White" 
+                           FontWeight="Bold"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Payment View -->
+        <Grid Grid.Row="1">
+            <TextBlock Text="Payment Method:" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,12"/>
+            
+            <!-- Payment Options -->
+            <StackPanel Spacing="12">
+                <RadioButton Content="Cash" IsChecked="{x:Bind ViewModel.SelectedPaymentMethod, Mode=TwoWay}" GroupName="PaymentMethod"/>
+                <RadioButton Content="Credit Card" IsChecked="{x:Bind ViewModel.SelectedPaymentMethod, Mode=TwoWay}" GroupName="PaymentMethod"/>
+                <RadioButton Content="Gift Card" IsChecked="{x:Bind ViewModel.SelectedPaymentMethod, Mode=TwoWay}" GroupName="PaymentMethod"/>
+            </StackPanel>
+
+            <!-- Tender Amount Input -->
+            <TextBox Text="{x:Bind ViewModel.TenderAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                     Header="Tender Amount"
+                     FontSize="24" 
+                     FontWeight="Bold" 
+                     HorizontalContentAlignment="Right"
+                     Margin="0,12,0,0"/>
+        </Grid>
+
+        <!-- Processing Status -->
+        <Border Grid.Row="2" 
+                Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" 
+                CornerRadius="8" 
+                Padding="16"
+                Visibility="{x:Bind ViewModel.IsProcessing, Mode=OneWay}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="12">
+                <ProgressRing IsActive="True" Width="24" Height="24"/>
+                <TextBlock Text="{x:Bind ViewModel.ProcessingMessage}" Style="{StaticResource BodyTextBlockStyle}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</ContentDialog>
