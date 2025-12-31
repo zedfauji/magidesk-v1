@@ -3,6 +3,7 @@ using Magidesk.Application.Interfaces;
 using Magidesk.Application.Queries;
 using Magidesk.Presentation.Services; // Ensure NavigationService is available
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
 

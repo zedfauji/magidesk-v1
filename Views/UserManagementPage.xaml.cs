@@ -14,4 +14,13 @@ public sealed partial class UserManagementPage : Page
         ViewModel = App.Services.GetRequiredService<UserManagementViewModel>();
         DataContext = ViewModel;
     }
+    
+    protected override void OnNavigatedTo(Microsoft.UI.Xaml.Navigation.NavigationEventArgs e)
+    {
+        base.OnNavigatedTo(e);
+        if (ViewModel.LoadCommand.CanExecute(null))
+        {
+            ViewModel.LoadCommand.Execute(null);
+        }
+    }
 }

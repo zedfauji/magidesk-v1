@@ -5,6 +5,7 @@ using Magidesk.Application.Interfaces;
 using Magidesk.Application.Commands;
 using Magidesk.Presentation.Services;
 using Microsoft.UI.Xaml.Controls;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -17,6 +18,8 @@ public class LoginViewModel : ViewModelBase
     private readonly ICommandHandler<ClockInCommand> _clockInHandler;
     private readonly ICommandHandler<ClockOutCommand> _clockOutHandler;
     private readonly IAttendanceRepository _attendanceRepository;
+    private readonly IDefaultViewRoutingService _defaultViewRoutingService;
+    private readonly ITerminalContext _terminalContext;
 
     private string _pin = string.Empty;
     private string _errorMessage = string.Empty;
@@ -28,7 +31,9 @@ public class LoginViewModel : ViewModelBase
         IUserService userService,
         ICommandHandler<ClockInCommand> clockInHandler,
         ICommandHandler<ClockOutCommand> clockOutHandler,
-        IAttendanceRepository attendanceRepository)
+        IAttendanceRepository attendanceRepository,
+        IDefaultViewRoutingService defaultViewRoutingService,
+        ITerminalContext terminalContext)
     {
         _securityService = securityService;
         _encryptionService = encryptionService;
@@ -37,6 +42,8 @@ public class LoginViewModel : ViewModelBase
         _clockInHandler = clockInHandler;
         _clockOutHandler = clockOutHandler;
         _attendanceRepository = attendanceRepository;
+        _defaultViewRoutingService = defaultViewRoutingService;
+        _terminalContext = terminalContext;
 
         AppendDigitCommand = new RelayCommand<string>(AppendDigit);
         ClearCommand = new RelayCommand(Clear);
@@ -165,13 +172,13 @@ public class LoginViewModel : ViewModelBase
             if (user != null)
             {
                 // Set Current User
-                // Set Current User
                 _userService.CurrentUser = new Magidesk.Application.DTOs.UserDto 
                 { 
                     Id = user.Id,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    Username = user.Username
+                    Username = user.Username,
+                    TerminalId = _terminalContext.TerminalId ?? Guid.Empty
                 };
 
                 // Login Success
@@ -181,8 +188,17 @@ public class LoginViewModel : ViewModelBase
                     mainWindow.SetUser($"{user.FirstName} {user.LastName}");
                 }
                 
-                // Navigate to Switchboard
-                _navigationService.Navigate(typeof(Views.SwitchboardPage));
+                // Navigate to default view based on terminal configuration (FloreantPOS-aligned)
+                try
+                {
+                    var defaultViewType = await _defaultViewRoutingService.GetDefaultViewTypeAsync(_userService.CurrentUser?.TerminalId);
+                    _navigationService.Navigate(defaultViewType);
+                }
+                catch (Exception routingEx)
+                {
+                    // Fallback to SwitchboardPage if routing fails
+                    _navigationService.Navigate(typeof(Views.SwitchboardPage));
+                }
                 Pin = string.Empty; // Reset for next time (logout)
             }
             else

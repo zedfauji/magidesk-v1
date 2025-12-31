@@ -41,9 +41,14 @@ public partial class BackOfficeViewModel : ViewModelBase
         NavigationItems.Add(new NavigationItem("Modifiers", "Manage Options & Toppings", "\uE74C", typeof(ModifierEditorPage)));
         NavigationItems.Add(new NavigationItem("Inventory", "Manage Stock & Ingredients", "\uE8F2", typeof(InventoryPage)));
         NavigationItems.Add(new NavigationItem("Tables", "Manage Floor Plan", "\uE8F1", typeof(TableMapPage))); // Resusing Table Map
-        NavigationItems.Add(new NavigationItem("Users", "Manage Staff & Permissions", "\uE77B", typeof(object))); // Placeholder
+        NavigationItems.Add(new NavigationItem("Users", "Manage Staff & Permissions", "\uE77B", typeof(Magidesk.Presentation.Views.UserManagementPage)));
+        NavigationItems.Add(new NavigationItem("Roles", "Manage User Roles", "\uE716", typeof(Magidesk.Presentation.Views.RoleManagementPage)));
+        NavigationItems.Add(new NavigationItem("Tax / Discount", "Discount & Tax tools", "\uE8D7", typeof(Magidesk.Presentation.Views.DiscountTaxPage)));
+        NavigationItems.Add(new NavigationItem("Order Types", "Manage order type rules", "\uE8A1", typeof(OrderTypeExplorerPage)));
+        NavigationItems.Add(new NavigationItem("Shifts", "Manage shift definitions", "\uE823", typeof(ShiftExplorerPage)));
         NavigationItems.Add(new NavigationItem("Reports", "Sales Summaries", "\uE9F9", typeof(SalesReportsPage)));
-        NavigationItems.Add(new NavigationItem("Settings", "System Configuration", "\uE713", typeof(SystemConfigPage)));
+        NavigationItems.Add(new NavigationItem("App Settings", "Kiosk + connectivity", "\uE713", typeof(SettingsPage)));
+        NavigationItems.Add(new NavigationItem("Database / Backup", "System Configuration", "\uE713", typeof(SystemConfigPage)));
     }
 
     private async Task CaptureBatchAsync()
@@ -69,11 +74,6 @@ public partial class BackOfficeViewModel : ViewModelBase
     {
         _navigationService.GoBack();
     }
-}
-
-public partial class BackOfficeViewModel : ViewModelBase
-{
-   // ... (existing code)
 }
 
 public class NavigationItem

@@ -13,6 +13,7 @@ public class User
     public string? EncryptedPin { get; private set; } // Hashed PIN
     public string? EncryptedPassword { get; private set; } // Hashed Password
     public Guid RoleId { get; private set; }
+    public virtual Role? Role { get; private set; } // Navigation Property
     public Money HourlyRate { get; private set; }
     public bool IsActive { get; private set; }
 
@@ -61,5 +62,19 @@ public class User
     public void Activate()
     {
         IsActive = true;
+    }
+
+    public void UpdateDetails(string firstName, string lastName)
+    {
+        if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentException("First Name required");
+        FirstName = firstName;
+        LastName = lastName;
+        // Regenerate username if first name changes? Or keep stable? 
+        // For simple POS, username usually stable, but let's leave it for now.
+    }
+
+    public void SetPin(string encryptedPin)
+    {
+        EncryptedPin = encryptedPin;
     }
 }

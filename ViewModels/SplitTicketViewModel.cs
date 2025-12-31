@@ -8,6 +8,7 @@ using Magidesk.Application.Commands;
 using Magidesk.Application.DTOs;
 using Magidesk.Application.Interfaces;
 using Magidesk.Domain.ValueObjects;
+using CommunityToolkit.Mvvm.Input;
 using Magidesk.Presentation.Services;
 using Microsoft.UI.Xaml.Controls;
 

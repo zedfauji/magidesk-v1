@@ -82,8 +82,9 @@ namespace Magidesk.Presentation.ViewModels
         private async Task ReportsAsync()
         {
             CloseAction?.Invoke();
-            // TODO: Implement Reports functionality
-            await Task.CompletedTask;
+            await Task.Delay(100);
+
+            _navigationService.Navigate(typeof(Views.BackOfficePage));
         }
 
         [RelayCommand]
@@ -197,6 +198,17 @@ namespace Magidesk.Presentation.ViewModels
             dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
             
             await _navigationService.ShowDialogAsync(dialog);
+        }
+
+        [RelayCommand]
+        private async Task RefundTicketAsync()
+        {
+            CloseAction?.Invoke();
+            await Task.Delay(100);
+
+            // F-0051: Refund Button (Entry to Refund/Void Screen)
+            // Navigate to Ticket Management (Explorer) which has Refund logic
+            _navigationService.Navigate(typeof(Views.TicketManagementPage));
         }
 
         [RelayCommand]

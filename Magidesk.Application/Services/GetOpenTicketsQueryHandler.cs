@@ -35,12 +35,6 @@ public class GetOpenTicketsQueryHandler : IQueryHandler<GetOpenTicketsQuery, IEn
             
             if (dto != null)
             {
-                // Populate Table Name
-                if (dto.TableNumbers.Any())
-                {
-                    dto.TableName = $"Table {dto.TableNumbers.First()}";
-                }
-
                 // Populate Owner Name
                 var owner = await _userRepository.GetByIdAsync(ticket.CreatedBy.Value, cancellationToken);
                 dto.OwnerName = owner != null ? $"{owner.FirstName} {owner.LastName}" : "Unknown";

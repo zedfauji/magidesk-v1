@@ -31,15 +31,18 @@ public static class ServiceCollectionExtensions
                 npgsqlOptions => npgsqlOptions.MigrationsAssembly("Magidesk.Infrastructure")));
 
         // Register repositories
-        services.AddScoped<ITicketRepository, TicketRepository>();
-        services.AddScoped<IPaymentRepository, PaymentRepository>();
-        services.AddScoped<ICashSessionRepository, CashSessionRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<IShiftRepository, ShiftRepository>();
+        services.AddScoped<ICashSessionRepository, CashSessionRepository>();
+        services.AddScoped<IAttendanceRepository, AttendanceRepository>();
         services.AddScoped<IOrderTypeRepository, OrderTypeRepository>();
         services.AddScoped<ITableRepository, TableRepository>();
         services.AddScoped<IAuditEventRepository, AuditEventRepository>();
         services.AddScoped<IKitchenOrderRepository, KitchenOrderRepository>();
         services.AddScoped<IGroupSettlementRepository, GroupSettlementRepository>();
+        services.AddScoped<ITicketRepository, TicketRepository>();
+        services.AddScoped<IPaymentRepository, PaymentRepository>();
         services.AddScoped<IPaymentBatchRepository, PaymentBatchRepository>();
         services.AddScoped<IMerchantGatewayConfigurationRepository, MerchantGatewayConfigurationRepository>();
         services.AddScoped<IDiscountRepository, DiscountRepository>();
@@ -51,7 +54,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IMenuModifierRepository, MenuModifierRepository>();
         services.AddScoped<IInventoryItemRepository, InventoryItemRepository>();
         services.AddScoped<IAttendanceRepository, AttendanceRepository>();
+        services.AddScoped<IAttendanceRepository, AttendanceRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRestaurantConfigurationRepository, RestaurantConfigurationRepository>();
 
 
         // Register domain services (stateless, can be singleton or scoped)

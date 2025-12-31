@@ -30,7 +30,7 @@ public class GetTicketQueryHandler : IQueryHandler<GetTicketQuery, TicketDto?>
 
     private static TicketDto MapToDto(Domain.Entities.Ticket ticket)
     {
-        return new TicketDto
+        var dto = new TicketDto
         {
             Id = ticket.Id,
             TicketNumber = ticket.TicketNumber,
@@ -72,6 +72,18 @@ public class GetTicketQueryHandler : IQueryHandler<GetTicketQuery, TicketDto?>
             Gratuity = ticket.Gratuity != null ? MapGratuityToDto(ticket.Gratuity) : null,
             Version = ticket.Version
         };
+
+        // Set TableName based on TableNumbers
+        if (dto.TableNumbers.Any())
+        {
+            dto.TableName = $"Table {dto.TableNumbers.First()}";
+        }
+        else
+        {
+            dto.TableName = "Take Out"; // Default for tickets without table assignment
+        }
+
+        return dto;
     }
 
     private static OrderLineDto MapOrderLineToDto(Domain.Entities.OrderLine orderLine)

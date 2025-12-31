@@ -12,7 +12,7 @@ public sealed partial class ModifierEditorPage : Page
     public ModifierEditorPage()
     {
         this.InitializeComponent();
-        ViewModel = App.Services.GetService<ModifierEditorViewModel>()!;
+        ViewModel = App.Services.GetRequiredService<ModifierEditorViewModel>();
     }
     
     protected override void OnNavigatedTo(NavigationEventArgs e)

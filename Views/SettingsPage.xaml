@@ -11,16 +11,22 @@
         <StackPanel Spacing="12" Padding="16" MaxWidth="900">
             <TextBlock Text="Settings" FontSize="24" />
 
-            <TextBlock Text="General" FontSize="18" />
-            <ToggleSwitch Header="Kiosk mode" IsOn="{Binding IsKioskMode, Mode=TwoWay}" />
+            <TextBlock Text="Restaurant Information" FontSize="18" FontWeight="SemiBold" Margin="0,12,0,0"/>
+            <TextBox Header="Restaurant Name" Text="{Binding RestaurantName, Mode=TwoWay}" />
+            <TextBox Header="Address" Text="{Binding RestaurantAddress, Mode=TwoWay}" />
+            <TextBox Header="Phone" Text="{Binding RestaurantPhone, Mode=TwoWay}" InputScope="TelephoneNumber" />
+            <TextBox Header="Email" Text="{Binding RestaurantEmail, Mode=TwoWay}" InputScope="EmailSmtpAddress" />
+            <TextBox Header="Website" Text="{Binding RestaurantWebsite, Mode=TwoWay}" InputScope="Url" />
+            <TextBox Header="Tax ID / VAT" Text="{Binding TaxId, Mode=TwoWay}" />
+            <TextBox Header="Receipt Footer Message" Text="{Binding ReceiptFooter, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="80" />
+            
+            <Button Content="Save Changes" Command="{Binding SaveSettingsCommand}" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right" />
 
-            <TextBlock Text="Connectivity" FontSize="18" />
-            <TextBox Header="API Base URL" Text="{Binding ApiBaseUrl, Mode=TwoWay}" />
+            <MenuFlyoutSeparator />
 
-            <TextBlock Text="Placeholders" FontSize="18" />
-            <TextBlock Opacity="0.7" Text="- User roles / permissions (coming soon)" />
-            <TextBlock Opacity="0.7" Text="- Printer setup (coming soon)" />
-            <TextBlock Opacity="0.7" Text="- Tax/discount configuration (coming soon)" />
+            <TextBlock Text="Terminal Settings" FontSize="18" FontWeight="SemiBold" />
+            <ToggleSwitch Header="Kiosk Mode" IsOn="{Binding IsKioskMode, Mode=TwoWay}" />
+            <!-- ApiBaseUrl removed as it was a placeholder -->
         </StackPanel>
     </ScrollViewer>
 </Page>

@@ -183,3 +183,4 @@ This document defines the vertical slices for the Magidesk POS rebuild. Executio
 | **F-0126** | Delivery Zone Configuration | |
 | **F-0127** | Printer Group Configuration | |
 | **F-0128** | Database Backup Dialog | |
+| **F-0133** | Role Management View | |

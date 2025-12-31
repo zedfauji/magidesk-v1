@@ -6,6 +6,7 @@ using Magidesk.Domain.Enumerations;
 using Magidesk.Domain.ValueObjects;
 using System.Net.Sockets;
 using Magidesk.Presentation.Services;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
 

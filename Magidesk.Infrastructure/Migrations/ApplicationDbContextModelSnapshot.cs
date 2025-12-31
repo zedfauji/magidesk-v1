@@ -18,7 +18,7 @@ namespace Magidesk.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -723,7 +723,7 @@ namespace Magidesk.Infrastructure.Migrations
 
                     b.ToTable("MenuModifiers", "magidesk");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("MenuModifier");
+                    b.HasDiscriminator().HasValue("MenuModifier");
 
                     b.UseTphMappingStrategy();
                 });
@@ -1241,6 +1241,54 @@ namespace Magidesk.Infrastructure.Migrations
                     b.HasIndex("CashSessionId");
 
                     b.ToTable("Payouts", (string)null);
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.RestaurantConfiguration", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("ReceiptFooterMessage")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("TaxId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Website")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RestaurantConfigurations");
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.Role", b =>

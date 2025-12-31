@@ -7,42 +7,54 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <ScrollViewer>
-        <StackPanel Spacing="12" Padding="16" MaxWidth="720">
-            <TextBlock Text="Cash Session" FontSize="24" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-            <InfoBar
-                IsOpen="{Binding HasError}"
-                IsClosable="True"
-                Severity="Error"
-                Message="{Binding Error}" />
+        <CommandBar DefaultLabelPosition="Right" Background="Transparent">
+            <AppBarButton Icon="Back" Label="Back" Command="{Binding GoBackCommand}"/>
+            <AppBarElementContainer>
+                 <TextBlock Text="Cash Session" VerticalAlignment="Center" Margin="12,0,0,0" Style="{StaticResource TitleTextBlockStyle}"/>
+            </AppBarElementContainer>
+        </CommandBar>
 
-            <StackPanel Orientation="Horizontal" Spacing="12">
-                <TextBox Header="UserId" Width="320" Text="{Binding UserIdText, Mode=TwoWay}" />
-                <Button Content="Refresh" Command="{Binding RefreshCommand}" />
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Spacing="12" Padding="16" MaxWidth="720">
+                <InfoBar
+                    IsOpen="{Binding HasError}"
+                    IsClosable="True"
+                    Severity="Error"
+                    Message="{Binding Error}" />
+
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <TextBox Header="UserId" Width="320" Text="{Binding UserIdText, Mode=TwoWay}" />
+                    <Button Content="Refresh" Command="{Binding RefreshCommand}" />
+                </StackPanel>
+
+                <TextBlock Text="Open Session" FontSize="18" />
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <TextBox Header="TerminalId" Width="220" Text="{Binding TerminalIdText, Mode=TwoWay}" />
+                    <TextBox Header="ShiftId" Width="220" Text="{Binding ShiftIdText, Mode=TwoWay}" />
+                    <TextBox Header="Opening Balance" Width="140" Text="{Binding OpeningBalanceText, Mode=TwoWay}" />
+                    <Button Content="Open" Command="{Binding OpenCommand}" />
+                </StackPanel>
+
+                <TextBlock Text="Current Session" FontSize="18" />
+                <StackPanel Spacing="6">
+                    <TextBlock Text="{Binding CurrentStatusText}" />
+                    <TextBlock Text="{Binding CurrentSessionIdText}" />
+                    <TextBlock Text="{Binding CurrentOpenedAtText}" />
+                    <TextBlock Text="{Binding CurrentExpectedCashText}" />
+                </StackPanel>
+
+                <TextBlock Text="Close Session" FontSize="18" />
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <TextBox Header="Actual Cash" Width="140" Text="{Binding ActualCashText, Mode=TwoWay}" />
+                    <Button Content="Close" Command="{Binding CloseCommand}" />
+                </StackPanel>
             </StackPanel>
-
-            <TextBlock Text="Open Session" FontSize="18" />
-            <StackPanel Orientation="Horizontal" Spacing="12">
-                <TextBox Header="TerminalId" Width="220" Text="{Binding TerminalIdText, Mode=TwoWay}" />
-                <TextBox Header="ShiftId" Width="220" Text="{Binding ShiftIdText, Mode=TwoWay}" />
-                <TextBox Header="Opening Balance" Width="140" Text="{Binding OpeningBalanceText, Mode=TwoWay}" />
-                <Button Content="Open" Command="{Binding OpenCommand}" />
-            </StackPanel>
-
-            <TextBlock Text="Current Session" FontSize="18" />
-            <StackPanel Spacing="6">
-                <TextBlock Text="{Binding CurrentStatusText}" />
-                <TextBlock Text="{Binding CurrentSessionIdText}" />
-                <TextBlock Text="{Binding CurrentOpenedAtText}" />
-                <TextBlock Text="{Binding CurrentExpectedCashText}" />
-            </StackPanel>
-
-            <TextBlock Text="Close Session" FontSize="18" />
-            <StackPanel Orientation="Horizontal" Spacing="12">
-                <TextBox Header="Actual Cash" Width="140" Text="{Binding ActualCashText, Mode=TwoWay}" />
-                <Button Content="Close" Command="{Binding CloseCommand}" />
-            </StackPanel>
-        </StackPanel>
-    </ScrollViewer>
+        </ScrollViewer>
+    </Grid>
 </Page>

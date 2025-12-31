@@ -7,6 +7,7 @@ using Magidesk.Application.DTOs;
 using Magidesk.Application.Interfaces;
 using Magidesk.Presentation.Services;
 using Microsoft.UI.Xaml.Controls;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -37,7 +38,7 @@ public class VoidTicketViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedReason, value))
             {
-                ((AsyncRelayCommand<object?>)VoidCommand).RaiseCanExecuteChanged();
+                ((AsyncRelayCommand<object?>)VoidCommand).NotifyCanExecuteChanged();
             }
         }
     }

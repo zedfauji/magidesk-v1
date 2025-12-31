@@ -1,18 +1,29 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Magidesk.Presentation.Services;
+
 namespace Magidesk.Presentation.Views
 {
     /// <summary>
-    /// A simple page that can be used on its own or navigated to within a Frame.
+    /// Utility page used as a fallback when no ticket is selected for editing.
     /// </summary>
     public partial class MainPage : Page
     {
-        int count = 0;
+        private readonly NavigationService _navigation;
 
         public MainPage()
         {
             this.InitializeComponent();
+            _navigation = App.Services.GetRequiredService<NavigationService>();
         }
 
-        private void OnCountClicked(object sender, RoutedEventArgs e)
-            => txtCount.Text = $"Current count: {count++}";
+        private void OnGoBackClicked(object sender, RoutedEventArgs e)
+        {
+            if (_navigation.CanGoBack)
+            {
+                _navigation.GoBack();
+            }
+        }
     }
 }

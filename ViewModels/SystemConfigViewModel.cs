@@ -5,6 +5,7 @@ using Magidesk.Application.Interfaces;
 using Magidesk.Application.Queries;
 using Magidesk.Application.Queries.SystemConfig;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -104,7 +105,21 @@ public partial class SystemConfigViewModel : ViewModelBase
     {
         if (string.IsNullOrEmpty(fileName)) return;
 
-        // TODO: Add confirmation dialog here
+        var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+        {
+            Title = "Restore Backup",
+            Content = $"Restore backup '{fileName}'? This will overwrite current data.",
+            PrimaryButtonText = "Restore",
+            CloseButtonText = "Cancel",
+            DefaultButton = Microsoft.UI.Xaml.Controls.ContentDialogButton.Close,
+            XamlRoot = App.MainWindowInstance.Content.XamlRoot
+        };
+
+        var confirmation = await dialog.ShowAsync();
+        if (confirmation != Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
+        {
+            return;
+        }
         
         IsRestoring = true;
         IsBusy = true;

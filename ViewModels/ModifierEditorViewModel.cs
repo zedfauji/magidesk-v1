@@ -4,6 +4,7 @@ using Magidesk.Application.Interfaces;
 using Magidesk.Domain.Entities;
 using Magidesk.Domain.Enumerations;
 using Magidesk.Domain.ValueObjects;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -248,21 +249,45 @@ public class ModifierEditorViewModel : ViewModelBase
 
     private async Task DeleteAsync()
     {
-        if (SelectedModifier != null)
+        IsBusy = true;
+        try
         {
-            var mod = SelectedModifier;
-            // await _modifierRepository.DeleteAsync(mod.Id);
-            Modifiers.Remove(mod);
-            SelectedModifier = null;
-            StatusMessage = "Modifier Deleted";
+            if (SelectedModifier != null)
+            {
+                var mod = SelectedModifier;
+                await _modifierRepository.DeleteAsync(mod.Id);
+                Modifiers.Remove(mod);
+                SelectedModifier = null;
+                StatusMessage = "Modifier deleted.";
+                return;
+            }
+
+            if (SelectedGroup != null)
+            {
+                var grp = SelectedGroup;
+
+                var mods = await _modifierRepository.GetByGroupIdAsync(grp.Id);
+                foreach (var m in mods.ToList())
+                {
+                    await _modifierRepository.DeleteAsync(m.Id);
+                }
+
+                await _groupRepository.DeleteAsync(grp.Id);
+
+                Groups.Remove(grp);
+                Modifiers.Clear();
+                SelectedModifier = null;
+                SelectedGroup = null;
+                StatusMessage = "Group deleted.";
+            }
         }
-        else if (SelectedGroup != null)
+        catch (Exception ex)
         {
-            var grp = SelectedGroup;
-            // await _groupRepository.DeleteAsync(grp.Id);
-            Groups.Remove(grp);
-            SelectedGroup = null;
-            StatusMessage = "Group Deleted";
+            StatusMessage = $"Delete Failed: {ex.Message}";
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
 }

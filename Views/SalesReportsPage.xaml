@@ -58,6 +58,13 @@
                     <TextBlock Text="End Date" Style="{StaticResource CaptionTextBlockStyle}" Margin="0,0,0,4"/>
                     <CalendarDatePicker Date="{x:Bind ViewModel.EndDate, Mode=TwoWay}" Width="150"/>
                 </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Bottom">
+                    <Button Content="Today" Command="{x:Bind ViewModel.SetDateRangeCommand}" CommandParameter="today"/>
+                    <Button Content="Yesterday" Command="{x:Bind ViewModel.SetDateRangeCommand}" CommandParameter="yesterday"/>
+                    <Button Content="Week" Command="{x:Bind ViewModel.SetDateRangeCommand}" CommandParameter="week"/>
+                    <Button Content="Month" Command="{x:Bind ViewModel.SetDateRangeCommand}" CommandParameter="month"/>
+                </StackPanel>
                 
                 <Button Command="{x:Bind ViewModel.LoadReportCommand}" 
                         Style="{StaticResource AccentButtonStyle}"
@@ -158,6 +165,261 @@
                             </ListView>
                         </Grid>
                     </StackPanel>
+                </Grid>
+
+                <!-- SALES BALANCE -->
+                <Grid Visibility="{x:Bind ViewModel.IsSalesBalanceVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                      Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Sales Balance" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,16"/>
+
+                    <StackPanel Grid.Row="1" Spacing="16">
+                        <Border BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" BorderThickness="1" CornerRadius="4" Padding="16">
+                            <Grid ColumnSpacing="24">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Gross Sales" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                    <TextBlock Text="{x:Bind ViewModel.SalesBalance.Sales.TotalGrossSales, Mode=OneWay, FallbackValue=0}" Style="{StaticResource TitleTextBlockStyle}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Net Collected" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                    <TextBlock Text="{x:Bind ViewModel.SalesBalance.Payments.NetCollected, Mode=OneWay, FallbackValue=0}" Style="{StaticResource TitleTextBlockStyle}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Variance" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                    <TextBlock Text="{x:Bind ViewModel.SalesBalance.Variance, Mode=OneWay, FallbackValue=0}" Style="{StaticResource TitleTextBlockStyle}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="3">
+                                    <TextBlock Text="Tickets" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                    <TextBlock Text="{x:Bind ViewModel.SalesBalance.Sales.TicketCount, Mode=OneWay, FallbackValue=0}" Style="{StaticResource TitleTextBlockStyle}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Payments by Type" FontWeight="SemiBold" Margin="0,0,0,8"/>
+
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Padding="12" Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="80"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Type" Style="{StaticResource HeaderTextStyle}"/>
+                                    <TextBlock Grid.Column="1" Text="Amount" Style="{StaticResource HeaderTextStyle}"/>
+                                    <TextBlock Grid.Column="2" Text="Count" Style="{StaticResource HeaderTextStyle}"/>
+                                </Grid>
+
+                                <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.SalesBalance.Payments.ByType, Mode=OneWay}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="dto:PaymentTypeSummaryDto">
+                                            <Grid Padding="0,8">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition Width="80"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{x:Bind PaymentType}" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="1" Text="{x:Bind Amount}" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="2" Text="{x:Bind Count}" VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+
+                <!-- EXCEPTIONS REPORT -->
+                <Grid Visibility="{x:Bind ViewModel.IsExceptionsReportVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                      Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Exceptions" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,16"/>
+
+                    <ScrollViewer Grid.Row="1">
+                        <StackPanel Spacing="24">
+                            <StackPanel>
+                                <TextBlock Text="Voids" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                                <ListView ItemsSource="{x:Bind ViewModel.ExceptionsReport.Voids, Mode=OneWay}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="dto:VoidItemDto">
+                                            <Grid Padding="0,8" ColumnSpacing="12">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="160"/>
+                                                    <ColumnDefinition Width="100"/>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{x:Bind Date}"/>
+                                                <TextBlock Grid.Column="1" Text="{x:Bind TicketNumber}"/>
+                                                <TextBlock Grid.Column="2" Text="{x:Bind Amount}"/>
+                                                <TextBlock Grid.Column="3" Text="{x:Bind VoidedBy}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+
+                            <StackPanel>
+                                <TextBlock Text="Refunds" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                                <ListView ItemsSource="{x:Bind ViewModel.ExceptionsReport.Refunds, Mode=OneWay}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="dto:RefundItemDto">
+                                            <Grid Padding="0,8" ColumnSpacing="12">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="160"/>
+                                                    <ColumnDefinition Width="100"/>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{x:Bind Date}"/>
+                                                <TextBlock Grid.Column="1" Text="{x:Bind TicketNumber}"/>
+                                                <TextBlock Grid.Column="2" Text="{x:Bind Amount}"/>
+                                                <TextBlock Grid.Column="3" Text="{x:Bind PaymentType}"/>
+                                                <TextBlock Grid.Column="4" Text="{x:Bind Reason}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+
+                            <StackPanel>
+                                <TextBlock Text="Discounts" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                                <ListView ItemsSource="{x:Bind ViewModel.ExceptionsReport.Discounts, Mode=OneWay}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="dto:DiscountItemDto">
+                                            <Grid Padding="0,8" ColumnSpacing="12">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="160"/>
+                                                    <ColumnDefinition Width="100"/>
+                                                    <ColumnDefinition Width="200"/>
+                                                    <ColumnDefinition Width="120"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{x:Bind Date}"/>
+                                                <TextBlock Grid.Column="1" Text="{x:Bind TicketNumber}"/>
+                                                <TextBlock Grid.Column="2" Text="{x:Bind Name}"/>
+                                                <TextBlock Grid.Column="3" Text="{x:Bind Amount}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+
+                <!-- JOURNAL REPORT -->
+                <Grid Visibility="{x:Bind ViewModel.IsJournalReportVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                      Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Journal" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,16"/>
+
+                    <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.JournalReport.Entries, Mode=OneWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="dto:JournalEntryDto">
+                                <Grid Padding="0,8" ColumnSpacing="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{x:Bind Timestamp}"/>
+                                    <TextBlock Grid.Column="1" Text="{x:Bind EventType}"/>
+                                    <TextBlock Grid.Column="2" Text="{x:Bind User}"/>
+                                    <TextBlock Grid.Column="3" Text="{x:Bind Description}" TextWrapping="Wrap"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+
+                <!-- PRODUCTIVITY REPORT -->
+                <Grid Visibility="{x:Bind ViewModel.IsProductivityReportVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                      Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Server Productivity" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,16"/>
+
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Padding="12" Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="User" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="1" Text="Sales" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="2" Text="Tips" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="3" Text="Hours" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="4" Text="Sales/Hr" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="5" Text="Tickets" Style="{StaticResource HeaderTextStyle}"/>
+                        </Grid>
+
+                        <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.ProductivityReport.ServerStats, Mode=OneWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="dto:ServerProductivityDto">
+                                    <Grid Padding="0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{x:Bind UserName}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{x:Bind TotalSales}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind TotalTips}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" Text="{x:Bind TotalHours}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="4" Text="{x:Bind SalesPerHour}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="5" Text="{x:Bind TicketCount}" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
                 </Grid>
 
                 <!-- LABOR REPORT -->

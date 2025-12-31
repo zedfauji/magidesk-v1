@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Magidesk.Application.Services;
 using Magidesk.Application.Interfaces;
-using Magidesk.Application.Interfaces;
+using Magidesk.Application.Commands;
 using Magidesk.Application.Commands.SystemConfig;
 using Magidesk.Application.Queries.SystemConfig;
 using Magidesk.Application.DTOs.SystemConfig;
@@ -132,6 +132,14 @@ public static class ServiceCollectionExtensions
         // System Config command handlers
         services.AddScoped<ICommandHandler<CreateSystemBackupCommand, CreateSystemBackupResult>, CreateSystemBackupCommandHandler>();
         services.AddScoped<ICommandHandler<RestoreSystemBackupCommand, RestoreSystemBackupResult>, RestoreSystemBackupCommandHandler>();
+        services.AddScoped<ICommandHandler<UpdateRestaurantConfigCommand, UpdateRestaurantConfigResult>, UpdateRestaurantConfigCommandHandler>();
+        services.AddScoped<IQueryHandler<GetRestaurantConfigQuery, GetRestaurantConfigResult>, GetRestaurantConfigQueryHandler>();
+
+        // User Management Handlers
+        services.AddScoped<ICommandHandler<CreateUserCommand, CreateUserResult>, CreateUserCommandHandler>();
+        services.AddScoped<ICommandHandler<UpdateUserCommand, UpdateUserResult>, UpdateUserCommandHandler>();
+        services.AddScoped<ICommandHandler<DeleteUserCommand, DeleteUserResult>, DeleteUserCommandHandler>();
+
         services.AddScoped<IKitchenRoutingService, KitchenRoutingService>();
         services.AddScoped<IKitchenStatusService, KitchenStatusService>();
         services.AddScoped<ICashSessionService, CashSessionService>();

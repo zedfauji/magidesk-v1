@@ -1,0 +1,164 @@
+flowchart TD
+  %% Nodes (Pages)
+  LoginPage[LoginPage]
+  SwitchboardPage[SwitchboardPage]
+  CashSessionPage[CashSessionPage]
+  TicketPage[TicketPage]
+  PaymentPage[PaymentPage]
+  DiscountTaxPage[DiscountTaxPage]
+  PrintPage[PrintPage]
+  TicketManagementPage[TicketManagementPage]
+  SalesReportsPage[SalesReportsPage]
+  UserManagementPage[UserManagementPage]
+  SettingsPage[SettingsPage]
+  TableMapPage[TableMapPage]
+  KitchenDisplayPage[KitchenDisplayPage]
+  OrderEntryPage[OrderEntryPage]
+  SettlePage[SettlePage]
+  BackOfficePage[BackOfficePage]
+  MenuEditorPage[MenuEditorPage]
+  ModifierEditorPage[ModifierEditorPage]
+  InventoryPage[InventoryPage]
+  OrderTypeExplorerPage[OrderTypeExplorerPage]
+  ShiftExplorerPage[ShiftExplorerPage]
+  SystemConfigPage[SystemConfigPage]
+  MainPage[MainPage]
+
+  %% Nodes (Dialogs)
+  ManagerFunctionsDialog{{ManagerFunctionsDialog}}
+  OpenTicketsListDialog{{OpenTicketsListDialog}}
+  CashDropManagementDialog{{CashDropManagementDialog}}
+  CashEntryDialog{{CashEntryDialog}}
+  DrawerPullReportDialog{{DrawerPullReportDialog}}
+  VoidTicketDialog{{VoidTicketDialog}}
+  SplitTicketDialog{{SplitTicketDialog}}
+  OrderTypeSelectionDialog{{OrderTypeSelectionDialog}}
+  GuestCountDialog{{GuestCountDialog}}
+  ShiftStartDialog{{ShiftStartDialog}}
+  ShiftEndDialog{{ShiftEndDialog}}
+  GroupSettleTicketSelectionWindow{{GroupSettleTicketSelectionWindow}}
+  GroupSettleTicketDialog{{GroupSettleTicketDialog}}
+  AuthorizationCaptureBatchDialog{{AuthorizationCaptureBatchDialog}}
+  SwipeCardDialog{{SwipeCardDialog}}
+  AuthorizationCodeDialog{{AuthorizationCodeDialog}}
+  PaymentProcessWaitDialog{{PaymentProcessWaitDialog}}
+  ModifierSelectionDialog_Presentation{{ModifierSelectionDialog (Presentation)}}
+  MergeTicketsDialog{{MergeTicketsDialog}}
+  CustomerSelectionDialog{{CustomerSelectionDialog}}
+  TableSelectionDialog{{TableSelectionDialog}}
+  CookingInstructionDialog{{CookingInstructionDialog}}
+  ModifierSelectionDialog_Dialogs{{ModifierSelectionDialog (Dialogs)}}
+  AddOnSelectionDialog{{AddOnSelectionDialog}}
+  ComboSelectionDialog{{ComboSelectionDialog}}
+  PizzaModifierDialog{{PizzaModifierDialog}}
+  TicketFeeDialog{{TicketFeeDialog}}
+  SeatSelectionDialog{{SeatSelectionDialog}}
+  MiscItemDialog{{MiscItemDialog}}
+  SizeSelectionDialog{{SizeSelectionDialog}}
+  ItemSearchDialog{{ItemSearchDialog}}
+  PriceEntryDialog{{PriceEntryDialog}}
+  QuantityDialog{{QuantityDialog}}
+
+  %% Startup
+  Startup((App Startup)) -->|Navigate| LoginPage
+
+  %% Root sidebar -> pages
+  MainWindowSidebar((MainWindow Sidebar)) -->|home| SwitchboardPage
+  MainWindowSidebar -->|cashSession| CashSessionPage
+  MainWindowSidebar -->|ticket| TicketPage
+  MainWindowSidebar -->|payments| PaymentPage
+  MainWindowSidebar -->|discountTax| DiscountTaxPage
+  MainWindowSidebar -->|printing| PrintPage
+  MainWindowSidebar -->|ticketMgmt| TicketManagementPage
+  MainWindowSidebar -->|salesReports| SalesReportsPage
+  MainWindowSidebar -->|userMgmt| UserManagementPage
+  MainWindowSidebar -->|settings| SettingsPage
+
+  %% Root sidebar -> dialogs
+  MainWindowSidebar -->|drawerPull| DrawerPullReportDialog
+
+  %% Login
+  LoginPage -->|Login success| SwitchboardPage
+
+  %% Switchboard buttons
+  SwitchboardPage -->|New Ticket| OrderTypeSelectionDialog
+  OrderTypeSelectionDialog -->|conditional| GuestCountDialog
+  OrderTypeSelectionDialog -->|conditional| ShiftStartDialog
+  OrderTypeSelectionDialog -->|creates ticket| OrderEntryPage
+
+  SwitchboardPage -->|Edit Selected| OrderEntryPage
+  SwitchboardPage -->|Edit Selected (no selection)| TicketManagementPage
+  SwitchboardPage -->|Table Map| TableMapPage
+  SwitchboardPage -->|Kitchen Display| KitchenDisplayPage
+  SwitchboardPage -->|Manager| ManagerFunctionsDialog
+  SwitchboardPage -->|Logout| LoginPage
+
+  %% Manager Functions dialog
+  ManagerFunctionsDialog -->|Drawer Pull| DrawerPullReportDialog
+  ManagerFunctionsDialog -->|Cash Drop| CashDropManagementDialog
+  ManagerFunctionsDialog -->|Open Tickets| OpenTicketsListDialog
+  ManagerFunctionsDialog -->|Group Settle| GroupSettleTicketSelectionWindow
+  GroupSettleTicketSelectionWindow -->|Continue| GroupSettleTicketDialog
+  ManagerFunctionsDialog -->|Reports| BackOfficePage
+  ManagerFunctionsDialog -->|System Config| SystemConfigPage
+  ManagerFunctionsDialog -->|End Shift| ShiftEndDialog
+
+  %% Open Tickets List dialog
+  OpenTicketsListDialog -->|Resume| OrderEntryPage
+  OpenTicketsListDialog -->|Transfer| InlineUserSelectionDialog((inline ContentDialog))
+  OpenTicketsListDialog -->|Void| VoidTicketDialog
+  OpenTicketsListDialog -.->|Split (VM method; no UI binding)| SplitTicketDialog
+
+  %% Cash Drop Management dialog
+  CashDropManagementDialog -->|Add Cash Drop| CashEntryDialog
+  CashDropManagementDialog -->|Add Drawer Bleed| CashEntryDialog
+
+  %% Back Office internal navigation (Frame)
+  BackOfficePage -->|Nav: Menu Editor| MenuEditorPage
+  BackOfficePage -->|Nav: Modifiers| ModifierEditorPage
+  BackOfficePage -->|Nav: Inventory| InventoryPage
+  BackOfficePage -->|Nav: Tables| TableMapPage
+  BackOfficePage -->|Nav: Users| UserManagementPage
+  BackOfficePage -->|Nav: Tax/Discount| DiscountTaxPage
+  BackOfficePage -->|Nav: Order Types| OrderTypeExplorerPage
+  BackOfficePage -->|Nav: Shifts| ShiftExplorerPage
+  BackOfficePage -->|Nav: Reports| SalesReportsPage
+  BackOfficePage -->|Nav: App Settings| SettingsPage
+  BackOfficePage -->|Nav: Settings| SystemConfigPage
+  BackOfficePage -->|Capture Batch| AuthorizationCaptureBatchDialog
+
+  %% TicketPage actions
+  TicketPage -->|Split Ticket| SplitTicketDialog
+  TicketPage -->|Move Table| TableMapPage
+  TicketPage -->|Settle| SettlePage
+  TicketPage -->|Add Order Line (modifiers)| ModifierSelectionDialog_Presentation
+
+  %% Table Map selection
+  TableMapPage -->|Select Table (existing ticket)| OrderEntryPage
+  TableMapPage -->|Select Table (available table)| OrderEntryPage
+
+  %% Order Entry actions
+  OrderEntryPage -->|Settle| SettlePage
+  OrderEntryPage -->|Split| SplitTicketDialog
+  OrderEntryPage -->|Merge| MergeTicketsDialog
+  OrderEntryPage -->|Assign Customer| CustomerSelectionDialog
+  OrderEntryPage -->|Change Table| TableSelectionDialog
+  OrderEntryPage -->|Cooking Instruction| CookingInstructionDialog
+  OrderEntryPage -->|Edit Modifiers| ModifierSelectionDialog_Dialogs
+  OrderEntryPage -->|Add Ons| AddOnSelectionDialog
+  OrderEntryPage -->|Combo| ComboSelectionDialog
+  OrderEntryPage -->|Pizza Modifiers| PizzaModifierDialog
+  OrderEntryPage -->|Add Fee| TicketFeeDialog
+  OrderEntryPage -->|Change Seat| SeatSelectionDialog
+  OrderEntryPage -->|Misc Item| MiscItemDialog
+  OrderEntryPage -->|Size Selection| SizeSelectionDialog
+  OrderEntryPage -->|Item Search| ItemSearchDialog
+  OrderEntryPage -->|Price Entry| PriceEntryDialog
+  OrderEntryPage -->|Set Quantity| QuantityDialog
+
+  %% Settle flows
+  SettlePage -->|Logout| LoginPage
+  SettlePage -->|Swipe card| SwipeCardDialog
+  SwipeCardDialog -->|Manual entry| AuthorizationCodeDialog
+  SwipeCardDialog -->|Swipe data| PaymentProcessWaitDialog
+  AuthorizationCodeDialog -->|Auth code entered| PaymentProcessWaitDialog

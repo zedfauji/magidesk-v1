@@ -62,64 +62,16 @@ public sealed partial class MainWindow : Window
             return;
         }
 
-        if (tag == "cashSession")
+        if (tag == "tableMap")
         {
-            _navigation.Navigate(typeof(Views.CashSessionPage));
+            _navigation.Navigate(typeof(Views.TableMapPage));
             return;
         }
 
-        if (tag == "ticket")
+        if (tag == "kitchenDisplay")
         {
-            _navigation.Navigate(typeof(Views.TicketPage));
+            _navigation.Navigate(typeof(Views.KitchenDisplayPage));
             return;
-        }
-
-        if (tag == "payments")
-        {
-            _navigation.Navigate(typeof(Views.PaymentPage));
-            return;
-        }
-
-        if (tag == "discountTax")
-        {
-            _navigation.Navigate(typeof(Views.DiscountTaxPage));
-            return;
-        }
-
-        if (tag == "printing")
-        {
-            _navigation.Navigate(typeof(Views.PrintPage));
-            return;
-        }
-
-        if (tag == "ticketMgmt")
-        {
-            _navigation.Navigate(typeof(Views.TicketManagementPage));
-            return;
-        }
-
-        if (tag == "drawerPull")
-        {
-             var dialog = new Views.DrawerPullReportDialog();
-             await _navigation.ShowDialogAsync(dialog);
-            return;
-        }
-
-        if (tag == "salesReports")
-        {
-            _navigation.Navigate(typeof(Views.SalesReportsPage));
-            return;
-        }
-
-        if (tag == "userMgmt")
-        {
-            _navigation.Navigate(typeof(Views.UserManagementPage));
-            return;
-        }
-
-        if (tag == "settings")
-        {
-            _navigation.Navigate(typeof(Views.SettingsPage));
         }
     }
 

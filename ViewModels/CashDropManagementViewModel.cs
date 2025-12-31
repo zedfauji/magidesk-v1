@@ -9,6 +9,7 @@ using Magidesk.Domain.Entities;
 using Magidesk.Presentation.Services;
 using Magidesk.Presentation.Views;
 using Microsoft.UI.Xaml.Controls;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -35,7 +36,7 @@ public class CashDropManagementViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedTransaction, value))
             {
-                ((AsyncRelayCommand)DeleteCommand).RaiseCanExecuteChanged();
+                ((AsyncRelayCommand)DeleteCommand).NotifyCanExecuteChanged();
             }
         }
     }

@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Magidesk.Application.Interfaces;
 using Magidesk.Domain.Entities;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -242,32 +243,74 @@ public class MenuEditorViewModel : ViewModelBase
 
     private async Task DeleteAsync()
     {
-         if (SelectedItem != null)
-         {
-             var item = SelectedItem;
-             // await _menuRepository.DeleteAsync(item.Id);
-             Items.Remove(item);
-             SelectedItem = null;
-             StatusMessage = "Item Deleted (Simulated)";
-             return;
-         }
+        IsBusy = true;
+        try
+        {
+            if (SelectedItem != null)
+            {
+                var item = SelectedItem;
+                await _menuRepository.DeleteAsync(item);
+                Items.Remove(item);
+                SelectedItem = null;
+                StatusMessage = "Item deleted.";
+                return;
+            }
 
-         if (SelectedGroup != null)
-         {
-             var group = SelectedGroup; // capture verification logic
-             // await _groupRepository.DeleteAsync(group.Id); 
-             Groups.Remove(group);
-             SelectedGroup = null;
-             StatusMessage = "Group Deleted (Simulated)";
-             return;
-         }
+            if (SelectedGroup != null)
+            {
+                var group = SelectedGroup;
 
-         if (SelectedCategory != null)
-         {
-             Categories.Remove(SelectedCategory); 
-             SelectedCategory = null;
-             StatusMessage = "Category Deleted (Simulated)";
-         }
+                var items = (await _menuRepository.GetAllAsync()).Where(i => i.GroupId == group.Id).ToList();
+                foreach (var item in items)
+                {
+                    await _menuRepository.DeleteAsync(item);
+                }
+
+                await _groupRepository.DeleteAsync(group);
+
+                Groups.Remove(group);
+                Items.Clear();
+                SelectedItem = null;
+                SelectedGroup = null;
+                StatusMessage = "Group deleted.";
+                return;
+            }
+
+            if (SelectedCategory != null)
+            {
+                var category = SelectedCategory;
+
+                var groups = (await _groupRepository.GetAllAsync()).Where(g => g.CategoryId == category.Id).ToList();
+                foreach (var group in groups)
+                {
+                    var items = (await _menuRepository.GetAllAsync()).Where(i => i.GroupId == group.Id).ToList();
+                    foreach (var item in items)
+                    {
+                        await _menuRepository.DeleteAsync(item);
+                    }
+
+                    await _groupRepository.DeleteAsync(group);
+                }
+
+                await _categoryRepository.DeleteAsync(category);
+
+                Categories.Remove(category);
+                Groups.Clear();
+                Items.Clear();
+                SelectedItem = null;
+                SelectedGroup = null;
+                SelectedCategory = null;
+                StatusMessage = "Category deleted.";
+            }
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = $"Delete Failed: {ex.Message}";
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     private async Task AddCategoryAsync()

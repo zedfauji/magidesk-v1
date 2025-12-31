@@ -4,6 +4,7 @@ using Magidesk.Application.Interfaces;
 using Magidesk.Application.Queries;
 using Magidesk.Domain.ValueObjects;
 using Magidesk.Presentation.Services;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -14,6 +15,7 @@ public sealed class CashSessionViewModel : ViewModelBase
     private readonly ICommandHandler<CloseCashSessionCommand, CloseCashSessionResult> _close;
     private readonly IUserService _userService;
     private readonly ITerminalContext _terminalContext;
+    private readonly NavigationService _navigationService;
 
     private CashSessionDto? _current;
     private string _userIdText = Guid.Empty.ToString();
@@ -28,17 +30,20 @@ public sealed class CashSessionViewModel : ViewModelBase
         ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult> open,
         ICommandHandler<CloseCashSessionCommand, CloseCashSessionResult> close,
         IUserService userService,
-        ITerminalContext terminalContext)
+        ITerminalContext terminalContext,
+        NavigationService navigationService)
     {
         _getCurrent = getCurrent;
         _open = open;
         _close = close;
         _userService = userService;
         _terminalContext = terminalContext;
+        _navigationService = navigationService;
 
         RefreshCommand = new AsyncRelayCommand(RefreshAsync);
         OpenCommand = new AsyncRelayCommand(OpenAsync);
         CloseCommand = new AsyncRelayCommand(CloseAsync);
+        GoBackCommand = new RelayCommand(GoBack);
 
         Title = "Cash Session";
 
@@ -52,6 +57,11 @@ public sealed class CashSessionViewModel : ViewModelBase
             TerminalIdText = _terminalContext.TerminalId.Value.ToString();
         }
     }
+
+    public AsyncRelayCommand RefreshCommand { get; }
+    public AsyncRelayCommand OpenCommand { get; }
+    public AsyncRelayCommand CloseCommand { get; }
+    public RelayCommand GoBackCommand { get; }
 
     public CashSessionDto? Current
     {
@@ -123,9 +133,13 @@ public sealed class CashSessionViewModel : ViewModelBase
 
     public bool HasError => !string.IsNullOrWhiteSpace(Error);
 
-    public AsyncRelayCommand RefreshCommand { get; }
-    public AsyncRelayCommand OpenCommand { get; }
-    public AsyncRelayCommand CloseCommand { get; }
+    private void GoBack()
+    {
+        if (_navigationService.CanGoBack)
+        {
+            _navigationService.GoBack();
+        }
+    }
 
     public async Task RefreshAsync()
     {

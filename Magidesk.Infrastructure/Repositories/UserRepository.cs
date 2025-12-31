@@ -23,7 +23,9 @@ public class UserRepository : IUserRepository
 
     public async Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return await _context.Users.ToListAsync(cancellationToken);
+        return await _context.Users
+            .Include(u => u.Role)
+            .ToListAsync(cancellationToken);
     }
 
     public async Task AddAsync(User entity, CancellationToken cancellationToken = default)

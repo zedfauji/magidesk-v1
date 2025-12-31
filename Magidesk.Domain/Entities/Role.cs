@@ -28,4 +28,11 @@ public class Role
     {
         Permissions = permissions;
     }
+
+    public void SetName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Role name cannot be empty.", nameof(name));
+        Name = name;
+    }
 }

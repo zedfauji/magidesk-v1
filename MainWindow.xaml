@@ -24,16 +24,8 @@
 
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Home" Tag="home" Icon="Home" />
-                <NavigationViewItem Content="Cash Session" Tag="cashSession" />
-                <NavigationViewItem Content="Ticket Entry" Tag="ticket" />
-                <NavigationViewItem Content="Payments" Tag="payments" />
-                <NavigationViewItem Content="Discount &amp; Tax" Tag="discountTax" />
-                <NavigationViewItem Content="Printing" Tag="printing" />
-                <NavigationViewItem Content="Ticket Management" Tag="ticketMgmt" />
-                <NavigationViewItem Content="Drawer Pull Report" Tag="drawerPull" />
-                <NavigationViewItem Content="Sales Reports" Tag="salesReports" />
-                <NavigationViewItem Content="User Management" Tag="userMgmt" />
-                <NavigationViewItem Content="Settings" Tag="settings" />
+                <NavigationViewItem Content="Table Map" Tag="tableMap" Icon="Map" />
+                <NavigationViewItem Content="Kitchen Display" Tag="kitchenDisplay" Icon="ViewAll" />
             </NavigationView.MenuItems>
 
             <Frame x:Name="ContentFrame" />

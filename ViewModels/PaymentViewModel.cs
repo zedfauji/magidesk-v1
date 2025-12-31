@@ -4,6 +4,8 @@ using Magidesk.Application.Interfaces;
 using Magidesk.Application.Queries;
 using Magidesk.Domain.Enumerations;
 using Magidesk.Domain.ValueObjects;
+using Magidesk.Presentation.Services;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -11,6 +13,7 @@ public sealed class PaymentViewModel : ViewModelBase
 {
     private readonly IQueryHandler<GetTicketQuery, TicketDto?> _getTicket;
     private readonly ICommandHandler<ProcessPaymentCommand, ProcessPaymentResult> _processPayment;
+    private readonly NavigationService _navigationService;
 
     private TicketDto? _ticket;
     private string _ticketIdText = string.Empty;
@@ -28,15 +31,18 @@ public sealed class PaymentViewModel : ViewModelBase
 
     public PaymentViewModel(
         IQueryHandler<GetTicketQuery, TicketDto?> getTicket,
-        ICommandHandler<ProcessPaymentCommand, ProcessPaymentResult> processPayment)
+        ICommandHandler<ProcessPaymentCommand, ProcessPaymentResult> processPayment,
+        NavigationService navigationService)
     {
         _getTicket = getTicket;
         _processPayment = processPayment;
+        _navigationService = navigationService;
 
         Title = "Payment";
 
         LoadTicketCommand = new AsyncRelayCommand(LoadTicketAsync);
         CashPayCommand = new AsyncRelayCommand(CashPayAsync);
+        GoBackCommand = new RelayCommand(GoBack);
     }
 
     public TicketDto? Ticket
@@ -133,6 +139,15 @@ public sealed class PaymentViewModel : ViewModelBase
 
     public AsyncRelayCommand LoadTicketCommand { get; }
     public AsyncRelayCommand CashPayCommand { get; }
+    public RelayCommand GoBackCommand { get; }
+
+    private void GoBack()
+    {
+        if (_navigationService.CanGoBack)
+        {
+            _navigationService.GoBack();
+        }
+    }
 
     private async Task LoadTicketAsync()
     {

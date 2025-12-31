@@ -7,6 +7,7 @@ using Magidesk.Domain.Enumerations;
 using Magidesk.Domain.ValueObjects;
 using Magidesk.Presentation.Views;
 using Magidesk.Presentation.Services;
+using CommunityToolkit.Mvvm.Input;
 using System.Threading.Tasks;
 using System.Windows.Input;
 

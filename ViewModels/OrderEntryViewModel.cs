@@ -748,16 +748,32 @@ public partial class OrderEntryViewModel : ViewModelBase
 
     public async Task InitializeAsync(Guid? ticketId = null)
     {
-        await LoadCategoriesAsync();
+        try
+        {
+            System.Diagnostics.Debug.WriteLine($"OrderEntryViewModel.InitializeAsync called with ticketId: {ticketId}");
+            
+            await LoadCategoriesAsync();
+            System.Diagnostics.Debug.WriteLine($"Categories loaded: {Categories.Count}");
 
-        if (ticketId.HasValue)
-        {
-            await LoadTicketAsync(ticketId.Value);
+            if (ticketId.HasValue)
+            {
+                System.Diagnostics.Debug.WriteLine($"Loading existing ticket: {ticketId.Value}");
+                await LoadTicketAsync(ticketId.Value);
+                System.Diagnostics.Debug.WriteLine($"Ticket loading completed. Ticket is null: {Ticket == null}");
+            }
+            else if (Ticket == null)
+            {
+                System.Diagnostics.Debug.WriteLine("No ticketId provided and no existing ticket - creating new ticket");
+                // Auto-create ticket if none exists
+                 await CreateNewTicketAsync();
+            }
+            
+            System.Diagnostics.Debug.WriteLine($"OrderEntryViewModel initialization complete. HasTicket: {HasTicket}, HasTicketWithItems: {HasTicketWithItems}");
         }
-        else if (Ticket == null)
+        catch (Exception ex)
         {
-            // Auto-create ticket if none exists
-             await CreateNewTicketAsync();
+            System.Diagnostics.Debug.WriteLine($"Error in OrderEntryViewModel.InitializeAsync: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
         }
     }
 
@@ -766,13 +782,23 @@ public partial class OrderEntryViewModel : ViewModelBase
         IsBusy = true;
         try
         {
+            System.Diagnostics.Debug.WriteLine("LoadCategoriesAsync started");
             Categories.Clear();
             var categories = await _categoryRepository.GetVisibleAsync();
-             foreach (var cat in categories) Categories.Add(cat);
+            
+            System.Diagnostics.Debug.WriteLine($"Retrieved {categories.Count()} categories from repository");
+            
+            foreach (var category in categories)
+            {
+                Categories.Add(category);
+            }
+            
+            System.Diagnostics.Debug.WriteLine($"Categories collection populated with {Categories.Count} items");
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Error loading categories: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
         }
         finally { IsBusy = false; }
     }
@@ -949,7 +975,25 @@ public partial class OrderEntryViewModel : ViewModelBase
 
     private async Task LoadTicketAsync(Guid ticketId)
     {
-         Ticket = await _getTicketHandler.HandleAsync(new GetTicketQuery { TicketId = ticketId });
+        try
+        {
+            System.Diagnostics.Debug.WriteLine($"Loading ticket: {ticketId}");
+            Ticket = await _getTicketHandler.HandleAsync(new GetTicketQuery { TicketId = ticketId });
+            
+            if (Ticket == null)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ticket {ticketId} not found or failed to load");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"Successfully loaded ticket #{Ticket.TicketNumber} with {Ticket.OrderLines.Count} items");
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error loading ticket {ticketId}: {ex.Message}");
+            Ticket = null;
+        }
     }
 
     private async Task AddItemAsync(MenuItem? item)

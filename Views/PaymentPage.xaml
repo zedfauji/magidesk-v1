@@ -7,50 +7,62 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <ScrollViewer>
-        <StackPanel Spacing="12" Padding="16" MaxWidth="900">
-            <TextBlock Text="Payments" FontSize="24" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-            <InfoBar IsOpen="{Binding HasError}" IsClosable="True" Severity="Error" Message="{Binding Error}" />
+        <CommandBar DefaultLabelPosition="Right" Background="Transparent">
+            <AppBarButton Icon="Back" Label="Back" Command="{Binding GoBackCommand}"/>
+            <AppBarElementContainer>
+                 <TextBlock Text="Payments" VerticalAlignment="Center" Margin="12,0,0,0" Style="{StaticResource TitleTextBlockStyle}"/>
+            </AppBarElementContainer>
+        </CommandBar>
 
-            <TextBlock Text="Load Ticket" FontSize="18" />
-            <StackPanel Orientation="Horizontal" Spacing="12">
-                <TextBox Header="TicketId" Width="420" Text="{Binding TicketIdText, Mode=TwoWay}" />
-                <Button Content="Load" Command="{Binding LoadTicketCommand}" />
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Spacing="12" Padding="16" MaxWidth="900">
+                <InfoBar IsOpen="{Binding HasError}" IsClosable="True" Severity="Error" Message="{Binding Error}" />
+
+                <TextBlock Text="Load Ticket" FontSize="18" />
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <TextBox Header="TicketId" Width="420" Text="{Binding TicketIdText, Mode=TwoWay}" />
+                    <Button Content="Load" Command="{Binding LoadTicketCommand}" />
+                </StackPanel>
+
+                <TextBlock Text="{Binding TicketHeaderText}" FontSize="14" />
+                <TextBlock Text="{Binding TotalsText}" FontSize="14" />
+
+                <TextBlock Text="Existing Payments" FontSize="18" />
+                <ListView ItemsSource="{Binding Payments}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <TextBlock Text="{Binding PaymentType}" Width="140" />
+                                <TextBlock Text="{Binding TransactionType}" Width="100" />
+                                <TextBlock Text="{Binding Amount}" Width="90" />
+                                <TextBlock Text="{Binding TipsAmount}" Width="90" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <TextBlock Text="Cash Payment" FontSize="18" />
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <TextBox Header="ProcessedBy (UserId)" Width="260" Text="{Binding ProcessedByText, Mode=TwoWay}" />
+                    <TextBox Header="TerminalId" Width="220" Text="{Binding TerminalIdText, Mode=TwoWay}" />
+                    <TextBox Header="CashSessionId (optional)" Width="260" Text="{Binding CashSessionIdText, Mode=TwoWay}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <TextBox Header="Amount" Width="120" Text="{Binding AmountText, Mode=TwoWay}" />
+                    <TextBox Header="Tender" Width="120" Text="{Binding TenderText, Mode=TwoWay}" />
+                    <TextBox Header="Tips" Width="120" Text="{Binding TipsText, Mode=TwoWay}" />
+                    <TextBox Header="Note" Width="260" Text="{Binding Note, Mode=TwoWay}" />
+                    <Button Content="Cash Pay" Command="{Binding CashPayCommand}" />
+                </StackPanel>
+
+                <TextBlock Text="Card payments UI will be enabled once the ticket payment creation flow supports card types in ProcessPaymentCommand (currently cash-only)." Opacity="0.7" />
             </StackPanel>
-
-            <TextBlock Text="{Binding TicketHeaderText}" FontSize="14" />
-            <TextBlock Text="{Binding TotalsText}" FontSize="14" />
-
-            <TextBlock Text="Existing Payments" FontSize="18" />
-            <ListView ItemsSource="{Binding Payments}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <TextBlock Text="{Binding PaymentType}" Width="140" />
-                            <TextBlock Text="{Binding TransactionType}" Width="100" />
-                            <TextBlock Text="{Binding Amount}" Width="90" />
-                            <TextBlock Text="{Binding TipsAmount}" Width="90" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <TextBlock Text="Cash Payment" FontSize="18" />
-            <StackPanel Orientation="Horizontal" Spacing="12">
-                <TextBox Header="ProcessedBy (UserId)" Width="260" Text="{Binding ProcessedByText, Mode=TwoWay}" />
-                <TextBox Header="TerminalId" Width="220" Text="{Binding TerminalIdText, Mode=TwoWay}" />
-                <TextBox Header="CashSessionId (optional)" Width="260" Text="{Binding CashSessionIdText, Mode=TwoWay}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Spacing="12">
-                <TextBox Header="Amount" Width="120" Text="{Binding AmountText, Mode=TwoWay}" />
-                <TextBox Header="Tender" Width="120" Text="{Binding TenderText, Mode=TwoWay}" />
-                <TextBox Header="Tips" Width="120" Text="{Binding TipsText, Mode=TwoWay}" />
-                <TextBox Header="Note" Width="260" Text="{Binding Note, Mode=TwoWay}" />
-                <Button Content="Cash Pay" Command="{Binding CashPayCommand}" />
-            </StackPanel>
-
-            <TextBlock Text="Card payments UI will be enabled once the ticket payment creation flow supports card types in ProcessPaymentCommand (currently cash-only)." Opacity="0.7" />
-        </StackPanel>
-    </ScrollViewer>
+        </ScrollViewer>
+    </Grid>
 </Page>

@@ -40,7 +40,7 @@
 - **NONE**
 
 ## 6. Active Phase
-- Current execution phase: **Slice 4 Completed / Ready for Slice 5**
+- Current execution phase: **Slice 5 In Progress (Admin / Reporting)**
 
 ## 7. Frozen Decisions
 - **Single Source of Truth**: Memory Bank.
@@ -48,11 +48,28 @@
 
 
 ## 8. Last Update Metadata
-- Timestamp: 2025-12-30T22:55:00Z
-- Reason for update: **Slice 4: Kitchen - Execution Complete**
+- Timestamp: 2025-12-31T05:31:00Z
+- Reason for update: **Slice 5: Modifier + OrderType + Shift Explorers**
 - What changed since last update:
-  - Implemented **Kitchen Display System** (Views & VM).
-  - Wired **Switchboard Navigation** to KDS.
-  - Fixed **Logout Navigation** bug.
-  - Verified **Table Map** seeding.
-  - Slice 4 is now **FUNCTIONALLY ACTIVE**.
+  - Implemented real **Delete** for Modifier Editor (Modifiers, Groups) with cascade delete behavior.
+  - Added **Order Type Explorer** page (create/edit/activate-deactivate) and wired into Back Office.
+  - Added **Shift Explorer** page (create/edit/activate-deactivate) and wired into Back Office.
+  - Build + run verified.
+
+## 9. Slice 5 (Admin / Reporting) Snapshot
+- Slice 5 status: **PARTIAL**
+- Verified paths:
+  - Manager Functions -> Reports opens Back Office
+  - Back Office -> Menu Editor supports add/edit/delete Category/Group/Item
+  - Back Office -> Modifiers supports add/edit/delete Modifier Group/Modifier
+  - Back Office -> Order Types opens Order Type Explorer
+  - Back Office -> Shifts opens Shift Explorer
+  - Back Office -> Reports opens Sales Reports page
+  - Back Office -> Settings opens System Configuration page
+  - Back Office -> Users opens User Management page
+  - Back Office -> Tax / Discount opens Discount & Tax page
+- Remaining slice-local gaps:
+  - Menu Explorer does not yet cover separate Category/Group/Item explorer screens beyond Menu Editor (future split optional).
+  - Coupon/Tax/Printer explorers still missing.
+  - Many Slice 5 admin/config explorers still missing (printers, taxes explorer, order type explorer, shift explorer, etc.).
+  - Several Slice 5 reports still missing (sales detail, credit card report, payment report, menu usage, tip report, attendance, cash out).

@@ -52,11 +52,11 @@
                                 </Border>
                                 
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="12,0">
-                                    <TextBlock Text="{x:Bind TableName, TargetNullValue='No Table'}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{x:Bind TableName, TargetNullValue='Take Out'}" FontWeight="SemiBold"/>
                                     <TextBlock Text="{x:Bind OwnerName}" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                                 </StackPanel>
                                 
-                                <TextBlock Grid.Column="2" Text="{x:Bind TotalAmount}" FontWeight="Bold" VerticalAlignment="Center" Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+                                <TextBlock Grid.Column="2" Text="{x:Bind TotalAmount, Mode=OneWay}" FontWeight="Bold" VerticalAlignment="Center" Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

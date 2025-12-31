@@ -8,6 +8,7 @@ using Magidesk.Application.DTOs;
 using Magidesk.Application.Queries;
 using Magidesk.Presentation.Services;
 using Magidesk.Presentation.Views;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Magidesk.Presentation.Views.Dialogs;
@@ -108,6 +109,7 @@ public class SwitchboardViewModel : ViewModelBase
         ShutdownCommand = new RelayCommand(() => { try { Microsoft.UI.Xaml.Application.Current.Exit(); } catch {} });
 
         NewTicketCommand = new AsyncRelayCommand(NewTicketAsync);
+
     }
 
     private async void ManagerFunctionsAsync()
@@ -269,7 +271,7 @@ public class SwitchboardViewModel : ViewModelBase
         }
     }
 
-    private async Task LoadTicketsAsync()
+    public async Task LoadTicketsAsync()
     {
         try
         {
@@ -292,10 +294,8 @@ public class SwitchboardViewModel : ViewModelBase
         }
         else
         {
-             // If no ticket selected, navigate to TicketManagementPage (default existing behavior fallback)
-             // or show a message "Select a ticket".
-             // For now, mapping to OrderEntryPage as a default "generic" load is safer if we want to create new.
-             _navigationService.Navigate(typeof(TicketManagementPage));
+             // If no ticket selected, navigate to MainPage (utility/debug fallback)
+             _navigationService.Navigate(typeof(Views.MainPage));
         }
     }
 

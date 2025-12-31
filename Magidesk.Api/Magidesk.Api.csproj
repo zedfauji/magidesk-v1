@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Magidesk.Application\Magidesk.Application.csproj" />
     <ProjectReference Include="..\Magidesk.Infrastructure\Magidesk.Infrastructure.csproj" />
+    <ProjectReference Include="..\Magidesk.Migrations\Magidesk.Migrations.csproj" />
   </ItemGroup>
 
   <ItemGroup>

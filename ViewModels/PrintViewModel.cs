@@ -1,5 +1,6 @@
 using Magidesk.Application.Commands;
 using Magidesk.Application.Interfaces;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
 

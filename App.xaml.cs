@@ -9,6 +9,7 @@ using Magidesk.Infrastructure.DependencyInjection;
 using Magidesk.Infrastructure.Repositories;
 using Magidesk.Infrastructure.Services;
 using Magidesk.Presentation.Services;
+using Magidesk.Application.Commands.SystemConfig;
 
 namespace Magidesk.Presentation;
 
@@ -56,6 +57,7 @@ public partial class App : Microsoft.UI.Xaml.Application
                 services.AddSingleton<IUserService, UserService>();
                 services.AddSingleton<ITerminalContext, TerminalContext>();
                 services.AddSingleton<IPrintingService, PrintingService>();
+                services.AddSingleton<IDefaultViewRoutingService, DefaultViewRoutingService>();
 
                 // ViewModels
                 services.AddTransient<Magidesk.Presentation.ViewModels.CashSessionViewModel>();
@@ -67,7 +69,10 @@ public partial class App : Microsoft.UI.Xaml.Application
                 services.AddTransient<Magidesk.Presentation.ViewModels.DrawerPullReportViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.SalesReportsViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.UserManagementViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.RoleManagementViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.SettingsViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.OrderTypeExplorerViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.ShiftExplorerViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.SwitchboardViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.OrderTypeSelectionViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.ModifierSelectionViewModel>();
@@ -98,7 +103,13 @@ public partial class App : Microsoft.UI.Xaml.Application
                 services.AddTransient<ICommandHandler<ChangeSeatCommand>, ChangeSeatCommandHandler>();
                 services.AddTransient<ICommandHandler<MergeTicketsCommand>, MergeTicketsCommandHandler>();
                 services.AddTransient<ICommandHandler<ChangeTableCommand, ChangeTableResult>, ChangeTableCommandHandler>();
+
                 services.AddTransient<ICommandHandler<SetCustomerCommand, SetCustomerResult>, SetCustomerCommandHandler>();
+                
+                // Role Management Handlers
+                services.AddTransient<ICommandHandler<CreateRoleCommand, CreateRoleResult>, Magidesk.Application.Services.Administration.RoleCommandHandlers>();
+                services.AddTransient<ICommandHandler<UpdateRoleCommand, UpdateRoleResult>, Magidesk.Application.Services.Administration.RoleCommandHandlers>();
+                services.AddTransient<ICommandHandler<DeleteRoleCommand, DeleteRoleResult>, Magidesk.Application.Services.Administration.RoleCommandHandlers>();
 
                 // Domain services
                 services.AddTransient<BatchPaymentDomainService>();

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Magidesk.Application.Interfaces;
 using Microsoft.UI.Dispatching; // For DispatcherQueue (Timer replacement for WinUI)
+using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
 

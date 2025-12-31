@@ -50,6 +50,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Role> Roles { get; set; } = null!;
     public DbSet<InventoryItem> InventoryItems { get; set; } = null!;
     public DbSet<AttendanceHistory> AttendanceHistories { get; set; } = null!;
+    public DbSet<RestaurantConfiguration> RestaurantConfigurations { get; set; } = null!;
     // FractionalModifier is part of Set<MenuModifier> via Inheritance
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

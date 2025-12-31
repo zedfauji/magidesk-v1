@@ -12,7 +12,7 @@ public sealed partial class BackOfficePage : Page
     public BackOfficePage()
     {
         this.InitializeComponent();
-        ViewModel = App.Services.GetService<BackOfficeViewModel>();
+        ViewModel = App.Services.GetRequiredService<BackOfficeViewModel>();
         
         // Handle Navigation
         var navView = this.Content as Grid; 
@@ -27,7 +27,27 @@ public sealed partial class BackOfficePage : Page
         if (args.SelectedItem is NavigationItem item)
         {
             ViewModel.NavigateCommand.Execute(item);
+
+            if (item.PageType == typeof(object))
+            {
+                _ = ShowNotImplementedAsync(item.Title);
+                return;
+            }
+
             ContentFrame.Navigate(item.PageType);
         }
+    }
+
+    private async Task ShowNotImplementedAsync(string title)
+    {
+        var dialog = new ContentDialog
+        {
+            Title = title,
+            Content = "Not implemented yet.",
+            CloseButtonText = "OK",
+            XamlRoot = this.XamlRoot
+        };
+
+        await dialog.ShowAsync();
     }
 }

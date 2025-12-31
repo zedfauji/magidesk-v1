@@ -7,10 +7,131 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <ScrollViewer>
-        <StackPanel Spacing="12" Padding="16" MaxWidth="900">
-            <TextBlock Text="User Management" FontSize="24" />
-            <TextBlock Opacity="0.7" Text="Placeholder: user CRUD + roles/permissions UI will be implemented after user model is added." />
-        </StackPanel>
-    </ScrollViewer>
+    <Grid Padding="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="{x:Bind ViewModel.Title}" Style="{StaticResource TitleTextBlockStyle}" Margin="0,0,0,24"/>
+
+        <!-- Toolbar -->
+        <CommandBar DefaultLabelPosition="Right" Grid.Row="1" Background="Transparent" IsOpen="True">
+            <AppBarButton Icon="Add" Label="New User" Command="{x:Bind ViewModel.AddCommand}"/>
+            <AppBarButton Icon="Refresh" Label="Reload" Command="{x:Bind ViewModel.LoadCommand}"/>
+        </CommandBar>
+
+        <!-- Content -->
+        <Grid Grid.Row="2" ColumnSpacing="24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="320"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- List -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Text="Staff Members" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,8"/>
+                
+                <Border Grid.Row="1" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" BorderThickness="1" CornerRadius="4">
+                    <ListView ItemsSource="{x:Bind ViewModel.Users, Mode=OneWay}" 
+                              SelectedItem="{x:Bind ViewModel.SelectedUser, Mode=TwoWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Padding="12">
+                                    <TextBlock Text="{Binding FirstName}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding LastName}" Opacity="0.8"/>
+                                    <TextBlock Text="{Binding Role.Name}" Opacity="0.6" FontSize="10"/> 
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Border>
+            </Grid>
+
+            <!-- Editor -->
+            <Border Grid.Column="1" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" CornerRadius="8" Padding="24">
+                <Grid>
+                    <!-- Placeholder-->
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="12" 
+                                Visibility="{x:Bind ViewModel.HasSelection, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Reverse}">
+                         <FontIcon Glyph="&#xE77B;" FontSize="48" Foreground="Gray"/>
+                         <TextBlock Text="Select a user to edit or click Add" Foreground="Gray" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                         
+                         <!-- Show Add Form if Adding (handled by clearing selection in VM? No, logic needs refactoring if Add relies on clearing selection. 
+                              Actually, VM AddAsync clears selection. So we need a way to distinguish 'No Selection' from 'New User Mode'.
+                              For simplicity: If HasSelection is false, let's assume New User Mode if StatusMessage implies it? 
+                              Better: Update VM to have a separate IsEditing flag or similar. 
+                              
+                              Wait, check VM logic: 
+                              AddAsync => SelectedUser = null; StatusMessage = "Enter details...".
+                              HydrateEditor => If SelectedUser is null => Clears fields.
+                              So if SelectedUser is null, we are in "New User" state basically.
+                              BUT if we use BoolToVisibility Reverse on HasSelection, this panel shows.
+                              
+                              Let's just show the Form ALWAYS, but maybe disable it if not intent?
+                              Actually, simple approach:
+                              If SelectedUser is NULL, we are in "Create Mode".
+                              We just need to ensure the form fields are bound to VM properties, not SelectedUser directly.
+                              Since VM properties ARE bound (FirstName, etc.), editing them works.
+                              So we just need a UI that shows the form always, or maybe hides it only if strictly "Idle".
+                              
+                              Let's hide the Placeholder and Show the Form if:
+                              (HasSelection OR FirstName != empty OR StatusMessage != Ready)?
+                              
+                              Let's just show the FORM always for now to avoid complex visibility logic, 
+                              or change the Placeholder to be "Create / Edit User".
+                              -->
+                    </StackPanel>
+
+                    <!-- Form -->
+                    <!-- Simple visibility check: Show form always, user can fill it out. 
+                         The List selection populates it. -->
+                    <ScrollViewer>
+                        <StackPanel Spacing="16" MaxWidth="600" HorizontalAlignment="Left">
+                            <TextBlock Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}" Style="{StaticResource SubtitleTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundAccentBrush}"/>
+                            
+                            <Grid ColumnSpacing="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0" Header="First Name" Text="{x:Bind ViewModel.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="1" Header="Last Name" Text="{x:Bind ViewModel.LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                            
+                            <PasswordBox Header="PIN (Leave empty to keep current)" Password="{x:Bind ViewModel.Pin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            
+                            <!-- Updated ComboBox for Roles -->
+                            <ComboBox Header="User Role" 
+                                      ItemsSource="{x:Bind ViewModel.Roles, Mode=OneWay}"
+                                      SelectedItem="{x:Bind ViewModel.SelectedRole, Mode=TwoWay}"
+                                      DisplayMemberPath="Name"
+                                      HorizontalAlignment="Stretch"/>
+                            
+                            <ToggleSwitch Header="Active User" IsOn="{x:Bind ViewModel.IsActive, Mode=TwoWay}"/>
+                            
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <Button Content="Save User" Command="{x:Bind ViewModel.SaveCommand}" Style="{StaticResource AccentButtonStyle}" Margin="0,12,0,0"/>
+                                <Button Content="Delete" Command="{x:Bind ViewModel.DeleteCommand}" Background="Red" Foreground="White" Margin="0,12,0,0"
+                                        Visibility="{x:Bind ViewModel.HasSelection, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                            </StackPanel>
+
+                            <TextBlock Text="Note: Username is automatically generated from First Name." FontStyle="Italic" Opacity="0.6" Margin="0,12,0,0"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+        
+        <!-- Busy -->
+        <Grid Grid.RowSpan="3" Background="#80000000" Visibility="{x:Bind ViewModel.IsBusy, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+             <ProgressRing IsActive="True" Width="60" Height="60"/>
+        </Grid>
+    </Grid>
 </Page>

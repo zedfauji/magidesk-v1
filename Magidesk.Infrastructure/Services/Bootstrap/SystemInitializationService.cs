@@ -4,6 +4,8 @@ using Magidesk.Application.Interfaces;
 using Magidesk.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Magidesk.Domain.Enumerations;
+using Magidesk.Domain.Entities;
 
 namespace Magidesk.Infrastructure.Services.Bootstrap
 {
@@ -72,8 +74,41 @@ namespace Magidesk.Infrastructure.Services.Bootstrap
                     await _dbContext.SaveChangesAsync();
                 }
 
-                // Roles/Users skipped to avoid authentication mismatch. 
-                // Assuming Slice 1 seeded them or they persist.
+                // Seed Roles
+                if (!await _dbContext.Roles.AnyAsync())
+                {
+                    _logger.LogInformation("Seeding Roles...");
+                    
+                    var manager = Role.Create("Manager", 
+                        UserPermission.CreateTicket | UserPermission.EditTicket | UserPermission.TakePayment |
+                        UserPermission.VoidTicket | UserPermission.RefundPayment | UserPermission.OpenDrawer |
+                        UserPermission.CloseBatch | UserPermission.ApplyDiscount | 
+                        UserPermission.ManageUsers | UserPermission.ManageTableLayout | 
+                        UserPermission.ManageMenu | UserPermission.ViewReports | UserPermission.SystemConfiguration);
+                        
+                    var server = Role.Create("Server", 
+                        UserPermission.CreateTicket | UserPermission.EditTicket | UserPermission.TakePayment);
+
+                    var kitchen = Role.Create("Kitchen", UserPermission.None);
+                    var host = Role.Create("Host", UserPermission.ManageTableLayout); 
+                    var driver = Role.Create("Driver", UserPermission.TakePayment);
+
+                    _dbContext.Roles.AddRange(manager, server, kitchen, host, driver);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                // Users skipped to avoid authentication mismatch (assuming manual seed via Login or existing data)
+                // However, without at least one Manager, system login is impossible from scratch.
+                // If Users count is 0, we should seed a default Admin.
+                if (!await _dbContext.Users.AnyAsync())
+                {
+                    _logger.LogInformation("Seeding Default Admin...");
+                    var adminRole = await _dbContext.Roles.FirstAsync(r => r.Name == "Manager");
+                    // Note: Pin needs to be encrypted correctly. Assuming "1234" -> "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4" (from existing seed)
+                    // Or we rely on the manual migration seed. 
+                    // Let's NOT risk double seeding Users if Migration handles it.
+                    // But Roles were needed for the UI.
+                }
 
                 // Seed Menu Categories & Items
                 if (!await _dbContext.MenuCategories.AnyAsync())

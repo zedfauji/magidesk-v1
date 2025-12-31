@@ -10,6 +10,7 @@ using Magidesk.Application.Queries;
 using Magidesk.Domain.ValueObjects;
 using Magidesk.Presentation.Services;
 using Microsoft.UI.Xaml.Controls;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -38,9 +39,9 @@ public class OpenTicketsListViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedTicket, value))
             {
-                ((AsyncRelayCommand)ResumeCommand).RaiseCanExecuteChanged();
-                ((AsyncRelayCommand)TransferCommand).RaiseCanExecuteChanged();
-                ((AsyncRelayCommand)VoidCommand).RaiseCanExecuteChanged();
+                ((AsyncRelayCommand)ResumeCommand).NotifyCanExecuteChanged();
+                ((AsyncRelayCommand)TransferCommand).NotifyCanExecuteChanged();
+                ((AsyncRelayCommand)VoidCommand).NotifyCanExecuteChanged();
             }
         }
     }
