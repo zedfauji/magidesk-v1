@@ -52,6 +52,7 @@
             <converters:StringFormatConverter x:Key="StringFormatConverter"/>
             <converters:StringToBoolConverter x:Key="StringToBoolConverter"/>
             <converters:StringColorToBrushConverter x:Key="StringColorToBrushConverter"/>
+            <converters:CurrencyConverter x:Key="CurrencyConverter"/>
 
              <!-- Standard Text Styles -->
              <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock">
@@ -62,6 +63,22 @@
              <Style x:Key="SubtitleTextBlockStyle" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="18"/>
                 <Setter Property="FontWeight" Value="Normal"/>
+             </Style>
+
+             <Style x:Key="DisplayTextBlockStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="40"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+             </Style>
+
+             <Style x:Key="CaptionTextBlockStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Opacity" Value="0.8"/>
+             </Style>
+
+             <Style x:Key="BodyStrongTextBlockStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
              </Style>
              
              <Style x:Key="AccentButtonStyle" TargetType="Button">

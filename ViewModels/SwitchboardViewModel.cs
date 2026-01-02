@@ -62,6 +62,7 @@ public class SwitchboardViewModel : ViewModelBase
     
     public ICommand TablesCommand { get; }
     public ICommand ManagerFunctionsCommand { get; }
+    public ICommand BackOfficeCommand { get; }
     public ICommand LogoutCommand { get; }
     public ICommand ShutdownCommand { get; }
 
@@ -110,6 +111,7 @@ public class SwitchboardViewModel : ViewModelBase
         
         TablesCommand = new RelayCommand(() => _navigationService.Navigate(typeof(Views.TableMapPage)));
         ManagerFunctionsCommand = new AsyncRelayCommand(ManagerFunctionsAsync);
+        BackOfficeCommand = new AsyncRelayCommand(BackOfficeAsync);
         LogoutCommand = new RelayCommand(() => {
             _navigationService.Navigate(typeof(Views.LoginPage));
         });
@@ -117,6 +119,63 @@ public class SwitchboardViewModel : ViewModelBase
 
         NewTicketCommand = new AsyncRelayCommand(NewTicketAsync);
 
+    }
+
+    private async Task BackOfficeAsync()
+    {
+        // Security Gate for Admin/Backoffice
+        var passwordDialog = new Views.PasswordEntryDialog();
+        passwordDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        var result = await _navigationService.ShowDialogAsync(passwordDialog);
+
+        if (result != ContentDialogResult.Primary) return;
+
+        var pin = passwordDialog.Password;
+        if (string.IsNullOrWhiteSpace(pin)) return;
+
+        try
+        {
+            var encryptedPin = _encryptionService.Encrypt(pin);
+            var user = await _securityService.GetUserByPinAsync(encryptedPin);
+
+            if (user == null)
+            {
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Authentication Failed",
+                    Content = "Invalid PIN.",
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                };
+                await _navigationService.ShowDialogAsync(errorDialog);
+                return;
+            }
+
+            // Check Admin Permissions
+            var adminPermissions = UserPermission.ManageUsers | UserPermission.ManageTableLayout | 
+                                 UserPermission.ManageMenu | UserPermission.ViewReports | 
+                                 UserPermission.SystemConfiguration;
+
+            if ((user.Role.Permissions & adminPermissions) == 0)
+            {
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Access Denied",
+                    Content = "Insufficient privileges for Back Office functions.",
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                };
+                await _navigationService.ShowDialogAsync(errorDialog);
+                return;
+            }
+
+            // Auth Success - Navigate to Back Office hub
+            _navigationService.Navigate(typeof(Views.BackOfficePage));
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Back Office Auth Error: {ex.Message}");
+        }
     }
 
     private async Task ManagerFunctionsAsync()

@@ -32,6 +32,7 @@
           Magidesk.Domain.Tests\**;
           Magidesk.Infrastructure.Tests\**;
           Magidesk.Presentation\**;
+          generate_pins.cs;
           terminals\**;
           memory-bank\**;
           bin\**;

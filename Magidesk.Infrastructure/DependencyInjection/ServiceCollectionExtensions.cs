@@ -53,13 +53,13 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IModifierGroupRepository, ModifierGroupRepository>();
         services.AddScoped<IMenuModifierRepository, MenuModifierRepository>();
         services.AddScoped<IInventoryItemRepository, InventoryItemRepository>();
-        services.AddScoped<IAttendanceRepository, AttendanceRepository>();
-        services.AddScoped<IAttendanceRepository, AttendanceRepository>();
-        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRestaurantConfigurationRepository, RestaurantConfigurationRepository>();
         services.AddScoped<ITerminalRepository, TerminalRepository>();
         services.AddScoped<IPrinterGroupRepository, PrinterGroupRepository>();
         services.AddScoped<IPrinterMappingRepository, PrinterMappingRepository>();
+        services.AddScoped<IVendorRepository, VendorRepository>();
+        services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
+        services.AddScoped<IInventoryAdjustmentRepository, InventoryAdjustmentRepository>();
 
 
         // Register domain services (stateless, can be singleton or scoped)

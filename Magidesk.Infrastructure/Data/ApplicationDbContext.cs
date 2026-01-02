@@ -12,6 +12,7 @@ public class ApplicationDbContext : DbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
+        System.Diagnostics.Debug.WriteLine("DB: ApplicationDbContext Instantiated.");
     }
 
     // DbSets
@@ -54,6 +55,10 @@ public class ApplicationDbContext : DbContext
     public DbSet<Terminal> Terminals { get; set; } = null!;
     public DbSet<PrinterGroup> PrinterGroups { get; set; } = null!;
     public DbSet<PrinterMapping> PrinterMappings { get; set; } = null!;
+    public DbSet<Vendor> Vendors { get; set; } = null!;
+    public DbSet<PurchaseOrder> PurchaseOrders { get; set; } = null!;
+    public DbSet<PurchaseOrderLine> PurchaseOrderLines { get; set; } = null!;
+    public DbSet<InventoryAdjustment> InventoryAdjustments { get; set; } = null!;
     // FractionalModifier is part of Set<MenuModifier> via Inheritance
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -104,6 +109,10 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new AttendanceHistoryConfiguration());
         modelBuilder.ApplyConfiguration(new PrinterGroupConfiguration());
         modelBuilder.ApplyConfiguration(new PrinterMappingConfiguration());
+        modelBuilder.ApplyConfiguration(new VendorConfiguration());
+        modelBuilder.ApplyConfiguration(new PurchaseOrderConfiguration());
+        modelBuilder.ApplyConfiguration(new PurchaseOrderLineConfiguration());
+        modelBuilder.ApplyConfiguration(new InventoryAdjustmentConfiguration());
     }
 }
 

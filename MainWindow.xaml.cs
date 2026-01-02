@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Magidesk.Infrastructure.Services;
 using Magidesk.Presentation.Services;
 
 namespace Magidesk.Presentation;
@@ -12,32 +13,44 @@ public sealed partial class MainWindow : Window
 
     public MainWindow()
     {
-        InitializeComponent();
+        StartupLogger.Log("MainWindow Constructor - Start");
+        try {
+            InitializeComponent();
+            StartupLogger.Log("MainWindow - InitializeComponent Success");
+        } catch (Exception ex) {
+            StartupLogger.Log($"MainWindow - InitializeComponent FATAL: {ex}");
+            throw;
+        }
 
-        _navigation = App.Services.GetRequiredService<NavigationService>();
-        _navigation.Initialize(ContentFrame);
-
-        // Maximize window by default (F-0002 requirement)
-        // Note: For actual kiosk mode, we'd go full screen, but maximized is safer for dev.
-        // this.Maximize(); // Requires PInvoke or specific WinUI3 calls, skipping for MVP stability unless User requests.
+        StartupLogger.Log("MainWindow - Navigation initialization Start");
+        try {
+            _navigation = App.Services.GetRequiredService<NavigationService>();
+            _navigation.Initialize(ContentFrame);
+            StartupLogger.Log("MainWindow - Navigation initialization Success");
+        } catch (Exception ex) {
+            StartupLogger.Log($"MainWindow - Navigation initialization FATAL: {ex}");
+            throw;
+        }
 
         // Initialize Clock
+        StartupLogger.Log("MainWindow - Clock Start");
         _clockTimer = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread().CreateTimer();
         _clockTimer.Interval = System.TimeSpan.FromSeconds(1);
-        _clockTimer.Tick += (s, e) => StatusClock.Text = System.DateTime.Now.ToString("HH:mm:ss");
+        _clockTimer.Tick += (s, e) => { if (StatusClock != null) StatusClock.Text = System.DateTime.Now.ToString("HH:mm:ss"); };
         _clockTimer.Start();
-        // Initial tick
-        StatusClock.Text = System.DateTime.Now.ToString("HH:mm:ss");
+        
+        if (StatusClock != null) StatusClock.Text = System.DateTime.Now.ToString("HH:mm:ss");
+        StartupLogger.Log("MainWindow Constructor - End");
     }
 
     public void SetTerminalId(string terminalId)
     {
-        StatusTerminalId.Text = terminalId;
+        if (StatusTerminalId != null) StatusTerminalId.Text = terminalId;
     }
 
     public void SetUser(string userName)
     {
-        StatusUser.Text = userName;
+        if (StatusUser != null) StatusUser.Text = userName;
     }
 
     private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
@@ -77,12 +90,12 @@ public sealed partial class MainWindow : Window
 
     public void ShowLoading(string message)
     {
-        LoadingStatus.Text = message;
-        LoadingOverlay.Visibility = Visibility.Visible;
+        if (LoadingStatus != null) LoadingStatus.Text = message;
+        if (LoadingOverlay != null) LoadingOverlay.Visibility = Visibility.Visible;
     }
 
     public void HideLoading()
     {
-        LoadingOverlay.Visibility = Visibility.Collapsed;
+        if (LoadingOverlay != null) LoadingOverlay.Visibility = Visibility.Collapsed;
     }
 }

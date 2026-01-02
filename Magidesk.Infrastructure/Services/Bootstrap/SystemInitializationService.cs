@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Magidesk.Domain.Enumerations;
 using Magidesk.Domain.Entities;
+using Magidesk.Infrastructure.Services;
 
 namespace Magidesk.Infrastructure.Services.Bootstrap
 {
@@ -25,41 +26,60 @@ namespace Magidesk.Infrastructure.Services.Bootstrap
 
         public async Task<InitializationResult> InitializeSystemAsync()
         {
-            _logger.LogInformation("Starting System Initialization...");
-
-            // 1. Check Database Connectivity
             try
             {
+                StartupLogger.Log("INIT: Starting System Initialization...");
+                _logger.LogInformation("Starting System Initialization...");
+                System.Diagnostics.Debug.WriteLine("INIT: Starting System Initialization...");
+
+                // 1. Check Database Connectivity
+                StartupLogger.Log("INIT: Checking Database Connectivity...");
+                _logger.LogInformation("Checking Database Connectivity...");
                 if (!await _dbContext.Database.CanConnectAsync())
                 {
+                    StartupLogger.Log("INIT: Database connection FAILED");
                     _logger.LogCritical("Database connection failed during bootstrap.");
                     return InitializationResult.Failure("Cannot connect to the database. Please check configuration.");
                 }
+
+                // 2. Resolve Terminal Identity
+                string terminalIdentity = Environment.MachineName;
+                StartupLogger.Log($"INIT: Resolving Terminal Identity for: {terminalIdentity}");
+                _logger.LogInformation($"Resolving Terminal Identity for: {terminalIdentity}");
+                System.Diagnostics.Debug.WriteLine($"INIT: Resolving Terminal Identity for: {terminalIdentity}");
+
+                var terminal = await _terminalRepository.GetByTerminalKeyAsync(terminalIdentity);
+                
+                if (terminal == null)
+                {
+                    StartupLogger.Log("INIT: Creating new terminal record");
+                    _logger.LogInformation($"Registering new Terminal: {terminalIdentity}");
+                    terminal = Magidesk.Domain.Entities.Terminal.Create(terminalIdentity, terminalIdentity);
+                    await _terminalRepository.AddTerminalAsync(terminal);
+                }
+
+                StartupLogger.Log($"INIT: Terminal ID: {terminal.Id}");
+
+                // 3. Seed Reference Data
+                StartupLogger.Log("INIT: Seeding reference data...");
+                _logger.LogInformation("Seeding reference data if needed...");
+                System.Diagnostics.Debug.WriteLine("INIT: Seeding reference data...");
+                await SeedReferenceDataAsync();
+
+                StartupLogger.Log("INIT: Initialization Success");
+                _logger.LogInformation("System Initialization successful.");
+                System.Diagnostics.Debug.WriteLine("INIT: Initialization successful.");
+
+                return InitializationResult.Success(terminalIdentity, terminal.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "Exception during database connection check.");
-                return InitializationResult.Failure($"Database Error: {ex.Message}");
+                StartupLogger.Log($"INIT: FATAL ERROR: {ex.Message}");
+                StartupLogger.Log($"INIT: STACK: {ex.StackTrace}");
+                _logger.LogCritical(ex, "CRITICAL ERROR during Initialization.");
+                System.Diagnostics.Debug.WriteLine($"INIT FATAL: {ex}");
+                return InitializationResult.Failure($"Init Crash: {ex.Message}");
             }
-
-            // 2. Resolve Terminal Identity
-            string terminalIdentity = Environment.MachineName;
-            _logger.LogInformation($"Resolved Terminal Identity: {terminalIdentity}");
-
-            var terminal = await _terminalRepository.GetByTerminalKeyAsync(terminalIdentity);
-            
-            if (terminal == null)
-            {
-                _logger.LogInformation($"Registering new Terminal: {terminalIdentity}");
-                terminal = Magidesk.Domain.Entities.Terminal.Create(terminalIdentity, terminalIdentity);
-                await _terminalRepository.AddTerminalAsync(terminal);
-            }
-
-            // 3. Load Critical Configuration (Stub for now)
-            // 3. Seed Reference Data
-            await SeedReferenceDataAsync();
-
-            return InitializationResult.Success(terminalIdentity);
         }
 
         private async Task SeedReferenceDataAsync()

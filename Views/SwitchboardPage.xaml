@@ -102,12 +102,21 @@
                         </StackPanel>
                     </Button>
 
+                    <!-- Back Office -->
+                    <Button Command="{x:Bind ViewModel.BackOfficeCommand}" 
+                            HorizontalAlignment="Stretch" Height="80" Background="#4527A0" CornerRadius="8">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <FontIcon Glyph="&#xE713;" FontSize="24" Foreground="White" VerticalAlignment="Center"/>
+                            <TextBlock Text="Back Office" Foreground="White" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
                     <!-- Manager Functions -->
                     <Button Command="{x:Bind ViewModel.ManagerFunctionsCommand}" 
-                            HorizontalAlignment="Stretch" Height="60" CornerRadius="4" Margin="0,24,0,0">
+                            HorizontalAlignment="Stretch" Height="60" CornerRadius="4" Margin="0,12,0,0">
                         <StackPanel Orientation="Horizontal" Spacing="12">
                             <FontIcon Glyph="&#xE716;" FontSize="20"/>
-                            <TextBlock Text="Manager" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="Manager Fn" FontSize="16" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 

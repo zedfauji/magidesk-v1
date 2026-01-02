@@ -9,12 +9,14 @@ namespace Magidesk.Presentation.ViewModels;
 public class InventoryViewModel : ViewModelBase
 {
     private readonly IInventoryItemRepository _inventoryRepository;
+    private readonly IInventoryAdjustmentRepository _adjustmentRepository;
     
     private InventoryItem? _selectedItem;
     private string _editingName = string.Empty;
     private string _editingUnit = "unit";
     private string _editingStock = "0";
     private string _editingReorder = "0";
+    private string _adjustmentReason = "Regular update";
     private bool _isEditing;
 
     public ObservableCollection<InventoryItem> InventoryItems { get; } = new();
@@ -48,6 +50,7 @@ public class InventoryViewModel : ViewModelBase
     public string EditingUnit { get => _editingUnit; set => SetProperty(ref _editingUnit, value); }
     public string EditingStock { get => _editingStock; set => SetProperty(ref _editingStock, value); }
     public string EditingReorder { get => _editingReorder; set => SetProperty(ref _editingReorder, value); }
+    public string AdjustmentReason { get => _adjustmentReason; set => SetProperty(ref _adjustmentReason, value); }
     
     public bool IsEditing { get => _isEditing; set => SetProperty(ref _isEditing, value); }
 
@@ -59,9 +62,10 @@ public class InventoryViewModel : ViewModelBase
     public ICommand SaveCommand { get; }
     public ICommand DeleteCommand { get; }
 
-    public InventoryViewModel(IInventoryItemRepository inventoryRepository)
+    public InventoryViewModel(IInventoryItemRepository inventoryRepository, IInventoryAdjustmentRepository adjustmentRepository)
     {
         _inventoryRepository = inventoryRepository;
+        _adjustmentRepository = adjustmentRepository;
         Title = "Inventory Management";
         
         LoadDataCommand = new AsyncRelayCommand(LoadDataAsync);
@@ -118,7 +122,12 @@ public class InventoryViewModel : ViewModelBase
                
                var currentStock = SelectedItem.StockQuantity;
                var delta = stock - currentStock;
-               if (delta != 0) SelectedItem.AdjustStock(delta);
+               if (delta != 0)
+               {
+                   SelectedItem.AdjustStock(delta);
+                   var adjustment = InventoryAdjustment.Create(SelectedItem.Id, delta, AdjustmentReason);
+                   await _adjustmentRepository.AddAsync(adjustment);
+               }
                
                SelectedItem.SetReorderPoint(reorder);
 
