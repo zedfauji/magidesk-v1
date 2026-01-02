@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.Input;
 using Magidesk.Presentation.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
@@ -17,6 +18,6 @@ public sealed partial class PurchaseOrdersPage : Page
     protected override async void OnNavigatedTo(Microsoft.UI.Xaml.Navigation.NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
-        await ViewModel.LoadDataCommand.ExecuteAsync(null);
+        await (ViewModel.LoadDataCommand as IAsyncRelayCommand).ExecuteAsync(null);
     }
 }

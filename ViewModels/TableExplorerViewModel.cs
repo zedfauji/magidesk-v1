@@ -45,7 +45,7 @@ public class TableExplorerViewModel : ViewModelBase
 
         Title = "Table Explorer";
         LoadTablesCommand = new AsyncRelayCommand(LoadTablesAsync);
-        SelectTableCommand = new RelayCommand<TableDto>(SelectTable);
+        SelectTableCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<TableDto>(SelectTable);
     }
 
     private async Task LoadTablesAsync()

@@ -50,7 +50,7 @@
 
                         <StackPanel Grid.Column="1">
                             <TextBlock Text="{Binding TableNumber, ConverterParameter='Table {0}', Converter={StaticResource StringFormatConverter}}" FontWeight="Bold" FontSize="18"/>
-                            <TextBlock Text="{Binding Capacity, ConverterParameter={0} Seats, Converter={StaticResource StringFormatConverter}}" Opacity="0.6"/>
+                            <TextBlock Text="{Binding Capacity, ConverterParameter='{}{0} Seats', Converter={StaticResource StringFormatConverter}}" Opacity="0.6"/>
                         </StackPanel>
 
                         <Button Grid.Column="2" 
