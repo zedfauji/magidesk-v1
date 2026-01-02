@@ -84,7 +84,8 @@ namespace Magidesk.Presentation.ViewModels
             CloseAction?.Invoke();
             await Task.Delay(100);
 
-            _navigationService.Navigate(typeof(Views.BackOfficePage));
+            // Navigate to BackOffice with Reports selected
+            _navigationService.Navigate(typeof(Views.BackOfficePage), typeof(Views.SalesReportsPage));
         }
 
         [RelayCommand]
@@ -159,8 +160,8 @@ namespace Magidesk.Presentation.ViewModels
             await Task.Delay(100);
 
             // F-0111 / F-0128: System Config
-            // Navigate to SystemConfigPage
-            _navigationService.Navigate(typeof(Views.SystemConfigPage)); 
+            // Navigate to BackOffice with SystemConfig selected
+            _navigationService.Navigate(typeof(Views.BackOfficePage), typeof(Views.SystemConfigPage)); 
             await Task.CompletedTask;
         }
         

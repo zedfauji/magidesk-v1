@@ -55,6 +55,12 @@ public class RestaurantConfigurationRepository : IRestaurantConfigurationReposit
             existing.Website = configuration.Website;
             existing.ReceiptFooterMessage = configuration.ReceiptFooterMessage;
             existing.TaxId = configuration.TaxId;
+            existing.ZipCode = configuration.ZipCode;
+            existing.Capacity = configuration.Capacity;
+            existing.CurrencySymbol = configuration.CurrencySymbol;
+            existing.ServiceChargePercentage = configuration.ServiceChargePercentage;
+            existing.DefaultGratuityPercentage = configuration.DefaultGratuityPercentage;
+            existing.IsKioskMode = configuration.IsKioskMode;
             
             _context.RestaurantConfigurations.Update(existing);
         }

@@ -318,7 +318,7 @@ public class SalesReportRepositoryTests : IDisposable
         
         Assert.Equal("John Doe", stats.UserName);
         Assert.Equal(200m, stats.TotalSales); // Net Sales
-        Assert.Equal(20m, stats.TotalTips);
+        Assert.Equal(20m, stats.TipsCollected);
         Assert.Equal(5.0, stats.TotalHours, 1); // 10 to 15 = 5 hours
         Assert.Equal(40m, stats.SalesPerHour); // 200 / 5 = 40
         Assert.Equal(1, stats.TicketCount);
@@ -493,6 +493,144 @@ public class SalesReportRepositoryTests : IDisposable
         
         _context.Payments.Add(payment);
         await _context.SaveChangesAsync();
+    }
+
+    [Fact]
+    public async Task GetAttendanceReportAsync_ShouldCalculateHoursCorrectly()
+    {
+        // Arrange
+        var today = DateTime.UtcNow;
+        var start = today.Date;
+        var end = today.Date.AddDays(1).AddTicks(-1);
+
+        // 1. Create Shift
+        var shift = Shift.Create("Morning Shift", TimeSpan.FromHours(8), TimeSpan.FromHours(16));
+        _context.Shifts.Add(shift);
+        await _context.SaveChangesAsync();
+
+        // 1.5 Create Role
+        var role = Role.Create("Server", UserPermission.None);
+        _context.Roles.Add(role);
+        await _context.SaveChangesAsync();
+
+        // 2. Create User
+        var user = User.Create("Staff", "Alice", "Wonder", role.Id, null, "password");
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync();
+
+        // 3. Create Attendance Record (6 hours)
+        var att1 = AttendanceHistory.Create(new UserId(user.Id), shift.Id);
+        // Use reflection or helper to set ClockOutTime as it's private set usually?
+        // AttendanceHistory.ClockOut sets it.
+        // Or set property directly.
+        SetProperty(att1, "ClockInTime", start.AddHours(9));
+        SetProperty(att1, "ClockOutTime", start.AddHours(15));
+        _context.AttendanceHistories.Add(att1);
+
+        // 4. Create Partial Attendance with NULL ClockOut (Should be 0 hours)
+        var att2 = AttendanceHistory.Create(new UserId(user.Id), shift.Id);
+        SetProperty(att2, "ClockInTime", start.AddHours(16));
+        _context.AttendanceHistories.Add(att2);
+        
+        await _context.SaveChangesAsync();
+
+        // Act
+        var report = await _repository.GetAttendanceReportAsync(start, end, null);
+
+        // Assert
+        Assert.Equal(2, report.Items.Count); // 2 records
+        
+        var completedShift = report.Items.FirstOrDefault(x => x.ClockOutTime.HasValue);
+        Assert.NotNull(completedShift);
+        Assert.Equal("Alice Wonder", completedShift.UserName);
+        Assert.Equal("Morning Shift", completedShift.ShiftName);
+        Assert.Equal(6.0, completedShift.HoursWorked, 1);
+        
+        var ongoingShift = report.Items.FirstOrDefault(x => !x.ClockOutTime.HasValue);
+        Assert.NotNull(ongoingShift);
+        Assert.Equal(0, ongoingShift.HoursWorked);
+        
+        Assert.Equal(2, report.TotalShifts);
+        Assert.Equal(6.0, report.TotalHours, 1);
+    }
+
+    [Fact]
+    public async Task GetCashOutReportAsync_ShouldCalculateNetDueCorrectly()
+    {
+        // Arrange
+        var today = DateTime.UtcNow.Date;
+        var now = DateTime.UtcNow;
+
+        // Create Role
+        var role = Role.Create("Server", UserPermission.None);
+        _context.Roles.Add(role);
+        await _context.SaveChangesAsync();
+
+        // Create Users
+        var userA = User.Create("S01", "Bob", "Builder", role.Id, null, "123");
+        var userB = User.Create("S02", "Dora", "Explorer", role.Id, null, "123");
+        _context.Users.AddRange(userA, userB);
+        await _context.SaveChangesAsync();
+        
+        var userIdA = new UserId(userA.Id);
+        var userIdB = new UserId(userB.Id);
+
+        // Ticket 1: User A - $100 Cash (Net Due +100)
+        var t1 = Ticket.Create(101, userIdA, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        // Use CashPayment factory
+        var p1 = CashPayment.Create(t1.Id, new Money(100.00m), userIdA, Guid.NewGuid());
+        t1.AddPayment(p1);
+        SetProperty(t1, "Status", TicketStatus.Closed);
+        SetProperty(t1, "ClosedAt", now);
+        _context.Tickets.Add(t1);
+
+        // Ticket 2: User A - $100 Credit + $20 Tip (Net Due -20)
+        var t2 = Ticket.Create(102, userIdA, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        // Use CreditCardPayment factory
+        var p2 = CreditCardPayment.Create(t2.Id, new Money(100.00m), userIdA, Guid.NewGuid());
+        SetProperty(p2, "TipsAmount", new Money(20.00m));
+        t2.AddPayment(p2);
+        SetProperty(t2, "Status", TicketStatus.Closed);
+        SetProperty(t2, "ClosedAt", now);
+        _context.Tickets.Add(t2);
+
+        // Ticket 3: User B - $10 Credit + $50 Tip (Net Due -50)
+        var t3 = Ticket.Create(103, userIdB, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        // Use CreditCardPayment factory
+        var p3 = CreditCardPayment.Create(t3.Id, new Money(10.00m), userIdB, Guid.NewGuid());
+        SetProperty(p3, "TipsAmount", new Money(50.00m));
+        t3.AddPayment(p3);
+        SetProperty(t3, "Status", TicketStatus.Closed);
+        SetProperty(t3, "ClosedAt", now);
+        _context.Tickets.Add(t3);
+
+        await _context.SaveChangesAsync();
+
+        // Act
+        var report = await _repository.GetCashOutReportAsync(today, today.AddDays(1));
+
+        // Assert
+        Assert.Equal(2, report.Items.Count);
+
+        var reportA = report.Items.First(i => i.UserName == "Bob Builder");
+        // Cash Sales: 100 (from T1). T2 was Credit.
+        Assert.Equal(100.00m, reportA.CashSales);
+        // Charged Tips: 20 (from T2). T1 was Cash.
+        Assert.Equal(20.00m, reportA.ChargedTips);
+        // Net Due: 100 - 20 = 80
+        Assert.Equal(80.00m, reportA.NetDue);
+
+        var reportB = report.Items.First(i => i.UserName == "Dora Explorer");
+        // Cash Sales: 0
+        Assert.Equal(0.00m, reportB.CashSales);
+        // Charged Tips: 50
+        Assert.Equal(50.00m, reportB.ChargedTips);
+        // Net Due: 0 - 50 = -50
+        Assert.Equal(-50.00m, reportB.NetDue);
+
+        Assert.Equal(100.00m, report.TotalCashSales);
+        Assert.Equal(70.00m, report.TotalChargedTips); // 20 + 50
+        Assert.Equal(30.00m, report.TotalNetDue); // 80 - 50 = 30
     }
 
     public void Dispose()

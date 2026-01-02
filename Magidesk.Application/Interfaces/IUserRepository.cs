@@ -7,4 +7,5 @@ public interface IUserRepository : IRepository<User>
 {
     Task<User?> GetByUsernameAsync(string username, CancellationToken cancellationToken = default);
     Task<User?> GetByPinAsync(string encryptedPin, CancellationToken cancellationToken = default);
+    Task<bool> HasUsersInRoleAsync(Guid roleId, CancellationToken cancellationToken = default);
 }

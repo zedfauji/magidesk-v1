@@ -26,6 +26,11 @@ public class GetRestaurantConfigQueryHandler : IQueryHandler<GetRestaurantConfig
             Website = entity.Website,
             ReceiptFooterMessage = entity.ReceiptFooterMessage,
             TaxId = entity.TaxId,
+            ZipCode = entity.ZipCode,
+            Capacity = entity.Capacity,
+            CurrencySymbol = entity.CurrencySymbol,
+            ServiceChargePercentage = entity.ServiceChargePercentage,
+            DefaultGratuityPercentage = entity.DefaultGratuityPercentage,
             IsKioskMode = entity.IsKioskMode
         };
         

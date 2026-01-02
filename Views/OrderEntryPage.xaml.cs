@@ -21,15 +21,19 @@ public sealed partial class OrderEntryPage : Page
     protected override async void OnNavigatedTo(NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
-        System.Diagnostics.Debug.WriteLine($"OrderEntryPage.OnNavigatedTo called with parameter: {e.Parameter}");
         
         Guid? ticketId = null;
-        if (e.Parameter is Guid id)
+        
+        if (e.Parameter is OrderEntryNavigationContext context)
+        {
+            ticketId = context.TicketId;
+            ViewModel.SetNavigationContext(context);
+        }
+        else if (e.Parameter is Guid id)
         {
             ticketId = id;
         }
 
         await ViewModel.InitializeAsync(ticketId);
-        System.Diagnostics.Debug.WriteLine("OrderEntryPage.OnNavigatedTo completed");
     }
 }

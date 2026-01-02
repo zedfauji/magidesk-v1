@@ -107,7 +107,7 @@ public class TableMapViewModel : ViewModelBase
                 if (result.Success)
                 {
                      // Return to Ticket Page
-                     _navigationService.Navigate(typeof(OrderEntryPage), SourceTicketId.Value);
+                     _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(SourceTicketId.Value, true));
                      
                      // Reset Context
                      SetContext(null);
@@ -129,12 +129,12 @@ public class TableMapViewModel : ViewModelBase
         if (table.Status == TableStatus.Seat && table.CurrentTicketId.HasValue)
         {
              // Resume existing ticket
-             _navigationService.Navigate(typeof(OrderEntryPage), table.CurrentTicketId.Value);
+             _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(table.CurrentTicketId.Value, true));
         }
         else if (table.Status == TableStatus.Available)
         {
              // Create new ticket (TODO: Pass TableId to link it?)
-             _navigationService.Navigate(typeof(OrderEntryPage));
+             _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(null, true));
         }
     }
 }

@@ -43,6 +43,7 @@ public class SecurityService : ISecurityService
     public async Task<User?> GetUserByPinAsync(string encryptedPin, CancellationToken cancellationToken = default)
     {
         return await _dbContext.Users
+            .Include(u => u.Role)
             .FirstOrDefaultAsync(u => u.EncryptedPin == encryptedPin && u.IsActive, cancellationToken);
     }
 }

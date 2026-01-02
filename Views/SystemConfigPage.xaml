@@ -6,102 +6,296 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:dto="using:Magidesk.Application.DTOs.SystemConfig"
+    xmlns:converters="using:Magidesk.Presentation.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <converters:DecimalToDoubleConverter x:Key="DecimalToDoubleConverter"/>
+        <converters:IntToDoubleConverter x:Key="IntToDoubleConverter"/>
+    </Page.Resources>
+
     <Grid Padding="24">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <StackPanel Spacing="8">
+        <StackPanel Spacing="8" Margin="0,0,0,12">
             <TextBlock Text="{x:Bind ViewModel.Title}" Style="{StaticResource TitleTextBlockStyle}"/>
             <TextBlock Text="Manage database backups and system settings." Style="{StaticResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
         </StackPanel>
 
-        <!-- Actions Bar -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="16" Margin="0,24">
-            <Button Command="{x:Bind ViewModel.CreateBackupCommand}" 
-                    Style="{StaticResource AccentButtonStyle}">
-                <StackPanel Orientation="Horizontal" Spacing="8">
-                    <FontIcon Glyph="&#xE768;" FontSize="16"/>
-                    <TextBlock Text="Create New Backup"/>
-                </StackPanel>
-            </Button>
+        <Pivot Grid.Row="1">
+            <!-- Restaurant Configuration Tab -->
+            <PivotItem Header="Restaurant Info">
+                <ScrollViewer>
+                    <StackPanel Spacing="16" MaxWidth="600" HorizontalAlignment="Left" Padding="0,12,0,0">
+                        <TextBlock Text="General Information" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        
+                        <TextBox Header="Restaurant Name" Text="{x:Bind ViewModel.Configuration.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Header="Address" Text="{x:Bind ViewModel.Configuration.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Height="80"/>
+                        <TextBox Header="Zip Code" Text="{x:Bind ViewModel.Configuration.ZipCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Header="Phone" Text="{x:Bind ViewModel.Configuration.Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Header="Email" Text="{x:Bind ViewModel.Configuration.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Header="Website" Text="{x:Bind ViewModel.Configuration.Website, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        
+                        <TextBlock Text="Regional &amp; Financials" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,12,0,0"/>
+                        <TextBox Header="Currency Symbol" Text="{x:Bind ViewModel.Configuration.CurrencySymbol, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="5"/>
+                        <NumberBox Header="Service Charge %" Value="{x:Bind ViewModel.Configuration.ServiceChargePercentage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DecimalToDoubleConverter}}" SmallChange="0.5" LargeChange="1"/>
+                        <NumberBox Header="Default Gratuity %" Value="{x:Bind ViewModel.Configuration.DefaultGratuityPercentage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DecimalToDoubleConverter}}" SmallChange="0.5" LargeChange="1"/>
+                        <NumberBox Header="Guest Capacity" Value="{x:Bind ViewModel.Configuration.Capacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SpinButtonPlacementMode="Compact"/>
 
-            <Button Command="{x:Bind ViewModel.LoadBackupsCommand}">
-                <StackPanel Orientation="Horizontal" Spacing="8">
-                    <FontIcon Glyph="&#xE72C;" FontSize="16"/>
-                    <TextBlock Text="Refresh List"/>
-                </StackPanel>
-            </Button>
-            
-            <ProgressRing IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}"/>
-            
-            <TextBlock Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}" 
-                       VerticalAlignment="Center" 
-                       FontWeight="SemiBold"
-                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-        </StackPanel>
+                        <TextBlock Text="Receipt Settings" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,12,0,0"/>
+                        <TextBox Header="Tax ID" Text="{x:Bind ViewModel.Configuration.TaxId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Header="Footer Message" Text="{x:Bind ViewModel.Configuration.ReceiptFooterMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Height="60"/>
+                        
+                        <CheckBox Content="Kiosk Mode" IsChecked="{x:Bind ViewModel.Configuration.IsKioskMode, Mode=TwoWay}"/>
 
-        <!-- Backups List -->
-        <Grid Grid.Row="2" Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,12,0,0">
+                            <Button Content="Save Changes" Command="{x:Bind ViewModel.SaveConfigurationCommand}" Style="{StaticResource AccentButtonStyle}"/>
+                            
+                            <ProgressRing IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}"/>
+                            <TextBlock Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
 
-            <TextBlock Text="Database Backups" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,16"/>
+            <!-- Terminal Configuration Tab -->
+            <PivotItem Header="Terminal Settings">
+                <ScrollViewer>
+                    <StackPanel Spacing="16" MaxWidth="600" HorizontalAlignment="Left" Padding="0,12,0,0">
+                        <TextBlock Text="Workstation Settings" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        
+                        <TextBox Header="Terminal Name" Text="{x:Bind ViewModel.TerminalConfiguration.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Header="Identifier (Machine Name)" Text="{x:Bind ViewModel.TerminalConfiguration.TerminalKey, Mode=OneWay}" IsReadOnly="True" Background="{ThemeResource SystemControlBackgroundAltMediumLowBrush}"/>
+                        <TextBox Header="Physical Location" Text="{x:Bind ViewModel.TerminalConfiguration.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        
+                        <TextBlock Text="Operational Config" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,12,0,0"/>
+                        <CheckBox Content="Has Cash Drawer" IsChecked="{x:Bind ViewModel.TerminalConfiguration.HasCashDrawer, Mode=TwoWay}"/>
+                        <CheckBox Content="Kitchen Mode (Direct to Kitchen)" IsChecked="{x:Bind ViewModel.TerminalConfiguration.KitchenMode, Mode=TwoWay}"/>
+                        <CheckBox Content="Auto Log Out" IsChecked="{x:Bind ViewModel.TerminalConfiguration.AutoLogOut, Mode=TwoWay}"/>
+                        <NumberBox Header="Auto Log Out Timeout (Seconds)" 
+                                   Value="{x:Bind ViewModel.TerminalConfiguration.AutoLogOutTime, Mode=TwoWay, Converter={StaticResource IntToDoubleConverter}}" 
+                                   Minimum="5" Maximum="3600" 
+                                   IsEnabled="{x:Bind ViewModel.TerminalConfiguration.AutoLogOut, Mode=OneWay}"/>
+                        
+                        <TextBlock Text="UI Preferences" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,12,0,0"/>
+                        <CheckBox Content="Show Guest Selection" IsChecked="{x:Bind ViewModel.TerminalConfiguration.ShowGuestSelection, Mode=TwoWay}"/>
+                        <CheckBox Content="Show Table Selection" IsChecked="{x:Bind ViewModel.TerminalConfiguration.ShowTableSelection, Mode=TwoWay}"/>
+                        
+                        <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,12,0,0">
+                            <Button Content="Save Terminal Config" Command="{x:Bind ViewModel.SaveTerminalConfigurationCommand}" Style="{StaticResource AccentButtonStyle}"/>
+                            
+                            <ProgressRing IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
 
-            <!-- List Header -->
-            <Grid Grid.Row="1" VerticalAlignment="Top" Margin="0,0,0,8" Padding="12,0" Visibility="{x:Bind ViewModel.Backups.Count, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="120"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="File Name" FontWeight="SemiBold"/>
-                <TextBlock Grid.Column="1" Text="Created Date" FontWeight="SemiBold"/>
-                <TextBlock Grid.Column="2" Text="Size (Bytes)" FontWeight="SemiBold"/>
-                <TextBlock Grid.Column="3" Text="Action" FontWeight="SemiBold"/>
-            </Grid>
+            <!-- Card Configuration Tab -->
+            <PivotItem Header="Card Settings">
+                <ScrollViewer>
+                    <StackPanel Spacing="16" MaxWidth="600" HorizontalAlignment="Left" Padding="0,12,0,0">
+                        <TextBlock Text="Payment Gateway" Style="{StaticResource SubtitleTextBlockStyle}"/>
 
-            <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.Backups, Mode=OneWay}" Margin="0,30,0,0">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="dto:BackupInfoDto">
-                        <Grid Padding="0,8">
+                        <ComboBox Header="Provider" HorizontalAlignment="Stretch"
+                                  SelectedItem="{x:Bind ViewModel.CardConfiguration.ProviderName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <x:String>AUTHORIZE_NET</x:String>
+                            <x:String>MERCURY</x:String>
+                            <x:String>STRIPE</x:String>
+                            <x:String>PAGSEGURO</x:String>
+                        </ComboBox>
+
+                        <TextBox Header="Merchant ID" Text="{x:Bind ViewModel.CardConfiguration.MerchantId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <PasswordBox Header="Gateway Secret / API Key" Password="{x:Bind ViewModel.CardConfiguration.ApiKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Header="Gateway URL" Text="{x:Bind ViewModel.CardConfiguration.GatewayUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <TextBlock Text="Transaction Rules" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,12,0,0"/>
+                        <TextBox Header="Accepted Card Types (CSV)" Text="{x:Bind ViewModel.CardConfiguration.CardTypesAccepted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <NumberBox Header="Signature Threshold ($)" Value="{x:Bind ViewModel.CardConfiguration.SignatureThreshold, Mode=TwoWay, Converter={StaticResource DecimalToDoubleConverter}}" SmallChange="1" LargeChange="5"/>
+
+                        <CheckBox Content="Allow Tip Adjustment" IsChecked="{x:Bind ViewModel.CardConfiguration.AllowTipAdjustment, Mode=TwoWay}"/>
+                        <CheckBox Content="Is External Terminal (Non-Integrated)" IsChecked="{x:Bind ViewModel.CardConfiguration.IsExternalTerminal, Mode=TwoWay}"/>
+                        <CheckBox Content="Allow Manual Card Entry" IsChecked="{x:Bind ViewModel.CardConfiguration.AllowManualEntry, Mode=TwoWay}"/>
+                        <CheckBox Content="Enable Pre-Auth Mode" IsChecked="{x:Bind ViewModel.CardConfiguration.EnablePreAuth, Mode=TwoWay}"/>
+
+                        <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,12,0,0">
+                            <Button Content="Save Card Configuration" Command="{x:Bind ViewModel.SaveCardConfigurationCommand}" Style="{StaticResource AccentButtonStyle}"/>
+                            <ProgressRing IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+
+            <!-- Printers Tab -->
+            <PivotItem Header="Printers">
+                <ScrollViewer>
+                    <StackPanel Spacing="24" MaxWidth="800" HorizontalAlignment="Left" Padding="0,12,0,0">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Printer Groups" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <TextBlock Text="Define virtual printer groups and their types." Style="{StaticResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                            
+                            <ListView ItemsSource="{x:Bind ViewModel.PrinterGroups, Mode=OneWay}" SelectionMode="None">
+                                <ListView.Header>
+                                    <Grid Padding="12,0" Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="Group Name" FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Column="1" Text="Printer Type" FontWeight="SemiBold"/>
+                                    </Grid>
+                                </ListView.Header>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="dto:PrinterGroupDto">
+                                        <Grid Padding="0,8">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox Text="{x:Bind Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                                            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                                      SelectedItem="{x:Bind PrinterTypeString, Mode=TwoWay}">
+                                                <x:String>Receipt</x:String>
+                                                <x:String>Kitchen</x:String>
+                                                <x:String>Packing</x:String>
+                                                <x:String>Report</x:String>
+                                            </ComboBox>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Terminal Printer Mapping" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <TextBlock Text="Map printer groups to physical printers on this terminal." Style="{StaticResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+
+                            <ListView ItemsSource="{x:Bind ViewModel.PrinterMappings, Mode=OneWay}" SelectionMode="None">
+                                <ListView.Header>
+                                    <Grid Padding="12,0" Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="Printer Group" FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Column="1" Text="Physical Printer" FontWeight="SemiBold"/>
+                                    </Grid>
+                                </ListView.Header>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="dto:PrinterMappingDto">
+                                        <Grid Padding="0,8">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{x:Bind PrinterGroupName}" VerticalAlignment="Center"/>
+                                            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                                      ItemsSource="{Binding ElementName=RootPage, Path=ViewModel.SystemPrinters}"
+                                                      SelectedItem="{x:Bind PrinterName, Mode=TwoWay}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,12,0,24">
+                            <Button Content="Save Printer Settings" Command="{x:Bind ViewModel.SavePrintersCommand}" Style="{StaticResource AccentButtonStyle}"/>
+                            <ProgressRing IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+
+            <!-- Database Backups Tab -->
+            <PivotItem Header="Database Backups">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Actions Bar -->
+                    <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,12,0,24">
+                        <Button Command="{x:Bind ViewModel.CreateBackupCommand}" Style="{StaticResource AccentButtonStyle}">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <FontIcon Glyph="&#xE768;" FontSize="16"/>
+                                <TextBlock Text="Create New Backup"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Command="{x:Bind ViewModel.LoadBackupsCommand}">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <FontIcon Glyph="&#xE72C;" FontSize="16"/>
+                                <TextBlock Text="Refresh List"/>
+                            </StackPanel>
+                        </Button>
+                        
+                        <ProgressRing IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}"/>
+                        <TextBlock Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                    </StackPanel>
+
+                    <!-- Backups List -->
+                    <Grid Grid.Row="1" Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Existing Backups" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,16"/>
+
+                        <!-- List Header -->
+                        <Grid Grid.Row="1" VerticalAlignment="Top" Margin="0,0,0,8" Padding="12,0" Visibility="{x:Bind ViewModel.Backups.Count, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="200"/>
                                 <ColumnDefinition Width="150"/>
                                 <ColumnDefinition Width="120"/>
                             </Grid.ColumnDefinitions>
-                            
-                            <StackPanel>
-                                <TextBlock Text="{x:Bind FileName}" FontWeight="SemiBold"/>
-                                <TextBlock Text="{x:Bind Path}" FontSize="10" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" TextTrimming="CharacterEllipsis"/>
-                            </StackPanel>
-                            
-                            <TextBlock Grid.Column="1" Text="{x:Bind CreatedAt}" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="{x:Bind SizeBytes}" VerticalAlignment="Center"/>
-                            
-                            <Button Grid.Column="3" 
-                                    Content="Restore" 
-                                    Command="{Binding ElementName=RootPage, Path=ViewModel.RestoreBackupCommand}"
-                                    CommandParameter="{x:Bind FileName}"
-                                    Background="DarkRed" Foreground="White"/>
+                            <TextBlock Text="File Name" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="1" Text="Created Date" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="2" Text="Size (Bytes)" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="3" Text="Action" FontWeight="SemiBold"/>
                         </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            
-            <TextBlock Grid.Row="1" Text="No backups found." 
-                       HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Visibility="{x:Bind ViewModel.Backups.Count, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Reverse}"/>
-        </Grid>
+
+                        <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.Backups, Mode=OneWay}" Margin="0,30,0,0">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="dto:BackupInfoDto">
+                                    <Grid Padding="0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="120"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <StackPanel>
+                                            <TextBlock Text="{x:Bind FileName}" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{x:Bind Path}" FontSize="10" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" TextTrimming="CharacterEllipsis"/>
+                                        </StackPanel>
+                                        
+                                        <TextBlock Grid.Column="1" Text="{x:Bind CreatedAt}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind SizeBytes}" VerticalAlignment="Center"/>
+                                        
+                                        <Button Grid.Column="3" 
+                                                Content="Restore" 
+                                                Command="{Binding ElementName=RootPage, Path=ViewModel.RestoreBackupCommand}"
+                                                CommandParameter="{x:Bind FileName}"
+                                                Background="DarkRed" Foreground="White"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        
+                        <TextBlock Grid.Row="1" Text="No backups found." 
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Visibility="{x:Bind ViewModel.Backups.Count, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Reverse}"/>
+                    </Grid>
+                </Grid>
+            </PivotItem>
+        </Pivot>
     </Grid>
 </Page>

@@ -63,7 +63,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.UpdateTableCommand, Commands.UpdateTableResult>, UpdateTableCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.AssignTableToTicketCommand, Commands.AssignTableToTicketResult>, AssignTableToTicketCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.TransferTicketToTableCommand, Commands.TransferTicketToTableResult>, TransferTicketToTableCommandHandler>();
-        services.AddScoped<ICommandHandler<Commands.TransferTicketToTableCommand, Commands.TransferTicketToTableResult>, TransferTicketToTableCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.ReleaseTableCommand, Commands.ReleaseTableResult>, ReleaseTableCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.ChangeTableCommand, Commands.ChangeTableResult>, ChangeTableCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.SetTaxExemptCommand, Commands.SetTaxExemptResult>, SetTaxExemptCommandHandler>();
@@ -124,7 +123,15 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IQueryHandler<Queries.Reports.GetProductivityReportQuery, DTOs.Reports.ProductivityReportDto>, Services.Reports.GetProductivityReportQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.Reports.GetLaborReportQuery, DTOs.Reports.LaborReportDto>, Services.Reports.GetLaborReportQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.Reports.GetDeliveryReportQuery, DTOs.Reports.DeliveryReportDto>, Services.Reports.GetDeliveryReportQueryHandler>();
-        services.AddScoped<IQueryHandler<Queries.Reports.GetDeliveryReportQuery, DTOs.Reports.DeliveryReportDto>, Services.Reports.GetDeliveryReportQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.Reports.GetSalesDetailQuery, DTOs.Reports.SalesDetailReportDto>, Services.Reports.GetSalesDetailQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.Reports.GetCreditCardReportQuery, DTOs.Reports.CreditCardReportDto>, Services.Reports.GetCreditCardReportQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.Reports.GetMenuUsageReportQuery, DTOs.Reports.MenuUsageReportDto>, Services.Reports.GetMenuUsageReportQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.Reports.GetPaymentReportQuery, DTOs.Reports.PaymentReportDto>, Services.Reports.GetPaymentReportQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.Reports.GetServerProductivityReportQuery, DTOs.Reports.ServerProductivityReportDto>, Services.Reports.GetServerProductivityReportQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.Reports.GetHourlyLaborReportQuery, DTOs.Reports.HourlyLaborReportDto>, Services.Reports.GetHourlyLaborReportQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.Reports.GetTipReportQuery, DTOs.Reports.TipReportDto>, Services.Reports.GetTipReportQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.Reports.GetAttendanceReportQuery, DTOs.Reports.AttendanceReportDto>, Services.Reports.GetAttendanceReportQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.Reports.GetCashOutReportQuery, DTOs.Reports.CashOutReportDto>, Services.Reports.GetCashOutReportQueryHandler>();
         
         // System Config query handlers
         services.AddScoped<IQueryHandler<GetSystemBackupsQuery, GetSystemBackupsResult>, GetSystemBackupsQueryHandler>();
@@ -134,11 +141,24 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<RestoreSystemBackupCommand, RestoreSystemBackupResult>, RestoreSystemBackupCommandHandler>();
         services.AddScoped<ICommandHandler<UpdateRestaurantConfigCommand, UpdateRestaurantConfigResult>, UpdateRestaurantConfigCommandHandler>();
         services.AddScoped<IQueryHandler<GetRestaurantConfigQuery, GetRestaurantConfigResult>, GetRestaurantConfigQueryHandler>();
+        services.AddScoped<IQueryHandler<GetTerminalConfigQuery, GetTerminalConfigResult>, GetTerminalConfigQueryHandler>();
+        services.AddScoped<ICommandHandler<UpdateTerminalConfigCommand, UpdateTerminalConfigResult>, UpdateTerminalConfigCommandHandler>();
+        services.AddScoped<IQueryHandler<GetCardConfigQuery, GetCardConfigResult>, GetCardConfigQueryHandler>();
+        services.AddScoped<ICommandHandler<UpdateCardConfigCommand, UpdateCardConfigResult>, UpdateCardConfigCommandHandler>();
+        services.AddScoped<IQueryHandler<GetPrinterGroupsQuery, GetPrinterGroupsResult>, GetPrinterGroupsQueryHandler>();
+        services.AddScoped<IQueryHandler<GetPrinterMappingsQuery, GetPrinterMappingsResult>, GetPrinterMappingsQueryHandler>();
+        services.AddScoped<ICommandHandler<UpdatePrinterGroupsCommand, UpdatePrinterGroupsResult>, UpdatePrinterGroupsCommandHandler>();
+        services.AddScoped<ICommandHandler<UpdatePrinterMappingsCommand, UpdatePrinterMappingsResult>, UpdatePrinterMappingsCommandHandler>();
 
         // User Management Handlers
         services.AddScoped<ICommandHandler<CreateUserCommand, CreateUserResult>, CreateUserCommandHandler>();
         services.AddScoped<ICommandHandler<UpdateUserCommand, UpdateUserResult>, UpdateUserCommandHandler>();
         services.AddScoped<ICommandHandler<DeleteUserCommand, DeleteUserResult>, DeleteUserCommandHandler>();
+
+        // Role Management Handlers
+        services.AddScoped<ICommandHandler<CreateRoleCommand, CreateRoleResult>, CreateRoleCommandHandler>();
+        services.AddScoped<ICommandHandler<UpdateRoleCommand, UpdateRoleResult>, UpdateRoleCommandHandler>();
+        services.AddScoped<ICommandHandler<DeleteRoleCommand, DeleteRoleResult>, DeleteRoleCommandHandler>();
 
         services.AddScoped<IKitchenRoutingService, KitchenRoutingService>();
         services.AddScoped<IKitchenStatusService, KitchenStatusService>();
@@ -149,4 +169,3 @@ public static class ServiceCollectionExtensions
         return services;
     }
 }
-

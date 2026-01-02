@@ -1,0 +1,31 @@
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.Dialogs.NotesDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="{Binding Title}"
+    PrimaryButtonText="Save"
+    CloseButtonText="Cancel"
+    PrimaryButtonCommand="{Binding SaveCommand}"
+    x:Name="DialogRoot">
+
+    <Grid RowSpacing="16" Width="400">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Note Input -->
+        <TextBox Grid.Row="0"
+                 Text="{Binding Note, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap"
+                 MinHeight="100"
+                 PlaceholderText="Enter note here..."
+                 Header="Note"/>
+
+
+    </Grid>
+</ContentDialog>

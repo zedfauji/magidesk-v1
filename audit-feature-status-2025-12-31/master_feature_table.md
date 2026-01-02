@@ -95,22 +95,22 @@
 | **F-0090** | Kitchen Status | FULL | FULL | FULL | NO | YES |
 | **F-0091** | Kitchen List | FULL | FULL | FULL | NO | YES |
 | **F-0092** | Sales Summary | PARTIAL | PARTIAL | PARTIAL | NO | NO |
-| **F-0093** | Sales Detail | NOT IMPL | NOT IMPL | MISSING | NO | NO |
-| **F-0094** | Sales Balance | NOT IMPL | NOT IMPL | MISSING | NO | NO |
-| **F-0095** | Sales Exception | NOT IMPL | NOT IMPL | MISSING | NO | NO |
-| **F-0096** | Credit Card Rpt | NOT IMPL | NOT IMPL | MISSING | NO | NO |
-| **F-0097** | Payment Report | NOT IMPL | NOT IMPL | MISSING | NO | NO |
-| **F-0098** | Menu Usage Rpt | NOT IMPL | NOT IMPL | MISSING | NO | NO |
-| **F-0099** | Server Prod Rpt | NOT IMPL | NOT IMPL | MISSING | NO | NO |
-| **F-0100** | Hourly Labor Rpt | NOT IMPL | NOT IMPL | MISSING | NO | NO |
-| **F-0101** | Tip Report | NOT IMPL | NOT IMPL | MISSING | NO | NO |
-| **F-0102** | Attendance Rpt | NOT IMPL | NOT IMPL | MISSING | NO | NO |
+| **F-0093** | Sales Detail | FULL | FULL | FULL | NO | YES |
+| **F-0094** | Sales Balance | FULL | FULL | FULL | NO | YES |
+| **F-0095** | Sales Exception | FULL | FULL | FULL | NO | YES |
+| **F-0096** | Credit Card Rpt | FULL | FULL | FULL | NO | YES |
+| **F-0097** | Payment Report | FULL | FULL | FULL | NO | YES |
+| **F-0098** | Menu Usage Rpt | FULL | FULL | FULL | NO | YES |
+| **F-0099** | Server Prod Rpt | FULL | FULL | FULL | NO | YES |
+| **F-0100** | Hourly Labor Rpt | FULL | FULL | FULL | NO | YES |
+| **F-0101** | Tip Report | FULL | FULL | ALIGNED | NO | YES |
+| **F-0102** | Attendance Rpt | FULL | FULL | FULL | NO | YES |
 | **F-0103** | Journal Report | NOT IMPL | NOT IMPL | MISSING | NO | NO |
-| **F-0104** | Cash Out Report | NOT IMPL | NOT IMPL | MISSING | NO | NO |
-| **F-0105** | Restaurant Config | PARTIAL | PARTIAL | PARTIAL | NO | NO |
-| **F-0106** | Terminal Config | PARTIAL | PARTIAL | PARTIAL | NO | NO |
-| **F-0107** | Card Config | PARTIAL | PARTIAL | PARTIAL | NO | NO |
-| **F-0108** | Print Config | PARTIAL | PARTIAL | PARTIAL | NO | NO |
+| **F-0104** | Cash Out Report | FULL | FULL | FULL | NO | YES |
+| **F-0105** | Restaurant Config | FULL | FULL | FULL | NO | YES |
+| **F-0106** | Terminal Config | FULL | FULL | FULL | NO | YES |
+| **F-0107** | Card Config | FULL | FULL | FULL | NO | YES |
+| **F-0108** | Print Config | FULL | FULL | FULL | NO | YES |
 | **F-0109** | Tax Config | PARTIAL | PARTIAL | PARTIAL | NO | NO |
 | **F-0110** | Language Select | PARTIAL | PARTIAL | PARTIAL | NO | NO |
 | **F-0111** | Back Office Win | FULL | FULL | FULL | NO | YES |
@@ -127,7 +127,7 @@
 | **F-0122** | Coupon/Discount | NOT IMPL | NOT IMPL | MISSING | NO | NO |
 | **F-0123** | Discount App | PARTIAL | PARTIAL | PARTIAL | NO | YES |
 | **F-0124** | Table Section | FULL | FULL | FULL | NO | YES |
-| **F-0125** | Notes Dialog | NOT IMPL | NOT IMPL | MISSING | NO | NO |
+| **F-0125** | Notes Dialog | FULL | FULL | FULL | NO | YES |
 | **F-0126** | Delivery Zone | NOT IMPL | NOT IMPL | MISSING | NO | NO |
 | **F-0127** | Printer Group | NOT IMPL | NOT IMPL | MISSING | NO | NO |
 | **F-0128** | Backup Dialog | PARTIAL | PARTIAL | PARTIAL | NO | YES |

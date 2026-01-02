@@ -44,6 +44,7 @@ public class GetTicketQueryHandler : IQueryHandler<GetTicketQuery, TicketDto?>
             CreatedBy = ticket.CreatedBy.Value,
             ClosedBy = ticket.ClosedBy?.Value,
             VoidedBy = ticket.VoidedBy?.Value,
+            Note = ticket.Note, // F-0125
             TerminalId = ticket.TerminalId,
             ShiftId = ticket.ShiftId,
             OrderTypeId = ticket.OrderTypeId,

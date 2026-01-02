@@ -27,6 +27,11 @@ public class UpdateRestaurantConfigCommandHandler : ICommandHandler<UpdateRestau
             Website = dto.Website,
             ReceiptFooterMessage = dto.ReceiptFooterMessage,
             TaxId = dto.TaxId,
+            ZipCode = dto.ZipCode,
+            Capacity = dto.Capacity,
+            CurrencySymbol = dto.CurrencySymbol,
+            ServiceChargePercentage = dto.ServiceChargePercentage,
+            DefaultGratuityPercentage = dto.DefaultGratuityPercentage,
             IsKioskMode = dto.IsKioskMode
         };
 

@@ -4,6 +4,7 @@ using Magidesk.Application.Interfaces;
 using Magidesk.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 using Magidesk.Domain.Enumerations;
 using Magidesk.Domain.Entities;
 
@@ -13,11 +14,13 @@ namespace Magidesk.Infrastructure.Services.Bootstrap
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<SystemInitializationService> _logger;
+        private readonly ITerminalRepository _terminalRepository;
 
-        public SystemInitializationService(ApplicationDbContext dbContext, ILogger<SystemInitializationService> logger)
+        public SystemInitializationService(ApplicationDbContext dbContext, ILogger<SystemInitializationService> logger, ITerminalRepository terminalRepository)
         {
             _dbContext = dbContext;
             _logger = logger;
+            _terminalRepository = terminalRepository;
         }
 
         public async Task<InitializationResult> InitializeSystemAsync()
@@ -40,10 +43,17 @@ namespace Magidesk.Infrastructure.Services.Bootstrap
             }
 
             // 2. Resolve Terminal Identity
-            // GAP: Terminal Entity does not exist in Domain yet.
-            // Strategy: Use Environment.MachineName as the persistent identity for now.
             string terminalIdentity = Environment.MachineName;
             _logger.LogInformation($"Resolved Terminal Identity: {terminalIdentity}");
+
+            var terminal = await _terminalRepository.GetByTerminalKeyAsync(terminalIdentity);
+            
+            if (terminal == null)
+            {
+                _logger.LogInformation($"Registering new Terminal: {terminalIdentity}");
+                terminal = Magidesk.Domain.Entities.Terminal.Create(terminalIdentity, terminalIdentity);
+                await _terminalRepository.AddTerminalAsync(terminal);
+            }
 
             // 3. Load Critical Configuration (Stub for now)
             // 3. Seed Reference Data

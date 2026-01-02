@@ -41,4 +41,8 @@ public class RoleRepository : IRoleRepository
         _context.Roles.Remove(entity);
         await _context.SaveChangesAsync(cancellationToken);
     }
+    public async Task<Role?> GetByNameAsync(string name, CancellationToken cancellationToken = default)
+    {
+        return await _context.Roles.FirstOrDefaultAsync(r => r.Name == name, cancellationToken);
+    }
 }

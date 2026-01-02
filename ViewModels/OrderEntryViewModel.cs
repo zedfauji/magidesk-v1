@@ -253,6 +253,33 @@ public partial class OrderEntryViewModel : ViewModelBase
         AssignCustomerCommand = new AsyncRelayCommand(AssignCustomerAsync);
         SettleCommand = new AsyncRelayCommand(SettleAsync);
         QuickPayCommand = new AsyncRelayCommand(QuickPayAsync);
+        EditNoteCommand = new AsyncRelayCommand<OrderLineDto>(EditNoteAsync);
+    }
+
+    public ICommand EditNoteCommand { get; }
+
+    private async Task EditNoteAsync(OrderLineDto? line)
+    {
+        if (Ticket == null) return;
+
+        var vm = _serviceProvider.GetRequiredService<Magidesk.Presentation.ViewModels.Dialogs.NotesDialogViewModel>();
+        
+        if (line != null)
+        {
+            vm.InitializeForOrderLine(Ticket.Id, line.Id, line.Instructions);
+        }
+        else
+        {
+            vm.InitializeForTicket(Ticket.Id, Ticket.Note);
+        }
+
+        var dialog = new Magidesk.Presentation.Views.Dialogs.NotesDialog(vm);
+        dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        
+        await dialog.ShowAsync();
+
+        // Reload ticket to see changes
+        await LoadTicketAsync(Ticket.Id);
     }
 
     // ... InitializeAsync ...
@@ -1364,4 +1391,25 @@ public partial class OrderEntryViewModel : ViewModelBase
             IsBusy = false;
         }
     }
+    private bool _fromTableMap;
+
+    public void SetNavigationContext(OrderEntryNavigationContext context)
+    {
+        _fromTableMap = context.FromTableMap;
+    }
+
+    [RelayCommand]
+    private void Close()
+    {
+        if (_fromTableMap)
+        {
+            _navigationService.Navigate(typeof(Magidesk.Presentation.Views.TableMapPage));
+        }
+        else
+        {
+            _navigationService.GoBack();
+        }
+    }
 }
+
+public record OrderEntryNavigationContext(Guid? TicketId, bool FromTableMap = false);

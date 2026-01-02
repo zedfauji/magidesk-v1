@@ -57,6 +57,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IAttendanceRepository, AttendanceRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRestaurantConfigurationRepository, RestaurantConfigurationRepository>();
+        services.AddScoped<ITerminalRepository, TerminalRepository>();
+        services.AddScoped<IPrinterGroupRepository, PrinterGroupRepository>();
+        services.AddScoped<IPrinterMappingRepository, PrinterMappingRepository>();
 
 
         // Register domain services (stateless, can be singleton or scoped)

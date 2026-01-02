@@ -29,6 +29,18 @@ public class RestaurantConfiguration
     
     [MaxLength(50)]
     public string TaxId { get; set; } = string.Empty;
+    
+    [MaxLength(20)]
+    public string ZipCode { get; set; } = string.Empty;
+
+    public int Capacity { get; set; } = 0;
+
+    [MaxLength(5)]
+    public string CurrencySymbol { get; set; } = "$";
+
+    public decimal ServiceChargePercentage { get; set; } = 0;
+
+    public decimal DefaultGratuityPercentage { get; set; } = 0;
 
     public bool IsKioskMode { get; set; } = false;
 }

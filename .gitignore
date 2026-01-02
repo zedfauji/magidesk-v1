@@ -63,3 +63,6 @@ TestResult.xml
 *.log
 *.txt
 *.binlog
+*.zip
+
+obj/*

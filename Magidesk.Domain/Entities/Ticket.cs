@@ -82,7 +82,11 @@ public class Ticket
     public int Version { get; private set; }
     
     // Properties (flexible metadata)
+    // Properties (flexible metadata)
     public IReadOnlyDictionary<string, string> Properties => _properties.AsReadOnly();
+    
+    // F-0125: Ticket Note
+    public string? Note { get; private set; }
 
     // Private constructor for EF Core
     private Ticket()
@@ -784,11 +788,7 @@ public class Ticket
         CalculateTotals();
     }
 
-    /// <summary>
-    /// Sets the adjustment amount (positive only - for price increases).
-    /// Used for manual price adjustments, rounding, or corrections.
-    /// Note: For price reductions, use discounts instead.
-    /// </summary>
+
     /// <summary>
     /// Sets the tax exempt status of the ticket.
     /// </summary>
@@ -799,13 +799,27 @@ public class Ticket
             throw new DomainInvalidOperationException($"Cannot modify tax exempt status on ticket in {Status} status.");
         }
 
-        if (IsTaxExempt == isTaxExempt) return;
-
         IsTaxExempt = isTaxExempt;
         ActiveDate = DateTime.UtcNow;
-        IncrementVersion();
         CalculateTotals();
     }
+
+    /// <summary>
+    /// Sets the note for the ticket.
+    /// </summary>
+    public void SetNote(string? note)
+    {
+        if (Status == TicketStatus.Closed || Status == TicketStatus.Voided || Status == TicketStatus.Refunded)
+        {
+             throw new DomainInvalidOperationException($"Cannot update note on ticket in {Status} status.");
+        }
+
+        Note = note;
+        ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
+    }
+
+
 
     /// <summary>
     /// Sets the number of guests for the ticket.

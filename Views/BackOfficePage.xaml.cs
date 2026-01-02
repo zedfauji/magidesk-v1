@@ -22,6 +22,26 @@ public sealed partial class BackOfficePage : Page
         }
     }
 
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        base.OnNavigatedTo(e);
+
+        if (e.Parameter is Type targetType)
+        {
+             // Find item matching type
+             var navView = (this.Content as Grid)?.Children[1] as NavigationView;
+             if (navView != null)
+             {
+                 var item = ViewModel.NavigationItems.FirstOrDefault(i => i.PageType == targetType);
+                 if (item != null)
+                 {
+                     navView.SelectedItem = item;
+                     // SelectionChanged will fire and navigate
+                 }
+             }
+        }
+    }
+
     private void Nv_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
         if (args.SelectedItem is NavigationItem item)

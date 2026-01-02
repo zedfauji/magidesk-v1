@@ -167,6 +167,112 @@
                     </StackPanel>
                 </Grid>
 
+                <!-- SALES DETAIL -->
+                <Grid Visibility="{x:Bind ViewModel.IsSalesDetailVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                      Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Text="Sales Detail" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,16"/>
+                    
+                    <!-- Totals Section -->
+                    <Border Grid.Row="1" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" BorderThickness="1" CornerRadius="4" Padding="16" Margin="0,0,0,16">
+                        <Grid ColumnSpacing="24">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Total Items" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.SalesDetail.Totals.TotalItems, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Gross Sales" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.SalesDetail.Totals.TotalGrossSales, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Discounts" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.SalesDetail.Totals.TotalDiscounts, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="3">
+                                <TextBlock Text="Net Sales" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.SalesDetail.Totals.TotalNetSales, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="4">
+                                <TextBlock Text="Total Tax" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.SalesDetail.Totals.TotalTax, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Detail Items List -->
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Header Row -->
+                        <Grid Padding="12" Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="120"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Time" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="1" Text="Ticket" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="2" Text="Item" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="3" Text="Category" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="4" Text="Qty" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="5" Text="Unit Price" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="6" Text="Gross" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="7" Text="Net" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="8" Text="User" Style="{StaticResource HeaderTextStyle}"/>
+                        </Grid>
+                        
+                        <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.SalesDetail.Items, Mode=OneWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="dto:SalesDetailItemDto">
+                                    <Grid Padding="0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="140"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="120"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{x:Bind TicketTime}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{x:Bind TicketNumber}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind ItemName}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                        <TextBlock Grid.Column="3" Text="{x:Bind CategoryName}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="4" Text="{x:Bind Quantity}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="5" Text="{x:Bind UnitPrice}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="6" Text="{x:Bind GrossAmount}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="7" Text="{x:Bind NetAmount}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="8" Text="{x:Bind UserName}" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
+
                 <!-- SALES BALANCE -->
                 <Grid Visibility="{x:Bind ViewModel.IsSalesBalanceVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
                       Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
@@ -334,6 +440,540 @@
                     </ScrollViewer>
                 </Grid>
 
+                <!-- CREDIT CARD REPORT -->
+                <Grid Visibility="{x:Bind ViewModel.IsCreditCardReportVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                      Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Text="Credit Card Report" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,16"/>
+                    
+                    <!-- Totals Section -->
+                    <Border Grid.Row="1" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" BorderThickness="1" CornerRadius="4" Padding="16" Margin="0,0,0,16">
+                        <Grid ColumnSpacing="24">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Total Transactions" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.CreditCardReport.Totals.TotalTransactions, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Total Sales" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.CreditCardReport.Totals.TotalSales, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Total Tips" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.CreditCardReport.Totals.TotalTips, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="3">
+                                <TextBlock Text="Voids" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.CreditCardReport.Totals.TotalVoids, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="4">
+                                <TextBlock Text="Net Amount" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.CreditCardReport.Totals.NetAmount, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Transactions List -->
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Header Row -->
+                        <Grid Padding="12" Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Time" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="1" Text="Ticket" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="2" Text="Card Type" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="3" Text="Card Last4" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="4" Text="Auth Code" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="5" Text="Amount" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="6" Text="Tip" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="7" Text="Type" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="8" Text="Status" Style="{StaticResource HeaderTextStyle}"/>
+                        </Grid>
+                        
+                        <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.CreditCardReport.Transactions, Mode=OneWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="dto:CreditCardTransactionDto">
+                                    <Grid Padding="0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="140"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{x:Bind TransactionTime}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{x:Bind TicketNumber}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind CardType}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" Text="{x:Bind CardLast4}" VerticalAlignment="Center" FontFamily="Consolas"/>
+                                        <TextBlock Grid.Column="4" Text="{x:Bind AuthorizationCode}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="5" Text="{x:Bind Amount}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="6" Text="{x:Bind TipAmount}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="7" Text="{x:Bind TransactionType}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="8" Text="{x:Bind TransactionStatus}" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
+
+                <!-- PAYMENT REPORT -->
+                <Grid Visibility="{x:Bind ViewModel.IsPaymentReportVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                      Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Text="Payment Report" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,16"/>
+                    
+                    <!-- Totals Section -->
+                    <Border Grid.Row="1" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" BorderThickness="1" CornerRadius="4" Padding="16" Margin="0,0,0,16">
+                        <Grid ColumnSpacing="24">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Total Transactions" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.PaymentReport.Totals.TotalTransactions, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Cash" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.PaymentReport.Totals.TotalCash, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Credit Cards" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.PaymentReport.Totals.TotalCreditCards, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="3">
+                                <TextBlock Text="Debit Cards" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.PaymentReport.Totals.TotalDebitCards, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="4">
+                                <TextBlock Text="Gift Certificates" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.PaymentReport.Totals.TotalGiftCertificates, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="5">
+                                <TextBlock Text="House Accounts" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.PaymentReport.Totals.TotalHouseAccounts, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="6">
+                                <TextBlock Text="Grand Total" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.PaymentReport.Totals.GrandTotal, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Payment Types List -->
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Header Row -->
+                        <Grid Padding="12" Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="120"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Payment Type" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="1" Text="Sub Type" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="2" Text="Count" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="3" Text="Amount" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="4" Text="Tips" Style="{StaticResource HeaderTextStyle}"/>
+                        </Grid>
+                        
+                        <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.PaymentReport.PaymentTypes, Mode=OneWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="dto:PaymentTypeTotalDto">
+                                    <Grid Padding="0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{x:Bind PaymentType}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{x:Bind SubType}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind TransactionCount}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="3" Text="{x:Bind TotalAmount}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="4" Text="{x:Bind TipAmount}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
+
+                <!-- MENU USAGE REPORT -->
+                <Grid Visibility="{x:Bind ViewModel.IsMenuUsageReportVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                      Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Text="Menu Usage Report" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,16"/>
+                    
+                    <!-- Totals Section -->
+                    <Border Grid.Row="1" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" BorderThickness="1" CornerRadius="4" Padding="16" Margin="0,0,0,16">
+                        <Grid ColumnSpacing="24">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Total Items" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.MenuUsageReport.Totals.TotalItems, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Total Quantity Sold" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.MenuUsageReport.Totals.TotalQuantitySold, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Total Revenue" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.MenuUsageReport.Totals.TotalRevenue, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="3">
+                                <TextBlock Text="Avg Quantity/Item" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.MenuUsageReport.Totals.AverageQuantityPerItem, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Menu Items List -->
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Header Row -->
+                        <Grid Padding="12" Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Item Name" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="1" Text="Category" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="2" Text="Quantity" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="3" Text="Revenue" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="4" Text="% of Total" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="5" Text="Avg Price" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="6" Text="Tickets" Style="{StaticResource HeaderTextStyle}"/>
+                        </Grid>
+                        
+                        <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.MenuUsageReport.Items, Mode=OneWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="dto:MenuUsageItemDto">
+                                    <Grid Padding="0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Background="{x:Bind IsTopPerformer, Mode=OneWay, Converter={StaticResource BoolToColorConverter}, ConverterParameter='LightGreen'}"
+                                               BorderBrush="{x:Bind IsBottomPerformer, Mode=OneWay, Converter={StaticResource BoolToColorConverter}, ConverterParameter='LightRed'}"
+                                               BorderThickness="2" CornerRadius="4">
+                                            <Grid Padding="8,4">
+                                                <TextBlock Text="{x:Bind ItemName}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Grid.Column="1" Text="{x:Bind CategoryName}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Grid.Column="2" Text="{x:Bind QuantitySold}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                                <TextBlock Grid.Column="3" Text="{x:Bind Revenue}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                                <TextBlock Grid.Column="4" Text="{x:Bind PercentageOfTotal, Mode=OneWay, Converter={StaticResource DecimalToPercentStringConverter}}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                                <TextBlock Grid.Column="5" Text="{x:Bind AveragePrice}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                                <TextBlock Grid.Column="6" Text="{x:Bind TicketCount}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
+
+                <!-- SERVER PRODUCTIVITY REPORT -->
+                <Grid Visibility="{x:Bind ViewModel.IsServerProductivityReportVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                      Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Text="Server Productivity Report" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,16"/>
+                    
+                    <!-- Totals Section -->
+                    <Border Grid.Row="1" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" BorderThickness="1" CornerRadius="4" Padding="16" Margin="0,0,0,16">
+                        <Grid ColumnSpacing="24">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Total Servers" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.ServerProductivityReport.Totals.TotalServers, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Total Tickets" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.ServerProductivityReport.Totals.TotalTickets, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Total Sales" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.ServerProductivityReport.Totals.TotalSales, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="3">
+                                <TextBlock Text="Total Tips" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.ServerProductivityReport.Totals.TotalTips, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="4">
+                                <TextBlock Text="Avg Ticket Size" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.ServerProductivityReport.Totals.AverageTicketSize, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="5">
+                                <TextBlock Text="Avg Tip %" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.ServerProductivityReport.Totals.AverageTipPercentage, Mode=OneWay, Converter={StaticResource DecimalToPercentStringConverter}}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Servers List -->
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Header Row -->
+                        <Grid Padding="12" Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Server Name" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="1" Text="Tickets" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="2" Text="Total Sales" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="3" Text="Net Sales" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="4" Text="Tips" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="5" Text="Avg Ticket" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="6" Text="Avg Tip %" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="7" Text="Sales/Hour" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="8" Text="Hours" Style="{StaticResource HeaderTextStyle}"/>
+                        </Grid>
+                        
+                        <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.ServerProductivityReport.Servers, Mode=OneWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="dto:ServerProductivityDto">
+                                    <Grid Padding="0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{x:Bind UserName}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Grid.Column="1" Text="{x:Bind TicketCount}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind TotalSales}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="3" Text="{x:Bind NetSales}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="4" Text="{x:Bind TipsCollected}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="5" Text="{x:Bind AverageTicketSize}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="6" Text="{x:Bind AverageTipPercentage, Mode=OneWay, Converter={StaticResource DecimalToPercentStringConverter}}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="7" Text="{x:Bind SalesPerHour}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="8" Text="{x:Bind TotalHours, Mode=OneWay, Converter={StaticResource DoubleToDecimalStringConverter}}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
+
+                <!-- HOURLY LABOR REPORT -->
+                <Grid Visibility="{x:Bind ViewModel.IsHourlyLaborReportVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                      Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Text="Hourly Labor Report" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,16"/>
+                    
+                    <!-- Totals Section -->
+                    <Border Grid.Row="1" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" BorderThickness="1" CornerRadius="4" Padding="16" Margin="0,0,0,16">
+                        <Grid ColumnSpacing="24">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Total Labor Hours" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.HourlyLaborReport.Totals.TotalLaborHours, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Total Labor Cost" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.HourlyLaborReport.Totals.TotalLaborCost, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Total Sales" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.HourlyLaborReport.Totals.TotalSales, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="3">
+                                <TextBlock Text="Avg Labor %" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.HourlyLaborReport.Totals.AverageLaborPercentage, Mode=OneWay, Converter={StaticResource DecimalToPercentStringConverter}}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="4">
+                                <TextBlock Text="Total Employees" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.HourlyLaborReport.Totals.TotalEmployees, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Hours List -->
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Header Row -->
+                        <Grid Padding="12" Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Hour" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="1" Text="Employees" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="2" Text="Hours Worked" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="3" Text="Labor Cost" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="4" Text="Sales" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="5" Text="Labor %" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="6" Text="High Labor" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="7" Text="Total Hours" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="8" Text="Total Cost" Style="{StaticResource HeaderTextStyle}"/>
+                        </Grid>
+                        
+                        <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.HourlyLaborReport.Hours, Mode=OneWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="dto:HourlyLaborDto">
+                                    <Grid Padding="0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Background="{x:Bind IsHighLaborPercentage, Mode=OneWay, Converter={StaticResource BoolToColorConverter}, ConverterParameter='LightRed'}"
+                                               BorderBrush="{x:Bind IsHighLaborPercentage, Mode=OneWay, Converter={StaticResource BoolToColorConverter}, ConverterParameter='LightRed'}"
+                                               BorderThickness="2" CornerRadius="4">
+                                            <Grid Padding="8,4">
+                                                <TextBlock Text="{x:Bind Hour}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                                <ListView Grid.Column="1" ItemsSource="{x:Bind Employees, Mode=OneWay}">
+                                                    <ListView.ItemTemplate>
+                                                        <DataTemplate x:DataType="dto:EmployeeLaborDto">
+                                                            <Grid Padding="0,4">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="200"/>
+                                                                    <ColumnDefinition Width="100"/>
+                                                                    <ColumnDefinition Width="120"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Text="{x:Bind EmployeeName}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                                                <TextBlock Grid.Column="1" Text="{x:Bind HoursWorked}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                                                <TextBlock Grid.Column="2" Text="{x:Bind LaborCost}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
+
                 <!-- JOURNAL REPORT -->
                 <Grid Visibility="{x:Bind ViewModel.IsJournalReportVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
                       Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
@@ -411,7 +1051,7 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="{x:Bind UserName}" VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="1" Text="{x:Bind TotalSales}" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Column="2" Text="{x:Bind TotalTips}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind TipsCollected}" VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="3" Text="{x:Bind TotalHours}" VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="4" Text="{x:Bind SalesPerHour}" VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="5" Text="{x:Bind TicketCount}" VerticalAlignment="Center"/>
@@ -566,6 +1206,333 @@
                                         <TextBlock Grid.Column="2" Text="{x:Bind TotalSales}" VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="3" Text="{x:Bind AverageTimeMinutes}" VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="4" Text="{x:Bind TipsAmount}" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
+                
+                <!-- TIP REPORT -->
+                <Grid Visibility="{x:Bind ViewModel.IsTipReportVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                      Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Text="Tip Report" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,16"/>
+                    
+                    <!-- Summary Section -->
+                    <Border Grid.Row="1" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" BorderThickness="1" CornerRadius="4" Padding="16" Margin="0,0,0,16">
+                        <Grid ColumnSpacing="24" RowSpacing="16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            
+                            <StackPanel>
+                                <TextBlock Text="Total Tips" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.TipReport.TotalTips, Mode=OneWay, FallbackValue='$0.00'}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Tips Paid" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.TipReport.PaidTips, Mode=OneWay, FallbackValue='$0.00'}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Tips Due" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.TipReport.TipsDue, Mode=OneWay, FallbackValue='$0.00'}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Column="3">
+                                <TextBlock Text="Total Auto Grat" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.TipReport.TotalAutoGratuity, Mode=OneWay, FallbackValue='$0.00'}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Row="1">
+                                <TextBlock Text="Cash Tips Count" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.TipReport.CashTipsCount, Mode=OneWay, FallbackValue='0'}" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Row="1" Grid.Column="1">
+                                <TextBlock Text="Cash Tips Amount" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.TipReport.CashTipsAmount, Mode=OneWay, FallbackValue='$0.00'}" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Row="1" Grid.Column="2">
+                                <TextBlock Text="Charged Tips Count" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.TipReport.ChargedTipsCount, Mode=OneWay, FallbackValue='0'}" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Row="1" Grid.Column="3">
+                                <TextBlock Text="Charged Tips Amount" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.TipReport.ChargedTipsAmount, Mode=OneWay, FallbackValue='$0.00'}" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Server Summary -->
+                    <Grid Grid.Row="2" Margin="0,0,0,24">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Summary by Server" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="0,0,0,8"/>
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Background="{ThemeResource SystemControlBackgroundBaseLowBrush}" Padding="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="80"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Server" Style="{StaticResource HeaderTextStyle}"/>
+                                <TextBlock Grid.Column="1" Text="Tickets" Style="{StaticResource HeaderTextStyle}"/>
+                                <TextBlock Grid.Column="2" Text="Total Sales" Style="{StaticResource HeaderTextStyle}"/>
+                                <TextBlock Grid.Column="3" Text="Cash" Style="{StaticResource HeaderTextStyle}"/>
+                                <TextBlock Grid.Column="4" Text="CC" Style="{StaticResource HeaderTextStyle}"/>
+                                <TextBlock Grid.Column="5" Text="AutoGrat" Style="{StaticResource HeaderTextStyle}"/>
+                                <TextBlock Grid.Column="6" Text="Total Tips" Style="{StaticResource HeaderTextStyle}"/>
+                                <TextBlock Grid.Column="7" Text="Tip %" Style="{StaticResource HeaderTextStyle}"/>
+                            </Grid>
+                            <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.TipReport.ServerSummaries, Mode=OneWay}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="dto:TipReportServerSummaryDto">
+                                        <Grid Padding="0,8">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="80"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{x:Bind ServerName}" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="1" Text="{x:Bind TicketCount}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            <TextBlock Grid.Column="2" Text="{x:Bind TotalSales}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBlock Grid.Column="3" Text="{x:Bind CashTips}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBlock Grid.Column="4" Text="{x:Bind ChargedTips}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBlock Grid.Column="5" Text="{x:Bind AutoGratuity}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBlock Grid.Column="6" Text="{x:Bind TotalTips}" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                                            <TextBlock Grid.Column="7" Text="{x:Bind TipPercentage}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </Grid>
+                    
+                    <!-- Details List -->
+                    <Grid Grid.Row="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Header Row -->
+                        <Grid Padding="12" Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Ticket #" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="1" Text="Sale Type" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="2" Text="Server" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="3" Text="Total" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="4" Text="Tip" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="5" Text="Status" Style="{StaticResource HeaderTextStyle}"/>
+                        </Grid>
+                        
+                        <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.TipReport.Details, Mode=OneWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="dto:TipReportDataDto">
+                                    <Grid Padding="0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{x:Bind TicketId}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{x:Bind SaleType}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind ServerName}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" Text="{x:Bind TicketTotal}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="4" Text="{x:Bind Tips}" VerticalAlignment="Center" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColor}"/>
+                                        <TextBlock Grid.Column="5" Text="{x:Bind IsPaid, Converter={StaticResource BoolToStringConverter}, ConverterParameter='Paid:Due'}" 
+                                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   Foreground="{x:Bind IsPaid, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Green:Orange'}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
+
+                <!-- ATTENDANCE REPORT -->
+                <Grid Visibility="{x:Bind ViewModel.IsAttendanceReportVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                      Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Text="Attendance Report" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,16"/>
+                    
+                     <Border Grid.Row="1" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" BorderThickness="1" CornerRadius="4" Padding="16" Margin="0,0,0,16">
+                         <StackPanel Orientation="Horizontal" Spacing="24">
+                            <StackPanel>
+                                <TextBlock Text="Total Shifts" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.AttendanceReport.TotalShifts, Mode=OneWay, FallbackValue='0'}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Total Hours" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.AttendanceReport.TotalHours, Mode=OneWay, FallbackValue='0.00'}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            </StackPanel>
+                         </StackPanel>
+                     </Border>
+
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Grid Background="{ThemeResource SystemControlBackgroundBaseLowBrush}" Padding="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1.5*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Employee" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="1" Text="Role" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="2" Text="Clock In" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="3" Text="Clock Out" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="4" Text="Hours" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="5" Text="Shift" Style="{StaticResource HeaderTextStyle}"/>
+                        </Grid>
+                        
+                        <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.AttendanceReport.Items, Mode=OneWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="dto:AttendanceReportItemDto">
+                                    <Grid Padding="12,8" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}" BorderThickness="0,0,0,1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1.5*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{x:Bind UserName}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{x:Bind Role}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind ClockInTime}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" Text="{x:Bind ClockOutTime, TargetNullValue='-'}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="4" Text="{x:Bind HoursWorked}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="5" Text="{x:Bind ShiftName}" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
+
+                <!-- CASH OUT REPORT -->
+                <Grid Visibility="{x:Bind ViewModel.IsCashOutReportVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                      Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="8" Padding="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Cash Out Report" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,16"/>
+
+                    <Border Grid.Row="1" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" BorderThickness="1" CornerRadius="4" Padding="16" Margin="0,0,0,16">
+                        <StackPanel Orientation="Horizontal" Spacing="24">
+                            <StackPanel>
+                                <TextBlock Text="Total Cash Sales" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.CashOutReport.TotalCashSales, Mode=OneWay, TargetNullValue='$0.00'}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
+                            </StackPanel>
+                            <Border Width="1" Background="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
+                            <StackPanel>
+                                <TextBlock Text="Total Charged Tips" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.CashOutReport.TotalChargedTips, Mode=OneWay, TargetNullValue='$0.00'}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
+                            </StackPanel>
+                            <Border Width="1" Background="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
+                            <StackPanel>
+                                <TextBlock Text="Total Net Due" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind ViewModel.CashOutReport.TotalNetDue, Mode=OneWay, TargetNullValue='$0.00'}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Background="{ThemeResource SystemControlBackgroundBaseLowBrush}" Padding="12,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1.5*"/>
+                                <ColumnDefinition Width="1.5*"/>
+                                <ColumnDefinition Width="1.5*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Server" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="1" Text="Tickets" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="2" Text="Cash Sales" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="3" Text="Charged Tips" Style="{StaticResource HeaderTextStyle}"/>
+                            <TextBlock Grid.Column="4" Text="Net Due" Style="{StaticResource HeaderTextStyle}"/>
+                        </Grid>
+
+                        <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.CashOutReport.Items, Mode=OneWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="dto:CashOutReportItemDto">
+                                    <Grid Padding="12,8" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}" BorderThickness="0,0,0,1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1.5*"/>
+                                            <ColumnDefinition Width="1.5*"/>
+                                            <ColumnDefinition Width="1.5*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{x:Bind UserName}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{x:Bind TicketCount}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind CashSales}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" Text="{x:Bind ChargedTips}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="4" Text="{x:Bind NetDue}" VerticalAlignment="Center" FontWeight="SemiBold"/>
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>

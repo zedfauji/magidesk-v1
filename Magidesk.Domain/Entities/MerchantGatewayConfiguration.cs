@@ -17,6 +17,14 @@ public class MerchantGatewayConfiguration
     public string GatewayUrl { get; private set; } = null!;
     public bool IsActive { get; private set; }
 
+    // Parity with FloreantPOS (F-0107)
+    public string CardTypesAccepted { get; private set; } = "VISA,MC,AMEX,DISC";
+    public decimal SignatureThreshold { get; private set; } = 25.00m;
+    public bool AllowTipAdjustment { get; private set; } = true;
+    public bool IsExternalTerminal { get; private set; } = false;
+    public bool AllowManualEntry { get; private set; } = true;
+    public bool EnablePreAuth { get; private set; } = false;
+
     // Concurrency
     public int Version { get; private set; }
 
@@ -42,10 +50,28 @@ public class MerchantGatewayConfiguration
         };
     }
 
-    public void UpdateCredentials(string merchantId, string encryptedApiKey)
+    public void UpdateCredentials(string merchantId, string encryptedApiKey, string gatewayUrl)
     {
         MerchantId = merchantId;
         EncryptedApiKey = encryptedApiKey;
+        GatewayUrl = gatewayUrl;
+        Version++;
+    }
+
+    public void UpdateSettings(
+        string cardTypesAccepted,
+        decimal signatureThreshold,
+        bool allowTipAdjustment,
+        bool isExternalTerminal,
+        bool allowManualEntry,
+        bool enablePreAuth)
+    {
+        CardTypesAccepted = cardTypesAccepted;
+        SignatureThreshold = signatureThreshold;
+        AllowTipAdjustment = allowTipAdjustment;
+        IsExternalTerminal = isExternalTerminal;
+        AllowManualEntry = allowManualEntry;
+        EnablePreAuth = enablePreAuth;
         Version++;
     }
 

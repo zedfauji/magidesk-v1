@@ -10,6 +10,9 @@ using Magidesk.Infrastructure.Repositories;
 using Magidesk.Infrastructure.Services;
 using Magidesk.Presentation.Services;
 using Magidesk.Application.Commands.SystemConfig;
+using Magidesk.Application.DTOs.Reports;
+using Magidesk.Application.Queries.Reports;
+using Magidesk.Application.Services.Reports;
 
 namespace Magidesk.Presentation;
 
@@ -95,6 +98,12 @@ public partial class App : Microsoft.UI.Xaml.Application
                 services.AddTransient<Magidesk.Presentation.ViewModels.GroupSettleTicketSelectionViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.GroupSettleTicketViewModel>();
                 services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel>();
+                services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.NotesDialogViewModel>();
+
+                // Query handlers
+                services.AddScoped<IQueryHandler<GetServerProductivityReportQuery, ServerProductivityReportDto>, GetServerProductivityReportQueryHandler>();
+                services.AddScoped<IQueryHandler<GetHourlyLaborReportQuery, HourlyLaborReportDto>, GetHourlyLaborReportQueryHandler>();
+                services.AddScoped<IQueryHandler<GetTipReportQuery, TipReportDto>, GetTipReportQueryHandler>();
 
                 // Command handlers
                 services.AddTransient<ICommandHandler<GroupSettleCommand, GroupSettleResult>, GroupSettleCommandHandler>();
@@ -106,11 +115,6 @@ public partial class App : Microsoft.UI.Xaml.Application
 
                 services.AddTransient<ICommandHandler<SetCustomerCommand, SetCustomerResult>, SetCustomerCommandHandler>();
                 
-                // Role Management Handlers
-                services.AddTransient<ICommandHandler<CreateRoleCommand, CreateRoleResult>, Magidesk.Application.Services.Administration.RoleCommandHandlers>();
-                services.AddTransient<ICommandHandler<UpdateRoleCommand, UpdateRoleResult>, Magidesk.Application.Services.Administration.RoleCommandHandlers>();
-                services.AddTransient<ICommandHandler<DeleteRoleCommand, DeleteRoleResult>, Magidesk.Application.Services.Administration.RoleCommandHandlers>();
-
                 // Domain services
                 services.AddTransient<BatchPaymentDomainService>();
                 services.AddSingleton<IEventPublisher, EventPublisher>();

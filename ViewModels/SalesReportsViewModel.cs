@@ -11,23 +11,41 @@ namespace Magidesk.Presentation.ViewModels;
 public enum ReportProperties
 {
     SalesSummary,
+    SalesDetail,
     SalesBalance,
     Exceptions,
+    CreditCardReport,
+    PaymentReport,
+    MenuUsageReport,
+    ServerProductivityReport,
+    HourlyLaborReport,
     Journal,
     Productivity,
     Labor,
-    Delivery
+    Delivery,
+    Tips,
+    Attendance,
+    CashOut
 }
 
 public partial class SalesReportsViewModel : ViewModelBase
 {
     private readonly IQueryHandler<GetSalesSummaryQuery, SalesSummaryReportDto> _getSalesSummary;
+    private readonly IQueryHandler<GetSalesDetailQuery, SalesDetailReportDto> _getSalesDetail;
     private readonly IQueryHandler<GetSalesBalanceQuery, SalesBalanceReportDto> _getSalesBalance;
     private readonly IQueryHandler<GetExceptionsReportQuery, ExceptionsReportDto> _getExceptionsReport;
+    private readonly IQueryHandler<GetCreditCardReportQuery, CreditCardReportDto> _getCreditCardReport;
+    private readonly IQueryHandler<GetPaymentReportQuery, PaymentReportDto> _getPaymentReport;
+    private readonly IQueryHandler<GetMenuUsageReportQuery, MenuUsageReportDto> _getMenuUsageReport;
+    private readonly IQueryHandler<GetServerProductivityReportQuery, ServerProductivityReportDto> _getServerProductivityReport;
+    private readonly IQueryHandler<GetHourlyLaborReportQuery, HourlyLaborReportDto> _getHourlyLaborReport;
     private readonly IQueryHandler<GetJournalReportQuery, JournalReportDto> _getJournalReport;
     private readonly IQueryHandler<GetProductivityReportQuery, ProductivityReportDto> _getProductivityReport;
     private readonly IQueryHandler<GetLaborReportQuery, LaborReportDto> _getLaborReport;
     private readonly IQueryHandler<GetDeliveryReportQuery, DeliveryReportDto> _getDeliveryReport;
+    private readonly IQueryHandler<GetTipReportQuery, TipReportDto> _getTipReport;
+    private readonly IQueryHandler<GetAttendanceReportQuery, AttendanceReportDto> _getAttendanceReport;
+    private readonly IQueryHandler<GetCashOutReportQuery, CashOutReportDto> _getCashOutReport;
 
     private DateTimeOffset _startDate = DateTime.Today;
     private DateTimeOffset _endDate = DateTime.Today.AddDays(1).AddSeconds(-1);
@@ -40,29 +58,56 @@ public partial class SalesReportsViewModel : ViewModelBase
 
     // Report Data Containers
     private SalesSummaryReportDto? _salesSummary;
+    private SalesDetailReportDto? _salesDetail;
     private SalesBalanceReportDto? _salesBalance;
     private ExceptionsReportDto? _exceptionsReport;
+    private CreditCardReportDto? _creditCardReport;
+    private PaymentReportDto? _paymentReport;
+    private MenuUsageReportDto? _menuUsageReport;
+    private ServerProductivityReportDto? _serverProductivityReport;
+    private HourlyLaborReportDto? _hourlyLaborReport;
     private JournalReportDto? _journalReport;
     private ProductivityReportDto? _productivityReport;
     private LaborReportDto? _laborReport;
     private DeliveryReportDto? _deliveryReport;
+    private TipReportDto? _tipReport;
+    private AttendanceReportDto? _attendanceReport;
+    private CashOutReportDto? _cashOutReport;
 
     public SalesReportsViewModel(
         IQueryHandler<GetSalesSummaryQuery, SalesSummaryReportDto> getSalesSummary,
+        IQueryHandler<GetSalesDetailQuery, SalesDetailReportDto> getSalesDetail,
         IQueryHandler<GetSalesBalanceQuery, SalesBalanceReportDto> getSalesBalance,
         IQueryHandler<GetExceptionsReportQuery, ExceptionsReportDto> getExceptionsReport,
+        IQueryHandler<GetCreditCardReportQuery, CreditCardReportDto> getCreditCardReport,
+        IQueryHandler<GetPaymentReportQuery, PaymentReportDto> getPaymentReport,
+        IQueryHandler<GetMenuUsageReportQuery, MenuUsageReportDto> getMenuUsageReport,
+        IQueryHandler<GetServerProductivityReportQuery, ServerProductivityReportDto> getServerProductivityReport,
+        IQueryHandler<GetHourlyLaborReportQuery, HourlyLaborReportDto> getHourlyLaborReport,
         IQueryHandler<GetJournalReportQuery, JournalReportDto> getJournalReport,
         IQueryHandler<GetProductivityReportQuery, ProductivityReportDto> getProductivityReport,
         IQueryHandler<GetLaborReportQuery, LaborReportDto> getLaborReport,
-        IQueryHandler<GetDeliveryReportQuery, DeliveryReportDto> getDeliveryReport)
+        IQueryHandler<GetDeliveryReportQuery, DeliveryReportDto> getDeliveryReport,
+        IQueryHandler<GetTipReportQuery, TipReportDto> getTipReport,
+        IQueryHandler<GetAttendanceReportQuery, AttendanceReportDto> getAttendanceReport,
+        IQueryHandler<GetCashOutReportQuery, CashOutReportDto> getCashOutReport)
     {
         _getSalesSummary = getSalesSummary;
+        _getSalesDetail = getSalesDetail;
         _getSalesBalance = getSalesBalance;
         _getExceptionsReport = getExceptionsReport;
+        _getCreditCardReport = getCreditCardReport;
+        _getPaymentReport = getPaymentReport;
+        _getMenuUsageReport = getMenuUsageReport;
+        _getServerProductivityReport = getServerProductivityReport;
+        _getHourlyLaborReport = getHourlyLaborReport;
         _getJournalReport = getJournalReport;
         _getProductivityReport = getProductivityReport;
         _getLaborReport = getLaborReport;
         _getDeliveryReport = getDeliveryReport;
+        _getTipReport = getTipReport;
+        _getAttendanceReport = getAttendanceReport;
+        _getCashOutReport = getCashOutReport;
 
         Title = "Reporting";
         LoadReportCommand = new AsyncRelayCommand(LoadReportAsync);
@@ -118,20 +163,37 @@ public partial class SalesReportsViewModel : ViewModelBase
                 // Clear previous data or auto-load?
                 // Auto-load might be nice but let's stick to explicit "Run" for now to avoid accidental heavy queries
                 OnPropertyChanged(nameof(IsSalesSummaryVisible));
+                OnPropertyChanged(nameof(IsSalesDetailVisible));
                 OnPropertyChanged(nameof(IsSalesBalanceVisible));
                 OnPropertyChanged(nameof(IsExceptionsReportVisible));
+                OnPropertyChanged(nameof(IsCreditCardReportVisible));
+                OnPropertyChanged(nameof(IsPaymentReportVisible));
+                OnPropertyChanged(nameof(IsMenuUsageReportVisible));
+                OnPropertyChanged(nameof(IsServerProductivityReportVisible));
+                OnPropertyChanged(nameof(IsHourlyLaborReportVisible));
                 OnPropertyChanged(nameof(IsJournalReportVisible));
                 OnPropertyChanged(nameof(IsProductivityReportVisible));
                 OnPropertyChanged(nameof(IsLaborReportVisible));
                 OnPropertyChanged(nameof(IsDeliveryReportVisible));
+                OnPropertyChanged(nameof(IsTipReportVisible));
 
                 OnPropertyChanged(nameof(HasSalesSummary));
+                OnPropertyChanged(nameof(HasSalesDetail));
                 OnPropertyChanged(nameof(HasSalesBalance));
                 OnPropertyChanged(nameof(HasExceptionsReport));
+                OnPropertyChanged(nameof(HasCreditCardReport));
+                OnPropertyChanged(nameof(HasPaymentReport));
+                OnPropertyChanged(nameof(HasMenuUsageReport));
+                OnPropertyChanged(nameof(HasServerProductivityReport));
+                OnPropertyChanged(nameof(HasHourlyLaborReport));
                 OnPropertyChanged(nameof(HasJournalReport));
                 OnPropertyChanged(nameof(HasProductivityReport));
                 OnPropertyChanged(nameof(HasLaborReport));
                 OnPropertyChanged(nameof(HasDeliveryReport));
+                OnPropertyChanged(nameof(HasTipReport));
+                OnPropertyChanged(nameof(HasAttendanceReport));
+                OnPropertyChanged(nameof(HasCashOutReport));
+                OnPropertyChanged(nameof(IsCashOutReportVisible));
             }
         }
     }
@@ -139,17 +201,32 @@ public partial class SalesReportsViewModel : ViewModelBase
     public ObservableCollection<ReportProperties> ReportTypes { get; } = new(Enum.GetValues<ReportProperties>());
 
     public bool IsSalesSummaryVisible => SelectedReportType == ReportProperties.SalesSummary;
+    public bool IsSalesDetailVisible => SelectedReportType == ReportProperties.SalesDetail;
     public bool IsSalesBalanceVisible => SelectedReportType == ReportProperties.SalesBalance;
     public bool IsExceptionsReportVisible => SelectedReportType == ReportProperties.Exceptions;
+    public bool IsCreditCardReportVisible => SelectedReportType == ReportProperties.CreditCardReport;
+    public bool IsPaymentReportVisible => SelectedReportType == ReportProperties.PaymentReport;
+    public bool IsMenuUsageReportVisible => SelectedReportType == ReportProperties.MenuUsageReport;
+    public bool IsServerProductivityReportVisible => SelectedReportType == ReportProperties.ServerProductivityReport;
+    public bool IsHourlyLaborReportVisible => SelectedReportType == ReportProperties.HourlyLaborReport;
     public bool IsJournalReportVisible => SelectedReportType == ReportProperties.Journal;
     public bool IsProductivityReportVisible => SelectedReportType == ReportProperties.Productivity;
     public bool IsLaborReportVisible => SelectedReportType == ReportProperties.Labor;
     public bool IsDeliveryReportVisible => SelectedReportType == ReportProperties.Delivery;
+    public bool IsTipReportVisible => SelectedReportType == ReportProperties.Tips;
+    public bool IsAttendanceReportVisible => SelectedReportType == ReportProperties.Attendance;
+    public bool IsCashOutReportVisible => SelectedReportType == ReportProperties.CashOut;
 
     public SalesSummaryReportDto? SalesSummary
     {
         get => _salesSummary;
         private set => SetProperty(ref _salesSummary, value);
+    }
+
+    public SalesDetailReportDto? SalesDetail
+    {
+        get => _salesDetail;
+        private set => SetProperty(ref _salesDetail, value);
     }
 
     public SalesBalanceReportDto? SalesBalance
@@ -162,6 +239,36 @@ public partial class SalesReportsViewModel : ViewModelBase
     {
         get => _exceptionsReport;
         private set => SetProperty(ref _exceptionsReport, value);
+    }
+
+    public CreditCardReportDto? CreditCardReport
+    {
+        get => _creditCardReport;
+        private set => SetProperty(ref _creditCardReport, value);
+    }
+
+    public PaymentReportDto? PaymentReport
+    {
+        get => _paymentReport;
+        private set => SetProperty(ref _paymentReport, value);
+    }
+
+    public MenuUsageReportDto? MenuUsageReport
+    {
+        get => _menuUsageReport;
+        private set => SetProperty(ref _menuUsageReport, value);
+    }
+
+    public ServerProductivityReportDto? ServerProductivityReport
+    {
+        get => _serverProductivityReport;
+        private set => SetProperty(ref _serverProductivityReport, value);
+    }
+
+    public HourlyLaborReportDto? HourlyLaborReport
+    {
+        get => _hourlyLaborReport;
+        private set => SetProperty(ref _hourlyLaborReport, value);
     }
 
     public JournalReportDto? JournalReport
@@ -188,13 +295,40 @@ public partial class SalesReportsViewModel : ViewModelBase
         private set => SetProperty(ref _deliveryReport, value);
     }
 
+    public TipReportDto? TipReport
+    {
+        get => _tipReport;
+        private set => SetProperty(ref _tipReport, value);
+    }
+
+    public AttendanceReportDto? AttendanceReport
+    {
+        get => _attendanceReport;
+        private set => SetProperty(ref _attendanceReport, value);
+    }
+
+    public CashOutReportDto? CashOutReport
+    {
+        get => _cashOutReport;
+        private set => SetProperty(ref _cashOutReport, value);
+    }
+
     public bool HasSalesSummary => SalesSummary != null;
+    public bool HasSalesDetail => SalesDetail != null;
     public bool HasSalesBalance => SalesBalance != null;
     public bool HasExceptionsReport => ExceptionsReport != null;
+    public bool HasCreditCardReport => CreditCardReport != null;
+    public bool HasPaymentReport => PaymentReport != null;
+    public bool HasMenuUsageReport => MenuUsageReport != null;
+    public bool HasServerProductivityReport => ServerProductivityReport != null;
+    public bool HasHourlyLaborReport => HourlyLaborReport != null;
     public bool HasJournalReport => JournalReport != null;
     public bool HasProductivityReport => ProductivityReport != null;
     public bool HasLaborReport => LaborReport != null;
     public bool HasDeliveryReport => DeliveryReport != null;
+    public bool HasTipReport => TipReport != null;
+    public bool HasAttendanceReport => AttendanceReport != null;
+    public bool HasCashOutReport => CashOutReport != null;
 
     public string Error
     {
@@ -235,6 +369,11 @@ public partial class SalesReportsViewModel : ViewModelBase
                     SalesSummary = salesReport;
                     break;
 
+                case ReportProperties.SalesDetail:
+                    var salesDetail = await _getSalesDetail.HandleAsync(new GetSalesDetailQuery(start, end));
+                    SalesDetail = salesDetail;
+                    break;
+
                 case ReportProperties.SalesBalance:
                     var salesBalance = await _getSalesBalance.HandleAsync(new GetSalesBalanceQuery(start, end));
                     SalesBalance = salesBalance;
@@ -243,6 +382,31 @@ public partial class SalesReportsViewModel : ViewModelBase
                 case ReportProperties.Exceptions:
                     var exceptions = await _getExceptionsReport.HandleAsync(new GetExceptionsReportQuery(start, end));
                     ExceptionsReport = exceptions;
+                    break;
+
+                case ReportProperties.CreditCardReport:
+                    var creditCardReport = await _getCreditCardReport.HandleAsync(new GetCreditCardReportQuery(start, end));
+                    CreditCardReport = creditCardReport;
+                    break;
+
+                case ReportProperties.PaymentReport:
+                    var paymentReport = await _getPaymentReport.HandleAsync(new GetPaymentReportQuery(start, end));
+                    PaymentReport = paymentReport;
+                    break;
+
+                case ReportProperties.MenuUsageReport:
+                    var menuUsageReport = await _getMenuUsageReport.HandleAsync(new GetMenuUsageReportQuery(start, end));
+                    MenuUsageReport = menuUsageReport;
+                    break;
+
+                case ReportProperties.ServerProductivityReport:
+                    var serverProductivityReport = await _getServerProductivityReport.HandleAsync(new GetServerProductivityReportQuery(start, end));
+                    ServerProductivityReport = serverProductivityReport;
+                    break;
+
+                case ReportProperties.HourlyLaborReport:
+                    var hourlyLaborReport = await _getHourlyLaborReport.HandleAsync(new GetHourlyLaborReportQuery(start, end));
+                    HourlyLaborReport = hourlyLaborReport;
                     break;
 
                 case ReportProperties.Journal:
@@ -263,6 +427,21 @@ public partial class SalesReportsViewModel : ViewModelBase
                 case ReportProperties.Delivery:
                     var deliveryReport = await _getDeliveryReport.HandleAsync(new GetDeliveryReportQuery(start, end));
                     DeliveryReport = deliveryReport;
+                    break;
+
+                case ReportProperties.Tips:
+                    var tipsReport = await _getTipReport.HandleAsync(new GetTipReportQuery(start, end));
+                    TipReport = tipsReport;
+                    break;
+                
+                case ReportProperties.Attendance:
+                    var attendanceReport = await _getAttendanceReport.HandleAsync(new GetAttendanceReportQuery(start, end));
+                    AttendanceReport = attendanceReport;
+                    break;
+                
+                case ReportProperties.CashOut:
+                    var cashOutReport = await _getCashOutReport.HandleAsync(new GetCashOutReportQuery(start, end));
+                    CashOutReport = cashOutReport;
                     break;
             }
         }

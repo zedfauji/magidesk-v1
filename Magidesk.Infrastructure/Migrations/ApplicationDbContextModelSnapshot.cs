@@ -18,7 +18,7 @@ namespace Magidesk.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -723,7 +723,7 @@ namespace Magidesk.Infrastructure.Migrations
 
                     b.ToTable("MenuModifiers", "magidesk");
 
-                    b.HasDiscriminator().HasValue("MenuModifier");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("MenuModifier");
 
                     b.UseTphMappingStrategy();
                 });
@@ -733,6 +733,28 @@ namespace Magidesk.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<bool>("AllowManualEntry")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<bool>("AllowTipAdjustment")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("CardTypesAccepted")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasDefaultValue("VISA,MC,AMEX,DISC");
+
+                    b.Property<bool>("EnablePreAuth")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("EncryptedApiKey")
                         .IsRequired()
@@ -749,6 +771,11 @@ namespace Magidesk.Infrastructure.Migrations
                         .HasColumnType("boolean")
                         .HasDefaultValue(true);
 
+                    b.Property<bool>("IsExternalTerminal")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
                     b.Property<string>("MerchantId")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -758,6 +785,12 @@ namespace Magidesk.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<decimal>("SignatureThreshold")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasDefaultValue(25m);
 
                     b.Property<Guid>("TerminalId")
                         .HasColumnType("uuid");
@@ -1243,6 +1276,50 @@ namespace Magidesk.Infrastructure.Migrations
                     b.ToTable("Payouts", (string)null);
                 });
 
+            modelBuilder.Entity("Magidesk.Domain.Entities.PrinterGroup", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PrinterGroups", (string)null);
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.PrinterMapping", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("PhysicalPrinterName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<Guid>("PrinterGroupId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TerminalId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TerminalId", "PrinterGroupId")
+                        .IsUnique();
+
+                    b.ToTable("PrinterMappings", (string)null);
+                });
+
             modelBuilder.Entity("Magidesk.Domain.Entities.RestaurantConfiguration", b =>
                 {
                     b.Property<int>("Id")
@@ -1256,10 +1333,24 @@ namespace Magidesk.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
+                    b.Property<int>("Capacity")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CurrencySymbol")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("character varying(5)");
+
+                    b.Property<decimal>("DefaultGratuityPercentage")
+                        .HasColumnType("numeric");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<bool>("IsKioskMode")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1276,6 +1367,9 @@ namespace Magidesk.Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
+                    b.Property<decimal>("ServiceChargePercentage")
+                        .HasColumnType("numeric");
+
                     b.Property<string>("TaxId")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -1285,6 +1379,11 @@ namespace Magidesk.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.HasKey("Id");
 
@@ -1406,6 +1505,64 @@ namespace Magidesk.Infrastructure.Migrations
                     b.ToTable("Tables", "magidesk");
                 });
 
+            modelBuilder.Entity("Magidesk.Domain.Entities.Terminal", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("AutoLogOut")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("AutoLogOutTime")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("CurrentBalance")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("DefaultFontFamily")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("DefaultFontSize")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("FloorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("HasCashDrawer")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("KitchenMode")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("OpeningBalance")
+                        .HasColumnType("numeric");
+
+                    b.Property<bool>("ShowGuestSelection")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("ShowTableSelection")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("TerminalKey")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Terminals");
+                });
+
             modelBuilder.Entity("Magidesk.Domain.Entities.TerminalTransaction", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1500,6 +1657,10 @@ namespace Magidesk.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<int>("NumberOfGuests")
                         .ValueGeneratedOnAdd()
@@ -1641,6 +1802,8 @@ namespace Magidesk.Infrastructure.Migrations
                         .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.HasIndex("Username")
                         .IsUnique();
@@ -3288,6 +3451,12 @@ namespace Magidesk.Infrastructure.Migrations
 
             modelBuilder.Entity("Magidesk.Domain.Entities.User", b =>
                 {
+                    b.HasOne("Magidesk.Domain.Entities.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.OwnsOne("Magidesk.Domain.ValueObjects.Money", "HourlyRate", b1 =>
                         {
                             b1.Property<Guid>("UserId")
@@ -3318,6 +3487,8 @@ namespace Magidesk.Infrastructure.Migrations
 
                     b.Navigation("HourlyRate")
                         .IsRequired();
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.GiftCertificatePayment", b =>

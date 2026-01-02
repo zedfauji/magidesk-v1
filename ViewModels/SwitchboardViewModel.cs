@@ -12,6 +12,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Magidesk.Presentation.Views.Dialogs;
+using Magidesk.Domain.Enumerations;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -64,6 +65,9 @@ public class SwitchboardViewModel : ViewModelBase
     public ICommand LogoutCommand { get; }
     public ICommand ShutdownCommand { get; }
 
+    private readonly ISecurityService _securityService;
+    private readonly IAesEncryptionService _encryptionService;
+
     public SwitchboardViewModel(
         NavigationService navigationService,
         ICashSessionRepository cashSessionRepository,
@@ -73,7 +77,9 @@ public class SwitchboardViewModel : ViewModelBase
         IAttendanceRepository attendanceRepository,
         ICommandHandler<CreateTicketCommand, CreateTicketResult> createTicketHandler,
         IUserService userService,
-        ITerminalContext terminalContext)
+        ITerminalContext terminalContext,
+        ISecurityService securityService,
+        IAesEncryptionService encryptionService)
     {
         _navigationService = navigationService;
         _cashSessionRepository = cashSessionRepository;
@@ -84,6 +90,8 @@ public class SwitchboardViewModel : ViewModelBase
         _createTicketHandler = createTicketHandler;
         _userService = userService;
         _terminalContext = terminalContext;
+        _securityService = securityService;
+        _encryptionService = encryptionService;
         Title = "Magidesk POS";
 
         LoadTicketsCommand = new AsyncRelayCommand(LoadTicketsAsync);
@@ -98,11 +106,10 @@ public class SwitchboardViewModel : ViewModelBase
         PerformOpenDrawerCommand = new AsyncRelayCommand(PerformOpenDrawerAsync);
         ShowDrawerBalanceCommand = new AsyncRelayCommand(ShowDrawerBalanceAsync);
         
-        ShowDrawerBalanceCommand = new AsyncRelayCommand(ShowDrawerBalanceAsync);
         KitchenCommand = new RelayCommand(() => _navigationService.Navigate(typeof(Views.KitchenDisplayPage)));
         
         TablesCommand = new RelayCommand(() => _navigationService.Navigate(typeof(Views.TableMapPage)));
-        ManagerFunctionsCommand = new RelayCommand(ManagerFunctionsAsync);
+        ManagerFunctionsCommand = new AsyncRelayCommand(ManagerFunctionsAsync);
         LogoutCommand = new RelayCommand(() => {
             _navigationService.Navigate(typeof(Views.LoginPage));
         });
@@ -112,10 +119,64 @@ public class SwitchboardViewModel : ViewModelBase
 
     }
 
-    private async void ManagerFunctionsAsync()
+    private async Task ManagerFunctionsAsync()
     {
-        var dialog = new Views.ManagerFunctionsDialog();
-        await _navigationService.ShowDialogAsync(dialog);
+        // Manager Authentication Gate
+        var passwordDialog = new Views.PasswordEntryDialog();
+        passwordDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        var result = await _navigationService.ShowDialogAsync(passwordDialog);
+
+        if (result != ContentDialogResult.Primary) return;
+
+        var pin = passwordDialog.Password;
+        if (string.IsNullOrWhiteSpace(pin)) return;
+
+        try
+        {
+            var encryptedPin = _encryptionService.Encrypt(pin);
+            var user = await _securityService.GetUserByPinAsync(encryptedPin);
+
+            if (user == null)
+            {
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Authentication Failed",
+                    Content = "Invalid PIN.",
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                };
+                await _navigationService.ShowDialogAsync(errorDialog);
+                return;
+            }
+
+            // Check permissions (Any Manager or Admin function)
+            var managerPermissions = UserPermission.VoidTicket | UserPermission.RefundPayment | 
+                                   UserPermission.OpenDrawer | UserPermission.CloseBatch | 
+                                   UserPermission.ApplyDiscount | UserPermission.ManageUsers | 
+                                   UserPermission.ManageTableLayout | UserPermission.ManageMenu | 
+                                   UserPermission.ViewReports | UserPermission.SystemConfiguration;
+
+            if ((user.Role.Permissions & managerPermissions) == 0)
+            {
+                 var errorDialog = new ContentDialog
+                {
+                    Title = "Access Denied",
+                    Content = "Insufficient privileges for Manager functions.",
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                };
+                await _navigationService.ShowDialogAsync(errorDialog);
+                return;
+            }
+
+            // Auth Success - Navigate
+            var dialog = new Views.ManagerFunctionsDialog();
+            await _navigationService.ShowDialogAsync(dialog);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Manager Auth Error: {ex.Message}");
+        }
     }
 
     // ... 

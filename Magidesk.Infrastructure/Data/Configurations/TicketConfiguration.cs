@@ -254,6 +254,9 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
         builder.Property(t => t.ExtraDeliveryInfo)
             .HasMaxLength(1000);
 
+        builder.Property(t => t.Note)
+            .HasMaxLength(500);
+
         builder.Property(t => t.CustomerWillPickup)
             .IsRequired()
             .HasDefaultValue(false);

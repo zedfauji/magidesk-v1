@@ -9,5 +9,10 @@ public class RestaurantConfigurationDto
     public string Website { get; set; } = string.Empty;
     public string ReceiptFooterMessage { get; set; } = string.Empty;
     public string TaxId { get; set; } = string.Empty;
+    public string ZipCode { get; set; } = string.Empty;
+    public int Capacity { get; set; }
+    public string CurrencySymbol { get; set; } = "$";
+    public decimal ServiceChargePercentage { get; set; }
+    public decimal DefaultGratuityPercentage { get; set; }
     public bool IsKioskMode { get; set; }
 }

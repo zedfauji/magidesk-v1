@@ -4,5 +4,5 @@ namespace Magidesk.Application.Interfaces;
 
 public interface IRoleRepository : IRepository<Role>
 {
-    // Add specific constraints if needed
+    Task<Role?> GetByNameAsync(string name, CancellationToken cancellationToken = default);
 }

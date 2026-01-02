@@ -18,6 +18,7 @@ public class UserRepository : IUserRepository
     public async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _context.Users
+            .Include(u => u.Role)
             .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
     }
 
@@ -49,12 +50,18 @@ public class UserRepository : IUserRepository
     public async Task<User?> GetByUsernameAsync(string username, CancellationToken cancellationToken = default)
     {
         return await _context.Users
+            .Include(u => u.Role)
             .FirstOrDefaultAsync(u => u.Username == username, cancellationToken);
     }
 
     public async Task<User?> GetByPinAsync(string encryptedPin, CancellationToken cancellationToken = default)
     {
         return await _context.Users
+            .Include(u => u.Role)
             .FirstOrDefaultAsync(u => u.EncryptedPin == encryptedPin, cancellationToken);
+    }
+    public async Task<bool> HasUsersInRoleAsync(Guid roleId, CancellationToken cancellationToken = default)
+    {
+        return await _context.Users.AnyAsync(u => u.RoleId == roleId, cancellationToken);
     }
 }

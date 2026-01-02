@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing.Printing;
+using System.Linq;
 using System.Threading.Tasks;
 using Magidesk.Application.DTOs;
 using Magidesk.Application.Interfaces;
@@ -8,6 +11,26 @@ namespace Magidesk.Infrastructure.Services;
 
 public class PrintingService : IPrintingService
 {
+    public async Task<IEnumerable<string>> GetSystemPrintersAsync()
+    {
+        return await Task.Run(() =>
+        {
+            var printers = new List<string>();
+            try
+            {
+                foreach (string printer in PrinterSettings.InstalledPrinters)
+                {
+                    printers.Add(printer);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[PrintingService] Error getting installed printers: {ex.Message}");
+            }
+            return printers.AsEnumerable();
+        });
+    }
+
     public async Task PrintTicketAsync(TicketDto ticket, string printerName = null)
     {
         // Stub: Log print request

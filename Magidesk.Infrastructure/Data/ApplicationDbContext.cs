@@ -51,6 +51,9 @@ public class ApplicationDbContext : DbContext
     public DbSet<InventoryItem> InventoryItems { get; set; } = null!;
     public DbSet<AttendanceHistory> AttendanceHistories { get; set; } = null!;
     public DbSet<RestaurantConfiguration> RestaurantConfigurations { get; set; } = null!;
+    public DbSet<Terminal> Terminals { get; set; } = null!;
+    public DbSet<PrinterGroup> PrinterGroups { get; set; } = null!;
+    public DbSet<PrinterMapping> PrinterMappings { get; set; } = null!;
     // FractionalModifier is part of Set<MenuModifier> via Inheritance
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -99,6 +102,8 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new MenuGroupConfiguration());
         modelBuilder.ApplyConfiguration(new InventoryItemConfiguration());
         modelBuilder.ApplyConfiguration(new AttendanceHistoryConfiguration());
+        modelBuilder.ApplyConfiguration(new PrinterGroupConfiguration());
+        modelBuilder.ApplyConfiguration(new PrinterMappingConfiguration());
     }
 }
 
