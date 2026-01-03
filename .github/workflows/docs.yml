@@ -14,9 +14,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Ensure Python 3.11
+    - name: Ensure Python
       run: |
         $commonPaths = @(
+            "C:\Users\giris\AppData\Local\Programs\Python\Python39\python.exe",
+            "$env:LOCALAPPDATA\Programs\Python\Python39\python.exe",
             "C:\Program Files\Python311\python.exe",
             "C:\Program Files\Python312\python.exe",
             "$env:LOCALAPPDATA\Programs\Python\Python311\python.exe",
@@ -58,7 +60,7 @@ jobs:
              $finalVersion = python --version 2>&1
              Write-Host "Successfully configured: $finalVersion"
         } else {
-             Write-Error "Python 3.11+ could not be found. Please ensure it is installed in a standard location or added to the Machine PATH."
+             Write-Error "Python 3.9+ could not be found. Please ensure it is installed or added to the Machine PATH."
              exit 1
         }
     
