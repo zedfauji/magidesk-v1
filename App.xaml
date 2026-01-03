@@ -47,12 +47,27 @@
             </Style>
 
             <!-- Converters -->
-            <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <!-- Converters -->
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
             <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
             <converters:StringFormatConverter x:Key="StringFormatConverter"/>
             <converters:StringToBoolConverter x:Key="StringToBoolConverter"/>
             <converters:StringColorToBrushConverter x:Key="StringColorToBrushConverter"/>
             <converters:CurrencyConverter x:Key="CurrencyConverter"/>
+            <converters:DecimalToDoubleConverter x:Key="DecimalToDoubleConverter"/>
+            <converters:IntToDoubleConverter x:Key="IntToDoubleConverter"/>
+            <converters:CollectionEmptyToVisibilityConverter x:Key="CollectionEmptyToVisibilityConverter"/>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
+
+        <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush" Color="{StaticResource SystemAltHighColor}"/>
+            <converters:BoolToDesignModeTextConverter x:Key="BoolToDesignModeTextConverter"/>
+            <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
+            <converters:ShapeToCornerRadiusConverter x:Key="ShapeToCornerRadiusConverter"/>
+            <converters:TableToSelectionVisibilityConverter x:Key="TableToSelectionVisibilityConverter"/>
+            <converters:DateTimeToTimeConverter x:Key="DateTimeToTimeConverter"/>
+            <converters:TableStatusToBrushConverter x:Key="TableStatusToBrushConverter"/>
 
              <!-- Standard Text Styles -->
              <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock">

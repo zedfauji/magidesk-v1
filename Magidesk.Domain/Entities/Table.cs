@@ -11,13 +11,20 @@ public class Table
 {
     public Guid Id { get; private set; }
     public int TableNumber { get; private set; }
-    public Guid? FloorId { get; private set; }
     public int Capacity { get; private set; }
-    public int X { get; private set; }
-    public int Y { get; private set; }
-    public TableStatus Status { get; private set; }
+    public int X { get; private set; } = 0;
+    public int Y { get; private set; } = 0;
+    public int Width { get; private set; } = 100; // Default width
+    public int Height { get; private set; } = 100; // Default height
+    public TableShapeType Shape { get; private set; } = TableShapeType.Rectangle;
+    public Guid? FloorId { get; private set; }
+    public Guid? LayoutId { get; private set; }
+    public TableLayout? Layout { get; private set; }
+    public TableStatus Status { get; private set; } = TableStatus.Available;
     public Guid? CurrentTicketId { get; private set; }
-    public bool IsActive { get; private set; }
+    public bool IsActive { get; private set; } = true;
+    public DateTime CreatedAt { get; private set; }
+    public DateTime UpdatedAt { get; private set; }
     public int Version { get; private set; }
 
     // Private constructor for EF Core
@@ -34,7 +41,11 @@ public class Table
         int x = 0,
         int y = 0,
         Guid? floorId = null,
-        bool isActive = true)
+        Guid? layoutId = null,
+        bool isActive = true,
+        TableShapeType shape = TableShapeType.Rectangle,
+        int width = 100,
+        int height = 100)
     {
         if (tableNumber <= 0)
         {
@@ -54,8 +65,12 @@ public class Table
             Capacity = capacity,
             X = x,
             Y = y,
+            Width = width,
+            Height = height,
+            Shape = shape,
             Status = TableStatus.Available,
             CurrentTicketId = null,
+            LayoutId = layoutId,
             IsActive = isActive,
             Version = 1
         };

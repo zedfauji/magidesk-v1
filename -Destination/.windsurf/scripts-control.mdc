@@ -1,0 +1,228 @@
+# Scripts Control Rules
+
+## Scripts Location
+- **Path**: `/scripts` folder
+- **Purpose**: Development, build, and deployment scripts
+- **Format**: PowerShell (.ps1) for Windows, Bash (.sh) for cross-platform
+
+## Script Organization
+
+### Script Categories
+```
+scripts/
+├── setup/
+│   ├── setup-database.ps1
+│   ├── setup-dev-environment.ps1
+│   └── install-dependencies.ps1
+├── build/
+│   ├── build.ps1
+│   ├── test.ps1
+│   └── package.ps1
+├── database/
+│   ├── migrate.ps1
+│   ├── seed.ps1
+│   └── backup.ps1
+├── deployment/
+│   ├── deploy.ps1
+│   └── rollback.ps1
+└── utilities/
+    ├── clean.ps1
+    └── format-code.ps1
+```
+
+## Script Standards
+
+### PowerShell Scripts
+- Use PowerShell 7+ (cross-platform)
+- Use proper error handling
+- Use parameter validation
+- Provide help documentation
+- Use consistent naming
+
+### Script Naming
+- Use descriptive names
+- Use kebab-case (e.g., `setup-database.ps1`)
+- Include purpose in name
+- Group related scripts
+
+### Script Documentation
+- Include script header with description
+- Document parameters
+- Document usage
+- Document prerequisites
+- Document examples
+
+## Database Scripts
+
+### Migration Scripts
+- Use EF Core migrations (not SQL scripts)
+- Scripts to run migrations
+- Scripts to rollback migrations
+- Scripts to check migration status
+
+### Seed Scripts
+- Scripts to seed initial data
+- Scripts to seed test data
+- Scripts to reset database
+- Idempotent scripts
+
+### Backup Scripts
+- Scripts to backup database
+- Scripts to restore database
+- Include timestamp in backups
+- Compress backups
+
+## Build Scripts
+
+### Build Process
+- Clean build artifacts
+- Restore NuGet packages
+- Build solution
+- Run tests
+- Generate reports
+
+### Test Scripts
+- Run all tests
+- Run specific test categories
+- Generate coverage reports
+- Publish test results
+
+### Package Scripts
+- Create deployment packages
+- Version packages
+- Sign packages if needed
+- Publish packages
+
+## Setup Scripts
+
+### Development Environment
+- Install prerequisites
+- Setup database
+- Configure environment
+- Verify setup
+
+### Database Setup
+- Create database if needed
+- Run migrations
+- Seed initial data
+- Verify setup
+
+## Utility Scripts
+
+### Code Quality
+- Format code
+- Run linters
+- Check code style
+- Generate reports
+
+### Cleanup Scripts
+- Clean build artifacts
+- Clean test results
+- Clean temporary files
+- Clean database (dev only)
+
+## Script Security
+
+### Security Rules
+- Never include secrets in scripts
+- Use environment variables for sensitive data
+- Validate inputs
+- Handle errors securely
+- Don't execute untrusted code
+
+### Parameter Validation
+- Validate all parameters
+- Provide default values where appropriate
+- Show usage on error
+- Handle missing parameters
+
+## Script Execution
+
+### Execution Policy
+- Scripts should be executable
+- Document execution requirements
+- Handle permissions properly
+- Provide clear error messages
+
+### Error Handling
+- Handle errors gracefully
+- Provide helpful error messages
+- Log errors appropriately
+- Exit with proper codes
+
+## Script Documentation
+
+### Required Documentation
+- Script purpose
+- Parameters and options
+- Usage examples
+- Prerequisites
+- Error handling
+- Return codes
+
+### Documentation Format
+```powershell
+<#
+.SYNOPSIS
+    Brief description
+
+.DESCRIPTION
+    Detailed description
+
+.PARAMETER ParameterName
+    Parameter description
+
+.EXAMPLE
+    Example usage
+
+.NOTES
+    Additional notes
+#>
+```
+
+## Prohibited Practices
+
+### NEVER:
+- Include secrets in scripts
+- Execute untrusted code
+- Skip error handling
+- Skip parameter validation
+- Skip documentation
+- Hard-code paths (use variables)
+- Skip logging
+
+### ALWAYS:
+- Validate inputs
+- Handle errors
+- Document scripts
+- Use secure practices
+- Test scripts
+- Provide clear messages
+
+## Script Versioning
+
+### Version Control
+- All scripts in version control
+- Track script changes
+- Review script changes
+- Test scripts before commit
+
+### Script Updates
+- Update scripts when processes change
+- Keep scripts current
+- Test updated scripts
+- Document changes
+
+## Script Testing
+
+### Test Requirements
+- Test scripts before use
+- Test error scenarios
+- Test with different inputs
+- Test on clean environment
+
+### Test Process
+- Test on development environment first
+- Verify script behavior
+- Check error handling
+- Verify output

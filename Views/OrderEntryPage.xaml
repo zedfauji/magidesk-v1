@@ -59,7 +59,7 @@
             </StackPanel>
 
             <!-- Order Lines -->
-            <ListView Grid.Row="1" ItemsSource="{Binding OrderLines}" Background="White" CornerRadius="4" Margin="0,12,0,0">
+            <ListView Grid.Row="1" ItemsSource="{Binding OrderLines}" CornerRadius="4" Margin="0,12,0,0">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="dto:OrderLineDto">
                         <Grid Padding="12,8">
@@ -71,7 +71,7 @@
                             
                             <!-- Name and Modifiers -->
                             <StackPanel>
-                                <TextBlock Text="{x:Bind MenuItemName}" FontWeight="SemiBold"/>
+                                <TextBlock Text="{x:Bind MenuItemName}" FontWeight="SemiBold" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis"/>
                                  <ItemsControl ItemsSource="{x:Bind Modifiers}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
@@ -84,20 +84,20 @@
                             </StackPanel>
                             
                             <!-- Qty Controls -->
-                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" Margin="8,0">
-                                <Button Content="-" Padding="4,0" Height="24" Width="24" 
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4" Margin="4,0">
+                                <Button Content="-" Padding="2,0" Height="24" Width="24" 
                                         Command="{Binding ElementName=RootPage, Path=DataContext.DecrementQuantityCommand}" 
                                         CommandParameter="{x:Bind}"
                                         IsEnabled="{x:Bind PrintedToKitchen, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"/>
-                                <TextBlock Text="{x:Bind Quantity}" VerticalAlignment="Center" FontWeight="Bold"/>
-                                <Button Content="+" Padding="4,0" Height="24" Width="24"
+                                <TextBlock Text="{x:Bind Quantity, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:0.###}'}" VerticalAlignment="Center" FontWeight="Bold"/>
+                                <Button Content="+" Padding="2,0" Height="24" Width="24"
                                         Command="{Binding ElementName=RootPage, Path=DataContext.IncrementQuantityCommand}" 
                                         CommandParameter="{x:Bind}"
                                         IsEnabled="{x:Bind PrintedToKitchen, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"/>
                             </StackPanel>
 
                             <!-- Price and Actions -->
-                            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4">
                                 <TextBlock Text="{x:Bind TotalAmount}" VerticalAlignment="Center"/>
                                 
                                 <!-- F-0036: Seat Assignment -->
@@ -194,31 +194,40 @@
                                    Visibility="{Binding IsPendingQuantityVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     </Grid>
 
-                <Grid ColumnSpacing="8">
+                <!-- Row 1: Financial Actions -->
+                <Grid ColumnSpacing="8" Margin="0,4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="Misc" Command="{Binding AddMiscItemCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
+                    <Button Grid.Column="1" Content="Settle" Command="{Binding SettleCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
+                    <Button Grid.Column="2" Content="Pay Now" Command="{Binding QuickPayCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicketWithItems}" Background="Green" Foreground="White" FontWeight="Bold"/>
+                </Grid>
+
+                <!-- Row 2: Ticket Management & Output -->
+                <Grid ColumnSpacing="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/> <!-- Increased width for Split/Merge -->
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                     <!-- Placeholder actions -->
-                    <Button Content="Misc" Command="{Binding AddMiscItemCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
-                    <Button Grid.Column="1" Content="Settle" HorizontalAlignment="Stretch" Command="{Binding SettleCommand}" IsEnabled="{Binding HasTicket}"/>
-                    <Button Grid.Column="2" Content="Pay Now" HorizontalAlignment="Stretch" Command="{Binding QuickPayCommand}" IsEnabled="{Binding HasTicketWithItems}" Background="Green" Foreground="White"/>
-                    <Grid Grid.Column="3" ColumnSpacing="2">
+                    
+                    <!-- Split / Merge -->
+                    <Grid Grid.Column="0" ColumnSpacing="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Content="Split" Command="{Binding SplitTicketUiCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
-                        <Button Grid.Column="1" Content="Merge" Command="{Binding MergeTicketsCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
+                        <Button Content="Split" Command="{Binding SplitTicketUiCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}" FontSize="11" Padding="2"/>
+                        <Button Grid.Column="1" Content="Merge" Command="{Binding MergeTicketsCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}" FontSize="11" Padding="2"/>
                     </Grid>
-                    <Button Grid.Column="4" Content="Note" Command="{Binding EditNoteCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
-                    <Button Grid.Column="5" Content="Print" Command="{Binding PrintTicketCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
-                    <Button Grid.Column="6" Content="Send" Command="{Binding SendToKitchenCommand}" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" IsEnabled="{Binding HasUnsentItems}"/>
+
+                    <Button Grid.Column="1" Content="Note" Command="{Binding EditNoteCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
+                    <Button Grid.Column="2" Content="Print" Command="{Binding PrintTicketCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
+                    <Button Grid.Column="3" Content="Send" Command="{Binding SendToKitchenCommand}" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" IsEnabled="{Binding HasUnsentItems}"/>
                 </Grid>
             </StackPanel>
         </Grid>

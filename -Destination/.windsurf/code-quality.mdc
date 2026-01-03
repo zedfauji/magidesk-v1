@@ -1,0 +1,241 @@
+# Code Quality Rules
+
+## Code Standards
+
+### C# Coding Conventions
+- Follow Microsoft C# coding conventions
+- Use meaningful names
+- Keep methods focused (single responsibility)
+- Keep classes focused
+- Use appropriate access modifiers
+
+### Code Organization
+- One class per file
+- Namespace matches folder structure
+- Group related classes
+- Use regions sparingly
+
+### Naming Conventions
+- **Classes**: PascalCase
+- **Methods**: PascalCase
+- **Properties**: PascalCase
+- **Fields**: camelCase with `_` prefix for private
+- **Constants**: PascalCase
+- **Enums**: PascalCase
+- **Interfaces**: I prefix
+- **Local variables**: camelCase
+- **Parameters**: camelCase
+
+## Code Complexity
+
+### Method Complexity
+- Keep methods under 50 lines
+- Extract complex logic to separate methods
+- Use descriptive method names
+- One responsibility per method
+
+### Class Complexity
+- Keep classes focused
+- Single Responsibility Principle
+- Extract complex logic to services
+- Use composition over inheritance
+
+### Cyclomatic Complexity
+- Keep complexity low
+- Extract complex conditions
+- Use early returns
+- Simplify logic
+
+## Code Comments
+
+### When to Comment
+- Complex algorithms
+- Business rules
+- Non-obvious code
+- Workarounds
+- Public APIs (XML comments)
+
+### Comment Standards
+- Write clear comments
+- Keep comments up to date
+- Explain why, not what
+- Use XML comments for public APIs
+
+### When NOT to Comment
+- Obvious code
+- Self-documenting code
+- Implementation details (use code)
+- Outdated comments
+
+## Error Handling
+
+### Exception Handling
+- Catch specific exceptions
+- Don't catch generic Exception unless necessary
+- Log exceptions with context
+- Provide user-friendly messages
+- Don't swallow exceptions
+
+### Validation
+- Validate inputs early
+- Validate at boundaries
+- Provide clear error messages
+- Handle validation errors gracefully
+
+### Error Recovery
+- Implement retry logic where appropriate
+- Handle transient failures
+- Provide fallback mechanisms
+- Test error scenarios
+
+## Performance
+
+### Database Performance
+- Use appropriate indexes
+- Avoid N+1 queries
+- Use pagination for large datasets
+- Monitor query performance
+- Use async/await for I/O
+
+### Memory Performance
+- Dispose of resources properly
+- Avoid memory leaks
+- Use appropriate data structures
+- Profile memory usage
+
+### UI Performance
+- Keep UI responsive
+- Use async operations
+- Virtualize large lists
+- Optimize data binding
+- Avoid blocking UI thread
+
+## Security
+
+### Data Protection
+- Never log sensitive data
+- Encrypt sensitive data at rest
+- Use secure connections
+- Follow security best practices
+
+### Input Validation
+- Validate all user input
+- Sanitize input for display
+- Use parameterized queries
+- Prevent injection attacks
+
+### Authentication
+- Implement proper authentication
+- Use secure password storage
+- Implement session management
+- Handle permissions properly
+
+## Testing
+
+### Test Coverage
+- Domain layer: >90%
+- Application layer: >80%
+- Infrastructure: >70%
+- Presentation: Focus on critical paths
+
+### Test Quality
+- Test behavior, not implementation
+- Use descriptive test names
+- One assertion per test (when possible)
+- Test edge cases
+- Test error scenarios
+
+### Test Organization
+- One test class per class
+- Group related tests
+- Use test fixtures appropriately
+- Keep tests maintainable
+
+## Refactoring
+
+### When to Refactor
+- Code smells detected
+- Performance issues
+- Architecture violations
+- Technical debt
+
+### Refactoring Rules
+- Refactor in separate commits
+- Maintain test coverage
+- Update documentation
+- Get review
+
+## Code Review
+
+### Review Focus
+- Architecture compliance
+- Code quality
+- Test coverage
+- Documentation
+- Security
+
+### Review Checklist
+- [ ] Follows architecture
+- [ ] Code quality good
+- [ ] Tests written
+- [ ] Documentation updated
+- [ ] Security considered
+- [ ] Performance considered
+
+## Linting and Formatting
+
+### Linter Rules
+- Follow .editorconfig
+- Fix all linter warnings
+- Don't disable rules without justification
+- Keep code consistent
+
+### Formatting
+- Use consistent formatting
+- Use auto-formatting
+- Follow team conventions
+- Keep formatting consistent
+
+## Prohibited Patterns
+
+### NEVER:
+- Use `goto` statements
+- Use `var` for unclear types
+- Use magic numbers (use constants)
+- Ignore compiler warnings
+- Suppress exceptions without handling
+- Use `dynamic` unless necessary
+- Hard-code configuration
+- Commit secrets
+
+### Code Smells to Avoid
+- Long methods
+- Large classes
+- Deep nesting
+- Duplicate code
+- Dead code
+- Complex conditionals
+- God objects
+- Feature envy
+
+## Best Practices
+
+### DO:
+- Write clear, readable code
+- Use meaningful names
+- Keep code simple
+- Write tests
+- Document complex logic
+- Follow SOLID principles
+- Use design patterns appropriately
+- Refactor regularly
+
+### DON'T:
+- Over-engineer
+- Premature optimization
+- Copy-paste code
+- Ignore warnings
+- Skip tests
+- Write unclear code
+- Violate architecture
+- Hard-code values

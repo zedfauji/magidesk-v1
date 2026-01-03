@@ -1,0 +1,158 @@
+---
+trigger: always_on
+---
+# Git Workflow Rules
+
+## Branch Strategy
+
+### Main Branches
+- **main**: Production-ready code only
+- **develop**: Integration branch for features
+- **feature/***: Feature development branches
+- **bugfix/***: Bug fix branches
+- **hotfix/***: Hotfix branches for production
+
+### Branch Naming
+- Features: `feature/ticket-management`
+- Bug fixes: `bugfix/payment-calculation`
+- Hotfixes: `hotfix/critical-security-fix`
+- Use kebab-case
+- Be descriptive
+
+## Commit Rules
+
+### Commit Messages
+- Format: `[Type] Description`
+- Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `perf`
+- Be clear and descriptive
+- Reference issues if applicable
+- Use imperative mood
+
+### Commit Examples
+```
+feat: Add split payment support
+fix: Correct tax calculation for tax-exempt items
+docs: Update domain model documentation
+refactor: Simplify ticket total calculation
+test: Add tests for refund workflow
+```
+
+### Commit Size
+- One logical change per commit
+- Don't mix unrelated changes
+- Keep commits focused
+- Make commits reviewable
+
+## Pull Request Rules
+
+### PR Requirements
+- One feature per PR
+- Include tests
+- Update documentation
+- Get approval before merge
+- All tests must pass
+- Code review required
+
+### PR Description
+- Describe what changed
+- Explain why it changed
+- Reference related issues
+- List breaking changes
+- Include screenshots if UI changes
+
+### PR Review
+- At least one approval required
+- Address review comments
+- Keep PR focused
+- Don't merge your own PR (unless exception)
+
+## Code Review
+
+### Review Checklist
+- [ ] Follows architecture
+- [ ] Code quality good
+- [ ] Tests written
+- [ ] Documentation updated
+- [ ] No secrets committed
+- [ ] Follows coding standards
+
+### Review Focus
+- Architecture compliance
+- Code quality
+- Test coverage
+- Documentation
+- Security
+- Performance
+
+## Merge Rules
+
+### Merge Process
+- Squash and merge (preferred)
+- Or merge commit (if preserving history)
+- Delete branch after merge
+- Update documentation
+- Tag releases
+
+### Merge Requirements
+- All tests pass
+- Code review approved
+- Documentation updated
+- No conflicts
+- CI/CD passes
+
+## Prohibited Practices
+
+### NEVER:
+- Commit directly to main
+- Commit secrets/passwords
+- Commit large files
+- Force push to shared branches
+- Skip code review
+- Merge without approval
+- Commit broken code
+- Commit commented-out code
+
+### ALWAYS:
+- Use feature branches
+- Write clear commit messages
+- Get code review
+- Run tests before commit
+- Update documentation
+- Follow branch strategy
+
+## Git Hooks
+
+### Pre-commit Hooks
+- Run linters
+- Run formatters
+- Check for secrets
+- Validate commit message
+
+### Pre-push Hooks
+- Run tests
+- Check coverage
+- Validate build
+
+## Conflict Resolution
+
+### Handling Conflicts
+- Resolve conflicts carefully
+- Test after resolution
+- Get review if major conflicts
+- Don't force resolution
+- Communicate with team
+
+## Release Process
+
+### Release Branches
+- Create release branch from develop
+- Tag releases
+- Merge to main
+- Merge back to develop
+- Document release
+
+### Versioning
+- Use semantic versioning
+- Major.Minor.Patch
+- Tag releases
+- Document changes

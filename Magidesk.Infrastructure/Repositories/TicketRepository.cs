@@ -31,7 +31,6 @@ public class TicketRepository : ITicketRepository
         if (ticket != null)
         {
             // Load modifiers and discounts for all order lines
-            // Modifiers are loaded through the Modifiers navigation property (which uses _modifiers backing field)
             foreach (var orderLine in ticket.OrderLines)
             {
                 await _context.Entry(orderLine)
@@ -41,23 +40,9 @@ public class TicketRepository : ITicketRepository
                     .Collection(ol => ol.Discounts)
                     .LoadAsync(cancellationToken);
             }
-
-            // Split modifiers after loading (EF Core loads all into Modifiers, we split into Modifiers/AddOns)
-            SplitModifiersForOrderLines(ticket.OrderLines);
         }
 
         return ticket;
-    }
-
-    private static void SplitModifiersForOrderLines(IEnumerable<OrderLine> orderLines)
-    {
-        var method = typeof(OrderLine).GetMethod("SplitModifiersAfterLoad", 
-            BindingFlags.NonPublic | BindingFlags.Instance);
-        
-        foreach (var orderLine in orderLines)
-        {
-            method?.Invoke(orderLine, null);
-        }
     }
 
     public async Task<Ticket?> GetByTicketNumberAsync(int ticketNumber, CancellationToken cancellationToken = default)
@@ -75,14 +60,12 @@ public class TicketRepository : ITicketRepository
             foreach (var orderLine in ticket.OrderLines)
             {
                 await _context.Entry(orderLine)
-                    .Collection("_modifiers")
+                    .Collection(ol => ol.Modifiers)
                     .LoadAsync(cancellationToken);
                 await _context.Entry(orderLine)
                     .Collection(ol => ol.Discounts)
                     .LoadAsync(cancellationToken);
             }
-
-            SplitModifiersForOrderLines(ticket.OrderLines);
         }
 
         return ticket;
@@ -114,7 +97,6 @@ public class TicketRepository : ITicketRepository
                     .Collection(ol => ol.Modifiers)
                     .LoadAsync(cancellationToken);
             }
-            SplitModifiersForOrderLines(ticket.OrderLines);
         }
 
         return tickets;
@@ -138,7 +120,6 @@ public class TicketRepository : ITicketRepository
                     .Collection(ol => ol.Modifiers)
                     .LoadAsync(cancellationToken);
             }
-            SplitModifiersForOrderLines(ticket.OrderLines);
         }
 
         return tickets;
@@ -183,10 +164,55 @@ public class TicketRepository : ITicketRepository
                     if (!existing.Contains(orderLine.Id))
                     {
                         entry.State = EntityState.Added;
+                        
+                        // IMPORTANT: Explicitly mark new Modifiers and Discounts as Added too
+                        // If parent is newly added, EF usually handles this, but recursive logic here ensures safety
+                        foreach (var mod in orderLine.Modifiers)
+                        {
+                            _context.Entry(mod).State = EntityState.Added;
+                        }
+                        // Also AddOns! OrderLine.Modifiers now reads from _modifiers which contains AddOns too if we merged them?
+                        // Wait, my previous Edit merged them into _modifiers, so orderLine.Modifiers (public prop) does NOT contain AddOns (it filters).
+                        // I need to iterate ALL modifiers.
+                        // Since I made _modifiers private, I can't access it directly.
+                        // I should iterate Modifiers AND AddOns.
+                        // Or better, assume AddOns are also saved via _modifiers mapping if EF accesses the field.
+                        
+                        // Wait, if I iterate Modifiers AND AddOns, I cover everything.
+                        foreach (var addon in orderLine.AddOns)
+                        {
+                            _context.Entry(addon).State = EntityState.Added;
+                        }
+
+                        foreach (var discount in orderLine.Discounts)
+                        {
+                            _context.Entry(discount).State = EntityState.Added;
+                        }
                     }
-                    else if (entry.State == EntityState.Detached)
+                    else 
                     {
-                        _context.OrderLines.Attach(orderLine);
+                        // Existing OrderLine
+                        if (entry.State == EntityState.Detached)
+                        {
+                             _context.OrderLines.Attach(orderLine);
+                        }
+                        
+                         // Check for NEW modifiers on an EXISTING order line
+                        foreach (var mod in orderLine.Modifiers)
+                        {
+                            if (_context.Entry(mod).State == EntityState.Detached) 
+                            { 
+                                // Ideally check existence but GUIDs are new likely
+                                _context.Entry(mod).State = EntityState.Added; 
+                            }
+                        }
+                         foreach (var addon in orderLine.AddOns)
+                        {
+                            if (_context.Entry(addon).State == EntityState.Detached) 
+                            { 
+                                _context.Entry(addon).State = EntityState.Added; 
+                            }
+                        }
                     }
                 }
             }

@@ -55,6 +55,10 @@ public static class FullPosSeeder
         // =========================
         // STEP 11 — INVENTORY
         // =========================
+        // =========================
+        // STEP 11 — INVENTORY
+        // =========================
+        // await EnsureInventoryTablesExistAsync(db, cancellationToken);
         var inventory = await SeedInventoryAsync(db, cancellationToken);
 
         // =========================
@@ -435,19 +439,43 @@ public static class FullPosSeeder
         // Dining: 1-20
         for (var i = 1; i <= 20; i++)
         {
-            tables.Add(Table.Create(i, capacity: i <= 10 ? 4 : 2, x: (i - 1) % 5 * 120, y: (i - 1) / 5 * 90, floorId: floors["Dining"]));
+            tables.Add(Table.Create(
+                tableNumber: i, 
+                capacity: i <= 10 ? 4 : 2, 
+                x: (i - 1) % 5 * 120, 
+                y: (i - 1) / 5 * 90, 
+                floorId: floors["Dining"],
+                shape: TableShapeType.Rectangle,
+                width: 80,
+                height: 80));
         }
 
         // Patio: 21-28
         for (var i = 21; i <= 28; i++)
         {
-            tables.Add(Table.Create(i, capacity: 4, x: (i - 21) % 4 * 140, y: (i - 21) / 4 * 110, floorId: floors["Patio"]));
+            tables.Add(Table.Create(
+                tableNumber: i, 
+                capacity: 4, 
+                x: (i - 21) % 4 * 140, 
+                y: (i - 21) / 4 * 110, 
+                floorId: floors["Patio"],
+                shape: TableShapeType.Round,
+                width: 90,
+                height: 90));
         }
 
         // Bar: 29-34 (small tops)
         for (var i = 29; i <= 34; i++)
         {
-            tables.Add(Table.Create(i, capacity: 2, x: (i - 29) * 100, y: 0, floorId: floors["Bar"]));
+            tables.Add(Table.Create(
+                tableNumber: i, 
+                capacity: 2, 
+                x: (i - 29) * 100, 
+                y: 0, 
+                floorId: floors["Bar"],
+                shape: TableShapeType.Square,
+                width: 60,
+                height: 60));
         }
 
         db.Tables.AddRange(tables);

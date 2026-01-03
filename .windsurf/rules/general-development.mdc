@@ -1,0 +1,262 @@
+---
+trigger: always_on
+---
+# General Development Rules
+
+## Project Structure
+
+### Solution Organization
+- Keep solution structure clean
+- Follow Clean Architecture structure
+- Group related projects
+- Use consistent naming
+
+### File Organization
+- One class per file
+- Namespace matches folder structure
+- Group related files
+- Use appropriate folder structure
+
+## Code Organization
+
+### Namespace Rules
+- Namespace matches folder path
+- Use company/project prefix
+- Example: `Magidesk.Domain.Entities`
+
+### File Naming
+- File name matches class name
+- One class per file
+- Use PascalCase for file names
+
+### Folder Naming
+- Use PascalCase for folders
+- Match namespace structure
+- Keep folder structure shallow
+
+## Dependency Injection
+
+### DI Container
+- Use Microsoft.Extensions.DependencyInjection
+- Register services in Infrastructure/Presentation
+- Use constructor injection
+- Register interfaces, not implementations
+
+### Service Lifetime
+- **Singleton**: Application-wide services
+- **Scoped**: Per-request/operation services
+- **Transient**: Short-lived services
+- Choose appropriate lifetime
+
+## Async/Await
+
+### When to Use Async
+- All I/O operations (database, file, network)
+- Long-running operations
+- Operations that can block
+- UI operations that might take time
+
+### Async Best Practices
+- Use async/await, not .Result or .Wait()
+- ConfigureAwait(false) in library code
+- Handle exceptions in async methods
+- Don't mix async and sync
+
+## Logging
+
+### Logging Framework
+- Use Microsoft.Extensions.Logging
+- Use structured logging
+- Use appropriate log levels
+- Don't log sensitive data
+
+### Log Levels
+- **Trace**: Detailed diagnostic information
+- **Debug**: Diagnostic information
+- **Information**: General information
+- **Warning**: Warning messages
+- **Error**: Error messages
+- **Critical**: Critical failures
+
+## Configuration
+
+### Configuration Management
+- Use appsettings.json for configuration
+- Use environment-specific configs
+- Store secrets securely
+- Never hard-code configuration
+
+### Configuration Access
+- Use IConfiguration interface
+- Use strongly-typed configuration
+- Validate configuration on startup
+- Provide default values
+
+## MCP Tools Integration
+
+### Context7 MCP Tool
+- **REQUIRE**: Use before implementing new library features
+- Get latest documentation for libraries (EF Core, CommunityToolkit.Mvvm, etc.)
+- Check for breaking changes and compatibility
+- Follow latest patterns from documentation
+
+### PostgreSQL MCP Tool
+- Use for database analysis and optimization
+- Use for query performance analysis
+- Use for health checks
+- Use for schema analysis
+- **NOTE**: Use EF Core migrations for schema changes, not direct SQL
+
+### Sequential Thinking MCP Tool
+- Use for complex domain problems
+- Use for architecture decisions
+- Use for multi-step implementations
+- Document thinking process
+
+### Memory Bank MCP Tool
+- Store important architectural decisions
+- Document domain model decisions
+- Maintain project context and history
+- Use for knowledge persistence
+- Update when decisions change
+
+## Library Usage
+
+### Preferred Libraries
+- **EF Core**: ORM (Infrastructure layer only)
+- **CommunityToolkit.Mvvm**: MVVM framework
+- **FluentValidation**: Validation
+- **Polly**: Resilience patterns
+- **xUnit/Moq**: Testing
+- **Dapper**: Optional, for performance-critical queries
+
+### Library Documentation
+- **REQUIRE**: Use Context7 MCP tool for latest documentation
+- Check documentation before using new features
+- Follow library best practices
+- Keep libraries updated
+
+## Error Handling
+
+### Exception Handling
+- Catch specific exceptions
+- Don't catch generic Exception unless necessary
+- Log exceptions with context
+- Provide user-friendly messages
+- Don't swallow exceptions
+
+### Error Recovery
+- Implement retry logic where appropriate
+- Handle transient failures
+- Provide fallback mechanisms
+- Test error scenarios
+
+## Performance
+
+### Performance Considerations
+- Profile before optimizing
+- Use appropriate data structures
+- Avoid premature optimization
+- Monitor performance
+- Optimize hot paths
+
+### Database Performance
+- Use indexes appropriately
+- Avoid N+1 queries
+- Use pagination
+- Monitor query performance
+
+### UI Performance
+- Keep UI responsive
+- Use async operations
+- Virtualize large lists
+- Optimize data binding
+
+## Code Reusability
+
+### DRY Principle
+- Don't Repeat Yourself
+- Extract common code
+- Use base classes appropriately
+- Use composition
+- Create reusable components
+
+### Code Duplication
+- Identify duplicated code
+- Extract to shared methods/classes
+- Use inheritance/composition appropriately
+- Don't over-abstract
+
+## Documentation
+
+### Code Documentation
+- XML comments on public APIs
+- Document complex algorithms
+- Document business rules
+- Keep comments current
+
+### Inline Documentation
+- Explain why, not what
+- Document non-obvious code
+- Document workarounds
+- Keep documentation current
+
+## Version Control
+
+### Git Best Practices
+- Commit frequently
+- Write clear commit messages
+- Use feature branches
+- Review before merge
+- Keep history clean
+
+### File Management
+- Don't commit generated files
+- Don't commit secrets
+- Use .gitignore appropriately
+- Keep repository clean
+
+## Prohibited Practices
+
+### NEVER:
+- Hard-code values
+- Skip error handling
+- Ignore warnings
+- Copy-paste code
+- Skip tests
+- Skip documentation
+- Commit secrets
+- Use magic numbers
+- Ignore architecture rules
+
+### ALWAYS:
+- Follow architecture
+- Write tests
+- Handle errors
+- Document code
+- Review code
+- Follow conventions
+- Keep code clean
+- Update documentation
+
+## Best Practices
+
+### DO:
+- Write clear, readable code
+- Use meaningful names
+- Keep code simple
+- Write tests
+- Document complex logic
+- Follow SOLID principles
+- Refactor regularly
+- Review code
+
+### DON'T:
+- Over-engineer
+- Premature optimization
+- Copy-paste code
+- Ignore warnings
+- Skip tests
+- Write unclear code
+- Violate architecture
+- Hard-code values

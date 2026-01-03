@@ -22,8 +22,20 @@
 
         <!-- Header -->
         <CommandBar DefaultLabelPosition="Right" Background="Transparent">
-            <!-- Back / Refresh buttons can go here -->
-            <AppBarButton Icon="Refresh" Label="Refresh" Command="{x:Bind ViewModel.LoadTablesCommand}"/>
+            <AppBarToggleButton Icon="Sync" Label="Real-time" 
+                              IsChecked="{x:Bind ViewModel.IsRealTimeEnabled, Mode=TwoWay}"
+                              Command="{x:Bind ViewModel.ToggleRealTimeCommand}"/>
+            <AppBarSeparator/>
+            <AppBarButton Icon="Refresh" Label="Refresh" Command="{x:Bind ViewModel.RefreshTablesCommand}"/>
+            <AppBarElementContainer>
+                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center" Margin="12,0,0,0">
+                    <TextBlock Text="Last Update:" Style="{StaticResource CaptionTextBlockStyle}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{x:Bind ViewModel.LastRefresh, Converter={StaticResource DateTimeToTimeConverter}}" 
+                              Style="{StaticResource CaptionTextBlockStyle}" 
+                              VerticalAlignment="Center"
+                              Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                </StackPanel>
+            </AppBarElementContainer>
         </CommandBar>
 
         <!-- Map Area -->
@@ -32,30 +44,25 @@
                 <!-- Panel is a Canvas for absolute positioning -->
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas Width="2000" Height="2000" Background="#f3f3f3"/>
+                        <Canvas Width="2000" Height="2000" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-
-                <!-- Bind Canvas.Left/Top to X/Y properties -->
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ContentPresenter">
-                        <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                        <Setter Property="Canvas.Top" Value="{Binding Y}"/>
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
 
                 <!-- Item Template: The Table Button -->
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="dto:TableDto">
-                        <Button Width="100" Height="100" 
+                        <Button Width="{Binding Width}" Height="{Binding Height}" 
                                 Command="{Binding ElementName=RootPage, Path=ViewModel.SelectTableCommand}"
                                 CommandParameter="{x:Bind}">
+                            <Button.RenderTransform>
+                                <TranslateTransform X="{x:Bind X}" Y="{x:Bind Y}"/>
+                            </Button.RenderTransform>
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Grid>
                                         <!-- Visual Representation -->
                                         <Border x:Name="TableShape" 
-                                                CornerRadius="8" 
+                                                CornerRadius="{Binding Shape, Converter={StaticResource ShapeToCornerRadiusConverter}}" 
                                                 BorderThickness="2"
                                                 BorderBrush="Gray"
                                                 Background="{Binding Status, Converter={StaticResource TableStatusConverter}}"> 

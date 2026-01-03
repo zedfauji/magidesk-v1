@@ -87,7 +87,7 @@
                                         </Grid>
                                         <!-- Modifiers -->
                                         <TextBlock Text="{Binding Modifiers}" Margin="38,2,0,0" FontSize="12" FontStyle="Italic" Opacity="0.8" TextWrapping="Wrap" 
-                                                   Visibility="{Binding Modifiers, Converter={StaticResource StringFormatConverter}, ConverterParameter='NotEmpty'}"/> 
+                                                   Visibility="{Binding Modifiers, Converter={StaticResource StringVisibilityConverter}}"/> 
                                                    <!-- Note: StringFormatConverter might not handle NotEmpty logic directly, fallback to binding if simple -->
                                     </StackPanel>
                                 </DataTemplate>

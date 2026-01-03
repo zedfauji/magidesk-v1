@@ -1,0 +1,222 @@
+# UI Controls and XAML Rules
+
+## WinUI 3 Controls
+
+### Standard Controls
+- Use WinUI 3 native controls
+- Prefer built-in controls over custom
+- Use appropriate control for data type
+- Follow WinUI 3 design guidelines
+
+### Control Selection
+- **TextBlock**: Display read-only text
+- **TextBox**: Single-line text input
+- **NumberBox**: Numeric input (for amounts, quantities)
+- **Button**: User actions
+- **ToggleButton**: Binary state
+- **ComboBox**: Dropdown selection
+- **ListView/GridView**: Collections
+- **DataGrid**: Tabular data (if needed)
+- **DatePicker/TimePicker**: Date/time input
+
+## XAML Best Practices
+
+### Naming Conventions
+- Controls: `{Purpose}{Type}` (e.g., `TicketNumberTextBox`, `TotalAmountTextBlock`)
+- Resources: `{Type}{Purpose}` (e.g., `TicketStatusStyle`, `AmountConverter`)
+- Namespaces: Use clear prefixes
+
+### Resource Organization
+- Styles in ResourceDictionary
+- Converters in separate file
+- Templates in ResourceDictionary
+- Resources at appropriate scope (page, app, control)
+
+### Data Binding
+- Use data binding for all data display
+- Use `{Binding}` for simple properties
+- Use `{x:Bind}` for better performance (compile-time)
+- Use converters for data transformation
+- Avoid code-behind for data manipulation
+
+### Binding Modes
+- **OneWay**: Display data (default)
+- **TwoWay**: Editable fields
+- **OneTime**: Static data
+- Use appropriate mode for performance
+
+## Layout Controls
+
+### Grid
+- Use Grid for complex layouts
+- Define rows and columns explicitly
+- Use Star sizing for flexible layouts
+- Use Auto sizing for content-based sizing
+
+### StackPanel
+- Use for simple vertical/horizontal stacking
+- Avoid deep nesting
+- Consider performance for large lists
+
+### RelativePanel
+- Use for relative positioning
+- Useful for responsive layouts
+
+### ScrollViewer
+- Wrap content that may overflow
+- Use for lists and long content
+- Set appropriate scroll modes
+
+## Input Controls
+
+### NumberBox
+- Use for all numeric input (amounts, quantities)
+- Set appropriate min/max values
+- Set number format (currency, decimal places)
+- Handle validation
+
+### TextBox
+- Use for text input
+- Set appropriate input scope
+- Handle validation
+- Use password box for sensitive data
+
+### DatePicker/TimePicker
+- Use for date/time selection
+- Set appropriate date ranges
+- Handle timezone if needed
+
+## Collection Controls
+
+### ListView
+- Use for simple lists
+- Virtualize for performance
+- Use ItemTemplate for item display
+- Handle selection
+
+### GridView
+- Use for grid layouts
+- Virtualize for performance
+- Use ItemTemplate for item display
+
+### DataGrid
+- Use only if needed (complex tabular data)
+- Consider performance implications
+- Use virtualization
+
+## Command Binding
+
+### Button Commands
+- Bind Button.Command to ViewModel command
+- Use CommandParameter for additional data
+- Handle CanExecute for button state
+
+### Menu Commands
+- Bind menu items to commands
+- Use command groups for related actions
+- Handle permissions/visibility
+
+## Styling and Theming
+
+### Styles
+- Define styles in ResourceDictionary
+- Use based-on for style inheritance
+- Name styles clearly
+- Reuse styles across views
+
+### Themes
+- Support light and dark themes
+- Use theme resources
+- Test in both themes
+
+### Colors
+- Use theme colors, not hard-coded
+- Support high contrast if needed
+- Ensure accessibility
+
+## Accessibility
+
+### Requirements
+- All interactive controls must be keyboard accessible
+- Provide appropriate labels
+- Support screen readers
+- Ensure sufficient contrast
+- Support keyboard navigation
+
+### Implementation
+- Use AutomationProperties
+- Set appropriate labels
+- Test with screen reader
+- Test keyboard navigation
+
+## Performance
+
+### Virtualization
+- Use virtualization for large lists
+- Enable ItemsSource virtualization
+- Consider data virtualization for very large datasets
+
+### Lazy Loading
+- Load data on demand
+- Use pagination for large datasets
+- Load images asynchronously
+
+### Binding Performance
+- Prefer `{x:Bind}` over `{Binding}` when possible
+- Avoid complex converters in hot paths
+- Cache converter instances
+
+## Error Display
+
+### Error Messages
+- Display errors clearly
+- Use error style/color
+- Show errors near relevant controls
+- Clear errors when fixed
+
+### Validation Display
+- Show validation errors inline
+- Use validation styles
+- Provide helpful error messages
+
+## Responsive Design
+
+### Layout Adaptation
+- Design for different screen sizes
+- Use adaptive layouts
+- Test on different resolutions
+- Consider tablet/desktop differences
+
+## Prohibited Patterns
+
+### NEVER:
+- Hard-code values in XAML (use resources)
+- Put business logic in code-behind
+- Access ViewModel properties directly (use binding)
+- Create controls programmatically (use XAML)
+- Use deprecated controls
+- Ignore accessibility
+
+## Control-Specific Rules
+
+### Money Display
+- Always show 2 decimal places
+- Use currency format
+- Use NumberBox for money input
+- Validate money input
+
+### Date/Time Display
+- Use consistent format
+- Show timezone if relevant
+- Use DatePicker/TimePicker for input
+
+### Status Display
+- Use colors/icons for status
+- Make status clear
+- Use enums, not strings
+
+### Lists
+- Virtualize large lists
+- Use appropriate item template
+- Handle empty states
+- Support selection if needed

@@ -44,6 +44,7 @@ public partial class BackOfficeViewModel : ViewModelBase
         NavigationItems.Add(new NavigationItem("Purchase Orders", "Stock Procurement", "\uEA37", typeof(PurchaseOrdersPage)));
         NavigationItems.Add(new NavigationItem("Table Map", "Spatial Floor Plan", "\uE8F1", typeof(TableMapPage)));
         NavigationItems.Add(new NavigationItem("Table Explorer", "List Floor Plan", "\uE179", typeof(TableExplorerPage)));
+        NavigationItems.Add(new NavigationItem("Table Designer", "Design Table Layouts", "\uE70F", typeof(Magidesk.Presentation.Views.TableDesignerPage)));
         NavigationItems.Add(new NavigationItem("Users", "Manage Staff & Permissions", "\uE77B", typeof(Magidesk.Presentation.Views.UserManagementPage)));
         NavigationItems.Add(new NavigationItem("Roles", "Manage User Roles", "\uE716", typeof(Magidesk.Presentation.Views.RoleManagementPage)));
         NavigationItems.Add(new NavigationItem("Tax / Discount", "Discount & Tax tools", "\uE8D7", typeof(Magidesk.Presentation.Views.DiscountTaxPage)));

@@ -1,15 +1,17 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
+using MediatR;
 using Magidesk.Application.DependencyInjection;
 using Magidesk.Application.Interfaces;
 using Magidesk.Application.Commands;
 using Magidesk.Application.Services;
+using Magidesk.Application.DTOs;
 using Magidesk.Infrastructure.DependencyInjection;
 using Magidesk.Infrastructure.Repositories;
 using Magidesk.Infrastructure.Services;
-using Magidesk.Infrastructure.Services;
 using Magidesk.Presentation.Services;
+using Magidesk.Presentation.ViewModels;
 using Magidesk.Application.Commands.SystemConfig;
 using Magidesk.Application.DTOs.Reports;
 using Magidesk.Application.Queries.Reports;
@@ -110,6 +112,10 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<Magidesk.Presentation.ViewModels.GroupSettleTicketViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.NotesDialogViewModel>();
+                    services.AddTransient<TableDesignerViewModel>();
+                    services.AddTransient<FloorManagementViewModel>();
+                    services.AddTransient<ExportImportManagementViewModel>();
+                    services.AddTransient<ServerSectionManagementViewModel>();
 
                     // Query handlers
                     services.AddScoped<IQueryHandler<GetServerProductivityReportQuery, ServerProductivityReportDto>, GetServerProductivityReportQueryHandler>();
@@ -125,6 +131,10 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<ICommandHandler<ChangeTableCommand, ChangeTableResult>, ChangeTableCommandHandler>();
                     services.AddTransient<ICommandHandler<SetCustomerCommand, SetCustomerResult>, SetCustomerCommandHandler>();
                     
+                    services.AddTransient<ITableRepository, TableRepository>();
+                    services.AddTransient<ITableLayoutRepository, TableLayoutRepository>();
+                    services.AddTransient<IFloorRepository, FloorRepository>();
+
                     // Domain services
                     services.AddTransient<BatchPaymentDomainService>();
                     services.AddSingleton<IEventPublisher, EventPublisher>();

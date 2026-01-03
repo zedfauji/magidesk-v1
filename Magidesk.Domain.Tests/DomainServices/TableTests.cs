@@ -45,7 +45,7 @@ public class TableTests
         var isActive = false;
 
         // Act
-        var table = Table.Create(tableNumber, capacity, x, y, floorId, isActive);
+        var table = Table.Create(tableNumber, capacity, x, y, floorId, isActive: isActive);
 
         // Assert
         table.TableNumber.Should().Be(tableNumber);

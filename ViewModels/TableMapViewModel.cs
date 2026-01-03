@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Threading;
 using Magidesk.Application.DTOs;
 using Magidesk.Application.Interfaces;
 using Magidesk.Application.Queries;
@@ -10,14 +11,17 @@ using Magidesk.Presentation.Services;
 using CommunityToolkit.Mvvm.Input;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Linq;
 
 namespace Magidesk.Presentation.ViewModels;
 
 public class TableMapViewModel : ViewModelBase
 {
-    private readonly IQueryHandler<GetAvailableTablesQuery, GetAvailableTablesResult> _getAvailableTables;
+    private readonly IQueryHandler<GetTableMapQuery, GetTableMapResult> _getTableMap;
     private readonly ICommandHandler<ChangeTableCommand, ChangeTableResult> _changeTable;
     private readonly NavigationService _navigationService;
+    private Timer? _refreshTimer;
+    private readonly CancellationTokenSource _cancellationTokenSource = new();
 
     public ObservableCollection<TableDto> Tables { get; } = new();
 
@@ -26,6 +30,27 @@ public class TableMapViewModel : ViewModelBase
     {
         get => _selectedTable;
         set => SetProperty(ref _selectedTable, value);
+    }
+
+    private bool _isRealTimeEnabled = true;
+    public bool IsRealTimeEnabled
+    {
+        get => _isRealTimeEnabled;
+        set => SetProperty(ref _isRealTimeEnabled, value);
+    }
+
+    private int _refreshInterval = 5000; // 5 seconds
+    public int RefreshInterval
+    {
+        get => _refreshInterval;
+        set => SetProperty(ref _refreshInterval, value);
+    }
+
+    private DateTime _lastRefresh = DateTime.MinValue;
+    public DateTime LastRefresh
+    {
+        get => _lastRefresh;
+        set => SetProperty(ref _lastRefresh, value);
     }
     
     // Mode Logic
@@ -39,20 +64,44 @@ public class TableMapViewModel : ViewModelBase
     public string HeaderText => SourceTicketId.HasValue ? "Select New Table" : "Table Map";
 
     public AsyncRelayCommand LoadTablesCommand { get; }
+    public AsyncRelayCommand RefreshTablesCommand { get; }
+    public AsyncRelayCommand ToggleRealTimeCommand { get; }
     public AsyncRelayCommand<TableDto> SelectTableCommand { get; }
 
+    private readonly IUserService _userService;
+    private readonly ITerminalContext _terminalContext;
+    private readonly ICashSessionRepository _cashSessionRepository;
+    private readonly IOrderTypeRepository _orderTypeRepository;
+    private readonly ICommandHandler<CreateTicketCommand, CreateTicketResult> _createTicketHandler;
+
     public TableMapViewModel(
-        IQueryHandler<GetAvailableTablesQuery, GetAvailableTablesResult> getAvailableTables,
+        IQueryHandler<GetTableMapQuery, GetTableMapResult> getTableMap,
         ICommandHandler<ChangeTableCommand, ChangeTableResult> changeTable,
-        NavigationService navigationService)
+        NavigationService navigationService,
+        IUserService userService,
+        ITerminalContext terminalContext,
+        ICashSessionRepository cashSessionRepository,
+        IOrderTypeRepository orderTypeRepository,
+        ICommandHandler<CreateTicketCommand, CreateTicketResult> createTicketHandler)
     {
-        _getAvailableTables = getAvailableTables;
+        _getTableMap = getTableMap;
         _changeTable = changeTable;
         _navigationService = navigationService;
+        _userService = userService;
+        _terminalContext = terminalContext;
+        _cashSessionRepository = cashSessionRepository;
+        _orderTypeRepository = orderTypeRepository;
+        _createTicketHandler = createTicketHandler;
+
+        LoadTablesCommand = new AsyncRelayCommand(LoadTablesAsync);
+        RefreshTablesCommand = new AsyncRelayCommand(RefreshTablesAsync);
+        ToggleRealTimeCommand = new AsyncRelayCommand(ToggleRealTimeAsync);
+        SelectTableCommand = new AsyncRelayCommand<TableDto>(SelectTableAsync);
 
         Title = "Table Map";
-        LoadTablesCommand = new AsyncRelayCommand(LoadTablesAsync);
-        SelectTableCommand = new AsyncRelayCommand<TableDto>(SelectTableAsync);
+        
+        // Start real-time polling with initial delay
+        StartRealTimePolling();
     }
     
     public void SetContext(Guid? sourceTicketId)
@@ -66,7 +115,7 @@ public class TableMapViewModel : ViewModelBase
         IsBusy = true;
         try
         {
-            var result = await _getAvailableTables.HandleAsync(new GetAvailableTablesQuery());
+            var result = await _getTableMap.HandleAsync(new GetTableMapQuery());
             Tables.Clear();
             foreach (var table in result.Tables)
             {
@@ -133,8 +182,140 @@ public class TableMapViewModel : ViewModelBase
         }
         else if (table.Status == TableStatus.Available)
         {
-             // Create new ticket (TODO: Pass TableId to link it?)
-             _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(null, true));
+             // Create new ticket logic
+             try 
+             {
+                 IsBusy = true;
+
+                 // 1. Context Validation
+                 if (_userService.CurrentUser?.Id == null)
+                 {
+                     // In a real scenario, might redirect to login, but here just return
+                     return;
+                 }
+                 var userId = _userService.CurrentUser.Id;
+
+                 if (_terminalContext.TerminalId == null)
+                 {
+                     return;
+                 }
+                 var terminalId = _terminalContext.TerminalId.Value;
+
+                 // 2. Session Validation
+                 var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
+                 if (session == null)
+                 {
+                     // Simple error for now, as full dialog parity is complex to duplicate right here
+                     // But we can try to show a basic message if possible, or just fail silently/log
+                     System.Diagnostics.Debug.WriteLine("No open session. Please start shift.");
+                     return;
+                 }
+                 var shiftId = session.Id;
+
+                 // 3. Order Type (DINE IN)
+                 var orderTypes = await _orderTypeRepository.GetActiveAsync();
+                 var dineIn = orderTypes.FirstOrDefault(ot => ot.Name.ToUpper().Contains("DINE IN")) ?? orderTypes.FirstOrDefault();
+                 
+                 if (dineIn == null)
+                 {
+                     System.Diagnostics.Debug.WriteLine("No Order Types found.");
+                     return;
+                 }
+
+                 // 4. Create Ticket
+                 var command = new CreateTicketCommand
+                 {
+                     CreatedBy = userId,
+                     TerminalId = terminalId,
+                     ShiftId = shiftId,
+                     OrderTypeId = dineIn.Id,
+                     TableNumbers = new List<int> { table.TableNumber },
+                     NumberOfGuests = 1 // Default
+                 };
+
+                 var result = await _createTicketHandler.HandleAsync(command);
+
+                 // 5. Navigate with new Ticket ID
+                 _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(result.TicketId, true));
+             }
+             catch (Exception ex)
+             {
+                 System.Diagnostics.Debug.WriteLine($"Failed to create ticket from map: {ex.Message}");
+             }
+             finally
+             {
+                 IsBusy = false;
+             }
         }
+    }
+
+    private void StartRealTimePolling()
+    {
+        if (IsRealTimeEnabled)
+        {
+            // Initial delay to avoid collision with page load
+            _refreshTimer = new Timer(async _ => await RefreshTableStatusAsync(), 
+                                     null, TimeSpan.FromMilliseconds(RefreshInterval), TimeSpan.FromMilliseconds(RefreshInterval));
+        }
+    }
+
+    private void StopRealTimePolling()
+    {
+        _refreshTimer?.Dispose();
+    }
+
+    private async Task RefreshTableStatusAsync()
+    {
+        if (!IsRealTimeEnabled || IsBusy) return;
+
+        try
+        {
+            var result = await _getTableMap.HandleAsync(new GetTableMapQuery());
+            
+            // Update only changed tables for performance
+            foreach (var updatedTable in result.Tables)
+            {
+                var existingTable = Tables.FirstOrDefault(t => t.Id == updatedTable.Id);
+                if (existingTable != null && existingTable.Status != updatedTable.Status)
+                {
+                    existingTable.Status = updatedTable.Status;
+                    existingTable.CurrentTicketId = updatedTable.CurrentTicketId;
+                }
+            }
+
+            LastRefresh = DateTime.UtcNow;
+        }
+        catch (Exception ex)
+        {
+            // Log error but don't crash the polling
+            System.Diagnostics.Debug.WriteLine($"Error refreshing table status: {ex.Message}");
+        }
+    }
+
+    private async Task RefreshTablesAsync()
+    {
+        await LoadTablesAsync();
+        LastRefresh = DateTime.UtcNow;
+    }
+
+    private async Task ToggleRealTimeAsync()
+    {
+        IsRealTimeEnabled = !IsRealTimeEnabled;
+        
+        if (IsRealTimeEnabled)
+        {
+            StartRealTimePolling();
+        }
+        else
+        {
+            StopRealTimePolling();
+        }
+    }
+
+    public void Dispose()
+    {
+        _cancellationTokenSource.Cancel();
+        StopRealTimePolling();
+        _cancellationTokenSource.Dispose();
     }
 }

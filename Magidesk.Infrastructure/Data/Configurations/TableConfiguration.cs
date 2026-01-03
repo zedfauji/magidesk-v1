@@ -42,6 +42,21 @@ public class TableConfiguration : IEntityTypeConfiguration<Table>
                 v => (TableStatus)Enum.Parse(typeof(TableStatus), v))
             .HasDefaultValue(TableStatus.Available);
 
+        builder.Property(t => t.Width)
+            .IsRequired()
+            .HasDefaultValue(100);
+
+        builder.Property(t => t.Height)
+            .IsRequired()
+            .HasDefaultValue(100);
+
+        builder.Property(t => t.Shape)
+            .IsRequired()
+            .HasConversion(
+                v => v.ToString(),
+                v => (TableShapeType)Enum.Parse(typeof(TableShapeType), v))
+            .HasDefaultValue(TableShapeType.Rectangle);
+
         builder.Property(t => t.CurrentTicketId);
 
         builder.Property(t => t.IsActive)

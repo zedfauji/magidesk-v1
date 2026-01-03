@@ -1,0 +1,107 @@
+<Page
+    x:Class="Magidesk.Presentation.Views.TableDesignerTestPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Magidesk.Presentation.ViewModels"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <CommandBar Grid.Row="0" DefaultLabelPosition="Right" Background="Transparent">
+            <AppBarButton Icon="Back" Label="Back" Click="BackButton_Click"/>
+            <AppBarButton Icon="Play" Label="Run All Tests" Click="RunAllTests_Click"/>
+            <AppBarButton Icon="TestBeaker" Label="Basic Workflow" Click="TestBasicWorkflow_Click"/>
+            <AppBarButton Icon="DragDrop" Label="Drag &amp; Drop" Click="TestDragDrop_Click"/>
+            <AppBarButton Icon="Shape" Label="Shape Selection" Click="TestShapes_Click"/>
+        </CommandBar>
+
+        <!-- Test Results -->
+        <ScrollViewer Grid.Row="1" Padding="16">
+            <StackPanel Spacing="16">
+                <TextBlock Text="Table Designer Test Suite" Style="{StaticResource TitleTextBlockStyle}"/>
+                
+                <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                       BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                       BorderThickness="1"
+                       CornerRadius="8"
+                       Padding="16">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Test Status" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock x:Name="StatusText" Text="Ready to run tests..." 
+                                  Style="{StaticResource BodyTextBlockStyle}"/>
+                        <ProgressBar x:Name="TestProgress" Minimum="0" Maximum="100" Value="0" 
+                                     Height="4" Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                       BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                       BorderThickness="1"
+                       CornerRadius="8"
+                       Padding="16">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Test Results" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <ScrollViewer MaxHeight="300">
+                            <TextBlock x:Name="ResultsText" Text="No tests run yet." 
+                                      Style="{StaticResource BodyTextBlockStyle}"
+                                      FontFamily="Consolas"
+                                      TextWrapping="Wrap"/>
+                        </ScrollViewer>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                       BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                       BorderThickness="1"
+                       CornerRadius="8"
+                       Padding="16">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Test Statistics" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Passed" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                <TextBlock x:Name="PassedCount" Text="0" Style="{StaticResource SubtitleTextBlockStyle}" 
+                                          Foreground="Green"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Failed" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                <TextBlock x:Name="FailedCount" Text="0" Style="{StaticResource SubtitleTextBlockStyle}" 
+                                          Foreground="Red"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Total" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                <TextBlock x:Name="TotalCount" Text="0" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" 
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="16,8">
+            <TextBlock x:Name="StatusBarText" Text="Ready" 
+                      Style="{StaticResource CaptionTextBlockStyle}"/>
+        </Border>
+    </Grid>
+</Page>

@@ -39,6 +39,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IOrderTypeRepository, OrderTypeRepository>();
         services.AddScoped<ITableRepository, TableRepository>();
         services.AddScoped<IAuditEventRepository, AuditEventRepository>();
+        services.AddScoped<ITableLayoutRepository, TableLayoutRepository>();
         services.AddScoped<IKitchenOrderRepository, KitchenOrderRepository>();
         services.AddScoped<IGroupSettlementRepository, GroupSettlementRepository>();
         services.AddScoped<ITicketRepository, TicketRepository>();
@@ -60,6 +61,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IVendorRepository, VendorRepository>();
         services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
         services.AddScoped<IInventoryAdjustmentRepository, InventoryAdjustmentRepository>();
+        services.AddScoped<IServerSectionRepository, ServerSectionRepository>();
 
 
         // Register domain services (stateless, can be singleton or scoped)

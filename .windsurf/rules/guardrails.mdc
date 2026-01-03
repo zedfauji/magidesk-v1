@@ -1,0 +1,248 @@
+---
+trigger: always_on
+---
+# Development Guardrails
+
+## Architecture Guardrails
+
+### Layer Violations
+- **BLOCK**: Presentation accessing Domain directly
+- **BLOCK**: Application accessing Infrastructure directly (except interfaces)
+- **BLOCK**: Domain accessing any other layer
+- **BLOCK**: Business logic in Presentation layer
+- **BLOCK**: Database access from Presentation layer
+
+### Dependency Direction
+- Dependencies must point inward
+- Domain has no dependencies
+- Application depends only on Domain
+- Infrastructure depends on Application and Domain
+- Presentation depends only on Application
+
+## Domain Guardrails
+
+### Business Logic Location
+- **REQUIRE**: All business logic in Domain layer
+- **BLOCK**: Business logic in Application layer (orchestration only)
+- **BLOCK**: Business logic in Infrastructure layer
+- **BLOCK**: Business logic in Presentation layer
+
+### Entity Design
+- **REQUIRE**: Rich domain model (entities have behavior)
+- **REQUIRE**: Invariants enforced in entities
+- **BLOCK**: Anemic domain model (entities are data only)
+- **BLOCK**: Entities without behavior
+
+## Application Guardrails
+
+### Use Cases
+- **REQUIRE**: One use case per file
+- **REQUIRE**: Use cases orchestrate domain logic
+- **BLOCK**: Business logic in use cases
+- **BLOCK**: Direct database access
+
+### DTOs
+- **REQUIRE**: DTOs for Presentation communication
+- **REQUIRE**: Mapping between entities and DTOs
+- **BLOCK**: Exposing domain entities to UI
+- **BLOCK**: Business logic in DTOs
+
+## Infrastructure Guardrails
+
+### Repository Pattern
+- **REQUIRE**: Repository interfaces in Application layer
+- **REQUIRE**: Repository implementations in Infrastructure
+- **BLOCK**: Business logic in repositories
+- **BLOCK**: Direct DbContext access from Application
+
+### EF Core
+- **REQUIRE**: EF Core only in Infrastructure layer
+- **REQUIRE**: Entity configurations separate
+- **BLOCK**: EF Core in Domain layer
+- **BLOCK**: EF Core in Presentation layer
+
+## Presentation Guardrails
+
+### MVVM Pattern
+- **REQUIRE**: ViewModels for all views
+- **REQUIRE**: Data binding for all data
+- **BLOCK**: Business logic in ViewModels
+- **BLOCK**: Business logic in code-behind
+- **BLOCK**: Direct service instantiation
+
+### Data Access
+- **BLOCK**: DbContext in Presentation layer
+- **BLOCK**: Repository access from ViewModels
+- **REQUIRE**: All data through Application layer
+
+## Database Guardrails
+
+### Schema Management
+- **REQUIRE**: All changes via EF Core migrations
+- **REQUIRE**: Test migrations before applying
+- **BLOCK**: Direct database modifications
+- **BLOCK**: Manual schema changes
+
+### Queries
+- **REQUIRE**: Parameterized queries (EF Core default)
+- **REQUIRE**: Proper indexing
+- **BLOCK**: SQL injection vulnerabilities
+- **BLOCK**: N+1 queries
+
+## Code Quality Guardrails
+
+### Code Standards
+- **REQUIRE**: Follow C# conventions
+- **REQUIRE**: Meaningful names
+- **REQUIRE**: Proper error handling
+- **BLOCK**: Code smells
+- **BLOCK**: Magic numbers
+
+### Complexity
+- **LIMIT**: Method complexity (cyclomatic complexity < 10)
+- **LIMIT**: Method length (< 50 lines)
+- **LIMIT**: Class size (single responsibility)
+- **BLOCK**: Deep nesting (> 3 levels)
+
+## Testing Guardrails
+
+### Coverage
+- **REQUIRE**: Domain layer >90% coverage
+- **REQUIRE**: Application layer >80% coverage
+- **REQUIRE**: All invariants have tests
+- **BLOCK**: Merging without tests
+
+### Test Quality
+- **REQUIRE**: Descriptive test names
+- **REQUIRE**: One assertion per test (when possible)
+- **REQUIRE**: Test edge cases
+- **BLOCK**: Tests that depend on each other
+
+## Security Guardrails
+
+### Data Protection
+- **BLOCK**: Logging sensitive data
+- **BLOCK**: Storing secrets in code
+- **REQUIRE**: Input validation
+- **REQUIRE**: Secure connections
+
+### Authentication
+- **REQUIRE**: Proper authentication
+- **REQUIRE**: Secure password storage
+- **BLOCK**: Weak passwords
+- **BLOCK**: Skipping authentication
+
+## Documentation Guardrails
+
+### Documentation Requirements
+- **REQUIRE**: Update docs when code changes
+- **REQUIRE**: Document complex logic
+- **REQUIRE**: Document design decisions
+- **BLOCK**: Outdated documentation
+
+## FloreantPOS Guardrails
+
+### Reference Usage
+- **ALLOW**: Reading FloreantPOS for behavior understanding
+- **ALLOW**: Documenting behaviors found
+- **BLOCK**: Copying any code
+- **BLOCK**: Porting code to C#
+- **BLOCK**: Importing files
+
+## Library Usage Guardrails
+
+### Library Selection
+- **REQUIRE**: Use established, maintained libraries
+- **REQUIRE**: Check Context7 MCP for latest documentation
+- **REQUIRE**: Verify .NET 8 compatibility
+- **BLOCK**: Unmaintained libraries
+- **BLOCK**: Libraries with security vulnerabilities
+- **BLOCK**: Reinventing existing functionality
+
+### Required Libraries
+- **REQUIRE**: EF Core for database access
+- **REQUIRE**: CommunityToolkit.Mvvm for MVVM
+- **REQUIRE**: FluentValidation for validation
+- **REQUIRE**: Polly for resilience patterns
+- **REQUIRE**: xUnit and Moq for testing
+
+### Library Documentation
+- **REQUIRE**: Use Context7 MCP tool before implementing library features
+- **REQUIRE**: Follow latest patterns from documentation
+- **BLOCK**: Using outdated library patterns
+- **BLOCK**: Skipping documentation lookup
+
+## MCP Tools Guardrails
+
+### Context7 MCP Tool
+- **REQUIRE**: Use before implementing new library features
+- **REQUIRE**: Check for latest documentation
+- **REQUIRE**: Verify compatibility and breaking changes
+- **BLOCK**: Using outdated documentation
+- **BLOCK**: Skipping documentation lookup
+
+### PostgreSQL MCP Tool
+- **ALLOW**: Database analysis and optimization
+- **ALLOW**: Query performance analysis
+- **ALLOW**: Health checks
+- **BLOCK**: Direct schema modifications (use EF Core migrations)
+- **BLOCK**: Production data modifications
+
+### Sequential Thinking MCP Tool
+- **REQUIRE**: Use for complex domain problems
+- **REQUIRE**: Use for architecture decisions
+- **REQUIRE**: Use for multi-step implementations
+- **BLOCK**: Skipping analysis for complex problems
+
+### Memory Bank MCP Tool
+- **REQUIRE**: Store important architectural decisions
+- **REQUIRE**: Document domain model decisions
+- **REQUIRE**: Maintain project context
+- **REQUIRE**: Update when decisions change
+- **BLOCK**: Storing sensitive data
+- **BLOCK**: Skipping updates when decisions change
+
+## Implementation Plan Guardrails
+
+### Phase Adherence
+- **REQUIRE**: Follow execution plan phases
+- **REQUIRE**: Complete phase before moving to next
+- **REQUIRE**: Use libraries specified in plan
+- **BLOCK**: Skipping phases
+- **BLOCK**: Using unapproved libraries
+
+### Library Usage from Plan
+- **REQUIRE**: Use EF Core as specified
+- **REQUIRE**: Use CommunityToolkit.Mvvm as specified
+- **REQUIRE**: Use FluentValidation as specified
+- **REQUIRE**: Use Polly for resilience as specified
+- **ALLOW**: Dapper if performance requires (document reason)
+
+## Enforcement
+
+### Automated Checks
+- Linters check for violations
+- Tests verify invariants
+- Code review catches issues
+- CI/CD blocks violations
+
+### Manual Checks
+- Code review required
+- Architecture review for major changes
+- Security review for sensitive changes
+- Library usage review
+- MCP tool usage verification
+
+## Violation Handling
+
+### On Violation
+- Block merge if automated check fails
+- Require fix in code review
+- Document violation and fix
+- Update guardrails if needed
+
+### Exception Process
+- Document exception reason
+- Get approval for exception
+- Plan to remove exception
+- Review exception regularly

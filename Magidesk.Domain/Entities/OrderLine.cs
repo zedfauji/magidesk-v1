@@ -12,7 +12,6 @@ namespace Magidesk.Domain.Entities;
 public class OrderLine
 {
     private readonly List<OrderLineModifier> _modifiers = new();
-    private readonly List<OrderLineModifier> _addOns = new();
     private readonly List<OrderLineDiscount> _discounts = new();
 
     public Guid Id { get; private set; }
@@ -52,8 +51,10 @@ public class OrderLine
     public bool TreatAsSeat { get; private set; }
     
     // Collections
-    public IReadOnlyCollection<OrderLineModifier> Modifiers => _modifiers.AsReadOnly();
-    public IReadOnlyCollection<OrderLineModifier> AddOns => _addOns.AsReadOnly();
+    // Computed views for modifiers based on type
+    public IReadOnlyCollection<OrderLineModifier> Modifiers => _modifiers.Where(m => m.ModifierType != Enumerations.ModifierType.Extra).ToList().AsReadOnly();
+    public IReadOnlyCollection<OrderLineModifier> AddOns => _modifiers.Where(m => m.ModifierType == Enumerations.ModifierType.Extra).ToList().AsReadOnly();
+    
     public IReadOnlyCollection<OrderLineDiscount> Discounts => _discounts.AsReadOnly();
     public OrderLineModifier? SizeModifier { get; private set; }
     
@@ -72,31 +73,6 @@ public class OrderLine
         TaxAmountWithoutModifiers = Money.Zero();
         TotalAmount = Money.Zero();
         TotalAmountWithoutModifiers = Money.Zero();
-    }
-
-    /// <summary>
-    /// Splits modifiers into _modifiers and _addOns based on ModifierType.
-    /// Called after EF Core materialization.
-    /// </summary>
-    internal void SplitModifiersAfterLoad()
-    {
-        // EF Core loads all OrderLineModifiers into _modifiers
-        // We need to split them into _modifiers (Normal) and _addOns (Extra)
-        var allModifiers = _modifiers.ToList();
-        _modifiers.Clear();
-        _addOns.Clear();
-
-        foreach (var modifier in allModifiers)
-        {
-            if (modifier.ModifierType == Enumerations.ModifierType.Extra)
-            {
-                _addOns.Add(modifier);
-            }
-            else
-            {
-                _modifiers.Add(modifier);
-            }
-        }
     }
 
     /// <summary>
@@ -149,22 +125,20 @@ public class OrderLine
         // Calculate subtotal without modifiers
         SubtotalAmountWithoutModifiers = UnitPrice * Quantity;
 
-        // Add modifiers
+        // Add modifiers (All inclusive)
         var modifierTotal = _modifiers.Aggregate(Money.Zero(), (sum, m) => sum + m.TotalAmount);
-        var addOnTotal = _addOns.Aggregate(Money.Zero(), (sum, a) => sum + a.TotalAmount);
         
         // Add size modifier if present
         var sizeModifierTotal = SizeModifier?.TotalAmount ?? Money.Zero();
 
-        SubtotalAmount = SubtotalAmountWithoutModifiers + modifierTotal + addOnTotal + sizeModifierTotal;
+        SubtotalAmount = SubtotalAmountWithoutModifiers + modifierTotal + sizeModifierTotal;
 
         // Calculate tax
         TaxAmountWithoutModifiers = SubtotalAmountWithoutModifiers * TaxRate;
         var modifierTax = _modifiers.Aggregate(Money.Zero(), (sum, m) => sum + m.TaxAmount);
-        var addOnTax = _addOns.Aggregate(Money.Zero(), (sum, a) => sum + a.TaxAmount);
         var sizeModifierTax = SizeModifier?.TaxAmount ?? Money.Zero();
         
-        TaxAmount = TaxAmountWithoutModifiers + modifierTax + addOnTax + sizeModifierTax;
+        TaxAmount = TaxAmountWithoutModifiers + modifierTax + sizeModifierTax;
 
         // Apply discounts
         DiscountAmount = _discounts.Aggregate(Money.Zero(), (sum, d) => sum + d.Amount);
@@ -210,8 +184,11 @@ public class OrderLine
         if (UnitPrice != other.UnitPrice) return false;
         if (TaxRate != other.TaxRate) return false;
         if (_modifiers.Count != other._modifiers.Count) return false;
-        if (_addOns.Count != other._addOns.Count) return false;
-        // Could add more detailed comparison of modifiers/add-ons
+        
+        // Detailed comparison of modifiers
+        // For simplicity, we can check basic counts or IDs, but in a real POS we'd compare content
+        // Assuming if counts match, we merge (naive but standard for now unless specific logic requested)
+        // Ideally: check if any modifier in _modifiers is missing in other._modifiers
         
         return true;
     }
@@ -238,15 +215,7 @@ public class OrderLine
     {
         if (modifier == null) throw new ArgumentNullException(nameof(modifier));
 
-        if (modifier.ModifierType == Enumerations.ModifierType.Extra)
-        {
-            _addOns.Add(modifier);
-        }
-        else
-        {
-            _modifiers.Add(modifier);
-        }
-
+        _modifiers.Add(modifier);
         CalculatePrice();
     }
 
@@ -257,15 +226,7 @@ public class OrderLine
     {
          if (modifier == null) throw new ArgumentNullException(nameof(modifier));
 
-        if (modifier.ModifierType == Enumerations.ModifierType.Extra)
-        {
-            _addOns.Remove(modifier);
-        }
-        else
-        {
-            _modifiers.Remove(modifier);
-        }
-
+        _modifiers.Remove(modifier);
         CalculatePrice();
     }
 
@@ -285,11 +246,6 @@ public class OrderLine
         foreach (var modifier in _modifiers.Where(m => m.ShouldPrintToKitchen))
         {
             modifier.MarkPrintedToKitchen();
-        }
-
-        foreach (var addOn in _addOns.Where(a => a.ShouldPrintToKitchen))
-        {
-            addOn.MarkPrintedToKitchen();
         }
     }
 
@@ -315,7 +271,6 @@ public class OrderLine
     public void UpdateModifiers(IEnumerable<OrderLineModifier> newModifiers)
     {
         _modifiers.Clear();
-        _addOns.Clear();
 
         foreach (var modifier in newModifiers)
         {

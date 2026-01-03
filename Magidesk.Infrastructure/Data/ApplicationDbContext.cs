@@ -32,6 +32,9 @@ public class ApplicationDbContext : DbContext
     public DbSet<Shift> Shifts { get; set; } = null!;
     public DbSet<OrderType> OrderTypes { get; set; } = null!;
     public DbSet<Table> Tables { get; set; } = null!;
+    public DbSet<TableLayout> TableLayouts { get; set; } = null!;
+    public DbSet<Floor> Floors { get; set; } = null!;
+    public DbSet<TableShape> TableShapes { get; set; } = null!;
     public DbSet<MenuModifier> MenuModifiers { get; set; } = null!;
     public DbSet<ModifierGroup> ModifierGroups { get; set; } = null!;
     public DbSet<KitchenOrder> KitchenOrders { get; set; } = null!;
@@ -59,6 +62,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<PurchaseOrder> PurchaseOrders { get; set; } = null!;
     public DbSet<PurchaseOrderLine> PurchaseOrderLines { get; set; } = null!;
     public DbSet<InventoryAdjustment> InventoryAdjustments { get; set; } = null!;
+    public DbSet<ServerSection> ServerSections { get; set; } = null!;
     // FractionalModifier is part of Set<MenuModifier> via Inheritance
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -87,6 +91,9 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ShiftConfiguration());
         modelBuilder.ApplyConfiguration(new OrderTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TableConfiguration());
+        modelBuilder.ApplyConfiguration(new TableLayoutConfiguration());
+        modelBuilder.ApplyConfiguration(new FloorConfiguration());
+        modelBuilder.ApplyConfiguration(new TableShapeConfiguration());
         modelBuilder.ApplyConfiguration(new MenuModifierConfiguration());
         modelBuilder.ApplyConfiguration(new ModifierGroupConfiguration());
         modelBuilder.ApplyConfiguration(new KitchenOrderConfiguration());

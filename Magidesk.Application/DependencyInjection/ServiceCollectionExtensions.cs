@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using MediatR;
 using Magidesk.Application.Services;
 using Magidesk.Application.Interfaces;
 using Magidesk.Application.Commands;
@@ -19,6 +20,12 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
+        // Register MediatR
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly);
+        });
+
         // Register command handlers
         // Handlers with results
         services.AddScoped<ICommandHandler<Commands.CreateTicketCommand, Commands.CreateTicketResult>, CreateTicketCommandHandler>();
@@ -89,6 +96,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.ApplyCouponCommand>, ApplyCouponCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.AddOrderLineComboCommand>, AddOrderLineComboCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.CloseTicketCommand>, CloseTicketCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.UpdateTicketNoteCommand>, UpdateTicketNoteCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.UpdateOrderLineInstructionCommand>, UpdateOrderLineInstructionCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.VoidTicketCommand>, VoidTicketCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.PayNowCommand>, PayNowCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.LogoutCommand>, LogoutCommandHandler>();
@@ -115,6 +124,7 @@ public static class ServiceCollectionExtensions
         // Table query handlers
         services.AddScoped<IQueryHandler<Queries.GetTableQuery, Queries.GetTableResult>, GetTableQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetAvailableTablesQuery, Queries.GetAvailableTablesResult>, GetAvailableTablesQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.GetTableMapQuery, Queries.GetTableMapResult>, GetTableMapQueryHandler>();
 
         services.AddScoped<IQueryHandler<Queries.GetSalesBalanceQuery, DTOs.Reports.SalesBalanceReportDto>, Services.Reports.GetSalesBalanceQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetSalesSummaryQuery, DTOs.Reports.SalesSummaryReportDto>, Services.Reports.GetSalesSummaryQueryHandler>();
@@ -165,6 +175,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICashSessionService, CashSessionService>();
         services.AddScoped<IGroupSettleService, GroupSettleService>();
         services.AddScoped<IMerchantBatchService, MerchantBatchService>();
+        services.AddScoped<TableLayoutExporter>();
 
         return services;
     }

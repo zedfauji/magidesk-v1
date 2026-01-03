@@ -11,10 +11,14 @@ public class TableDto
     public int TableNumber { get; set; }
     public Guid? FloorId { get; set; }
     public int Capacity { get; set; }
-    public int X { get; set; }
-    public int Y { get; set; }
+    public double X { get; set; }
+    public double Y { get; set; }
+    public double Width { get; set; }
+    public double Height { get; set; }
+    public TableShapeType Shape { get; set; }
     public TableStatus Status { get; set; }
     public Guid? CurrentTicketId { get; set; }
     public bool IsActive { get; set; }
+    public bool IsSelected { get; set; }
 }
 

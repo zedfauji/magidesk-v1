@@ -1,6 +1,6 @@
 # FULL POS Seed Profile
 
-- Generated: `2026-01-02T06:26:54.6211803Z`
+- Generated: `2026-01-02T21:59:19.0821114Z`
 - Target DB: `magidesk_new`
 - Random seed: `42`
 - History days: `60`

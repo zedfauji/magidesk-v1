@@ -38,6 +38,9 @@ public class GetAvailableTablesQueryHandler : IQueryHandler<GetAvailableTablesQu
             Capacity = t.Capacity,
             X = t.X,
             Y = t.Y,
+            Width = t.Width,
+            Height = t.Height,
+            Shape = t.Shape,
             Status = t.Status,
             CurrentTicketId = t.CurrentTicketId,
             IsActive = t.IsActive

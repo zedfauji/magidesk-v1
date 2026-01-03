@@ -8,6 +8,8 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.I
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Magidesk.Infrastructure.Tests.runtimeconfig.json
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Magidesk.Infrastructure.Tests.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Magidesk.Infrastructure.Tests.pdb
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\MediatR.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\MediatR.Contracts.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Microsoft.VisualStudio.CodeCoverage.Shim.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll

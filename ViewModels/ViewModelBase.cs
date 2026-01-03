@@ -5,7 +5,7 @@ namespace Magidesk.Presentation.ViewModels;
 /// <summary>
 /// Base view model for MVVM.
 /// </summary>
-public abstract class ViewModelBase : ObservableObject
+public abstract class ViewModelBase : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 {
     private bool _isBusy;
     private string? _title;

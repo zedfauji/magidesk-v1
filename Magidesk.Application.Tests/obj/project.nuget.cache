@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "dq3SiNIZtqU=",
+  "dgSpecHash": "1IkMfzi69PE=",
   "success": true,
   "projectFilePath": "C:\\Users\\giris\\Documents\\Code\\Redesign-POS\\Windows Based POS\\Magidesk\\Magidesk.Application.Tests\\Magidesk.Application.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\giris\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\fluentassertions\\6.12.0\\fluentassertions.6.12.0.nupkg.sha512",
+    "C:\\Users\\giris\\.nuget\\packages\\mediatr\\12.2.0\\mediatr.12.2.0.nupkg.sha512",
+    "C:\\Users\\giris\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\microsoft.codecoverage\\17.8.0\\microsoft.codecoverage.17.8.0.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.1\\microsoft.extensions.dependencyinjection.abstractions.10.0.1.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\microsoft.net.test.sdk\\17.8.0\\microsoft.net.test.sdk.17.8.0.nupkg.sha512",

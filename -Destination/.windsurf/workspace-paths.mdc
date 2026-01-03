@@ -1,0 +1,17 @@
+---
+alwaysApply: true
+---
+
+# Workspace Paths & MCP Filesystem Root
+
+## Canonical Workspace Root (MCP Filesystem)
+
+- **MCP filesystem root**: `/projects`
+- **This repo is accessible at**: `/projects/Code/Redesign-POS/Windows Based POS/Magidesk`
+
+## Usage Rules
+
+- **Always prefer** MCP filesystem paths under `/projects/Code/Redesign-POS/Windows Based POS/Magidesk` when creating/editing files via MCP tools.
+- **Do not assume** repo-relative paths map to `/projects` unless confirmed; use the path above as the source of truth.
+- If a tool rejects access with “outside allowed directories”, re-check that the path starts with `/projects/…/Magidesk`.
+

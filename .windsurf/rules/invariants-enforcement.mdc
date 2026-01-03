@@ -1,0 +1,164 @@
+---
+trigger: always_on
+---
+# Invariant Enforcement Rules
+
+## Invariant Definition
+Invariants are business rules that MUST NEVER be violated. They are enforced at the Domain layer and cannot be bypassed.
+
+## Enforcement Levels
+
+### Level 1: Domain Layer (Primary)
+- Invariants enforced in entity constructors
+- Invariants enforced in property setters
+- Invariants enforced in domain service methods
+- Throws domain exceptions on violation
+
+### Level 2: Application Layer (Secondary)
+- Use case validators check preconditions
+- Validates before calling domain services
+- Provides user-friendly error messages
+- Cannot bypass domain layer enforcement
+
+### Level 3: Infrastructure Layer (Tertiary)
+- Database constraints as last line of defense
+- Foreign key constraints
+- Check constraints
+- Unique constraints
+
+### Level 4: Tests (Verification)
+- Unit tests prove invariants cannot be violated
+- Integration tests show enforcement in full stack
+- Negative tests show proper exceptions
+
+## Financial Invariants
+
+### F1: Money Precision
+- **Enforcement**: Money value object constructor
+- **Violation**: Cannot create Money with >2 decimal places
+- **Test**: Unit test for Money precision
+
+### F2: Non-Negative Amounts
+- **Enforcement**: Entity constructors and setters
+- **Violation**: Throws BusinessRuleViolationException
+- **Test**: Unit test for negative amount rejection
+
+### F3: Payment-Total Balance
+- **Enforcement**: TicketDomainService.CanCloseTicket()
+- **Violation**: Cannot close ticket, throws InvalidOperationException
+- **Test**: Integration test for payment validation
+
+## Ticket Invariants
+
+### T1: Non-Empty Ticket
+- **Enforcement**: TicketDomainService.CanOpenTicket()
+- **Violation**: Cannot open ticket, throws BusinessRuleViolationException
+- **Test**: Unit test for empty ticket rejection
+
+### T2: No Modifications to Finalized Tickets
+- **Enforcement**: OrderLine operations check ticket status
+- **Violation**: Throws InvalidOperationException
+- **Test**: Unit test for modification attempt on closed ticket
+
+### T3: Void Before Payment
+- **Enforcement**: TicketDomainService.CanVoidTicket()
+- **Violation**: Cannot void ticket, throws InvalidOperationException
+- **Test**: Unit test for void with payments
+
+## Payment Invariants
+
+### P1: Positive Payment Amount
+- **Enforcement**: Payment constructor
+- **Violation**: Cannot create payment, throws BusinessRuleViolationException
+- **Test**: Unit test for zero/negative amount
+
+### P2: Cash Tender Sufficiency
+- **Enforcement**: Payment processing logic
+- **Violation**: Cannot process payment, throws BusinessRuleViolationException
+- **Test**: Unit test for insufficient tender
+
+## Testing Requirements
+
+### Every Invariant Must Have
+- Unit test proving it cannot be violated
+- Integration test showing enforcement
+- Negative test showing proper exception
+- Test name: `[Entity]_[Invariant]_[Scenario]_[ExpectedResult]`
+
+### Test Examples
+```csharp
+[Fact]
+public void Ticket_CannotAddItem_WhenClosed_ThrowsInvalidOperationException()
+{
+    // Arrange
+    var ticket = CreateClosedTicket();
+    
+    // Act & Assert
+    Assert.Throws<InvalidOperationException>(() => 
+        ticket.AddOrderLine(orderLine));
+}
+```
+
+## Exception Types
+
+### BusinessRuleViolationException
+- Used for invariant violations
+- Contains clear error message
+- Logged for audit
+
+### InvalidOperationException
+- Used for state-based violations
+- Contains operation and current state
+- Logged for audit
+
+### ConcurrencyException
+- Used for optimistic concurrency conflicts
+- Contains entity and version info
+- Requires retry
+
+## Invariant Documentation
+
+### Documentation Requirements
+- All invariants documented in INVARIANTS_FULL.md
+- Each invariant has:
+  - Rule description
+  - Enforcement location
+  - Violation behavior
+  - Test requirements
+
+### Update Process
+- Update invariants when rules change
+- Update tests when invariants change
+- Update documentation when invariants change
+- Review invariants regularly
+
+## Prohibited Practices
+
+### NEVER:
+- Skip invariant enforcement
+- Allow invariants to be bypassed
+- Remove invariant checks for "performance"
+- Ignore invariant violations
+- Test invariants only in integration tests
+
+### ALWAYS:
+- Enforce invariants at domain level
+- Test invariants with unit tests
+- Document all invariants
+- Review invariants in code review
+- Fix invariant violations immediately
+
+## Invariant Review
+
+### Code Review Checklist
+- [ ] Invariants enforced in domain
+- [ ] Tests written for invariants
+- [ ] Documentation updated
+- [ ] No bypasses found
+- [ ] Proper exceptions thrown
+
+### Regular Review
+- Review invariants quarterly
+- Verify all invariants still valid
+- Update invariants as needed
+- Remove obsolete invariants
