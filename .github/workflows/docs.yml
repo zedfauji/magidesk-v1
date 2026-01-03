@@ -14,16 +14,16 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
+    - name: Setup PowerShell for Windows Runner
+      if: runner.os == 'Windows'
+      run: |
+        Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+        Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope CurrentUser -Force
+    
     - name: Setup Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
-    
-    - name: Setup PowerShell for Windows Runner
-      if: runner.os == 'Windows'
-      run: |
-        Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
-        Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
     
     - name: Install dependencies
       run: |
