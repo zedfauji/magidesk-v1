@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ master ]
 
+permissions:
+  contents: write
+
 defaults:
   run:
     shell: powershell -ExecutionPolicy Bypass {0}
