@@ -83,8 +83,8 @@ The development server includes:
 - Code highlighting
 - Diagram rendering
 
-### Self-Hosted Runner Configuration
-The documentation portal is configured to use a self-hosted runner named "WIDOWSVAIL" for building and deployment.
+### GitHub Actions Configuration
+The documentation portal uses GitHub Actions with Ubuntu runners for reliable building and deployment.
 
 ### For Repository Owner
 Repository URLs have been updated to use zedfauji/magidesk-v1
