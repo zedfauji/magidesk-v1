@@ -18,7 +18,9 @@ git push origin main
 2. Click **Settings** tab
 3. Scroll down to **Pages** section
 4. Under "Build and deployment", select **GitHub Actions**
-5. GitHub Pages will now be automatically deployed when you push to main
+5. GitHub Pages will now be automatically deployed when you push to master
+
+**Note**: The workflow is configured to use a self-hosted runner named "WIDOWSVAIL" for building and deployment.
 
 ### 3. Verify Deployment
 
