@@ -63,7 +63,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-      shell: bash
+      shell: powershell
     
     - name: Build documentation
       run: |
