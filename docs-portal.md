@@ -75,7 +75,6 @@ mkdocs serve --dev-addr=0.0.0.0:8000
 
 Once running, the documentation portal is available at:
 - **Local**: http://127.0.0.1:8000
-- **Network**: http://localhost:8000
 
 The development server includes:
 - Live reload (pages refresh automatically)
@@ -84,9 +83,11 @@ The development server includes:
 - Code highlighting
 - Diagram rendering
 
-## Portal URL
+### Self-Hosted Runner Configuration
+The documentation portal is configured to use a self-hosted runner named "WIDOWSVAIL" for building and deployment.
 
-**Production Portal**: https://zedfauji.github.io/magidesk-v1/
+### For Repository Owner
+Repository URLs have been updated to use zedfauji/magidesk-v1
 
 ## How to Update Documentation Safely
 
