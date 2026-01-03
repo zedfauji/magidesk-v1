@@ -14,16 +14,40 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Setup PowerShell for Windows Runner
-      if: runner.os == 'Windows'
+    - name: Ensure Python 3.11
       run: |
-        Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-        Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope CurrentUser -Force
-    
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
+        $pythonVersion = "3.11.9"
+        $installerUrl = "https://www.python.org/ftp/python/$pythonVersion/python-$pythonVersion-amd64.exe"
+        $installerPath = "$env:TEMP\python-$pythonVersion-amd64.exe"
+        
+        # Check if Python is already installed and in PATH
+        if (Get-Command python -ErrorAction SilentlyContinue) {
+            $currentVersion = python --version 2>&1
+            Write-Host "Python found: $currentVersion"
+            if ($currentVersion -match "3\.11") {
+                Write-Host "Python 3.11 is already installed."
+                exit 0
+            }
+        }
+        
+        Write-Host "Python 3.11 not found. Installing..."
+        
+        # Download Installer
+        Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
+        
+        # Install Python silently
+        Start-Process -FilePath $installerPath -ArgumentList "/quiet InstallAllUsers=1 PrependPath=1" -Wait
+        
+        # Refresh Environment Variables
+        $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+        
+        # Verify Installation
+        if (Get-Command python -ErrorAction SilentlyContinue) {
+            python --version
+        } else {
+            Write-Error "Python installation failed or path not updated."
+            exit 1
+        }
     
     - name: Install dependencies
       run: |
