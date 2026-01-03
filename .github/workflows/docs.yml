@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ master ]
 
+defaults:
+  run:
+    shell: powershell -ExecutionPolicy Bypass {0}
+
 jobs:
   build:
     runs-on: self-hosted
@@ -25,7 +29,9 @@ jobs:
         Write-Host "Setting up Portable Python in $pythonDir"
         
         # Create directory
-        New-Item -ItemType Directory -Path $pythonDir -Force | Out-Null
+        if (-not (Test-Path $pythonDir)) {
+             New-Item -ItemType Directory -Path $pythonDir -Force | Out-Null
+        }
         
         # Download
         Write-Host "Downloading Python $version..."
@@ -63,7 +69,6 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-      shell: powershell
     
     - name: Build documentation
       run: |
