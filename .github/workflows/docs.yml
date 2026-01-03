@@ -8,7 +8,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    environment: WIDOWSVAIL
     
     steps:
     - uses: actions/checkout@v4
@@ -18,9 +19,16 @@ jobs:
       with:
         python-version: '3.11'
     
+    - name: Setup PowerShell for Windows Runner
+      if: runner.os == 'Windows'
+      run: |
+        Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
+        Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
+    
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
+      shell: bash
     
     - name: Build documentation
       run: |
