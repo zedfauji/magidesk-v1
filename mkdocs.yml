@@ -1,0 +1,165 @@
+site_name: Magidesk POS System Documentation
+site_description: Comprehensive documentation for the Magidesk Point of Sale system
+site_author: Magidesk Development Team
+site_url: https://zedfauji.github.io/magidesk-v1/
+
+# Repository
+repo_name: zedfauji/magidesk-v1
+repo_url: https://github.com/zedfauji/magidesk-v1
+edit_uri: edit/main/docs/
+
+# Theme
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+    - content.code.copy
+    - content.code.annotate
+  palette:
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+# Plugins
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
+  - minify:
+      minify_html: true
+
+# Extensions
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+  - md_in_html
+  - toc:
+      permalink: true
+      title: Table of Contents
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:materialx.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: zedfauji
+      repo: magidesk-v1
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# Navigation
+nav:
+  - Home: README.md
+  - System:
+    - Vision & Mission: system/vision.md
+    - Capabilities: system/capabilities.md
+    - Glossary: system/glossary.md
+  - Architecture:
+    - System Overview: architecture/system-overview.md
+    - Module Map: architecture/module-map.md
+  - UI:
+    - UI Overview: ui/ui-overview.md
+    - UI Flows:
+      - Order Entry Flow: ui/ui-flows/order-entry-flow.md
+      - Payment Flow: ui/ui-flows/payment-flow.md
+      - Kitchen Display Flow: ui/ui-flows/kitchen-display-flow.md
+    - Mockups:
+      - Order Entry Screen: ui/mockups/order-entry.txt
+      - Payment Screen: ui/mockups/payment.txt
+      - Kitchen Display: ui/mockups/kitchen-display.txt
+      - Manager Functions: ui/mockups/manager-functions.txt
+  - Backend:
+    - Backend Overview: backend/backend-overview.md
+    - API Documentation:
+      - Authentication: backend/api/authentication.md
+      - Tickets API: backend/api/tickets.md
+      - Payments API: backend/api/payments.md
+      - Menu API: backend/api/menu.md
+  - Data:
+    - Data Model: data/data-model.md
+    - Database Schema: data/database-schema.md
+    - Migrations: data/migrations.md
+  - Workflows:
+    - End-to-End Order: workflows/end-to-end-order.md
+    - Shift Management: workflows/shift-management.md
+    - Cash Handling: workflows/cash-handling.md
+    - Kitchen Operations: workflows/kitchen-operations.md
+  - Configuration:
+    - System Configuration: configuration/system-configuration.md
+    - Environment Setup: configuration/environment-setup.md
+    - Security Configuration: configuration/security-configuration.md
+  - Operations:
+    - Deployment: operations/deployment.md
+    - Monitoring: operations/monitoring.md
+    - Backup & Recovery: operations/backup-recovery.md
+    - Performance Tuning: operations/performance-tuning.md
+  - Runbooks:
+    - Troubleshooting: runbooks/troubleshooting.md
+    - Emergency Procedures: runbooks/emergency-procedures.md
+    - Maintenance: runbooks/maintenance.md
+  - Contributing:
+    - Development Guide: contributing/development-guide.md
+    - Code Review: contributing/code-review.md
+    - Testing Guidelines: contributing/testing-guidelines.md
+
+# Customization
+extra:
+  analytics:
+    provider: google
+    property: !ENV GOOGLE_ANALYTICS_KEY
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/zedfauji/magidesk-v1
+    - icon: fontawesome/brands/docker
+      link: https://hub.docker.com/r/zedfauji/magidesk-v1
+
+# Copyright
+copyright: Copyright &copy; 2024 Magidesk Development Team
