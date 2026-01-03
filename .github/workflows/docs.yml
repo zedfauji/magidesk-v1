@@ -46,8 +46,6 @@ jobs:
         if (Test-Path $pthFile) {
             Write-Host "Enabling site support in $pthFile"
             (Get-Content $pthFile) -replace "#import site", "import site" | Set-Content $pthFile
-        } else {
-            Write-Warning "Could not find ._pth file to enable site support."
         }
         
         # Download get-pip.py
@@ -68,11 +66,19 @@ jobs:
     
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt
+        $reqFile = Join-Path $env:GITHUB_WORKSPACE "requirements.txt"
+        Write-Host "Looking for requirements at: $reqFile"
+        if (Test-Path $reqFile) {
+            python -m pip install -r $reqFile
+        } else {
+            Write-Error "Could not find requirements.txt in $env:GITHUB_WORKSPACE"
+            exit 1
+        }
     
     - name: Build documentation
       run: |
-        mkdocs build
+        $mkdocsFile = Join-Path $env:GITHUB_WORKSPACE "mkdocs.yml"
+        python -m mkdocs build -f $mkdocsFile
     
     - name: Deploy to GitHub Pages
       if: github.ref == 'refs/heads/master'
