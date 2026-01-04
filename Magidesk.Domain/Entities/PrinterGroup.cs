@@ -13,6 +13,13 @@ public class PrinterGroup
     public string Name { get; private set; } = string.Empty;
     public PrinterType Type { get; private set; }
 
+    public CutBehavior CutBehavior { get; private set; }
+    public bool ShowPrices { get; private set; }
+    public int RetryCount { get; private set; }
+    public int RetryDelayMs { get; private set; }
+    public bool AllowReprint { get; private set; }
+    public Guid? FallbackPrinterGroupId { get; private set; }
+
     // Private constructor for EF Core
     private PrinterGroup()
     {
@@ -27,7 +34,13 @@ public class PrinterGroup
         {
             Id = Guid.NewGuid(),
             Name = name,
-            Type = type
+            Type = type,
+            // Defaults
+            CutBehavior = CutBehavior.Auto,
+            ShowPrices = true,
+            RetryCount = 0,
+            RetryDelayMs = 0,
+            AllowReprint = true
         };
     }
 
@@ -38,5 +51,21 @@ public class PrinterGroup
 
         Name = name;
         Type = type;
+    }
+
+    public void UpdateBehavior(
+        CutBehavior cutBehavior,
+        bool showPrices,
+        int retryCount,
+        int retryDelayMs,
+        bool allowReprint,
+        Guid? fallbackPrinterGroupId)
+    {
+        CutBehavior = cutBehavior;
+        ShowPrices = showPrices;
+        RetryCount = retryCount;
+        RetryDelayMs = retryDelayMs;
+        AllowReprint = allowReprint;
+        FallbackPrinterGroupId = fallbackPrinterGroupId;
     }
 }

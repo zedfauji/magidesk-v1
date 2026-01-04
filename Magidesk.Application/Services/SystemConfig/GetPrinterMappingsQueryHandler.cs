@@ -31,7 +31,15 @@ public class GetPrinterMappingsQueryHandler : IQueryHandler<GetPrinterMappingsQu
             TerminalId = m.TerminalId,
             PrinterGroupId = m.PrinterGroupId,
             PhysicalPrinterName = m.PhysicalPrinterName,
-            PrinterGroupName = groupsDict.GetValueOrDefault(m.PrinterGroupId, "Unknown Group")
+            Format = m.Format,
+            CutEnabled = m.CutEnabled,
+            PrinterGroupName = groupsDict.GetValueOrDefault(m.PrinterGroupId, "Unknown Group"),
+            PaperWidthMm = m.PaperWidthMm,
+            PrintableWidthChars = m.PrintableWidthChars,
+            Dpi = m.Dpi,
+            SupportsCashDrawer = m.SupportsCashDrawer,
+            SupportsImages = m.SupportsImages,
+            SupportsQr = m.SupportsQr
         }).ToList());
     }
 }

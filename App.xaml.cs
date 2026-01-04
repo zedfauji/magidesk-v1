@@ -65,6 +65,7 @@ public partial class App : Microsoft.UI.Xaml.Application
 
                     // UI services
                     services.AddSingleton<NavigationService>();
+                    services.AddSingleton<IDefaultViewRoutingService, DefaultViewRoutingService>();
                     services.AddSingleton<IUserService, UserService>();
                     services.AddSingleton<Magidesk.Application.Interfaces.ITerminalContext, TerminalContext>();
             // Printing

@@ -10,7 +10,7 @@ namespace Magidesk.Presentation.ViewModels;
 public class DrawerPullReportViewModel : ViewModelBase
 {
     private readonly IQueryHandler<GetDrawerPullReportQuery, GetDrawerPullReportResult> _reportQueryHandler;
-    private readonly IQueryHandler<GetCurrentCashSessionQuery, CashSessionDto?> _currentSessionHandler;
+    private readonly IQueryHandler<GetCurrentCashSessionQuery, GetCurrentCashSessionResult> _currentSessionHandler;
     private readonly NavigationService _navigationService;
 
     private DrawerPullReportDto? _report;
@@ -33,7 +33,7 @@ public class DrawerPullReportViewModel : ViewModelBase
 
     public DrawerPullReportViewModel(
         IQueryHandler<GetDrawerPullReportQuery, GetDrawerPullReportResult> reportQueryHandler,
-        IQueryHandler<GetCurrentCashSessionQuery, CashSessionDto?> currentSessionHandler,
+        IQueryHandler<GetCurrentCashSessionQuery, GetCurrentCashSessionResult> currentSessionHandler,
         NavigationService navigationService)
     {
         _reportQueryHandler = reportQueryHandler;
@@ -49,8 +49,8 @@ public class DrawerPullReportViewModel : ViewModelBase
         IsLoading = true;
         try
         {
-            var session = await _currentSessionHandler.HandleAsync(new GetCurrentCashSessionQuery());
-            if (session == null)
+            var sessionResult = await _currentSessionHandler.HandleAsync(new GetCurrentCashSessionQuery());
+            if (sessionResult.CashSession == null)
             {
                 // No active session. 
                 // In a real scenario, we might want to allow looking up past sessions or report "No active session".
@@ -58,7 +58,7 @@ public class DrawerPullReportViewModel : ViewModelBase
                 return;
             }
 
-            var result = await _reportQueryHandler.HandleAsync(new GetDrawerPullReportQuery { CashSessionId = session.Id });
+            var result = await _reportQueryHandler.HandleAsync(new GetDrawerPullReportQuery { CashSessionId = sessionResult.CashSession.Id });
             Report = result.Report;
         }
         catch (Exception ex)

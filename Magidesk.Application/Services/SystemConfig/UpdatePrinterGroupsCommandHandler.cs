@@ -41,11 +41,25 @@ public class UpdatePrinterGroupsCommandHandler : ICommandHandler<UpdatePrinterGr
                 if (existing != null)
                 {
                     existing.Update(dto.Name, dto.PrinterType);
+                    existing.UpdateBehavior(
+                        dto.CutBehavior,
+                        dto.ShowPrices,
+                        dto.RetryCount,
+                        dto.RetryDelayMs,
+                        dto.AllowReprint,
+                        dto.FallbackPrinterGroupId);
                     await _repository.UpdateAsync(existing, cancellationToken);
                 }
                 else
                 {
                     var newGroup = PrinterGroup.Create(dto.Name, dto.PrinterType);
+                    newGroup.UpdateBehavior(
+                        dto.CutBehavior,
+                        dto.ShowPrices,
+                        dto.RetryCount,
+                        dto.RetryDelayMs,
+                        dto.AllowReprint,
+                        dto.FallbackPrinterGroupId);
                     await _repository.AddAsync(newGroup, cancellationToken);
                 }
             }

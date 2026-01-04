@@ -23,7 +23,13 @@ public class GetPrinterGroupsQueryHandler : IQueryHandler<GetPrinterGroupsQuery,
         {
             Id = g.Id,
             Name = g.Name,
-            PrinterType = g.Type
+            PrinterType = g.Type,
+            CutBehavior = g.CutBehavior,
+            ShowPrices = g.ShowPrices,
+            RetryCount = g.RetryCount,
+            RetryDelayMs = g.RetryDelayMs,
+            AllowReprint = g.AllowReprint,
+            FallbackPrinterGroupId = g.FallbackPrinterGroupId
         }).ToList());
     }
 }

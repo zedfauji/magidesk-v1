@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Magidesk.Application.Interfaces;
 using Magidesk.Application.DTOs;
 using Magidesk.Domain.Entities;
@@ -25,7 +26,7 @@ public interface IDefaultViewRoutingService
 public sealed class DefaultViewRoutingService : IDefaultViewRoutingService
 {
     private readonly ITerminalContext _terminalContext;
-    private readonly IOrderTypeRepository _orderTypeRepository;
+    private readonly IServiceScopeFactory _scopeFactory;
 
     // In a full implementation, these would come from a TerminalConfig entity.
     // For now, we use simple conventions:
@@ -37,10 +38,10 @@ public sealed class DefaultViewRoutingService : IDefaultViewRoutingService
 
     public DefaultViewRoutingService(
         ITerminalContext terminalContext,
-        IOrderTypeRepository orderTypeRepository)
+        IServiceScopeFactory scopeFactory)
     {
         _terminalContext = terminalContext;
-        _orderTypeRepository = orderTypeRepository;
+        _scopeFactory = scopeFactory;
     }
 
     public async Task<Type> GetDefaultViewTypeAsync(Guid? terminalId)
@@ -58,20 +59,25 @@ public sealed class DefaultViewRoutingService : IDefaultViewRoutingService
             }
 
             // Rule 2: Check for a configured default order type that requires table selection
-            var defaultOrderType = await GetDefaultOrderTypeAsync();
-            if (defaultOrderType != null)
+            using (var scope = _scopeFactory.CreateScope())
             {
-                // If default order type requires table, default to TableMapPage
-                if (defaultOrderType.RequiresTable)
+                var orderTypeRepository = scope.ServiceProvider.GetRequiredService<IOrderTypeRepository>();
+                var defaultOrderType = await GetDefaultOrderTypeAsync(orderTypeRepository);
+                
+                if (defaultOrderType != null)
                 {
-                    return typeof(Magidesk.Presentation.Views.TableMapPage);
-                }
+                    // If default order type requires table, default to TableMapPage
+                    if (defaultOrderType.RequiresTable)
+                    {
+                        return typeof(Magidesk.Presentation.Views.TableMapPage);
+                    }
 
-                // If default order type allows immediate ticket creation, default to OrderEntryPage
-                // This mimics FloreantPOS behavior where some terminals go directly to OrderView
-                if (!defaultOrderType.RequiresTable && !defaultOrderType.RequiresCustomer)
-                {
-                    return typeof(Magidesk.Presentation.Views.OrderEntryPage);
+                    // If default order type allows immediate ticket creation, default to OrderEntryPage
+                    // This mimics FloreantPOS behavior where some terminals go directly to OrderView
+                    if (!defaultOrderType.RequiresTable && !defaultOrderType.RequiresCustomer)
+                    {
+                        return typeof(Magidesk.Presentation.Views.OrderEntryPage);
+                    }
                 }
             }
 
@@ -92,13 +98,13 @@ public sealed class DefaultViewRoutingService : IDefaultViewRoutingService
                terminalIdentity.Contains(KdsTerminalKeyword, StringComparison.OrdinalIgnoreCase);
     }
 
-    private async Task<OrderType?> GetDefaultOrderTypeAsync()
+    private async Task<OrderType?> GetDefaultOrderTypeAsync(IOrderTypeRepository repository)
     {
         try
         {
             // In a full implementation, this would read from a TerminalConfig.DefaultOrderTypeId
             // For now, we use a simple heuristic: first active order type
-            var orderTypes = await _orderTypeRepository.GetAllAsync();
+            var orderTypes = await repository.GetAllAsync();
             
             // If no order types exist, return null to fallback to SwitchboardPage
             if (orderTypes == null || !orderTypes.Any())

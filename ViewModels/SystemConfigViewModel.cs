@@ -7,6 +7,7 @@ using Magidesk.Application.Queries.SystemConfig;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using Magidesk.Presentation.Services;
+using Magidesk.Domain.Enumerations;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -32,6 +33,8 @@ public partial class SystemConfigViewModel : ViewModelBase
     public ObservableCollection<PrinterGroupDto> PrinterGroups { get; } = new();
     public ObservableCollection<PrinterMappingDto> PrinterMappings { get; } = new();
     public ObservableCollection<string> SystemPrinters { get; } = new();
+    public ObservableCollection<PrinterFormat> PrinterFormats { get; } = new(Enum.GetValues<PrinterFormat>());
+    public ObservableCollection<CutBehavior> CutBehaviors { get; } = new(Enum.GetValues<CutBehavior>());
 
     private string _statusMessage = string.Empty;
     public string StatusMessage
@@ -111,7 +114,7 @@ public partial class SystemConfigViewModel : ViewModelBase
         _printingService = printingService;
         _terminalContext = terminalContext;
 
-        Title = "System Configuration";
+        Title = "System & Hardware Configuration";
         _terminalConfiguration = new TerminalDto(); // Initialize to avoid null binding issues
         _cardConfiguration = new CardConfigDto(); // Initialize to avoid null binding issues
         LoadBackupsCommand = new AsyncRelayCommand(LoadBackupsAsync);

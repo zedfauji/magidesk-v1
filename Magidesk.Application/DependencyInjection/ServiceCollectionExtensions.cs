@@ -7,6 +7,8 @@ using Magidesk.Application.Commands.SystemConfig;
 using Magidesk.Application.Queries.SystemConfig;
 using Magidesk.Application.DTOs.SystemConfig;
 using Magidesk.Application.Services.SystemConfig;
+using Magidesk.Application.Queries;
+using Magidesk.Application.DTOs;
 
 namespace Magidesk.Application.DependencyInjection;
 
@@ -161,6 +163,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<UpdatePrinterMappingsCommand, UpdatePrinterMappingsResult>, UpdatePrinterMappingsCommandHandler>();
 
         // User Management Handlers
+        services.AddScoped<IQueryHandler<GetUsersQuery, IEnumerable<UserDto>>, GetUsersQueryHandler>();
         services.AddScoped<ICommandHandler<CreateUserCommand, CreateUserResult>, CreateUserCommandHandler>();
         services.AddScoped<ICommandHandler<UpdateUserCommand, UpdateUserResult>, UpdateUserCommandHandler>();
         services.AddScoped<ICommandHandler<DeleteUserCommand, DeleteUserResult>, DeleteUserCommandHandler>();

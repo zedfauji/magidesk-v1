@@ -11,6 +11,10 @@ using Magidesk.Domain.Services;
 using Magidesk.Application.Services;
 using Magidesk.Infrastructure.Security;
 using Magidesk.Infrastructure.Services.Bootstrap;
+using Magidesk.Infrastructure.Printing.Engines;
+using Magidesk.Infrastructure.Printing.Layouts;
+using Magidesk.Domain.Interfaces.Printing;
+using Magidesk.Domain.Enumerations;
 
 namespace Magidesk.Infrastructure.DependencyInjection;
 
@@ -22,6 +26,7 @@ public static class ServiceCollectionExtensions
     /// <summary>
     /// Adds Infrastructure layer services to the service collection.
     /// </summary>
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         // Add DbContext
@@ -76,9 +81,10 @@ public static class ServiceCollectionExtensions
         // Register payment gateway (using mock for development)
         services.AddScoped<IPaymentGateway, MockPaymentGateway>();
 
-        // Register print services (using mock for development)
-        services.AddScoped<IKitchenPrintService, MockKitchenPrintService>();
-        services.AddScoped<IReceiptPrintService, MockReceiptPrintService>();
+        // Register print services
+        services.AddScoped<IRawPrintService, WindowsPrintingService>();
+        services.AddScoped<IKitchenPrintService, KitchenPrintService>();
+        services.AddScoped<IReceiptPrintService, ReceiptPrintService>();
 
         // Register Security Services
         services.AddSingleton<IAesEncryptionService, Security.AesEncryptionService>();
@@ -88,6 +94,26 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ISystemInitializationService, SystemInitializationService>();
         services.AddScoped<ISystemService, SystemService>();
         services.AddScoped<IBackupService, Services.PostgresBackupService>();
+
+        // Printing Layout Adapters
+        services.AddTransient<Thermal58mmAdapter>();
+        services.AddTransient<Thermal80mmAdapter>();
+        services.AddTransient<StandardPageAdapter>();
+
+        // Factory for Layout Adapters
+        services.AddScoped<Func<PrinterFormat, IPrintLayoutAdapter>>(serviceProvider => format =>
+        {
+            return format switch
+            {
+                PrinterFormat.Thermal58mm => serviceProvider.GetRequiredService<Thermal58mmAdapter>(),
+                PrinterFormat.Thermal80mm => serviceProvider.GetRequiredService<Thermal80mmAdapter>(),
+                PrinterFormat.StandardPage => serviceProvider.GetRequiredService<StandardPageAdapter>(),
+                _ => throw new ArgumentOutOfRangeException(nameof(format), format, null)
+            };
+        });
+
+        // Layout Engine
+        services.AddScoped<IPrintLayoutEngine, PrintLayoutEngine>();
 
         return services;
     }

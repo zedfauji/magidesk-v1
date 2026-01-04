@@ -43,9 +43,10 @@ public class ReceiptPrintService : IReceiptPrintService
     {
         try
         {
-            // 1. Resolve Printer
-            var printerName = await ResolveReceiptPrinterAsync(cancellationToken);
-            if (string.IsNullOrEmpty(printerName))
+            // 1. Resolve Printer Context
+            var (mapping, group) = await ResolveReceiptPrinterContextAsync(cancellationToken);
+            
+            if (mapping == null || string.IsNullOrEmpty(mapping.PhysicalPrinterName))
             {
                 _logger.LogWarning($"Receipt printing skipped: No Receipt Printer mapped for Terminal {_terminalContext.TerminalIdentity}");
                 return false;
@@ -54,16 +55,24 @@ public class ReceiptPrintService : IReceiptPrintService
             // 2. Resolve Server Name
             string serverName = await ResolveUserNameAsync(ticket.CreatedBy.Value, cancellationToken);
 
+            // 3. Determine Layout Settings
+            bool showPrices = group?.ShowPrices ?? true; // Default to true for Receipts
+            bool shouldCut = ShouldCut(group, mapping);
+            int width = mapping.PrintableWidthChars > 0 ? mapping.PrintableWidthChars : 32;
+
             // 3. Generate Data
-            var bytes = GenerateReceiptBytes(ticket, serverName, isRefund: false);
+            var bytes = GenerateReceiptBytes(ticket, serverName, isRefund: false, width, showPrices, shouldCut);
 
-            // 4. Print
-            await _rawPrintService.PrintRawBytesAsync(printerName, bytes);
+            // 4. Print with Retry
+            bool printed = await ExecutePrintWithRetryAsync(mapping.PhysicalPrinterName, bytes, group);
 
-            // 5. Audit
-            await logAuditAsync("Ticket", ticket.Id, userId, $"Ticket #{ticket.TicketNumber} Printed", $"Total: {ticket.TotalAmount}", ticket.Id, cancellationToken);
-            
-            return true;
+            if (printed)
+            {
+                // 5. Audit
+                await logAuditAsync("Ticket", ticket.Id, userId, $"Ticket #{ticket.TicketNumber} Printed", $"Total: {ticket.TotalAmount}", ticket.Id, cancellationToken);
+                return true;
+            }
+            return false;
         }
         catch (Exception ex)
         {
@@ -74,13 +83,6 @@ public class ReceiptPrintService : IReceiptPrintService
 
     public async Task<bool> PrintPaymentReceiptAsync(Payment payment, Ticket ticket, Guid? userId = null, CancellationToken cancellationToken = default)
     {
-        // For now, payment receipt is just a full receipt with payment info emphasized, or maybe just a chit?
-        // Usually customers want the full bill with the payment line added.
-        // So we can re-use the main receipt logic but ensure payments are up to date in the ticket object passed.
-        
-        // However, if we need a specific "Credit Card Slip", that requires different logic.
-        // Following "No Silent Failures", we will attempt to print the full ticket receipt which includes payments.
-        
         return await PrintTicketReceiptAsync(ticket, userId, cancellationToken);
     }
 
@@ -88,17 +90,25 @@ public class ReceiptPrintService : IReceiptPrintService
     {
         try
         {
-             var printerName = await ResolveReceiptPrinterAsync(cancellationToken);
-            if (string.IsNullOrEmpty(printerName)) return false;
+            var (mapping, group) = await ResolveReceiptPrinterContextAsync(cancellationToken);
+            if (mapping == null || string.IsNullOrEmpty(mapping.PhysicalPrinterName)) return false;
 
             string serverName = await ResolveUserNameAsync(ticket.CreatedBy.Value, cancellationToken);
-            var bytes = GenerateReceiptBytes(ticket, serverName, isRefund: true);
-
-            await _rawPrintService.PrintRawBytesAsync(printerName, bytes);
             
-            await logAuditAsync("Refund", refundPayment.Id, userId, "Refund Receipt Printed", $"Amount: {refundPayment.Amount}", ticket.Id, cancellationToken);
+            bool showPrices = group?.ShowPrices ?? true;
+            bool shouldCut = ShouldCut(group, mapping);
+            int width = mapping.PrintableWidthChars > 0 ? mapping.PrintableWidthChars : 32;
 
-            return true;
+            var bytes = GenerateReceiptBytes(ticket, serverName, isRefund: true, width, showPrices, shouldCut);
+
+            bool printed = await ExecutePrintWithRetryAsync(mapping.PhysicalPrinterName, bytes, group);
+            
+            if (printed)
+            {
+                await logAuditAsync("Refund", refundPayment.Id, userId, "Refund Receipt Printed", $"Amount: {refundPayment.Amount}", ticket.Id, cancellationToken);
+                return true;
+            }
+            return false;
         }
         catch (Exception ex)
         {
@@ -107,20 +117,59 @@ public class ReceiptPrintService : IReceiptPrintService
         }
     }
 
-    private async Task<string?> ResolveReceiptPrinterAsync(CancellationToken cancellationToken)
+    private async Task<(PrinterMapping? mapping, PrinterGroup? group)> ResolveReceiptPrinterContextAsync(CancellationToken cancellationToken)
     {
         var terminalId = _terminalContext.TerminalId ?? Guid.Empty;
-        if (terminalId == Guid.Empty) return null;
+        if (terminalId == Guid.Empty) return (null, null);
 
         var groups = await _printerGroupRepository.GetAllAsync(cancellationToken);
         var receiptGroup = groups.FirstOrDefault(g => g.Type == PrinterType.Receipt);
 
-        if (receiptGroup == null) return null;
+        if (receiptGroup == null) return (null, null);
 
         var mappings = await _printerMappingRepository.GetByTerminalIdAsync(terminalId, cancellationToken);
         var mapping = mappings.FirstOrDefault(m => m.PrinterGroupId == receiptGroup.Id);
 
-        return mapping?.PhysicalPrinterName;
+        return (mapping, receiptGroup);
+    }
+
+    private bool ShouldCut(PrinterGroup? group, PrinterMapping mapping)
+    {
+        if (group == null) return mapping.CutEnabled;
+
+        return group.CutBehavior switch
+        {
+            Domain.Enumerations.CutBehavior.Always => true,
+            Domain.Enumerations.CutBehavior.Never => false,
+            Domain.Enumerations.CutBehavior.Auto => mapping.CutEnabled,
+            _ => mapping.CutEnabled
+        };
+    }
+
+    private async Task<bool> ExecutePrintWithRetryAsync(string printerName, byte[] data, PrinterGroup? group)
+    {
+        int maxRetries = group?.RetryCount ?? 0;
+        int delayMs = group?.RetryDelayMs ?? 500;
+        // Sanity Check
+        if (delayMs < 100) delayMs = 100;
+
+        int attempts = 0;
+        while (attempts <= maxRetries)
+        {
+            try
+            {
+                await _rawPrintService.PrintRawBytesAsync(printerName, data);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                attempts++;
+                _logger.LogWarning(ex, $"Print failed to {printerName}. Attempt {attempts}/{maxRetries + 1}.");
+                if (attempts > maxRetries) return false;
+                await Task.Delay(delayMs);
+            }
+        }
+        return false;
     }
 
     private async Task<string> ResolveUserNameAsync(Guid userId, CancellationToken cancellationToken)
@@ -158,7 +207,7 @@ public class ReceiptPrintService : IReceiptPrintService
         }
     }
 
-    private byte[] GenerateReceiptBytes(Ticket ticket, string serverName, bool isRefund)
+    private byte[] GenerateReceiptBytes(Ticket ticket, string serverName, bool isRefund, int width, bool showPrices, bool shouldCut)
     {
         var cmds = new List<byte[]>();
 
@@ -187,7 +236,9 @@ public class ReceiptPrintService : IReceiptPrintService
         cmds.Add(EscPosHelper.NewLine());
         cmds.Add(EscPosHelper.GetBytes($"Svr: {serverName}"));
         cmds.Add(EscPosHelper.NewLine());
-        cmds.Add(EscPosHelper.GetBytes(new string('-', 32))); // Separator in 32 col mode usually safe
+        
+        // Separator
+        cmds.Add(EscPosHelper.GetBytes(new string('-', width))); 
         cmds.Add(EscPosHelper.NewLine());
 
         // Items
@@ -198,42 +249,48 @@ public class ReceiptPrintService : IReceiptPrintService
              // Layout: "1 Burger        10.00"
              
              string lineStr = $"{line.Quantity} {line.MenuItemName}";
-             string priceStr = line.TotalAmount.ToString(); // ToString calls Money.ToString() which has symbol
+             string priceStr = showPrices ? line.TotalAmount.ToString() : ""; 
 
              cmds.Add(EscPosHelper.GetBytes(lineStr));
              cmds.Add(EscPosHelper.NewLine());
              // Print modifiers indented
              foreach(var mod in line.Modifiers)
              {
-                 cmds.Add(EscPosHelper.GetBytes($"  + {mod.Name}  {mod.TotalAmount}"));
+                 string modPrice = showPrices ? mod.TotalAmount.ToString() : "";
+                 cmds.Add(EscPosHelper.GetBytes($"  + {mod.Name}  {modPrice}"));
                  cmds.Add(EscPosHelper.NewLine());
              }
              
-             // Price on next line right aligned? Or trying to fit?
-             // For simple implementation:
-             cmds.Add(EscPosHelper.AlignRight());
-             cmds.Add(EscPosHelper.GetBytes(priceStr));
-             cmds.Add(EscPosHelper.AlignLeft());
-             cmds.Add(EscPosHelper.NewLine());
+             // Price on next line right aligned?
+             if (showPrices)
+             {
+                 cmds.Add(EscPosHelper.AlignRight());
+                 cmds.Add(EscPosHelper.GetBytes(priceStr));
+                 cmds.Add(EscPosHelper.AlignLeft());
+                 cmds.Add(EscPosHelper.NewLine());
+             }
         }
 
-        cmds.Add(EscPosHelper.GetBytes(new string('-', 32)));
+        cmds.Add(EscPosHelper.GetBytes(new string('-', width)));
         cmds.Add(EscPosHelper.NewLine());
 
         // Totals
-        cmds.Add(EscPosHelper.AlignRight());
-        cmds.Add(EscPosHelper.GetBytes($"Subtotal: {ticket.SubtotalAmount}"));
-        cmds.Add(EscPosHelper.NewLine());
-        cmds.Add(EscPosHelper.GetBytes($"Tax: {ticket.TaxAmount}"));
-        cmds.Add(EscPosHelper.NewLine());
-        cmds.Add(EscPosHelper.DoubleHeightOn());
-        cmds.Add(EscPosHelper.GetBytes($"TOTAL: {ticket.TotalAmount}"));
-        cmds.Add(EscPosHelper.NormalSize());
-        cmds.Add(EscPosHelper.NewLine());
-        cmds.Add(EscPosHelper.NewLine());
+        if (showPrices)
+        {
+            cmds.Add(EscPosHelper.AlignRight());
+            cmds.Add(EscPosHelper.GetBytes($"Subtotal: {ticket.SubtotalAmount}"));
+            cmds.Add(EscPosHelper.NewLine());
+            cmds.Add(EscPosHelper.GetBytes($"Tax: {ticket.TaxAmount}"));
+            cmds.Add(EscPosHelper.NewLine());
+            cmds.Add(EscPosHelper.DoubleHeightOn());
+            cmds.Add(EscPosHelper.GetBytes($"TOTAL: {ticket.TotalAmount}"));
+            cmds.Add(EscPosHelper.NormalSize());
+            cmds.Add(EscPosHelper.NewLine());
+            cmds.Add(EscPosHelper.NewLine());
+        }
 
         // Payments
-        if (ticket.Payments.Any())
+        if (showPrices && ticket.Payments.Any())
         {
             cmds.Add(EscPosHelper.AlignLeft());
             cmds.Add(EscPosHelper.GetBytes("Payments:"));
@@ -255,7 +312,11 @@ public class ReceiptPrintService : IReceiptPrintService
         cmds.Add(EscPosHelper.NewLine());
         cmds.Add(EscPosHelper.NewLine());
         cmds.Add(EscPosHelper.NewLine());
-        cmds.Add(EscPosHelper.Cut());
+        
+        if (shouldCut)
+        {
+            cmds.Add(EscPosHelper.Cut());
+        }
 
         return EscPosHelper.GenerateTicketData(cmds);
     }

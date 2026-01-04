@@ -60,7 +60,7 @@
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
         <PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
-        <PackageReference Include="System.Drawing.Common" Version="10.0.1" />
+        <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
@@ -84,6 +84,7 @@
     <ItemGroup>
       <ProjectReference Include="Magidesk.Application\Magidesk.Application.csproj" />
       <ProjectReference Include="Magidesk.Infrastructure\Magidesk.Infrastructure.csproj" />
+      <ProjectReference Include="Magidesk.Migrations\Magidesk.Migrations.csproj" />
     </ItemGroup>
 
     <ItemGroup>

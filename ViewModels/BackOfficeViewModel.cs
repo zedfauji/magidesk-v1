@@ -51,8 +51,8 @@ public partial class BackOfficeViewModel : ViewModelBase
         NavigationItems.Add(new NavigationItem("Order Types", "Manage order type rules", "\uE8A1", typeof(OrderTypeExplorerPage)));
         NavigationItems.Add(new NavigationItem("Shifts", "Manage shift definitions", "\uE823", typeof(ShiftExplorerPage)));
         NavigationItems.Add(new NavigationItem("Reports", "Sales Summaries", "\uE9F9", typeof(SalesReportsPage)));
-        NavigationItems.Add(new NavigationItem("App Settings", "Kiosk + connectivity", "\uE713", typeof(SettingsPage)));
-        NavigationItems.Add(new NavigationItem("Database / Backup", "System Configuration", "\uE713", typeof(SystemConfigPage)));
+        NavigationItems.Add(new NavigationItem("General Settings", "Restaurant Info & Kiosk", "\uE713", typeof(SettingsPage)));
+        NavigationItems.Add(new NavigationItem("System & Printers", "Hardware, Config & Backup", "\uE713", typeof(SystemConfigPage)));
     }
 
     private async Task CaptureBatchAsync()

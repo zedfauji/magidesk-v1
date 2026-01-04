@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:dto="using:Magidesk.Application.DTOs.SystemConfig"
     xmlns:converters="using:Magidesk.Presentation.Converters"
+    xmlns:enums="using:Magidesk.Domain.Enumerations"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -139,24 +140,45 @@
                             <TextBlock Text="Define virtual printer groups and their types." Style="{StaticResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                             
                             <ListView ItemsSource="{x:Bind ViewModel.PrinterGroups, Mode=OneWay}" SelectionMode="None">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        <Setter Property="Padding" Value="0"/>
+                                        <Setter Property="Margin" Value="0"/>
+                                        <Setter Property="MinHeight" Value="0"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
                                 <ListView.Header>
-                                    <Grid Padding="12,0" Margin="0,0,0,8">
+                                    <Grid Padding="12,0" Margin="0,0,0,8" ColumnSpacing="12">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="2*"/>
                                             <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="0.8*"/>
+                                            <ColumnDefinition Width="0.8*"/>
+                                            <ColumnDefinition Width="0.5*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="Group Name" FontWeight="SemiBold"/>
-                                        <TextBlock Grid.Column="1" Text="Printer Type" FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Column="1" Text="Type" FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Column="2" Text="Cut Behavior" FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Column="3" Text="Show $" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="4" Text="Retry #" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="5" Text="Delay" FontWeight="SemiBold" HorizontalAlignment="Center"/>
                                     </Grid>
                                 </ListView.Header>
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="dto:PrinterGroupDto">
-                                        <Grid Padding="0,8">
+                                        <Grid Padding="12,8" ColumnSpacing="12">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="2*"/>
                                                 <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="0.8*"/>
+                                                <ColumnDefinition Width="0.8*"/>
+                                                <ColumnDefinition Width="0.5*"/>
                                             </Grid.ColumnDefinitions>
                                             <TextBox Text="{x:Bind Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                                            
                                             <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                                       SelectedItem="{x:Bind PrinterTypeString, Mode=TwoWay}">
                                                 <x:String>Receipt</x:String>
@@ -164,6 +186,23 @@
                                                 <x:String>Packing</x:String>
                                                 <x:String>Report</x:String>
                                             </ComboBox>
+
+                                            <!-- Cut Behavior -->
+                                            <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                                      ItemsSource="{Binding ElementName=RootPage, Path=ViewModel.CutBehaviors}"
+                                                      SelectedItem="{x:Bind CutBehavior, Mode=TwoWay}"/>
+
+                                            <!-- Show Prices -->
+                                            <CheckBox Grid.Column="3" IsChecked="{x:Bind ShowPrices, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                                            <!-- Retry Count -->
+                                            <NumberBox Grid.Column="4" Value="{x:Bind RetryCount, Mode=TwoWay, Converter={StaticResource IntToDoubleConverter}}" 
+                                                       Minimum="0" Maximum="10" SpinButtonPlacementMode="Compact" VerticalAlignment="Center"/>
+
+                                            <!-- Retry Delay -->
+                                            <NumberBox Grid.Column="5" Value="{x:Bind RetryDelayMs, Mode=TwoWay, Converter={StaticResource IntToDoubleConverter}}" 
+                                                       Minimum="0" Maximum="5000" SmallChange="100" LargeChange="500" SpinButtonPlacementMode="Compact" VerticalAlignment="Center"
+                                                       ToolTipService.ToolTip="Delay in ms"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
@@ -175,27 +214,71 @@
                             <TextBlock Text="Map printer groups to physical printers on this terminal." Style="{StaticResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
 
                             <ListView ItemsSource="{x:Bind ViewModel.PrinterMappings, Mode=OneWay}" SelectionMode="None">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        <Setter Property="Padding" Value="0"/>
+                                        <Setter Property="Margin" Value="0"/>
+                                        <Setter Property="MinHeight" Value="0"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
                                 <ListView.Header>
-                                    <Grid Padding="12,0" Margin="0,0,0,8">
+                                    <Grid Padding="12,0" Margin="0,0,0,8" ColumnSpacing="12">
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1.5*"/>
                                             <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1.5*"/>
+                                            <ColumnDefinition Width="0.5*"/>
+                                            <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="Printer Group" FontWeight="SemiBold"/>
                                         <TextBlock Grid.Column="1" Text="Physical Printer" FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Column="2" Text="Format" FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Column="3" Text="Cut" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="4" Text="Capabilities" FontWeight="SemiBold" HorizontalAlignment="Center"/>
                                     </Grid>
                                 </ListView.Header>
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="dto:PrinterMappingDto">
-                                        <Grid Padding="0,8">
+                                        <Grid Padding="12,8" ColumnSpacing="12">
                                             <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1.5*"/>
                                                 <ColumnDefinition Width="2*"/>
-                                                <ColumnDefinition Width="2*"/>
+                                                <ColumnDefinition Width="1.5*"/>
+                                                <ColumnDefinition Width="0.5*"/>
+                                                <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Text="{x:Bind PrinterGroupName}" VerticalAlignment="Center"/>
+                                            
                                             <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                                       ItemsSource="{Binding ElementName=RootPage, Path=ViewModel.SystemPrinters}"
                                                       SelectedItem="{x:Bind PrinterName, Mode=TwoWay}"/>
+                                            
+                                            <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                                      ItemsSource="{Binding ElementName=RootPage, Path=ViewModel.PrinterFormats}"
+                                                      SelectedItem="{x:Bind Format, Mode=TwoWay}"/>
+                                            
+                                            <CheckBox Grid.Column="3" IsChecked="{x:Bind CutEnabled, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                                            <!-- Detailed Config Expander/Flyout would be ideal, but for now just basic text inputs or a dedicated dialog? -->
+                                            <!-- Let's use a Flyout for details -->
+                                            <Button Grid.Column="4" Content="Details" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Button.Flyout>
+                                                    <Flyout>
+                                                        <StackPanel Spacing="12" Width="250">
+                                                            <TextBlock Text="Physical Capabilities" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                                                            
+                                                            <NumberBox Header="Paper Width (mm)" Value="{x:Bind PaperWidthMm, Mode=TwoWay, Converter={StaticResource IntToDoubleConverter}}" Minimum="0" Maximum="200" SpinButtonPlacementMode="Inline"/>
+                                                            <NumberBox Header="Printable Width (chars)" Value="{x:Bind PrintableWidthChars, Mode=TwoWay, Converter={StaticResource IntToDoubleConverter}}" Minimum="0" Maximum="100" SpinButtonPlacementMode="Inline"/>
+                                                            <NumberBox Header="DPI" Value="{x:Bind Dpi, Mode=TwoWay, Converter={StaticResource IntToDoubleConverter}}" Minimum="72" Maximum="600" SpinButtonPlacementMode="Inline"/>
+                                                            
+                                                            <CheckBox Content="Cash Drawer Kick" IsChecked="{x:Bind SupportsCashDrawer, Mode=TwoWay}"/>
+                                                            <CheckBox Content="Supports Images" IsChecked="{x:Bind SupportsImages, Mode=TwoWay}"/>
+                                                            <CheckBox Content="Supports QR Code" IsChecked="{x:Bind SupportsQr, Mode=TwoWay}"/>
+                                                        </StackPanel>
+                                                    </Flyout>
+                                                </Button.Flyout>
+                                            </Button>
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>

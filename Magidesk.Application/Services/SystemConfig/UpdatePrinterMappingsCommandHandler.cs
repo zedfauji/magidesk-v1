@@ -40,12 +40,33 @@ public class UpdatePrinterMappingsCommandHandler : ICommandHandler<UpdatePrinter
                 var existing = existingMappingsList.FirstOrDefault(m => m.PrinterGroupId == dto.PrinterGroupId);
                 if (existing != null)
                 {
-                    existing.Update(dto.PhysicalPrinterName);
+                    existing.UpdateConfiguration(
+                        dto.PhysicalPrinterName, 
+                        dto.Format, 
+                        dto.CutEnabled,
+                        dto.PaperWidthMm,
+                        dto.PrintableWidthChars,
+                        dto.Dpi,
+                        dto.SupportsCashDrawer,
+                        dto.SupportsImages,
+                        dto.SupportsQr);
                     await _repository.UpdateAsync(existing, cancellationToken);
                 }
                 else
                 {
-                    var newMapping = PrinterMapping.Create(command.TerminalId, dto.PrinterGroupId, dto.PhysicalPrinterName);
+                    var newMapping = PrinterMapping.Create(command.TerminalId, dto.PrinterGroupId, dto.PhysicalPrinterName, dto.Format, dto.CutEnabled);
+                    // Update detailed config immediately for new items if they deviate from defaults
+                     newMapping.UpdateConfiguration(
+                        dto.PhysicalPrinterName, 
+                        dto.Format, 
+                        dto.CutEnabled,
+                        dto.PaperWidthMm,
+                        dto.PrintableWidthChars,
+                        dto.Dpi,
+                        dto.SupportsCashDrawer,
+                        dto.SupportsImages,
+                        dto.SupportsQr);
+                        
                     await _repository.AddAsync(newMapping, cancellationToken);
                 }
             }
