@@ -47,6 +47,7 @@ public class LoginViewModel : ViewModelBase
 
         AppendDigitCommand = new RelayCommand<string>(AppendDigit);
         ClearCommand = new RelayCommand(Clear);
+        RemoveLastDigitCommand = new RelayCommand(RemoveLastDigit);
         LoginCommand = new AsyncRelayCommand(LoginAsync);
         ShutdownCommand = new RelayCommand(Shutdown);
         ClockInOutCommand = new AsyncRelayCommand(ClockInOutAsync);
@@ -75,6 +76,7 @@ public class LoginViewModel : ViewModelBase
 
     public ICommand AppendDigitCommand { get; }
     public ICommand ClearCommand { get; }
+    public ICommand RemoveLastDigitCommand { get; }
     public ICommand LoginCommand { get; }
     public ICommand ShutdownCommand { get; }
     public ICommand ClockInOutCommand { get; }
@@ -92,6 +94,15 @@ public class LoginViewModel : ViewModelBase
     {
         Pin = string.Empty;
         ErrorMessage = string.Empty;
+    }
+
+    private void RemoveLastDigit()
+    {
+        if (!string.IsNullOrEmpty(Pin))
+        {
+            Pin = Pin.Substring(0, Pin.Length - 1);
+            ErrorMessage = string.Empty;
+        }
     }
 
     private async Task ClockInOutAsync()

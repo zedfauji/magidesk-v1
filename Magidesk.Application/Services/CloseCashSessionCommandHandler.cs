@@ -12,15 +12,18 @@ public class CloseCashSessionCommandHandler : ICommandHandler<CloseCashSessionCo
 {
     private readonly ICashSessionRepository _cashSessionRepository;
     private readonly IAuditEventRepository _auditEventRepository;
+    private readonly ITicketRepository _ticketRepository;
     private readonly Domain.DomainServices.CashSessionDomainService _cashSessionDomainService;
 
     public CloseCashSessionCommandHandler(
         ICashSessionRepository cashSessionRepository,
         IAuditEventRepository auditEventRepository,
+        ITicketRepository ticketRepository,
         Domain.DomainServices.CashSessionDomainService cashSessionDomainService)
     {
         _cashSessionRepository = cashSessionRepository;
         _auditEventRepository = auditEventRepository;
+        _ticketRepository = ticketRepository;
         _cashSessionDomainService = cashSessionDomainService;
     }
 
@@ -33,10 +36,18 @@ public class CloseCashSessionCommandHandler : ICommandHandler<CloseCashSessionCo
             throw new Domain.Exceptions.BusinessRuleViolationException($"Cash session {command.CashSessionId} not found.");
         }
 
-        // Validate can close
+        // Validate can close (internal state)
         if (!_cashSessionDomainService.CanCloseSession(cashSession))
         {
             throw new Domain.Exceptions.InvalidOperationException($"Cash session {command.CashSessionId} cannot be closed.");
+        }
+
+        // Validate External Dependencies (Settlement Enforcement)
+        var openTickets = await _ticketRepository.GetOpenTicketsAsync(cancellationToken);
+        if (openTickets.Any())
+        {
+            throw new Domain.Exceptions.BusinessRuleViolationException(
+                $"Cannot close shift: {openTickets.Count()} tickets are still OPEN or UNPAID. verify all tables are settled.");
         }
 
         // Close cash session

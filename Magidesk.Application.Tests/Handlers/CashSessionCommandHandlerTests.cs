@@ -68,9 +68,10 @@ public class CashSessionCommandHandlerTests
     {
         var sessions = new InMemoryCashSessionRepository();
         var audits = new InMemoryAuditEventRepository();
+        var tickets = new InMemoryTicketRepository();
         var domain = new CashSessionDomainService();
 
-        var handler = new CloseCashSessionCommandHandler(sessions, audits, domain);
+        var handler = new CloseCashSessionCommandHandler(sessions, audits, tickets, domain);
 
         var userId = new UserId(Guid.NewGuid());
         var session = Magidesk.Domain.Entities.CashSession.Open(userId, Guid.NewGuid(), Guid.NewGuid(), new Money(100m));
@@ -93,5 +94,41 @@ public class CashSessionCommandHandlerTests
         saved.Status.Should().Be(Magidesk.Domain.Enumerations.CashSessionStatus.Closed);
 
         audits.Events.Should().HaveCount(1);
+    }
+
+    [Fact]
+    public async Task CloseCashSession_WhenOpenTicketsExist_ShouldThrow()
+    {
+        var sessions = new InMemoryCashSessionRepository();
+        var audits = new InMemoryAuditEventRepository();
+        var tickets = new InMemoryTicketRepository();
+        var domain = new CashSessionDomainService();
+
+        var handler = new CloseCashSessionCommandHandler(sessions, audits, tickets, domain);
+
+        // Setup Open Ticket
+        var openTicket = Magidesk.Domain.Entities.Ticket.Create(
+            1, 
+            new UserId(Guid.NewGuid()), 
+            Guid.NewGuid(), 
+            Guid.NewGuid(), 
+            Guid.NewGuid());
+        await tickets.AddAsync(openTicket);
+
+        var userId = new UserId(Guid.NewGuid());
+        var session = Magidesk.Domain.Entities.CashSession.Open(userId, Guid.NewGuid(), Guid.NewGuid(), new Money(100m));
+        await sessions.AddAsync(session);
+
+        var cmd = new CloseCashSessionCommand
+        {
+            CashSessionId = session.Id,
+            ClosedBy = userId,
+            ActualCash = new Money(100m)
+        };
+
+        var act = async () => await handler.HandleAsync(cmd);
+
+        await act.Should().ThrowAsync<Magidesk.Domain.Exceptions.BusinessRuleViolationException>()
+            .WithMessage("*tickets are still OPEN*");
     }
 }

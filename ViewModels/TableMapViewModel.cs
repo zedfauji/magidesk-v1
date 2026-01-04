@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Threading;
 using Magidesk.Application.DTOs;
+using Microsoft.Extensions.DependencyInjection;
 using Magidesk.Application.Interfaces;
 using Magidesk.Application.Queries;
 using Magidesk.Application.Commands;
@@ -73,6 +74,8 @@ public class TableMapViewModel : ViewModelBase
     private readonly ICashSessionRepository _cashSessionRepository;
     private readonly IOrderTypeRepository _orderTypeRepository;
     private readonly ICommandHandler<CreateTicketCommand, CreateTicketResult> _createTicketHandler;
+    private readonly IServiceScopeFactory _serviceScopeFactory;
+    private readonly Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue;
 
     public TableMapViewModel(
         IQueryHandler<GetTableMapQuery, GetTableMapResult> getTableMap,
@@ -82,7 +85,8 @@ public class TableMapViewModel : ViewModelBase
         ITerminalContext terminalContext,
         ICashSessionRepository cashSessionRepository,
         IOrderTypeRepository orderTypeRepository,
-        ICommandHandler<CreateTicketCommand, CreateTicketResult> createTicketHandler)
+        ICommandHandler<CreateTicketCommand, CreateTicketResult> createTicketHandler,
+        IServiceScopeFactory serviceScopeFactory)
     {
         _getTableMap = getTableMap;
         _changeTable = changeTable;
@@ -92,6 +96,8 @@ public class TableMapViewModel : ViewModelBase
         _cashSessionRepository = cashSessionRepository;
         _orderTypeRepository = orderTypeRepository;
         _createTicketHandler = createTicketHandler;
+        _serviceScopeFactory = serviceScopeFactory;
+        _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
 
         LoadTablesCommand = new AsyncRelayCommand(LoadTablesAsync);
         RefreshTablesCommand = new AsyncRelayCommand(RefreshTablesAsync);
@@ -103,6 +109,8 @@ public class TableMapViewModel : ViewModelBase
         // Start real-time polling with initial delay
         StartRealTimePolling();
     }
+
+    public event EventHandler? RequestShiftStart;
     
     public void SetContext(Guid? sourceTicketId)
     {
@@ -201,13 +209,11 @@ public class TableMapViewModel : ViewModelBase
                  }
                  var terminalId = _terminalContext.TerminalId.Value;
 
-                 // 2. Session Validation
+                // 2. Session Validation
                  var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
                  if (session == null)
                  {
-                     // Simple error for now, as full dialog parity is complex to duplicate right here
-                     // But we can try to show a basic message if possible, or just fail silently/log
-                     System.Diagnostics.Debug.WriteLine("No open session. Please start shift.");
+                     RequestShiftStart?.Invoke(this, EventArgs.Empty);
                      return;
                  }
                  var shiftId = session.Id;
@@ -251,7 +257,7 @@ public class TableMapViewModel : ViewModelBase
 
     private void StartRealTimePolling()
     {
-        if (IsRealTimeEnabled)
+        if (IsRealTimeEnabled) // IsBusy check removed as we use separate scope
         {
             // Initial delay to avoid collision with page load
             _refreshTimer = new Timer(async _ => await RefreshTableStatusAsync(), 
@@ -266,24 +272,35 @@ public class TableMapViewModel : ViewModelBase
 
     private async Task RefreshTableStatusAsync()
     {
-        if (!IsRealTimeEnabled || IsBusy) return;
+        if (!IsRealTimeEnabled) return;
 
         try
         {
-            var result = await _getTableMap.HandleAsync(new GetTableMapQuery());
-            
-            // Update only changed tables for performance
-            foreach (var updatedTable in result.Tables)
+            using (var scope = _serviceScopeFactory.CreateScope())
             {
-                var existingTable = Tables.FirstOrDefault(t => t.Id == updatedTable.Id);
-                if (existingTable != null && existingTable.Status != updatedTable.Status)
+                var getTableMap = scope.ServiceProvider.GetRequiredService<IQueryHandler<GetTableMapQuery, GetTableMapResult>>();
+                var result = await getTableMap.HandleAsync(new GetTableMapQuery());
+            
+                // Marshall back to UI thread if needed, or update ObservableCollection carefully.
+                // Since this is updating the ObservableCollection properties (Status, CurrentTicketId),
+                // we should do this on the UI thread to avoid "The application called an interface that was marshalled for a different thread."
+                
+                _dispatcherQueue.TryEnqueue(() => 
                 {
-                    existingTable.Status = updatedTable.Status;
-                    existingTable.CurrentTicketId = updatedTable.CurrentTicketId;
-                }
+                    // Update only changed tables for performance
+                    foreach (var updatedTable in result.Tables)
+                    {
+                        var existingTable = Tables.FirstOrDefault(t => t.Id == updatedTable.Id);
+                        if (existingTable != null && (existingTable.Status != updatedTable.Status || existingTable.CurrentTicketId != updatedTable.CurrentTicketId))
+                        {
+                            existingTable.Status = updatedTable.Status;
+                            existingTable.CurrentTicketId = updatedTable.CurrentTicketId;
+                        }
+                    }
+                });
             }
-
-            LastRefresh = DateTime.UtcNow;
+            
+            _dispatcherQueue.TryEnqueue(() => LastRefresh = DateTime.UtcNow);
         }
         catch (Exception ex)
         {

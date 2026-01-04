@@ -8,6 +8,12 @@ namespace Magidesk.Presentation.Services;
 public class NavigationService
 {
     private Frame? _frame;
+    private readonly Application.Interfaces.IUserService _userService;
+
+    public NavigationService(Application.Interfaces.IUserService userService)
+    {
+        _userService = userService;
+    }
 
     public void Initialize(Frame frame)
     {
@@ -29,6 +35,24 @@ public class NavigationService
         if (_frame == null)
         {
             throw new InvalidOperationException("NavigationService is not initialized. Call Initialize(frame) first.");
+        }
+
+        // AUTH GUARD
+        // Allow public access to LoginPage
+        if (pageType == typeof(Views.LoginPage))
+        {
+             return _frame.Navigate(pageType, parameter);
+        }
+
+        // Block all other pages if not authenticated
+        if (_userService.CurrentUser == null)
+        {
+            // Redirect to Login if not already there
+            if (_frame.CurrentSourcePageType != typeof(Views.LoginPage))
+            {
+                return _frame.Navigate(typeof(Views.LoginPage));
+            }
+            return false;
         }
 
         return _frame.Navigate(pageType, parameter);

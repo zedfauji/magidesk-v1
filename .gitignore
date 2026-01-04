@@ -60,9 +60,9 @@ TestResult.xml
 
 #Build Logs
 
-*.log
-*.txt
-*.binlog
+#*.log
+#*.txt
+#*.binlog
 *.zip
 
 obj/*

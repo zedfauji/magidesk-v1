@@ -40,7 +40,44 @@ public sealed partial class MainWindow : Window
         _clockTimer.Start();
         
         if (StatusClock != null) StatusClock.Text = System.DateTime.Now.ToString("HH:mm:ss");
+        
+        // AUTH GUARD: UI Visibility
+        try 
+        {
+            var userService = App.Services.GetRequiredService<Magidesk.Application.Interfaces.IUserService>();
+            userService.UserChanged += (s, u) => DispatcherQueue.TryEnqueue(() => UpdateUiAuthState(u));
+            UpdateUiAuthState(userService.CurrentUser);
+        }
+        catch (Exception ex)
+        {
+             StartupLogger.Log($"MainWindow - UserService FATAL: {ex}");
+        }
+
         StartupLogger.Log("MainWindow Constructor - End");
+    }
+
+    private void UpdateUiAuthState(Magidesk.Application.DTOs.UserDto? user)
+    {
+        if (RootNavigationView != null)
+        {
+            RootNavigationView.IsPaneVisible = user != null;
+            RootNavigationView.IsSettingsVisible = user != null;
+            
+            // Optionally disable interaction or hide completely
+            // RootNavigationView.Visibility = user != null ? Visibility.Visible : Visibility.Collapsed;
+            // But if we collapse it, the ContentFrame inside might also hide if it's content?
+            // NavigationView content property is the frame. Hiding NavigationView hides the frame.
+            // So we must ONLY hide the PANE.
+            
+            RootNavigationView.PaneDisplayMode = user != null ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftMinimal;
+            RootNavigationView.IsPaneOpen = false;
+            RootNavigationView.IsPaneToggleButtonVisible = user != null;
+        }
+
+        if (StatusUser != null)
+        {
+            StatusUser.Text = user != null ? $"{user.FirstName} {user.LastName}" : "Not Logged In";
+        }
     }
 
     public void SetTerminalId(string terminalId)

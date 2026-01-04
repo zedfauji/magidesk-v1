@@ -30,5 +30,20 @@ public sealed partial class TableMapPage : Page
         }
 
         await ViewModel.LoadTablesCommand.ExecuteAsync(null);
+        
+        ViewModel.RequestShiftStart += ViewModel_RequestShiftStart;
+    }
+
+    protected override void OnNavigatedFrom(NavigationEventArgs e)
+    {
+        base.OnNavigatedFrom(e);
+        ViewModel.RequestShiftStart -= ViewModel_RequestShiftStart;
+    }
+
+    private async void ViewModel_RequestShiftStart(object? sender, EventArgs e)
+    {
+        var dialog = new Dialogs.ShiftStartDialog();
+        dialog.XamlRoot = this.XamlRoot;
+        await dialog.ShowAsync();
     }
 }

@@ -57,7 +57,9 @@
 - Count MISSING: **72** (Prev 80 - 8 newly completed)
 
 ## 5. Blockers (Hard Stops)
-- **NONE**
+- **AUTH BYPASS (RESOLVED)**: Hard navigation gate implemented (2026-01-03).
+- **SHIFT SETTLEMENT (RESOLVED)**: Enforced 'No Open Tickets' rule in `CloseCashSessionCommandHandler` (2026-01-03).
+- **PHYSICAL KEYBOARD PIN INPUT (RESOLVED)**: Mapped Page KeyDown events to ViewModel commands on Login Screen (2026-01-03).
 
 ## 6. Active Phase
 - Current execution phase: **Slice 5 In Progress (Admin / Reporting)**

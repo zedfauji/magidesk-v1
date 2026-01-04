@@ -5,5 +5,20 @@ namespace Magidesk.Presentation.Services;
 
 public class UserService : IUserService
 {
-    public UserDto? CurrentUser { get; set; }
+    private UserDto? _currentUser;
+
+    public UserDto? CurrentUser 
+    { 
+        get => _currentUser;
+        set
+        {
+            if (_currentUser != value)
+            {
+                _currentUser = value;
+                UserChanged?.Invoke(this, _currentUser);
+            }
+        }
+    }
+
+    public event EventHandler<UserDto?>? UserChanged;
 }
