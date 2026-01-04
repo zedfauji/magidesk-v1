@@ -24,6 +24,24 @@ public sealed partial class ShiftStartDialog : ContentDialog
 
     private async void ShiftStartDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
     {
-        await ViewModel.InitializeAsync();
+        // FEH-003: Async Void Barrier
+        try
+        {
+            await ViewModel.InitializeAsync();
+        }
+        catch (Exception ex)
+        {
+            try
+            {
+                var dialogService = App.Services.GetRequiredService<Magidesk.Application.Interfaces.IDialogService>();
+                await dialogService.ShowErrorAsync("Shift Start Error", "Failed to initialize shift dialog.", ex.ToString());
+                 this.Hide(); 
+            }
+            catch
+            {
+                // Fallback if DialogService fails
+                this.Hide();
+            }
+        }
     }
 }

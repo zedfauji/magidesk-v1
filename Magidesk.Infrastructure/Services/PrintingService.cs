@@ -9,6 +9,7 @@ using Magidesk.Application.Interfaces;
 
 namespace Magidesk.Infrastructure.Services;
 
+[System.Runtime.Versioning.SupportedOSPlatform("windows")]
 public class PrintingService : IPrintingService
 {
     public async Task<IEnumerable<string>> GetSystemPrintersAsync()
@@ -16,22 +17,16 @@ public class PrintingService : IPrintingService
         return await Task.Run(() =>
         {
             var printers = new List<string>();
-            try
+            // BEH-001: No Silent Failures. Allow exception to propagate to caller for Dialog.
+            foreach (string printer in PrinterSettings.InstalledPrinters)
             {
-                foreach (string printer in PrinterSettings.InstalledPrinters)
-                {
-                    printers.Add(printer);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"[PrintingService] Error getting installed printers: {ex.Message}");
+                printers.Add(printer);
             }
             return printers.AsEnumerable();
         });
     }
 
-    public async Task PrintTicketAsync(TicketDto ticket, string printerName = null)
+    public async Task PrintTicketAsync(TicketDto ticket, string? printerName = null)
     {
         // Stub: Log print request
         Debug.WriteLine($"[PrintingService] Printing Ticket #{ticket.TicketNumber} to {(printerName ?? "Default Printer")}");

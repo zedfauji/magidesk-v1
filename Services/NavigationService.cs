@@ -1,4 +1,5 @@
 using Microsoft.UI.Xaml.Controls;
+using Magidesk.Infrastructure.Services;
 
 namespace Magidesk.Presentation.Services;
 
@@ -74,11 +75,24 @@ public class NavigationService
 
         if (_frame.XamlRoot == null)
         {
-            throw new InvalidOperationException("Cannot show dialog: Frame's XamlRoot is null.");
+            // NAV-001: Safe Dialog Failure
+            // Do NOT throw. Log and return None.
+            System.Diagnostics.Debug.WriteLine($"[NavigationService] Failed to show dialog '{dialog.Title}'. XamlRoot not found after 2 seconds.");
+            StartupLogger.Log($"[NavigationService] Failed to show dialog '{dialog.Title}'. XamlRoot not found.");
+            return ContentDialogResult.None;
         }
 
         dialog.XamlRoot = _frame.XamlRoot;
-        return await dialog.ShowAsync();
+        try 
+        {
+            return await dialog.ShowAsync();
+        }
+        catch (Exception ex)
+        {
+            // Catch "Dialog already open" or other WinUI specific errors
+            System.Diagnostics.Debug.WriteLine($"[NavigationService] ShowAsync Failed: {ex.Message}");
+            return ContentDialogResult.None;
+        }
     }
     public Microsoft.UI.Dispatching.DispatcherQueue? DispatcherQueue => _frame?.DispatcherQueue;
 }

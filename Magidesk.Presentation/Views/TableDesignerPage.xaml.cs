@@ -28,7 +28,22 @@ public sealed partial class TableDesignerPage : Page
     protected override async void OnNavigatedTo(NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
-        await ViewModel.LoadDataAsync();
+        // FEH-004: Async Void Barrier
+        try
+        {
+            await ViewModel.LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+             // We can't easily show a dialog here since the page might not be fully loaded,
+             // but IDialogService logic via NavigationService is robust now (NAV-001).
+             try
+             {
+                 var dialogService = App.Services.GetRequiredService<Magidesk.Application.Interfaces.IDialogService>();
+                 await dialogService.ShowErrorAsync("Designer Error", "Failed to load table designer.", ex.ToString());
+             }
+             catch { /* Last resort silence */ }
+        }
     }
 
     private void Canvas_Tapped(object sender, TappedRoutedEventArgs e)

@@ -32,8 +32,12 @@ public partial class App : Microsoft.UI.Xaml.Application
 
     public static IServiceProvider Services => Host.Services;
 
+    [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
+    private static extern int MessageBox(IntPtr hWnd, String text, String caption, uint type);
+
     public App()
     {
+        // SYS-001: FATAL STARTUP BARRIER
         StartupLogger.Log("App Constructor - Start");
         this.UnhandledException += App_UnhandledException;
         
@@ -42,7 +46,7 @@ public partial class App : Microsoft.UI.Xaml.Application
             InitializeComponent();
             StartupLogger.Log("App - InitializeComponent Success");
         } catch (Exception ex) {
-            StartupLogger.Log($"App - InitializeComponent FATAL: {ex}");
+            HandleFatalStartupError("InitializeComponent Failed", ex);
             throw;
         }
 
@@ -62,9 +66,14 @@ public partial class App : Microsoft.UI.Xaml.Application
                     // UI services
                     services.AddSingleton<NavigationService>();
                     services.AddSingleton<IUserService, UserService>();
-                    services.AddSingleton<ITerminalContext, TerminalContext>();
-                    services.AddSingleton<IPrintingService, PrintingService>();
-                    services.AddSingleton<IDefaultViewRoutingService, DefaultViewRoutingService>();
+                    services.AddSingleton<Magidesk.Application.Interfaces.ITerminalContext, TerminalContext>();
+            // Printing
+            services.AddSingleton<Magidesk.Application.Interfaces.IPrintingService, Infrastructure.Services.PrintingService>();
+            services.AddSingleton<Magidesk.Application.Interfaces.IRawPrintService, Infrastructure.Printing.WindowsPrintingService>();
+            services.AddScoped<Magidesk.Application.Interfaces.IKitchenPrintService, Infrastructure.Printing.KitchenPrintService>(); // Real Implementation
+            services.AddSingleton<Magidesk.Application.Interfaces.ICashDrawerService, Infrastructure.Services.CashDrawerService>();
+            services.AddTransient<Magidesk.Application.Interfaces.ICommandHandler<Magidesk.Application.Commands.OpenCashDrawerCommand>, Magidesk.Application.Commands.OpenCashDrawerCommandHandler>();
+            services.AddScoped<Magidesk.Application.Interfaces.IReceiptPrintService, Infrastructure.Printing.ReceiptPrintService>(); // Real Implementation
 
                     // ViewModels
                     StartupLogger.Log("App - Registering ViewModels...");
@@ -144,10 +153,21 @@ public partial class App : Microsoft.UI.Xaml.Application
                 .Build();
             StartupLogger.Log("App - Host Building Success");
         } catch (Exception ex) {
-            StartupLogger.Log($"App - Host Building FATAL: {ex}");
+            HandleFatalStartupError("Host Compilation Failed", ex);
             throw;
         }
         StartupLogger.Log("App Constructor - End");
+    }
+
+    private void HandleFatalStartupError(string stage, Exception ex)
+    {
+        var msg = $"CRITICAL STARTUP FAILURE\nStage: {stage}\nError: {ex.Message}\n\nStack:\n{ex.StackTrace}";
+        StartupLogger.Log(msg);
+        try 
+        {
+            MessageBox(IntPtr.Zero, msg, "Magidesk Fatal Error", 0x10); // 0x10 = MB_ICONHAND (Error)
+        }
+        catch { /* Cant do anything if native call fails */ }
     }
 
     protected override async void OnLaunched(LaunchActivatedEventArgs args)
@@ -226,17 +246,28 @@ public partial class App : Microsoft.UI.Xaml.Application
 
     private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
     {
+        // PARANOID GLOBAL HANDLER (FEH-002)
+        // 1. Attempt Primary Logging
         try
         {
-            // Use LocalApplicationData as it's almost always writable for the user
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var logDir = System.IO.Path.Combine(appData, "Magidesk", "Logs");
             System.IO.Directory.CreateDirectory(logDir);
             var logPath = System.IO.Path.Combine(logDir, "crash_log.txt");
             
-            System.IO.File.AppendAllText(logPath, $"{DateTime.Now}: UNHANDLED: {e.Exception}\n");
-            System.Diagnostics.Debug.WriteLine($"UNHANDLED EXCEPTION: {e.Exception}");
+            var message = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] CRITICAL UNHANDLED: {e.Exception?.Message}\nStack: {e.Exception?.StackTrace}\nInner: {e.Exception?.InnerException}\n--------------------------------\n";
+            System.IO.File.AppendAllText(logPath, message);
         }
-        catch { }
+        catch (Exception logEx)
+        {
+            // 2. Fallback Logging (Console/Debug)
+            System.Diagnostics.Debug.WriteLine($"[FATAL] Failed to write crash log: {logEx.Message}");
+            System.Diagnostics.Debug.WriteLine($"With Original Exception: {e.Exception}");
+        }
+
+        // 3. Last Ditch UI Notification only if we are on UI thread (implied by UnhandledException event usually)
+        // Note: We cannot reliably show a XAML Dialog here if the visual tree is corrupt. 
+        // We accept the crash, but at least we logged it.
+        // e.Handled = true; // DO NOT MARK HANDLED. Let it crash so the process restarts/closes properly.
     }
 }

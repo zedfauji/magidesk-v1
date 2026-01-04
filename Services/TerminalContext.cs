@@ -1,15 +1,9 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using Magidesk.Application.Interfaces;
 
 namespace Magidesk.Presentation.Services;
-
-public interface ITerminalContext
-{
-    string? TerminalIdentity { get; }
-    Guid? TerminalId { get; }
-    void SetTerminalIdentity(string terminalIdentity, Guid terminalId);
-}
 
 public sealed class TerminalContext : ITerminalContext
 {

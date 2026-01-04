@@ -45,7 +45,14 @@ public sealed partial class MainWindow : Window
         try 
         {
             var userService = App.Services.GetRequiredService<Magidesk.Application.Interfaces.IUserService>();
-            userService.UserChanged += (s, u) => DispatcherQueue.TryEnqueue(() => UpdateUiAuthState(u));
+            // FEH-005: Fire-and-Forget Barrier
+            userService.UserChanged += (s, u) => 
+            {
+                DispatcherQueue.TryEnqueue(() => 
+                { 
+                    try { UpdateUiAuthState(u); } catch (Exception ex) { StartupLogger.Log($"Auth UI Update Failed: {ex}"); }
+                });
+            };
             UpdateUiAuthState(userService.CurrentUser);
         }
         catch (Exception ex)
@@ -100,28 +107,47 @@ public sealed partial class MainWindow : Window
 
     private async void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
-        if (args.InvokedItemContainer is not NavigationViewItem item)
+        // FEH-001: Async Void Barrier
+        try
         {
-            return;
-        }
+            if (args.InvokedItemContainer is not NavigationViewItem item)
+            {
+                return;
+            }
 
-        var tag = item.Tag?.ToString();
-        if (tag == "home")
-        {
-            _navigation.Navigate(typeof(Views.SwitchboardPage));
-            return;
-        }
+            var tag = item.Tag?.ToString();
+            if (tag == "home")
+            {
+                _navigation.Navigate(typeof(Views.SwitchboardPage));
+                return;
+            }
 
-        if (tag == "tableMap")
-        {
-            _navigation.Navigate(typeof(Views.TableMapPage));
-            return;
-        }
+            if (tag == "tableMap")
+            {
+                _navigation.Navigate(typeof(Views.TableMapPage));
+                return;
+            }
 
-        if (tag == "kitchenDisplay")
+            if (tag == "kitchenDisplay")
+            {
+                _navigation.Navigate(typeof(Views.KitchenDisplayPage));
+                return;
+            }
+        }
+        catch (Exception ex)
         {
-            _navigation.Navigate(typeof(Views.KitchenDisplayPage));
-            return;
+            StartupLogger.Log($"FATAL NAV ERROR: {ex}");
+            try 
+            {
+                // Attempt to retrieve dialog service to show error
+                var dialogService = App.Services.GetRequiredService<Magidesk.Application.Interfaces.IDialogService>();
+                await dialogService.ShowErrorAsync("Navigation Failed", $"Could not navigate to the requested page.\n\nError: {ex.Message}", ex.ToString());
+            }
+            catch (Exception dialogEx)
+            {
+                // Absolute last resort
+                System.Diagnostics.Debug.WriteLine($"Double Fault in Navigation: {dialogEx}");
+            }
         }
     }
 

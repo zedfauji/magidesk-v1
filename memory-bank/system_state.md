@@ -60,8 +60,40 @@
 - **AUTH BYPASS (RESOLVED)**: Hard navigation gate implemented (2026-01-03).
 - **SHIFT SETTLEMENT (RESOLVED)**: Enforced 'No Open Tickets' rule in `CloseCashSessionCommandHandler` (2026-01-03).
 - **PHYSICAL KEYBOARD PIN INPUT (RESOLVED)**: Mapped Page KeyDown events to ViewModel commands on Login Screen (2026-01-03).
+- **PHYSICAL KEYBOARD PIN INPUT (RESOLVED)**: Mapped Page KeyDown events to ViewModel commands on Login Screen (2026-01-03).
 
-## 6. Active Phase
+## 6. FAILURE VISIBILITY STATUS (2026-01-03)
+- **Policy**: [Failure Handling Policy](../docs/failure-audit/failure_policy.md)
+- **Status**: **CRITICAL GAPS**
+- **Silent Failures**:
+    - `App_UnhandledException` swallows logging errors (Crash to Desktop).
+    - `MainWindow.OnItemInvoked` (`async void`) crashes on nav error.
+    - `UpdateUiAuthState` is fire-and-forget.
+- **Missing Infrastructure**:
+- **Missing Infrastructure**:
+    - No Safe Fire-and-Forget mechanism (SafeFireAndForget extension pending).
+
+## 7. FAILURE REMEDIATION TRACKING
+- **Phase**: **COMPLETED** (All Critical/High Tickets Resolved)
+- **Total Tickets**: **10**
+- **Blockers**: **0** 
+- **Tracking**: [Ticket Order](../docs/failure-audit/ticket_execution_order.md)
+
+## 8. PRINTING SYSTEM STATUS (2026-01-03)
+- **Status**: **NON-FUNCTIONAL / MOCK ONLY**
+- **Action**: Forensic Parity Audit & Implementation Initiated.
+- **Artifacts**: [Inventory](../docs/printing-audit/printing_feature_inventory.md), [Drift Report](../docs/printing-audit/printing_drift_report.md)
+- **Critical Gaps**:
+    - Kitchen/Bar Printing (Stubbed)
+    - Receipt Printing (Stubbed)
+    - Cash Drawer Kick (Missing)
+    - Report Printing (Missing)
+
+## 9. Blockers (Hard Stops)
+- **PRINTING SYSTEM**: Printing is RELEASE BLOCKER until complete parity is achieved.
+
+
+## 8. Active Phase
 - Current execution phase: **Slice 5 In Progress (Admin / Reporting)**
 
 ## 7. Frozen Decisions
