@@ -109,6 +109,62 @@
          <lastmod>2026-01-04</lastmod>
     </url>
     <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/failure-audit/dynamic_failure_analysis/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/failure-audit/exception_gap_matrix/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/failure-audit/failure_blockers/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/failure-audit/failure_entry_points/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/failure-audit/failure_policy/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/failure-audit/implementation_plan/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/failure-audit/static_failure_analysis/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/failure-audit/ticket_execution_order/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/failure-audit/ticket_layer_mapping/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/failure-audit/ticket_verification_criteria/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/failure-audit/tickets/BEH/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/failure-audit/tickets/FEH/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/failure-audit/tickets/NAV/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/failure-audit/tickets/SYS/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
          <loc>https://zedfauji.github.io/magidesk-v1/forensic-backend-audit/F-0001-application-bootstrap/</loc>
          <lastmod>2026-01-04</lastmod>
     </url>
@@ -1266,6 +1322,38 @@
     </url>
     <url>
          <loc>https://zedfauji.github.io/magidesk-v1/operations/performance-tuning/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/printing-audit/printing_drift_report/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/printing-audit/printing_execution_order/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/printing-audit/printing_feature_inventory/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/printing-audit/printing_flows/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/printing-audit/printing_ticket_status/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/printing-audit/printing_tickets/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/printing-audit/printing_todo_map/</loc>
+         <lastmod>2026-01-04</lastmod>
+    </url>
+    <url>
+         <loc>https://zedfauji.github.io/magidesk-v1/printing-audit/printing_verification/</loc>
          <lastmod>2026-01-04</lastmod>
     </url>
     <url>
