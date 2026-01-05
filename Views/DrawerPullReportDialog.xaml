@@ -44,12 +44,18 @@
             <StackPanel Grid.Row="1" Spacing="8" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}" BorderThickness="0,0,0,1" Padding="0,0,0,16">
                 <TextBlock Text="Sales Summary" Style="{StaticResource SubtitleTextBlockStyle}"/>
                 
-                <Grid ColumnDefinitions="*,Auto">
-                    <TextBlock Text="Net Sales"/>
-                    <TextBlock Grid.Column="1" Text="{Binding Report.TotalCashReceipts, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}"/> <!-- Note: DTO naming might imply CashReceipts != NetSales, verifying logic -->
+                <Grid ColumnDefinitions="*,Auto" RowSpacing="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Grid.Row="0" Text="Net Sales"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Report.NetSales, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}"/>
+
+                    <TextBlock Grid.Row="1" Text="Tax"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Report.Tax, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}"/>
                 </Grid>
-                 <!-- Added placeholder for Tax/Tips if DTO doesn't allow direct Sales/Tax split yet -->
-                 <TextBlock Text="* Sales Tax &amp; Net Sales unavailable in backend query" Foreground="Orange" Style="{StaticResource CaptionTextBlockStyle}"/>
             </StackPanel>
 
             <!-- Cash Accountability -->
@@ -79,7 +85,7 @@
                     <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Report.TotalCashDrops, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}"/>
 
                     <TextBlock Grid.Row="3" Text="Tips Paid Out"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Text="($0.00)" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/> <!-- Placeholder per MVP -->
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Report.TotalTips, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}"/>
                     
                     <TextBlock Grid.Row="4" Text="Payouts"/>
                     <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Report.TotalPayouts, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}"/>

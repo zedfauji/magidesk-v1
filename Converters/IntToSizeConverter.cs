@@ -18,7 +18,7 @@ public class IntToSizeConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)
     {
-        throw new NotImplementedException();
+        return DependencyProperty.UnsetValue;
     }
 }
 
@@ -37,8 +37,6 @@ public class IntToPreviewSizeConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)
     {
-        throw new NotImplementedException();
+        return DependencyProperty.UnsetValue;
     }
 }
-
-

@@ -141,6 +141,11 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<ICommandHandler<ChangeTableCommand, ChangeTableResult>, ChangeTableCommandHandler>();
                     services.AddTransient<ICommandHandler<SetCustomerCommand, SetCustomerResult>, SetCustomerCommandHandler>();
                     
+                    // User Management (TECH-U003)
+                    services.AddTransient<ICommandHandler<CreateUserCommand, CreateUserResult>, CreateUserCommandHandler>();
+                    services.AddTransient<ICommandHandler<UpdateUserCommand, UpdateUserResult>, UpdateUserCommandHandler>();
+                    services.AddTransient<ICommandHandler<DeleteUserCommand, DeleteUserResult>, DeleteUserCommandHandler>();
+                    
                     services.AddTransient<ITableRepository, TableRepository>();
                     services.AddTransient<ITableLayoutRepository, TableLayoutRepository>();
                     services.AddTransient<IFloorRepository, FloorRepository>();

@@ -1,6 +1,7 @@
 using Magidesk.Application.DTOs;
 using Magidesk.Domain.Enumerations;
 using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml;
 
 namespace Magidesk.Presentation.Converters;
 
@@ -35,6 +36,6 @@ public class ShapeToCornerRadiusConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)
     {
-        throw new NotImplementedException();
+        return DependencyProperty.UnsetValue;
     }
 }

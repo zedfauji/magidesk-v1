@@ -1,3 +1,4 @@
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 
 namespace Magidesk.Presentation.Converters;
@@ -39,6 +40,6 @@ public class DateTimeToTimeConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)
     {
-        throw new NotImplementedException();
+        return DependencyProperty.UnsetValue;
     }
 }

@@ -2,6 +2,8 @@ using System;
 using Microsoft.UI.Xaml.Data;
 using System.Globalization;
 
+using Microsoft.UI.Xaml;
+
 namespace Magidesk.Presentation.Converters;
 
 public class CurrencyConverter : IValueConverter
@@ -21,6 +23,6 @@ public class CurrencyConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)
     {
-        throw new NotImplementedException();
+        return DependencyProperty.UnsetValue;
     }
 }

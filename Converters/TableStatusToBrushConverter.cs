@@ -2,6 +2,7 @@ using System;
 using Magidesk.Domain.Enumerations;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml;
 
 namespace Magidesk.Presentation.Converters;
 
@@ -27,6 +28,6 @@ public class TableStatusToBrushConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)
     {
-        throw new NotImplementedException();
+        return DependencyProperty.UnsetValue;
     }
 }

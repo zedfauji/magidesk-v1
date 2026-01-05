@@ -231,6 +231,20 @@ public class OrderLine
     }
 
     /// <summary>
+    /// Applies a discount to the order line.
+    /// </summary>
+    public void ApplyDiscount(OrderLineDiscount discount)
+    {
+        if (discount == null) throw new ArgumentNullException(nameof(discount));
+        
+        if (discount.OrderLineId != Id)
+            throw new BusinessRuleViolationException("Discount does not belong to this order line.");
+
+        _discounts.Add(discount);
+        CalculatePrice();
+    }
+
+    /// <summary>
     /// Marks this order line as printed to kitchen.
     /// </summary>
     public void MarkPrintedToKitchen()

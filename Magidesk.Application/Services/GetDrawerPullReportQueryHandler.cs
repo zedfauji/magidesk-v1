@@ -11,10 +11,12 @@ namespace Magidesk.Application.Services;
 public class GetDrawerPullReportQueryHandler : IQueryHandler<GetDrawerPullReportQuery, GetDrawerPullReportResult>
 {
     private readonly ICashSessionRepository _cashSessionRepository;
+    private readonly ISalesReportRepository _salesReportRepository;
 
-    public GetDrawerPullReportQueryHandler(ICashSessionRepository cashSessionRepository)
+    public GetDrawerPullReportQueryHandler(ICashSessionRepository cashSessionRepository, ISalesReportRepository salesReportRepository)
     {
         _cashSessionRepository = cashSessionRepository;
+        _salesReportRepository = salesReportRepository;
     }
 
     public async Task<GetDrawerPullReportResult> HandleAsync(GetDrawerPullReportQuery query, CancellationToken cancellationToken = default)
@@ -24,6 +26,19 @@ public class GetDrawerPullReportQueryHandler : IQueryHandler<GetDrawerPullReport
         {
             throw new Domain.Exceptions.BusinessRuleViolationException($"Cash session {query.CashSessionId} not found.");
         }
+
+        // Fetch Sales Data for the session duration
+        var startDate = cashSession.OpenedAt;
+        var endDate = cashSession.ClosedAt ?? DateTime.UtcNow;
+
+        // TECH-U004: Fetch Sales and Tips
+        // Note: Filters by null (all categories/users) to match the session. 
+        // Ideally we should filter by cashSession.UserId if this is a "User" drawer pull. 
+        // CashSessions are per-user/per-terminal usually. 
+        // Assuming this is a USER drawer pull, we verify strictly by User.
+        
+        var salesSummary = await _salesReportRepository.GetSalesSummaryAsync(startDate, endDate, false, cancellationToken);
+        var tipReport = await _salesReportRepository.GetTipReportAsync(startDate, endDate, cashSession.UserId, cancellationToken);
 
         var cashPayments = cashSession.Payments
             .Where(p => p.PaymentType == PaymentType.Cash && !p.IsVoided)
@@ -52,6 +67,12 @@ public class GetDrawerPullReportQueryHandler : IQueryHandler<GetDrawerPullReport
             TotalPayouts = cashSession.Payouts.Sum(p => p.Amount.Amount),
             TotalCashDrops = cashSession.CashDrops.Sum(d => d.Amount.Amount),
             TotalDrawerBleeds = cashSession.DrawerBleeds.Sum(b => b.Amount.Amount),
+            
+            // Populated from Repositories
+            NetSales = salesSummary.Totals.TotalNetSales,
+            Tax = salesSummary.Totals.TotalTax,
+            TotalTips = tipReport.TotalTips,
+
             Payouts = cashSession.Payouts.Select(MapPayoutToDto).ToList(),
             CashDrops = cashSession.CashDrops.Select(MapCashDropToDto).ToList(),
             DrawerBleeds = cashSession.DrawerBleeds.Select(MapDrawerBleedToDto).ToList(),

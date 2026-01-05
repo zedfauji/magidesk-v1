@@ -450,6 +450,28 @@ public class Ticket
     }
 
     /// <summary>
+    /// Applies a discount to a specific order line in the ticket.
+    /// </summary>
+    public void ApplyLineDiscount(Guid orderLineId, OrderLineDiscount discount)
+    {
+        if (discount == null) throw new ArgumentNullException(nameof(discount));
+        
+        if (Status == TicketStatus.Closed || Status == TicketStatus.Voided || Status == TicketStatus.Refunded)
+        {
+            throw new DomainInvalidOperationException($"Cannot apply discount to ticket in {Status} status.");
+        }
+
+        var line = _orderLines.FirstOrDefault(x => x.Id == orderLineId);
+        if (line == null)
+            throw new BusinessRuleViolationException($"OrderLine {orderLineId} not found in this ticket.");
+
+        line.ApplyDiscount(discount);
+        ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
+        CalculateTotals();
+    }
+
+    /// <summary>
     /// Schedules the ticket for future fulfillment.
     /// </summary>
     public void Schedule(DateTime deliveryDate)

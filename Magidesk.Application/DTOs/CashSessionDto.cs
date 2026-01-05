@@ -84,6 +84,9 @@ public class DrawerPullReportDto
     public decimal TotalPayouts { get; set; }
     public decimal TotalCashDrops { get; set; }
     public decimal TotalDrawerBleeds { get; set; }
+    public decimal NetSales { get; set; } // TECH-U004
+    public decimal Tax { get; set; } // TECH-U004
+    public decimal TotalTips { get; set; } // TECH-U004
     public List<PayoutDto> Payouts { get; set; } = new();
     public List<CashDropDto> CashDrops { get; set; } = new();
     public List<DrawerBleedDto> DrawerBleeds { get; set; } = new();

@@ -19,14 +19,32 @@ public class SetCustomerCommandHandler : ICommandHandler<SetCustomerCommand, Set
         if (ticket == null)
             return new SetCustomerResult { Success = false, ErrorMessage = "Ticket not found." };
 
-        // For now, we store Name/Phone in ExtraDeliveryInfo JSON or formatting, 
-        // since we don't have a Customer Entity or dedicated GuestName field yet.
-        // This is a Slice 2 Gap Fill stub.
+        // TECH-B004: Implement actual assignment logic
+        // Since ICustomerRepository is pending, we map GuestName/Phone to Ticket metadata
         
-        var info = $"Guest: {command.GuestName} | Phone: {command.PhoneNumber}";
+        // Format extra info for guest tracking
+        var extraInfo = new
+        {
+            GuestName = command.GuestName,
+            Phone = command.PhoneNumber,
+            Timestamp = DateTime.UtcNow
+        };
         
-        // Pass null for CustomerId and Address as this is just "Guest Assignment"
-        ticket.SetCustomer(null, null, info);
+        string jsonInfo = JsonSerializer.Serialize(extraInfo);
+
+        // Update the ticket
+        // Note: For now we pass null for CustomerId as we don't have the entity key
+        // We map the guest name to the DeliveryAddress field if it's not a formal address, 
+        // effectively using it as a "Customer Label" for now, or just rely on ExtraDeliveryInfo.
+        
+        ticket.SetCustomer(
+            customerId: null, 
+            address: null, // Address would come from a real Customer profile
+            extraInfo: jsonInfo
+        );
+
+        // If we want to store the name visually on the ticket, we might need a specific field.
+        // For now, relying on the 'OwnerName' being the server, and 'ExtraDeliveryInfo' carrying the guest.
 
         await _ticketRepository.UpdateAsync(ticket, cancellationToken);
 
