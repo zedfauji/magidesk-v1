@@ -125,3 +125,7 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.I
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.pdb
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\Magidesk.Infrastructure.Tests.genruntimeconfig.cache
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\obj\Debug\net8.0\ref\Magidesk.Infrastructure.Tests.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Fluid.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\Parlot.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\bin\Debug\net8.0\TimeZoneConverter.dll

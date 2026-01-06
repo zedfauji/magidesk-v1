@@ -1,0 +1,1 @@
+‚RlC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Magidesk.Domain.csproj¢net8.0òCSharp12

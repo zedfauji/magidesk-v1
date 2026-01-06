@@ -1,0 +1,1 @@
+™R‚C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application.Tests\Magidesk.Application.Tests.csproj¢net8.0òCSharp12

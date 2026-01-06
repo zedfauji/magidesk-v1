@@ -1,0 +1,2735 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Microsoft (R) Visual C# Compiler",
+        "version": "5.0.0.0",
+        "fileVersion": "5.0.0-2.25569.105 (fad253f5)",
+        "semanticVersion": "5.0.0",
+        "language": "en-US"
+      },
+      "results": [
+        {
+          "ruleId": "S1451",
+          "level": "warning",
+          "message": "Add or update the header of this file.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/CashController.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "HeaderFormat": "/*\u000a * <Your-Product-Name>\u000a * Copyright (c) <Year-From>-<Year-To> <Your-Company-Name>\u000a *\u000a * Please configure this header in your SonarCloud/SonarQube quality profile.\u000a * You can also set it in SonarLint.xml additional file for SonarLint or standalone NuGet analyzer.\u000a */\u000a",
+              "IsRegularExpression": "False"
+            }
+          }
+        },
+        {
+          "ruleId": "S122",
+          "level": "warning",
+          "message": "Reformat the code to have only one statement per line.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/CashController.cs",
+                "region": {
+                  "startLine": 62,
+                  "startColumn": 9,
+                  "endLine": 62,
+                  "endColumn": 48
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1451",
+          "level": "warning",
+          "message": "Add or update the header of this file.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/KitchenController.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "HeaderFormat": "/*\u000a * <Your-Product-Name>\u000a * Copyright (c) <Year-From>-<Year-To> <Your-Company-Name>\u000a *\u000a * Please configure this header in your SonarCloud/SonarQube quality profile.\u000a * You can also set it in SonarLint.xml additional file for SonarLint or standalone NuGet analyzer.\u000a */\u000a",
+              "IsRegularExpression": "False"
+            }
+          }
+        },
+        {
+          "ruleId": "S4487",
+          "level": "warning",
+          "message": "Remove this unread private field '_routingService' or refactor the code to use its value.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/KitchenController.cs",
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 45,
+                  "endLine": 12,
+                  "endColumn": 60
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1312",
+          "level": "warning",
+          "message": "Make the logger '_logger' private static readonly.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuCategoriesController.cs",
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 56,
+                  "endLine": 13,
+                  "endColumn": 63
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1312",
+          "level": "warning",
+          "message": "Make the logger '_logger' private static readonly.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuGroupsController.cs",
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 52,
+                  "endLine": 13,
+                  "endColumn": 59
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1312",
+          "level": "warning",
+          "message": "Make the logger '_logger' private static readonly.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/SystemController.cs",
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 48,
+                  "endLine": 12,
+                  "endColumn": 55
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1451",
+          "level": "warning",
+          "message": "Add or update the header of this file.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuCategoriesController.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "HeaderFormat": "/*\u000a * <Your-Product-Name>\u000a * Copyright (c) <Year-From>-<Year-To> <Your-Company-Name>\u000a *\u000a * Please configure this header in your SonarCloud/SonarQube quality profile.\u000a * You can also set it in SonarLint.xml additional file for SonarLint or standalone NuGet analyzer.\u000a */\u000a",
+              "IsRegularExpression": "False"
+            }
+          }
+        },
+        {
+          "ruleId": "S1451",
+          "level": "warning",
+          "message": "Add or update the header of this file.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuGroupsController.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "HeaderFormat": "/*\u000a * <Your-Product-Name>\u000a * Copyright (c) <Year-From>-<Year-To> <Your-Company-Name>\u000a *\u000a * Please configure this header in your SonarCloud/SonarQube quality profile.\u000a * You can also set it in SonarLint.xml additional file for SonarLint or standalone NuGet analyzer.\u000a */\u000a",
+              "IsRegularExpression": "False"
+            }
+          }
+        },
+        {
+          "ruleId": "S1451",
+          "level": "warning",
+          "message": "Add or update the header of this file.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/ReportsController.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "HeaderFormat": "/*\u000a * <Your-Product-Name>\u000a * Copyright (c) <Year-From>-<Year-To> <Your-Company-Name>\u000a *\u000a * Please configure this header in your SonarCloud/SonarQube quality profile.\u000a * You can also set it in SonarLint.xml additional file for SonarLint or standalone NuGet analyzer.\u000a */\u000a",
+              "IsRegularExpression": "False"
+            }
+          }
+        },
+        {
+          "ruleId": "S103",
+          "level": "warning",
+          "message": "Split this 289 characters long line (which is greater than 200 authorized).",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/ReportsController.cs",
+                "region": {
+                  "startLine": 30,
+                  "startColumn": 1,
+                  "endLine": 30,
+                  "endColumn": 290
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S103",
+          "level": "warning",
+          "message": "Split this 254 characters long line (which is greater than 200 authorized).",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/ReportsController.cs",
+                "region": {
+                  "startLine": 38,
+                  "startColumn": 1,
+                  "endLine": 38,
+                  "endColumn": 255
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1451",
+          "level": "warning",
+          "message": "Add or update the header of this file.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/SystemController.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "HeaderFormat": "/*\u000a * <Your-Product-Name>\u000a * Copyright (c) <Year-From>-<Year-To> <Your-Company-Name>\u000a *\u000a * Please configure this header in your SonarCloud/SonarQube quality profile.\u000a * You can also set it in SonarLint.xml additional file for SonarLint or standalone NuGet analyzer.\u000a */\u000a",
+              "IsRegularExpression": "False"
+            }
+          }
+        },
+        {
+          "ruleId": "S2221",
+          "level": "warning",
+          "message": "Catch a list of specific exception subtype or use exception filters instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/KitchenController.cs",
+                "region": {
+                  "startLine": 34,
+                  "startColumn": 16,
+                  "endLine": 34,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2221",
+          "level": "warning",
+          "message": "Catch a list of specific exception subtype or use exception filters instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/KitchenController.cs",
+                "region": {
+                  "startLine": 48,
+                  "startColumn": 16,
+                  "endLine": 48,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2221",
+          "level": "warning",
+          "message": "Catch a list of specific exception subtype or use exception filters instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/CashController.cs",
+                "region": {
+                  "startLine": 35,
+                  "startColumn": 16,
+                  "endLine": 35,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2221",
+          "level": "warning",
+          "message": "Catch a list of specific exception subtype or use exception filters instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/CashController.cs",
+                "region": {
+                  "startLine": 52,
+                  "startColumn": 16,
+                  "endLine": 52,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1451",
+          "level": "warning",
+          "message": "Add or update the header of this file.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "HeaderFormat": "/*\u000a * <Your-Product-Name>\u000a * Copyright (c) <Year-From>-<Year-To> <Your-Company-Name>\u000a *\u000a * Please configure this header in your SonarCloud/SonarQube quality profile.\u000a * You can also set it in SonarLint.xml additional file for SonarLint or standalone NuGet analyzer.\u000a */\u000a",
+              "IsRegularExpression": "False"
+            }
+          }
+        },
+        {
+          "ruleId": "S2221",
+          "level": "warning",
+          "message": "Catch a list of specific exception subtype or use exception filters instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/KitchenController.cs",
+                "region": {
+                  "startLine": 62,
+                  "startColumn": 16,
+                  "endLine": 62,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2360",
+          "level": "warning",
+          "message": "Use the overloading mechanism instead of the optional parameters.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/ReportsController.cs",
+                "region": {
+                  "startLine": 30,
+                  "startColumn": 169,
+                  "endLine": 30,
+                  "endColumn": 175
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2360",
+          "level": "warning",
+          "message": "Use the overloading mechanism instead of the optional parameters.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/ReportsController.cs",
+                "region": {
+                  "startLine": 30,
+                  "startColumn": 282,
+                  "endLine": 30,
+                  "endColumn": 289
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3254",
+          "level": "warning",
+          "message": "Remove this default value assigned to parameter 'currency'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/CashController.cs",
+                "region": {
+                  "startLine": 49,
+                  "startColumn": 51,
+                  "endLine": 49,
+                  "endColumn": 56
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3254",
+          "level": "warning",
+          "message": "Remove this default value assigned to parameter 'currency'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/CashController.cs",
+                "region": {
+                  "startLine": 32,
+                  "startColumn": 50,
+                  "endLine": 32,
+                  "endColumn": 55
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6964",
+          "level": "warning",
+          "message": "Value type property used as input in a controller action should be nullable, required or annotated with the JsonRequiredAttribute to avoid under-posting.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/CashController.cs",
+                "region": {
+                  "startLine": 77,
+                  "startColumn": 17,
+                  "endLine": 77,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6964",
+          "level": "warning",
+          "message": "Value type property used as input in a controller action should be nullable, required or annotated with the JsonRequiredAttribute to avoid under-posting.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/CashController.cs",
+                "region": {
+                  "startLine": 78,
+                  "startColumn": 20,
+                  "endLine": 78,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6964",
+          "level": "warning",
+          "message": "Value type property used as input in a controller action should be nullable, required or annotated with the JsonRequiredAttribute to avoid under-posting.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/CashController.cs",
+                "region": {
+                  "startLine": 69,
+                  "startColumn": 17,
+                  "endLine": 69,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6964",
+          "level": "warning",
+          "message": "Value type property used as input in a controller action should be nullable, required or annotated with the JsonRequiredAttribute to avoid under-posting.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/CashController.cs",
+                "region": {
+                  "startLine": 70,
+                  "startColumn": 17,
+                  "endLine": 70,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6964",
+          "level": "warning",
+          "message": "Value type property used as input in a controller action should be nullable, required or annotated with the JsonRequiredAttribute to avoid under-posting.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/CashController.cs",
+                "region": {
+                  "startLine": 71,
+                  "startColumn": 17,
+                  "endLine": 71,
+                  "endColumn": 24
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6964",
+          "level": "warning",
+          "message": "Value type property used as input in a controller action should be nullable, required or annotated with the JsonRequiredAttribute to avoid under-posting.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/CashController.cs",
+                "region": {
+                  "startLine": 72,
+                  "startColumn": 20,
+                  "endLine": 72,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2360",
+          "level": "warning",
+          "message": "Use the overloading mechanism instead of the optional parameters.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/ReportsController.cs",
+                "region": {
+                  "startLine": 38,
+                  "startColumn": 247,
+                  "endLine": 38,
+                  "endColumn": 254
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S121",
+          "level": "warning",
+          "message": "Add curly braces around the nested statement(s) in this 'if' block.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/CashController.cs",
+                "region": {
+                  "startLine": 62,
+                  "startColumn": 9,
+                  "endLine": 62,
+                  "endColumn": 11
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2360",
+          "level": "warning",
+          "message": "Use the overloading mechanism instead of the optional parameters.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/ReportsController.cs",
+                "region": {
+                  "startLine": 51,
+                  "startColumn": 110,
+                  "endLine": 51,
+                  "endColumn": 117
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2221",
+          "level": "warning",
+          "message": "Catch a list of specific exception subtype or use exception filters instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/SystemController.cs",
+                "region": {
+                  "startLine": 55,
+                  "startColumn": 16,
+                  "endLine": 55,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2360",
+          "level": "warning",
+          "message": "Use the overloading mechanism instead of the optional parameters.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/ReportsController.cs",
+                "region": {
+                  "startLine": 63,
+                  "startColumn": 120,
+                  "endLine": 63,
+                  "endColumn": 127
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2221",
+          "level": "warning",
+          "message": "Catch a list of specific exception subtype or use exception filters instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/SystemController.cs",
+                "region": {
+                  "startLine": 28,
+                  "startColumn": 16,
+                  "endLine": 28,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2221",
+          "level": "warning",
+          "message": "Catch a list of specific exception subtype or use exception filters instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuCategoriesController.cs",
+                "region": {
+                  "startLine": 49,
+                  "startColumn": 16,
+                  "endLine": 49,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S4055",
+          "level": "warning",
+          "message": "Replace this string literal with a string retrieved through an instance of the 'ResourceManager' class.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/SystemController.cs",
+                "region": {
+                  "startLine": 57,
+                  "startColumn": 34,
+                  "endLine": 57,
+                  "endColumn": 50
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S109",
+          "level": "warning",
+          "message": "Assign this magic number '500' to a well-named variable or constant, and use that instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/SystemController.cs",
+                "region": {
+                  "startLine": 58,
+                  "startColumn": 31,
+                  "endLine": 58,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2221",
+          "level": "warning",
+          "message": "Catch a list of specific exception subtype or use exception filters instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuGroupsController.cs",
+                "region": {
+                  "startLine": 61,
+                  "startColumn": 16,
+                  "endLine": 61,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6960",
+          "level": "warning",
+          "message": "This controller has multiple responsibilities and could be split into 2 smaller controllers.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/KitchenController.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 14,
+                  "endLine": 10,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/KitchenController.cs",
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 38,
+                  "endLine": 27,
+                  "endColumn": 47
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/KitchenController.cs",
+                "region": {
+                  "startLine": 41,
+                  "startColumn": 38,
+                  "endLine": 41,
+                  "endColumn": 47
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/KitchenController.cs",
+                "region": {
+                  "startLine": 55,
+                  "startColumn": 38,
+                  "endLine": 55,
+                  "endColumn": 47
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "0": "May belong to responsibility #1.",
+              "1": "May belong to responsibility #2.",
+              "2": "May belong to responsibility #2."
+            }
+          }
+        },
+        {
+          "ruleId": "S4055",
+          "level": "warning",
+          "message": "Replace this string literal with a string retrieved through an instance of the 'ResourceManager' class.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuCategoriesController.cs",
+                "region": {
+                  "startLine": 51,
+                  "startColumn": 34,
+                  "endLine": 51,
+                  "endColumn": 68
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S109",
+          "level": "warning",
+          "message": "Assign this magic number '500' to a well-named variable or constant, and use that instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuCategoriesController.cs",
+                "region": {
+                  "startLine": 52,
+                  "startColumn": 31,
+                  "endLine": 52,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2221",
+          "level": "warning",
+          "message": "Catch a list of specific exception subtype or use exception filters instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuCategoriesController.cs",
+                "region": {
+                  "startLine": 81,
+                  "startColumn": 16,
+                  "endLine": 81,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2360",
+          "level": "warning",
+          "message": "Use the overloading mechanism instead of the optional parameters.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuCategoriesController.cs",
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 40,
+                  "endLine": 29,
+                  "endColumn": 47
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S4055",
+          "level": "warning",
+          "message": "Replace this string literal with a string retrieved through an instance of the 'ResourceManager' class.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/SystemController.cs",
+                "region": {
+                  "startLine": 30,
+                  "startColumn": 34,
+                  "endLine": 30,
+                  "endColumn": 49
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2221",
+          "level": "warning",
+          "message": "Catch a list of specific exception subtype or use exception filters instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuGroupsController.cs",
+                "region": {
+                  "startLine": 94,
+                  "startColumn": 16,
+                  "endLine": 94,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S109",
+          "level": "warning",
+          "message": "Assign this magic number '500' to a well-named variable or constant, and use that instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/SystemController.cs",
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 31,
+                  "endLine": 31,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S4055",
+          "level": "warning",
+          "message": "Replace this string literal with a string retrieved through an instance of the 'ResourceManager' class.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuGroupsController.cs",
+                "region": {
+                  "startLine": 63,
+                  "startColumn": 34,
+                  "endLine": 63,
+                  "endColumn": 64
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S109",
+          "level": "warning",
+          "message": "Assign this magic number '500' to a well-named variable or constant, and use that instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuGroupsController.cs",
+                "region": {
+                  "startLine": 64,
+                  "startColumn": 31,
+                  "endLine": 64,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S4055",
+          "level": "warning",
+          "message": "Replace this string literal with a string retrieved through an instance of the 'ResourceManager' class.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuCategoriesController.cs",
+                "region": {
+                  "startLine": 83,
+                  "startColumn": 34,
+                  "endLine": 83,
+                  "endColumn": 79
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2360",
+          "level": "warning",
+          "message": "Use the overloading mechanism instead of the optional parameters.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuGroupsController.cs",
+                "region": {
+                  "startLine": 30,
+                  "startColumn": 38,
+                  "endLine": 30,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2360",
+          "level": "warning",
+          "message": "Use the overloading mechanism instead of the optional parameters.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuGroupsController.cs",
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 40,
+                  "endLine": 31,
+                  "endColumn": 47
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S109",
+          "level": "warning",
+          "message": "Assign this magic number '500' to a well-named variable or constant, and use that instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuCategoriesController.cs",
+                "region": {
+                  "startLine": 84,
+                  "startColumn": 31,
+                  "endLine": 84,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S4055",
+          "level": "warning",
+          "message": "Replace this string literal with a string retrieved through an instance of the 'ResourceManager' class.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuGroupsController.cs",
+                "region": {
+                  "startLine": 96,
+                  "startColumn": 34,
+                  "endLine": 96,
+                  "endColumn": 73
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S109",
+          "level": "warning",
+          "message": "Assign this magic number '500' to a well-named variable or constant, and use that instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuGroupsController.cs",
+                "region": {
+                  "startLine": 97,
+                  "startColumn": 31,
+                  "endLine": 97,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S121",
+          "level": "warning",
+          "message": "Add curly braces around the nested statement(s) in this 'if' block.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuCategoriesController.cs",
+                "region": {
+                  "startLine": 66,
+                  "startColumn": 13,
+                  "endLine": 66,
+                  "endColumn": 15
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2221",
+          "level": "warning",
+          "message": "Catch a list of specific exception subtype or use exception filters instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 176,
+                  "startColumn": 8,
+                  "endLine": 176,
+                  "endColumn": 17
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2221",
+          "level": "warning",
+          "message": "Catch a list of specific exception subtype or use exception filters instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 201,
+                  "startColumn": 5,
+                  "endLine": 201,
+                  "endColumn": 10
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S121",
+          "level": "warning",
+          "message": "Add curly braces around the nested statement(s) in this 'if' block.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Controllers/MenuGroupsController.cs",
+                "region": {
+                  "startLine": 78,
+                  "startColumn": 13,
+                  "endLine": 78,
+                  "endColumn": 15
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6563",
+          "level": "warning",
+          "message": "Use UTC when recording DateTime instants",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 27,
+                  "endLine": 10,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6563",
+          "level": "warning",
+          "message": "Use UTC when recording DateTime instants",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 164,
+                  "startColumn": 27,
+                  "endLine": 164,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6563",
+          "level": "warning",
+          "message": "Use UTC when recording DateTime instants",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 179,
+                  "startColumn": 27,
+                  "endLine": 179,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S134",
+          "level": "warning",
+          "message": "Refactor this code to not nest more than 3 control flow statements.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 107,
+                  "startColumn": 17,
+                  "endLine": 107,
+                  "endColumn": 20
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3776",
+          "level": "warning",
+          "message": "Refactor this top-level file to reduce its Cognitive Complexity from 22 to the 15 allowed.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 63,
+                  "startColumn": 5,
+                  "endLine": 63,
+                  "endColumn": 7
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 88,
+                  "startColumn": 9,
+                  "endLine": 88,
+                  "endColumn": 14
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 105,
+                  "startColumn": 13,
+                  "endLine": 105,
+                  "endColumn": 18
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 105,
+                  "startColumn": 44,
+                  "endLine": 105,
+                  "endColumn": 46
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 111,
+                  "startColumn": 21,
+                  "endLine": 111,
+                  "endColumn": 23
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 116,
+                  "startColumn": 21,
+                  "endLine": 116,
+                  "endColumn": 25
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 121,
+                  "startColumn": 17,
+                  "endLine": 121,
+                  "endColumn": 22
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 124,
+                  "startColumn": 21,
+                  "endLine": 124,
+                  "endColumn": 23
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 129,
+                  "startColumn": 21,
+                  "endLine": 129,
+                  "endColumn": 25
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 137,
+                  "startColumn": 9,
+                  "endLine": 137,
+                  "endColumn": 14
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 151,
+                  "startColumn": 13,
+                  "endLine": 151,
+                  "endColumn": 15
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 157,
+                  "startColumn": 9,
+                  "endLine": 157,
+                  "endColumn": 14
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 169,
+                  "startColumn": 5,
+                  "endLine": 169,
+                  "endColumn": 12
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 176,
+                  "startColumn": 1,
+                  "endLine": 176,
+                  "endColumn": 6
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 186,
+                  "startColumn": 5,
+                  "endLine": 186,
+                  "endColumn": 12
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 201,
+                  "startColumn": 5,
+                  "endLine": 201,
+                  "endColumn": 10
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "0": "+1",
+              "1": "+1",
+              "10": "+1",
+              "11": "+1",
+              "12": "+1",
+              "13": "+1",
+              "14": "+2 (incl 1 for nesting)",
+              "15": "+2 (incl 1 for nesting)",
+              "2": "+1",
+              "3": "+1",
+              "4": "+2 (incl 1 for nesting)",
+              "5": "+1",
+              "6": "+2 (incl 1 for nesting)",
+              "7": "+3 (incl 2 for nesting)",
+              "8": "+1",
+              "9": "+1"
+            }
+          }
+        },
+        {
+          "ruleId": "S1541",
+          "level": "warning",
+          "message": "The Cyclomatic Complexity of this top-level file is 11 which is greater than 10 authorized.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 44,
+                  "startColumn": 56,
+                  "endLine": 44,
+                  "endColumn": 57
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 49,
+                  "startColumn": 46,
+                  "endLine": 49,
+                  "endColumn": 48
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 49,
+                  "startColumn": 36,
+                  "endLine": 49,
+                  "endColumn": 37
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 63,
+                  "startColumn": 5,
+                  "endLine": 63,
+                  "endColumn": 7
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 105,
+                  "startColumn": 13,
+                  "endLine": 105,
+                  "endColumn": 18
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 105,
+                  "startColumn": 44,
+                  "endLine": 105,
+                  "endColumn": 46
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 111,
+                  "startColumn": 21,
+                  "endLine": 111,
+                  "endColumn": 23
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 124,
+                  "startColumn": 21,
+                  "endLine": 124,
+                  "endColumn": 23
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 151,
+                  "startColumn": 13,
+                  "endLine": 151,
+                  "endColumn": 15
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 169,
+                  "startColumn": 5,
+                  "endLine": 169,
+                  "endColumn": 12
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 186,
+                  "startColumn": 5,
+                  "endLine": 186,
+                  "endColumn": 12
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "0": "+1",
+              "1": "+1",
+              "10": "+1",
+              "2": "+1",
+              "3": "+1",
+              "4": "+1",
+              "5": "+1",
+              "6": "+1",
+              "7": "+1",
+              "8": "+1",
+              "9": "+1"
+            }
+          }
+        },
+        {
+          "ruleId": "S4055",
+          "level": "warning",
+          "message": "Replace this string literal with a string retrieved through an instance of the 'ResourceManager' class.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 56,
+                  "startColumn": 40,
+                  "endLine": 56,
+                  "endColumn": 75
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S109",
+          "level": "warning",
+          "message": "Assign this magic number '500' to a well-named variable or constant, and use that instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 40,
+                  "startColumn": 43,
+                  "endLine": 40,
+                  "endColumn": 46
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S109",
+          "level": "warning",
+          "message": "Assign this magic number '2000' to a well-named variable or constant, and use that instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 127,
+                  "startColumn": 55,
+                  "endLine": 127,
+                  "endColumn": 59
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3353",
+          "level": "warning",
+          "message": "Add the 'const' modifier to 'maxRetries'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 102,
+                  "startColumn": 17,
+                  "endLine": 102,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6566",
+          "level": "warning",
+          "message": "Prefer using \"DateTimeOffset\" instead of \"DateTime\"",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 27,
+                  "endLine": 10,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6566",
+          "level": "warning",
+          "message": "Prefer using \"DateTimeOffset\" instead of \"DateTime\"",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 50,
+                  "startColumn": 29,
+                  "endLine": 50,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6566",
+          "level": "warning",
+          "message": "Prefer using \"DateTimeOffset\" instead of \"DateTime\"",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 164,
+                  "startColumn": 27,
+                  "endLine": 164,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6566",
+          "level": "warning",
+          "message": "Prefer using \"DateTimeOffset\" instead of \"DateTime\"",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 179,
+                  "startColumn": 27,
+                  "endLine": 179,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6354",
+          "level": "warning",
+          "message": "Use a testable (date) time provider instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 27,
+                  "endLine": 10,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6354",
+          "level": "warning",
+          "message": "Use a testable (date) time provider instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 50,
+                  "startColumn": 29,
+                  "endLine": 50,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6354",
+          "level": "warning",
+          "message": "Use a testable (date) time provider instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 164,
+                  "startColumn": 27,
+                  "endLine": 164,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6354",
+          "level": "warning",
+          "message": "Use a testable (date) time provider instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 179,
+                  "startColumn": 27,
+                  "endLine": 179,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA2254",
+          "level": "note",
+          "message": "The logging message template should not vary between calls to 'LoggerExtensions.LogInformation(ILogger, string?, params object?[])'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 171,
+                  "startColumn": 31,
+                  "endLine": 171,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1416",
+          "level": "warning",
+          "message": "This call site is reachable on all platforms. 'ServiceCollectionExtensions.AddInfrastructure(IServiceCollection)' is only supported on: 'windows'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 22,
+                  "startColumn": 5,
+                  "endLine": 22,
+                  "endColumn": 41
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6966",
+          "level": "warning",
+          "message": "Await CanConnectAsync instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 110,
+                  "startColumn": 38,
+                  "endLine": 110,
+                  "endColumn": 69
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6966",
+          "level": "warning",
+          "message": "Await RunAsync instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 174,
+                  "startColumn": 5,
+                  "endLine": 174,
+                  "endColumn": 14
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6966",
+          "level": "warning",
+          "message": "Await WriteLineAsync instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 183,
+                  "startColumn": 5,
+                  "endLine": 183,
+                  "endColumn": 87
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6966",
+          "level": "warning",
+          "message": "Await WriteLineAsync instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 184,
+                  "startColumn": 5,
+                  "endLine": 184,
+                  "endColumn": 64
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6966",
+          "level": "warning",
+          "message": "Await WriteLineAsync instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 185,
+                  "startColumn": 5,
+                  "endLine": 185,
+                  "endColumn": 87
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6966",
+          "level": "warning",
+          "message": "Await WriteLineAsync instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 188,
+                  "startColumn": 9,
+                  "endLine": 188,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6966",
+          "level": "warning",
+          "message": "Await WriteLineAsync instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 190,
+                  "startColumn": 5,
+                  "endLine": 190,
+                  "endColumn": 87
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6966",
+          "level": "warning",
+          "message": "Await WriteAllLinesAsync instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 198,
+                  "startColumn": 9,
+                  "endLine": 198,
+                  "endColumn": 51
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6966",
+          "level": "warning",
+          "message": "Await WriteLineAsync instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 199,
+                  "startColumn": 9,
+                  "endLine": 199,
+                  "endColumn": 70
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6966",
+          "level": "warning",
+          "message": "Await WriteLineAsync instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 203,
+                  "startColumn": 9,
+                  "endLine": 203,
+                  "endColumn": 71
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1481",
+          "level": "warning",
+          "message": "Remove the unused local variable 'mediator'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Api/Program.cs",
+                "region": {
+                  "startLine": 85,
+                  "startColumn": 17,
+                  "endLine": 85,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3990",
+          "level": "warning",
+          "message": "Provide a 'CLSCompliant' attribute for assembly 'Magidesk.Api'.",
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3992",
+          "level": "warning",
+          "message": "Provide a 'ComVisible' attribute for assembly 'Magidesk.Api'.",
+          "properties": {
+            "warningLevel": 1
+          }
+        }
+      ],
+      "rules": {
+        "CA1416": {
+          "id": "CA1416",
+          "shortDescription": "Validate platform compatibility",
+          "fullDescription": "Using platform dependent API on a component makes the code no longer work across all platforms.",
+          "defaultLevel": "warning",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416",
+          "properties": {
+            "category": "Interoperability",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Telemetry",
+              "EnabledRuleInAggressiveMode"
+            ]
+          }
+        },
+        "CA2254": {
+          "id": "CA2254",
+          "shortDescription": "Template should be a static expression",
+          "fullDescription": "The logging message template should not vary between calls.",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2254",
+          "properties": {
+            "category": "Usage",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Telemetry",
+              "EnabledRuleInAggressiveMode"
+            ]
+          }
+        },
+        "S103": {
+          "id": "S103",
+          "shortDescription": "Lines should not be too long",
+          "fullDescription": "Scrolling horizontally to see a full line of code lowers the code readability.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-103",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope"
+            ]
+          }
+        },
+        "S109": {
+          "id": "S109",
+          "shortDescription": "Magic numbers should not be used",
+          "fullDescription": "A magic number is a hard-coded numerical value that may lack context or meaning. They should not be used because they can make the code less readable and maintainable.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-109",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope"
+            ]
+          }
+        },
+        "S121": {
+          "id": "S121",
+          "shortDescription": "Control structures should use curly braces",
+          "fullDescription": "Control structures are code statements that impact the program’s control flow (e.g., if statements, for loops, etc.)",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-121",
+          "properties": {
+            "category": "Critical Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope"
+            ]
+          }
+        },
+        "S122": {
+          "id": "S122",
+          "shortDescription": "Statements should be on separate lines",
+          "fullDescription": "Putting multiple statements on a single line lowers the code readability and makes debugging the code more complex.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-122",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope"
+            ]
+          }
+        },
+        "S1312": {
+          "id": "S1312",
+          "shortDescription": "Logger fields should be \"private static readonly\"",
+          "fullDescription": "Regardless of the logging framework in use (Microsoft.Extension.Logging, Serilog, Log4net, NLog, …​​), logger fields should be:",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-1312",
+          "properties": {
+            "category": "Minor Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope"
+            ]
+          }
+        },
+        "S134": {
+          "id": "S134",
+          "shortDescription": "Control flow statements \"if\", \"switch\", \"for\", \"foreach\", \"while\", \"do\"  and \"try\" should not be nested too deeply",
+          "fullDescription": "Nested control flow statements if, switch, for, foreach, while, do, and try are often key ingredients in creating what’s known as \"Spaghetti code\". This code smell can make your program difficult to understand and maintain.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-134",
+          "properties": {
+            "category": "Critical Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope"
+            ]
+          }
+        },
+        "S1451": {
+          "id": "S1451",
+          "shortDescription": "Track lack of copyright and license headers",
+          "fullDescription": "Each source file should start with a header stating file ownership and the license which must be used to distribute the application.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-1451",
+          "properties": {
+            "category": "Blocker Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope"
+            ]
+          }
+        },
+        "S1481": {
+          "id": "S1481",
+          "shortDescription": "Unused local variables should be removed",
+          "fullDescription": "An unused local variable is a variable that has been declared but is not used anywhere in the block of code where it is defined. It is dead code, contributing to unnecessary complexity and leading to confusion when reading the code. Therefore, it should be removed from your code to maintain clarity and efficiency.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-1481",
+          "properties": {
+            "category": "Minor Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S1541": {
+          "id": "S1541",
+          "shortDescription": "Methods and properties should not be too complex",
+          "fullDescription": "The cyclomatic complexity of methods and properties should not exceed a defined threshold. Complex code can perform poorly and will in any case be difficult to understand and therefore to maintain.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-1541",
+          "properties": {
+            "category": "Critical Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope"
+            ]
+          }
+        },
+        "S2221": {
+          "id": "S2221",
+          "shortDescription": "\"Exception\" should not be caught",
+          "fullDescription": "Catching System.Exception seems like an efficient way to handle multiple possible exceptions. Unfortunately, it traps all exception types, including the ones that were not intended to be caught. To prevent any misunderstandings, exception filters should be used. Alternatively, each exception type should be in a separate catch block.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-2221",
+          "properties": {
+            "category": "Minor Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope"
+            ]
+          }
+        },
+        "S2360": {
+          "id": "S2360",
+          "shortDescription": "Optional parameters should not be used",
+          "fullDescription": "The overloading mechanism should be used in place of optional parameters for several reasons:",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-2360",
+          "properties": {
+            "category": "Critical Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope"
+            ]
+          }
+        },
+        "S3254": {
+          "id": "S3254",
+          "shortDescription": "Default parameter values should not be passed as arguments",
+          "fullDescription": "Specifying the default parameter values in a method call is redundant. Such values should be omitted in the interests of readability.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-3254",
+          "properties": {
+            "category": "Minor Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope"
+            ]
+          }
+        },
+        "S3353": {
+          "id": "S3353",
+          "shortDescription": "Unchanged variables should be marked as \"const\"",
+          "fullDescription": "If a variable that is not supposed to change is not marked as const, it could be accidentally reassigned elsewhere in the code, leading to unexpected behavior and bugs that can be hard to track down.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-3353",
+          "properties": {
+            "category": "Critical Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope"
+            ]
+          }
+        },
+        "S3776": {
+          "id": "S3776",
+          "shortDescription": "Cognitive Complexity of methods should not be too high",
+          "fullDescription": "This rule raises an issue when the code cognitive complexity of a function is above a certain threshold.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-3776",
+          "properties": {
+            "category": "Critical Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S3990": {
+          "id": "S3990",
+          "shortDescription": "Assemblies should be marked as CLS compliant",
+          "fullDescription": "Assemblies should conform with the Common Language Specification (CLS) in order to be usable across programming languages. To be compliant an assembly has to indicate it with System.CLSCompliantAttribute.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-3990",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope"
+            ]
+          }
+        },
+        "S3992": {
+          "id": "S3992",
+          "shortDescription": "Assemblies should explicitly specify COM visibility",
+          "fullDescription": "Assemblies should explicitly indicate whether they are meant to be COM visible or not. If the ComVisibleAttribute is not present, the default is to make the content of the assembly visible to COM clients.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-3992",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope"
+            ]
+          }
+        },
+        "S4055": {
+          "id": "S4055",
+          "shortDescription": "Literals should not be passed as localized parameters",
+          "fullDescription": "String literals embedded in the source code will not be localized properly.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-4055",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope"
+            ]
+          }
+        },
+        "S4487": {
+          "id": "S4487",
+          "shortDescription": "Unread \"private\" fields should be removed",
+          "fullDescription": "Private fields which are written but never read are a case of \"dead store\". Changing the value of such a field is useless and most probably indicates an error in the code.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-4487",
+          "properties": {
+            "category": "Critical Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S6354": {
+          "id": "S6354",
+          "shortDescription": "Use a testable date/time provider",
+          "fullDescription": "One of the principles of a unit test is that it must have full control of the system under test. This is problematic when production code includes calls to static methods, which cannot be changed or controlled. Date/time functions are usually provided by system libraries as static methods.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-6354",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope"
+            ]
+          }
+        },
+        "S6563": {
+          "id": "S6563",
+          "shortDescription": "Use UTC when recording DateTime instants",
+          "fullDescription": "You should avoid recording time instants with the use of property DateTime.Now. The property DateTime.Now returns the current date and time expressed in the machine’s local time without containing any timezone-related information (for example, the offset from Coordinated Universal Time). Not having this information means that if you need to display this DateTime object or use it for computations in another machine placed in a different time zone, you won’t be able to reconstruct it in the second machine’s local time without knowing the origin’s offset. This will likely lead to confusion and potential bugs.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-6563",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope"
+            ]
+          }
+        },
+        "S6566": {
+          "id": "S6566",
+          "shortDescription": "Use \"DateTimeOffset\" instead of \"DateTime\"",
+          "fullDescription": "This rule recommends using DateTimeOffset instead of DateTime for projects targeting .NET Framework 2.0 or later.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-6566",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope"
+            ]
+          }
+        },
+        "S6960": {
+          "id": "S6960",
+          "shortDescription": "Controllers should not have mixed responsibilities",
+          "fullDescription": "ASP.NET controllers should not have mixed responsibilities. Following the Single Responsibility Principle (SRP), they should be kept lean and focused on a single, separate concern. In short, they should have a single reason to change.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-6960",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S6964": {
+          "id": "S6964",
+          "shortDescription": "Value type property used as input in a controller action should be nullable, required or annotated with the JsonRequiredAttribute to avoid under-posting.",
+          "fullDescription": "\"Under-posting\" refers to a situation where a client sends less data than expected to the server during an HTTP request, for example when the client omits some properties from the request body that the server expects to receive.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-6964",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S6966": {
+          "id": "S6966",
+          "shortDescription": "Awaitable method should be used",
+          "fullDescription": "In an async method, any blocking operations should be avoided.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-6966",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope",
+              "SonarWay"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

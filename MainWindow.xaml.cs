@@ -45,14 +45,8 @@ public sealed partial class MainWindow : Window
         try 
         {
             var userService = App.Services.GetRequiredService<Magidesk.Application.Interfaces.IUserService>();
-            // FEH-005: Fire-and-Forget Barrier
-            userService.UserChanged += (s, u) => 
-            {
-                DispatcherQueue.TryEnqueue(() => 
-                { 
-                    try { UpdateUiAuthState(u); } catch (Exception ex) { StartupLogger.Log($"Auth UI Update Failed: {ex}"); }
-                });
-            };
+            // TICKET-011: Proper async event handler instead of fire-and-forget
+            userService.UserChanged += UserService_UserChanged;
             UpdateUiAuthState(userService.CurrentUser);
         }
         catch (Exception ex)
@@ -160,5 +154,76 @@ public sealed partial class MainWindow : Window
     public void HideLoading()
     {
         if (LoadingOverlay != null) LoadingOverlay.Visibility = Visibility.Collapsed;
+    }
+
+    // F-ENTRY-003 FIX (TICKET-003): Persistent Error Banner Methods
+    private string? _lastErrorDetails;
+
+    public void ShowErrorBanner(string message, string? details = null)
+    {
+        DispatcherQueue.TryEnqueue(() =>
+        {
+            if (ErrorBanner != null)
+            {
+                ErrorBanner.Title = "System Error";
+                ErrorBanner.Message = message;
+                ErrorBanner.IsOpen = true;
+                _lastErrorDetails = details;
+            }
+        });
+    }
+
+    public void HideErrorBanner()
+    {
+        DispatcherQueue.TryEnqueue(() =>
+        {
+            if (ErrorBanner != null)
+            {
+                ErrorBanner.IsOpen = false;
+                _lastErrorDetails = null;
+            }
+        });
+    }
+
+    private async void ErrorBanner_DetailsClick(object sender, RoutedEventArgs e)
+    {
+        if (!string.IsNullOrEmpty(_lastErrorDetails))
+        {
+            var dialog = new ContentDialog
+            {
+                Title = "Error Details",
+                Content = new ScrollViewer
+                {
+                    Content = new TextBlock
+                    {
+                        Text = _lastErrorDetails,
+                        TextWrapping = TextWrapping.Wrap,
+                        FontFamily = new Microsoft.UI.Xaml.Media.FontFamily("Consolas")
+                    },
+                    MaxHeight = 400
+                },
+                CloseButtonText = "Close",
+                XamlRoot = this.Content.XamlRoot
+            };
+            await dialog.ShowAsync();
+        }
+    }
+
+    // TICKET-011: Proper async event handler for UserChanged
+    private async void UserService_UserChanged(object? sender, Magidesk.Application.DTOs.UserDto? user)
+    {
+        try
+        {
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                UpdateUiAuthState(user);
+            });
+        }
+        catch (Exception ex)
+        {
+            StartupLogger.Log($"Auth UI Update Failed: {ex}");
+            // TICKET-011: Show error banner for UI sync failures
+            ShowErrorBanner($"UI sync failed: {ex.Message}");
+        }
     }
 }

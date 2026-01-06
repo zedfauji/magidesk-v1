@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
+  <ProjectName>Magidesk.Presentation</ProjectName>
+  <ProjectLanguage>C#</ProjectLanguage>
+  <ProjectType>Product</ProjectType>
+  <ProjectGuid>b251c3d8-431b-4561-aa23-7a5b07a4a02f</ProjectGuid>
+  <FullPath>C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Presentation.csproj</FullPath>
+  <IsExcluded>false</IsExcluded>
+  <AnalysisResultFiles>
+    <AnalysisResultFile Id="FilesToAnalyze" Location="C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\conf\8\FilesToAnalyze.txt" />
+  </AnalysisResultFiles>
+  <AnalysisSettings>
+    <Property Name="sonar.cs.roslyn.reportFilePaths">C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\out\8\Issues.json</Property>
+    <Property Name="sonar.cs.analyzer.projectOutPaths">C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\out\8</Property>
+    <Property Name="sonar.cs.scanner.telemetry">C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\out\8\Telemetry.json</Property>
+  </AnalysisSettings>
+  <Configuration>Debug</Configuration>
+  <Platform>x86</Platform>
+  <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+</ProjectInfo>

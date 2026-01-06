@@ -27,14 +27,21 @@ public class StringColorToBrushConverter : IValueConverter
 
                     return new SolidColorBrush(Windows.UI.Color.FromArgb(a, r, g, b));
                 }
+                else
+                {
+                    // F-CONV-001 FIX (TICKET-006): Log invalid format
+                    System.Diagnostics.Debug.WriteLine($"[StringColorToBrushConverter] Invalid color format (missing #): '{value}'");
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                // Silently fail and return default
+                // F-CONV-001 FIX (TICKET-006): Log parse failure with details
+                System.Diagnostics.Debug.WriteLine($"[StringColorToBrushConverter] Failed to parse color '{value}': {ex.Message}");
             }
         }
 
-        return new SolidColorBrush(Colors.Transparent);
+        // F-CONV-001 FIX (TICKET-006): Return visible fallback (LightGray) instead of Transparent
+        return new SolidColorBrush(Colors.LightGray);
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)

@@ -1,0 +1,19 @@
+ö
+éC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\obj\Debug\net8.0\Magidesk.Migrations.AssemblyInfo.csutf-8•
+ôC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\obj\Debug\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.csutf-8ú
+êC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\obj\Debug\net8.0\Magidesk.Migrations.GlobalUsings.g.csutf-8x
+oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\SeedResult.csutf-8
+vC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\SeedProfileWriter.csutf-8y
+pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\SeedOptions.csutf-8x
+oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\SeedGuards.csutf-8|
+sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\ReflectionUtil.csutf-8{
+rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\FullPosSeeder.csutf-8x
+oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\DbResetter.csutf-8ï
+âC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\ApplicationDbContextModelSnapshot.csutf-8ô
+çC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260106150426_AddIsDraftCol.Designer.csutf-8é
+ÑC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260106150426_AddIsDraftCol.csutf-8´
+üC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260104171112_AddPrinterDetailedConfiguration.Designer.csutf-8†
+ñC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260104171112_AddPrinterDetailedConfiguration.csutf-8ô
+èC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260104154305_AddPrinterSupportColumns.csutf-8§
+òC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260104154305_AddPrinterSupportColumns.Designer.csutf-8~
+uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\MigrationsContextFactory.csutf-8

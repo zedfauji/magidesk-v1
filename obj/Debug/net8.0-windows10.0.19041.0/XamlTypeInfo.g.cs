@@ -226,7 +226,7 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
         
         private void InitTypeTables()
         {
-            _typeNameTable = new string[221];
+            _typeNameTable = new string[223];
             _typeNameTable[0] = "Microsoft.UI.Xaml.Controls.XamlControlsResources";
             _typeNameTable[1] = "Microsoft.UI.Xaml.ResourceDictionary";
             _typeNameTable[2] = "Object";
@@ -245,211 +245,213 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
             _typeNameTable[15] = "Magidesk.Presentation.Converters.IntToDoubleConverter";
             _typeNameTable[16] = "Magidesk.Presentation.Converters.CollectionEmptyToVisibilityConverter";
             _typeNameTable[17] = "Magidesk.Presentation.Converters.BooleanToVisibilityConverter";
-            _typeNameTable[18] = "Magidesk.Presentation.Converters.StringVisibilityConverter";
-            _typeNameTable[19] = "Magidesk.Presentation.Converters.BoolToDesignModeTextConverter";
-            _typeNameTable[20] = "Magidesk.Presentation.Converters.EnumToBoolConverter";
-            _typeNameTable[21] = "Magidesk.Presentation.Converters.ShapeToCornerRadiusConverter";
-            _typeNameTable[22] = "Magidesk.Presentation.Converters.TableToSelectionVisibilityConverter";
-            _typeNameTable[23] = "Magidesk.Presentation.Converters.DateTimeToTimeConverter";
-            _typeNameTable[24] = "Magidesk.Presentation.Converters.TableStatusToBrushConverter";
-            _typeNameTable[25] = "Microsoft.UI.Xaml.Controls.NavigationView";
-            _typeNameTable[26] = "Microsoft.UI.Xaml.Controls.ContentControl";
-            _typeNameTable[27] = "Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible";
-            _typeNameTable[28] = "System.Enum";
-            _typeNameTable[29] = "Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode";
-            _typeNameTable[30] = "System.Collections.Generic.IList`1<Object>";
-            _typeNameTable[31] = "Microsoft.UI.Xaml.Controls.AutoSuggestBox";
-            _typeNameTable[32] = "Double";
-            _typeNameTable[33] = "Microsoft.UI.Xaml.UIElement";
-            _typeNameTable[34] = "Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode";
-            _typeNameTable[35] = "Microsoft.UI.Xaml.DataTemplate";
-            _typeNameTable[36] = "Microsoft.UI.Xaml.Style";
-            _typeNameTable[37] = "Microsoft.UI.Xaml.Controls.StyleSelector";
-            _typeNameTable[38] = "Microsoft.UI.Xaml.Controls.DataTemplateSelector";
-            _typeNameTable[39] = "Microsoft.UI.Xaml.Controls.NavigationViewOverflowLabelMode";
-            _typeNameTable[40] = "String";
-            _typeNameTable[41] = "Microsoft.UI.Xaml.Controls.NavigationViewSelectionFollowsFocus";
-            _typeNameTable[42] = "Microsoft.UI.Xaml.Controls.NavigationViewShoulderNavigationEnabled";
-            _typeNameTable[43] = "Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings";
-            _typeNameTable[44] = "Microsoft.UI.Xaml.DependencyObject";
-            _typeNameTable[45] = "Microsoft.UI.Xaml.Controls.ProgressRing";
-            _typeNameTable[46] = "Microsoft.UI.Xaml.Controls.Control";
-            _typeNameTable[47] = "Microsoft.UI.Xaml.Controls.ProgressRingTemplateSettings";
-            _typeNameTable[48] = "Microsoft.UI.Xaml.Controls.NavigationViewItem";
-            _typeNameTable[49] = "Microsoft.UI.Xaml.Controls.NavigationViewItemBase";
-            _typeNameTable[50] = "Microsoft.UI.Xaml.Controls.IconElement";
-            _typeNameTable[51] = "Microsoft.UI.Xaml.Controls.InfoBadge";
-            _typeNameTable[52] = "Magidesk.Presentation.MainWindow";
-            _typeNameTable[53] = "Microsoft.UI.Xaml.Window";
-            _typeNameTable[54] = "Microsoft.UI.Xaml.Controls.ProgressBar";
-            _typeNameTable[55] = "Microsoft.UI.Xaml.Controls.Primitives.RangeBase";
-            _typeNameTable[56] = "Microsoft.UI.Xaml.Controls.ProgressBarTemplateSettings";
-            _typeNameTable[57] = "Magidesk.Views.AuthorizationCaptureBatchDialog";
-            _typeNameTable[58] = "Microsoft.UI.Xaml.Controls.ContentDialog";
-            _typeNameTable[59] = "Magidesk.Presentation.ViewModels.AuthorizationCaptureBatchViewModel";
-            _typeNameTable[60] = "Magidesk.Presentation.ViewModels.ViewModelBase";
-            _typeNameTable[61] = "CommunityToolkit.Mvvm.ComponentModel.ObservableObject";
-            _typeNameTable[62] = "Microsoft.UI.Xaml.Controls.RadioButtons";
-            _typeNameTable[63] = "Int32";
-            _typeNameTable[64] = "Magidesk.Views.AuthorizationCodeDialog";
-            _typeNameTable[65] = "Magidesk.Presentation.ViewModels.AuthorizationCodeViewModel";
-            _typeNameTable[66] = "Magidesk.Presentation.Views.BackOfficePage";
-            _typeNameTable[67] = "Microsoft.UI.Xaml.Controls.Page";
-            _typeNameTable[68] = "Microsoft.UI.Xaml.Controls.UserControl";
-            _typeNameTable[69] = "Magidesk.Presentation.ViewModels.BackOfficeViewModel";
-            _typeNameTable[70] = "Magidesk.Presentation.Views.CashDropManagementDialog";
-            _typeNameTable[71] = "Magidesk.Presentation.ViewModels.CashDropManagementViewModel";
-            _typeNameTable[72] = "Magidesk.Presentation.Views.CashEntryDialog";
-            _typeNameTable[73] = "System.Decimal";
-            _typeNameTable[74] = "Microsoft.UI.Xaml.Controls.InfoBar";
-            _typeNameTable[75] = "Microsoft.UI.Xaml.Controls.InfoBarSeverity";
-            _typeNameTable[76] = "Microsoft.UI.Xaml.Controls.Primitives.ButtonBase";
-            _typeNameTable[77] = "System.Windows.Input.ICommand";
-            _typeNameTable[78] = "Microsoft.UI.Xaml.Controls.IconSource";
-            _typeNameTable[79] = "Microsoft.UI.Xaml.Controls.InfoBarTemplateSettings";
-            _typeNameTable[80] = "Magidesk.Presentation.Views.CashSessionPage";
-            _typeNameTable[81] = "Magidesk.Presentation.ViewModels.CashSessionViewModel";
-            _typeNameTable[82] = "Microsoft.UI.Xaml.Controls.RadioButton";
-            _typeNameTable[83] = "Microsoft.UI.Xaml.Controls.NumberBox";
-            _typeNameTable[84] = "Windows.Globalization.NumberFormatting.INumberFormatter2";
-            _typeNameTable[85] = "Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase";
-            _typeNameTable[86] = "Microsoft.UI.Xaml.Media.SolidColorBrush";
-            _typeNameTable[87] = "Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode";
-            _typeNameTable[88] = "Microsoft.UI.Xaml.TextReadingOrder";
-            _typeNameTable[89] = "Microsoft.UI.Xaml.Controls.NumberBoxValidationMode";
-            _typeNameTable[90] = "Magidesk.Presentation.Views.Components.TableShapePalette";
-            _typeNameTable[91] = "Magidesk.Presentation.ViewModels.TableDesignerViewModel";
-            _typeNameTable[92] = "Magidesk.Presentation.Views.Components.VirtualizedTableCanvas";
-            _typeNameTable[93] = "Magidesk.Views.Dialogs.AddOnSelectionDialog";
-            _typeNameTable[94] = "Magidesk.ViewModels.Dialogs.AddOnSelectionViewModel";
-            _typeNameTable[95] = "Magidesk.Presentation.Views.Dialogs.CashEntryDialog";
-            _typeNameTable[96] = "Magidesk.Views.Dialogs.ComboSelectionDialog";
-            _typeNameTable[97] = "Magidesk.ViewModels.Dialogs.ComboSelectionViewModel";
-            _typeNameTable[98] = "Magidesk.Views.Dialogs.CookingInstructionDialog";
-            _typeNameTable[99] = "Magidesk.Presentation.ViewModels.Dialogs.CookingInstructionViewModel";
-            _typeNameTable[100] = "Magidesk.Views.Dialogs.CustomerSelectionDialog";
-            _typeNameTable[101] = "Magidesk.Presentation.ViewModels.Dialogs.CustomerSelectionViewModel";
-            _typeNameTable[102] = "Magidesk.Presentation.Views.Dialogs.GuestCountDialog";
-            _typeNameTable[103] = "Magidesk.Presentation.ViewModels.GuestCountViewModel";
-            _typeNameTable[104] = "Magidesk.Views.Dialogs.ItemSearchDialog";
-            _typeNameTable[105] = "Magidesk.Presentation.ViewModels.Dialogs.ItemSearchViewModel";
-            _typeNameTable[106] = "Magidesk.Views.Dialogs.MergeTicketsDialog";
-            _typeNameTable[107] = "Magidesk.Presentation.ViewModels.Dialogs.MergeTicketsViewModel";
-            _typeNameTable[108] = "Magidesk.Views.Dialogs.MiscItemDialog";
-            _typeNameTable[109] = "Magidesk.ViewModels.MiscItemViewModel";
-            _typeNameTable[110] = "Magidesk.Views.Dialogs.ModifierSelectionDialog";
-            _typeNameTable[111] = "Magidesk.ViewModels.Dialogs.ModifierSelectionViewModel";
-            _typeNameTable[112] = "Magidesk.Presentation.Views.Dialogs.NotesDialog";
-            _typeNameTable[113] = "Magidesk.Views.Dialogs.PizzaModifierDialog";
-            _typeNameTable[114] = "Magidesk.Presentation.ViewModels.Dialogs.PizzaModifierViewModel";
-            _typeNameTable[115] = "Magidesk.Views.Dialogs.PriceEntryDialog";
-            _typeNameTable[116] = "Magidesk.Presentation.ViewModels.Dialogs.PriceEntryViewModel";
-            _typeNameTable[117] = "Magidesk.Views.QuantityDialog";
-            _typeNameTable[118] = "Magidesk.Presentation.ViewModels.QuantityViewModel";
-            _typeNameTable[119] = "Magidesk.Views.Dialogs.SeatSelectionDialog";
-            _typeNameTable[120] = "Magidesk.Presentation.ViewModels.Dialogs.SeatSelectionViewModel";
-            _typeNameTable[121] = "Magidesk.Presentation.Views.Dialogs.ShiftEndDialog";
-            _typeNameTable[122] = "Magidesk.Presentation.ViewModels.Dialogs.ShiftEndViewModel";
-            _typeNameTable[123] = "Magidesk.Presentation.Views.Dialogs.ShiftStartDialog";
-            _typeNameTable[124] = "Magidesk.Presentation.ViewModels.ShiftStartViewModel";
-            _typeNameTable[125] = "Magidesk.Views.Dialogs.SizeSelectionDialog";
-            _typeNameTable[126] = "Magidesk.Presentation.ViewModels.Dialogs.SizeSelectionViewModel";
-            _typeNameTable[127] = "Magidesk.Views.Dialogs.TableSelectionDialog";
-            _typeNameTable[128] = "Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel";
-            _typeNameTable[129] = "Magidesk.Views.Dialogs.TicketFeeDialog";
-            _typeNameTable[130] = "Magidesk.ViewModels.TicketFeeViewModel";
-            _typeNameTable[131] = "System.Action";
-            _typeNameTable[132] = "System.MulticastDelegate";
-            _typeNameTable[133] = "System.Delegate";
-            _typeNameTable[134] = "Magidesk.Presentation.Views.DiscountTaxPage";
-            _typeNameTable[135] = "Magidesk.Presentation.ViewModels.DiscountTaxViewModel";
-            _typeNameTable[136] = "Magidesk.Presentation.Views.DrawerPullReportDialog";
-            _typeNameTable[137] = "Magidesk.Presentation.ViewModels.DrawerPullReportViewModel";
-            _typeNameTable[138] = "Magidesk.Presentation.Views.FloorManagementPage";
-            _typeNameTable[139] = "Magidesk.Presentation.ViewModels.FloorManagementViewModel";
-            _typeNameTable[140] = "Magidesk.Presentation.Views.GroupSettleTicketDialog";
-            _typeNameTable[141] = "Magidesk.Presentation.ViewModels.GroupSettleTicketViewModel";
-            _typeNameTable[142] = "Magidesk.Presentation.Views.GroupSettleTicketSelectionWindow";
-            _typeNameTable[143] = "Magidesk.Presentation.ViewModels.GroupSettleTicketSelectionViewModel";
-            _typeNameTable[144] = "Magidesk.Presentation.Views.InventoryPage";
-            _typeNameTable[145] = "Magidesk.Presentation.ViewModels.InventoryViewModel";
-            _typeNameTable[146] = "Magidesk.Presentation.Views.KitchenDisplayPage";
-            _typeNameTable[147] = "Magidesk.Presentation.ViewModels.KitchenDisplayViewModel";
-            _typeNameTable[148] = "Magidesk.Presentation.Views.LoginPage";
-            _typeNameTable[149] = "Magidesk.Presentation.ViewModels.LoginViewModel";
-            _typeNameTable[150] = "Magidesk.Presentation.Views.MainPage";
-            _typeNameTable[151] = "Magidesk.Presentation.Views.ManagerFunctionsDialog";
-            _typeNameTable[152] = "Magidesk.Presentation.ViewModels.ManagerFunctionsViewModel";
-            _typeNameTable[153] = "Magidesk.Presentation.Views.MenuEditorPage";
-            _typeNameTable[154] = "Magidesk.Presentation.ViewModels.MenuEditorViewModel";
-            _typeNameTable[155] = "Magidesk.Presentation.Views.ModifierEditorPage";
-            _typeNameTable[156] = "Magidesk.Presentation.ViewModels.ModifierEditorViewModel";
-            _typeNameTable[157] = "Magidesk.Presentation.Views.ModifierSelectionDialog";
-            _typeNameTable[158] = "Magidesk.Presentation.ViewModels.ModifierSelectionViewModel";
-            _typeNameTable[159] = "Magidesk.Presentation.Views.OpenTicketsListDialog";
-            _typeNameTable[160] = "Magidesk.Presentation.ViewModels.OpenTicketsListViewModel";
-            _typeNameTable[161] = "Magidesk.Presentation.Views.OrderEntryPage";
-            _typeNameTable[162] = "Magidesk.Presentation.ViewModels.OrderEntryViewModel";
-            _typeNameTable[163] = "Magidesk.Presentation.Views.OrderTypeExplorerPage";
-            _typeNameTable[164] = "Magidesk.Presentation.ViewModels.OrderTypeExplorerViewModel";
-            _typeNameTable[165] = "Magidesk.Presentation.Views.OrderTypeSelectionDialog";
-            _typeNameTable[166] = "Magidesk.Presentation.ViewModels.OrderTypeSelectionViewModel";
-            _typeNameTable[167] = "Magidesk.Domain.Entities.OrderType";
-            _typeNameTable[168] = "Magidesk.Presentation.Views.PasswordEntryDialog";
-            _typeNameTable[169] = "Magidesk.Presentation.Views.PaymentPage";
-            _typeNameTable[170] = "Magidesk.Presentation.ViewModels.PaymentViewModel";
-            _typeNameTable[171] = "Magidesk.Views.PaymentProcessWaitDialog";
-            _typeNameTable[172] = "Magidesk.Presentation.ViewModels.PaymentProcessWaitViewModel";
-            _typeNameTable[173] = "Magidesk.Presentation.Views.PrintPage";
-            _typeNameTable[174] = "Magidesk.Presentation.ViewModels.PrintViewModel";
-            _typeNameTable[175] = "Magidesk.Presentation.Views.PrintTemplatesPage";
-            _typeNameTable[176] = "Magidesk.Presentation.ViewModels.PrintTemplatesViewModel";
-            _typeNameTable[177] = "Magidesk.Presentation.Views.PurchaseOrdersPage";
-            _typeNameTable[178] = "Magidesk.Presentation.ViewModels.PurchaseOrderViewModel";
-            _typeNameTable[179] = "Magidesk.Presentation.Views.RoleManagementPage";
-            _typeNameTable[180] = "Magidesk.Presentation.ViewModels.RoleManagementViewModel";
-            _typeNameTable[181] = "Magidesk.Presentation.Views.SalesReportsPage";
-            _typeNameTable[182] = "Magidesk.Presentation.ViewModels.SalesReportsViewModel";
-            _typeNameTable[183] = "Magidesk.Presentation.Views.SettingsPage";
-            _typeNameTable[184] = "Magidesk.Presentation.ViewModels.SettingsViewModel";
-            _typeNameTable[185] = "Magidesk.Presentation.Views.SettlePage";
-            _typeNameTable[186] = "Magidesk.Presentation.ViewModels.SettleViewModel";
-            _typeNameTable[187] = "Magidesk.Presentation.Views.ShiftExplorerPage";
-            _typeNameTable[188] = "Magidesk.Presentation.ViewModels.ShiftExplorerViewModel";
-            _typeNameTable[189] = "Magidesk.Presentation.Views.SplitTicketDialog";
-            _typeNameTable[190] = "Magidesk.Presentation.ViewModels.SplitTicketViewModel";
-            _typeNameTable[191] = "Magidesk.Views.SwipeCardDialog";
-            _typeNameTable[192] = "Magidesk.Presentation.ViewModels.SwipeCardViewModel";
-            _typeNameTable[193] = "Magidesk.Presentation.Views.SwitchboardPage";
-            _typeNameTable[194] = "Magidesk.Presentation.ViewModels.SwitchboardViewModel";
-            _typeNameTable[195] = "Magidesk.Presentation.Views.SystemConfigPage";
-            _typeNameTable[196] = "Magidesk.Presentation.ViewModels.SystemConfigViewModel";
-            _typeNameTable[197] = "Magidesk.Presentation.Views.TableDesignerPage";
-            _typeNameTable[198] = "Magidesk.Presentation.Views.TableDesignerTestPage";
-            _typeNameTable[199] = "Magidesk.Presentation.Views.TableExplorerPage";
-            _typeNameTable[200] = "Magidesk.Presentation.ViewModels.TableExplorerViewModel";
-            _typeNameTable[201] = "Microsoft.UI.Xaml.Controls.Button";
-            _typeNameTable[202] = "Magidesk.Presentation.Views.TableMapPage";
-            _typeNameTable[203] = "Magidesk.Presentation.ViewModels.TableMapViewModel";
-            _typeNameTable[204] = "Microsoft.UI.Xaml.Controls.WebView2";
-            _typeNameTable[205] = "Microsoft.UI.Xaml.FrameworkElement";
-            _typeNameTable[206] = "Microsoft.Web.WebView2.Core.CoreWebView2";
-            _typeNameTable[207] = "System.Uri";
-            _typeNameTable[208] = "Magidesk.Presentation.Views.TemplateEditorPage";
-            _typeNameTable[209] = "Magidesk.Presentation.Views.TicketManagementPage";
-            _typeNameTable[210] = "Magidesk.Presentation.ViewModels.TicketManagementViewModel";
-            _typeNameTable[211] = "Magidesk.Presentation.Views.TicketPage";
-            _typeNameTable[212] = "Magidesk.Presentation.ViewModels.TicketViewModel";
-            _typeNameTable[213] = "Magidesk.Presentation.Views.UserManagementPage";
-            _typeNameTable[214] = "Magidesk.Presentation.ViewModels.UserManagementViewModel";
-            _typeNameTable[215] = "Magidesk.Presentation.Views.VendorsPage";
-            _typeNameTable[216] = "Magidesk.Presentation.ViewModels.VendorManagementViewModel";
-            _typeNameTable[217] = "Magidesk.Presentation.Views.VoidTicketDialog";
-            _typeNameTable[218] = "Magidesk.Presentation.ViewModels.VoidTicketViewModel";
-            _typeNameTable[219] = "Microsoft.UI.Xaml.Controls.TreeViewNode";
-            _typeNameTable[220] = "System.Collections.Generic.IList`1<Microsoft.UI.Xaml.Controls.TreeViewNode>";
+            _typeNameTable[18] = "Magidesk.Presentation.Converters.BooleanToStringConverter";
+            _typeNameTable[19] = "Magidesk.Presentation.Converters.StringVisibilityConverter";
+            _typeNameTable[20] = "Magidesk.Presentation.Converters.BoolToDesignModeTextConverter";
+            _typeNameTable[21] = "Magidesk.Presentation.Converters.EnumToBoolConverter";
+            _typeNameTable[22] = "Magidesk.Presentation.Converters.ShapeToCornerRadiusConverter";
+            _typeNameTable[23] = "Magidesk.Presentation.Converters.TableToSelectionVisibilityConverter";
+            _typeNameTable[24] = "Magidesk.Presentation.Converters.DateTimeToTimeConverter";
+            _typeNameTable[25] = "Magidesk.Presentation.Converters.TableStatusToBrushConverter";
+            _typeNameTable[26] = "Microsoft.UI.Xaml.Controls.NavigationView";
+            _typeNameTable[27] = "Microsoft.UI.Xaml.Controls.ContentControl";
+            _typeNameTable[28] = "Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible";
+            _typeNameTable[29] = "System.Enum";
+            _typeNameTable[30] = "Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode";
+            _typeNameTable[31] = "System.Collections.Generic.IList`1<Object>";
+            _typeNameTable[32] = "Microsoft.UI.Xaml.Controls.AutoSuggestBox";
+            _typeNameTable[33] = "Double";
+            _typeNameTable[34] = "Microsoft.UI.Xaml.UIElement";
+            _typeNameTable[35] = "Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode";
+            _typeNameTable[36] = "Microsoft.UI.Xaml.DataTemplate";
+            _typeNameTable[37] = "Microsoft.UI.Xaml.Style";
+            _typeNameTable[38] = "Microsoft.UI.Xaml.Controls.StyleSelector";
+            _typeNameTable[39] = "Microsoft.UI.Xaml.Controls.DataTemplateSelector";
+            _typeNameTable[40] = "Microsoft.UI.Xaml.Controls.NavigationViewOverflowLabelMode";
+            _typeNameTable[41] = "String";
+            _typeNameTable[42] = "Microsoft.UI.Xaml.Controls.NavigationViewSelectionFollowsFocus";
+            _typeNameTable[43] = "Microsoft.UI.Xaml.Controls.NavigationViewShoulderNavigationEnabled";
+            _typeNameTable[44] = "Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings";
+            _typeNameTable[45] = "Microsoft.UI.Xaml.DependencyObject";
+            _typeNameTable[46] = "Microsoft.UI.Xaml.Controls.InfoBar";
+            _typeNameTable[47] = "Microsoft.UI.Xaml.Controls.Control";
+            _typeNameTable[48] = "Microsoft.UI.Xaml.Controls.InfoBarSeverity";
+            _typeNameTable[49] = "Microsoft.UI.Xaml.Controls.Primitives.ButtonBase";
+            _typeNameTable[50] = "System.Windows.Input.ICommand";
+            _typeNameTable[51] = "Microsoft.UI.Xaml.Controls.IconSource";
+            _typeNameTable[52] = "Microsoft.UI.Xaml.Controls.InfoBarTemplateSettings";
+            _typeNameTable[53] = "Microsoft.UI.Xaml.Controls.ProgressRing";
+            _typeNameTable[54] = "Microsoft.UI.Xaml.Controls.ProgressRingTemplateSettings";
+            _typeNameTable[55] = "Microsoft.UI.Xaml.Controls.NavigationViewItem";
+            _typeNameTable[56] = "Microsoft.UI.Xaml.Controls.NavigationViewItemBase";
+            _typeNameTable[57] = "Microsoft.UI.Xaml.Controls.IconElement";
+            _typeNameTable[58] = "Microsoft.UI.Xaml.Controls.InfoBadge";
+            _typeNameTable[59] = "Magidesk.Presentation.MainWindow";
+            _typeNameTable[60] = "Microsoft.UI.Xaml.Window";
+            _typeNameTable[61] = "Microsoft.UI.Xaml.Controls.ProgressBar";
+            _typeNameTable[62] = "Microsoft.UI.Xaml.Controls.Primitives.RangeBase";
+            _typeNameTable[63] = "Microsoft.UI.Xaml.Controls.ProgressBarTemplateSettings";
+            _typeNameTable[64] = "Magidesk.Views.AuthorizationCaptureBatchDialog";
+            _typeNameTable[65] = "Microsoft.UI.Xaml.Controls.ContentDialog";
+            _typeNameTable[66] = "Magidesk.Presentation.ViewModels.AuthorizationCaptureBatchViewModel";
+            _typeNameTable[67] = "Magidesk.Presentation.ViewModels.ViewModelBase";
+            _typeNameTable[68] = "CommunityToolkit.Mvvm.ComponentModel.ObservableObject";
+            _typeNameTable[69] = "Microsoft.UI.Xaml.Controls.RadioButtons";
+            _typeNameTable[70] = "Int32";
+            _typeNameTable[71] = "Magidesk.Views.AuthorizationCodeDialog";
+            _typeNameTable[72] = "Magidesk.Presentation.ViewModels.AuthorizationCodeViewModel";
+            _typeNameTable[73] = "Magidesk.Presentation.Views.BackOfficePage";
+            _typeNameTable[74] = "Microsoft.UI.Xaml.Controls.Page";
+            _typeNameTable[75] = "Microsoft.UI.Xaml.Controls.UserControl";
+            _typeNameTable[76] = "Magidesk.Presentation.ViewModels.BackOfficeViewModel";
+            _typeNameTable[77] = "Magidesk.Presentation.Views.CashDropManagementDialog";
+            _typeNameTable[78] = "Magidesk.Presentation.ViewModels.CashDropManagementViewModel";
+            _typeNameTable[79] = "Magidesk.Presentation.Views.CashEntryDialog";
+            _typeNameTable[80] = "System.Decimal";
+            _typeNameTable[81] = "Magidesk.Presentation.Views.CashSessionPage";
+            _typeNameTable[82] = "Magidesk.Presentation.ViewModels.CashSessionViewModel";
+            _typeNameTable[83] = "Microsoft.UI.Xaml.Controls.RadioButton";
+            _typeNameTable[84] = "Microsoft.UI.Xaml.Controls.NumberBox";
+            _typeNameTable[85] = "Windows.Globalization.NumberFormatting.INumberFormatter2";
+            _typeNameTable[86] = "Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase";
+            _typeNameTable[87] = "Microsoft.UI.Xaml.Media.SolidColorBrush";
+            _typeNameTable[88] = "Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode";
+            _typeNameTable[89] = "Microsoft.UI.Xaml.TextReadingOrder";
+            _typeNameTable[90] = "Microsoft.UI.Xaml.Controls.NumberBoxValidationMode";
+            _typeNameTable[91] = "Magidesk.Presentation.Views.Components.TableShapePalette";
+            _typeNameTable[92] = "Magidesk.Presentation.ViewModels.TableDesignerViewModel";
+            _typeNameTable[93] = "Magidesk.Presentation.Views.Components.VirtualizedTableCanvas";
+            _typeNameTable[94] = "Magidesk.Views.Dialogs.AddOnSelectionDialog";
+            _typeNameTable[95] = "Magidesk.ViewModels.Dialogs.AddOnSelectionViewModel";
+            _typeNameTable[96] = "Magidesk.Presentation.Views.Dialogs.CashEntryDialog";
+            _typeNameTable[97] = "Magidesk.Views.Dialogs.ComboSelectionDialog";
+            _typeNameTable[98] = "Magidesk.ViewModels.Dialogs.ComboSelectionViewModel";
+            _typeNameTable[99] = "Magidesk.Views.Dialogs.CookingInstructionDialog";
+            _typeNameTable[100] = "Magidesk.Presentation.ViewModels.Dialogs.CookingInstructionViewModel";
+            _typeNameTable[101] = "Magidesk.Views.Dialogs.CustomerSelectionDialog";
+            _typeNameTable[102] = "Magidesk.Presentation.ViewModels.Dialogs.CustomerSelectionViewModel";
+            _typeNameTable[103] = "Magidesk.Presentation.Views.Dialogs.GuestCountDialog";
+            _typeNameTable[104] = "Magidesk.Presentation.ViewModels.GuestCountViewModel";
+            _typeNameTable[105] = "Magidesk.Views.Dialogs.ItemSearchDialog";
+            _typeNameTable[106] = "Magidesk.Presentation.ViewModels.Dialogs.ItemSearchViewModel";
+            _typeNameTable[107] = "Magidesk.Views.Dialogs.MergeTicketsDialog";
+            _typeNameTable[108] = "Magidesk.Presentation.ViewModels.Dialogs.MergeTicketsViewModel";
+            _typeNameTable[109] = "Magidesk.Views.Dialogs.MiscItemDialog";
+            _typeNameTable[110] = "Magidesk.ViewModels.MiscItemViewModel";
+            _typeNameTable[111] = "Magidesk.Views.Dialogs.ModifierSelectionDialog";
+            _typeNameTable[112] = "Magidesk.ViewModels.Dialogs.ModifierSelectionViewModel";
+            _typeNameTable[113] = "Magidesk.Presentation.Views.Dialogs.NotesDialog";
+            _typeNameTable[114] = "Magidesk.Views.Dialogs.PizzaModifierDialog";
+            _typeNameTable[115] = "Magidesk.Presentation.ViewModels.Dialogs.PizzaModifierViewModel";
+            _typeNameTable[116] = "Magidesk.Views.Dialogs.PriceEntryDialog";
+            _typeNameTable[117] = "Magidesk.Presentation.ViewModels.Dialogs.PriceEntryViewModel";
+            _typeNameTable[118] = "Magidesk.Views.QuantityDialog";
+            _typeNameTable[119] = "Magidesk.Presentation.ViewModels.QuantityViewModel";
+            _typeNameTable[120] = "Magidesk.Views.Dialogs.SeatSelectionDialog";
+            _typeNameTable[121] = "Magidesk.Presentation.ViewModels.Dialogs.SeatSelectionViewModel";
+            _typeNameTable[122] = "Magidesk.Presentation.Views.Dialogs.ShiftEndDialog";
+            _typeNameTable[123] = "Magidesk.Presentation.ViewModels.Dialogs.ShiftEndViewModel";
+            _typeNameTable[124] = "Magidesk.Presentation.Views.Dialogs.ShiftStartDialog";
+            _typeNameTable[125] = "Magidesk.Presentation.ViewModels.ShiftStartViewModel";
+            _typeNameTable[126] = "Magidesk.Views.Dialogs.SizeSelectionDialog";
+            _typeNameTable[127] = "Magidesk.Presentation.ViewModels.Dialogs.SizeSelectionViewModel";
+            _typeNameTable[128] = "Magidesk.Views.Dialogs.TableSelectionDialog";
+            _typeNameTable[129] = "Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel";
+            _typeNameTable[130] = "Magidesk.Views.Dialogs.TicketFeeDialog";
+            _typeNameTable[131] = "Magidesk.ViewModels.TicketFeeViewModel";
+            _typeNameTable[132] = "System.Action";
+            _typeNameTable[133] = "System.MulticastDelegate";
+            _typeNameTable[134] = "System.Delegate";
+            _typeNameTable[135] = "Magidesk.Presentation.Views.DiscountTaxPage";
+            _typeNameTable[136] = "Magidesk.Presentation.ViewModels.DiscountTaxViewModel";
+            _typeNameTable[137] = "Magidesk.Presentation.Views.DrawerPullReportDialog";
+            _typeNameTable[138] = "Magidesk.Presentation.ViewModels.DrawerPullReportViewModel";
+            _typeNameTable[139] = "Magidesk.Presentation.Views.FloorManagementPage";
+            _typeNameTable[140] = "Magidesk.Presentation.ViewModels.FloorManagementViewModel";
+            _typeNameTable[141] = "Magidesk.Presentation.Views.GroupSettleTicketDialog";
+            _typeNameTable[142] = "Magidesk.Presentation.ViewModels.GroupSettleTicketViewModel";
+            _typeNameTable[143] = "Magidesk.Presentation.Views.GroupSettleTicketSelectionWindow";
+            _typeNameTable[144] = "Magidesk.Presentation.ViewModels.GroupSettleTicketSelectionViewModel";
+            _typeNameTable[145] = "Magidesk.Presentation.Views.InventoryPage";
+            _typeNameTable[146] = "Magidesk.Presentation.ViewModels.InventoryViewModel";
+            _typeNameTable[147] = "Magidesk.Presentation.Views.KitchenDisplayPage";
+            _typeNameTable[148] = "Magidesk.Presentation.ViewModels.KitchenDisplayViewModel";
+            _typeNameTable[149] = "Magidesk.Presentation.Views.LoginPage";
+            _typeNameTable[150] = "Magidesk.Presentation.ViewModels.LoginViewModel";
+            _typeNameTable[151] = "Magidesk.Presentation.Views.MainPage";
+            _typeNameTable[152] = "Magidesk.Presentation.Views.ManagerFunctionsDialog";
+            _typeNameTable[153] = "Magidesk.Presentation.ViewModels.ManagerFunctionsViewModel";
+            _typeNameTable[154] = "Magidesk.Presentation.Views.MenuEditorPage";
+            _typeNameTable[155] = "Magidesk.Presentation.ViewModels.MenuEditorViewModel";
+            _typeNameTable[156] = "Magidesk.Presentation.Views.ModifierEditorPage";
+            _typeNameTable[157] = "Magidesk.Presentation.ViewModels.ModifierEditorViewModel";
+            _typeNameTable[158] = "Magidesk.Presentation.Views.ModifierSelectionDialog";
+            _typeNameTable[159] = "Magidesk.Presentation.ViewModels.ModifierSelectionViewModel";
+            _typeNameTable[160] = "Magidesk.Presentation.Views.OpenTicketsListDialog";
+            _typeNameTable[161] = "Magidesk.Presentation.ViewModels.OpenTicketsListViewModel";
+            _typeNameTable[162] = "Magidesk.Presentation.Views.OrderEntryPage";
+            _typeNameTable[163] = "Magidesk.Presentation.ViewModels.OrderEntryViewModel";
+            _typeNameTable[164] = "Magidesk.Presentation.Views.OrderTypeExplorerPage";
+            _typeNameTable[165] = "Magidesk.Presentation.ViewModels.OrderTypeExplorerViewModel";
+            _typeNameTable[166] = "Magidesk.Presentation.Views.OrderTypeSelectionDialog";
+            _typeNameTable[167] = "Magidesk.Presentation.ViewModels.OrderTypeSelectionViewModel";
+            _typeNameTable[168] = "Magidesk.Domain.Entities.OrderType";
+            _typeNameTable[169] = "Magidesk.Presentation.Views.PasswordEntryDialog";
+            _typeNameTable[170] = "Magidesk.Presentation.Views.PaymentPage";
+            _typeNameTable[171] = "Magidesk.Presentation.ViewModels.PaymentViewModel";
+            _typeNameTable[172] = "Magidesk.Views.PaymentProcessWaitDialog";
+            _typeNameTable[173] = "Magidesk.Presentation.ViewModels.PaymentProcessWaitViewModel";
+            _typeNameTable[174] = "Magidesk.Presentation.Views.PrintPage";
+            _typeNameTable[175] = "Magidesk.Presentation.ViewModels.PrintViewModel";
+            _typeNameTable[176] = "Magidesk.Presentation.Views.PrintTemplatesPage";
+            _typeNameTable[177] = "Magidesk.Presentation.ViewModels.PrintTemplatesViewModel";
+            _typeNameTable[178] = "Magidesk.Presentation.Views.PurchaseOrdersPage";
+            _typeNameTable[179] = "Magidesk.Presentation.ViewModels.PurchaseOrderViewModel";
+            _typeNameTable[180] = "Magidesk.Presentation.Views.RoleManagementPage";
+            _typeNameTable[181] = "Magidesk.Presentation.ViewModels.RoleManagementViewModel";
+            _typeNameTable[182] = "Magidesk.Presentation.Views.SalesReportsPage";
+            _typeNameTable[183] = "Magidesk.Presentation.ViewModels.SalesReportsViewModel";
+            _typeNameTable[184] = "Magidesk.Presentation.Views.SettingsPage";
+            _typeNameTable[185] = "Magidesk.Presentation.ViewModels.SettingsViewModel";
+            _typeNameTable[186] = "Magidesk.Presentation.Views.SettlePage";
+            _typeNameTable[187] = "Magidesk.Presentation.ViewModels.SettleViewModel";
+            _typeNameTable[188] = "Magidesk.Presentation.Views.ShiftExplorerPage";
+            _typeNameTable[189] = "Magidesk.Presentation.ViewModels.ShiftExplorerViewModel";
+            _typeNameTable[190] = "Magidesk.Presentation.Views.SplitTicketDialog";
+            _typeNameTable[191] = "Magidesk.Presentation.ViewModels.SplitTicketViewModel";
+            _typeNameTable[192] = "Magidesk.Views.SwipeCardDialog";
+            _typeNameTable[193] = "Magidesk.Presentation.ViewModels.SwipeCardViewModel";
+            _typeNameTable[194] = "Magidesk.Presentation.Views.SwitchboardPage";
+            _typeNameTable[195] = "Magidesk.Presentation.ViewModels.SwitchboardViewModel";
+            _typeNameTable[196] = "Magidesk.Presentation.Views.SystemConfigPage";
+            _typeNameTable[197] = "Magidesk.Presentation.ViewModels.SystemConfigViewModel";
+            _typeNameTable[198] = "Magidesk.Presentation.Views.TableDesignerPage";
+            _typeNameTable[199] = "Magidesk.Presentation.Views.TableDesignerTestPage";
+            _typeNameTable[200] = "Magidesk.Presentation.Views.TableExplorerPage";
+            _typeNameTable[201] = "Magidesk.Presentation.ViewModels.TableExplorerViewModel";
+            _typeNameTable[202] = "Microsoft.UI.Xaml.Controls.Button";
+            _typeNameTable[203] = "Magidesk.Presentation.Views.TableMapPage";
+            _typeNameTable[204] = "Magidesk.Presentation.ViewModels.TableMapViewModel";
+            _typeNameTable[205] = "Microsoft.UI.Xaml.Controls.WebView2";
+            _typeNameTable[206] = "Microsoft.UI.Xaml.FrameworkElement";
+            _typeNameTable[207] = "Microsoft.Web.WebView2.Core.CoreWebView2";
+            _typeNameTable[208] = "System.Uri";
+            _typeNameTable[209] = "Magidesk.Presentation.Views.TemplateEditorPage";
+            _typeNameTable[210] = "Magidesk.Presentation.ViewModels.TemplateEditorViewModel";
+            _typeNameTable[211] = "Magidesk.Presentation.Views.TicketManagementPage";
+            _typeNameTable[212] = "Magidesk.Presentation.ViewModels.TicketManagementViewModel";
+            _typeNameTable[213] = "Magidesk.Presentation.Views.TicketPage";
+            _typeNameTable[214] = "Magidesk.Presentation.ViewModels.TicketViewModel";
+            _typeNameTable[215] = "Magidesk.Presentation.Views.UserManagementPage";
+            _typeNameTable[216] = "Magidesk.Presentation.ViewModels.UserManagementViewModel";
+            _typeNameTable[217] = "Magidesk.Presentation.Views.VendorsPage";
+            _typeNameTable[218] = "Magidesk.Presentation.ViewModels.VendorManagementViewModel";
+            _typeNameTable[219] = "Magidesk.Presentation.Views.VoidTicketDialog";
+            _typeNameTable[220] = "Magidesk.Presentation.ViewModels.VoidTicketViewModel";
+            _typeNameTable[221] = "Microsoft.UI.Xaml.Controls.TreeViewNode";
+            _typeNameTable[222] = "System.Collections.Generic.IList`1<Microsoft.UI.Xaml.Controls.TreeViewNode>";
 
-            _typeTable = new global::System.Type[221];
+            _typeTable = new global::System.Type[223];
             _typeTable[0] = typeof(global::Microsoft.UI.Xaml.Controls.XamlControlsResources);
             _typeTable[1] = typeof(global::Microsoft.UI.Xaml.ResourceDictionary);
             _typeTable[2] = typeof(global::System.Object);
@@ -468,209 +470,211 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
             _typeTable[15] = typeof(global::Magidesk.Presentation.Converters.IntToDoubleConverter);
             _typeTable[16] = typeof(global::Magidesk.Presentation.Converters.CollectionEmptyToVisibilityConverter);
             _typeTable[17] = typeof(global::Magidesk.Presentation.Converters.BooleanToVisibilityConverter);
-            _typeTable[18] = typeof(global::Magidesk.Presentation.Converters.StringVisibilityConverter);
-            _typeTable[19] = typeof(global::Magidesk.Presentation.Converters.BoolToDesignModeTextConverter);
-            _typeTable[20] = typeof(global::Magidesk.Presentation.Converters.EnumToBoolConverter);
-            _typeTable[21] = typeof(global::Magidesk.Presentation.Converters.ShapeToCornerRadiusConverter);
-            _typeTable[22] = typeof(global::Magidesk.Presentation.Converters.TableToSelectionVisibilityConverter);
-            _typeTable[23] = typeof(global::Magidesk.Presentation.Converters.DateTimeToTimeConverter);
-            _typeTable[24] = typeof(global::Magidesk.Presentation.Converters.TableStatusToBrushConverter);
-            _typeTable[25] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationView);
-            _typeTable[26] = typeof(global::Microsoft.UI.Xaml.Controls.ContentControl);
-            _typeTable[27] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible);
-            _typeTable[28] = typeof(global::System.Enum);
-            _typeTable[29] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode);
-            _typeTable[30] = typeof(global::System.Collections.Generic.IList<global::System.Object>);
-            _typeTable[31] = typeof(global::Microsoft.UI.Xaml.Controls.AutoSuggestBox);
-            _typeTable[32] = typeof(global::System.Double);
-            _typeTable[33] = typeof(global::Microsoft.UI.Xaml.UIElement);
-            _typeTable[34] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode);
-            _typeTable[35] = typeof(global::Microsoft.UI.Xaml.DataTemplate);
-            _typeTable[36] = typeof(global::Microsoft.UI.Xaml.Style);
-            _typeTable[37] = typeof(global::Microsoft.UI.Xaml.Controls.StyleSelector);
-            _typeTable[38] = typeof(global::Microsoft.UI.Xaml.Controls.DataTemplateSelector);
-            _typeTable[39] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewOverflowLabelMode);
-            _typeTable[40] = typeof(global::System.String);
-            _typeTable[41] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewSelectionFollowsFocus);
-            _typeTable[42] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewShoulderNavigationEnabled);
-            _typeTable[43] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings);
-            _typeTable[44] = typeof(global::Microsoft.UI.Xaml.DependencyObject);
-            _typeTable[45] = typeof(global::Microsoft.UI.Xaml.Controls.ProgressRing);
-            _typeTable[46] = typeof(global::Microsoft.UI.Xaml.Controls.Control);
-            _typeTable[47] = typeof(global::Microsoft.UI.Xaml.Controls.ProgressRingTemplateSettings);
-            _typeTable[48] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewItem);
-            _typeTable[49] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewItemBase);
-            _typeTable[50] = typeof(global::Microsoft.UI.Xaml.Controls.IconElement);
-            _typeTable[51] = typeof(global::Microsoft.UI.Xaml.Controls.InfoBadge);
-            _typeTable[52] = typeof(global::Magidesk.Presentation.MainWindow);
-            _typeTable[53] = typeof(global::Microsoft.UI.Xaml.Window);
-            _typeTable[54] = typeof(global::Microsoft.UI.Xaml.Controls.ProgressBar);
-            _typeTable[55] = typeof(global::Microsoft.UI.Xaml.Controls.Primitives.RangeBase);
-            _typeTable[56] = typeof(global::Microsoft.UI.Xaml.Controls.ProgressBarTemplateSettings);
-            _typeTable[57] = typeof(global::Magidesk.Views.AuthorizationCaptureBatchDialog);
-            _typeTable[58] = typeof(global::Microsoft.UI.Xaml.Controls.ContentDialog);
-            _typeTable[59] = typeof(global::Magidesk.Presentation.ViewModels.AuthorizationCaptureBatchViewModel);
-            _typeTable[60] = typeof(global::Magidesk.Presentation.ViewModels.ViewModelBase);
-            _typeTable[61] = typeof(global::CommunityToolkit.Mvvm.ComponentModel.ObservableObject);
-            _typeTable[62] = typeof(global::Microsoft.UI.Xaml.Controls.RadioButtons);
-            _typeTable[63] = typeof(global::System.Int32);
-            _typeTable[64] = typeof(global::Magidesk.Views.AuthorizationCodeDialog);
-            _typeTable[65] = typeof(global::Magidesk.Presentation.ViewModels.AuthorizationCodeViewModel);
-            _typeTable[66] = typeof(global::Magidesk.Presentation.Views.BackOfficePage);
-            _typeTable[67] = typeof(global::Microsoft.UI.Xaml.Controls.Page);
-            _typeTable[68] = typeof(global::Microsoft.UI.Xaml.Controls.UserControl);
-            _typeTable[69] = typeof(global::Magidesk.Presentation.ViewModels.BackOfficeViewModel);
-            _typeTable[70] = typeof(global::Magidesk.Presentation.Views.CashDropManagementDialog);
-            _typeTable[71] = typeof(global::Magidesk.Presentation.ViewModels.CashDropManagementViewModel);
-            _typeTable[72] = typeof(global::Magidesk.Presentation.Views.CashEntryDialog);
-            _typeTable[73] = typeof(global::System.Decimal);
-            _typeTable[74] = typeof(global::Microsoft.UI.Xaml.Controls.InfoBar);
-            _typeTable[75] = typeof(global::Microsoft.UI.Xaml.Controls.InfoBarSeverity);
-            _typeTable[76] = typeof(global::Microsoft.UI.Xaml.Controls.Primitives.ButtonBase);
-            _typeTable[77] = typeof(global::System.Windows.Input.ICommand);
-            _typeTable[78] = typeof(global::Microsoft.UI.Xaml.Controls.IconSource);
-            _typeTable[79] = typeof(global::Microsoft.UI.Xaml.Controls.InfoBarTemplateSettings);
-            _typeTable[80] = typeof(global::Magidesk.Presentation.Views.CashSessionPage);
-            _typeTable[81] = typeof(global::Magidesk.Presentation.ViewModels.CashSessionViewModel);
-            _typeTable[82] = typeof(global::Microsoft.UI.Xaml.Controls.RadioButton);
-            _typeTable[83] = typeof(global::Microsoft.UI.Xaml.Controls.NumberBox);
-            _typeTable[84] = typeof(global::Windows.Globalization.NumberFormatting.INumberFormatter2);
-            _typeTable[85] = typeof(global::Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase);
-            _typeTable[86] = typeof(global::Microsoft.UI.Xaml.Media.SolidColorBrush);
-            _typeTable[87] = typeof(global::Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode);
-            _typeTable[88] = typeof(global::Microsoft.UI.Xaml.TextReadingOrder);
-            _typeTable[89] = typeof(global::Microsoft.UI.Xaml.Controls.NumberBoxValidationMode);
-            _typeTable[90] = typeof(global::Magidesk.Presentation.Views.Components.TableShapePalette);
-            _typeTable[91] = typeof(global::Magidesk.Presentation.ViewModels.TableDesignerViewModel);
-            _typeTable[92] = typeof(global::Magidesk.Presentation.Views.Components.VirtualizedTableCanvas);
-            _typeTable[93] = typeof(global::Magidesk.Views.Dialogs.AddOnSelectionDialog);
-            _typeTable[94] = typeof(global::Magidesk.ViewModels.Dialogs.AddOnSelectionViewModel);
-            _typeTable[95] = typeof(global::Magidesk.Presentation.Views.Dialogs.CashEntryDialog);
-            _typeTable[96] = typeof(global::Magidesk.Views.Dialogs.ComboSelectionDialog);
-            _typeTable[97] = typeof(global::Magidesk.ViewModels.Dialogs.ComboSelectionViewModel);
-            _typeTable[98] = typeof(global::Magidesk.Views.Dialogs.CookingInstructionDialog);
-            _typeTable[99] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.CookingInstructionViewModel);
-            _typeTable[100] = typeof(global::Magidesk.Views.Dialogs.CustomerSelectionDialog);
-            _typeTable[101] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.CustomerSelectionViewModel);
-            _typeTable[102] = typeof(global::Magidesk.Presentation.Views.Dialogs.GuestCountDialog);
-            _typeTable[103] = typeof(global::Magidesk.Presentation.ViewModels.GuestCountViewModel);
-            _typeTable[104] = typeof(global::Magidesk.Views.Dialogs.ItemSearchDialog);
-            _typeTable[105] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.ItemSearchViewModel);
-            _typeTable[106] = typeof(global::Magidesk.Views.Dialogs.MergeTicketsDialog);
-            _typeTable[107] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.MergeTicketsViewModel);
-            _typeTable[108] = typeof(global::Magidesk.Views.Dialogs.MiscItemDialog);
-            _typeTable[109] = typeof(global::Magidesk.ViewModels.MiscItemViewModel);
-            _typeTable[110] = typeof(global::Magidesk.Views.Dialogs.ModifierSelectionDialog);
-            _typeTable[111] = typeof(global::Magidesk.ViewModels.Dialogs.ModifierSelectionViewModel);
-            _typeTable[112] = typeof(global::Magidesk.Presentation.Views.Dialogs.NotesDialog);
-            _typeTable[113] = typeof(global::Magidesk.Views.Dialogs.PizzaModifierDialog);
-            _typeTable[114] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.PizzaModifierViewModel);
-            _typeTable[115] = typeof(global::Magidesk.Views.Dialogs.PriceEntryDialog);
-            _typeTable[116] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.PriceEntryViewModel);
-            _typeTable[117] = typeof(global::Magidesk.Views.QuantityDialog);
-            _typeTable[118] = typeof(global::Magidesk.Presentation.ViewModels.QuantityViewModel);
-            _typeTable[119] = typeof(global::Magidesk.Views.Dialogs.SeatSelectionDialog);
-            _typeTable[120] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.SeatSelectionViewModel);
-            _typeTable[121] = typeof(global::Magidesk.Presentation.Views.Dialogs.ShiftEndDialog);
-            _typeTable[122] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.ShiftEndViewModel);
-            _typeTable[123] = typeof(global::Magidesk.Presentation.Views.Dialogs.ShiftStartDialog);
-            _typeTable[124] = typeof(global::Magidesk.Presentation.ViewModels.ShiftStartViewModel);
-            _typeTable[125] = typeof(global::Magidesk.Views.Dialogs.SizeSelectionDialog);
-            _typeTable[126] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.SizeSelectionViewModel);
-            _typeTable[127] = typeof(global::Magidesk.Views.Dialogs.TableSelectionDialog);
-            _typeTable[128] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel);
-            _typeTable[129] = typeof(global::Magidesk.Views.Dialogs.TicketFeeDialog);
-            _typeTable[130] = typeof(global::Magidesk.ViewModels.TicketFeeViewModel);
-            _typeTable[131] = typeof(global::System.Action);
-            _typeTable[132] = typeof(global::System.MulticastDelegate);
-            _typeTable[133] = typeof(global::System.Delegate);
-            _typeTable[134] = typeof(global::Magidesk.Presentation.Views.DiscountTaxPage);
-            _typeTable[135] = typeof(global::Magidesk.Presentation.ViewModels.DiscountTaxViewModel);
-            _typeTable[136] = typeof(global::Magidesk.Presentation.Views.DrawerPullReportDialog);
-            _typeTable[137] = typeof(global::Magidesk.Presentation.ViewModels.DrawerPullReportViewModel);
-            _typeTable[138] = typeof(global::Magidesk.Presentation.Views.FloorManagementPage);
-            _typeTable[139] = typeof(global::Magidesk.Presentation.ViewModels.FloorManagementViewModel);
-            _typeTable[140] = typeof(global::Magidesk.Presentation.Views.GroupSettleTicketDialog);
-            _typeTable[141] = typeof(global::Magidesk.Presentation.ViewModels.GroupSettleTicketViewModel);
-            _typeTable[142] = typeof(global::Magidesk.Presentation.Views.GroupSettleTicketSelectionWindow);
-            _typeTable[143] = typeof(global::Magidesk.Presentation.ViewModels.GroupSettleTicketSelectionViewModel);
-            _typeTable[144] = typeof(global::Magidesk.Presentation.Views.InventoryPage);
-            _typeTable[145] = typeof(global::Magidesk.Presentation.ViewModels.InventoryViewModel);
-            _typeTable[146] = typeof(global::Magidesk.Presentation.Views.KitchenDisplayPage);
-            _typeTable[147] = typeof(global::Magidesk.Presentation.ViewModels.KitchenDisplayViewModel);
-            _typeTable[148] = typeof(global::Magidesk.Presentation.Views.LoginPage);
-            _typeTable[149] = typeof(global::Magidesk.Presentation.ViewModels.LoginViewModel);
-            _typeTable[150] = typeof(global::Magidesk.Presentation.Views.MainPage);
-            _typeTable[151] = typeof(global::Magidesk.Presentation.Views.ManagerFunctionsDialog);
-            _typeTable[152] = typeof(global::Magidesk.Presentation.ViewModels.ManagerFunctionsViewModel);
-            _typeTable[153] = typeof(global::Magidesk.Presentation.Views.MenuEditorPage);
-            _typeTable[154] = typeof(global::Magidesk.Presentation.ViewModels.MenuEditorViewModel);
-            _typeTable[155] = typeof(global::Magidesk.Presentation.Views.ModifierEditorPage);
-            _typeTable[156] = typeof(global::Magidesk.Presentation.ViewModels.ModifierEditorViewModel);
-            _typeTable[157] = typeof(global::Magidesk.Presentation.Views.ModifierSelectionDialog);
-            _typeTable[158] = typeof(global::Magidesk.Presentation.ViewModels.ModifierSelectionViewModel);
-            _typeTable[159] = typeof(global::Magidesk.Presentation.Views.OpenTicketsListDialog);
-            _typeTable[160] = typeof(global::Magidesk.Presentation.ViewModels.OpenTicketsListViewModel);
-            _typeTable[161] = typeof(global::Magidesk.Presentation.Views.OrderEntryPage);
-            _typeTable[162] = typeof(global::Magidesk.Presentation.ViewModels.OrderEntryViewModel);
-            _typeTable[163] = typeof(global::Magidesk.Presentation.Views.OrderTypeExplorerPage);
-            _typeTable[164] = typeof(global::Magidesk.Presentation.ViewModels.OrderTypeExplorerViewModel);
-            _typeTable[165] = typeof(global::Magidesk.Presentation.Views.OrderTypeSelectionDialog);
-            _typeTable[166] = typeof(global::Magidesk.Presentation.ViewModels.OrderTypeSelectionViewModel);
-            _typeTable[167] = typeof(global::Magidesk.Domain.Entities.OrderType);
-            _typeTable[168] = typeof(global::Magidesk.Presentation.Views.PasswordEntryDialog);
-            _typeTable[169] = typeof(global::Magidesk.Presentation.Views.PaymentPage);
-            _typeTable[170] = typeof(global::Magidesk.Presentation.ViewModels.PaymentViewModel);
-            _typeTable[171] = typeof(global::Magidesk.Views.PaymentProcessWaitDialog);
-            _typeTable[172] = typeof(global::Magidesk.Presentation.ViewModels.PaymentProcessWaitViewModel);
-            _typeTable[173] = typeof(global::Magidesk.Presentation.Views.PrintPage);
-            _typeTable[174] = typeof(global::Magidesk.Presentation.ViewModels.PrintViewModel);
-            _typeTable[175] = typeof(global::Magidesk.Presentation.Views.PrintTemplatesPage);
-            _typeTable[176] = typeof(global::Magidesk.Presentation.ViewModels.PrintTemplatesViewModel);
-            _typeTable[177] = typeof(global::Magidesk.Presentation.Views.PurchaseOrdersPage);
-            _typeTable[178] = typeof(global::Magidesk.Presentation.ViewModels.PurchaseOrderViewModel);
-            _typeTable[179] = typeof(global::Magidesk.Presentation.Views.RoleManagementPage);
-            _typeTable[180] = typeof(global::Magidesk.Presentation.ViewModels.RoleManagementViewModel);
-            _typeTable[181] = typeof(global::Magidesk.Presentation.Views.SalesReportsPage);
-            _typeTable[182] = typeof(global::Magidesk.Presentation.ViewModels.SalesReportsViewModel);
-            _typeTable[183] = typeof(global::Magidesk.Presentation.Views.SettingsPage);
-            _typeTable[184] = typeof(global::Magidesk.Presentation.ViewModels.SettingsViewModel);
-            _typeTable[185] = typeof(global::Magidesk.Presentation.Views.SettlePage);
-            _typeTable[186] = typeof(global::Magidesk.Presentation.ViewModels.SettleViewModel);
-            _typeTable[187] = typeof(global::Magidesk.Presentation.Views.ShiftExplorerPage);
-            _typeTable[188] = typeof(global::Magidesk.Presentation.ViewModels.ShiftExplorerViewModel);
-            _typeTable[189] = typeof(global::Magidesk.Presentation.Views.SplitTicketDialog);
-            _typeTable[190] = typeof(global::Magidesk.Presentation.ViewModels.SplitTicketViewModel);
-            _typeTable[191] = typeof(global::Magidesk.Views.SwipeCardDialog);
-            _typeTable[192] = typeof(global::Magidesk.Presentation.ViewModels.SwipeCardViewModel);
-            _typeTable[193] = typeof(global::Magidesk.Presentation.Views.SwitchboardPage);
-            _typeTable[194] = typeof(global::Magidesk.Presentation.ViewModels.SwitchboardViewModel);
-            _typeTable[195] = typeof(global::Magidesk.Presentation.Views.SystemConfigPage);
-            _typeTable[196] = typeof(global::Magidesk.Presentation.ViewModels.SystemConfigViewModel);
-            _typeTable[197] = typeof(global::Magidesk.Presentation.Views.TableDesignerPage);
-            _typeTable[198] = typeof(global::Magidesk.Presentation.Views.TableDesignerTestPage);
-            _typeTable[199] = typeof(global::Magidesk.Presentation.Views.TableExplorerPage);
-            _typeTable[200] = typeof(global::Magidesk.Presentation.ViewModels.TableExplorerViewModel);
-            _typeTable[201] = typeof(global::Microsoft.UI.Xaml.Controls.Button);
-            _typeTable[202] = typeof(global::Magidesk.Presentation.Views.TableMapPage);
-            _typeTable[203] = typeof(global::Magidesk.Presentation.ViewModels.TableMapViewModel);
-            _typeTable[204] = typeof(global::Microsoft.UI.Xaml.Controls.WebView2);
-            _typeTable[205] = typeof(global::Microsoft.UI.Xaml.FrameworkElement);
-            _typeTable[206] = typeof(global::Microsoft.Web.WebView2.Core.CoreWebView2);
-            _typeTable[207] = typeof(global::System.Uri);
-            _typeTable[208] = typeof(global::Magidesk.Presentation.Views.TemplateEditorPage);
-            _typeTable[209] = typeof(global::Magidesk.Presentation.Views.TicketManagementPage);
-            _typeTable[210] = typeof(global::Magidesk.Presentation.ViewModels.TicketManagementViewModel);
-            _typeTable[211] = typeof(global::Magidesk.Presentation.Views.TicketPage);
-            _typeTable[212] = typeof(global::Magidesk.Presentation.ViewModels.TicketViewModel);
-            _typeTable[213] = typeof(global::Magidesk.Presentation.Views.UserManagementPage);
-            _typeTable[214] = typeof(global::Magidesk.Presentation.ViewModels.UserManagementViewModel);
-            _typeTable[215] = typeof(global::Magidesk.Presentation.Views.VendorsPage);
-            _typeTable[216] = typeof(global::Magidesk.Presentation.ViewModels.VendorManagementViewModel);
-            _typeTable[217] = typeof(global::Magidesk.Presentation.Views.VoidTicketDialog);
-            _typeTable[218] = typeof(global::Magidesk.Presentation.ViewModels.VoidTicketViewModel);
-            _typeTable[219] = typeof(global::Microsoft.UI.Xaml.Controls.TreeViewNode);
-            _typeTable[220] = typeof(global::System.Collections.Generic.IList<global::Microsoft.UI.Xaml.Controls.TreeViewNode>);
+            _typeTable[18] = typeof(global::Magidesk.Presentation.Converters.BooleanToStringConverter);
+            _typeTable[19] = typeof(global::Magidesk.Presentation.Converters.StringVisibilityConverter);
+            _typeTable[20] = typeof(global::Magidesk.Presentation.Converters.BoolToDesignModeTextConverter);
+            _typeTable[21] = typeof(global::Magidesk.Presentation.Converters.EnumToBoolConverter);
+            _typeTable[22] = typeof(global::Magidesk.Presentation.Converters.ShapeToCornerRadiusConverter);
+            _typeTable[23] = typeof(global::Magidesk.Presentation.Converters.TableToSelectionVisibilityConverter);
+            _typeTable[24] = typeof(global::Magidesk.Presentation.Converters.DateTimeToTimeConverter);
+            _typeTable[25] = typeof(global::Magidesk.Presentation.Converters.TableStatusToBrushConverter);
+            _typeTable[26] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationView);
+            _typeTable[27] = typeof(global::Microsoft.UI.Xaml.Controls.ContentControl);
+            _typeTable[28] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible);
+            _typeTable[29] = typeof(global::System.Enum);
+            _typeTable[30] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode);
+            _typeTable[31] = typeof(global::System.Collections.Generic.IList<global::System.Object>);
+            _typeTable[32] = typeof(global::Microsoft.UI.Xaml.Controls.AutoSuggestBox);
+            _typeTable[33] = typeof(global::System.Double);
+            _typeTable[34] = typeof(global::Microsoft.UI.Xaml.UIElement);
+            _typeTable[35] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode);
+            _typeTable[36] = typeof(global::Microsoft.UI.Xaml.DataTemplate);
+            _typeTable[37] = typeof(global::Microsoft.UI.Xaml.Style);
+            _typeTable[38] = typeof(global::Microsoft.UI.Xaml.Controls.StyleSelector);
+            _typeTable[39] = typeof(global::Microsoft.UI.Xaml.Controls.DataTemplateSelector);
+            _typeTable[40] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewOverflowLabelMode);
+            _typeTable[41] = typeof(global::System.String);
+            _typeTable[42] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewSelectionFollowsFocus);
+            _typeTable[43] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewShoulderNavigationEnabled);
+            _typeTable[44] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings);
+            _typeTable[45] = typeof(global::Microsoft.UI.Xaml.DependencyObject);
+            _typeTable[46] = typeof(global::Microsoft.UI.Xaml.Controls.InfoBar);
+            _typeTable[47] = typeof(global::Microsoft.UI.Xaml.Controls.Control);
+            _typeTable[48] = typeof(global::Microsoft.UI.Xaml.Controls.InfoBarSeverity);
+            _typeTable[49] = typeof(global::Microsoft.UI.Xaml.Controls.Primitives.ButtonBase);
+            _typeTable[50] = typeof(global::System.Windows.Input.ICommand);
+            _typeTable[51] = typeof(global::Microsoft.UI.Xaml.Controls.IconSource);
+            _typeTable[52] = typeof(global::Microsoft.UI.Xaml.Controls.InfoBarTemplateSettings);
+            _typeTable[53] = typeof(global::Microsoft.UI.Xaml.Controls.ProgressRing);
+            _typeTable[54] = typeof(global::Microsoft.UI.Xaml.Controls.ProgressRingTemplateSettings);
+            _typeTable[55] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewItem);
+            _typeTable[56] = typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewItemBase);
+            _typeTable[57] = typeof(global::Microsoft.UI.Xaml.Controls.IconElement);
+            _typeTable[58] = typeof(global::Microsoft.UI.Xaml.Controls.InfoBadge);
+            _typeTable[59] = typeof(global::Magidesk.Presentation.MainWindow);
+            _typeTable[60] = typeof(global::Microsoft.UI.Xaml.Window);
+            _typeTable[61] = typeof(global::Microsoft.UI.Xaml.Controls.ProgressBar);
+            _typeTable[62] = typeof(global::Microsoft.UI.Xaml.Controls.Primitives.RangeBase);
+            _typeTable[63] = typeof(global::Microsoft.UI.Xaml.Controls.ProgressBarTemplateSettings);
+            _typeTable[64] = typeof(global::Magidesk.Views.AuthorizationCaptureBatchDialog);
+            _typeTable[65] = typeof(global::Microsoft.UI.Xaml.Controls.ContentDialog);
+            _typeTable[66] = typeof(global::Magidesk.Presentation.ViewModels.AuthorizationCaptureBatchViewModel);
+            _typeTable[67] = typeof(global::Magidesk.Presentation.ViewModels.ViewModelBase);
+            _typeTable[68] = typeof(global::CommunityToolkit.Mvvm.ComponentModel.ObservableObject);
+            _typeTable[69] = typeof(global::Microsoft.UI.Xaml.Controls.RadioButtons);
+            _typeTable[70] = typeof(global::System.Int32);
+            _typeTable[71] = typeof(global::Magidesk.Views.AuthorizationCodeDialog);
+            _typeTable[72] = typeof(global::Magidesk.Presentation.ViewModels.AuthorizationCodeViewModel);
+            _typeTable[73] = typeof(global::Magidesk.Presentation.Views.BackOfficePage);
+            _typeTable[74] = typeof(global::Microsoft.UI.Xaml.Controls.Page);
+            _typeTable[75] = typeof(global::Microsoft.UI.Xaml.Controls.UserControl);
+            _typeTable[76] = typeof(global::Magidesk.Presentation.ViewModels.BackOfficeViewModel);
+            _typeTable[77] = typeof(global::Magidesk.Presentation.Views.CashDropManagementDialog);
+            _typeTable[78] = typeof(global::Magidesk.Presentation.ViewModels.CashDropManagementViewModel);
+            _typeTable[79] = typeof(global::Magidesk.Presentation.Views.CashEntryDialog);
+            _typeTable[80] = typeof(global::System.Decimal);
+            _typeTable[81] = typeof(global::Magidesk.Presentation.Views.CashSessionPage);
+            _typeTable[82] = typeof(global::Magidesk.Presentation.ViewModels.CashSessionViewModel);
+            _typeTable[83] = typeof(global::Microsoft.UI.Xaml.Controls.RadioButton);
+            _typeTable[84] = typeof(global::Microsoft.UI.Xaml.Controls.NumberBox);
+            _typeTable[85] = typeof(global::Windows.Globalization.NumberFormatting.INumberFormatter2);
+            _typeTable[86] = typeof(global::Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase);
+            _typeTable[87] = typeof(global::Microsoft.UI.Xaml.Media.SolidColorBrush);
+            _typeTable[88] = typeof(global::Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode);
+            _typeTable[89] = typeof(global::Microsoft.UI.Xaml.TextReadingOrder);
+            _typeTable[90] = typeof(global::Microsoft.UI.Xaml.Controls.NumberBoxValidationMode);
+            _typeTable[91] = typeof(global::Magidesk.Presentation.Views.Components.TableShapePalette);
+            _typeTable[92] = typeof(global::Magidesk.Presentation.ViewModels.TableDesignerViewModel);
+            _typeTable[93] = typeof(global::Magidesk.Presentation.Views.Components.VirtualizedTableCanvas);
+            _typeTable[94] = typeof(global::Magidesk.Views.Dialogs.AddOnSelectionDialog);
+            _typeTable[95] = typeof(global::Magidesk.ViewModels.Dialogs.AddOnSelectionViewModel);
+            _typeTable[96] = typeof(global::Magidesk.Presentation.Views.Dialogs.CashEntryDialog);
+            _typeTable[97] = typeof(global::Magidesk.Views.Dialogs.ComboSelectionDialog);
+            _typeTable[98] = typeof(global::Magidesk.ViewModels.Dialogs.ComboSelectionViewModel);
+            _typeTable[99] = typeof(global::Magidesk.Views.Dialogs.CookingInstructionDialog);
+            _typeTable[100] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.CookingInstructionViewModel);
+            _typeTable[101] = typeof(global::Magidesk.Views.Dialogs.CustomerSelectionDialog);
+            _typeTable[102] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.CustomerSelectionViewModel);
+            _typeTable[103] = typeof(global::Magidesk.Presentation.Views.Dialogs.GuestCountDialog);
+            _typeTable[104] = typeof(global::Magidesk.Presentation.ViewModels.GuestCountViewModel);
+            _typeTable[105] = typeof(global::Magidesk.Views.Dialogs.ItemSearchDialog);
+            _typeTable[106] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.ItemSearchViewModel);
+            _typeTable[107] = typeof(global::Magidesk.Views.Dialogs.MergeTicketsDialog);
+            _typeTable[108] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.MergeTicketsViewModel);
+            _typeTable[109] = typeof(global::Magidesk.Views.Dialogs.MiscItemDialog);
+            _typeTable[110] = typeof(global::Magidesk.ViewModels.MiscItemViewModel);
+            _typeTable[111] = typeof(global::Magidesk.Views.Dialogs.ModifierSelectionDialog);
+            _typeTable[112] = typeof(global::Magidesk.ViewModels.Dialogs.ModifierSelectionViewModel);
+            _typeTable[113] = typeof(global::Magidesk.Presentation.Views.Dialogs.NotesDialog);
+            _typeTable[114] = typeof(global::Magidesk.Views.Dialogs.PizzaModifierDialog);
+            _typeTable[115] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.PizzaModifierViewModel);
+            _typeTable[116] = typeof(global::Magidesk.Views.Dialogs.PriceEntryDialog);
+            _typeTable[117] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.PriceEntryViewModel);
+            _typeTable[118] = typeof(global::Magidesk.Views.QuantityDialog);
+            _typeTable[119] = typeof(global::Magidesk.Presentation.ViewModels.QuantityViewModel);
+            _typeTable[120] = typeof(global::Magidesk.Views.Dialogs.SeatSelectionDialog);
+            _typeTable[121] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.SeatSelectionViewModel);
+            _typeTable[122] = typeof(global::Magidesk.Presentation.Views.Dialogs.ShiftEndDialog);
+            _typeTable[123] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.ShiftEndViewModel);
+            _typeTable[124] = typeof(global::Magidesk.Presentation.Views.Dialogs.ShiftStartDialog);
+            _typeTable[125] = typeof(global::Magidesk.Presentation.ViewModels.ShiftStartViewModel);
+            _typeTable[126] = typeof(global::Magidesk.Views.Dialogs.SizeSelectionDialog);
+            _typeTable[127] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.SizeSelectionViewModel);
+            _typeTable[128] = typeof(global::Magidesk.Views.Dialogs.TableSelectionDialog);
+            _typeTable[129] = typeof(global::Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel);
+            _typeTable[130] = typeof(global::Magidesk.Views.Dialogs.TicketFeeDialog);
+            _typeTable[131] = typeof(global::Magidesk.ViewModels.TicketFeeViewModel);
+            _typeTable[132] = typeof(global::System.Action);
+            _typeTable[133] = typeof(global::System.MulticastDelegate);
+            _typeTable[134] = typeof(global::System.Delegate);
+            _typeTable[135] = typeof(global::Magidesk.Presentation.Views.DiscountTaxPage);
+            _typeTable[136] = typeof(global::Magidesk.Presentation.ViewModels.DiscountTaxViewModel);
+            _typeTable[137] = typeof(global::Magidesk.Presentation.Views.DrawerPullReportDialog);
+            _typeTable[138] = typeof(global::Magidesk.Presentation.ViewModels.DrawerPullReportViewModel);
+            _typeTable[139] = typeof(global::Magidesk.Presentation.Views.FloorManagementPage);
+            _typeTable[140] = typeof(global::Magidesk.Presentation.ViewModels.FloorManagementViewModel);
+            _typeTable[141] = typeof(global::Magidesk.Presentation.Views.GroupSettleTicketDialog);
+            _typeTable[142] = typeof(global::Magidesk.Presentation.ViewModels.GroupSettleTicketViewModel);
+            _typeTable[143] = typeof(global::Magidesk.Presentation.Views.GroupSettleTicketSelectionWindow);
+            _typeTable[144] = typeof(global::Magidesk.Presentation.ViewModels.GroupSettleTicketSelectionViewModel);
+            _typeTable[145] = typeof(global::Magidesk.Presentation.Views.InventoryPage);
+            _typeTable[146] = typeof(global::Magidesk.Presentation.ViewModels.InventoryViewModel);
+            _typeTable[147] = typeof(global::Magidesk.Presentation.Views.KitchenDisplayPage);
+            _typeTable[148] = typeof(global::Magidesk.Presentation.ViewModels.KitchenDisplayViewModel);
+            _typeTable[149] = typeof(global::Magidesk.Presentation.Views.LoginPage);
+            _typeTable[150] = typeof(global::Magidesk.Presentation.ViewModels.LoginViewModel);
+            _typeTable[151] = typeof(global::Magidesk.Presentation.Views.MainPage);
+            _typeTable[152] = typeof(global::Magidesk.Presentation.Views.ManagerFunctionsDialog);
+            _typeTable[153] = typeof(global::Magidesk.Presentation.ViewModels.ManagerFunctionsViewModel);
+            _typeTable[154] = typeof(global::Magidesk.Presentation.Views.MenuEditorPage);
+            _typeTable[155] = typeof(global::Magidesk.Presentation.ViewModels.MenuEditorViewModel);
+            _typeTable[156] = typeof(global::Magidesk.Presentation.Views.ModifierEditorPage);
+            _typeTable[157] = typeof(global::Magidesk.Presentation.ViewModels.ModifierEditorViewModel);
+            _typeTable[158] = typeof(global::Magidesk.Presentation.Views.ModifierSelectionDialog);
+            _typeTable[159] = typeof(global::Magidesk.Presentation.ViewModels.ModifierSelectionViewModel);
+            _typeTable[160] = typeof(global::Magidesk.Presentation.Views.OpenTicketsListDialog);
+            _typeTable[161] = typeof(global::Magidesk.Presentation.ViewModels.OpenTicketsListViewModel);
+            _typeTable[162] = typeof(global::Magidesk.Presentation.Views.OrderEntryPage);
+            _typeTable[163] = typeof(global::Magidesk.Presentation.ViewModels.OrderEntryViewModel);
+            _typeTable[164] = typeof(global::Magidesk.Presentation.Views.OrderTypeExplorerPage);
+            _typeTable[165] = typeof(global::Magidesk.Presentation.ViewModels.OrderTypeExplorerViewModel);
+            _typeTable[166] = typeof(global::Magidesk.Presentation.Views.OrderTypeSelectionDialog);
+            _typeTable[167] = typeof(global::Magidesk.Presentation.ViewModels.OrderTypeSelectionViewModel);
+            _typeTable[168] = typeof(global::Magidesk.Domain.Entities.OrderType);
+            _typeTable[169] = typeof(global::Magidesk.Presentation.Views.PasswordEntryDialog);
+            _typeTable[170] = typeof(global::Magidesk.Presentation.Views.PaymentPage);
+            _typeTable[171] = typeof(global::Magidesk.Presentation.ViewModels.PaymentViewModel);
+            _typeTable[172] = typeof(global::Magidesk.Views.PaymentProcessWaitDialog);
+            _typeTable[173] = typeof(global::Magidesk.Presentation.ViewModels.PaymentProcessWaitViewModel);
+            _typeTable[174] = typeof(global::Magidesk.Presentation.Views.PrintPage);
+            _typeTable[175] = typeof(global::Magidesk.Presentation.ViewModels.PrintViewModel);
+            _typeTable[176] = typeof(global::Magidesk.Presentation.Views.PrintTemplatesPage);
+            _typeTable[177] = typeof(global::Magidesk.Presentation.ViewModels.PrintTemplatesViewModel);
+            _typeTable[178] = typeof(global::Magidesk.Presentation.Views.PurchaseOrdersPage);
+            _typeTable[179] = typeof(global::Magidesk.Presentation.ViewModels.PurchaseOrderViewModel);
+            _typeTable[180] = typeof(global::Magidesk.Presentation.Views.RoleManagementPage);
+            _typeTable[181] = typeof(global::Magidesk.Presentation.ViewModels.RoleManagementViewModel);
+            _typeTable[182] = typeof(global::Magidesk.Presentation.Views.SalesReportsPage);
+            _typeTable[183] = typeof(global::Magidesk.Presentation.ViewModels.SalesReportsViewModel);
+            _typeTable[184] = typeof(global::Magidesk.Presentation.Views.SettingsPage);
+            _typeTable[185] = typeof(global::Magidesk.Presentation.ViewModels.SettingsViewModel);
+            _typeTable[186] = typeof(global::Magidesk.Presentation.Views.SettlePage);
+            _typeTable[187] = typeof(global::Magidesk.Presentation.ViewModels.SettleViewModel);
+            _typeTable[188] = typeof(global::Magidesk.Presentation.Views.ShiftExplorerPage);
+            _typeTable[189] = typeof(global::Magidesk.Presentation.ViewModels.ShiftExplorerViewModel);
+            _typeTable[190] = typeof(global::Magidesk.Presentation.Views.SplitTicketDialog);
+            _typeTable[191] = typeof(global::Magidesk.Presentation.ViewModels.SplitTicketViewModel);
+            _typeTable[192] = typeof(global::Magidesk.Views.SwipeCardDialog);
+            _typeTable[193] = typeof(global::Magidesk.Presentation.ViewModels.SwipeCardViewModel);
+            _typeTable[194] = typeof(global::Magidesk.Presentation.Views.SwitchboardPage);
+            _typeTable[195] = typeof(global::Magidesk.Presentation.ViewModels.SwitchboardViewModel);
+            _typeTable[196] = typeof(global::Magidesk.Presentation.Views.SystemConfigPage);
+            _typeTable[197] = typeof(global::Magidesk.Presentation.ViewModels.SystemConfigViewModel);
+            _typeTable[198] = typeof(global::Magidesk.Presentation.Views.TableDesignerPage);
+            _typeTable[199] = typeof(global::Magidesk.Presentation.Views.TableDesignerTestPage);
+            _typeTable[200] = typeof(global::Magidesk.Presentation.Views.TableExplorerPage);
+            _typeTable[201] = typeof(global::Magidesk.Presentation.ViewModels.TableExplorerViewModel);
+            _typeTable[202] = typeof(global::Microsoft.UI.Xaml.Controls.Button);
+            _typeTable[203] = typeof(global::Magidesk.Presentation.Views.TableMapPage);
+            _typeTable[204] = typeof(global::Magidesk.Presentation.ViewModels.TableMapViewModel);
+            _typeTable[205] = typeof(global::Microsoft.UI.Xaml.Controls.WebView2);
+            _typeTable[206] = typeof(global::Microsoft.UI.Xaml.FrameworkElement);
+            _typeTable[207] = typeof(global::Microsoft.Web.WebView2.Core.CoreWebView2);
+            _typeTable[208] = typeof(global::System.Uri);
+            _typeTable[209] = typeof(global::Magidesk.Presentation.Views.TemplateEditorPage);
+            _typeTable[210] = typeof(global::Magidesk.Presentation.ViewModels.TemplateEditorViewModel);
+            _typeTable[211] = typeof(global::Magidesk.Presentation.Views.TicketManagementPage);
+            _typeTable[212] = typeof(global::Magidesk.Presentation.ViewModels.TicketManagementViewModel);
+            _typeTable[213] = typeof(global::Magidesk.Presentation.Views.TicketPage);
+            _typeTable[214] = typeof(global::Magidesk.Presentation.ViewModels.TicketViewModel);
+            _typeTable[215] = typeof(global::Magidesk.Presentation.Views.UserManagementPage);
+            _typeTable[216] = typeof(global::Magidesk.Presentation.ViewModels.UserManagementViewModel);
+            _typeTable[217] = typeof(global::Magidesk.Presentation.Views.VendorsPage);
+            _typeTable[218] = typeof(global::Magidesk.Presentation.ViewModels.VendorManagementViewModel);
+            _typeTable[219] = typeof(global::Magidesk.Presentation.Views.VoidTicketDialog);
+            _typeTable[220] = typeof(global::Magidesk.Presentation.ViewModels.VoidTicketViewModel);
+            _typeTable[221] = typeof(global::Microsoft.UI.Xaml.Controls.TreeViewNode);
+            _typeTable[222] = typeof(global::System.Collections.Generic.IList<global::Microsoft.UI.Xaml.Controls.TreeViewNode>);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -717,98 +721,99 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
         private object Activate_15_IntToDoubleConverter() { return new global::Magidesk.Presentation.Converters.IntToDoubleConverter(); }
         private object Activate_16_CollectionEmptyToVisibilityConverter() { return new global::Magidesk.Presentation.Converters.CollectionEmptyToVisibilityConverter(); }
         private object Activate_17_BooleanToVisibilityConverter() { return new global::Magidesk.Presentation.Converters.BooleanToVisibilityConverter(); }
-        private object Activate_18_StringVisibilityConverter() { return new global::Magidesk.Presentation.Converters.StringVisibilityConverter(); }
-        private object Activate_19_BoolToDesignModeTextConverter() { return new global::Magidesk.Presentation.Converters.BoolToDesignModeTextConverter(); }
-        private object Activate_20_EnumToBoolConverter() { return new global::Magidesk.Presentation.Converters.EnumToBoolConverter(); }
-        private object Activate_21_ShapeToCornerRadiusConverter() { return new global::Magidesk.Presentation.Converters.ShapeToCornerRadiusConverter(); }
-        private object Activate_22_TableToSelectionVisibilityConverter() { return new global::Magidesk.Presentation.Converters.TableToSelectionVisibilityConverter(); }
-        private object Activate_23_DateTimeToTimeConverter() { return new global::Magidesk.Presentation.Converters.DateTimeToTimeConverter(); }
-        private object Activate_24_TableStatusToBrushConverter() { return new global::Magidesk.Presentation.Converters.TableStatusToBrushConverter(); }
-        private object Activate_25_NavigationView() { return new global::Microsoft.UI.Xaml.Controls.NavigationView(); }
-        private object Activate_43_NavigationViewTemplateSettings() { return new global::Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings(); }
-        private object Activate_45_ProgressRing() { return new global::Microsoft.UI.Xaml.Controls.ProgressRing(); }
-        private object Activate_48_NavigationViewItem() { return new global::Microsoft.UI.Xaml.Controls.NavigationViewItem(); }
-        private object Activate_51_InfoBadge() { return new global::Microsoft.UI.Xaml.Controls.InfoBadge(); }
-        private object Activate_52_MainWindow() { return new global::Magidesk.Presentation.MainWindow(); }
-        private object Activate_54_ProgressBar() { return new global::Microsoft.UI.Xaml.Controls.ProgressBar(); }
-        private object Activate_57_AuthorizationCaptureBatchDialog() { return new global::Magidesk.Views.AuthorizationCaptureBatchDialog(); }
-        private object Activate_59_AuthorizationCaptureBatchViewModel() { return new global::Magidesk.Presentation.ViewModels.AuthorizationCaptureBatchViewModel(); }
-        private object Activate_62_RadioButtons() { return new global::Microsoft.UI.Xaml.Controls.RadioButtons(); }
-        private object Activate_64_AuthorizationCodeDialog() { return new global::Magidesk.Views.AuthorizationCodeDialog(); }
-        private object Activate_65_AuthorizationCodeViewModel() { return new global::Magidesk.Presentation.ViewModels.AuthorizationCodeViewModel(); }
-        private object Activate_66_BackOfficePage() { return new global::Magidesk.Presentation.Views.BackOfficePage(); }
-        private object Activate_70_CashDropManagementDialog() { return new global::Magidesk.Presentation.Views.CashDropManagementDialog(); }
-        private object Activate_74_InfoBar() { return new global::Microsoft.UI.Xaml.Controls.InfoBar(); }
-        private object Activate_79_InfoBarTemplateSettings() { return new global::Microsoft.UI.Xaml.Controls.InfoBarTemplateSettings(); }
-        private object Activate_80_CashSessionPage() { return new global::Magidesk.Presentation.Views.CashSessionPage(); }
-        private object Activate_83_NumberBox() { return new global::Microsoft.UI.Xaml.Controls.NumberBox(); }
-        private object Activate_90_TableShapePalette() { return new global::Magidesk.Presentation.Views.Components.TableShapePalette(); }
-        private object Activate_92_VirtualizedTableCanvas() { return new global::Magidesk.Presentation.Views.Components.VirtualizedTableCanvas(); }
-        private object Activate_98_CookingInstructionDialog() { return new global::Magidesk.Views.Dialogs.CookingInstructionDialog(); }
-        private object Activate_100_CustomerSelectionDialog() { return new global::Magidesk.Views.Dialogs.CustomerSelectionDialog(); }
-        private object Activate_101_CustomerSelectionViewModel() { return new global::Magidesk.Presentation.ViewModels.Dialogs.CustomerSelectionViewModel(); }
-        private object Activate_103_GuestCountViewModel() { return new global::Magidesk.Presentation.ViewModels.GuestCountViewModel(); }
-        private object Activate_104_ItemSearchDialog() { return new global::Magidesk.Views.Dialogs.ItemSearchDialog(); }
-        private object Activate_106_MergeTicketsDialog() { return new global::Magidesk.Views.Dialogs.MergeTicketsDialog(); }
-        private object Activate_108_MiscItemDialog() { return new global::Magidesk.Views.Dialogs.MiscItemDialog(); }
-        private object Activate_109_MiscItemViewModel() { return new global::Magidesk.ViewModels.MiscItemViewModel(); }
-        private object Activate_113_PizzaModifierDialog() { return new global::Magidesk.Views.Dialogs.PizzaModifierDialog(); }
-        private object Activate_115_PriceEntryDialog() { return new global::Magidesk.Views.Dialogs.PriceEntryDialog(); }
-        private object Activate_117_QuantityDialog() { return new global::Magidesk.Views.QuantityDialog(); }
-        private object Activate_118_QuantityViewModel() { return new global::Magidesk.Presentation.ViewModels.QuantityViewModel(); }
-        private object Activate_119_SeatSelectionDialog() { return new global::Magidesk.Views.Dialogs.SeatSelectionDialog(); }
-        private object Activate_120_SeatSelectionViewModel() { return new global::Magidesk.Presentation.ViewModels.Dialogs.SeatSelectionViewModel(); }
-        private object Activate_123_ShiftStartDialog() { return new global::Magidesk.Presentation.Views.Dialogs.ShiftStartDialog(); }
-        private object Activate_125_SizeSelectionDialog() { return new global::Magidesk.Views.Dialogs.SizeSelectionDialog(); }
-        private object Activate_127_TableSelectionDialog() { return new global::Magidesk.Views.Dialogs.TableSelectionDialog(); }
-        private object Activate_129_TicketFeeDialog() { return new global::Magidesk.Views.Dialogs.TicketFeeDialog(); }
-        private object Activate_130_TicketFeeViewModel() { return new global::Magidesk.ViewModels.TicketFeeViewModel(); }
-        private object Activate_134_DiscountTaxPage() { return new global::Magidesk.Presentation.Views.DiscountTaxPage(); }
-        private object Activate_136_DrawerPullReportDialog() { return new global::Magidesk.Presentation.Views.DrawerPullReportDialog(); }
-        private object Activate_138_FloorManagementPage() { return new global::Magidesk.Presentation.Views.FloorManagementPage(); }
-        private object Activate_140_GroupSettleTicketDialog() { return new global::Magidesk.Presentation.Views.GroupSettleTicketDialog(); }
-        private object Activate_142_GroupSettleTicketSelectionWindow() { return new global::Magidesk.Presentation.Views.GroupSettleTicketSelectionWindow(); }
-        private object Activate_143_GroupSettleTicketSelectionViewModel() { return new global::Magidesk.Presentation.ViewModels.GroupSettleTicketSelectionViewModel(); }
-        private object Activate_144_InventoryPage() { return new global::Magidesk.Presentation.Views.InventoryPage(); }
-        private object Activate_146_KitchenDisplayPage() { return new global::Magidesk.Presentation.Views.KitchenDisplayPage(); }
-        private object Activate_148_LoginPage() { return new global::Magidesk.Presentation.Views.LoginPage(); }
-        private object Activate_150_MainPage() { return new global::Magidesk.Presentation.Views.MainPage(); }
-        private object Activate_151_ManagerFunctionsDialog() { return new global::Magidesk.Presentation.Views.ManagerFunctionsDialog(); }
-        private object Activate_153_MenuEditorPage() { return new global::Magidesk.Presentation.Views.MenuEditorPage(); }
-        private object Activate_155_ModifierEditorPage() { return new global::Magidesk.Presentation.Views.ModifierEditorPage(); }
-        private object Activate_159_OpenTicketsListDialog() { return new global::Magidesk.Presentation.Views.OpenTicketsListDialog(); }
-        private object Activate_161_OrderEntryPage() { return new global::Magidesk.Presentation.Views.OrderEntryPage(); }
-        private object Activate_163_OrderTypeExplorerPage() { return new global::Magidesk.Presentation.Views.OrderTypeExplorerPage(); }
-        private object Activate_165_OrderTypeSelectionDialog() { return new global::Magidesk.Presentation.Views.OrderTypeSelectionDialog(); }
-        private object Activate_168_PasswordEntryDialog() { return new global::Magidesk.Presentation.Views.PasswordEntryDialog(); }
-        private object Activate_169_PaymentPage() { return new global::Magidesk.Presentation.Views.PaymentPage(); }
-        private object Activate_171_PaymentProcessWaitDialog() { return new global::Magidesk.Views.PaymentProcessWaitDialog(); }
-        private object Activate_172_PaymentProcessWaitViewModel() { return new global::Magidesk.Presentation.ViewModels.PaymentProcessWaitViewModel(); }
-        private object Activate_173_PrintPage() { return new global::Magidesk.Presentation.Views.PrintPage(); }
-        private object Activate_175_PrintTemplatesPage() { return new global::Magidesk.Presentation.Views.PrintTemplatesPage(); }
-        private object Activate_177_PurchaseOrdersPage() { return new global::Magidesk.Presentation.Views.PurchaseOrdersPage(); }
-        private object Activate_179_RoleManagementPage() { return new global::Magidesk.Presentation.Views.RoleManagementPage(); }
-        private object Activate_181_SalesReportsPage() { return new global::Magidesk.Presentation.Views.SalesReportsPage(); }
-        private object Activate_183_SettingsPage() { return new global::Magidesk.Presentation.Views.SettingsPage(); }
-        private object Activate_185_SettlePage() { return new global::Magidesk.Presentation.Views.SettlePage(); }
-        private object Activate_187_ShiftExplorerPage() { return new global::Magidesk.Presentation.Views.ShiftExplorerPage(); }
-        private object Activate_189_SplitTicketDialog() { return new global::Magidesk.Presentation.Views.SplitTicketDialog(); }
-        private object Activate_191_SwipeCardDialog() { return new global::Magidesk.Views.SwipeCardDialog(); }
-        private object Activate_192_SwipeCardViewModel() { return new global::Magidesk.Presentation.ViewModels.SwipeCardViewModel(); }
-        private object Activate_193_SwitchboardPage() { return new global::Magidesk.Presentation.Views.SwitchboardPage(); }
-        private object Activate_195_SystemConfigPage() { return new global::Magidesk.Presentation.Views.SystemConfigPage(); }
-        private object Activate_197_TableDesignerPage() { return new global::Magidesk.Presentation.Views.TableDesignerPage(); }
-        private object Activate_198_TableDesignerTestPage() { return new global::Magidesk.Presentation.Views.TableDesignerTestPage(); }
-        private object Activate_199_TableExplorerPage() { return new global::Magidesk.Presentation.Views.TableExplorerPage(); }
-        private object Activate_202_TableMapPage() { return new global::Magidesk.Presentation.Views.TableMapPage(); }
-        private object Activate_204_WebView2() { return new global::Microsoft.UI.Xaml.Controls.WebView2(); }
-        private object Activate_208_TemplateEditorPage() { return new global::Magidesk.Presentation.Views.TemplateEditorPage(); }
-        private object Activate_209_TicketManagementPage() { return new global::Magidesk.Presentation.Views.TicketManagementPage(); }
-        private object Activate_211_TicketPage() { return new global::Magidesk.Presentation.Views.TicketPage(); }
-        private object Activate_213_UserManagementPage() { return new global::Magidesk.Presentation.Views.UserManagementPage(); }
-        private object Activate_215_VendorsPage() { return new global::Magidesk.Presentation.Views.VendorsPage(); }
-        private object Activate_217_VoidTicketDialog() { return new global::Magidesk.Presentation.Views.VoidTicketDialog(); }
-        private object Activate_219_TreeViewNode() { return new global::Microsoft.UI.Xaml.Controls.TreeViewNode(); }
+        private object Activate_18_BooleanToStringConverter() { return new global::Magidesk.Presentation.Converters.BooleanToStringConverter(); }
+        private object Activate_19_StringVisibilityConverter() { return new global::Magidesk.Presentation.Converters.StringVisibilityConverter(); }
+        private object Activate_20_BoolToDesignModeTextConverter() { return new global::Magidesk.Presentation.Converters.BoolToDesignModeTextConverter(); }
+        private object Activate_21_EnumToBoolConverter() { return new global::Magidesk.Presentation.Converters.EnumToBoolConverter(); }
+        private object Activate_22_ShapeToCornerRadiusConverter() { return new global::Magidesk.Presentation.Converters.ShapeToCornerRadiusConverter(); }
+        private object Activate_23_TableToSelectionVisibilityConverter() { return new global::Magidesk.Presentation.Converters.TableToSelectionVisibilityConverter(); }
+        private object Activate_24_DateTimeToTimeConverter() { return new global::Magidesk.Presentation.Converters.DateTimeToTimeConverter(); }
+        private object Activate_25_TableStatusToBrushConverter() { return new global::Magidesk.Presentation.Converters.TableStatusToBrushConverter(); }
+        private object Activate_26_NavigationView() { return new global::Microsoft.UI.Xaml.Controls.NavigationView(); }
+        private object Activate_44_NavigationViewTemplateSettings() { return new global::Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings(); }
+        private object Activate_46_InfoBar() { return new global::Microsoft.UI.Xaml.Controls.InfoBar(); }
+        private object Activate_52_InfoBarTemplateSettings() { return new global::Microsoft.UI.Xaml.Controls.InfoBarTemplateSettings(); }
+        private object Activate_53_ProgressRing() { return new global::Microsoft.UI.Xaml.Controls.ProgressRing(); }
+        private object Activate_55_NavigationViewItem() { return new global::Microsoft.UI.Xaml.Controls.NavigationViewItem(); }
+        private object Activate_58_InfoBadge() { return new global::Microsoft.UI.Xaml.Controls.InfoBadge(); }
+        private object Activate_59_MainWindow() { return new global::Magidesk.Presentation.MainWindow(); }
+        private object Activate_61_ProgressBar() { return new global::Microsoft.UI.Xaml.Controls.ProgressBar(); }
+        private object Activate_64_AuthorizationCaptureBatchDialog() { return new global::Magidesk.Views.AuthorizationCaptureBatchDialog(); }
+        private object Activate_66_AuthorizationCaptureBatchViewModel() { return new global::Magidesk.Presentation.ViewModels.AuthorizationCaptureBatchViewModel(); }
+        private object Activate_69_RadioButtons() { return new global::Microsoft.UI.Xaml.Controls.RadioButtons(); }
+        private object Activate_71_AuthorizationCodeDialog() { return new global::Magidesk.Views.AuthorizationCodeDialog(); }
+        private object Activate_72_AuthorizationCodeViewModel() { return new global::Magidesk.Presentation.ViewModels.AuthorizationCodeViewModel(); }
+        private object Activate_73_BackOfficePage() { return new global::Magidesk.Presentation.Views.BackOfficePage(); }
+        private object Activate_77_CashDropManagementDialog() { return new global::Magidesk.Presentation.Views.CashDropManagementDialog(); }
+        private object Activate_81_CashSessionPage() { return new global::Magidesk.Presentation.Views.CashSessionPage(); }
+        private object Activate_84_NumberBox() { return new global::Microsoft.UI.Xaml.Controls.NumberBox(); }
+        private object Activate_91_TableShapePalette() { return new global::Magidesk.Presentation.Views.Components.TableShapePalette(); }
+        private object Activate_93_VirtualizedTableCanvas() { return new global::Magidesk.Presentation.Views.Components.VirtualizedTableCanvas(); }
+        private object Activate_99_CookingInstructionDialog() { return new global::Magidesk.Views.Dialogs.CookingInstructionDialog(); }
+        private object Activate_101_CustomerSelectionDialog() { return new global::Magidesk.Views.Dialogs.CustomerSelectionDialog(); }
+        private object Activate_102_CustomerSelectionViewModel() { return new global::Magidesk.Presentation.ViewModels.Dialogs.CustomerSelectionViewModel(); }
+        private object Activate_104_GuestCountViewModel() { return new global::Magidesk.Presentation.ViewModels.GuestCountViewModel(); }
+        private object Activate_105_ItemSearchDialog() { return new global::Magidesk.Views.Dialogs.ItemSearchDialog(); }
+        private object Activate_107_MergeTicketsDialog() { return new global::Magidesk.Views.Dialogs.MergeTicketsDialog(); }
+        private object Activate_109_MiscItemDialog() { return new global::Magidesk.Views.Dialogs.MiscItemDialog(); }
+        private object Activate_110_MiscItemViewModel() { return new global::Magidesk.ViewModels.MiscItemViewModel(); }
+        private object Activate_114_PizzaModifierDialog() { return new global::Magidesk.Views.Dialogs.PizzaModifierDialog(); }
+        private object Activate_116_PriceEntryDialog() { return new global::Magidesk.Views.Dialogs.PriceEntryDialog(); }
+        private object Activate_118_QuantityDialog() { return new global::Magidesk.Views.QuantityDialog(); }
+        private object Activate_119_QuantityViewModel() { return new global::Magidesk.Presentation.ViewModels.QuantityViewModel(); }
+        private object Activate_120_SeatSelectionDialog() { return new global::Magidesk.Views.Dialogs.SeatSelectionDialog(); }
+        private object Activate_121_SeatSelectionViewModel() { return new global::Magidesk.Presentation.ViewModels.Dialogs.SeatSelectionViewModel(); }
+        private object Activate_124_ShiftStartDialog() { return new global::Magidesk.Presentation.Views.Dialogs.ShiftStartDialog(); }
+        private object Activate_126_SizeSelectionDialog() { return new global::Magidesk.Views.Dialogs.SizeSelectionDialog(); }
+        private object Activate_128_TableSelectionDialog() { return new global::Magidesk.Views.Dialogs.TableSelectionDialog(); }
+        private object Activate_130_TicketFeeDialog() { return new global::Magidesk.Views.Dialogs.TicketFeeDialog(); }
+        private object Activate_131_TicketFeeViewModel() { return new global::Magidesk.ViewModels.TicketFeeViewModel(); }
+        private object Activate_135_DiscountTaxPage() { return new global::Magidesk.Presentation.Views.DiscountTaxPage(); }
+        private object Activate_137_DrawerPullReportDialog() { return new global::Magidesk.Presentation.Views.DrawerPullReportDialog(); }
+        private object Activate_139_FloorManagementPage() { return new global::Magidesk.Presentation.Views.FloorManagementPage(); }
+        private object Activate_141_GroupSettleTicketDialog() { return new global::Magidesk.Presentation.Views.GroupSettleTicketDialog(); }
+        private object Activate_143_GroupSettleTicketSelectionWindow() { return new global::Magidesk.Presentation.Views.GroupSettleTicketSelectionWindow(); }
+        private object Activate_144_GroupSettleTicketSelectionViewModel() { return new global::Magidesk.Presentation.ViewModels.GroupSettleTicketSelectionViewModel(); }
+        private object Activate_145_InventoryPage() { return new global::Magidesk.Presentation.Views.InventoryPage(); }
+        private object Activate_147_KitchenDisplayPage() { return new global::Magidesk.Presentation.Views.KitchenDisplayPage(); }
+        private object Activate_149_LoginPage() { return new global::Magidesk.Presentation.Views.LoginPage(); }
+        private object Activate_151_MainPage() { return new global::Magidesk.Presentation.Views.MainPage(); }
+        private object Activate_152_ManagerFunctionsDialog() { return new global::Magidesk.Presentation.Views.ManagerFunctionsDialog(); }
+        private object Activate_154_MenuEditorPage() { return new global::Magidesk.Presentation.Views.MenuEditorPage(); }
+        private object Activate_156_ModifierEditorPage() { return new global::Magidesk.Presentation.Views.ModifierEditorPage(); }
+        private object Activate_160_OpenTicketsListDialog() { return new global::Magidesk.Presentation.Views.OpenTicketsListDialog(); }
+        private object Activate_162_OrderEntryPage() { return new global::Magidesk.Presentation.Views.OrderEntryPage(); }
+        private object Activate_164_OrderTypeExplorerPage() { return new global::Magidesk.Presentation.Views.OrderTypeExplorerPage(); }
+        private object Activate_166_OrderTypeSelectionDialog() { return new global::Magidesk.Presentation.Views.OrderTypeSelectionDialog(); }
+        private object Activate_169_PasswordEntryDialog() { return new global::Magidesk.Presentation.Views.PasswordEntryDialog(); }
+        private object Activate_170_PaymentPage() { return new global::Magidesk.Presentation.Views.PaymentPage(); }
+        private object Activate_172_PaymentProcessWaitDialog() { return new global::Magidesk.Views.PaymentProcessWaitDialog(); }
+        private object Activate_173_PaymentProcessWaitViewModel() { return new global::Magidesk.Presentation.ViewModels.PaymentProcessWaitViewModel(); }
+        private object Activate_174_PrintPage() { return new global::Magidesk.Presentation.Views.PrintPage(); }
+        private object Activate_176_PrintTemplatesPage() { return new global::Magidesk.Presentation.Views.PrintTemplatesPage(); }
+        private object Activate_178_PurchaseOrdersPage() { return new global::Magidesk.Presentation.Views.PurchaseOrdersPage(); }
+        private object Activate_180_RoleManagementPage() { return new global::Magidesk.Presentation.Views.RoleManagementPage(); }
+        private object Activate_182_SalesReportsPage() { return new global::Magidesk.Presentation.Views.SalesReportsPage(); }
+        private object Activate_184_SettingsPage() { return new global::Magidesk.Presentation.Views.SettingsPage(); }
+        private object Activate_186_SettlePage() { return new global::Magidesk.Presentation.Views.SettlePage(); }
+        private object Activate_188_ShiftExplorerPage() { return new global::Magidesk.Presentation.Views.ShiftExplorerPage(); }
+        private object Activate_190_SplitTicketDialog() { return new global::Magidesk.Presentation.Views.SplitTicketDialog(); }
+        private object Activate_192_SwipeCardDialog() { return new global::Magidesk.Views.SwipeCardDialog(); }
+        private object Activate_193_SwipeCardViewModel() { return new global::Magidesk.Presentation.ViewModels.SwipeCardViewModel(); }
+        private object Activate_194_SwitchboardPage() { return new global::Magidesk.Presentation.Views.SwitchboardPage(); }
+        private object Activate_196_SystemConfigPage() { return new global::Magidesk.Presentation.Views.SystemConfigPage(); }
+        private object Activate_198_TableDesignerPage() { return new global::Magidesk.Presentation.Views.TableDesignerPage(); }
+        private object Activate_199_TableDesignerTestPage() { return new global::Magidesk.Presentation.Views.TableDesignerTestPage(); }
+        private object Activate_200_TableExplorerPage() { return new global::Magidesk.Presentation.Views.TableExplorerPage(); }
+        private object Activate_203_TableMapPage() { return new global::Magidesk.Presentation.Views.TableMapPage(); }
+        private object Activate_205_WebView2() { return new global::Microsoft.UI.Xaml.Controls.WebView2(); }
+        private object Activate_209_TemplateEditorPage() { return new global::Magidesk.Presentation.Views.TemplateEditorPage(); }
+        private object Activate_211_TicketManagementPage() { return new global::Magidesk.Presentation.Views.TicketManagementPage(); }
+        private object Activate_213_TicketPage() { return new global::Magidesk.Presentation.Views.TicketPage(); }
+        private object Activate_215_UserManagementPage() { return new global::Magidesk.Presentation.Views.UserManagementPage(); }
+        private object Activate_217_VendorsPage() { return new global::Magidesk.Presentation.Views.VendorsPage(); }
+        private object Activate_219_VoidTicketDialog() { return new global::Magidesk.Presentation.Views.VoidTicketDialog(); }
+        private object Activate_221_TreeViewNode() { return new global::Microsoft.UI.Xaml.Controls.TreeViewNode(); }
         private void StaticInitializer_0_XamlControlsResources() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.XamlControlsResources).TypeHandle);
         private void StaticInitializer_4_Color() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Windows.UI.Color).TypeHandle);
         private void StaticInitializer_5_ValueType() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.ValueType).TypeHandle);
@@ -824,183 +829,185 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
         private void StaticInitializer_15_IntToDoubleConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.IntToDoubleConverter).TypeHandle);
         private void StaticInitializer_16_CollectionEmptyToVisibilityConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.CollectionEmptyToVisibilityConverter).TypeHandle);
         private void StaticInitializer_17_BooleanToVisibilityConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.BooleanToVisibilityConverter).TypeHandle);
-        private void StaticInitializer_18_StringVisibilityConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.StringVisibilityConverter).TypeHandle);
-        private void StaticInitializer_19_BoolToDesignModeTextConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.BoolToDesignModeTextConverter).TypeHandle);
-        private void StaticInitializer_20_EnumToBoolConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.EnumToBoolConverter).TypeHandle);
-        private void StaticInitializer_21_ShapeToCornerRadiusConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.ShapeToCornerRadiusConverter).TypeHandle);
-        private void StaticInitializer_22_TableToSelectionVisibilityConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.TableToSelectionVisibilityConverter).TypeHandle);
-        private void StaticInitializer_23_DateTimeToTimeConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.DateTimeToTimeConverter).TypeHandle);
-        private void StaticInitializer_24_TableStatusToBrushConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.TableStatusToBrushConverter).TypeHandle);
-        private void StaticInitializer_25_NavigationView() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationView).TypeHandle);
-        private void StaticInitializer_27_NavigationViewBackButtonVisible() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible).TypeHandle);
-        private void StaticInitializer_28_Enum() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.Enum).TypeHandle);
-        private void StaticInitializer_29_NavigationViewPaneDisplayMode() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode).TypeHandle);
-        private void StaticInitializer_30_IList() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.Collections.Generic.IList<global::System.Object>).TypeHandle);
-        private void StaticInitializer_34_NavigationViewDisplayMode() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode).TypeHandle);
-        private void StaticInitializer_39_NavigationViewOverflowLabelMode() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewOverflowLabelMode).TypeHandle);
-        private void StaticInitializer_41_NavigationViewSelectionFollowsFocus() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewSelectionFollowsFocus).TypeHandle);
-        private void StaticInitializer_42_NavigationViewShoulderNavigationEnabled() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewShoulderNavigationEnabled).TypeHandle);
-        private void StaticInitializer_43_NavigationViewTemplateSettings() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings).TypeHandle);
-        private void StaticInitializer_45_ProgressRing() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.ProgressRing).TypeHandle);
-        private void StaticInitializer_47_ProgressRingTemplateSettings() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.ProgressRingTemplateSettings).TypeHandle);
-        private void StaticInitializer_48_NavigationViewItem() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewItem).TypeHandle);
-        private void StaticInitializer_49_NavigationViewItemBase() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewItemBase).TypeHandle);
-        private void StaticInitializer_51_InfoBadge() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.InfoBadge).TypeHandle);
-        private void StaticInitializer_52_MainWindow() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.MainWindow).TypeHandle);
-        private void StaticInitializer_54_ProgressBar() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.ProgressBar).TypeHandle);
-        private void StaticInitializer_56_ProgressBarTemplateSettings() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.ProgressBarTemplateSettings).TypeHandle);
-        private void StaticInitializer_57_AuthorizationCaptureBatchDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.AuthorizationCaptureBatchDialog).TypeHandle);
-        private void StaticInitializer_59_AuthorizationCaptureBatchViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.AuthorizationCaptureBatchViewModel).TypeHandle);
-        private void StaticInitializer_60_ViewModelBase() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.ViewModelBase).TypeHandle);
-        private void StaticInitializer_61_ObservableObject() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::CommunityToolkit.Mvvm.ComponentModel.ObservableObject).TypeHandle);
-        private void StaticInitializer_62_RadioButtons() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.RadioButtons).TypeHandle);
-        private void StaticInitializer_64_AuthorizationCodeDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.AuthorizationCodeDialog).TypeHandle);
-        private void StaticInitializer_65_AuthorizationCodeViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.AuthorizationCodeViewModel).TypeHandle);
-        private void StaticInitializer_66_BackOfficePage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.BackOfficePage).TypeHandle);
-        private void StaticInitializer_69_BackOfficeViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.BackOfficeViewModel).TypeHandle);
-        private void StaticInitializer_70_CashDropManagementDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.CashDropManagementDialog).TypeHandle);
-        private void StaticInitializer_71_CashDropManagementViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.CashDropManagementViewModel).TypeHandle);
-        private void StaticInitializer_72_CashEntryDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.CashEntryDialog).TypeHandle);
-        private void StaticInitializer_73_Decimal() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.Decimal).TypeHandle);
-        private void StaticInitializer_74_InfoBar() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.InfoBar).TypeHandle);
-        private void StaticInitializer_75_InfoBarSeverity() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.InfoBarSeverity).TypeHandle);
-        private void StaticInitializer_77_ICommand() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.Windows.Input.ICommand).TypeHandle);
-        private void StaticInitializer_79_InfoBarTemplateSettings() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.InfoBarTemplateSettings).TypeHandle);
-        private void StaticInitializer_80_CashSessionPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.CashSessionPage).TypeHandle);
-        private void StaticInitializer_81_CashSessionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.CashSessionViewModel).TypeHandle);
-        private void StaticInitializer_83_NumberBox() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NumberBox).TypeHandle);
-        private void StaticInitializer_84_INumberFormatter2() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Windows.Globalization.NumberFormatting.INumberFormatter2).TypeHandle);
-        private void StaticInitializer_87_NumberBoxSpinButtonPlacementMode() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode).TypeHandle);
-        private void StaticInitializer_89_NumberBoxValidationMode() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NumberBoxValidationMode).TypeHandle);
-        private void StaticInitializer_90_TableShapePalette() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.Components.TableShapePalette).TypeHandle);
-        private void StaticInitializer_91_TableDesignerViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.TableDesignerViewModel).TypeHandle);
-        private void StaticInitializer_92_VirtualizedTableCanvas() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.Components.VirtualizedTableCanvas).TypeHandle);
-        private void StaticInitializer_93_AddOnSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.AddOnSelectionDialog).TypeHandle);
-        private void StaticInitializer_94_AddOnSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.ViewModels.Dialogs.AddOnSelectionViewModel).TypeHandle);
-        private void StaticInitializer_95_CashEntryDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.Dialogs.CashEntryDialog).TypeHandle);
-        private void StaticInitializer_96_ComboSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.ComboSelectionDialog).TypeHandle);
-        private void StaticInitializer_97_ComboSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.ViewModels.Dialogs.ComboSelectionViewModel).TypeHandle);
-        private void StaticInitializer_98_CookingInstructionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.CookingInstructionDialog).TypeHandle);
-        private void StaticInitializer_99_CookingInstructionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.CookingInstructionViewModel).TypeHandle);
-        private void StaticInitializer_100_CustomerSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.CustomerSelectionDialog).TypeHandle);
-        private void StaticInitializer_101_CustomerSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.CustomerSelectionViewModel).TypeHandle);
-        private void StaticInitializer_102_GuestCountDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.Dialogs.GuestCountDialog).TypeHandle);
-        private void StaticInitializer_103_GuestCountViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.GuestCountViewModel).TypeHandle);
-        private void StaticInitializer_104_ItemSearchDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.ItemSearchDialog).TypeHandle);
-        private void StaticInitializer_105_ItemSearchViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.ItemSearchViewModel).TypeHandle);
-        private void StaticInitializer_106_MergeTicketsDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.MergeTicketsDialog).TypeHandle);
-        private void StaticInitializer_107_MergeTicketsViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.MergeTicketsViewModel).TypeHandle);
-        private void StaticInitializer_108_MiscItemDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.MiscItemDialog).TypeHandle);
-        private void StaticInitializer_109_MiscItemViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.ViewModels.MiscItemViewModel).TypeHandle);
-        private void StaticInitializer_110_ModifierSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.ModifierSelectionDialog).TypeHandle);
-        private void StaticInitializer_111_ModifierSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.ViewModels.Dialogs.ModifierSelectionViewModel).TypeHandle);
-        private void StaticInitializer_112_NotesDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.Dialogs.NotesDialog).TypeHandle);
-        private void StaticInitializer_113_PizzaModifierDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.PizzaModifierDialog).TypeHandle);
-        private void StaticInitializer_114_PizzaModifierViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.PizzaModifierViewModel).TypeHandle);
-        private void StaticInitializer_115_PriceEntryDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.PriceEntryDialog).TypeHandle);
-        private void StaticInitializer_116_PriceEntryViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.PriceEntryViewModel).TypeHandle);
-        private void StaticInitializer_117_QuantityDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.QuantityDialog).TypeHandle);
-        private void StaticInitializer_118_QuantityViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.QuantityViewModel).TypeHandle);
-        private void StaticInitializer_119_SeatSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.SeatSelectionDialog).TypeHandle);
-        private void StaticInitializer_120_SeatSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.SeatSelectionViewModel).TypeHandle);
-        private void StaticInitializer_121_ShiftEndDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.Dialogs.ShiftEndDialog).TypeHandle);
-        private void StaticInitializer_122_ShiftEndViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.ShiftEndViewModel).TypeHandle);
-        private void StaticInitializer_123_ShiftStartDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.Dialogs.ShiftStartDialog).TypeHandle);
-        private void StaticInitializer_124_ShiftStartViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.ShiftStartViewModel).TypeHandle);
-        private void StaticInitializer_125_SizeSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.SizeSelectionDialog).TypeHandle);
-        private void StaticInitializer_126_SizeSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.SizeSelectionViewModel).TypeHandle);
-        private void StaticInitializer_127_TableSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.TableSelectionDialog).TypeHandle);
-        private void StaticInitializer_128_TableSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel).TypeHandle);
-        private void StaticInitializer_129_TicketFeeDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.TicketFeeDialog).TypeHandle);
-        private void StaticInitializer_130_TicketFeeViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.ViewModels.TicketFeeViewModel).TypeHandle);
-        private void StaticInitializer_131_Action() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.Action).TypeHandle);
-        private void StaticInitializer_132_MulticastDelegate() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.MulticastDelegate).TypeHandle);
-        private void StaticInitializer_133_Delegate() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.Delegate).TypeHandle);
-        private void StaticInitializer_134_DiscountTaxPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.DiscountTaxPage).TypeHandle);
-        private void StaticInitializer_135_DiscountTaxViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.DiscountTaxViewModel).TypeHandle);
-        private void StaticInitializer_136_DrawerPullReportDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.DrawerPullReportDialog).TypeHandle);
-        private void StaticInitializer_137_DrawerPullReportViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.DrawerPullReportViewModel).TypeHandle);
-        private void StaticInitializer_138_FloorManagementPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.FloorManagementPage).TypeHandle);
-        private void StaticInitializer_139_FloorManagementViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.FloorManagementViewModel).TypeHandle);
-        private void StaticInitializer_140_GroupSettleTicketDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.GroupSettleTicketDialog).TypeHandle);
-        private void StaticInitializer_141_GroupSettleTicketViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.GroupSettleTicketViewModel).TypeHandle);
-        private void StaticInitializer_142_GroupSettleTicketSelectionWindow() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.GroupSettleTicketSelectionWindow).TypeHandle);
-        private void StaticInitializer_143_GroupSettleTicketSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.GroupSettleTicketSelectionViewModel).TypeHandle);
-        private void StaticInitializer_144_InventoryPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.InventoryPage).TypeHandle);
-        private void StaticInitializer_145_InventoryViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.InventoryViewModel).TypeHandle);
-        private void StaticInitializer_146_KitchenDisplayPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.KitchenDisplayPage).TypeHandle);
-        private void StaticInitializer_147_KitchenDisplayViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.KitchenDisplayViewModel).TypeHandle);
-        private void StaticInitializer_148_LoginPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.LoginPage).TypeHandle);
-        private void StaticInitializer_149_LoginViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.LoginViewModel).TypeHandle);
-        private void StaticInitializer_150_MainPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.MainPage).TypeHandle);
-        private void StaticInitializer_151_ManagerFunctionsDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.ManagerFunctionsDialog).TypeHandle);
-        private void StaticInitializer_152_ManagerFunctionsViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.ManagerFunctionsViewModel).TypeHandle);
-        private void StaticInitializer_153_MenuEditorPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.MenuEditorPage).TypeHandle);
-        private void StaticInitializer_154_MenuEditorViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.MenuEditorViewModel).TypeHandle);
-        private void StaticInitializer_155_ModifierEditorPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.ModifierEditorPage).TypeHandle);
-        private void StaticInitializer_156_ModifierEditorViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.ModifierEditorViewModel).TypeHandle);
-        private void StaticInitializer_157_ModifierSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.ModifierSelectionDialog).TypeHandle);
-        private void StaticInitializer_158_ModifierSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.ModifierSelectionViewModel).TypeHandle);
-        private void StaticInitializer_159_OpenTicketsListDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.OpenTicketsListDialog).TypeHandle);
-        private void StaticInitializer_160_OpenTicketsListViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.OpenTicketsListViewModel).TypeHandle);
-        private void StaticInitializer_161_OrderEntryPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.OrderEntryPage).TypeHandle);
-        private void StaticInitializer_162_OrderEntryViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.OrderEntryViewModel).TypeHandle);
-        private void StaticInitializer_163_OrderTypeExplorerPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.OrderTypeExplorerPage).TypeHandle);
-        private void StaticInitializer_164_OrderTypeExplorerViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.OrderTypeExplorerViewModel).TypeHandle);
-        private void StaticInitializer_165_OrderTypeSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.OrderTypeSelectionDialog).TypeHandle);
-        private void StaticInitializer_166_OrderTypeSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.OrderTypeSelectionViewModel).TypeHandle);
-        private void StaticInitializer_167_OrderType() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Domain.Entities.OrderType).TypeHandle);
-        private void StaticInitializer_168_PasswordEntryDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.PasswordEntryDialog).TypeHandle);
-        private void StaticInitializer_169_PaymentPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.PaymentPage).TypeHandle);
-        private void StaticInitializer_170_PaymentViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.PaymentViewModel).TypeHandle);
-        private void StaticInitializer_171_PaymentProcessWaitDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.PaymentProcessWaitDialog).TypeHandle);
-        private void StaticInitializer_172_PaymentProcessWaitViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.PaymentProcessWaitViewModel).TypeHandle);
-        private void StaticInitializer_173_PrintPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.PrintPage).TypeHandle);
-        private void StaticInitializer_174_PrintViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.PrintViewModel).TypeHandle);
-        private void StaticInitializer_175_PrintTemplatesPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.PrintTemplatesPage).TypeHandle);
-        private void StaticInitializer_176_PrintTemplatesViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.PrintTemplatesViewModel).TypeHandle);
-        private void StaticInitializer_177_PurchaseOrdersPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.PurchaseOrdersPage).TypeHandle);
-        private void StaticInitializer_178_PurchaseOrderViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.PurchaseOrderViewModel).TypeHandle);
-        private void StaticInitializer_179_RoleManagementPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.RoleManagementPage).TypeHandle);
-        private void StaticInitializer_180_RoleManagementViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.RoleManagementViewModel).TypeHandle);
-        private void StaticInitializer_181_SalesReportsPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.SalesReportsPage).TypeHandle);
-        private void StaticInitializer_182_SalesReportsViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.SalesReportsViewModel).TypeHandle);
-        private void StaticInitializer_183_SettingsPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.SettingsPage).TypeHandle);
-        private void StaticInitializer_184_SettingsViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.SettingsViewModel).TypeHandle);
-        private void StaticInitializer_185_SettlePage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.SettlePage).TypeHandle);
-        private void StaticInitializer_186_SettleViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.SettleViewModel).TypeHandle);
-        private void StaticInitializer_187_ShiftExplorerPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.ShiftExplorerPage).TypeHandle);
-        private void StaticInitializer_188_ShiftExplorerViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.ShiftExplorerViewModel).TypeHandle);
-        private void StaticInitializer_189_SplitTicketDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.SplitTicketDialog).TypeHandle);
-        private void StaticInitializer_190_SplitTicketViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.SplitTicketViewModel).TypeHandle);
-        private void StaticInitializer_191_SwipeCardDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.SwipeCardDialog).TypeHandle);
-        private void StaticInitializer_192_SwipeCardViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.SwipeCardViewModel).TypeHandle);
-        private void StaticInitializer_193_SwitchboardPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.SwitchboardPage).TypeHandle);
-        private void StaticInitializer_194_SwitchboardViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.SwitchboardViewModel).TypeHandle);
-        private void StaticInitializer_195_SystemConfigPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.SystemConfigPage).TypeHandle);
-        private void StaticInitializer_196_SystemConfigViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.SystemConfigViewModel).TypeHandle);
-        private void StaticInitializer_197_TableDesignerPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.TableDesignerPage).TypeHandle);
-        private void StaticInitializer_198_TableDesignerTestPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.TableDesignerTestPage).TypeHandle);
-        private void StaticInitializer_199_TableExplorerPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.TableExplorerPage).TypeHandle);
-        private void StaticInitializer_200_TableExplorerViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.TableExplorerViewModel).TypeHandle);
-        private void StaticInitializer_202_TableMapPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.TableMapPage).TypeHandle);
-        private void StaticInitializer_203_TableMapViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.TableMapViewModel).TypeHandle);
-        private void StaticInitializer_204_WebView2() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.WebView2).TypeHandle);
-        private void StaticInitializer_206_CoreWebView2() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.Web.WebView2.Core.CoreWebView2).TypeHandle);
-        private void StaticInitializer_207_Uri() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.Uri).TypeHandle);
-        private void StaticInitializer_208_TemplateEditorPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.TemplateEditorPage).TypeHandle);
-        private void StaticInitializer_209_TicketManagementPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.TicketManagementPage).TypeHandle);
-        private void StaticInitializer_210_TicketManagementViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.TicketManagementViewModel).TypeHandle);
-        private void StaticInitializer_211_TicketPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.TicketPage).TypeHandle);
-        private void StaticInitializer_212_TicketViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.TicketViewModel).TypeHandle);
-        private void StaticInitializer_213_UserManagementPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.UserManagementPage).TypeHandle);
-        private void StaticInitializer_214_UserManagementViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.UserManagementViewModel).TypeHandle);
-        private void StaticInitializer_215_VendorsPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.VendorsPage).TypeHandle);
-        private void StaticInitializer_216_VendorManagementViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.VendorManagementViewModel).TypeHandle);
-        private void StaticInitializer_217_VoidTicketDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.VoidTicketDialog).TypeHandle);
-        private void StaticInitializer_218_VoidTicketViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.VoidTicketViewModel).TypeHandle);
-        private void StaticInitializer_219_TreeViewNode() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.TreeViewNode).TypeHandle);
-        private void StaticInitializer_220_IList() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.Collections.Generic.IList<global::Microsoft.UI.Xaml.Controls.TreeViewNode>).TypeHandle);
+        private void StaticInitializer_18_BooleanToStringConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.BooleanToStringConverter).TypeHandle);
+        private void StaticInitializer_19_StringVisibilityConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.StringVisibilityConverter).TypeHandle);
+        private void StaticInitializer_20_BoolToDesignModeTextConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.BoolToDesignModeTextConverter).TypeHandle);
+        private void StaticInitializer_21_EnumToBoolConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.EnumToBoolConverter).TypeHandle);
+        private void StaticInitializer_22_ShapeToCornerRadiusConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.ShapeToCornerRadiusConverter).TypeHandle);
+        private void StaticInitializer_23_TableToSelectionVisibilityConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.TableToSelectionVisibilityConverter).TypeHandle);
+        private void StaticInitializer_24_DateTimeToTimeConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.DateTimeToTimeConverter).TypeHandle);
+        private void StaticInitializer_25_TableStatusToBrushConverter() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Converters.TableStatusToBrushConverter).TypeHandle);
+        private void StaticInitializer_26_NavigationView() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationView).TypeHandle);
+        private void StaticInitializer_28_NavigationViewBackButtonVisible() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible).TypeHandle);
+        private void StaticInitializer_29_Enum() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.Enum).TypeHandle);
+        private void StaticInitializer_30_NavigationViewPaneDisplayMode() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode).TypeHandle);
+        private void StaticInitializer_31_IList() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.Collections.Generic.IList<global::System.Object>).TypeHandle);
+        private void StaticInitializer_35_NavigationViewDisplayMode() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode).TypeHandle);
+        private void StaticInitializer_40_NavigationViewOverflowLabelMode() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewOverflowLabelMode).TypeHandle);
+        private void StaticInitializer_42_NavigationViewSelectionFollowsFocus() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewSelectionFollowsFocus).TypeHandle);
+        private void StaticInitializer_43_NavigationViewShoulderNavigationEnabled() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewShoulderNavigationEnabled).TypeHandle);
+        private void StaticInitializer_44_NavigationViewTemplateSettings() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings).TypeHandle);
+        private void StaticInitializer_46_InfoBar() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.InfoBar).TypeHandle);
+        private void StaticInitializer_48_InfoBarSeverity() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.InfoBarSeverity).TypeHandle);
+        private void StaticInitializer_50_ICommand() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.Windows.Input.ICommand).TypeHandle);
+        private void StaticInitializer_52_InfoBarTemplateSettings() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.InfoBarTemplateSettings).TypeHandle);
+        private void StaticInitializer_53_ProgressRing() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.ProgressRing).TypeHandle);
+        private void StaticInitializer_54_ProgressRingTemplateSettings() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.ProgressRingTemplateSettings).TypeHandle);
+        private void StaticInitializer_55_NavigationViewItem() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewItem).TypeHandle);
+        private void StaticInitializer_56_NavigationViewItemBase() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NavigationViewItemBase).TypeHandle);
+        private void StaticInitializer_58_InfoBadge() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.InfoBadge).TypeHandle);
+        private void StaticInitializer_59_MainWindow() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.MainWindow).TypeHandle);
+        private void StaticInitializer_61_ProgressBar() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.ProgressBar).TypeHandle);
+        private void StaticInitializer_63_ProgressBarTemplateSettings() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.ProgressBarTemplateSettings).TypeHandle);
+        private void StaticInitializer_64_AuthorizationCaptureBatchDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.AuthorizationCaptureBatchDialog).TypeHandle);
+        private void StaticInitializer_66_AuthorizationCaptureBatchViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.AuthorizationCaptureBatchViewModel).TypeHandle);
+        private void StaticInitializer_67_ViewModelBase() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.ViewModelBase).TypeHandle);
+        private void StaticInitializer_68_ObservableObject() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::CommunityToolkit.Mvvm.ComponentModel.ObservableObject).TypeHandle);
+        private void StaticInitializer_69_RadioButtons() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.RadioButtons).TypeHandle);
+        private void StaticInitializer_71_AuthorizationCodeDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.AuthorizationCodeDialog).TypeHandle);
+        private void StaticInitializer_72_AuthorizationCodeViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.AuthorizationCodeViewModel).TypeHandle);
+        private void StaticInitializer_73_BackOfficePage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.BackOfficePage).TypeHandle);
+        private void StaticInitializer_76_BackOfficeViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.BackOfficeViewModel).TypeHandle);
+        private void StaticInitializer_77_CashDropManagementDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.CashDropManagementDialog).TypeHandle);
+        private void StaticInitializer_78_CashDropManagementViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.CashDropManagementViewModel).TypeHandle);
+        private void StaticInitializer_79_CashEntryDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.CashEntryDialog).TypeHandle);
+        private void StaticInitializer_80_Decimal() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.Decimal).TypeHandle);
+        private void StaticInitializer_81_CashSessionPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.CashSessionPage).TypeHandle);
+        private void StaticInitializer_82_CashSessionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.CashSessionViewModel).TypeHandle);
+        private void StaticInitializer_84_NumberBox() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NumberBox).TypeHandle);
+        private void StaticInitializer_85_INumberFormatter2() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Windows.Globalization.NumberFormatting.INumberFormatter2).TypeHandle);
+        private void StaticInitializer_88_NumberBoxSpinButtonPlacementMode() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode).TypeHandle);
+        private void StaticInitializer_90_NumberBoxValidationMode() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.NumberBoxValidationMode).TypeHandle);
+        private void StaticInitializer_91_TableShapePalette() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.Components.TableShapePalette).TypeHandle);
+        private void StaticInitializer_92_TableDesignerViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.TableDesignerViewModel).TypeHandle);
+        private void StaticInitializer_93_VirtualizedTableCanvas() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.Components.VirtualizedTableCanvas).TypeHandle);
+        private void StaticInitializer_94_AddOnSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.AddOnSelectionDialog).TypeHandle);
+        private void StaticInitializer_95_AddOnSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.ViewModels.Dialogs.AddOnSelectionViewModel).TypeHandle);
+        private void StaticInitializer_96_CashEntryDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.Dialogs.CashEntryDialog).TypeHandle);
+        private void StaticInitializer_97_ComboSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.ComboSelectionDialog).TypeHandle);
+        private void StaticInitializer_98_ComboSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.ViewModels.Dialogs.ComboSelectionViewModel).TypeHandle);
+        private void StaticInitializer_99_CookingInstructionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.CookingInstructionDialog).TypeHandle);
+        private void StaticInitializer_100_CookingInstructionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.CookingInstructionViewModel).TypeHandle);
+        private void StaticInitializer_101_CustomerSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.CustomerSelectionDialog).TypeHandle);
+        private void StaticInitializer_102_CustomerSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.CustomerSelectionViewModel).TypeHandle);
+        private void StaticInitializer_103_GuestCountDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.Dialogs.GuestCountDialog).TypeHandle);
+        private void StaticInitializer_104_GuestCountViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.GuestCountViewModel).TypeHandle);
+        private void StaticInitializer_105_ItemSearchDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.ItemSearchDialog).TypeHandle);
+        private void StaticInitializer_106_ItemSearchViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.ItemSearchViewModel).TypeHandle);
+        private void StaticInitializer_107_MergeTicketsDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.MergeTicketsDialog).TypeHandle);
+        private void StaticInitializer_108_MergeTicketsViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.MergeTicketsViewModel).TypeHandle);
+        private void StaticInitializer_109_MiscItemDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.MiscItemDialog).TypeHandle);
+        private void StaticInitializer_110_MiscItemViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.ViewModels.MiscItemViewModel).TypeHandle);
+        private void StaticInitializer_111_ModifierSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.ModifierSelectionDialog).TypeHandle);
+        private void StaticInitializer_112_ModifierSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.ViewModels.Dialogs.ModifierSelectionViewModel).TypeHandle);
+        private void StaticInitializer_113_NotesDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.Dialogs.NotesDialog).TypeHandle);
+        private void StaticInitializer_114_PizzaModifierDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.PizzaModifierDialog).TypeHandle);
+        private void StaticInitializer_115_PizzaModifierViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.PizzaModifierViewModel).TypeHandle);
+        private void StaticInitializer_116_PriceEntryDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.PriceEntryDialog).TypeHandle);
+        private void StaticInitializer_117_PriceEntryViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.PriceEntryViewModel).TypeHandle);
+        private void StaticInitializer_118_QuantityDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.QuantityDialog).TypeHandle);
+        private void StaticInitializer_119_QuantityViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.QuantityViewModel).TypeHandle);
+        private void StaticInitializer_120_SeatSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.SeatSelectionDialog).TypeHandle);
+        private void StaticInitializer_121_SeatSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.SeatSelectionViewModel).TypeHandle);
+        private void StaticInitializer_122_ShiftEndDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.Dialogs.ShiftEndDialog).TypeHandle);
+        private void StaticInitializer_123_ShiftEndViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.ShiftEndViewModel).TypeHandle);
+        private void StaticInitializer_124_ShiftStartDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.Dialogs.ShiftStartDialog).TypeHandle);
+        private void StaticInitializer_125_ShiftStartViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.ShiftStartViewModel).TypeHandle);
+        private void StaticInitializer_126_SizeSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.SizeSelectionDialog).TypeHandle);
+        private void StaticInitializer_127_SizeSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.SizeSelectionViewModel).TypeHandle);
+        private void StaticInitializer_128_TableSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.TableSelectionDialog).TypeHandle);
+        private void StaticInitializer_129_TableSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel).TypeHandle);
+        private void StaticInitializer_130_TicketFeeDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.Dialogs.TicketFeeDialog).TypeHandle);
+        private void StaticInitializer_131_TicketFeeViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.ViewModels.TicketFeeViewModel).TypeHandle);
+        private void StaticInitializer_132_Action() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.Action).TypeHandle);
+        private void StaticInitializer_133_MulticastDelegate() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.MulticastDelegate).TypeHandle);
+        private void StaticInitializer_134_Delegate() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.Delegate).TypeHandle);
+        private void StaticInitializer_135_DiscountTaxPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.DiscountTaxPage).TypeHandle);
+        private void StaticInitializer_136_DiscountTaxViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.DiscountTaxViewModel).TypeHandle);
+        private void StaticInitializer_137_DrawerPullReportDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.DrawerPullReportDialog).TypeHandle);
+        private void StaticInitializer_138_DrawerPullReportViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.DrawerPullReportViewModel).TypeHandle);
+        private void StaticInitializer_139_FloorManagementPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.FloorManagementPage).TypeHandle);
+        private void StaticInitializer_140_FloorManagementViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.FloorManagementViewModel).TypeHandle);
+        private void StaticInitializer_141_GroupSettleTicketDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.GroupSettleTicketDialog).TypeHandle);
+        private void StaticInitializer_142_GroupSettleTicketViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.GroupSettleTicketViewModel).TypeHandle);
+        private void StaticInitializer_143_GroupSettleTicketSelectionWindow() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.GroupSettleTicketSelectionWindow).TypeHandle);
+        private void StaticInitializer_144_GroupSettleTicketSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.GroupSettleTicketSelectionViewModel).TypeHandle);
+        private void StaticInitializer_145_InventoryPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.InventoryPage).TypeHandle);
+        private void StaticInitializer_146_InventoryViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.InventoryViewModel).TypeHandle);
+        private void StaticInitializer_147_KitchenDisplayPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.KitchenDisplayPage).TypeHandle);
+        private void StaticInitializer_148_KitchenDisplayViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.KitchenDisplayViewModel).TypeHandle);
+        private void StaticInitializer_149_LoginPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.LoginPage).TypeHandle);
+        private void StaticInitializer_150_LoginViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.LoginViewModel).TypeHandle);
+        private void StaticInitializer_151_MainPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.MainPage).TypeHandle);
+        private void StaticInitializer_152_ManagerFunctionsDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.ManagerFunctionsDialog).TypeHandle);
+        private void StaticInitializer_153_ManagerFunctionsViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.ManagerFunctionsViewModel).TypeHandle);
+        private void StaticInitializer_154_MenuEditorPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.MenuEditorPage).TypeHandle);
+        private void StaticInitializer_155_MenuEditorViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.MenuEditorViewModel).TypeHandle);
+        private void StaticInitializer_156_ModifierEditorPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.ModifierEditorPage).TypeHandle);
+        private void StaticInitializer_157_ModifierEditorViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.ModifierEditorViewModel).TypeHandle);
+        private void StaticInitializer_158_ModifierSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.ModifierSelectionDialog).TypeHandle);
+        private void StaticInitializer_159_ModifierSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.ModifierSelectionViewModel).TypeHandle);
+        private void StaticInitializer_160_OpenTicketsListDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.OpenTicketsListDialog).TypeHandle);
+        private void StaticInitializer_161_OpenTicketsListViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.OpenTicketsListViewModel).TypeHandle);
+        private void StaticInitializer_162_OrderEntryPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.OrderEntryPage).TypeHandle);
+        private void StaticInitializer_163_OrderEntryViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.OrderEntryViewModel).TypeHandle);
+        private void StaticInitializer_164_OrderTypeExplorerPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.OrderTypeExplorerPage).TypeHandle);
+        private void StaticInitializer_165_OrderTypeExplorerViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.OrderTypeExplorerViewModel).TypeHandle);
+        private void StaticInitializer_166_OrderTypeSelectionDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.OrderTypeSelectionDialog).TypeHandle);
+        private void StaticInitializer_167_OrderTypeSelectionViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.OrderTypeSelectionViewModel).TypeHandle);
+        private void StaticInitializer_168_OrderType() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Domain.Entities.OrderType).TypeHandle);
+        private void StaticInitializer_169_PasswordEntryDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.PasswordEntryDialog).TypeHandle);
+        private void StaticInitializer_170_PaymentPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.PaymentPage).TypeHandle);
+        private void StaticInitializer_171_PaymentViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.PaymentViewModel).TypeHandle);
+        private void StaticInitializer_172_PaymentProcessWaitDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.PaymentProcessWaitDialog).TypeHandle);
+        private void StaticInitializer_173_PaymentProcessWaitViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.PaymentProcessWaitViewModel).TypeHandle);
+        private void StaticInitializer_174_PrintPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.PrintPage).TypeHandle);
+        private void StaticInitializer_175_PrintViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.PrintViewModel).TypeHandle);
+        private void StaticInitializer_176_PrintTemplatesPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.PrintTemplatesPage).TypeHandle);
+        private void StaticInitializer_177_PrintTemplatesViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.PrintTemplatesViewModel).TypeHandle);
+        private void StaticInitializer_178_PurchaseOrdersPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.PurchaseOrdersPage).TypeHandle);
+        private void StaticInitializer_179_PurchaseOrderViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.PurchaseOrderViewModel).TypeHandle);
+        private void StaticInitializer_180_RoleManagementPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.RoleManagementPage).TypeHandle);
+        private void StaticInitializer_181_RoleManagementViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.RoleManagementViewModel).TypeHandle);
+        private void StaticInitializer_182_SalesReportsPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.SalesReportsPage).TypeHandle);
+        private void StaticInitializer_183_SalesReportsViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.SalesReportsViewModel).TypeHandle);
+        private void StaticInitializer_184_SettingsPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.SettingsPage).TypeHandle);
+        private void StaticInitializer_185_SettingsViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.SettingsViewModel).TypeHandle);
+        private void StaticInitializer_186_SettlePage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.SettlePage).TypeHandle);
+        private void StaticInitializer_187_SettleViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.SettleViewModel).TypeHandle);
+        private void StaticInitializer_188_ShiftExplorerPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.ShiftExplorerPage).TypeHandle);
+        private void StaticInitializer_189_ShiftExplorerViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.ShiftExplorerViewModel).TypeHandle);
+        private void StaticInitializer_190_SplitTicketDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.SplitTicketDialog).TypeHandle);
+        private void StaticInitializer_191_SplitTicketViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.SplitTicketViewModel).TypeHandle);
+        private void StaticInitializer_192_SwipeCardDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Views.SwipeCardDialog).TypeHandle);
+        private void StaticInitializer_193_SwipeCardViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.SwipeCardViewModel).TypeHandle);
+        private void StaticInitializer_194_SwitchboardPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.SwitchboardPage).TypeHandle);
+        private void StaticInitializer_195_SwitchboardViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.SwitchboardViewModel).TypeHandle);
+        private void StaticInitializer_196_SystemConfigPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.SystemConfigPage).TypeHandle);
+        private void StaticInitializer_197_SystemConfigViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.SystemConfigViewModel).TypeHandle);
+        private void StaticInitializer_198_TableDesignerPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.TableDesignerPage).TypeHandle);
+        private void StaticInitializer_199_TableDesignerTestPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.TableDesignerTestPage).TypeHandle);
+        private void StaticInitializer_200_TableExplorerPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.TableExplorerPage).TypeHandle);
+        private void StaticInitializer_201_TableExplorerViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.TableExplorerViewModel).TypeHandle);
+        private void StaticInitializer_203_TableMapPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.TableMapPage).TypeHandle);
+        private void StaticInitializer_204_TableMapViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.TableMapViewModel).TypeHandle);
+        private void StaticInitializer_205_WebView2() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.WebView2).TypeHandle);
+        private void StaticInitializer_207_CoreWebView2() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.Web.WebView2.Core.CoreWebView2).TypeHandle);
+        private void StaticInitializer_208_Uri() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.Uri).TypeHandle);
+        private void StaticInitializer_209_TemplateEditorPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.TemplateEditorPage).TypeHandle);
+        private void StaticInitializer_210_TemplateEditorViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.TemplateEditorViewModel).TypeHandle);
+        private void StaticInitializer_211_TicketManagementPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.TicketManagementPage).TypeHandle);
+        private void StaticInitializer_212_TicketManagementViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.TicketManagementViewModel).TypeHandle);
+        private void StaticInitializer_213_TicketPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.TicketPage).TypeHandle);
+        private void StaticInitializer_214_TicketViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.TicketViewModel).TypeHandle);
+        private void StaticInitializer_215_UserManagementPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.UserManagementPage).TypeHandle);
+        private void StaticInitializer_216_UserManagementViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.UserManagementViewModel).TypeHandle);
+        private void StaticInitializer_217_VendorsPage() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.VendorsPage).TypeHandle);
+        private void StaticInitializer_218_VendorManagementViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.VendorManagementViewModel).TypeHandle);
+        private void StaticInitializer_219_VoidTicketDialog() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.Views.VoidTicketDialog).TypeHandle);
+        private void StaticInitializer_220_VoidTicketViewModel() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Magidesk.Presentation.ViewModels.VoidTicketViewModel).TypeHandle);
+        private void StaticInitializer_221_TreeViewNode() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::Microsoft.UI.Xaml.Controls.TreeViewNode).TypeHandle);
+        private void StaticInitializer_222_IList() => global::System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(global::System.Collections.Generic.IList<global::Microsoft.UI.Xaml.Controls.TreeViewNode>).TypeHandle);
         private void MapAdd_0_XamlControlsResources(object instance, object key, object item)
         {
             var collection = (global::System.Collections.Generic.IDictionary<global::System.Object, global::System.Object>)instance;
@@ -1008,13 +1015,13 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
             var newItem = (global::System.Object)item;
             collection.Add(newKey, newItem);
         }
-        private void VectorAdd_30_IList(object instance, object item)
+        private void VectorAdd_31_IList(object instance, object item)
         {
             var collection = (global::System.Collections.Generic.ICollection<global::System.Object>)instance;
             var newItem = (global::System.Object)item;
             collection.Add(newItem);
         }
-        private void VectorAdd_220_IList(object instance, object item)
+        private void VectorAdd_222_IList(object instance, object item)
         {
             var collection = (global::System.Collections.Generic.ICollection<global::Microsoft.UI.Xaml.Controls.TreeViewNode>)instance;
             var newItem = (global::Microsoft.UI.Xaml.Controls.TreeViewNode)item;
@@ -1163,66 +1170,74 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 18:   //  Magidesk.Presentation.Converters.StringVisibilityConverter
+            case 18:   //  Magidesk.Presentation.Converters.BooleanToStringConverter
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
-                userType.Activator = Activate_18_StringVisibilityConverter;
-                userType.StaticInitializer = StaticInitializer_18_StringVisibilityConverter;
+                userType.Activator = Activate_18_BooleanToStringConverter;
+                userType.StaticInitializer = StaticInitializer_18_BooleanToStringConverter;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 19:   //  Magidesk.Presentation.Converters.BoolToDesignModeTextConverter
+            case 19:   //  Magidesk.Presentation.Converters.StringVisibilityConverter
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
-                userType.Activator = Activate_19_BoolToDesignModeTextConverter;
-                userType.StaticInitializer = StaticInitializer_19_BoolToDesignModeTextConverter;
+                userType.Activator = Activate_19_StringVisibilityConverter;
+                userType.StaticInitializer = StaticInitializer_19_StringVisibilityConverter;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 20:   //  Magidesk.Presentation.Converters.EnumToBoolConverter
+            case 20:   //  Magidesk.Presentation.Converters.BoolToDesignModeTextConverter
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
-                userType.Activator = Activate_20_EnumToBoolConverter;
-                userType.StaticInitializer = StaticInitializer_20_EnumToBoolConverter;
+                userType.Activator = Activate_20_BoolToDesignModeTextConverter;
+                userType.StaticInitializer = StaticInitializer_20_BoolToDesignModeTextConverter;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 21:   //  Magidesk.Presentation.Converters.ShapeToCornerRadiusConverter
+            case 21:   //  Magidesk.Presentation.Converters.EnumToBoolConverter
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
-                userType.Activator = Activate_21_ShapeToCornerRadiusConverter;
-                userType.StaticInitializer = StaticInitializer_21_ShapeToCornerRadiusConverter;
+                userType.Activator = Activate_21_EnumToBoolConverter;
+                userType.StaticInitializer = StaticInitializer_21_EnumToBoolConverter;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 22:   //  Magidesk.Presentation.Converters.TableToSelectionVisibilityConverter
+            case 22:   //  Magidesk.Presentation.Converters.ShapeToCornerRadiusConverter
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
-                userType.Activator = Activate_22_TableToSelectionVisibilityConverter;
-                userType.StaticInitializer = StaticInitializer_22_TableToSelectionVisibilityConverter;
+                userType.Activator = Activate_22_ShapeToCornerRadiusConverter;
+                userType.StaticInitializer = StaticInitializer_22_ShapeToCornerRadiusConverter;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 23:   //  Magidesk.Presentation.Converters.DateTimeToTimeConverter
+            case 23:   //  Magidesk.Presentation.Converters.TableToSelectionVisibilityConverter
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
-                userType.Activator = Activate_23_DateTimeToTimeConverter;
-                userType.StaticInitializer = StaticInitializer_23_DateTimeToTimeConverter;
+                userType.Activator = Activate_23_TableToSelectionVisibilityConverter;
+                userType.StaticInitializer = StaticInitializer_23_TableToSelectionVisibilityConverter;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 24:   //  Magidesk.Presentation.Converters.TableStatusToBrushConverter
+            case 24:   //  Magidesk.Presentation.Converters.DateTimeToTimeConverter
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
-                userType.Activator = Activate_24_TableStatusToBrushConverter;
-                userType.StaticInitializer = StaticInitializer_24_TableStatusToBrushConverter;
+                userType.Activator = Activate_24_DateTimeToTimeConverter;
+                userType.StaticInitializer = StaticInitializer_24_DateTimeToTimeConverter;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 25:   //  Microsoft.UI.Xaml.Controls.NavigationView
+            case 25:   //  Magidesk.Presentation.Converters.TableStatusToBrushConverter
+                userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+                userType.Activator = Activate_25_TableStatusToBrushConverter;
+                userType.StaticInitializer = StaticInitializer_25_TableStatusToBrushConverter;
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 26:   //  Microsoft.UI.Xaml.Controls.NavigationView
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentControl"));
-                userType.Activator = Activate_25_NavigationView;
-                userType.StaticInitializer = StaticInitializer_25_NavigationView;
+                userType.Activator = Activate_26_NavigationView;
+                userType.StaticInitializer = StaticInitializer_26_NavigationView;
                 userType.AddMemberName("IsBackButtonVisible");
                 userType.AddMemberName("IsBackEnabled");
                 userType.AddMemberName("PaneDisplayMode");
@@ -1263,28 +1278,28 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 26:   //  Microsoft.UI.Xaml.Controls.ContentControl
+            case 27:   //  Microsoft.UI.Xaml.Controls.ContentControl
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 27:   //  Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible
+            case 28:   //  Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Enum"));
-                userType.StaticInitializer = StaticInitializer_27_NavigationViewBackButtonVisible;
+                userType.StaticInitializer = StaticInitializer_28_NavigationViewBackButtonVisible;
                 userType.AddEnumValue("Collapsed", global::Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Collapsed);
                 userType.AddEnumValue("Visible", global::Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Visible);
                 userType.AddEnumValue("Auto", global::Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Auto);
                 xamlType = userType;
                 break;
 
-            case 28:   //  System.Enum
+            case 29:   //  System.Enum
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.ValueType"));
-                userType.StaticInitializer = StaticInitializer_28_Enum;
+                userType.StaticInitializer = StaticInitializer_29_Enum;
                 xamlType = userType;
                 break;
 
-            case 29:   //  Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode
+            case 30:   //  Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Enum"));
-                userType.StaticInitializer = StaticInitializer_29_NavigationViewPaneDisplayMode;
+                userType.StaticInitializer = StaticInitializer_30_NavigationViewPaneDisplayMode;
                 userType.AddEnumValue("Auto", global::Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.Auto);
                 userType.AddEnumValue("Left", global::Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.Left);
                 userType.AddEnumValue("Top", global::Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.Top);
@@ -1293,95 +1308,153 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 30:   //  System.Collections.Generic.IList`1<Object>
+            case 31:   //  System.Collections.Generic.IList`1<Object>
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, null);
-                userType.StaticInitializer = StaticInitializer_30_IList;
-                userType.CollectionAdd = VectorAdd_30_IList;
+                userType.StaticInitializer = StaticInitializer_31_IList;
+                userType.CollectionAdd = VectorAdd_31_IList;
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
-            case 31:   //  Microsoft.UI.Xaml.Controls.AutoSuggestBox
+            case 32:   //  Microsoft.UI.Xaml.Controls.AutoSuggestBox
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 32:   //  Double
+            case 33:   //  Double
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 33:   //  Microsoft.UI.Xaml.UIElement
+            case 34:   //  Microsoft.UI.Xaml.UIElement
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 34:   //  Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode
+            case 35:   //  Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Enum"));
-                userType.StaticInitializer = StaticInitializer_34_NavigationViewDisplayMode;
+                userType.StaticInitializer = StaticInitializer_35_NavigationViewDisplayMode;
                 userType.AddEnumValue("Minimal", global::Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Minimal);
                 userType.AddEnumValue("Compact", global::Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Compact);
                 userType.AddEnumValue("Expanded", global::Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Expanded);
                 xamlType = userType;
                 break;
 
-            case 35:   //  Microsoft.UI.Xaml.DataTemplate
+            case 36:   //  Microsoft.UI.Xaml.DataTemplate
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 36:   //  Microsoft.UI.Xaml.Style
+            case 37:   //  Microsoft.UI.Xaml.Style
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 37:   //  Microsoft.UI.Xaml.Controls.StyleSelector
+            case 38:   //  Microsoft.UI.Xaml.Controls.StyleSelector
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 38:   //  Microsoft.UI.Xaml.Controls.DataTemplateSelector
+            case 39:   //  Microsoft.UI.Xaml.Controls.DataTemplateSelector
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 39:   //  Microsoft.UI.Xaml.Controls.NavigationViewOverflowLabelMode
+            case 40:   //  Microsoft.UI.Xaml.Controls.NavigationViewOverflowLabelMode
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Enum"));
-                userType.StaticInitializer = StaticInitializer_39_NavigationViewOverflowLabelMode;
+                userType.StaticInitializer = StaticInitializer_40_NavigationViewOverflowLabelMode;
                 userType.AddEnumValue("MoreLabel", global::Microsoft.UI.Xaml.Controls.NavigationViewOverflowLabelMode.MoreLabel);
                 userType.AddEnumValue("NoLabel", global::Microsoft.UI.Xaml.Controls.NavigationViewOverflowLabelMode.NoLabel);
                 xamlType = userType;
                 break;
 
-            case 40:   //  String
+            case 41:   //  String
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 41:   //  Microsoft.UI.Xaml.Controls.NavigationViewSelectionFollowsFocus
+            case 42:   //  Microsoft.UI.Xaml.Controls.NavigationViewSelectionFollowsFocus
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Enum"));
-                userType.StaticInitializer = StaticInitializer_41_NavigationViewSelectionFollowsFocus;
+                userType.StaticInitializer = StaticInitializer_42_NavigationViewSelectionFollowsFocus;
                 userType.AddEnumValue("Disabled", global::Microsoft.UI.Xaml.Controls.NavigationViewSelectionFollowsFocus.Disabled);
                 userType.AddEnumValue("Enabled", global::Microsoft.UI.Xaml.Controls.NavigationViewSelectionFollowsFocus.Enabled);
                 xamlType = userType;
                 break;
 
-            case 42:   //  Microsoft.UI.Xaml.Controls.NavigationViewShoulderNavigationEnabled
+            case 43:   //  Microsoft.UI.Xaml.Controls.NavigationViewShoulderNavigationEnabled
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Enum"));
-                userType.StaticInitializer = StaticInitializer_42_NavigationViewShoulderNavigationEnabled;
+                userType.StaticInitializer = StaticInitializer_43_NavigationViewShoulderNavigationEnabled;
                 userType.AddEnumValue("WhenSelectionFollowsFocus", global::Microsoft.UI.Xaml.Controls.NavigationViewShoulderNavigationEnabled.WhenSelectionFollowsFocus);
                 userType.AddEnumValue("Always", global::Microsoft.UI.Xaml.Controls.NavigationViewShoulderNavigationEnabled.Always);
                 userType.AddEnumValue("Never", global::Microsoft.UI.Xaml.Controls.NavigationViewShoulderNavigationEnabled.Never);
                 xamlType = userType;
                 break;
 
-            case 43:   //  Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings
+            case 44:   //  Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.DependencyObject"));
-                userType.StaticInitializer = StaticInitializer_43_NavigationViewTemplateSettings;
+                userType.StaticInitializer = StaticInitializer_44_NavigationViewTemplateSettings;
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
-            case 44:   //  Microsoft.UI.Xaml.DependencyObject
+            case 45:   //  Microsoft.UI.Xaml.DependencyObject
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 45:   //  Microsoft.UI.Xaml.Controls.ProgressRing
+            case 46:   //  Microsoft.UI.Xaml.Controls.InfoBar
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Control"));
-                userType.Activator = Activate_45_ProgressRing;
-                userType.StaticInitializer = StaticInitializer_45_ProgressRing;
+                userType.Activator = Activate_46_InfoBar;
+                userType.StaticInitializer = StaticInitializer_46_InfoBar;
+                userType.SetContentPropertyName("Microsoft.UI.Xaml.Controls.InfoBar.Content");
+                userType.AddMemberName("Content");
+                userType.AddMemberName("Severity");
+                userType.AddMemberName("IsOpen");
+                userType.AddMemberName("IsClosable");
+                userType.AddMemberName("ActionButton");
+                userType.AddMemberName("CloseButtonCommand");
+                userType.AddMemberName("CloseButtonCommandParameter");
+                userType.AddMemberName("CloseButtonStyle");
+                userType.AddMemberName("ContentTemplate");
+                userType.AddMemberName("IconSource");
+                userType.AddMemberName("IsIconVisible");
+                userType.AddMemberName("Message");
+                userType.AddMemberName("TemplateSettings");
+                userType.AddMemberName("Title");
+                xamlType = userType;
+                break;
+
+            case 47:   //  Microsoft.UI.Xaml.Controls.Control
+                xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 48:   //  Microsoft.UI.Xaml.Controls.InfoBarSeverity
+                userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Enum"));
+                userType.StaticInitializer = StaticInitializer_48_InfoBarSeverity;
+                userType.AddEnumValue("Informational", global::Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational);
+                userType.AddEnumValue("Success", global::Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success);
+                userType.AddEnumValue("Warning", global::Microsoft.UI.Xaml.Controls.InfoBarSeverity.Warning);
+                userType.AddEnumValue("Error", global::Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+                xamlType = userType;
+                break;
+
+            case 49:   //  Microsoft.UI.Xaml.Controls.Primitives.ButtonBase
+                xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 50:   //  System.Windows.Input.ICommand
+                userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, null);
+                userType.StaticInitializer = StaticInitializer_50_ICommand;
+                userType.SetIsReturnTypeStub();
+                xamlType = userType;
+                break;
+
+            case 51:   //  Microsoft.UI.Xaml.Controls.IconSource
+                xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 52:   //  Microsoft.UI.Xaml.Controls.InfoBarTemplateSettings
+                userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.DependencyObject"));
+                userType.StaticInitializer = StaticInitializer_52_InfoBarTemplateSettings;
+                userType.SetIsReturnTypeStub();
+                xamlType = userType;
+                break;
+
+            case 53:   //  Microsoft.UI.Xaml.Controls.ProgressRing
+                userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Control"));
+                userType.Activator = Activate_53_ProgressRing;
+                userType.StaticInitializer = StaticInitializer_53_ProgressRing;
                 userType.AddMemberName("IsActive");
                 userType.AddMemberName("IsIndeterminate");
                 userType.AddMemberName("Maximum");
@@ -1391,21 +1464,17 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 46:   //  Microsoft.UI.Xaml.Controls.Control
-                xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
-                break;
-
-            case 47:   //  Microsoft.UI.Xaml.Controls.ProgressRingTemplateSettings
+            case 54:   //  Microsoft.UI.Xaml.Controls.ProgressRingTemplateSettings
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.DependencyObject"));
-                userType.StaticInitializer = StaticInitializer_47_ProgressRingTemplateSettings;
+                userType.StaticInitializer = StaticInitializer_54_ProgressRingTemplateSettings;
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
-            case 48:   //  Microsoft.UI.Xaml.Controls.NavigationViewItem
+            case 55:   //  Microsoft.UI.Xaml.Controls.NavigationViewItem
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItemBase"));
-                userType.Activator = Activate_48_NavigationViewItem;
-                userType.StaticInitializer = StaticInitializer_48_NavigationViewItem;
+                userType.Activator = Activate_55_NavigationViewItem;
+                userType.StaticInitializer = StaticInitializer_55_NavigationViewItem;
                 userType.AddMemberName("Icon");
                 userType.AddMemberName("CompactPaneLength");
                 userType.AddMemberName("HasUnrealizedChildren");
@@ -1418,40 +1487,40 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 49:   //  Microsoft.UI.Xaml.Controls.NavigationViewItemBase
+            case 56:   //  Microsoft.UI.Xaml.Controls.NavigationViewItemBase
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentControl"));
-                userType.StaticInitializer = StaticInitializer_49_NavigationViewItemBase;
+                userType.StaticInitializer = StaticInitializer_56_NavigationViewItemBase;
                 userType.AddMemberName("IsSelected");
                 xamlType = userType;
                 break;
 
-            case 50:   //  Microsoft.UI.Xaml.Controls.IconElement
+            case 57:   //  Microsoft.UI.Xaml.Controls.IconElement
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 51:   //  Microsoft.UI.Xaml.Controls.InfoBadge
+            case 58:   //  Microsoft.UI.Xaml.Controls.InfoBadge
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Control"));
-                userType.StaticInitializer = StaticInitializer_51_InfoBadge;
+                userType.StaticInitializer = StaticInitializer_58_InfoBadge;
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
-            case 52:   //  Magidesk.Presentation.MainWindow
+            case 59:   //  Magidesk.Presentation.MainWindow
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Window"));
-                userType.Activator = Activate_52_MainWindow;
-                userType.StaticInitializer = StaticInitializer_52_MainWindow;
+                userType.Activator = Activate_59_MainWindow;
+                userType.StaticInitializer = StaticInitializer_59_MainWindow;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 53:   //  Microsoft.UI.Xaml.Window
+            case 60:   //  Microsoft.UI.Xaml.Window
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 54:   //  Microsoft.UI.Xaml.Controls.ProgressBar
+            case 61:   //  Microsoft.UI.Xaml.Controls.ProgressBar
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Primitives.RangeBase"));
-                userType.Activator = Activate_54_ProgressBar;
-                userType.StaticInitializer = StaticInitializer_54_ProgressBar;
+                userType.Activator = Activate_61_ProgressBar;
+                userType.StaticInitializer = StaticInitializer_61_ProgressBar;
                 userType.AddMemberName("IsIndeterminate");
                 userType.AddMemberName("ShowError");
                 userType.AddMemberName("ShowPaused");
@@ -1459,55 +1528,55 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 55:   //  Microsoft.UI.Xaml.Controls.Primitives.RangeBase
+            case 62:   //  Microsoft.UI.Xaml.Controls.Primitives.RangeBase
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 56:   //  Microsoft.UI.Xaml.Controls.ProgressBarTemplateSettings
+            case 63:   //  Microsoft.UI.Xaml.Controls.ProgressBarTemplateSettings
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.DependencyObject"));
-                userType.StaticInitializer = StaticInitializer_56_ProgressBarTemplateSettings;
+                userType.StaticInitializer = StaticInitializer_63_ProgressBarTemplateSettings;
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
-            case 57:   //  Magidesk.Views.AuthorizationCaptureBatchDialog
+            case 64:   //  Magidesk.Views.AuthorizationCaptureBatchDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_57_AuthorizationCaptureBatchDialog;
-                userType.StaticInitializer = StaticInitializer_57_AuthorizationCaptureBatchDialog;
+                userType.Activator = Activate_64_AuthorizationCaptureBatchDialog;
+                userType.StaticInitializer = StaticInitializer_64_AuthorizationCaptureBatchDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 58:   //  Microsoft.UI.Xaml.Controls.ContentDialog
+            case 65:   //  Microsoft.UI.Xaml.Controls.ContentDialog
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 59:   //  Magidesk.Presentation.ViewModels.AuthorizationCaptureBatchViewModel
+            case 66:   //  Magidesk.Presentation.ViewModels.AuthorizationCaptureBatchViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_59_AuthorizationCaptureBatchViewModel;
+                userType.StaticInitializer = StaticInitializer_66_AuthorizationCaptureBatchViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 60:   //  Magidesk.Presentation.ViewModels.ViewModelBase
+            case 67:   //  Magidesk.Presentation.ViewModels.ViewModelBase
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("CommunityToolkit.Mvvm.ComponentModel.ObservableObject"));
-                userType.StaticInitializer = StaticInitializer_60_ViewModelBase;
+                userType.StaticInitializer = StaticInitializer_67_ViewModelBase;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 61:   //  CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+            case 68:   //  CommunityToolkit.Mvvm.ComponentModel.ObservableObject
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
-                userType.StaticInitializer = StaticInitializer_61_ObservableObject;
+                userType.StaticInitializer = StaticInitializer_68_ObservableObject;
                 xamlType = userType;
                 break;
 
-            case 62:   //  Microsoft.UI.Xaml.Controls.RadioButtons
+            case 69:   //  Microsoft.UI.Xaml.Controls.RadioButtons
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Control"));
-                userType.Activator = Activate_62_RadioButtons;
-                userType.StaticInitializer = StaticInitializer_62_RadioButtons;
+                userType.Activator = Activate_69_RadioButtons;
+                userType.StaticInitializer = StaticInitializer_69_RadioButtons;
                 userType.SetContentPropertyName("Microsoft.UI.Xaml.Controls.RadioButtons.Items");
                 userType.AddMemberName("Items");
                 userType.AddMemberName("MaxColumns");
@@ -1520,164 +1589,110 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 63:   //  Int32
+            case 70:   //  Int32
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 64:   //  Magidesk.Views.AuthorizationCodeDialog
+            case 71:   //  Magidesk.Views.AuthorizationCodeDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_64_AuthorizationCodeDialog;
-                userType.StaticInitializer = StaticInitializer_64_AuthorizationCodeDialog;
+                userType.Activator = Activate_71_AuthorizationCodeDialog;
+                userType.StaticInitializer = StaticInitializer_71_AuthorizationCodeDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 65:   //  Magidesk.Presentation.ViewModels.AuthorizationCodeViewModel
+            case 72:   //  Magidesk.Presentation.ViewModels.AuthorizationCodeViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_65_AuthorizationCodeViewModel;
+                userType.StaticInitializer = StaticInitializer_72_AuthorizationCodeViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 66:   //  Magidesk.Presentation.Views.BackOfficePage
+            case 73:   //  Magidesk.Presentation.Views.BackOfficePage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_66_BackOfficePage;
-                userType.StaticInitializer = StaticInitializer_66_BackOfficePage;
+                userType.Activator = Activate_73_BackOfficePage;
+                userType.StaticInitializer = StaticInitializer_73_BackOfficePage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 67:   //  Microsoft.UI.Xaml.Controls.Page
+            case 74:   //  Microsoft.UI.Xaml.Controls.Page
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 68:   //  Microsoft.UI.Xaml.Controls.UserControl
+            case 75:   //  Microsoft.UI.Xaml.Controls.UserControl
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 69:   //  Magidesk.Presentation.ViewModels.BackOfficeViewModel
+            case 76:   //  Magidesk.Presentation.ViewModels.BackOfficeViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_69_BackOfficeViewModel;
+                userType.StaticInitializer = StaticInitializer_76_BackOfficeViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 70:   //  Magidesk.Presentation.Views.CashDropManagementDialog
+            case 77:   //  Magidesk.Presentation.Views.CashDropManagementDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_70_CashDropManagementDialog;
-                userType.StaticInitializer = StaticInitializer_70_CashDropManagementDialog;
+                userType.Activator = Activate_77_CashDropManagementDialog;
+                userType.StaticInitializer = StaticInitializer_77_CashDropManagementDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 71:   //  Magidesk.Presentation.ViewModels.CashDropManagementViewModel
+            case 78:   //  Magidesk.Presentation.ViewModels.CashDropManagementViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_71_CashDropManagementViewModel;
+                userType.StaticInitializer = StaticInitializer_78_CashDropManagementViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 72:   //  Magidesk.Presentation.Views.CashEntryDialog
+            case 79:   //  Magidesk.Presentation.Views.CashEntryDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.StaticInitializer = StaticInitializer_72_CashEntryDialog;
+                userType.StaticInitializer = StaticInitializer_79_CashEntryDialog;
                 userType.AddMemberName("Amount");
                 userType.AddMemberName("Reason");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 73:   //  System.Decimal
+            case 80:   //  System.Decimal
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.ValueType"));
-                userType.StaticInitializer = StaticInitializer_73_Decimal;
+                userType.StaticInitializer = StaticInitializer_80_Decimal;
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
-            case 74:   //  Microsoft.UI.Xaml.Controls.InfoBar
-                userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Control"));
-                userType.Activator = Activate_74_InfoBar;
-                userType.StaticInitializer = StaticInitializer_74_InfoBar;
-                userType.SetContentPropertyName("Microsoft.UI.Xaml.Controls.InfoBar.Content");
-                userType.AddMemberName("Content");
-                userType.AddMemberName("IsOpen");
-                userType.AddMemberName("IsClosable");
-                userType.AddMemberName("Severity");
-                userType.AddMemberName("Message");
-                userType.AddMemberName("ActionButton");
-                userType.AddMemberName("CloseButtonCommand");
-                userType.AddMemberName("CloseButtonCommandParameter");
-                userType.AddMemberName("CloseButtonStyle");
-                userType.AddMemberName("ContentTemplate");
-                userType.AddMemberName("IconSource");
-                userType.AddMemberName("IsIconVisible");
-                userType.AddMemberName("TemplateSettings");
-                userType.AddMemberName("Title");
-                xamlType = userType;
-                break;
-
-            case 75:   //  Microsoft.UI.Xaml.Controls.InfoBarSeverity
-                userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Enum"));
-                userType.StaticInitializer = StaticInitializer_75_InfoBarSeverity;
-                userType.AddEnumValue("Informational", global::Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational);
-                userType.AddEnumValue("Success", global::Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success);
-                userType.AddEnumValue("Warning", global::Microsoft.UI.Xaml.Controls.InfoBarSeverity.Warning);
-                userType.AddEnumValue("Error", global::Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
-                xamlType = userType;
-                break;
-
-            case 76:   //  Microsoft.UI.Xaml.Controls.Primitives.ButtonBase
-                xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
-                break;
-
-            case 77:   //  System.Windows.Input.ICommand
-                userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, null);
-                userType.StaticInitializer = StaticInitializer_77_ICommand;
-                userType.SetIsReturnTypeStub();
-                xamlType = userType;
-                break;
-
-            case 78:   //  Microsoft.UI.Xaml.Controls.IconSource
-                xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
-                break;
-
-            case 79:   //  Microsoft.UI.Xaml.Controls.InfoBarTemplateSettings
-                userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.DependencyObject"));
-                userType.StaticInitializer = StaticInitializer_79_InfoBarTemplateSettings;
-                userType.SetIsReturnTypeStub();
-                xamlType = userType;
-                break;
-
-            case 80:   //  Magidesk.Presentation.Views.CashSessionPage
+            case 81:   //  Magidesk.Presentation.Views.CashSessionPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_80_CashSessionPage;
-                userType.StaticInitializer = StaticInitializer_80_CashSessionPage;
+                userType.Activator = Activate_81_CashSessionPage;
+                userType.StaticInitializer = StaticInitializer_81_CashSessionPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 81:   //  Magidesk.Presentation.ViewModels.CashSessionViewModel
+            case 82:   //  Magidesk.Presentation.ViewModels.CashSessionViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_81_CashSessionViewModel;
+                userType.StaticInitializer = StaticInitializer_82_CashSessionViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 82:   //  Microsoft.UI.Xaml.Controls.RadioButton
+            case 83:   //  Microsoft.UI.Xaml.Controls.RadioButton
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 83:   //  Microsoft.UI.Xaml.Controls.NumberBox
+            case 84:   //  Microsoft.UI.Xaml.Controls.NumberBox
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Control"));
-                userType.Activator = Activate_83_NumberBox;
-                userType.StaticInitializer = StaticInitializer_83_NumberBox;
+                userType.Activator = Activate_84_NumberBox;
+                userType.StaticInitializer = StaticInitializer_84_NumberBox;
                 userType.AddMemberName("Value");
                 userType.AddMemberName("Minimum");
                 userType.AddMemberName("Maximum");
@@ -1700,999 +1715,999 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 84:   //  Windows.Globalization.NumberFormatting.INumberFormatter2
+            case 85:   //  Windows.Globalization.NumberFormatting.INumberFormatter2
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, null);
-                userType.StaticInitializer = StaticInitializer_84_INumberFormatter2;
+                userType.StaticInitializer = StaticInitializer_85_INumberFormatter2;
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
-            case 85:   //  Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase
+            case 86:   //  Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 86:   //  Microsoft.UI.Xaml.Media.SolidColorBrush
+            case 87:   //  Microsoft.UI.Xaml.Media.SolidColorBrush
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 87:   //  Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode
+            case 88:   //  Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Enum"));
-                userType.StaticInitializer = StaticInitializer_87_NumberBoxSpinButtonPlacementMode;
+                userType.StaticInitializer = StaticInitializer_88_NumberBoxSpinButtonPlacementMode;
                 userType.AddEnumValue("Hidden", global::Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode.Hidden);
                 userType.AddEnumValue("Compact", global::Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode.Compact);
                 userType.AddEnumValue("Inline", global::Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode.Inline);
                 xamlType = userType;
                 break;
 
-            case 88:   //  Microsoft.UI.Xaml.TextReadingOrder
+            case 89:   //  Microsoft.UI.Xaml.TextReadingOrder
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 89:   //  Microsoft.UI.Xaml.Controls.NumberBoxValidationMode
+            case 90:   //  Microsoft.UI.Xaml.Controls.NumberBoxValidationMode
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Enum"));
-                userType.StaticInitializer = StaticInitializer_89_NumberBoxValidationMode;
+                userType.StaticInitializer = StaticInitializer_90_NumberBoxValidationMode;
                 userType.AddEnumValue("InvalidInputOverwritten", global::Microsoft.UI.Xaml.Controls.NumberBoxValidationMode.InvalidInputOverwritten);
                 userType.AddEnumValue("Disabled", global::Microsoft.UI.Xaml.Controls.NumberBoxValidationMode.Disabled);
                 xamlType = userType;
                 break;
 
-            case 90:   //  Magidesk.Presentation.Views.Components.TableShapePalette
+            case 91:   //  Magidesk.Presentation.Views.Components.TableShapePalette
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.UserControl"));
-                userType.Activator = Activate_90_TableShapePalette;
-                userType.StaticInitializer = StaticInitializer_90_TableShapePalette;
+                userType.Activator = Activate_91_TableShapePalette;
+                userType.StaticInitializer = StaticInitializer_91_TableShapePalette;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 91:   //  Magidesk.Presentation.ViewModels.TableDesignerViewModel
+            case 92:   //  Magidesk.Presentation.ViewModels.TableDesignerViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_91_TableDesignerViewModel;
+                userType.StaticInitializer = StaticInitializer_92_TableDesignerViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 92:   //  Magidesk.Presentation.Views.Components.VirtualizedTableCanvas
+            case 93:   //  Magidesk.Presentation.Views.Components.VirtualizedTableCanvas
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.UserControl"));
-                userType.Activator = Activate_92_VirtualizedTableCanvas;
-                userType.StaticInitializer = StaticInitializer_92_VirtualizedTableCanvas;
+                userType.Activator = Activate_93_VirtualizedTableCanvas;
+                userType.StaticInitializer = StaticInitializer_93_VirtualizedTableCanvas;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 93:   //  Magidesk.Views.Dialogs.AddOnSelectionDialog
+            case 94:   //  Magidesk.Views.Dialogs.AddOnSelectionDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.StaticInitializer = StaticInitializer_93_AddOnSelectionDialog;
+                userType.StaticInitializer = StaticInitializer_94_AddOnSelectionDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 94:   //  Magidesk.ViewModels.Dialogs.AddOnSelectionViewModel
+            case 95:   //  Magidesk.ViewModels.Dialogs.AddOnSelectionViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("CommunityToolkit.Mvvm.ComponentModel.ObservableObject"));
-                userType.StaticInitializer = StaticInitializer_94_AddOnSelectionViewModel;
+                userType.StaticInitializer = StaticInitializer_95_AddOnSelectionViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 95:   //  Magidesk.Presentation.Views.Dialogs.CashEntryDialog
+            case 96:   //  Magidesk.Presentation.Views.Dialogs.CashEntryDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.StaticInitializer = StaticInitializer_95_CashEntryDialog;
+                userType.StaticInitializer = StaticInitializer_96_CashEntryDialog;
                 userType.AddMemberName("Amount");
                 userType.AddMemberName("Reason");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 96:   //  Magidesk.Views.Dialogs.ComboSelectionDialog
+            case 97:   //  Magidesk.Views.Dialogs.ComboSelectionDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.StaticInitializer = StaticInitializer_96_ComboSelectionDialog;
+                userType.StaticInitializer = StaticInitializer_97_ComboSelectionDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 97:   //  Magidesk.ViewModels.Dialogs.ComboSelectionViewModel
+            case 98:   //  Magidesk.ViewModels.Dialogs.ComboSelectionViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("CommunityToolkit.Mvvm.ComponentModel.ObservableObject"));
-                userType.StaticInitializer = StaticInitializer_97_ComboSelectionViewModel;
+                userType.StaticInitializer = StaticInitializer_98_ComboSelectionViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 98:   //  Magidesk.Views.Dialogs.CookingInstructionDialog
+            case 99:   //  Magidesk.Views.Dialogs.CookingInstructionDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_98_CookingInstructionDialog;
-                userType.StaticInitializer = StaticInitializer_98_CookingInstructionDialog;
+                userType.Activator = Activate_99_CookingInstructionDialog;
+                userType.StaticInitializer = StaticInitializer_99_CookingInstructionDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 99:   //  Magidesk.Presentation.ViewModels.Dialogs.CookingInstructionViewModel
+            case 100:   //  Magidesk.Presentation.ViewModels.Dialogs.CookingInstructionViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_99_CookingInstructionViewModel;
+                userType.StaticInitializer = StaticInitializer_100_CookingInstructionViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 100:   //  Magidesk.Views.Dialogs.CustomerSelectionDialog
+            case 101:   //  Magidesk.Views.Dialogs.CustomerSelectionDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_100_CustomerSelectionDialog;
-                userType.StaticInitializer = StaticInitializer_100_CustomerSelectionDialog;
+                userType.Activator = Activate_101_CustomerSelectionDialog;
+                userType.StaticInitializer = StaticInitializer_101_CustomerSelectionDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 101:   //  Magidesk.Presentation.ViewModels.Dialogs.CustomerSelectionViewModel
+            case 102:   //  Magidesk.Presentation.ViewModels.Dialogs.CustomerSelectionViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("CommunityToolkit.Mvvm.ComponentModel.ObservableObject"));
-                userType.StaticInitializer = StaticInitializer_101_CustomerSelectionViewModel;
+                userType.StaticInitializer = StaticInitializer_102_CustomerSelectionViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 102:   //  Magidesk.Presentation.Views.Dialogs.GuestCountDialog
+            case 103:   //  Magidesk.Presentation.Views.Dialogs.GuestCountDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.StaticInitializer = StaticInitializer_102_GuestCountDialog;
+                userType.StaticInitializer = StaticInitializer_103_GuestCountDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 103:   //  Magidesk.Presentation.ViewModels.GuestCountViewModel
+            case 104:   //  Magidesk.Presentation.ViewModels.GuestCountViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("CommunityToolkit.Mvvm.ComponentModel.ObservableObject"));
-                userType.StaticInitializer = StaticInitializer_103_GuestCountViewModel;
+                userType.StaticInitializer = StaticInitializer_104_GuestCountViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 104:   //  Magidesk.Views.Dialogs.ItemSearchDialog
+            case 105:   //  Magidesk.Views.Dialogs.ItemSearchDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_104_ItemSearchDialog;
-                userType.StaticInitializer = StaticInitializer_104_ItemSearchDialog;
+                userType.Activator = Activate_105_ItemSearchDialog;
+                userType.StaticInitializer = StaticInitializer_105_ItemSearchDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 105:   //  Magidesk.Presentation.ViewModels.Dialogs.ItemSearchViewModel
+            case 106:   //  Magidesk.Presentation.ViewModels.Dialogs.ItemSearchViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_105_ItemSearchViewModel;
+                userType.StaticInitializer = StaticInitializer_106_ItemSearchViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 106:   //  Magidesk.Views.Dialogs.MergeTicketsDialog
+            case 107:   //  Magidesk.Views.Dialogs.MergeTicketsDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_106_MergeTicketsDialog;
-                userType.StaticInitializer = StaticInitializer_106_MergeTicketsDialog;
+                userType.Activator = Activate_107_MergeTicketsDialog;
+                userType.StaticInitializer = StaticInitializer_107_MergeTicketsDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 107:   //  Magidesk.Presentation.ViewModels.Dialogs.MergeTicketsViewModel
+            case 108:   //  Magidesk.Presentation.ViewModels.Dialogs.MergeTicketsViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_107_MergeTicketsViewModel;
+                userType.StaticInitializer = StaticInitializer_108_MergeTicketsViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 108:   //  Magidesk.Views.Dialogs.MiscItemDialog
+            case 109:   //  Magidesk.Views.Dialogs.MiscItemDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_108_MiscItemDialog;
-                userType.StaticInitializer = StaticInitializer_108_MiscItemDialog;
+                userType.Activator = Activate_109_MiscItemDialog;
+                userType.StaticInitializer = StaticInitializer_109_MiscItemDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 109:   //  Magidesk.ViewModels.MiscItemViewModel
+            case 110:   //  Magidesk.ViewModels.MiscItemViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("CommunityToolkit.Mvvm.ComponentModel.ObservableObject"));
-                userType.StaticInitializer = StaticInitializer_109_MiscItemViewModel;
+                userType.StaticInitializer = StaticInitializer_110_MiscItemViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 110:   //  Magidesk.Views.Dialogs.ModifierSelectionDialog
+            case 111:   //  Magidesk.Views.Dialogs.ModifierSelectionDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.StaticInitializer = StaticInitializer_110_ModifierSelectionDialog;
+                userType.StaticInitializer = StaticInitializer_111_ModifierSelectionDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 111:   //  Magidesk.ViewModels.Dialogs.ModifierSelectionViewModel
+            case 112:   //  Magidesk.ViewModels.Dialogs.ModifierSelectionViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("CommunityToolkit.Mvvm.ComponentModel.ObservableObject"));
-                userType.StaticInitializer = StaticInitializer_111_ModifierSelectionViewModel;
+                userType.StaticInitializer = StaticInitializer_112_ModifierSelectionViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 112:   //  Magidesk.Presentation.Views.Dialogs.NotesDialog
+            case 113:   //  Magidesk.Presentation.Views.Dialogs.NotesDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.StaticInitializer = StaticInitializer_112_NotesDialog;
+                userType.StaticInitializer = StaticInitializer_113_NotesDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 113:   //  Magidesk.Views.Dialogs.PizzaModifierDialog
+            case 114:   //  Magidesk.Views.Dialogs.PizzaModifierDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_113_PizzaModifierDialog;
-                userType.StaticInitializer = StaticInitializer_113_PizzaModifierDialog;
+                userType.Activator = Activate_114_PizzaModifierDialog;
+                userType.StaticInitializer = StaticInitializer_114_PizzaModifierDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 114:   //  Magidesk.Presentation.ViewModels.Dialogs.PizzaModifierViewModel
+            case 115:   //  Magidesk.Presentation.ViewModels.Dialogs.PizzaModifierViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("CommunityToolkit.Mvvm.ComponentModel.ObservableObject"));
-                userType.StaticInitializer = StaticInitializer_114_PizzaModifierViewModel;
+                userType.StaticInitializer = StaticInitializer_115_PizzaModifierViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 115:   //  Magidesk.Views.Dialogs.PriceEntryDialog
+            case 116:   //  Magidesk.Views.Dialogs.PriceEntryDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_115_PriceEntryDialog;
-                userType.StaticInitializer = StaticInitializer_115_PriceEntryDialog;
+                userType.Activator = Activate_116_PriceEntryDialog;
+                userType.StaticInitializer = StaticInitializer_116_PriceEntryDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 116:   //  Magidesk.Presentation.ViewModels.Dialogs.PriceEntryViewModel
+            case 117:   //  Magidesk.Presentation.ViewModels.Dialogs.PriceEntryViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_116_PriceEntryViewModel;
+                userType.StaticInitializer = StaticInitializer_117_PriceEntryViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 117:   //  Magidesk.Views.QuantityDialog
+            case 118:   //  Magidesk.Views.QuantityDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_117_QuantityDialog;
-                userType.StaticInitializer = StaticInitializer_117_QuantityDialog;
+                userType.Activator = Activate_118_QuantityDialog;
+                userType.StaticInitializer = StaticInitializer_118_QuantityDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 118:   //  Magidesk.Presentation.ViewModels.QuantityViewModel
+            case 119:   //  Magidesk.Presentation.ViewModels.QuantityViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_118_QuantityViewModel;
+                userType.StaticInitializer = StaticInitializer_119_QuantityViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 119:   //  Magidesk.Views.Dialogs.SeatSelectionDialog
+            case 120:   //  Magidesk.Views.Dialogs.SeatSelectionDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_119_SeatSelectionDialog;
-                userType.StaticInitializer = StaticInitializer_119_SeatSelectionDialog;
+                userType.Activator = Activate_120_SeatSelectionDialog;
+                userType.StaticInitializer = StaticInitializer_120_SeatSelectionDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 120:   //  Magidesk.Presentation.ViewModels.Dialogs.SeatSelectionViewModel
+            case 121:   //  Magidesk.Presentation.ViewModels.Dialogs.SeatSelectionViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_120_SeatSelectionViewModel;
+                userType.StaticInitializer = StaticInitializer_121_SeatSelectionViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 121:   //  Magidesk.Presentation.Views.Dialogs.ShiftEndDialog
+            case 122:   //  Magidesk.Presentation.Views.Dialogs.ShiftEndDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.StaticInitializer = StaticInitializer_121_ShiftEndDialog;
+                userType.StaticInitializer = StaticInitializer_122_ShiftEndDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 122:   //  Magidesk.Presentation.ViewModels.Dialogs.ShiftEndViewModel
+            case 123:   //  Magidesk.Presentation.ViewModels.Dialogs.ShiftEndViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_122_ShiftEndViewModel;
+                userType.StaticInitializer = StaticInitializer_123_ShiftEndViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 123:   //  Magidesk.Presentation.Views.Dialogs.ShiftStartDialog
+            case 124:   //  Magidesk.Presentation.Views.Dialogs.ShiftStartDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_123_ShiftStartDialog;
-                userType.StaticInitializer = StaticInitializer_123_ShiftStartDialog;
+                userType.Activator = Activate_124_ShiftStartDialog;
+                userType.StaticInitializer = StaticInitializer_124_ShiftStartDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 124:   //  Magidesk.Presentation.ViewModels.ShiftStartViewModel
+            case 125:   //  Magidesk.Presentation.ViewModels.ShiftStartViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_124_ShiftStartViewModel;
+                userType.StaticInitializer = StaticInitializer_125_ShiftStartViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 125:   //  Magidesk.Views.Dialogs.SizeSelectionDialog
+            case 126:   //  Magidesk.Views.Dialogs.SizeSelectionDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_125_SizeSelectionDialog;
-                userType.StaticInitializer = StaticInitializer_125_SizeSelectionDialog;
+                userType.Activator = Activate_126_SizeSelectionDialog;
+                userType.StaticInitializer = StaticInitializer_126_SizeSelectionDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 126:   //  Magidesk.Presentation.ViewModels.Dialogs.SizeSelectionViewModel
+            case 127:   //  Magidesk.Presentation.ViewModels.Dialogs.SizeSelectionViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_126_SizeSelectionViewModel;
+                userType.StaticInitializer = StaticInitializer_127_SizeSelectionViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 127:   //  Magidesk.Views.Dialogs.TableSelectionDialog
+            case 128:   //  Magidesk.Views.Dialogs.TableSelectionDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_127_TableSelectionDialog;
-                userType.StaticInitializer = StaticInitializer_127_TableSelectionDialog;
+                userType.Activator = Activate_128_TableSelectionDialog;
+                userType.StaticInitializer = StaticInitializer_128_TableSelectionDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 128:   //  Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel
+            case 129:   //  Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("CommunityToolkit.Mvvm.ComponentModel.ObservableObject"));
-                userType.StaticInitializer = StaticInitializer_128_TableSelectionViewModel;
+                userType.StaticInitializer = StaticInitializer_129_TableSelectionViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 129:   //  Magidesk.Views.Dialogs.TicketFeeDialog
+            case 130:   //  Magidesk.Views.Dialogs.TicketFeeDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_129_TicketFeeDialog;
-                userType.StaticInitializer = StaticInitializer_129_TicketFeeDialog;
+                userType.Activator = Activate_130_TicketFeeDialog;
+                userType.StaticInitializer = StaticInitializer_130_TicketFeeDialog;
                 userType.AddMemberName("ViewModel");
                 userType.AddMemberName("CloseAction");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 130:   //  Magidesk.ViewModels.TicketFeeViewModel
+            case 131:   //  Magidesk.ViewModels.TicketFeeViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("CommunityToolkit.Mvvm.ComponentModel.ObservableObject"));
-                userType.StaticInitializer = StaticInitializer_130_TicketFeeViewModel;
+                userType.StaticInitializer = StaticInitializer_131_TicketFeeViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 131:   //  System.Action
+            case 132:   //  System.Action
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.MulticastDelegate"));
-                userType.StaticInitializer = StaticInitializer_131_Action;
+                userType.StaticInitializer = StaticInitializer_132_Action;
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
-            case 132:   //  System.MulticastDelegate
+            case 133:   //  System.MulticastDelegate
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Delegate"));
-                userType.StaticInitializer = StaticInitializer_132_MulticastDelegate;
+                userType.StaticInitializer = StaticInitializer_133_MulticastDelegate;
                 xamlType = userType;
                 break;
 
-            case 133:   //  System.Delegate
+            case 134:   //  System.Delegate
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
-                userType.StaticInitializer = StaticInitializer_133_Delegate;
+                userType.StaticInitializer = StaticInitializer_134_Delegate;
                 xamlType = userType;
                 break;
 
-            case 134:   //  Magidesk.Presentation.Views.DiscountTaxPage
+            case 135:   //  Magidesk.Presentation.Views.DiscountTaxPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_134_DiscountTaxPage;
-                userType.StaticInitializer = StaticInitializer_134_DiscountTaxPage;
+                userType.Activator = Activate_135_DiscountTaxPage;
+                userType.StaticInitializer = StaticInitializer_135_DiscountTaxPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 135:   //  Magidesk.Presentation.ViewModels.DiscountTaxViewModel
+            case 136:   //  Magidesk.Presentation.ViewModels.DiscountTaxViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_135_DiscountTaxViewModel;
+                userType.StaticInitializer = StaticInitializer_136_DiscountTaxViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 136:   //  Magidesk.Presentation.Views.DrawerPullReportDialog
+            case 137:   //  Magidesk.Presentation.Views.DrawerPullReportDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_136_DrawerPullReportDialog;
-                userType.StaticInitializer = StaticInitializer_136_DrawerPullReportDialog;
+                userType.Activator = Activate_137_DrawerPullReportDialog;
+                userType.StaticInitializer = StaticInitializer_137_DrawerPullReportDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 137:   //  Magidesk.Presentation.ViewModels.DrawerPullReportViewModel
+            case 138:   //  Magidesk.Presentation.ViewModels.DrawerPullReportViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_137_DrawerPullReportViewModel;
+                userType.StaticInitializer = StaticInitializer_138_DrawerPullReportViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 138:   //  Magidesk.Presentation.Views.FloorManagementPage
+            case 139:   //  Magidesk.Presentation.Views.FloorManagementPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_138_FloorManagementPage;
-                userType.StaticInitializer = StaticInitializer_138_FloorManagementPage;
+                userType.Activator = Activate_139_FloorManagementPage;
+                userType.StaticInitializer = StaticInitializer_139_FloorManagementPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 139:   //  Magidesk.Presentation.ViewModels.FloorManagementViewModel
+            case 140:   //  Magidesk.Presentation.ViewModels.FloorManagementViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_139_FloorManagementViewModel;
+                userType.StaticInitializer = StaticInitializer_140_FloorManagementViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 140:   //  Magidesk.Presentation.Views.GroupSettleTicketDialog
+            case 141:   //  Magidesk.Presentation.Views.GroupSettleTicketDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_140_GroupSettleTicketDialog;
-                userType.StaticInitializer = StaticInitializer_140_GroupSettleTicketDialog;
+                userType.Activator = Activate_141_GroupSettleTicketDialog;
+                userType.StaticInitializer = StaticInitializer_141_GroupSettleTicketDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 141:   //  Magidesk.Presentation.ViewModels.GroupSettleTicketViewModel
+            case 142:   //  Magidesk.Presentation.ViewModels.GroupSettleTicketViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_141_GroupSettleTicketViewModel;
+                userType.StaticInitializer = StaticInitializer_142_GroupSettleTicketViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 142:   //  Magidesk.Presentation.Views.GroupSettleTicketSelectionWindow
+            case 143:   //  Magidesk.Presentation.Views.GroupSettleTicketSelectionWindow
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_142_GroupSettleTicketSelectionWindow;
-                userType.StaticInitializer = StaticInitializer_142_GroupSettleTicketSelectionWindow;
+                userType.Activator = Activate_143_GroupSettleTicketSelectionWindow;
+                userType.StaticInitializer = StaticInitializer_143_GroupSettleTicketSelectionWindow;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 143:   //  Magidesk.Presentation.ViewModels.GroupSettleTicketSelectionViewModel
+            case 144:   //  Magidesk.Presentation.ViewModels.GroupSettleTicketSelectionViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_143_GroupSettleTicketSelectionViewModel;
+                userType.StaticInitializer = StaticInitializer_144_GroupSettleTicketSelectionViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 144:   //  Magidesk.Presentation.Views.InventoryPage
+            case 145:   //  Magidesk.Presentation.Views.InventoryPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_144_InventoryPage;
-                userType.StaticInitializer = StaticInitializer_144_InventoryPage;
+                userType.Activator = Activate_145_InventoryPage;
+                userType.StaticInitializer = StaticInitializer_145_InventoryPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 145:   //  Magidesk.Presentation.ViewModels.InventoryViewModel
+            case 146:   //  Magidesk.Presentation.ViewModels.InventoryViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_145_InventoryViewModel;
+                userType.StaticInitializer = StaticInitializer_146_InventoryViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 146:   //  Magidesk.Presentation.Views.KitchenDisplayPage
+            case 147:   //  Magidesk.Presentation.Views.KitchenDisplayPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_146_KitchenDisplayPage;
-                userType.StaticInitializer = StaticInitializer_146_KitchenDisplayPage;
+                userType.Activator = Activate_147_KitchenDisplayPage;
+                userType.StaticInitializer = StaticInitializer_147_KitchenDisplayPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 147:   //  Magidesk.Presentation.ViewModels.KitchenDisplayViewModel
+            case 148:   //  Magidesk.Presentation.ViewModels.KitchenDisplayViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_147_KitchenDisplayViewModel;
+                userType.StaticInitializer = StaticInitializer_148_KitchenDisplayViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 148:   //  Magidesk.Presentation.Views.LoginPage
+            case 149:   //  Magidesk.Presentation.Views.LoginPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_148_LoginPage;
-                userType.StaticInitializer = StaticInitializer_148_LoginPage;
+                userType.Activator = Activate_149_LoginPage;
+                userType.StaticInitializer = StaticInitializer_149_LoginPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 149:   //  Magidesk.Presentation.ViewModels.LoginViewModel
+            case 150:   //  Magidesk.Presentation.ViewModels.LoginViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_149_LoginViewModel;
+                userType.StaticInitializer = StaticInitializer_150_LoginViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 150:   //  Magidesk.Presentation.Views.MainPage
+            case 151:   //  Magidesk.Presentation.Views.MainPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_150_MainPage;
-                userType.StaticInitializer = StaticInitializer_150_MainPage;
+                userType.Activator = Activate_151_MainPage;
+                userType.StaticInitializer = StaticInitializer_151_MainPage;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 151:   //  Magidesk.Presentation.Views.ManagerFunctionsDialog
+            case 152:   //  Magidesk.Presentation.Views.ManagerFunctionsDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_151_ManagerFunctionsDialog;
-                userType.StaticInitializer = StaticInitializer_151_ManagerFunctionsDialog;
+                userType.Activator = Activate_152_ManagerFunctionsDialog;
+                userType.StaticInitializer = StaticInitializer_152_ManagerFunctionsDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 152:   //  Magidesk.Presentation.ViewModels.ManagerFunctionsViewModel
+            case 153:   //  Magidesk.Presentation.ViewModels.ManagerFunctionsViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_152_ManagerFunctionsViewModel;
+                userType.StaticInitializer = StaticInitializer_153_ManagerFunctionsViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 153:   //  Magidesk.Presentation.Views.MenuEditorPage
+            case 154:   //  Magidesk.Presentation.Views.MenuEditorPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_153_MenuEditorPage;
-                userType.StaticInitializer = StaticInitializer_153_MenuEditorPage;
+                userType.Activator = Activate_154_MenuEditorPage;
+                userType.StaticInitializer = StaticInitializer_154_MenuEditorPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 154:   //  Magidesk.Presentation.ViewModels.MenuEditorViewModel
+            case 155:   //  Magidesk.Presentation.ViewModels.MenuEditorViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_154_MenuEditorViewModel;
+                userType.StaticInitializer = StaticInitializer_155_MenuEditorViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 155:   //  Magidesk.Presentation.Views.ModifierEditorPage
+            case 156:   //  Magidesk.Presentation.Views.ModifierEditorPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_155_ModifierEditorPage;
-                userType.StaticInitializer = StaticInitializer_155_ModifierEditorPage;
+                userType.Activator = Activate_156_ModifierEditorPage;
+                userType.StaticInitializer = StaticInitializer_156_ModifierEditorPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 156:   //  Magidesk.Presentation.ViewModels.ModifierEditorViewModel
+            case 157:   //  Magidesk.Presentation.ViewModels.ModifierEditorViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_156_ModifierEditorViewModel;
+                userType.StaticInitializer = StaticInitializer_157_ModifierEditorViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 157:   //  Magidesk.Presentation.Views.ModifierSelectionDialog
+            case 158:   //  Magidesk.Presentation.Views.ModifierSelectionDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.StaticInitializer = StaticInitializer_157_ModifierSelectionDialog;
+                userType.StaticInitializer = StaticInitializer_158_ModifierSelectionDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 158:   //  Magidesk.Presentation.ViewModels.ModifierSelectionViewModel
+            case 159:   //  Magidesk.Presentation.ViewModels.ModifierSelectionViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_158_ModifierSelectionViewModel;
+                userType.StaticInitializer = StaticInitializer_159_ModifierSelectionViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 159:   //  Magidesk.Presentation.Views.OpenTicketsListDialog
+            case 160:   //  Magidesk.Presentation.Views.OpenTicketsListDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_159_OpenTicketsListDialog;
-                userType.StaticInitializer = StaticInitializer_159_OpenTicketsListDialog;
+                userType.Activator = Activate_160_OpenTicketsListDialog;
+                userType.StaticInitializer = StaticInitializer_160_OpenTicketsListDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 160:   //  Magidesk.Presentation.ViewModels.OpenTicketsListViewModel
+            case 161:   //  Magidesk.Presentation.ViewModels.OpenTicketsListViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_160_OpenTicketsListViewModel;
+                userType.StaticInitializer = StaticInitializer_161_OpenTicketsListViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 161:   //  Magidesk.Presentation.Views.OrderEntryPage
+            case 162:   //  Magidesk.Presentation.Views.OrderEntryPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_161_OrderEntryPage;
-                userType.StaticInitializer = StaticInitializer_161_OrderEntryPage;
+                userType.Activator = Activate_162_OrderEntryPage;
+                userType.StaticInitializer = StaticInitializer_162_OrderEntryPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 162:   //  Magidesk.Presentation.ViewModels.OrderEntryViewModel
+            case 163:   //  Magidesk.Presentation.ViewModels.OrderEntryViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_162_OrderEntryViewModel;
+                userType.StaticInitializer = StaticInitializer_163_OrderEntryViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 163:   //  Magidesk.Presentation.Views.OrderTypeExplorerPage
+            case 164:   //  Magidesk.Presentation.Views.OrderTypeExplorerPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_163_OrderTypeExplorerPage;
-                userType.StaticInitializer = StaticInitializer_163_OrderTypeExplorerPage;
+                userType.Activator = Activate_164_OrderTypeExplorerPage;
+                userType.StaticInitializer = StaticInitializer_164_OrderTypeExplorerPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 164:   //  Magidesk.Presentation.ViewModels.OrderTypeExplorerViewModel
+            case 165:   //  Magidesk.Presentation.ViewModels.OrderTypeExplorerViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_164_OrderTypeExplorerViewModel;
+                userType.StaticInitializer = StaticInitializer_165_OrderTypeExplorerViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 165:   //  Magidesk.Presentation.Views.OrderTypeSelectionDialog
+            case 166:   //  Magidesk.Presentation.Views.OrderTypeSelectionDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_165_OrderTypeSelectionDialog;
-                userType.StaticInitializer = StaticInitializer_165_OrderTypeSelectionDialog;
+                userType.Activator = Activate_166_OrderTypeSelectionDialog;
+                userType.StaticInitializer = StaticInitializer_166_OrderTypeSelectionDialog;
                 userType.AddMemberName("ViewModel");
                 userType.AddMemberName("SelectedOrderType");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 166:   //  Magidesk.Presentation.ViewModels.OrderTypeSelectionViewModel
+            case 167:   //  Magidesk.Presentation.ViewModels.OrderTypeSelectionViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_166_OrderTypeSelectionViewModel;
+                userType.StaticInitializer = StaticInitializer_167_OrderTypeSelectionViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 167:   //  Magidesk.Domain.Entities.OrderType
+            case 168:   //  Magidesk.Domain.Entities.OrderType
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
-                userType.StaticInitializer = StaticInitializer_167_OrderType;
+                userType.StaticInitializer = StaticInitializer_168_OrderType;
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
-            case 168:   //  Magidesk.Presentation.Views.PasswordEntryDialog
+            case 169:   //  Magidesk.Presentation.Views.PasswordEntryDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_168_PasswordEntryDialog;
-                userType.StaticInitializer = StaticInitializer_168_PasswordEntryDialog;
+                userType.Activator = Activate_169_PasswordEntryDialog;
+                userType.StaticInitializer = StaticInitializer_169_PasswordEntryDialog;
                 userType.AddMemberName("Password");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 169:   //  Magidesk.Presentation.Views.PaymentPage
+            case 170:   //  Magidesk.Presentation.Views.PaymentPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_169_PaymentPage;
-                userType.StaticInitializer = StaticInitializer_169_PaymentPage;
+                userType.Activator = Activate_170_PaymentPage;
+                userType.StaticInitializer = StaticInitializer_170_PaymentPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 170:   //  Magidesk.Presentation.ViewModels.PaymentViewModel
+            case 171:   //  Magidesk.Presentation.ViewModels.PaymentViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_170_PaymentViewModel;
+                userType.StaticInitializer = StaticInitializer_171_PaymentViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 171:   //  Magidesk.Views.PaymentProcessWaitDialog
+            case 172:   //  Magidesk.Views.PaymentProcessWaitDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_171_PaymentProcessWaitDialog;
-                userType.StaticInitializer = StaticInitializer_171_PaymentProcessWaitDialog;
+                userType.Activator = Activate_172_PaymentProcessWaitDialog;
+                userType.StaticInitializer = StaticInitializer_172_PaymentProcessWaitDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 172:   //  Magidesk.Presentation.ViewModels.PaymentProcessWaitViewModel
+            case 173:   //  Magidesk.Presentation.ViewModels.PaymentProcessWaitViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_172_PaymentProcessWaitViewModel;
+                userType.StaticInitializer = StaticInitializer_173_PaymentProcessWaitViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 173:   //  Magidesk.Presentation.Views.PrintPage
+            case 174:   //  Magidesk.Presentation.Views.PrintPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_173_PrintPage;
-                userType.StaticInitializer = StaticInitializer_173_PrintPage;
+                userType.Activator = Activate_174_PrintPage;
+                userType.StaticInitializer = StaticInitializer_174_PrintPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 174:   //  Magidesk.Presentation.ViewModels.PrintViewModel
+            case 175:   //  Magidesk.Presentation.ViewModels.PrintViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_174_PrintViewModel;
+                userType.StaticInitializer = StaticInitializer_175_PrintViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 175:   //  Magidesk.Presentation.Views.PrintTemplatesPage
+            case 176:   //  Magidesk.Presentation.Views.PrintTemplatesPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_175_PrintTemplatesPage;
-                userType.StaticInitializer = StaticInitializer_175_PrintTemplatesPage;
+                userType.Activator = Activate_176_PrintTemplatesPage;
+                userType.StaticInitializer = StaticInitializer_176_PrintTemplatesPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 176:   //  Magidesk.Presentation.ViewModels.PrintTemplatesViewModel
+            case 177:   //  Magidesk.Presentation.ViewModels.PrintTemplatesViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_176_PrintTemplatesViewModel;
+                userType.StaticInitializer = StaticInitializer_177_PrintTemplatesViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 177:   //  Magidesk.Presentation.Views.PurchaseOrdersPage
+            case 178:   //  Magidesk.Presentation.Views.PurchaseOrdersPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_177_PurchaseOrdersPage;
-                userType.StaticInitializer = StaticInitializer_177_PurchaseOrdersPage;
+                userType.Activator = Activate_178_PurchaseOrdersPage;
+                userType.StaticInitializer = StaticInitializer_178_PurchaseOrdersPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 178:   //  Magidesk.Presentation.ViewModels.PurchaseOrderViewModel
+            case 179:   //  Magidesk.Presentation.ViewModels.PurchaseOrderViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_178_PurchaseOrderViewModel;
+                userType.StaticInitializer = StaticInitializer_179_PurchaseOrderViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 179:   //  Magidesk.Presentation.Views.RoleManagementPage
+            case 180:   //  Magidesk.Presentation.Views.RoleManagementPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_179_RoleManagementPage;
-                userType.StaticInitializer = StaticInitializer_179_RoleManagementPage;
+                userType.Activator = Activate_180_RoleManagementPage;
+                userType.StaticInitializer = StaticInitializer_180_RoleManagementPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 180:   //  Magidesk.Presentation.ViewModels.RoleManagementViewModel
+            case 181:   //  Magidesk.Presentation.ViewModels.RoleManagementViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_180_RoleManagementViewModel;
+                userType.StaticInitializer = StaticInitializer_181_RoleManagementViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 181:   //  Magidesk.Presentation.Views.SalesReportsPage
+            case 182:   //  Magidesk.Presentation.Views.SalesReportsPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_181_SalesReportsPage;
-                userType.StaticInitializer = StaticInitializer_181_SalesReportsPage;
+                userType.Activator = Activate_182_SalesReportsPage;
+                userType.StaticInitializer = StaticInitializer_182_SalesReportsPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 182:   //  Magidesk.Presentation.ViewModels.SalesReportsViewModel
+            case 183:   //  Magidesk.Presentation.ViewModels.SalesReportsViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_182_SalesReportsViewModel;
+                userType.StaticInitializer = StaticInitializer_183_SalesReportsViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 183:   //  Magidesk.Presentation.Views.SettingsPage
+            case 184:   //  Magidesk.Presentation.Views.SettingsPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_183_SettingsPage;
-                userType.StaticInitializer = StaticInitializer_183_SettingsPage;
+                userType.Activator = Activate_184_SettingsPage;
+                userType.StaticInitializer = StaticInitializer_184_SettingsPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 184:   //  Magidesk.Presentation.ViewModels.SettingsViewModel
+            case 185:   //  Magidesk.Presentation.ViewModels.SettingsViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_184_SettingsViewModel;
+                userType.StaticInitializer = StaticInitializer_185_SettingsViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 185:   //  Magidesk.Presentation.Views.SettlePage
+            case 186:   //  Magidesk.Presentation.Views.SettlePage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_185_SettlePage;
-                userType.StaticInitializer = StaticInitializer_185_SettlePage;
+                userType.Activator = Activate_186_SettlePage;
+                userType.StaticInitializer = StaticInitializer_186_SettlePage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 186:   //  Magidesk.Presentation.ViewModels.SettleViewModel
+            case 187:   //  Magidesk.Presentation.ViewModels.SettleViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_186_SettleViewModel;
+                userType.StaticInitializer = StaticInitializer_187_SettleViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 187:   //  Magidesk.Presentation.Views.ShiftExplorerPage
+            case 188:   //  Magidesk.Presentation.Views.ShiftExplorerPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_187_ShiftExplorerPage;
-                userType.StaticInitializer = StaticInitializer_187_ShiftExplorerPage;
+                userType.Activator = Activate_188_ShiftExplorerPage;
+                userType.StaticInitializer = StaticInitializer_188_ShiftExplorerPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 188:   //  Magidesk.Presentation.ViewModels.ShiftExplorerViewModel
+            case 189:   //  Magidesk.Presentation.ViewModels.ShiftExplorerViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_188_ShiftExplorerViewModel;
+                userType.StaticInitializer = StaticInitializer_189_ShiftExplorerViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 189:   //  Magidesk.Presentation.Views.SplitTicketDialog
+            case 190:   //  Magidesk.Presentation.Views.SplitTicketDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_189_SplitTicketDialog;
-                userType.StaticInitializer = StaticInitializer_189_SplitTicketDialog;
+                userType.Activator = Activate_190_SplitTicketDialog;
+                userType.StaticInitializer = StaticInitializer_190_SplitTicketDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 190:   //  Magidesk.Presentation.ViewModels.SplitTicketViewModel
+            case 191:   //  Magidesk.Presentation.ViewModels.SplitTicketViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_190_SplitTicketViewModel;
+                userType.StaticInitializer = StaticInitializer_191_SplitTicketViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 191:   //  Magidesk.Views.SwipeCardDialog
+            case 192:   //  Magidesk.Views.SwipeCardDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_191_SwipeCardDialog;
-                userType.StaticInitializer = StaticInitializer_191_SwipeCardDialog;
+                userType.Activator = Activate_192_SwipeCardDialog;
+                userType.StaticInitializer = StaticInitializer_192_SwipeCardDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 192:   //  Magidesk.Presentation.ViewModels.SwipeCardViewModel
+            case 193:   //  Magidesk.Presentation.ViewModels.SwipeCardViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_192_SwipeCardViewModel;
+                userType.StaticInitializer = StaticInitializer_193_SwipeCardViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 193:   //  Magidesk.Presentation.Views.SwitchboardPage
+            case 194:   //  Magidesk.Presentation.Views.SwitchboardPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_193_SwitchboardPage;
-                userType.StaticInitializer = StaticInitializer_193_SwitchboardPage;
+                userType.Activator = Activate_194_SwitchboardPage;
+                userType.StaticInitializer = StaticInitializer_194_SwitchboardPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 194:   //  Magidesk.Presentation.ViewModels.SwitchboardViewModel
+            case 195:   //  Magidesk.Presentation.ViewModels.SwitchboardViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_194_SwitchboardViewModel;
+                userType.StaticInitializer = StaticInitializer_195_SwitchboardViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 195:   //  Magidesk.Presentation.Views.SystemConfigPage
+            case 196:   //  Magidesk.Presentation.Views.SystemConfigPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_195_SystemConfigPage;
-                userType.StaticInitializer = StaticInitializer_195_SystemConfigPage;
+                userType.Activator = Activate_196_SystemConfigPage;
+                userType.StaticInitializer = StaticInitializer_196_SystemConfigPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 196:   //  Magidesk.Presentation.ViewModels.SystemConfigViewModel
+            case 197:   //  Magidesk.Presentation.ViewModels.SystemConfigViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_196_SystemConfigViewModel;
+                userType.StaticInitializer = StaticInitializer_197_SystemConfigViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 197:   //  Magidesk.Presentation.Views.TableDesignerPage
+            case 198:   //  Magidesk.Presentation.Views.TableDesignerPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_197_TableDesignerPage;
-                userType.StaticInitializer = StaticInitializer_197_TableDesignerPage;
+                userType.Activator = Activate_198_TableDesignerPage;
+                userType.StaticInitializer = StaticInitializer_198_TableDesignerPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 198:   //  Magidesk.Presentation.Views.TableDesignerTestPage
+            case 199:   //  Magidesk.Presentation.Views.TableDesignerTestPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_198_TableDesignerTestPage;
-                userType.StaticInitializer = StaticInitializer_198_TableDesignerTestPage;
+                userType.Activator = Activate_199_TableDesignerTestPage;
+                userType.StaticInitializer = StaticInitializer_199_TableDesignerTestPage;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 199:   //  Magidesk.Presentation.Views.TableExplorerPage
+            case 200:   //  Magidesk.Presentation.Views.TableExplorerPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_199_TableExplorerPage;
-                userType.StaticInitializer = StaticInitializer_199_TableExplorerPage;
+                userType.Activator = Activate_200_TableExplorerPage;
+                userType.StaticInitializer = StaticInitializer_200_TableExplorerPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 200:   //  Magidesk.Presentation.ViewModels.TableExplorerViewModel
+            case 201:   //  Magidesk.Presentation.ViewModels.TableExplorerViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_200_TableExplorerViewModel;
+                userType.StaticInitializer = StaticInitializer_201_TableExplorerViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 201:   //  Microsoft.UI.Xaml.Controls.Button
+            case 202:   //  Microsoft.UI.Xaml.Controls.Button
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 202:   //  Magidesk.Presentation.Views.TableMapPage
+            case 203:   //  Magidesk.Presentation.Views.TableMapPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_202_TableMapPage;
-                userType.StaticInitializer = StaticInitializer_202_TableMapPage;
+                userType.Activator = Activate_203_TableMapPage;
+                userType.StaticInitializer = StaticInitializer_203_TableMapPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 203:   //  Magidesk.Presentation.ViewModels.TableMapViewModel
+            case 204:   //  Magidesk.Presentation.ViewModels.TableMapViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_203_TableMapViewModel;
+                userType.StaticInitializer = StaticInitializer_204_TableMapViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 204:   //  Microsoft.UI.Xaml.Controls.WebView2
+            case 205:   //  Microsoft.UI.Xaml.Controls.WebView2
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.FrameworkElement"));
-                userType.Activator = Activate_204_WebView2;
-                userType.StaticInitializer = StaticInitializer_204_WebView2;
+                userType.Activator = Activate_205_WebView2;
+                userType.StaticInitializer = StaticInitializer_205_WebView2;
                 userType.AddMemberName("CanGoBack");
                 userType.AddMemberName("CanGoForward");
                 userType.AddMemberName("CoreWebView2");
@@ -2701,121 +2716,130 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 205:   //  Microsoft.UI.Xaml.FrameworkElement
+            case 206:   //  Microsoft.UI.Xaml.FrameworkElement
                 xamlType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 206:   //  Microsoft.Web.WebView2.Core.CoreWebView2
+            case 207:   //  Microsoft.Web.WebView2.Core.CoreWebView2
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
-                userType.StaticInitializer = StaticInitializer_206_CoreWebView2;
+                userType.StaticInitializer = StaticInitializer_207_CoreWebView2;
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
-            case 207:   //  System.Uri
+            case 208:   //  System.Uri
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
-                userType.StaticInitializer = StaticInitializer_207_Uri;
+                userType.StaticInitializer = StaticInitializer_208_Uri;
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
-            case 208:   //  Magidesk.Presentation.Views.TemplateEditorPage
+            case 209:   //  Magidesk.Presentation.Views.TemplateEditorPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_208_TemplateEditorPage;
-                userType.StaticInitializer = StaticInitializer_208_TemplateEditorPage;
-                userType.SetIsLocalType();
-                xamlType = userType;
-                break;
-
-            case 209:   //  Magidesk.Presentation.Views.TicketManagementPage
-                userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_209_TicketManagementPage;
-                userType.StaticInitializer = StaticInitializer_209_TicketManagementPage;
+                userType.Activator = Activate_209_TemplateEditorPage;
+                userType.StaticInitializer = StaticInitializer_209_TemplateEditorPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 210:   //  Magidesk.Presentation.ViewModels.TicketManagementViewModel
+            case 210:   //  Magidesk.Presentation.ViewModels.TemplateEditorViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_210_TicketManagementViewModel;
+                userType.StaticInitializer = StaticInitializer_210_TemplateEditorViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 211:   //  Magidesk.Presentation.Views.TicketPage
+            case 211:   //  Magidesk.Presentation.Views.TicketManagementPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_211_TicketPage;
-                userType.StaticInitializer = StaticInitializer_211_TicketPage;
+                userType.Activator = Activate_211_TicketManagementPage;
+                userType.StaticInitializer = StaticInitializer_211_TicketManagementPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 212:   //  Magidesk.Presentation.ViewModels.TicketViewModel
+            case 212:   //  Magidesk.Presentation.ViewModels.TicketManagementViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_212_TicketViewModel;
+                userType.StaticInitializer = StaticInitializer_212_TicketManagementViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 213:   //  Magidesk.Presentation.Views.UserManagementPage
+            case 213:   //  Magidesk.Presentation.Views.TicketPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_213_UserManagementPage;
-                userType.StaticInitializer = StaticInitializer_213_UserManagementPage;
+                userType.Activator = Activate_213_TicketPage;
+                userType.StaticInitializer = StaticInitializer_213_TicketPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 214:   //  Magidesk.Presentation.ViewModels.UserManagementViewModel
+            case 214:   //  Magidesk.Presentation.ViewModels.TicketViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_214_UserManagementViewModel;
+                userType.StaticInitializer = StaticInitializer_214_TicketViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 215:   //  Magidesk.Presentation.Views.VendorsPage
+            case 215:   //  Magidesk.Presentation.Views.UserManagementPage
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_215_VendorsPage;
-                userType.StaticInitializer = StaticInitializer_215_VendorsPage;
+                userType.Activator = Activate_215_UserManagementPage;
+                userType.StaticInitializer = StaticInitializer_215_UserManagementPage;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 216:   //  Magidesk.Presentation.ViewModels.VendorManagementViewModel
+            case 216:   //  Magidesk.Presentation.ViewModels.UserManagementViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_216_VendorManagementViewModel;
+                userType.StaticInitializer = StaticInitializer_216_UserManagementViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 217:   //  Magidesk.Presentation.Views.VoidTicketDialog
+            case 217:   //  Magidesk.Presentation.Views.VendorsPage
+                userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_217_VendorsPage;
+                userType.StaticInitializer = StaticInitializer_217_VendorsPage;
+                userType.AddMemberName("ViewModel");
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 218:   //  Magidesk.Presentation.ViewModels.VendorManagementViewModel
+                userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
+                userType.StaticInitializer = StaticInitializer_218_VendorManagementViewModel;
+                userType.SetIsReturnTypeStub();
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 219:   //  Magidesk.Presentation.Views.VoidTicketDialog
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ContentDialog"));
-                userType.Activator = Activate_217_VoidTicketDialog;
-                userType.StaticInitializer = StaticInitializer_217_VoidTicketDialog;
+                userType.Activator = Activate_219_VoidTicketDialog;
+                userType.StaticInitializer = StaticInitializer_219_VoidTicketDialog;
                 userType.AddMemberName("ViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 218:   //  Magidesk.Presentation.ViewModels.VoidTicketViewModel
+            case 220:   //  Magidesk.Presentation.ViewModels.VoidTicketViewModel
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Magidesk.Presentation.ViewModels.ViewModelBase"));
-                userType.StaticInitializer = StaticInitializer_218_VoidTicketViewModel;
+                userType.StaticInitializer = StaticInitializer_220_VoidTicketViewModel;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 219:   //  Microsoft.UI.Xaml.Controls.TreeViewNode
+            case 221:   //  Microsoft.UI.Xaml.Controls.TreeViewNode
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.DependencyObject"));
-                userType.Activator = Activate_219_TreeViewNode;
-                userType.StaticInitializer = StaticInitializer_219_TreeViewNode;
+                userType.Activator = Activate_221_TreeViewNode;
+                userType.StaticInitializer = StaticInitializer_221_TreeViewNode;
                 userType.AddMemberName("Children");
                 userType.AddMemberName("Content");
                 userType.AddMemberName("Depth");
@@ -2827,10 +2851,10 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 220:   //  System.Collections.Generic.IList`1<Microsoft.UI.Xaml.Controls.TreeViewNode>
+            case 222:   //  System.Collections.Generic.IList`1<Microsoft.UI.Xaml.Controls.TreeViewNode>
                 userType = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType(this, typeName, type, null);
-                userType.StaticInitializer = StaticInitializer_220_IList;
-                userType.CollectionAdd = VectorAdd_220_IList;
+                userType.StaticInitializer = StaticInitializer_222_IList;
+                userType.CollectionAdd = VectorAdd_222_IList;
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
@@ -3288,425 +3312,425 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
             var that = (global::Microsoft.UI.Xaml.Controls.NavigationView)instance;
             return that.TemplateSettings;
         }
-        private object get_42_ProgressRing_IsActive(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
-            return that.IsActive;
-        }
-        private void set_42_ProgressRing_IsActive(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
-            that.IsActive = (global::System.Boolean)Value;
-        }
-        private object get_43_ProgressRing_IsIndeterminate(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
-            return that.IsIndeterminate;
-        }
-        private void set_43_ProgressRing_IsIndeterminate(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
-            that.IsIndeterminate = (global::System.Boolean)Value;
-        }
-        private object get_44_ProgressRing_Maximum(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
-            return that.Maximum;
-        }
-        private void set_44_ProgressRing_Maximum(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
-            that.Maximum = (global::System.Double)Value;
-        }
-        private object get_45_ProgressRing_Minimum(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
-            return that.Minimum;
-        }
-        private void set_45_ProgressRing_Minimum(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
-            that.Minimum = (global::System.Double)Value;
-        }
-        private object get_46_ProgressRing_TemplateSettings(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
-            return that.TemplateSettings;
-        }
-        private object get_47_ProgressRing_Value(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
-            return that.Value;
-        }
-        private void set_47_ProgressRing_Value(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
-            that.Value = (global::System.Double)Value;
-        }
-        private object get_48_NavigationViewItem_Icon(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
-            return that.Icon;
-        }
-        private void set_48_NavigationViewItem_Icon(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
-            that.Icon = (global::Microsoft.UI.Xaml.Controls.IconElement)Value;
-        }
-        private object get_49_NavigationViewItem_CompactPaneLength(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
-            return that.CompactPaneLength;
-        }
-        private object get_50_NavigationViewItem_HasUnrealizedChildren(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
-            return that.HasUnrealizedChildren;
-        }
-        private void set_50_NavigationViewItem_HasUnrealizedChildren(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
-            that.HasUnrealizedChildren = (global::System.Boolean)Value;
-        }
-        private object get_51_NavigationViewItem_InfoBadge(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
-            return that.InfoBadge;
-        }
-        private void set_51_NavigationViewItem_InfoBadge(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
-            that.InfoBadge = (global::Microsoft.UI.Xaml.Controls.InfoBadge)Value;
-        }
-        private object get_52_NavigationViewItem_IsChildSelected(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
-            return that.IsChildSelected;
-        }
-        private void set_52_NavigationViewItem_IsChildSelected(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
-            that.IsChildSelected = (global::System.Boolean)Value;
-        }
-        private object get_53_NavigationViewItem_IsExpanded(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
-            return that.IsExpanded;
-        }
-        private void set_53_NavigationViewItem_IsExpanded(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
-            that.IsExpanded = (global::System.Boolean)Value;
-        }
-        private object get_54_NavigationViewItem_MenuItems(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
-            return that.MenuItems;
-        }
-        private object get_55_NavigationViewItem_MenuItemsSource(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
-            return that.MenuItemsSource;
-        }
-        private void set_55_NavigationViewItem_MenuItemsSource(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
-            that.MenuItemsSource = (global::System.Object)Value;
-        }
-        private object get_56_NavigationViewItem_SelectsOnInvoked(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
-            return that.SelectsOnInvoked;
-        }
-        private void set_56_NavigationViewItem_SelectsOnInvoked(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
-            that.SelectsOnInvoked = (global::System.Boolean)Value;
-        }
-        private object get_57_NavigationViewItemBase_IsSelected(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItemBase)instance;
-            return that.IsSelected;
-        }
-        private void set_57_NavigationViewItemBase_IsSelected(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItemBase)instance;
-            that.IsSelected = (global::System.Boolean)Value;
-        }
-        private object get_58_ProgressBar_IsIndeterminate(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressBar)instance;
-            return that.IsIndeterminate;
-        }
-        private void set_58_ProgressBar_IsIndeterminate(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressBar)instance;
-            that.IsIndeterminate = (global::System.Boolean)Value;
-        }
-        private object get_59_ProgressBar_ShowError(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressBar)instance;
-            return that.ShowError;
-        }
-        private void set_59_ProgressBar_ShowError(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressBar)instance;
-            that.ShowError = (global::System.Boolean)Value;
-        }
-        private object get_60_ProgressBar_ShowPaused(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressBar)instance;
-            return that.ShowPaused;
-        }
-        private void set_60_ProgressBar_ShowPaused(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressBar)instance;
-            that.ShowPaused = (global::System.Boolean)Value;
-        }
-        private object get_61_ProgressBar_TemplateSettings(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.ProgressBar)instance;
-            return that.TemplateSettings;
-        }
-        private object get_62_AuthorizationCaptureBatchDialog_ViewModel(object instance)
-        {
-            var that = (global::Magidesk.Views.AuthorizationCaptureBatchDialog)instance;
-            return that.ViewModel;
-        }
-        private object get_63_RadioButtons_Items(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
-            return that.Items;
-        }
-        private object get_64_RadioButtons_MaxColumns(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
-            return that.MaxColumns;
-        }
-        private void set_64_RadioButtons_MaxColumns(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
-            that.MaxColumns = (global::System.Int32)Value;
-        }
-        private object get_65_RadioButtons_Header(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
-            return that.Header;
-        }
-        private void set_65_RadioButtons_Header(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
-            that.Header = (global::System.Object)Value;
-        }
-        private object get_66_RadioButtons_HeaderTemplate(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
-            return that.HeaderTemplate;
-        }
-        private void set_66_RadioButtons_HeaderTemplate(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
-            that.HeaderTemplate = (global::Microsoft.UI.Xaml.DataTemplate)Value;
-        }
-        private object get_67_RadioButtons_ItemTemplate(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
-            return that.ItemTemplate;
-        }
-        private void set_67_RadioButtons_ItemTemplate(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
-            that.ItemTemplate = (global::System.Object)Value;
-        }
-        private object get_68_RadioButtons_ItemsSource(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
-            return that.ItemsSource;
-        }
-        private void set_68_RadioButtons_ItemsSource(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
-            that.ItemsSource = (global::System.Object)Value;
-        }
-        private object get_69_RadioButtons_SelectedIndex(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
-            return that.SelectedIndex;
-        }
-        private void set_69_RadioButtons_SelectedIndex(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
-            that.SelectedIndex = (global::System.Int32)Value;
-        }
-        private object get_70_RadioButtons_SelectedItem(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
-            return that.SelectedItem;
-        }
-        private void set_70_RadioButtons_SelectedItem(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
-            that.SelectedItem = (global::System.Object)Value;
-        }
-        private object get_71_AuthorizationCodeDialog_ViewModel(object instance)
-        {
-            var that = (global::Magidesk.Views.AuthorizationCodeDialog)instance;
-            return that.ViewModel;
-        }
-        private object get_72_BackOfficePage_ViewModel(object instance)
-        {
-            var that = (global::Magidesk.Presentation.Views.BackOfficePage)instance;
-            return that.ViewModel;
-        }
-        private object get_73_CashDropManagementDialog_ViewModel(object instance)
-        {
-            var that = (global::Magidesk.Presentation.Views.CashDropManagementDialog)instance;
-            return that.ViewModel;
-        }
-        private object get_74_CashEntryDialog_Amount(object instance)
-        {
-            var that = (global::Magidesk.Presentation.Views.CashEntryDialog)instance;
-            return that.Amount;
-        }
-        private object get_75_CashEntryDialog_Reason(object instance)
-        {
-            var that = (global::Magidesk.Presentation.Views.CashEntryDialog)instance;
-            return that.Reason;
-        }
-        private object get_76_InfoBar_Content(object instance)
+        private object get_42_InfoBar_Content(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             return that.Content;
         }
-        private void set_76_InfoBar_Content(object instance, object Value)
+        private void set_42_InfoBar_Content(object instance, object Value)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             that.Content = (global::System.Object)Value;
         }
-        private object get_77_InfoBar_IsOpen(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
-            return that.IsOpen;
-        }
-        private void set_77_InfoBar_IsOpen(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
-            that.IsOpen = (global::System.Boolean)Value;
-        }
-        private object get_78_InfoBar_IsClosable(object instance)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
-            return that.IsClosable;
-        }
-        private void set_78_InfoBar_IsClosable(object instance, object Value)
-        {
-            var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
-            that.IsClosable = (global::System.Boolean)Value;
-        }
-        private object get_79_InfoBar_Severity(object instance)
+        private object get_43_InfoBar_Severity(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             return that.Severity;
         }
-        private void set_79_InfoBar_Severity(object instance, object Value)
+        private void set_43_InfoBar_Severity(object instance, object Value)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             that.Severity = (global::Microsoft.UI.Xaml.Controls.InfoBarSeverity)Value;
         }
-        private object get_80_InfoBar_Message(object instance)
+        private object get_44_InfoBar_IsOpen(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
-            return that.Message;
+            return that.IsOpen;
         }
-        private void set_80_InfoBar_Message(object instance, object Value)
+        private void set_44_InfoBar_IsOpen(object instance, object Value)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
-            that.Message = (global::System.String)Value;
+            that.IsOpen = (global::System.Boolean)Value;
         }
-        private object get_81_InfoBar_ActionButton(object instance)
+        private object get_45_InfoBar_IsClosable(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
+            return that.IsClosable;
+        }
+        private void set_45_InfoBar_IsClosable(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
+            that.IsClosable = (global::System.Boolean)Value;
+        }
+        private object get_46_InfoBar_ActionButton(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             return that.ActionButton;
         }
-        private void set_81_InfoBar_ActionButton(object instance, object Value)
+        private void set_46_InfoBar_ActionButton(object instance, object Value)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             that.ActionButton = (global::Microsoft.UI.Xaml.Controls.Primitives.ButtonBase)Value;
         }
-        private object get_82_InfoBar_CloseButtonCommand(object instance)
+        private object get_47_InfoBar_CloseButtonCommand(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             return that.CloseButtonCommand;
         }
-        private void set_82_InfoBar_CloseButtonCommand(object instance, object Value)
+        private void set_47_InfoBar_CloseButtonCommand(object instance, object Value)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             that.CloseButtonCommand = (global::System.Windows.Input.ICommand)Value;
         }
-        private object get_83_InfoBar_CloseButtonCommandParameter(object instance)
+        private object get_48_InfoBar_CloseButtonCommandParameter(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             return that.CloseButtonCommandParameter;
         }
-        private void set_83_InfoBar_CloseButtonCommandParameter(object instance, object Value)
+        private void set_48_InfoBar_CloseButtonCommandParameter(object instance, object Value)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             that.CloseButtonCommandParameter = (global::System.Object)Value;
         }
-        private object get_84_InfoBar_CloseButtonStyle(object instance)
+        private object get_49_InfoBar_CloseButtonStyle(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             return that.CloseButtonStyle;
         }
-        private void set_84_InfoBar_CloseButtonStyle(object instance, object Value)
+        private void set_49_InfoBar_CloseButtonStyle(object instance, object Value)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             that.CloseButtonStyle = (global::Microsoft.UI.Xaml.Style)Value;
         }
-        private object get_85_InfoBar_ContentTemplate(object instance)
+        private object get_50_InfoBar_ContentTemplate(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             return that.ContentTemplate;
         }
-        private void set_85_InfoBar_ContentTemplate(object instance, object Value)
+        private void set_50_InfoBar_ContentTemplate(object instance, object Value)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             that.ContentTemplate = (global::Microsoft.UI.Xaml.DataTemplate)Value;
         }
-        private object get_86_InfoBar_IconSource(object instance)
+        private object get_51_InfoBar_IconSource(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             return that.IconSource;
         }
-        private void set_86_InfoBar_IconSource(object instance, object Value)
+        private void set_51_InfoBar_IconSource(object instance, object Value)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             that.IconSource = (global::Microsoft.UI.Xaml.Controls.IconSource)Value;
         }
-        private object get_87_InfoBar_IsIconVisible(object instance)
+        private object get_52_InfoBar_IsIconVisible(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             return that.IsIconVisible;
         }
-        private void set_87_InfoBar_IsIconVisible(object instance, object Value)
+        private void set_52_InfoBar_IsIconVisible(object instance, object Value)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             that.IsIconVisible = (global::System.Boolean)Value;
         }
-        private object get_88_InfoBar_TemplateSettings(object instance)
+        private object get_53_InfoBar_Message(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
+            return that.Message;
+        }
+        private void set_53_InfoBar_Message(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
+            that.Message = (global::System.String)Value;
+        }
+        private object get_54_InfoBar_TemplateSettings(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             return that.TemplateSettings;
         }
-        private object get_89_InfoBar_Title(object instance)
+        private object get_55_InfoBar_Title(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             return that.Title;
         }
-        private void set_89_InfoBar_Title(object instance, object Value)
+        private void set_55_InfoBar_Title(object instance, object Value)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.InfoBar)instance;
             that.Title = (global::System.String)Value;
+        }
+        private object get_56_ProgressRing_IsActive(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
+            return that.IsActive;
+        }
+        private void set_56_ProgressRing_IsActive(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
+            that.IsActive = (global::System.Boolean)Value;
+        }
+        private object get_57_ProgressRing_IsIndeterminate(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
+            return that.IsIndeterminate;
+        }
+        private void set_57_ProgressRing_IsIndeterminate(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
+            that.IsIndeterminate = (global::System.Boolean)Value;
+        }
+        private object get_58_ProgressRing_Maximum(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
+            return that.Maximum;
+        }
+        private void set_58_ProgressRing_Maximum(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
+            that.Maximum = (global::System.Double)Value;
+        }
+        private object get_59_ProgressRing_Minimum(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
+            return that.Minimum;
+        }
+        private void set_59_ProgressRing_Minimum(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
+            that.Minimum = (global::System.Double)Value;
+        }
+        private object get_60_ProgressRing_TemplateSettings(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
+            return that.TemplateSettings;
+        }
+        private object get_61_ProgressRing_Value(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
+            return that.Value;
+        }
+        private void set_61_ProgressRing_Value(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressRing)instance;
+            that.Value = (global::System.Double)Value;
+        }
+        private object get_62_NavigationViewItem_Icon(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
+            return that.Icon;
+        }
+        private void set_62_NavigationViewItem_Icon(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
+            that.Icon = (global::Microsoft.UI.Xaml.Controls.IconElement)Value;
+        }
+        private object get_63_NavigationViewItem_CompactPaneLength(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
+            return that.CompactPaneLength;
+        }
+        private object get_64_NavigationViewItem_HasUnrealizedChildren(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
+            return that.HasUnrealizedChildren;
+        }
+        private void set_64_NavigationViewItem_HasUnrealizedChildren(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
+            that.HasUnrealizedChildren = (global::System.Boolean)Value;
+        }
+        private object get_65_NavigationViewItem_InfoBadge(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
+            return that.InfoBadge;
+        }
+        private void set_65_NavigationViewItem_InfoBadge(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
+            that.InfoBadge = (global::Microsoft.UI.Xaml.Controls.InfoBadge)Value;
+        }
+        private object get_66_NavigationViewItem_IsChildSelected(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
+            return that.IsChildSelected;
+        }
+        private void set_66_NavigationViewItem_IsChildSelected(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
+            that.IsChildSelected = (global::System.Boolean)Value;
+        }
+        private object get_67_NavigationViewItem_IsExpanded(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
+            return that.IsExpanded;
+        }
+        private void set_67_NavigationViewItem_IsExpanded(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
+            that.IsExpanded = (global::System.Boolean)Value;
+        }
+        private object get_68_NavigationViewItem_MenuItems(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
+            return that.MenuItems;
+        }
+        private object get_69_NavigationViewItem_MenuItemsSource(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
+            return that.MenuItemsSource;
+        }
+        private void set_69_NavigationViewItem_MenuItemsSource(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
+            that.MenuItemsSource = (global::System.Object)Value;
+        }
+        private object get_70_NavigationViewItem_SelectsOnInvoked(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
+            return that.SelectsOnInvoked;
+        }
+        private void set_70_NavigationViewItem_SelectsOnInvoked(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItem)instance;
+            that.SelectsOnInvoked = (global::System.Boolean)Value;
+        }
+        private object get_71_NavigationViewItemBase_IsSelected(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItemBase)instance;
+            return that.IsSelected;
+        }
+        private void set_71_NavigationViewItemBase_IsSelected(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.NavigationViewItemBase)instance;
+            that.IsSelected = (global::System.Boolean)Value;
+        }
+        private object get_72_ProgressBar_IsIndeterminate(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressBar)instance;
+            return that.IsIndeterminate;
+        }
+        private void set_72_ProgressBar_IsIndeterminate(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressBar)instance;
+            that.IsIndeterminate = (global::System.Boolean)Value;
+        }
+        private object get_73_ProgressBar_ShowError(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressBar)instance;
+            return that.ShowError;
+        }
+        private void set_73_ProgressBar_ShowError(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressBar)instance;
+            that.ShowError = (global::System.Boolean)Value;
+        }
+        private object get_74_ProgressBar_ShowPaused(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressBar)instance;
+            return that.ShowPaused;
+        }
+        private void set_74_ProgressBar_ShowPaused(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressBar)instance;
+            that.ShowPaused = (global::System.Boolean)Value;
+        }
+        private object get_75_ProgressBar_TemplateSettings(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.ProgressBar)instance;
+            return that.TemplateSettings;
+        }
+        private object get_76_AuthorizationCaptureBatchDialog_ViewModel(object instance)
+        {
+            var that = (global::Magidesk.Views.AuthorizationCaptureBatchDialog)instance;
+            return that.ViewModel;
+        }
+        private object get_77_RadioButtons_Items(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
+            return that.Items;
+        }
+        private object get_78_RadioButtons_MaxColumns(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
+            return that.MaxColumns;
+        }
+        private void set_78_RadioButtons_MaxColumns(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
+            that.MaxColumns = (global::System.Int32)Value;
+        }
+        private object get_79_RadioButtons_Header(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
+            return that.Header;
+        }
+        private void set_79_RadioButtons_Header(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
+            that.Header = (global::System.Object)Value;
+        }
+        private object get_80_RadioButtons_HeaderTemplate(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
+            return that.HeaderTemplate;
+        }
+        private void set_80_RadioButtons_HeaderTemplate(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
+            that.HeaderTemplate = (global::Microsoft.UI.Xaml.DataTemplate)Value;
+        }
+        private object get_81_RadioButtons_ItemTemplate(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
+            return that.ItemTemplate;
+        }
+        private void set_81_RadioButtons_ItemTemplate(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
+            that.ItemTemplate = (global::System.Object)Value;
+        }
+        private object get_82_RadioButtons_ItemsSource(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
+            return that.ItemsSource;
+        }
+        private void set_82_RadioButtons_ItemsSource(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
+            that.ItemsSource = (global::System.Object)Value;
+        }
+        private object get_83_RadioButtons_SelectedIndex(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
+            return that.SelectedIndex;
+        }
+        private void set_83_RadioButtons_SelectedIndex(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
+            that.SelectedIndex = (global::System.Int32)Value;
+        }
+        private object get_84_RadioButtons_SelectedItem(object instance)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
+            return that.SelectedItem;
+        }
+        private void set_84_RadioButtons_SelectedItem(object instance, object Value)
+        {
+            var that = (global::Microsoft.UI.Xaml.Controls.RadioButtons)instance;
+            that.SelectedItem = (global::System.Object)Value;
+        }
+        private object get_85_AuthorizationCodeDialog_ViewModel(object instance)
+        {
+            var that = (global::Magidesk.Views.AuthorizationCodeDialog)instance;
+            return that.ViewModel;
+        }
+        private object get_86_BackOfficePage_ViewModel(object instance)
+        {
+            var that = (global::Magidesk.Presentation.Views.BackOfficePage)instance;
+            return that.ViewModel;
+        }
+        private object get_87_CashDropManagementDialog_ViewModel(object instance)
+        {
+            var that = (global::Magidesk.Presentation.Views.CashDropManagementDialog)instance;
+            return that.ViewModel;
+        }
+        private object get_88_CashEntryDialog_Amount(object instance)
+        {
+            var that = (global::Magidesk.Presentation.Views.CashEntryDialog)instance;
+            return that.Amount;
+        }
+        private object get_89_CashEntryDialog_Reason(object instance)
+        {
+            var that = (global::Magidesk.Presentation.Views.CashEntryDialog)instance;
+            return that.Reason;
         }
         private object get_90_CashSessionPage_ViewModel(object instance)
         {
@@ -4318,77 +4342,82 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
             var that = (global::Microsoft.UI.Xaml.Controls.WebView2)instance;
             that.Source = (global::System.Uri)Value;
         }
-        private object get_174_TicketManagementPage_ViewModel(object instance)
+        private object get_174_TemplateEditorPage_ViewModel(object instance)
+        {
+            var that = (global::Magidesk.Presentation.Views.TemplateEditorPage)instance;
+            return that.ViewModel;
+        }
+        private object get_175_TicketManagementPage_ViewModel(object instance)
         {
             var that = (global::Magidesk.Presentation.Views.TicketManagementPage)instance;
             return that.ViewModel;
         }
-        private object get_175_TicketPage_ViewModel(object instance)
+        private object get_176_TicketPage_ViewModel(object instance)
         {
             var that = (global::Magidesk.Presentation.Views.TicketPage)instance;
             return that.ViewModel;
         }
-        private object get_176_UserManagementPage_ViewModel(object instance)
+        private object get_177_UserManagementPage_ViewModel(object instance)
         {
             var that = (global::Magidesk.Presentation.Views.UserManagementPage)instance;
             return that.ViewModel;
         }
-        private object get_177_VendorsPage_ViewModel(object instance)
+        private object get_178_VendorsPage_ViewModel(object instance)
         {
             var that = (global::Magidesk.Presentation.Views.VendorsPage)instance;
             return that.ViewModel;
         }
-        private object get_178_VoidTicketDialog_ViewModel(object instance)
+        private object get_179_VoidTicketDialog_ViewModel(object instance)
         {
             var that = (global::Magidesk.Presentation.Views.VoidTicketDialog)instance;
             return that.ViewModel;
         }
-        private object get_179_TreeViewNode_Children(object instance)
+        private object get_180_TreeViewNode_Children(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.TreeViewNode)instance;
             return that.Children;
         }
-        private object get_180_TreeViewNode_Content(object instance)
+        private object get_181_TreeViewNode_Content(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.TreeViewNode)instance;
             return that.Content;
         }
-        private void set_180_TreeViewNode_Content(object instance, object Value)
+        private void set_181_TreeViewNode_Content(object instance, object Value)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.TreeViewNode)instance;
             that.Content = (global::System.Object)Value;
         }
-        private object get_181_TreeViewNode_Depth(object instance)
+        private object get_182_TreeViewNode_Depth(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.TreeViewNode)instance;
             return that.Depth;
         }
-        private object get_182_TreeViewNode_HasChildren(object instance)
+        private object get_183_TreeViewNode_HasChildren(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.TreeViewNode)instance;
             return that.HasChildren;
         }
-        private object get_183_TreeViewNode_HasUnrealizedChildren(object instance)
+        private object get_184_TreeViewNode_HasUnrealizedChildren(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.TreeViewNode)instance;
             return that.HasUnrealizedChildren;
         }
-        private void set_183_TreeViewNode_HasUnrealizedChildren(object instance, object Value)
+        private void set_184_TreeViewNode_HasUnrealizedChildren(object instance, object Value)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.TreeViewNode)instance;
             that.HasUnrealizedChildren = (global::System.Boolean)Value;
         }
-        private object get_184_TreeViewNode_IsExpanded(object instance)
+        private object get_185_TreeViewNode_IsExpanded(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.TreeViewNode)instance;
             return that.IsExpanded;
         }
-        private void set_184_TreeViewNode_IsExpanded(object instance, object Value)
+        private void set_185_TreeViewNode_IsExpanded(object instance, object Value)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.TreeViewNode)instance;
             that.IsExpanded = (global::System.Boolean)Value;
         }
-        private object get_185_TreeViewNode_Parent(object instance)
+        private object get_186_TreeViewNode_Parent(object instance)
         {
             var that = (global::Microsoft.UI.Xaml.Controls.TreeViewNode)instance;
             return that.Parent;
@@ -4691,333 +4720,333 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
                 xamlMember.Getter = get_41_NavigationView_TemplateSettings;
                 xamlMember.SetIsReadOnly();
                 break;
-            case "Microsoft.UI.Xaml.Controls.ProgressRing.IsActive":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressRing");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsActive", "Boolean");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_42_ProgressRing_IsActive;
-                xamlMember.Setter = set_42_ProgressRing_IsActive;
-                break;
-            case "Microsoft.UI.Xaml.Controls.ProgressRing.IsIndeterminate":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressRing");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsIndeterminate", "Boolean");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_43_ProgressRing_IsIndeterminate;
-                xamlMember.Setter = set_43_ProgressRing_IsIndeterminate;
-                break;
-            case "Microsoft.UI.Xaml.Controls.ProgressRing.Maximum":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressRing");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Maximum", "Double");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_44_ProgressRing_Maximum;
-                xamlMember.Setter = set_44_ProgressRing_Maximum;
-                break;
-            case "Microsoft.UI.Xaml.Controls.ProgressRing.Minimum":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressRing");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Minimum", "Double");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_45_ProgressRing_Minimum;
-                xamlMember.Setter = set_45_ProgressRing_Minimum;
-                break;
-            case "Microsoft.UI.Xaml.Controls.ProgressRing.TemplateSettings":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressRing");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "TemplateSettings", "Microsoft.UI.Xaml.Controls.ProgressRingTemplateSettings");
-                xamlMember.Getter = get_46_ProgressRing_TemplateSettings;
-                xamlMember.SetIsReadOnly();
-                break;
-            case "Microsoft.UI.Xaml.Controls.ProgressRing.Value":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressRing");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Value", "Double");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_47_ProgressRing_Value;
-                xamlMember.Setter = set_47_ProgressRing_Value;
-                break;
-            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.Icon":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Icon", "Microsoft.UI.Xaml.Controls.IconElement");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_48_NavigationViewItem_Icon;
-                xamlMember.Setter = set_48_NavigationViewItem_Icon;
-                break;
-            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.CompactPaneLength":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "CompactPaneLength", "Double");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_49_NavigationViewItem_CompactPaneLength;
-                xamlMember.SetIsReadOnly();
-                break;
-            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.HasUnrealizedChildren":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "HasUnrealizedChildren", "Boolean");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_50_NavigationViewItem_HasUnrealizedChildren;
-                xamlMember.Setter = set_50_NavigationViewItem_HasUnrealizedChildren;
-                break;
-            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.InfoBadge":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "InfoBadge", "Microsoft.UI.Xaml.Controls.InfoBadge");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_51_NavigationViewItem_InfoBadge;
-                xamlMember.Setter = set_51_NavigationViewItem_InfoBadge;
-                break;
-            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.IsChildSelected":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsChildSelected", "Boolean");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_52_NavigationViewItem_IsChildSelected;
-                xamlMember.Setter = set_52_NavigationViewItem_IsChildSelected;
-                break;
-            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.IsExpanded":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsExpanded", "Boolean");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_53_NavigationViewItem_IsExpanded;
-                xamlMember.Setter = set_53_NavigationViewItem_IsExpanded;
-                break;
-            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.MenuItems":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "MenuItems", "System.Collections.Generic.IList`1<Object>");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_54_NavigationViewItem_MenuItems;
-                xamlMember.SetIsReadOnly();
-                break;
-            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.MenuItemsSource":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "MenuItemsSource", "Object");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_55_NavigationViewItem_MenuItemsSource;
-                xamlMember.Setter = set_55_NavigationViewItem_MenuItemsSource;
-                break;
-            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.SelectsOnInvoked":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "SelectsOnInvoked", "Boolean");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_56_NavigationViewItem_SelectsOnInvoked;
-                xamlMember.Setter = set_56_NavigationViewItem_SelectsOnInvoked;
-                break;
-            case "Microsoft.UI.Xaml.Controls.NavigationViewItemBase.IsSelected":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItemBase");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsSelected", "Boolean");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_57_NavigationViewItemBase_IsSelected;
-                xamlMember.Setter = set_57_NavigationViewItemBase_IsSelected;
-                break;
-            case "Microsoft.UI.Xaml.Controls.ProgressBar.IsIndeterminate":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressBar");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsIndeterminate", "Boolean");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_58_ProgressBar_IsIndeterminate;
-                xamlMember.Setter = set_58_ProgressBar_IsIndeterminate;
-                break;
-            case "Microsoft.UI.Xaml.Controls.ProgressBar.ShowError":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressBar");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ShowError", "Boolean");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_59_ProgressBar_ShowError;
-                xamlMember.Setter = set_59_ProgressBar_ShowError;
-                break;
-            case "Microsoft.UI.Xaml.Controls.ProgressBar.ShowPaused":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressBar");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ShowPaused", "Boolean");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_60_ProgressBar_ShowPaused;
-                xamlMember.Setter = set_60_ProgressBar_ShowPaused;
-                break;
-            case "Microsoft.UI.Xaml.Controls.ProgressBar.TemplateSettings":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressBar");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "TemplateSettings", "Microsoft.UI.Xaml.Controls.ProgressBarTemplateSettings");
-                xamlMember.Getter = get_61_ProgressBar_TemplateSettings;
-                xamlMember.SetIsReadOnly();
-                break;
-            case "Magidesk.Views.AuthorizationCaptureBatchDialog.ViewModel":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Views.AuthorizationCaptureBatchDialog");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ViewModel", "Magidesk.Presentation.ViewModels.AuthorizationCaptureBatchViewModel");
-                xamlMember.Getter = get_62_AuthorizationCaptureBatchDialog_ViewModel;
-                xamlMember.SetIsReadOnly();
-                break;
-            case "Microsoft.UI.Xaml.Controls.RadioButtons.Items":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.RadioButtons");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Items", "System.Collections.Generic.IList`1<Object>");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_63_RadioButtons_Items;
-                xamlMember.SetIsReadOnly();
-                break;
-            case "Microsoft.UI.Xaml.Controls.RadioButtons.MaxColumns":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.RadioButtons");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "MaxColumns", "Int32");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_64_RadioButtons_MaxColumns;
-                xamlMember.Setter = set_64_RadioButtons_MaxColumns;
-                break;
-            case "Microsoft.UI.Xaml.Controls.RadioButtons.Header":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.RadioButtons");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Header", "Object");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_65_RadioButtons_Header;
-                xamlMember.Setter = set_65_RadioButtons_Header;
-                break;
-            case "Microsoft.UI.Xaml.Controls.RadioButtons.HeaderTemplate":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.RadioButtons");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "HeaderTemplate", "Microsoft.UI.Xaml.DataTemplate");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_66_RadioButtons_HeaderTemplate;
-                xamlMember.Setter = set_66_RadioButtons_HeaderTemplate;
-                break;
-            case "Microsoft.UI.Xaml.Controls.RadioButtons.ItemTemplate":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.RadioButtons");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ItemTemplate", "Object");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_67_RadioButtons_ItemTemplate;
-                xamlMember.Setter = set_67_RadioButtons_ItemTemplate;
-                break;
-            case "Microsoft.UI.Xaml.Controls.RadioButtons.ItemsSource":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.RadioButtons");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ItemsSource", "Object");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_68_RadioButtons_ItemsSource;
-                xamlMember.Setter = set_68_RadioButtons_ItemsSource;
-                break;
-            case "Microsoft.UI.Xaml.Controls.RadioButtons.SelectedIndex":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.RadioButtons");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "SelectedIndex", "Int32");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_69_RadioButtons_SelectedIndex;
-                xamlMember.Setter = set_69_RadioButtons_SelectedIndex;
-                break;
-            case "Microsoft.UI.Xaml.Controls.RadioButtons.SelectedItem":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.RadioButtons");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "SelectedItem", "Object");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_70_RadioButtons_SelectedItem;
-                xamlMember.Setter = set_70_RadioButtons_SelectedItem;
-                break;
-            case "Magidesk.Views.AuthorizationCodeDialog.ViewModel":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Views.AuthorizationCodeDialog");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ViewModel", "Magidesk.Presentation.ViewModels.AuthorizationCodeViewModel");
-                xamlMember.Getter = get_71_AuthorizationCodeDialog_ViewModel;
-                xamlMember.SetIsReadOnly();
-                break;
-            case "Magidesk.Presentation.Views.BackOfficePage.ViewModel":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Presentation.Views.BackOfficePage");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ViewModel", "Magidesk.Presentation.ViewModels.BackOfficeViewModel");
-                xamlMember.Getter = get_72_BackOfficePage_ViewModel;
-                xamlMember.SetIsReadOnly();
-                break;
-            case "Magidesk.Presentation.Views.CashDropManagementDialog.ViewModel":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Presentation.Views.CashDropManagementDialog");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ViewModel", "Magidesk.Presentation.ViewModels.CashDropManagementViewModel");
-                xamlMember.Getter = get_73_CashDropManagementDialog_ViewModel;
-                xamlMember.SetIsReadOnly();
-                break;
-            case "Magidesk.Presentation.Views.CashEntryDialog.Amount":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Presentation.Views.CashEntryDialog");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Amount", "System.Decimal");
-                xamlMember.Getter = get_74_CashEntryDialog_Amount;
-                xamlMember.SetIsReadOnly();
-                break;
-            case "Magidesk.Presentation.Views.CashEntryDialog.Reason":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Presentation.Views.CashEntryDialog");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Reason", "String");
-                xamlMember.Getter = get_75_CashEntryDialog_Reason;
-                xamlMember.SetIsReadOnly();
-                break;
             case "Microsoft.UI.Xaml.Controls.InfoBar.Content":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.InfoBar");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Content", "Object");
                 xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_76_InfoBar_Content;
-                xamlMember.Setter = set_76_InfoBar_Content;
-                break;
-            case "Microsoft.UI.Xaml.Controls.InfoBar.IsOpen":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.InfoBar");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsOpen", "Boolean");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_77_InfoBar_IsOpen;
-                xamlMember.Setter = set_77_InfoBar_IsOpen;
-                break;
-            case "Microsoft.UI.Xaml.Controls.InfoBar.IsClosable":
-                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.InfoBar");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsClosable", "Boolean");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_78_InfoBar_IsClosable;
-                xamlMember.Setter = set_78_InfoBar_IsClosable;
+                xamlMember.Getter = get_42_InfoBar_Content;
+                xamlMember.Setter = set_42_InfoBar_Content;
                 break;
             case "Microsoft.UI.Xaml.Controls.InfoBar.Severity":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.InfoBar");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Severity", "Microsoft.UI.Xaml.Controls.InfoBarSeverity");
                 xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_79_InfoBar_Severity;
-                xamlMember.Setter = set_79_InfoBar_Severity;
+                xamlMember.Getter = get_43_InfoBar_Severity;
+                xamlMember.Setter = set_43_InfoBar_Severity;
                 break;
-            case "Microsoft.UI.Xaml.Controls.InfoBar.Message":
+            case "Microsoft.UI.Xaml.Controls.InfoBar.IsOpen":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.InfoBar");
-                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Message", "String");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsOpen", "Boolean");
                 xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_80_InfoBar_Message;
-                xamlMember.Setter = set_80_InfoBar_Message;
+                xamlMember.Getter = get_44_InfoBar_IsOpen;
+                xamlMember.Setter = set_44_InfoBar_IsOpen;
+                break;
+            case "Microsoft.UI.Xaml.Controls.InfoBar.IsClosable":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.InfoBar");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsClosable", "Boolean");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_45_InfoBar_IsClosable;
+                xamlMember.Setter = set_45_InfoBar_IsClosable;
                 break;
             case "Microsoft.UI.Xaml.Controls.InfoBar.ActionButton":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.InfoBar");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ActionButton", "Microsoft.UI.Xaml.Controls.Primitives.ButtonBase");
                 xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_81_InfoBar_ActionButton;
-                xamlMember.Setter = set_81_InfoBar_ActionButton;
+                xamlMember.Getter = get_46_InfoBar_ActionButton;
+                xamlMember.Setter = set_46_InfoBar_ActionButton;
                 break;
             case "Microsoft.UI.Xaml.Controls.InfoBar.CloseButtonCommand":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.InfoBar");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "CloseButtonCommand", "System.Windows.Input.ICommand");
                 xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_82_InfoBar_CloseButtonCommand;
-                xamlMember.Setter = set_82_InfoBar_CloseButtonCommand;
+                xamlMember.Getter = get_47_InfoBar_CloseButtonCommand;
+                xamlMember.Setter = set_47_InfoBar_CloseButtonCommand;
                 break;
             case "Microsoft.UI.Xaml.Controls.InfoBar.CloseButtonCommandParameter":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.InfoBar");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "CloseButtonCommandParameter", "Object");
                 xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_83_InfoBar_CloseButtonCommandParameter;
-                xamlMember.Setter = set_83_InfoBar_CloseButtonCommandParameter;
+                xamlMember.Getter = get_48_InfoBar_CloseButtonCommandParameter;
+                xamlMember.Setter = set_48_InfoBar_CloseButtonCommandParameter;
                 break;
             case "Microsoft.UI.Xaml.Controls.InfoBar.CloseButtonStyle":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.InfoBar");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "CloseButtonStyle", "Microsoft.UI.Xaml.Style");
                 xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_84_InfoBar_CloseButtonStyle;
-                xamlMember.Setter = set_84_InfoBar_CloseButtonStyle;
+                xamlMember.Getter = get_49_InfoBar_CloseButtonStyle;
+                xamlMember.Setter = set_49_InfoBar_CloseButtonStyle;
                 break;
             case "Microsoft.UI.Xaml.Controls.InfoBar.ContentTemplate":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.InfoBar");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ContentTemplate", "Microsoft.UI.Xaml.DataTemplate");
                 xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_85_InfoBar_ContentTemplate;
-                xamlMember.Setter = set_85_InfoBar_ContentTemplate;
+                xamlMember.Getter = get_50_InfoBar_ContentTemplate;
+                xamlMember.Setter = set_50_InfoBar_ContentTemplate;
                 break;
             case "Microsoft.UI.Xaml.Controls.InfoBar.IconSource":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.InfoBar");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IconSource", "Microsoft.UI.Xaml.Controls.IconSource");
                 xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_86_InfoBar_IconSource;
-                xamlMember.Setter = set_86_InfoBar_IconSource;
+                xamlMember.Getter = get_51_InfoBar_IconSource;
+                xamlMember.Setter = set_51_InfoBar_IconSource;
                 break;
             case "Microsoft.UI.Xaml.Controls.InfoBar.IsIconVisible":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.InfoBar");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsIconVisible", "Boolean");
                 xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_87_InfoBar_IsIconVisible;
-                xamlMember.Setter = set_87_InfoBar_IsIconVisible;
+                xamlMember.Getter = get_52_InfoBar_IsIconVisible;
+                xamlMember.Setter = set_52_InfoBar_IsIconVisible;
+                break;
+            case "Microsoft.UI.Xaml.Controls.InfoBar.Message":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.InfoBar");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Message", "String");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_53_InfoBar_Message;
+                xamlMember.Setter = set_53_InfoBar_Message;
                 break;
             case "Microsoft.UI.Xaml.Controls.InfoBar.TemplateSettings":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.InfoBar");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "TemplateSettings", "Microsoft.UI.Xaml.Controls.InfoBarTemplateSettings");
                 xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_88_InfoBar_TemplateSettings;
+                xamlMember.Getter = get_54_InfoBar_TemplateSettings;
                 xamlMember.SetIsReadOnly();
                 break;
             case "Microsoft.UI.Xaml.Controls.InfoBar.Title":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.InfoBar");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Title", "String");
                 xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_89_InfoBar_Title;
-                xamlMember.Setter = set_89_InfoBar_Title;
+                xamlMember.Getter = get_55_InfoBar_Title;
+                xamlMember.Setter = set_55_InfoBar_Title;
+                break;
+            case "Microsoft.UI.Xaml.Controls.ProgressRing.IsActive":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressRing");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsActive", "Boolean");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_56_ProgressRing_IsActive;
+                xamlMember.Setter = set_56_ProgressRing_IsActive;
+                break;
+            case "Microsoft.UI.Xaml.Controls.ProgressRing.IsIndeterminate":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressRing");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsIndeterminate", "Boolean");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_57_ProgressRing_IsIndeterminate;
+                xamlMember.Setter = set_57_ProgressRing_IsIndeterminate;
+                break;
+            case "Microsoft.UI.Xaml.Controls.ProgressRing.Maximum":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressRing");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Maximum", "Double");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_58_ProgressRing_Maximum;
+                xamlMember.Setter = set_58_ProgressRing_Maximum;
+                break;
+            case "Microsoft.UI.Xaml.Controls.ProgressRing.Minimum":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressRing");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Minimum", "Double");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_59_ProgressRing_Minimum;
+                xamlMember.Setter = set_59_ProgressRing_Minimum;
+                break;
+            case "Microsoft.UI.Xaml.Controls.ProgressRing.TemplateSettings":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressRing");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "TemplateSettings", "Microsoft.UI.Xaml.Controls.ProgressRingTemplateSettings");
+                xamlMember.Getter = get_60_ProgressRing_TemplateSettings;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "Microsoft.UI.Xaml.Controls.ProgressRing.Value":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressRing");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Value", "Double");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_61_ProgressRing_Value;
+                xamlMember.Setter = set_61_ProgressRing_Value;
+                break;
+            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.Icon":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Icon", "Microsoft.UI.Xaml.Controls.IconElement");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_62_NavigationViewItem_Icon;
+                xamlMember.Setter = set_62_NavigationViewItem_Icon;
+                break;
+            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.CompactPaneLength":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "CompactPaneLength", "Double");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_63_NavigationViewItem_CompactPaneLength;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.HasUnrealizedChildren":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "HasUnrealizedChildren", "Boolean");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_64_NavigationViewItem_HasUnrealizedChildren;
+                xamlMember.Setter = set_64_NavigationViewItem_HasUnrealizedChildren;
+                break;
+            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.InfoBadge":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "InfoBadge", "Microsoft.UI.Xaml.Controls.InfoBadge");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_65_NavigationViewItem_InfoBadge;
+                xamlMember.Setter = set_65_NavigationViewItem_InfoBadge;
+                break;
+            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.IsChildSelected":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsChildSelected", "Boolean");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_66_NavigationViewItem_IsChildSelected;
+                xamlMember.Setter = set_66_NavigationViewItem_IsChildSelected;
+                break;
+            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.IsExpanded":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsExpanded", "Boolean");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_67_NavigationViewItem_IsExpanded;
+                xamlMember.Setter = set_67_NavigationViewItem_IsExpanded;
+                break;
+            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.MenuItems":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "MenuItems", "System.Collections.Generic.IList`1<Object>");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_68_NavigationViewItem_MenuItems;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.MenuItemsSource":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "MenuItemsSource", "Object");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_69_NavigationViewItem_MenuItemsSource;
+                xamlMember.Setter = set_69_NavigationViewItem_MenuItemsSource;
+                break;
+            case "Microsoft.UI.Xaml.Controls.NavigationViewItem.SelectsOnInvoked":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItem");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "SelectsOnInvoked", "Boolean");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_70_NavigationViewItem_SelectsOnInvoked;
+                xamlMember.Setter = set_70_NavigationViewItem_SelectsOnInvoked;
+                break;
+            case "Microsoft.UI.Xaml.Controls.NavigationViewItemBase.IsSelected":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationViewItemBase");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsSelected", "Boolean");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_71_NavigationViewItemBase_IsSelected;
+                xamlMember.Setter = set_71_NavigationViewItemBase_IsSelected;
+                break;
+            case "Microsoft.UI.Xaml.Controls.ProgressBar.IsIndeterminate":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressBar");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsIndeterminate", "Boolean");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_72_ProgressBar_IsIndeterminate;
+                xamlMember.Setter = set_72_ProgressBar_IsIndeterminate;
+                break;
+            case "Microsoft.UI.Xaml.Controls.ProgressBar.ShowError":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressBar");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ShowError", "Boolean");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_73_ProgressBar_ShowError;
+                xamlMember.Setter = set_73_ProgressBar_ShowError;
+                break;
+            case "Microsoft.UI.Xaml.Controls.ProgressBar.ShowPaused":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressBar");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ShowPaused", "Boolean");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_74_ProgressBar_ShowPaused;
+                xamlMember.Setter = set_74_ProgressBar_ShowPaused;
+                break;
+            case "Microsoft.UI.Xaml.Controls.ProgressBar.TemplateSettings":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.ProgressBar");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "TemplateSettings", "Microsoft.UI.Xaml.Controls.ProgressBarTemplateSettings");
+                xamlMember.Getter = get_75_ProgressBar_TemplateSettings;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "Magidesk.Views.AuthorizationCaptureBatchDialog.ViewModel":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Views.AuthorizationCaptureBatchDialog");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ViewModel", "Magidesk.Presentation.ViewModels.AuthorizationCaptureBatchViewModel");
+                xamlMember.Getter = get_76_AuthorizationCaptureBatchDialog_ViewModel;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "Microsoft.UI.Xaml.Controls.RadioButtons.Items":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.RadioButtons");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Items", "System.Collections.Generic.IList`1<Object>");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_77_RadioButtons_Items;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "Microsoft.UI.Xaml.Controls.RadioButtons.MaxColumns":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.RadioButtons");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "MaxColumns", "Int32");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_78_RadioButtons_MaxColumns;
+                xamlMember.Setter = set_78_RadioButtons_MaxColumns;
+                break;
+            case "Microsoft.UI.Xaml.Controls.RadioButtons.Header":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.RadioButtons");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Header", "Object");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_79_RadioButtons_Header;
+                xamlMember.Setter = set_79_RadioButtons_Header;
+                break;
+            case "Microsoft.UI.Xaml.Controls.RadioButtons.HeaderTemplate":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.RadioButtons");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "HeaderTemplate", "Microsoft.UI.Xaml.DataTemplate");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_80_RadioButtons_HeaderTemplate;
+                xamlMember.Setter = set_80_RadioButtons_HeaderTemplate;
+                break;
+            case "Microsoft.UI.Xaml.Controls.RadioButtons.ItemTemplate":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.RadioButtons");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ItemTemplate", "Object");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_81_RadioButtons_ItemTemplate;
+                xamlMember.Setter = set_81_RadioButtons_ItemTemplate;
+                break;
+            case "Microsoft.UI.Xaml.Controls.RadioButtons.ItemsSource":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.RadioButtons");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ItemsSource", "Object");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_82_RadioButtons_ItemsSource;
+                xamlMember.Setter = set_82_RadioButtons_ItemsSource;
+                break;
+            case "Microsoft.UI.Xaml.Controls.RadioButtons.SelectedIndex":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.RadioButtons");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "SelectedIndex", "Int32");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_83_RadioButtons_SelectedIndex;
+                xamlMember.Setter = set_83_RadioButtons_SelectedIndex;
+                break;
+            case "Microsoft.UI.Xaml.Controls.RadioButtons.SelectedItem":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.RadioButtons");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "SelectedItem", "Object");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_84_RadioButtons_SelectedItem;
+                xamlMember.Setter = set_84_RadioButtons_SelectedItem;
+                break;
+            case "Magidesk.Views.AuthorizationCodeDialog.ViewModel":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Views.AuthorizationCodeDialog");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ViewModel", "Magidesk.Presentation.ViewModels.AuthorizationCodeViewModel");
+                xamlMember.Getter = get_85_AuthorizationCodeDialog_ViewModel;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "Magidesk.Presentation.Views.BackOfficePage.ViewModel":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Presentation.Views.BackOfficePage");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ViewModel", "Magidesk.Presentation.ViewModels.BackOfficeViewModel");
+                xamlMember.Getter = get_86_BackOfficePage_ViewModel;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "Magidesk.Presentation.Views.CashDropManagementDialog.ViewModel":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Presentation.Views.CashDropManagementDialog");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ViewModel", "Magidesk.Presentation.ViewModels.CashDropManagementViewModel");
+                xamlMember.Getter = get_87_CashDropManagementDialog_ViewModel;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "Magidesk.Presentation.Views.CashEntryDialog.Amount":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Presentation.Views.CashEntryDialog");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Amount", "System.Decimal");
+                xamlMember.Getter = get_88_CashEntryDialog_Amount;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "Magidesk.Presentation.Views.CashEntryDialog.Reason":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Presentation.Views.CashEntryDialog");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Reason", "String");
+                xamlMember.Getter = get_89_CashEntryDialog_Reason;
+                xamlMember.SetIsReadOnly();
                 break;
             case "Magidesk.Presentation.Views.CashSessionPage.ViewModel":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Presentation.Views.CashSessionPage");
@@ -5546,80 +5575,86 @@ namespace Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo
                 xamlMember.Getter = get_173_WebView2_Source;
                 xamlMember.Setter = set_173_WebView2_Source;
                 break;
+            case "Magidesk.Presentation.Views.TemplateEditorPage.ViewModel":
+                userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Presentation.Views.TemplateEditorPage");
+                xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ViewModel", "Magidesk.Presentation.ViewModels.TemplateEditorViewModel");
+                xamlMember.Getter = get_174_TemplateEditorPage_ViewModel;
+                xamlMember.SetIsReadOnly();
+                break;
             case "Magidesk.Presentation.Views.TicketManagementPage.ViewModel":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Presentation.Views.TicketManagementPage");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ViewModel", "Magidesk.Presentation.ViewModels.TicketManagementViewModel");
-                xamlMember.Getter = get_174_TicketManagementPage_ViewModel;
+                xamlMember.Getter = get_175_TicketManagementPage_ViewModel;
                 xamlMember.SetIsReadOnly();
                 break;
             case "Magidesk.Presentation.Views.TicketPage.ViewModel":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Presentation.Views.TicketPage");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ViewModel", "Magidesk.Presentation.ViewModels.TicketViewModel");
-                xamlMember.Getter = get_175_TicketPage_ViewModel;
+                xamlMember.Getter = get_176_TicketPage_ViewModel;
                 xamlMember.SetIsReadOnly();
                 break;
             case "Magidesk.Presentation.Views.UserManagementPage.ViewModel":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Presentation.Views.UserManagementPage");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ViewModel", "Magidesk.Presentation.ViewModels.UserManagementViewModel");
-                xamlMember.Getter = get_176_UserManagementPage_ViewModel;
+                xamlMember.Getter = get_177_UserManagementPage_ViewModel;
                 xamlMember.SetIsReadOnly();
                 break;
             case "Magidesk.Presentation.Views.VendorsPage.ViewModel":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Presentation.Views.VendorsPage");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ViewModel", "Magidesk.Presentation.ViewModels.VendorManagementViewModel");
-                xamlMember.Getter = get_177_VendorsPage_ViewModel;
+                xamlMember.Getter = get_178_VendorsPage_ViewModel;
                 xamlMember.SetIsReadOnly();
                 break;
             case "Magidesk.Presentation.Views.VoidTicketDialog.ViewModel":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Magidesk.Presentation.Views.VoidTicketDialog");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "ViewModel", "Magidesk.Presentation.ViewModels.VoidTicketViewModel");
-                xamlMember.Getter = get_178_VoidTicketDialog_ViewModel;
+                xamlMember.Getter = get_179_VoidTicketDialog_ViewModel;
                 xamlMember.SetIsReadOnly();
                 break;
             case "Microsoft.UI.Xaml.Controls.TreeViewNode.Children":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.TreeViewNode");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Children", "System.Collections.Generic.IList`1<Microsoft.UI.Xaml.Controls.TreeViewNode>");
-                xamlMember.Getter = get_179_TreeViewNode_Children;
+                xamlMember.Getter = get_180_TreeViewNode_Children;
                 xamlMember.SetIsReadOnly();
                 break;
             case "Microsoft.UI.Xaml.Controls.TreeViewNode.Content":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.TreeViewNode");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Content", "Object");
                 xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_180_TreeViewNode_Content;
-                xamlMember.Setter = set_180_TreeViewNode_Content;
+                xamlMember.Getter = get_181_TreeViewNode_Content;
+                xamlMember.Setter = set_181_TreeViewNode_Content;
                 break;
             case "Microsoft.UI.Xaml.Controls.TreeViewNode.Depth":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.TreeViewNode");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Depth", "Int32");
                 xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_181_TreeViewNode_Depth;
+                xamlMember.Getter = get_182_TreeViewNode_Depth;
                 xamlMember.SetIsReadOnly();
                 break;
             case "Microsoft.UI.Xaml.Controls.TreeViewNode.HasChildren":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.TreeViewNode");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "HasChildren", "Boolean");
                 xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_182_TreeViewNode_HasChildren;
+                xamlMember.Getter = get_183_TreeViewNode_HasChildren;
                 xamlMember.SetIsReadOnly();
                 break;
             case "Microsoft.UI.Xaml.Controls.TreeViewNode.HasUnrealizedChildren":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.TreeViewNode");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "HasUnrealizedChildren", "Boolean");
-                xamlMember.Getter = get_183_TreeViewNode_HasUnrealizedChildren;
-                xamlMember.Setter = set_183_TreeViewNode_HasUnrealizedChildren;
+                xamlMember.Getter = get_184_TreeViewNode_HasUnrealizedChildren;
+                xamlMember.Setter = set_184_TreeViewNode_HasUnrealizedChildren;
                 break;
             case "Microsoft.UI.Xaml.Controls.TreeViewNode.IsExpanded":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.TreeViewNode");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "IsExpanded", "Boolean");
                 xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_184_TreeViewNode_IsExpanded;
-                xamlMember.Setter = set_184_TreeViewNode_IsExpanded;
+                xamlMember.Getter = get_185_TreeViewNode_IsExpanded;
+                xamlMember.Setter = set_185_TreeViewNode_IsExpanded;
                 break;
             case "Microsoft.UI.Xaml.Controls.TreeViewNode.Parent":
                 userType = (global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.UI.Xaml.Controls.TreeViewNode");
                 xamlMember = new global::Magidesk.Presentation.Magidesk_Presentation_XamlTypeInfo.XamlMember(this, "Parent", "Microsoft.UI.Xaml.Controls.TreeViewNode");
-                xamlMember.Getter = get_185_TreeViewNode_Parent;
+                xamlMember.Getter = get_186_TreeViewNode_Parent;
                 xamlMember.SetIsReadOnly();
                 break;
             }

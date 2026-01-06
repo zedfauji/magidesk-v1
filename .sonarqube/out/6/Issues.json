@@ -1,0 +1,207 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Microsoft (R) Visual C# Compiler",
+        "version": "5.0.0.0",
+        "fileVersion": "5.0.0-2.25569.105 (fad253f5)",
+        "semanticVersion": "5.0.0",
+        "language": "en-US"
+      },
+      "results": [
+        {
+          "ruleId": "CS8602",
+          "level": "warning",
+          "message": "Dereference of a possibly null reference.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Infrastructure.Tests/Repositories/SalesReportRepositoryTests.cs",
+                "region": {
+                  "startLine": 153,
+                  "startColumn": 27,
+                  "endLine": 153,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8602",
+          "level": "warning",
+          "message": "Dereference of a possibly null reference.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Infrastructure.Tests/Repositories/SalesReportRepositoryTests.cs",
+                "region": {
+                  "startLine": 156,
+                  "startColumn": 26,
+                  "endLine": 156,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2699",
+          "level": "warning",
+          "message": "Add at least one assertion to this test case.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Infrastructure.Tests/UnitTest1.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 17,
+                  "endLine": 6,
+                  "endColumn": 22
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1816",
+          "level": "note",
+          "message": "Change TicketRepositoryTests.Dispose() to call GC.SuppressFinalize(object). This will prevent derived types that introduce a finalizer from needing to re-implement 'IDisposable' to call it.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Infrastructure.Tests/Repositories/TicketRepositoryTests.cs",
+                "region": {
+                  "startLine": 239,
+                  "startColumn": 17,
+                  "endLine": 239,
+                  "endColumn": 24
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1816",
+          "level": "note",
+          "message": "Change SalesReportRepositoryTests.Dispose() to call GC.SuppressFinalize(object). This will prevent derived types that introduce a finalizer from needing to re-implement 'IDisposable' to call it.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Infrastructure.Tests/Repositories/SalesReportRepositoryTests.cs",
+                "region": {
+                  "startLine": 636,
+                  "startColumn": 17,
+                  "endLine": 636,
+                  "endColumn": 24
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "note",
+          "message": "Member 'SetProperty' does not access instance data and can be marked as static",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Infrastructure.Tests/Repositories/SalesReportRepositoryTests.cs",
+                "region": {
+                  "startLine": 472,
+                  "startColumn": 18,
+                  "endLine": 472,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        }
+      ],
+      "rules": {
+        "CA1816": {
+          "id": "CA1816",
+          "shortDescription": "Dispose methods should call SuppressFinalize",
+          "fullDescription": "A method that is an implementation of Dispose does not call GC.SuppressFinalize; or a method that is not an implementation of Dispose calls GC.SuppressFinalize; or a method calls GC.SuppressFinalize and passes something other than this (Me in Visual Basic).",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1816",
+          "properties": {
+            "category": "Usage",
+            "isEnabledByDefault": true,
+            "tags": [
+              "PortedFromFxCop",
+              "Telemetry",
+              "EnabledRuleInAggressiveMode"
+            ]
+          }
+        },
+        "CA1822": {
+          "id": "CA1822",
+          "shortDescription": "Mark members as static",
+          "fullDescription": "Members that do not access instance data or call instance methods can be marked as static. After you mark the methods as static, the compiler will emit nonvirtual call sites to these members. This can give you a measurable performance gain for performance-sensitive code.",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1822",
+          "properties": {
+            "category": "Performance",
+            "isEnabledByDefault": true,
+            "tags": [
+              "PortedFromFxCop",
+              "Telemetry",
+              "EnabledRuleInAggressiveMode"
+            ]
+          }
+        },
+        "CS8602": {
+          "id": "CS8602",
+          "shortDescription": "Dereference of a possibly null reference.",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8602)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "S2699": {
+          "id": "S2699",
+          "shortDescription": "Tests should include assertions",
+          "fullDescription": "The rule targets test methods that lack an assertion and consist solely of an action and, optionally, a setup.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-2699",
+          "properties": {
+            "category": "Blocker Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "TestSourceScope",
+              "SonarWay"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

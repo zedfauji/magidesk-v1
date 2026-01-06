@@ -31,6 +31,20 @@
             <Frame x:Name="ContentFrame" />
         </NavigationView>
 
+        <!-- F-ENTRY-003 FIX (TICKET-003): Persistent Error Banner -->
+        <InfoBar x:Name="ErrorBanner"
+                 Grid.Row="0"
+                 Severity="Error"
+                 IsOpen="False"
+                 IsClosable="True"
+                 VerticalAlignment="Top"
+                 Canvas.ZIndex="999"
+                 Margin="10,10,10,0">
+            <InfoBar.ActionButton>
+                <Button Content="Details" Click="ErrorBanner_DetailsClick"/>
+            </InfoBar.ActionButton>
+        </InfoBar>
+
         <!-- Status Bar -->
         <Grid Grid.Row="1" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" Padding="10,5">
             <Grid.ColumnDefinitions>

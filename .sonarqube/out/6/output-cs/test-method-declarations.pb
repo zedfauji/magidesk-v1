@@ -1,0 +1,25 @@
+Ã
+pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\UnitTest1.csMagidesk.Infrastructure.Tests0
+'Magidesk.Infrastructure.Tests.UnitTest1Test1ÿ
+„C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\Services\PrintingServiceTests.csMagidesk.Infrastructure.Testsj
+;Magidesk.Infrastructure.Tests.Services.PrintingServiceTests+PrintTicketReceiptAsync_ShouldLogAuditEventk
+;Magidesk.Infrastructure.Tests.Services.PrintingServiceTests,PrintPaymentReceiptAsync_ShouldLogAuditEventÃ
+‰C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\Repositories\TicketRepositoryTests.csMagidesk.Infrastructure.Tests_
+@Magidesk.Infrastructure.Tests.Repositories.TicketRepositoryTestsAddAsync_ShouldCreateTicketq
+@Magidesk.Infrastructure.Tests.Repositories.TicketRepositoryTests-GetByIdAsync_ShouldReturnTicketWithOrderLinesm
+@Magidesk.Infrastructure.Tests.Repositories.TicketRepositoryTests)GetByTicketNumberAsync_ShouldReturnTickets
+@Magidesk.Infrastructure.Tests.Repositories.TicketRepositoryTests/GetOpenTicketsAsync_ShouldReturnOnlyOpenTicketsb
+@Magidesk.Infrastructure.Tests.Repositories.TicketRepositoryTestsUpdateAsync_ShouldUpdateTicketz
+@Magidesk.Infrastructure.Tests.Repositories.TicketRepositoryTests6GetNextTicketNumberAsync_ShouldReturnIncrementedNumberù
+
+ŽC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\Repositories\SalesReportRepositoryTests.csMagidesk.Infrastructure.Testsz
+EMagidesk.Infrastructure.Tests.Repositories.SalesReportRepositoryTests1GetSalesBalanceAsync_ShouldAggregateClosedTicketsu
+EMagidesk.Infrastructure.Tests.Repositories.SalesReportRepositoryTests,GetSalesBalanceAsync_ShouldAggregatePaymentsw
+EMagidesk.Infrastructure.Tests.Repositories.SalesReportRepositoryTests.GetSalesSummaryAsync_ShouldAggregateByCategoryv
+EMagidesk.Infrastructure.Tests.Repositories.SalesReportRepositoryTests-GetExceptionsReportAsync_ShouldAggregateItemsv
+EMagidesk.Infrastructure.Tests.Repositories.SalesReportRepositoryTests-GetJournalReportAsync_ShouldReturnAuditEventsx
+EMagidesk.Infrastructure.Tests.Repositories.SalesReportRepositoryTests/GetServerProductivityAsync_ShouldAggregateStatsu
+EMagidesk.Infrastructure.Tests.Repositories.SalesReportRepositoryTests,GetLaborReportAsync_ShouldCalculateLaborCostz
+EMagidesk.Infrastructure.Tests.Repositories.SalesReportRepositoryTests1GetDeliveryReportAsync_ShouldAggregateDriverStats
+EMagidesk.Infrastructure.Tests.Repositories.SalesReportRepositoryTests6GetAttendanceReportAsync_ShouldCalculateHoursCorrectly}
+EMagidesk.Infrastructure.Tests.Repositories.SalesReportRepositoryTests4GetCashOutReportAsync_ShouldCalculateNetDueCorrectly

@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Magidesk.Presentation.Views.Dialogs;
 using Magidesk.Domain.Enumerations;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -73,6 +74,7 @@ public class SwitchboardViewModel : ViewModelBase
     private readonly IOrderTypeRepository _orderTypeRepository;
     private readonly IShiftRepository _shiftRepository;
     private readonly ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult> _openSessionHandler;
+    private readonly ILogger<SwitchboardViewModel> _logger;
 
     public SwitchboardViewModel(
         NavigationService navigationService,
@@ -89,7 +91,8 @@ public class SwitchboardViewModel : ViewModelBase
         ISwitchboardDialogService switchboardDialogService,
         IOrderTypeRepository orderTypeRepository,
         IShiftRepository shiftRepository,
-        ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult> openSessionHandler)
+        ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult> openSessionHandler,
+        ILogger<SwitchboardViewModel> logger)
     {
         _navigationService = navigationService;
         _cashSessionRepository = cashSessionRepository;
@@ -106,6 +109,7 @@ public class SwitchboardViewModel : ViewModelBase
         _orderTypeRepository = orderTypeRepository;
         _shiftRepository = shiftRepository;
         _openSessionHandler = openSessionHandler;
+        _logger = logger;
         Title = "Magidesk POS";
 
         LoadTicketsCommand = new AsyncRelayCommand(LoadTicketsAsync);
@@ -128,7 +132,21 @@ public class SwitchboardViewModel : ViewModelBase
         LogoutCommand = new RelayCommand(() => {
             _navigationService.Navigate(typeof(Views.LoginPage));
         });
-        ShutdownCommand = new RelayCommand(() => { try { Microsoft.UI.Xaml.Application.Current.Exit(); } catch {} });
+        // TICKET-015: Proper shutdown error handling
+        ShutdownCommand = new RelayCommand(() => 
+        { 
+            try 
+            { 
+                Microsoft.UI.Xaml.Application.Current.Exit(); 
+            } 
+            catch (Exception ex) 
+            {
+                // Shutdown failure is rare but should be logged
+                _logger.LogError(ex, "Application shutdown failed");
+                // Force exit as last resort
+                Environment.Exit(0);
+            }
+        });
 
         NewTicketCommand = new AsyncRelayCommand(NewTicketAsync);
 

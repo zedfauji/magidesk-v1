@@ -1,0 +1,1 @@
+ŒRbC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Presentation.csproj¢net8.0-windows10.0.19041.0òCSharp14

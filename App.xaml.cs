@@ -166,6 +166,37 @@ public partial class App : Microsoft.UI.Xaml.Application
                 })
                 .Build();
             StartupLogger.Log("App - Host Building Success");
+            
+            // F-ENTRY-007 FIX (TICKET-004): Validate Critical Services
+            StartupLogger.Log("App - Validating Critical Services...");
+            try
+            {
+                using var scope = Host.Services.CreateScope();
+                var services = scope.ServiceProvider;
+                
+                // Validate critical services
+                var mediator = services.GetRequiredService<MediatR.IMediator>();
+                StartupLogger.Log("App - ✓ IMediator validated");
+                
+                var dialogService = services.GetRequiredService<IDialogService>();
+                StartupLogger.Log("App - ✓ IDialogService validated");
+                
+                var navigationService = services.GetRequiredService<NavigationService>();
+                StartupLogger.Log("App - ✓ NavigationService validated");
+                
+                var userService = services.GetRequiredService<IUserService>();
+                StartupLogger.Log("App - ✓ IUserService validated");
+                
+                var terminalContext = services.GetRequiredService<ITerminalContext>();
+                StartupLogger.Log("App - ✓ ITerminalContext validated");
+                
+                StartupLogger.Log("App - All critical services validated successfully");
+            }
+            catch (Exception validationEx)
+            {
+                HandleFatalStartupError("Service Validation Failed", validationEx);
+                throw;
+            }
         } catch (Exception ex) {
             HandleFatalStartupError("Host Compilation Failed", ex);
             throw;
@@ -236,36 +267,77 @@ public partial class App : Microsoft.UI.Xaml.Application
             }
             else
             {
+                // F-ENTRY-002 FIX (TICKET-002): Exit on initialization failure
                 StartupLogger.Log($"OnLaunched - Initialization Failed: {result.Message}");
-                mainWindow.ShowLoading($"Startup Failed: {result.Message}");
+                
+                // Show fatal error dialog
+                var errorMsg = $"System initialization failed and the application cannot start.\n\n" +
+                              $"Error: {result.Message}\n\n" +
+                              $"The application will now close.";
+                
+                try
+                {
+                    MessageBox(IntPtr.Zero, errorMsg, "Magidesk Initialization Failed", 0x10); // 0x10 = MB_ICONHAND
+                }
+                catch
+                {
+                    // Fallback to loading overlay if MessageBox fails
+                    mainWindow.ShowLoading($"FATAL: {result.Message}");
+                    System.Threading.Thread.Sleep(5000); // Give user time to read
+                }
+                
+                // Exit application - do NOT leave in zombie state
+                Environment.Exit(1);
             }
         }
         catch (System.Exception ex)
         {
+            // F-ENTRY-002 FIX (TICKET-002): Exit on startup exception
             System.Diagnostics.Debug.WriteLine($"APP FATAL: {ex}");
+            StartupLogger.Log($"OnLaunched - FATAL EXCEPTION: {ex}");
+            
+            var errorMsg = $"A critical error occurred during application startup.\n\n" +
+                          $"Error: {ex.Message}\n\n" +
+                          $"The application will now close.\n\n" +
+                          $"Details have been logged to: crash_log.txt";
+            
             try
             {
-                if (_window == null)
-                {
-                    _window = new Window();
-                    _window.Content = new Microsoft.UI.Xaml.Controls.TextBlock { 
-                        Text = $"Fatal Startup Error:\n{ex.Message}\n\nStack:\n{ex.StackTrace}", 
-                        Margin = new Thickness(20),
-                        VerticalAlignment = VerticalAlignment.Center,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        TextWrapping = TextWrapping.Wrap
-                    };
-                    _window.Activate();
-                }
-                else if (MainWindowInstance is MainWindow mw)
-                {
-                    mw.ShowLoading($"Critical Error: {ex.Message}");
-                }
+                // Try native MessageBox first
+                MessageBox(IntPtr.Zero, errorMsg, "Magidesk Fatal Startup Error", 0x10);
             }
             catch
             {
-                // Last resort logging
+                // Fallback to window if MessageBox fails
+                try
+                {
+                    if (_window == null)
+                    {
+                        _window = new Window();
+                        _window.Content = new Microsoft.UI.Xaml.Controls.TextBlock { 
+                            Text = $"Fatal Startup Error:\n{ex.Message}\n\nStack:\n{ex.StackTrace}", 
+                            Margin = new Thickness(20),
+                            VerticalAlignment = VerticalAlignment.Center,
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            TextWrapping = TextWrapping.Wrap
+                        };
+                        _window.Activate();
+                        System.Threading.Thread.Sleep(5000); // Give user time to read
+                    }
+                    else if (MainWindowInstance is MainWindow mw)
+                    {
+                        mw.ShowLoading($"FATAL: {ex.Message}");
+                        System.Threading.Thread.Sleep(5000);
+                    }
+                }
+                catch
+                {
+                    // Absolute last resort - just log
+                }
             }
+            
+            // Exit application - do NOT continue in broken state
+            Environment.Exit(1);
         }
     }
 
@@ -328,6 +400,29 @@ public partial class App : Microsoft.UI.Xaml.Application
         catch (Exception uiEx)
         {
             System.Diagnostics.Debug.WriteLine($"[FATAL] Failed to show error MessageBox: {uiEx.Message}");
+        }
+
+        // F-ENTRY-003 FIX (TICKET-003): Show Persistent Error Banner
+        // For background/task exceptions, show banner after MessageBox
+        if (source == "BACKGROUND_THREAD_UNHANDLED" || source == "UNOBSERVED_TASK_EXCEPTION")
+        {
+            try
+            {
+                if (MainWindowInstance is MainWindow mw)
+                {
+                    var bannerMsg = $"A background error occurred. The system may be in a degraded state.";
+                    var details = $"Source: {source}\n" +
+                                 $"Error: {ex.Message}\n" +
+                                 $"Stack Trace:\n{ex.StackTrace}\n" +
+                                 $"Inner Exception: {ex.InnerException}";
+                    
+                    mw.ShowErrorBanner(bannerMsg, details);
+                }
+            }
+            catch (Exception bannerEx)
+            {
+                System.Diagnostics.Debug.WriteLine($"[FATAL] Failed to show error banner: {bannerEx.Message}");
+            }
         }
 
         // 4. Ensure Termination (if not already dying)

@@ -1,0 +1,1 @@
+|RfC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Api\Magidesk.Api.csproj¢net8.0òCSharp12

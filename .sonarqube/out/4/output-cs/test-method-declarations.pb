@@ -1,0 +1,29 @@
+É
+ëC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application.Tests\Handlers\SystemConfig\RoleCommandHandlerTests.csMagidesk.Application.Testst
+HMagidesk.Application.Tests.Handlers.SystemConfig.RoleCommandHandlerTests(CreateRole_ShouldSucceed_WhenNameIsValidq
+HMagidesk.Application.Tests.Handlers.SystemConfig.RoleCommandHandlerTests%CreateRole_ShouldFail_WhenNameIsEmptys
+HMagidesk.Application.Tests.Handlers.SystemConfig.RoleCommandHandlerTests'UpdateRole_ShouldSucceed_WhenRoleExistss
+HMagidesk.Application.Tests.Handlers.SystemConfig.RoleCommandHandlerTests'DeleteRole_ShouldSucceed_WhenRoleExistsΩ
+éC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application.Tests\Handlers\RefundAndSplitCommandHandlerTests.csMagidesk.Application.TestsÜ
+EMagidesk.Application.Tests.Handlers.RefundAndSplitCommandHandlerTests=RefundTicket_ShouldCreateRefundPayments_AndUpdateTicketStatusÑ
+EMagidesk.Application.Tests.Handlers.RefundAndSplitCommandHandlerTests;SplitTicket_ShouldCreateNewTicket_AndRemoveLineFromOriginal°
+éC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application.Tests\Handlers\ProcessPaymentCommandHandlerTests.csMagidesk.Application.TestsÄ
+EMagidesk.Application.Tests.Handlers.ProcessPaymentCommandHandlerTests7HandleAsync_CashPayment_ShouldAddPaymentAndUpdateTicketo
+EMagidesk.Application.Tests.Handlers.ProcessPaymentCommandHandlerTests&HandleAsync_NonCashPayment_ShouldThrow•
+åC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application.Tests\Handlers\CreateTicketCommandHandlerTests.csMagidesk.Application.Testsx
+CMagidesk.Application.Tests.Handlers.CreateTicketCommandHandlerTests1HandleAsync_ShouldCreateTicket_AndWriteAuditEventò
+ãC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application.Tests\Handlers\CashSessionCommandHandlerTests.csMagidesk.Application.Testsw
+BMagidesk.Application.Tests.Handlers.CashSessionCommandHandlerTests1OpenCashSession_ShouldCreateSession_AndAuditEvent
+BMagidesk.Application.Tests.Handlers.CashSessionCommandHandlerTests9OpenCashSession_WhenUserAlreadyHasOpenSession_ShouldThrowy
+BMagidesk.Application.Tests.Handlers.CashSessionCommandHandlerTests3CloseCashSession_ShouldCloseSession_AndReturnTotalsw
+BMagidesk.Application.Tests.Handlers.CashSessionCommandHandlerTests1CloseCashSession_WhenOpenTicketsExist_ShouldThrowæ
+óC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application.Tests\Handlers\AddOrderLineInstructionCommandHandlerTests.csMagidesk.Application.TestsÖ
+NMagidesk.Application.Tests.Handlers.AddOrderLineInstructionCommandHandlerTests3HandleAsync_ShouldAddInstruction_AndWriteAuditEvent©
+êC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application.Tests\Handlers\AddOrderLineFractionalModifierTests.csMagidesk.Application.Tests{
+GMagidesk.Application.Tests.Handlers.AddOrderLineFractionalModifierTests0HandleAsync_ShouldCalculateSumOfHalves_Correctly{
+GMagidesk.Application.Tests.Handlers.AddOrderLineFractionalModifierTests0HandleAsync_ShouldCalculateHighestHalf_Correctlyó
+åC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application.Tests\Handlers\AddOrderLineCommandHandlerTests.csMagidesk.Application.Testsx
+CMagidesk.Application.Tests.Handlers.AddOrderLineCommandHandlerTests1HandleAsync_ShouldAddOrderLine_AndWriteAuditEventp
+CMagidesk.Application.Tests.Handlers.AddOrderLineCommandHandlerTests)HandleAsync_WithMissingTicket_ShouldThrow´
+ëC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application.Tests\Handlers\AddOrderLineComboCommandHandlerTests.csMagidesk.Application.Testsy
+HMagidesk.Application.Tests.Handlers.AddOrderLineComboCommandHandlerTests-Handle_ShouldAddComboItem_WithCorrectUpcharge

@@ -1,0 +1,236 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Microsoft (R) Visual C# Compiler",
+        "version": "5.0.0.0",
+        "fileVersion": "5.0.0-2.25569.105 (fad253f5)",
+        "semanticVersion": "5.0.0",
+        "language": "en-US"
+      },
+      "results": [
+        {
+          "ruleId": "CS8600",
+          "level": "warning",
+          "message": "Converting null literal or possible null value to non-nullable type.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Tests.Workflows/Workflows/Foundation/ShiftTests.cs",
+                "region": {
+                  "startLine": 70,
+                  "startColumn": 54,
+                  "endLine": 70,
+                  "endColumn": 58
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8602",
+          "level": "warning",
+          "message": "Dereference of a possibly null reference.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Tests.Workflows/Workflows/Foundation/ShiftTests.cs",
+                "region": {
+                  "startLine": 88,
+                  "startColumn": 13,
+                  "endLine": 88,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2699",
+          "level": "warning",
+          "message": "Add at least one assertion to this test case.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Tests.Workflows/UnitTest1.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 17,
+                  "endLine": 6,
+                  "endColumn": 22
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CsWinRT1030",
+          "level": "note",
+          "message": "Type 'Microsoft.Extensions.DependencyInjection.ServiceProvider' implements generic WinRT interfaces which requires generated code using unsafe for trimming and AOT compatibility if passed across the WinRT ABI. Project needs to be updated with '<AllowUnsafeBlocks>true</AllowUnsafeBlocks>'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Tests.Workflows/Infrastructure/WorkflowTestBase.cs",
+                "region": {
+                  "startLine": 121,
+                  "startColumn": 13,
+                  "endLine": 121,
+                  "endColumn": 62
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "note",
+          "message": "Member 'ExtractTaskFromCommand' does not access instance data and can be marked as static",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Tests.Workflows/Workflows/Foundation/SessionTests.cs",
+                "region": {
+                  "startLine": 62,
+                  "startColumn": 28,
+                  "endLine": 62,
+                  "endColumn": 50
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "note",
+          "message": "Member 'ExtractTaskFromCommand' does not access instance data and can be marked as static",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Tests.Workflows/Workflows/Foundation/ShiftTests.cs",
+                "region": {
+                  "startLine": 130,
+                  "startColumn": 28,
+                  "endLine": 130,
+                  "endColumn": 50
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "note",
+          "message": "Member 'CreateCategoryWithId' does not access instance data and can be marked as static",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Tests.Workflows/Workflows/OrderEntry/ModifierTests.cs",
+                "region": {
+                  "startLine": 191,
+                  "startColumn": 30,
+                  "endLine": 191,
+                  "endColumn": 50
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        }
+      ],
+      "rules": {
+        "CA1822": {
+          "id": "CA1822",
+          "shortDescription": "Mark members as static",
+          "fullDescription": "Members that do not access instance data or call instance methods can be marked as static. After you mark the methods as static, the compiler will emit nonvirtual call sites to these members. This can give you a measurable performance gain for performance-sensitive code.",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1822",
+          "properties": {
+            "category": "Performance",
+            "isEnabledByDefault": true,
+            "tags": [
+              "PortedFromFxCop",
+              "Telemetry",
+              "EnabledRuleInAggressiveMode"
+            ]
+          }
+        },
+        "CS8600": {
+          "id": "CS8600",
+          "shortDescription": "Converting null literal or possible null value to non-nullable type.",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8600)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "CS8602": {
+          "id": "CS8602",
+          "shortDescription": "Dereference of a possibly null reference.",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8602)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "CsWinRT1030": {
+          "id": "CsWinRT1030",
+          "shortDescription": "Project does not enable unsafe blocks",
+          "defaultLevel": "note",
+          "helpUri": "https://github.com/microsoft/CsWinRT/tree/master/src/Authoring/WinRT.SourceGenerator/AnalyzerReleases.Shipped.md",
+          "properties": {
+            "category": "Usage",
+            "isEnabledByDefault": true
+          }
+        },
+        "S2699": {
+          "id": "S2699",
+          "shortDescription": "Tests should include assertions",
+          "fullDescription": "The rule targets test methods that lack an assertion and consist solely of an action and, optionally, a setup.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-2699",
+          "properties": {
+            "category": "Blocker Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "TestSourceScope",
+              "SonarWay"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

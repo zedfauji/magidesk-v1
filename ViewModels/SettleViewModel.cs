@@ -7,6 +7,7 @@ using Magidesk.Domain.ValueObjects;
 using System.Net.Sockets;
 using Magidesk.Presentation.Services;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -21,6 +22,7 @@ public sealed class SettleViewModel : ViewModelBase
     private readonly ITerminalContext _terminalContext;
     private readonly ICashSessionRepository _cashSessionRepository;
     private readonly ICommandHandler<OpenCashDrawerCommand> _openCashDrawer;
+    private readonly ILogger<SettleViewModel> _logger;
 
     private TicketDto? _ticket;
     private decimal _tenderAmount;
@@ -39,7 +41,8 @@ public sealed class SettleViewModel : ViewModelBase
         IUserService userService,
         ITerminalContext terminalContext,
         ICashSessionRepository cashSessionRepository,
-        ICommandHandler<OpenCashDrawerCommand> openCashDrawer)
+        ICommandHandler<OpenCashDrawerCommand> openCashDrawer,
+        ILogger<SettleViewModel> logger)
     {
         _getTicket = getTicket;
         _processPayment = processPayment;
@@ -50,6 +53,7 @@ public sealed class SettleViewModel : ViewModelBase
         _terminalContext = terminalContext;
         _cashSessionRepository = cashSessionRepository;
         _openCashDrawer = openCashDrawer;
+        _logger = logger;
 
         Title = "Settle Ticket";
 
@@ -495,13 +499,7 @@ public sealed class SettleViewModel : ViewModelBase
         var dialog = new Magidesk.Views.PaymentProcessWaitDialog();
         dialog.ViewModel.SetMessage("Testing Wait Dialog (3s)...");
         
-        // Show dialog without awaiting it to allow background task simulation? 
-        // No, ShowDialogAsync awaits until closed. 
-        // We need a way to close it programmatically.
-        // Since we can't easily reference the dialog instance from VM after showing, 
-        // we usually run the background task BEFORE showing, or pass a unified controller.
-        // FOR THIS TEST: We will fire-and-forget the closer logic before showing.
-        
+        // TICKET-014: Track background task instead of fire-and-forget
         var closeTask = Task.Run(async () =>
         {
             try
@@ -516,11 +514,21 @@ public sealed class SettleViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"TestWaitAsync bg error: {ex}");
+                _logger.LogError(ex, "TestWaitAsync background task failed");
+                // Surface error to UI
+                _navigationService.DispatcherQueue.TryEnqueue(async () =>
+                {
+                    await _navigationService.ShowErrorAsync("Test Wait Failed", 
+                        $"Background task error: {ex.Message}");
+                });
             }
         });
 
-        await _navigationService.ShowDialogAsync(dialog);
+        // Show dialog and await both tasks
+        await Task.WhenAll(
+            _navigationService.ShowDialogAsync(dialog),
+            closeTask
+        );
     }
 
     private async Task SwipeCardAsync()

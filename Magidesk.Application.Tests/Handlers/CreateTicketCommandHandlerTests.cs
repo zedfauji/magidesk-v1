@@ -12,8 +12,9 @@ public class CreateTicketCommandHandlerTests
     public async Task HandleAsync_ShouldCreateTicket_AndWriteAuditEvent()
     {
         var tickets = new InMemoryTicketRepository();
+        var tables = new InMemoryTableRepository();
         var audits = new InMemoryAuditEventRepository();
-        var handler = new CreateTicketCommandHandler(tickets, audits);
+        var handler = new CreateTicketCommandHandler(tickets, tables, audits);
 
         var createdBy = new UserId(Guid.NewGuid());
         var cmd = new CreateTicketCommand
