@@ -33,12 +33,15 @@ public partial class App : Microsoft.UI.Xaml.Application
     public static IServiceProvider Services => Host.Services;
 
     [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
-    private static extern int MessageBox(IntPtr hWnd, String text, String caption, uint type);
+    public static extern int MessageBox(IntPtr hWnd, String text, String caption, uint type);
 
     public App()
     {
         // SYS-001: FATAL STARTUP BARRIER
         StartupLogger.Log("App Constructor - Start");
+        // T-001: Global Background Exception Handlers
+        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+        TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
         this.UnhandledException += App_UnhandledException;
         
         StartupLogger.Log("App - InitializeComponent Start");
@@ -66,6 +69,8 @@ public partial class App : Microsoft.UI.Xaml.Application
                     // UI services
                     services.AddSingleton<NavigationService>();
                     services.AddSingleton<IDefaultViewRoutingService, DefaultViewRoutingService>();
+                    services.AddSingleton<IOrderEntryDialogService, OrderEntryDialogService>();
+                    services.AddSingleton<ISwitchboardDialogService, SwitchboardDialogService>();
                     services.AddSingleton<IUserService, UserService>();
                     services.AddSingleton<Magidesk.Application.Interfaces.ITerminalContext, TerminalContext>();
             // Printing
@@ -173,7 +178,18 @@ public partial class App : Microsoft.UI.Xaml.Application
         {
             MessageBox(IntPtr.Zero, msg, "Magidesk Fatal Error", 0x10); // 0x10 = MB_ICONHAND (Error)
         }
-        catch { /* Cant do anything if native call fails */ }
+        catch 
+        { 
+             // T-001: Last Resort Fallback
+             // If Native MessageBox fails (e.g. no window handle), write to desktop file.
+             try
+             {
+                 var desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                 var path = System.IO.Path.Combine(desktop, "MAGIDESK_FATAL_ERROR.txt");
+                 System.IO.File.WriteAllText(path, msg + "\n\n(Native MessageBox Failed)");
+             }
+             catch { /* Absolute dead end */ }
+        }
     }
 
     protected override async void OnLaunched(LaunchActivatedEventArgs args)
@@ -252,7 +268,32 @@ public partial class App : Microsoft.UI.Xaml.Application
 
     private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
     {
-        // PARANOID GLOBAL HANDLER (FEH-002)
+        // PARANOID GLOBAL HANDLER (FEH-002) - UI THREAD
+        HandleCriticalException(e.Exception, "UI_THREAD_UNHANDLED");
+        // e.Handled = true; // DO NOT MARK HANDLED. Let it crash so the process restarts/closes properly.
+    }
+
+    // T-001: Global Background Exception Handler
+    private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
+    {
+        var ex = e.ExceptionObject as Exception;
+        HandleCriticalException(ex, "BACKGROUND_THREAD_UNHANDLED");
+    }
+
+    // T-001: Unobserved Task Exception Handler
+    private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+    {
+        HandleCriticalException(e.Exception, "UNOBSERVED_TASK_EXCEPTION");
+        e.SetObserved(); // Mark observed to prevent immediate crash, but we still log and exit safely if needed.
+        // Note: In .NET Core, unobserved task exceptions don't terminate process by default, 
+        // but we want to know about them and potentially restart if critical.
+        // For POS stability, we log heavily. If it's critical, we might want to warn user.
+    }
+
+    private void HandleCriticalException(Exception? ex, string source)
+    {
+        if (ex == null) return;
+
         // 1. Attempt Primary Logging
         try
         {
@@ -261,19 +302,34 @@ public partial class App : Microsoft.UI.Xaml.Application
             System.IO.Directory.CreateDirectory(logDir);
             var logPath = System.IO.Path.Combine(logDir, "crash_log.txt");
             
-            var message = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] CRITICAL UNHANDLED: {e.Exception?.Message}\nStack: {e.Exception?.StackTrace}\nInner: {e.Exception?.InnerException}\n--------------------------------\n";
+            var message = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] CRITICAL FAILURE ({source}): {ex.Message}\nStack: {ex.StackTrace}\nInner: {ex.InnerException}\n--------------------------------\n";
             System.IO.File.AppendAllText(logPath, message);
         }
         catch (Exception logEx)
         {
             // 2. Fallback Logging (Console/Debug)
             System.Diagnostics.Debug.WriteLine($"[FATAL] Failed to write crash log: {logEx.Message}");
-            System.Diagnostics.Debug.WriteLine($"With Original Exception: {e.Exception}");
+            System.Diagnostics.Debug.WriteLine($"With Original Exception: {ex}");
         }
 
-        // 3. Last Ditch UI Notification only if we are on UI thread (implied by UnhandledException event usually)
-        // Note: We cannot reliably show a XAML Dialog here if the visual tree is corrupt. 
-        // We accept the crash, but at least we logged it.
-        // e.Handled = true; // DO NOT MARK HANDLED. Let it crash so the process restarts/closes properly.
+        // 3. User Notification
+        // Use native MessageBox because XAML might be corrupted or we are on bg thread.
+        try
+        {
+            var errorMsg = $"A critical error occurred ({source}) and the application must close.\n\n" +
+                          $"Error: {ex.Message}\n\n" +
+                          $"The error has been logged to: crash_log.txt";
+            
+            MessageBox(IntPtr.Zero, errorMsg, "Magidesk Fatal Error", 0x10); // 0x10 = MB_ICONHAND | MB_OK
+        }
+        catch (Exception uiEx)
+        {
+            System.Diagnostics.Debug.WriteLine($"[FATAL] Failed to show error MessageBox: {uiEx.Message}");
+        }
+
+        // 4. Ensure Termination (if not already dying)
+        // For UI exceptions, the runtime usually kills it. For AppDomain, it kills it.
+        // For TaskScheduler, it might NOT kill it. We generally want to reset on critical state.
+        // But for now, we just ensure visibility.
     }
 }

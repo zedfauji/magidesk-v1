@@ -156,7 +156,15 @@ public class LoginViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            ErrorMessage = $"Error: {ex.Message}";
+             // T-003: Visible Failure
+             var errorDialog = new ContentDialog
+             {
+                 Title = "Clock In/Out Error",
+                 Content = $"System Error:\n{ex.Message}",
+                 CloseButtonText = "OK",
+                 XamlRoot = App.MainWindowInstance.Content.XamlRoot
+             };
+             await _navigationService.ShowDialogAsync(errorDialog);
         }
         finally
         {
@@ -207,8 +215,11 @@ public class LoginViewModel : ViewModelBase
                 }
                 catch (Exception routingEx)
                 {
+                    // T-005: Visible Failure
                     // Fallback to SwitchboardPage if routing fails
                     _navigationService.Navigate(typeof(Views.SwitchboardPage));
+                    // Toast/Non-blocking warning
+                    await _navigationService.ShowMessageAsync("Navigation Alert", $"Could not load default view ({routingEx.Message}). Sending to Switchboard.");
                 }
                 Pin = string.Empty; // Reset for next time (logout)
             }
@@ -220,7 +231,15 @@ public class LoginViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            ErrorMessage = $"Login Error: {ex.Message}";
+             // T-002: Visible Failure
+             var errorDialog = new ContentDialog
+             {
+                 Title = "Login Failed",
+                 Content = $"System Critical Error:\n{ex.Message}\n\nTerminals cannot authenticate if database is down.",
+                 CloseButtonText = "OK",
+                 XamlRoot = App.MainWindowInstance.Content.XamlRoot
+             };
+             await _navigationService.ShowDialogAsync(errorDialog);
         }
         finally
         {

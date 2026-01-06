@@ -20,11 +20,13 @@ public sealed class SettleViewModel : ViewModelBase
     private readonly IUserService _userService;
     private readonly ITerminalContext _terminalContext;
     private readonly ICashSessionRepository _cashSessionRepository;
+    private readonly ICommandHandler<OpenCashDrawerCommand> _openCashDrawer;
 
     private TicketDto? _ticket;
     private decimal _tenderAmount;
     private string _numpadInput = "";
     private string? _error;
+    private string? _statusMessage;
 
     private Guid _ticketId;
 
@@ -36,7 +38,8 @@ public sealed class SettleViewModel : ViewModelBase
         Services.NavigationService navigationService,
         IUserService userService,
         ITerminalContext terminalContext,
-        ICashSessionRepository cashSessionRepository)
+        ICashSessionRepository cashSessionRepository,
+        ICommandHandler<OpenCashDrawerCommand> openCashDrawer)
     {
         _getTicket = getTicket;
         _processPayment = processPayment;
@@ -46,6 +49,7 @@ public sealed class SettleViewModel : ViewModelBase
         _userService = userService;
         _terminalContext = terminalContext;
         _cashSessionRepository = cashSessionRepository;
+        _openCashDrawer = openCashDrawer;
 
         Title = "Settle Ticket";
 
@@ -62,7 +66,7 @@ public sealed class SettleViewModel : ViewModelBase
         TestWaitCommand = new AsyncRelayCommand(TestWaitAsync);
         SwipeCardCommand = new AsyncRelayCommand(SwipeCardAsync);
         ExactAmountCommand = new RelayCommand(OnExactAmount);
-        QuickCashCommand = new RelayCommand<decimal>(OnQuickCash);
+        QuickCashCommand = new RelayCommand<string>(OnQuickCash);
     }
 
     public TicketDto? Ticket
@@ -77,6 +81,8 @@ public sealed class SettleViewModel : ViewModelBase
                 OnPropertyChanged(nameof(DueAmount));
                 OnPropertyChanged(nameof(IsTaxExempt));
                 OnPropertyChanged(nameof(TaxAmount));
+                OnPropertyChanged(nameof(TicketNumber));
+                OnPropertyChanged(nameof(TableName));
                 
                 // Auto-set tender amount to due amount if input is empty
                 if (string.IsNullOrEmpty(_numpadInput) && value != null)
@@ -120,13 +126,33 @@ public sealed class SettleViewModel : ViewModelBase
     public decimal PaidAmount => Ticket?.PaidAmount ?? 0;
     public decimal DueAmount => Ticket?.DueAmount ?? 0;
     public decimal TaxAmount => Ticket?.TaxAmount ?? 0;
+    public string TicketNumber => Ticket != null ? $"Ticket #{Ticket.TicketNumber}" : "No Ticket";
+    public string TableName => Ticket?.TableName ?? "No Table";
     
     public bool HasDueAmount => DueAmount > 0;
 
     public string? Error
     {
         get => _error;
-        set => SetProperty(ref _error, value);
+        set 
+        {
+            if (SetProperty(ref _error, value) && !string.IsNullOrEmpty(value))
+            {
+                StatusMessage = null; // Clear status if error occurs
+            }
+        }
+    }
+
+    public string? StatusMessage
+    {
+        get => _statusMessage;
+        set 
+        {
+            if (SetProperty(ref _statusMessage, value) && !string.IsNullOrEmpty(value))
+            {
+                Error = null; // Clear error if status occurs
+            }
+        }
     }
 
 
@@ -141,7 +167,7 @@ public sealed class SettleViewModel : ViewModelBase
     public AsyncRelayCommand NoSaleCommand { get; }
     public AsyncRelayCommand LogoutUiCommand { get; }
     public RelayCommand ExactAmountCommand { get; }
-    public RelayCommand<decimal> QuickCashCommand { get; }
+    public RelayCommand<string> QuickCashCommand { get; }
 
     private async Task OnLogoutAsync()
     {
@@ -190,15 +216,18 @@ public sealed class SettleViewModel : ViewModelBase
         NumpadInput = DueAmount.ToString("F2");
     }
 
-    private void OnQuickCash(decimal amount)
+    private void OnQuickCash(string? amountStr)
     {
         // F-0043: Quick Cash Buttons - adds denomination to tender amount
-        if (amount <= 0) return;
-        
-        // Cumulative mode: add to existing tender amount
-        var newTenderAmount = TenderAmount + amount;
-        TenderAmount = newTenderAmount;
-        NumpadInput = newTenderAmount.ToString("F2");
+        if (decimal.TryParse(amountStr, out var amount))
+        {
+            if (amount <= 0) return;
+            
+            // Cumulative mode: add to existing tender amount
+            var newTenderAmount = TenderAmount + amount;
+            TenderAmount = newTenderAmount;
+            NumpadInput = newTenderAmount.ToString("F2");
+        }
     }
 
     private async Task OnNoSaleAsync()
@@ -208,10 +237,8 @@ public sealed class SettleViewModel : ViewModelBase
         IsBusy = true;
         try
         {
-            // TODO: Call backend "OpenDrawerCommand" or similar.
-            // For now, simulated delay.
-            await Task.Delay(100);
-            Error = "Drawer Opened (No Sale)";
+            await _openCashDrawer.HandleAsync(new OpenCashDrawerCommand());
+            StatusMessage = "Drawer Opened (No Sale)";
         }
         catch (Exception ex) { Error = ex.Message; }
         finally { IsBusy = false; }
@@ -314,7 +341,7 @@ public sealed class SettleViewModel : ViewModelBase
     {
         if (Ticket == null || string.IsNullOrEmpty(paymentTypeString)) return;
         
-        if (!Enum.TryParse<PaymentType>(paymentTypeString, out var paymentType))
+        if (!Enum.TryParse<Magidesk.Domain.Enumerations.PaymentType>(paymentTypeString, out var paymentType))
         {
             Error = $"Invalid payment type: {paymentTypeString}";
             return;
@@ -414,13 +441,32 @@ public sealed class SettleViewModel : ViewModelBase
             
             if (paymentType == PaymentType.Cash && result.ChangeAmount.Amount > 0)
             {
-                // TODO: Show Change Dialog
-                Error = $"Change Due: {result.ChangeAmount}"; 
+                 // Show Change Dialog (Blocking)
+                 var changeDialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+                 {
+                     Title = "Change Due",
+                     Content = $"Please return change to customer:\n\n{result.ChangeAmount}",
+                     CloseButtonText = "OK",
+                     XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                 };
+                 await _navigationService.ShowDialogAsync(changeDialog);
+                 
+                 Error = $"Change Due: {result.ChangeAmount}"; 
             }
         }
         catch (Exception ex)
         {
             Error = ex.Message;
+            
+            // T-004: Anti-Silence. Show blocking dialog on financial failure.
+             var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+             {
+                 Title = "Payment Failed",
+                 Content = $"Transaction could not be processed.\nReason: {ex.Message}",
+                 CloseButtonText = "OK",
+                 XamlRoot = App.MainWindowInstance.Content.XamlRoot
+             };
+             await _navigationService.ShowDialogAsync(dialog);
         }
         finally
         {
@@ -430,7 +476,15 @@ public sealed class SettleViewModel : ViewModelBase
 
     private void OnClose()
     {
-        _navigationService.GoBack();
+        if (Ticket != null && (Ticket.Status == TicketStatus.Paid || Ticket.Status == TicketStatus.Closed))
+        {
+            // F-0044: Settlement Navigation - Return to Switchboard/TableMap after successful payment
+            _navigationService.Navigate(typeof(Magidesk.Presentation.Views.SwitchboardPage));
+        }
+        else
+        {
+            _navigationService.GoBack();
+        }
     }
 
     public AsyncRelayCommand TestWaitCommand { get; }
@@ -450,13 +504,20 @@ public sealed class SettleViewModel : ViewModelBase
         
         var closeTask = Task.Run(async () =>
         {
-            await Task.Delay(3000);
-            // Must dispatch to UI thread to close
-            _navigationService.DispatcherQueue.TryEnqueue(() =>
+            try
             {
-                dialog.ViewModel.AllowClose();
-                dialog.Hide(); // ContentDialog.Hide() closes it
-            });
+                await Task.Delay(3000);
+                // Must dispatch to UI thread to close
+                _navigationService.DispatcherQueue.TryEnqueue(() =>
+                {
+                    dialog.ViewModel.AllowClose();
+                    dialog.Hide(); // ContentDialog.Hide() closes it
+                });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"TestWaitAsync bg error: {ex}");
+            }
         });
 
         await _navigationService.ShowDialogAsync(dialog);
@@ -570,6 +631,15 @@ public sealed class SettleViewModel : ViewModelBase
         catch (Exception ex)
         {
             Error = $"Card Payment Error: {ex.Message}";
+            
+            var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+            {
+                Title = "Card Payment Error",
+                Content = $"Card transaction failed.\nReason: {ex.Message}",
+                CloseButtonText = "OK",
+                XamlRoot = App.MainWindowInstance.Content.XamlRoot
+            };
+            await _navigationService.ShowDialogAsync(dialog);
         }
         finally
         {

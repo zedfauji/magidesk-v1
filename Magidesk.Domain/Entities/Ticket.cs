@@ -225,6 +225,13 @@ public class Ticket
         _payments.Add(payment);
         ActiveDate = DateTime.UtcNow;
         IncrementVersion();
+
+        // Auto-open if still in Draft
+        if (Status == TicketStatus.Draft)
+        {
+            Open();
+        }
+
         RecalculatePaidAmount();
 
         // Keep DueAmount consistent when payments are added.

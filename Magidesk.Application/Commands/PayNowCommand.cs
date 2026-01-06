@@ -15,3 +15,14 @@ public class PayNowCommand
     public UserId ProcessedBy { get; set; } = null!;
     public Guid TerminalId { get; set; }
 }
+
+public class PayNowResult
+{
+    public bool Success { get; set; }
+    public string Message { get; set; } = string.Empty;
+    public decimal PaidAmount { get; set; }
+    public List<string> Errors { get; set; } = new();
+
+    public static PayNowResult Failure(string message) => new() { Success = false, Message = message };
+    public static PayNowResult Successful(decimal amount) => new() { Success = true, PaidAmount = amount };
+}

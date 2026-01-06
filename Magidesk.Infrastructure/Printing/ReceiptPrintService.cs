@@ -19,6 +19,7 @@ public class ReceiptPrintService : IReceiptPrintService
     private readonly ITerminalContext _terminalContext;
     private readonly IUserRepository _userRepository;
     private readonly IAuditEventRepository _auditRepo;
+    private readonly ICashDrawerService _cashDrawerService;
     private readonly ILogger<ReceiptPrintService> _logger;
 
     public ReceiptPrintService(
@@ -28,6 +29,7 @@ public class ReceiptPrintService : IReceiptPrintService
         ITerminalContext terminalContext,
         IUserRepository userRepository,
         IAuditEventRepository auditRepo,
+        ICashDrawerService cashDrawerService,
         ILogger<ReceiptPrintService> logger)
     {
         _rawPrintService = rawPrintService;
@@ -36,6 +38,7 @@ public class ReceiptPrintService : IReceiptPrintService
         _terminalContext = terminalContext;
         _userRepository = userRepository;
         _auditRepo = auditRepo;
+        _cashDrawerService = cashDrawerService;
         _logger = logger;
     }
 
@@ -113,6 +116,27 @@ public class ReceiptPrintService : IReceiptPrintService
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to print refund receipt.");
+            return false;
+        }
+    }
+
+    public async Task<bool> OpenCashDrawerAsync(CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var (mapping, _) = await ResolveReceiptPrinterContextAsync(cancellationToken);
+            if (mapping == null || string.IsNullOrEmpty(mapping.PhysicalPrinterName))
+            {
+                _logger.LogWarning($"Drawer kick skipped: No Receipt Printer mapped for Terminal {_terminalContext.TerminalIdentity}");
+                return false;
+            }
+
+            await _cashDrawerService.OpenDrawerAsync(mapping.PhysicalPrinterName);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to send open drawer pulse.");
             return false;
         }
     }

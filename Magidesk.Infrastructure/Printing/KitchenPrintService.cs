@@ -34,20 +34,19 @@ public class KitchenPrintService : IKitchenPrintService
         _logger = logger;
     }
 
-    public async Task<bool> PrintOrderLineAsync(OrderLine orderLine, Ticket ticket, CancellationToken cancellationToken = default)
+    public async Task<KitchenPrintResult> PrintOrderLineAsync(OrderLine orderLine, Ticket ticket, CancellationToken cancellationToken = default)
     {
-        if (!orderLine.ShouldPrintToKitchen) return false;
+        if (!orderLine.ShouldPrintToKitchen) return KitchenPrintResult.SuccessResult(0);
         
         return await PrintSpecificLinesAsync(ticket, new[] { orderLine }, cancellationToken);
     }
 
-    public async Task<int> PrintTicketAsync(Ticket ticket, CancellationToken cancellationToken = default)
+    public async Task<KitchenPrintResult> PrintTicketAsync(Ticket ticket, CancellationToken cancellationToken = default)
     {
         var linesToPrint = ticket.OrderLines.Where(x => x.ShouldPrintToKitchen && !x.PrintedToKitchen).ToList();
-        if (!linesToPrint.Any()) return 0;
+        if (!linesToPrint.Any()) return KitchenPrintResult.SuccessResult(0);
 
-        bool success = await PrintSpecificLinesAsync(ticket, linesToPrint, cancellationToken);
-        return success ? linesToPrint.Count : 0;
+        return await PrintSpecificLinesAsync(ticket, linesToPrint, cancellationToken);
     }
 
     public Task MarkOrderLinePrintedAsync(OrderLine orderLine, CancellationToken cancellationToken = default)
@@ -56,15 +55,17 @@ public class KitchenPrintService : IKitchenPrintService
         return Task.CompletedTask;
     }
     
-    private async Task<bool> PrintSpecificLinesAsync(Ticket ticket, IEnumerable<OrderLine> lines, CancellationToken cancellationToken)
+    private async Task<KitchenPrintResult> PrintSpecificLinesAsync(Ticket ticket, IEnumerable<OrderLine> lines, CancellationToken cancellationToken)
     {
+        var errors = new List<string>();
         try
         {
             var terminalId = _terminalContext.TerminalId ?? Guid.Empty;
             if (terminalId == Guid.Empty)
             {
-                 _logger.LogWarning("Current Terminal ID is empty. Cannot resolve printer mappings.");
-                 return false;
+                 var msg = "Current Terminal ID is empty. Cannot resolve printer mappings.";
+                 _logger.LogWarning(msg);
+                 return KitchenPrintResult.Failure(msg);
             }
 
             // Resolve Server Name
@@ -85,7 +86,8 @@ public class KitchenPrintService : IKitchenPrintService
             var mappings = (await _printerMappingRepository.GetByTerminalIdAsync(terminalId, cancellationToken)).ToList();
             var groupedLines = lines.GroupBy(x => x.PrinterGroupId);
 
-            bool allPrinted = true;
+            bool overallSuccess = true;
+            int printedCount = 0;
 
             foreach (var group in groupedLines)
             {
@@ -97,15 +99,19 @@ public class KitchenPrintService : IKitchenPrintService
                 
                 if (mapping == null)
                 {
-                    _logger.LogWarning($"No printer mapping found for PrinterGroup {printerGroupId} on Terminal {terminalId}. Lines skipped.");
-                    allPrinted = false; 
+                    var msg = $"No printer mapping found for PrinterGroup {printerGroupId} on Terminal {terminalId}. Lines skipped.";
+                    _logger.LogWarning(msg);
+                    errors.Add(msg);
+                    overallSuccess = false; 
                     continue; 
                 }
 
                 if (string.IsNullOrEmpty(mapping.PhysicalPrinterName))
                 {
-                    _logger.LogWarning($"PhysicalPrinterName is empty for Group {printerGroupId}.");
-                    allPrinted = false;
+                    var msg = $"PhysicalPrinterName is empty for Group {printerGroupId}.";
+                    _logger.LogWarning(msg);
+                    errors.Add(msg);
+                    overallSuccess = false;
                     continue;
                 }
 
@@ -130,20 +136,28 @@ public class KitchenPrintService : IKitchenPrintService
                     foreach (var line in groupLines)
                     {
                         await MarkOrderLinePrintedAsync(line, cancellationToken);
+                        printedCount++;
                     }
                 }
                 else
                 {
-                    allPrinted = false;
+                    var msg = $"Failed to print to {mapping.PhysicalPrinterName} after retries.";
+                    errors.Add(msg);
+                    overallSuccess = false;
                 }
             }
 
-            return allPrinted;
+            if (!overallSuccess)
+            {
+                return KitchenPrintResult.Failure("One or more printers failed. Check logs.", errors);
+            }
+
+            return KitchenPrintResult.SuccessResult(printedCount);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error in PrintSpecificLinesAsync");
-            return false;
+            return KitchenPrintResult.Failure($"System Error: {ex.Message}", new List<string> { ex.Message });
         }
     }
 

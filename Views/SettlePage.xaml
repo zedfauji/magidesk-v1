@@ -16,41 +16,55 @@
         </Grid.ColumnDefinitions>
 
         <!-- Ticket Summary -->
-        <StackPanel Grid.Column="0" Spacing="20">
-            <TextBlock Text="{x:Bind ViewModel.Title}" Style="{StaticResource TitleTextBlockStyle}" />
+        <StackPanel Grid.Column="0" Spacing="16">
+            <StackPanel Spacing="4">
+                <TextBlock Text="{x:Bind ViewModel.Title}" Style="{StaticResource TitleTextBlockStyle}" />
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <TextBlock Text="{x:Bind ViewModel.TicketNumber, Mode=OneWay}" FontWeight="SemiBold" Foreground="Gray"/>
+                    <TextBlock Text="•" Foreground="LightGray"/>
+                    <TextBlock Text="{x:Bind ViewModel.TableName, Mode=OneWay}" FontWeight="SemiBold" Foreground="Gray"/>
+                </StackPanel>
+            </StackPanel>
             
             <Border Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" CornerRadius="8" Padding="16">
                 <StackPanel Spacing="12">
                     <Grid>
                         <TextBlock Text="Total Amount" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                        <TextBlock Text="{x:Bind ViewModel.TotalAmount, Mode=OneWay}" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        <TextBlock Text="{x:Bind ViewModel.TotalAmount, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Right" FontWeight="Bold"/>
                     </Grid>
                     
                     <Grid>
                          <TextBlock Text="Tax Amount"/>
-                         <TextBlock Text="{x:Bind ViewModel.TaxAmount, Mode=OneWay}" HorizontalAlignment="Right"/>
+                         <TextBlock Text="{x:Bind ViewModel.TaxAmount, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" HorizontalAlignment="Right"/>
                     </Grid>
                     
                     <MenuFlyoutSeparator />
 
                     <Grid>
                         <TextBlock Text="Paid Amount" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                        <TextBlock Text="{x:Bind ViewModel.PaidAmount, Mode=OneWay}" HorizontalAlignment="Right" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                        <TextBlock Text="{x:Bind ViewModel.PaidAmount, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" HorizontalAlignment="Right" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                     </Grid>
 
                     <Grid>
                         <TextBlock Text="Balance Due" Style="{StaticResource TitleTextBlockStyle}" Foreground="{ThemeResource SystemAccentColor}"/>
-                        <TextBlock Text="{x:Bind ViewModel.DueAmount, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Right" Foreground="{ThemeResource SystemAccentColor}" FontWeight="Bold"/>
+                        <TextBlock Text="{x:Bind ViewModel.DueAmount, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Right" Foreground="{ThemeResource SystemAccentColor}" FontWeight="Bold"/>
                     </Grid>
                 </StackPanel>
             </Border>
 
-            <InfoBar Title="Error" 
-                     Message="{x:Bind ViewModel.Error, Mode=OneWay}" 
-                     IsOpen="{x:Bind ViewModel.Error, Converter={StaticResource StringToBoolConverter}, Mode=OneWay}" 
-                     Severity="Error" />
+            <StackPanel Spacing="8">
+                <InfoBar Title="Error" 
+                         Message="{x:Bind ViewModel.Error, Mode=OneWay}" 
+                         IsOpen="{x:Bind ViewModel.Error, Converter={StaticResource StringToBoolConverter}, Mode=OneWay}" 
+                         Severity="Error" />
+ 
+                <InfoBar Title="Status" 
+                         Message="{x:Bind ViewModel.StatusMessage, Mode=OneWay}" 
+                         IsOpen="{x:Bind ViewModel.StatusMessage, Converter={StaticResource StringToBoolConverter}, Mode=OneWay}" 
+                         Severity="Success" />
+            </StackPanel>
 
-            <Button Command="{x:Bind ViewModel.CloseCommand}" Content="Cancel" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Background="Gray"/>
+            <Button Command="{x:Bind ViewModel.CloseCommand}" Content="Cancel" Height="48" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Background="DimGray"/>
         </StackPanel>
 
         <!-- Actions -->
@@ -67,20 +81,27 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Tender Input Display -->
-                <TextBox Text="{x:Bind ViewModel.NumpadInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                         Header="Tender Amount"
-                         FontSize="32" 
-                         FontWeight="Bold" 
-                         HorizontalContentAlignment="Right"
-                         IsReadOnly="True"/>
+                <!-- Tender Input Display (Stylized Readout) -->
+                <Border Grid.Column="0" 
+                        Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" 
+                        BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4" 
+                        Padding="12,4">
+                    <StackPanel>
+                        <TextBlock Text="Tender Amount" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemAccentColor}"/>
+                        <TextBlock Text="{x:Bind ViewModel.TenderAmount, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" 
+                                 FontSize="36" 
+                                 FontWeight="Bold" 
+                                 HorizontalAlignment="Right"/>
+                    </StackPanel>
+                </Border>
 
-                <!-- Tax Exempt Toggle -->
                 <ToggleButton Grid.Column="1" 
                               Content="Tax Exempt" 
                               IsChecked="{x:Bind ViewModel.IsTaxExempt, Mode=OneWay}"
                               Command="{x:Bind ViewModel.ToggleTaxExemptCommand}"
-                              Height="68" Margin="0,24,0,0"/>
+                              Height="60" VerticalAlignment="Bottom"/>
             </Grid>
 
             <!-- Numpad and Payment Methods -->
@@ -123,15 +144,17 @@
 
                 <!-- Payment Methods -->
                 <StackPanel Grid.Column="1" Spacing="12">
-                    <Grid ColumnSpacing="8">
+                     <Grid ColumnSpacing="8" RowSpacing="8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Content="Next $" Command="{x:Bind ViewModel.NextAmountCommand}" HorizontalAlignment="Stretch" Background="LightSlateGray" Foreground="White"/>
-                        <Button Grid.Column="1" Content="Exact" Command="{x:Bind ViewModel.ExactAmountCommand}" HorizontalAlignment="Stretch" Background="DarkGreen" Foreground="White" IsEnabled="{x:Bind ViewModel.HasDueAmount, Mode=OneWay}"/>
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Content="No Sale" Command="{x:Bind ViewModel.NoSaleCommand}" HorizontalAlignment="Stretch" Background="DarkRed" Foreground="White"/>
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Content="TEST WAIT" Command="{x:Bind ViewModel.TestWaitCommand}" Margin="0,10,0,0" Background="Orange" Foreground="Black"/>
+                        <Button Content="TEST WAIT" Command="{x:Bind ViewModel.TestWaitCommand}" Height="48" HorizontalAlignment="Stretch" Background="Orange" Foreground="Black"/>
+                        <Button Grid.Column="1" Content="Next $" Command="{x:Bind ViewModel.NextAmountCommand}" Height="48" HorizontalAlignment="Stretch" Background="LightSlateGray" Foreground="White"/>
+                        <Button Grid.Column="2" Content="No Sale" Command="{x:Bind ViewModel.NoSaleCommand}" Height="48" HorizontalAlignment="Stretch" Background="DarkRed" Foreground="White"/>
+                        <Button Grid.Column="3" Content="Exact" Command="{x:Bind ViewModel.ExactAmountCommand}" Height="48" HorizontalAlignment="Stretch" Background="DarkGreen" Foreground="White" IsEnabled="{x:Bind ViewModel.HasDueAmount, Mode=OneWay}"/>
                     </Grid>
 
                     <!-- F-0043: Quick Cash Buttons -->
@@ -149,13 +172,13 @@
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 
-                                <Button Content="$1" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="1" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
-                                <Button Grid.Column="1" Content="$5" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="5" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
-                                <Button Grid.Column="2" Content="$10" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="10" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
+                                <Button Content="$1" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="1" Height="40" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
+                                <Button Grid.Column="1" Content="$5" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="5" Height="40" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
+                                <Button Grid.Column="2" Content="$10" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="10" Height="40" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
                                 
-                                <Button Grid.Row="1" Content="$20" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="20" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
-                                <Button Grid.Row="1" Grid.Column="1" Content="$50" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="50" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
-                                <Button Grid.Row="1" Grid.Column="2" Content="$100" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="100" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
+                                <Button Grid.Row="1" Content="$20" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="20" Height="40" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
+                                <Button Grid.Row="1" Grid.Column="1" Content="$50" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="50" Height="40" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
+                                <Button Grid.Row="1" Grid.Column="2" Content="$100" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="100" Height="40" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
                             </Grid>
                         </StackPanel>
                     </Border>

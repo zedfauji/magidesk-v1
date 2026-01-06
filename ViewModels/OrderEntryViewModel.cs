@@ -12,6 +12,7 @@ using Microsoft.UI.Xaml.Controls;
 using Magidesk.ViewModels;
 using CommunityToolkit.Mvvm.Input;
 using Magidesk.ViewModels.Dialogs;
+using Magidesk.Presentation.ViewModels.Dialogs;
 using Magidesk.Domain.Enumerations;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -28,7 +29,7 @@ public partial class OrderEntryViewModel : ViewModelBase
     private readonly ICommandHandler<PrintToKitchenCommand, PrintToKitchenResult> _printToKitchenHandler;
     private readonly ICommandHandler<ModifyOrderLineCommand> _modifyOrderLineHandler;
     private readonly ICommandHandler<RemoveOrderLineCommand> _removeOrderLineHandler;
-    private readonly ICommandHandler<PayNowCommand> _payNowHandler;
+    private readonly ICommandHandler<PayNowCommand, PayNowResult> _payNowHandler;
     private readonly ICommandHandler<SetServiceChargeCommand, SetServiceChargeResult> _setServiceChargeHandler;
     private readonly ICommandHandler<SetDeliveryChargeCommand, SetDeliveryChargeResult> _setDeliveryChargeHandler;
     private readonly ICommandHandler<SetAdjustmentCommand, SetAdjustmentResult> _setAdjustmentHandler;
@@ -104,6 +105,7 @@ public partial class OrderEntryViewModel : ViewModelBase
                  OnPropertyChanged(nameof(DiscountText));
                  OnPropertyChanged(nameof(HasDiscount));
                  OnPropertyChanged(nameof(HasUnsentItems));
+                 OnPropertyChanged(nameof(HasTicketWithItems));
              }
         }
     }
@@ -175,6 +177,7 @@ public partial class OrderEntryViewModel : ViewModelBase
     public ICommand RemoveItemCommand { get; }
 
     private readonly IPrintingService _printingService;
+    private readonly Services.IOrderEntryDialogService _orderEntryDialogService;
 
     // ... existing fields ...
 
@@ -190,7 +193,7 @@ public partial class OrderEntryViewModel : ViewModelBase
         ICommandHandler<PrintToKitchenCommand, PrintToKitchenResult> printToKitchenHandler,
         ICommandHandler<ModifyOrderLineCommand> modifyOrderLineHandler,
         ICommandHandler<RemoveOrderLineCommand> removeOrderLineHandler,
-        ICommandHandler<PayNowCommand> payNowHandler,
+        ICommandHandler<PayNowCommand, PayNowResult> payNowHandler,
         ICommandHandler<SetServiceChargeCommand, SetServiceChargeResult> setServiceChargeHandler,
         ICommandHandler<SetDeliveryChargeCommand, SetDeliveryChargeResult> setDeliveryChargeHandler,
         ICommandHandler<SetAdjustmentCommand, SetAdjustmentResult> setAdjustmentHandler,
@@ -203,7 +206,8 @@ public partial class OrderEntryViewModel : ViewModelBase
         ICommandHandler<ChangeTableCommand, ChangeTableResult> changeTableHandler,
         ICommandHandler<SetCustomerCommand, SetCustomerResult> setCustomerHandler,
         IServiceProvider serviceProvider,
-        IKitchenRoutingService kitchenRoutingService)
+        IKitchenRoutingService kitchenRoutingService,
+        Services.IOrderEntryDialogService orderEntryDialogService)
     {
         _categoryRepository = categoryRepository;
         _groupRepository = groupRepository;
@@ -228,6 +232,7 @@ public partial class OrderEntryViewModel : ViewModelBase
         _setCustomerHandler = setCustomerHandler;
         _serviceProvider = serviceProvider;
         _kitchenRoutingService = kitchenRoutingService;
+        _orderEntryDialogService = orderEntryDialogService;
 
         Title = "Order Entry";
 
@@ -434,13 +439,8 @@ public partial class OrderEntryViewModel : ViewModelBase
         
         // F-0036: Audit requirement: Pre-defined options (Medium Rare, etc.)
         var vm = new Magidesk.Presentation.ViewModels.Dialogs.CookingInstructionViewModel(line.Instructions ?? "");
-        var dialog = new Magidesk.Views.Dialogs.CookingInstructionDialog { ViewModel = vm };
-        dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
         
-        vm.CloseAction = () => dialog.Hide();
-        vm.CancelAction = () => dialog.Hide();
-
-        await dialog.ShowAsync();
+        await _orderEntryDialogService.ShowCookingInstructionAsync(vm);
 
         if (vm.IsConfirmed)
         {
@@ -470,12 +470,8 @@ public partial class OrderEntryViewModel : ViewModelBase
 
         // Generic Modifiers
         var vm = new Magidesk.ViewModels.Dialogs.ModifierSelectionViewModel(_menuRepository, line);
-        var dialog = new Magidesk.Views.Dialogs.ModifierSelectionDialog(vm)
-        {
-            XamlRoot = App.MainWindowInstance.Content.XamlRoot
-        };
-
-        await dialog.ShowAsync();
+        
+        await _orderEntryDialogService.ShowModifierSelectionAsync(vm);
 
         if (vm.IsConfirmed)
         {
@@ -499,14 +495,8 @@ public partial class OrderEntryViewModel : ViewModelBase
 
         // Show add-on selection dialog
         var vm = new Magidesk.ViewModels.Dialogs.AddOnSelectionViewModel(_menuRepository, line);
-        var dialog = new Magidesk.Views.Dialogs.AddOnSelectionDialog(vm)
-        {
-            XamlRoot = App.MainWindowInstance.Content.XamlRoot
-        };
-
-        vm.CloseAction = () => dialog.Hide();
-
-        await dialog.ShowAsync();
+        
+        await _orderEntryDialogService.ShowAddOnSelectionAsync(vm);
 
         if (vm.IsConfirmed && vm.ResultAddOns.Any())
         {
@@ -541,14 +531,8 @@ public partial class OrderEntryViewModel : ViewModelBase
 
         // Show combo selection dialog
         var vm = new Magidesk.ViewModels.Dialogs.ComboSelectionViewModel(_menuRepository, line);
-        var dialog = new Magidesk.Views.Dialogs.ComboSelectionDialog(vm)
-        {
-            XamlRoot = App.MainWindowInstance.Content.XamlRoot
-        };
-
-        vm.CloseAction = () => dialog.Hide();
-
-        await dialog.ShowAsync();
+        
+        await _orderEntryDialogService.ShowComboSelectionAsync(vm);
 
         if (vm.IsConfirmed && vm.ResultSelections.Any())
         {
@@ -607,13 +591,8 @@ public partial class OrderEntryViewModel : ViewModelBase
         if (line == null || Ticket == null) return;
         
         var vm = new Magidesk.Presentation.ViewModels.Dialogs.PizzaModifierViewModel(_menuRepository, line);
-        var dialog = new Magidesk.Views.Dialogs.PizzaModifierDialog { ViewModel = vm };
-        dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
         
-        vm.CloseAction = () => dialog.Hide();
-        // vm.CancelAction = () => dialog.Hide(); // Handled internally
-
-        await dialog.ShowAsync();
+        await _orderEntryDialogService.ShowPizzaModifierAsync(vm);
 
         if (vm.IsConfirmed)
         {
@@ -633,13 +612,11 @@ public partial class OrderEntryViewModel : ViewModelBase
     {
         if (Ticket == null) return;
 
-        var dialog = new Magidesk.Views.Dialogs.TicketFeeDialog();
-        dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
-        var result = await dialog.ShowAsync();
+        var vm = new TicketFeeViewModel();
+        await _orderEntryDialogService.ShowTicketFeeAsync(vm);
 
-        if (result == ContentDialogResult.Primary)
+        if (vm.IsConfirmed)
         {
-            var vm = dialog.ViewModel;
             if (vm.Amount < 0) return; // Basic validation
 
             if (_userService.CurrentUser?.Id == null)
@@ -687,13 +664,9 @@ public partial class OrderEntryViewModel : ViewModelBase
         if (line == null || Ticket == null) return;
         
         // F-0036: Seat Assignment Dialog
-        var vm = new Magidesk.Presentation.ViewModels.Dialogs.SeatSelectionViewModel();
-        var dialog = new Magidesk.Views.Dialogs.SeatSelectionDialog { ViewModel = vm };
-        dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        var vm = new SeatSelectionViewModel();
         
-        vm.CloseAction = () => dialog.Hide();
-        
-        await dialog.ShowAsync();
+        await _orderEntryDialogService.ShowSeatSelectionAsync(vm);
         
         if (vm.IsConfirmed && vm.ResultSeatNumber.HasValue)
         {
@@ -726,13 +699,11 @@ public partial class OrderEntryViewModel : ViewModelBase
     {
         if (Ticket == null) return;
 
-        var dialog = new Magidesk.Views.Dialogs.MiscItemDialog();
-        dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
-        var result = await dialog.ShowAsync();
+        var vm = new MiscItemViewModel();
+        await _orderEntryDialogService.ShowMiscItemAsync(vm);
 
-        if (result == ContentDialogResult.Primary)
+        if (vm.IsConfirmed)
         {
-            var vm = dialog.ViewModel;
             if (string.IsNullOrWhiteSpace(vm.Description) || vm.Price < 0) return; // Basic validation
 
             await _addOrderLineHandler.HandleAsync(new AddOrderLineCommand
@@ -767,6 +738,15 @@ public partial class OrderEntryViewModel : ViewModelBase
         catch (Exception ex)
         {
              System.Diagnostics.Debug.WriteLine($"Print Error: {ex.Message}");
+             
+             var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+             {
+                 Title = "Print Failed",
+                 Content = $"Could not print receipt.\nReason: {ex.Message}",
+                 CloseButtonText = "OK",
+                 XamlRoot = App.MainWindowInstance.Content.XamlRoot
+             };
+             await _navigationService.ShowDialogAsync(dialog);
         }
         finally { IsBusy = false; }
     }
@@ -788,7 +768,23 @@ public partial class OrderEntryViewModel : ViewModelBase
                 await LoadTicketAsync(ticketId.Value);
                 System.Diagnostics.Debug.WriteLine($"Ticket loading completed. Ticket is null: {Ticket == null}");
             }
-            else if (Ticket == null)
+            else if (Ticket != null)
+            {
+                // Refresh existing ticket (e.g. returning from Settle view)
+                System.Diagnostics.Debug.WriteLine($"Refreshing existing ticket: {Ticket.Id}");
+                await LoadTicketAsync(Ticket.Id);
+                
+                // If the ticket is now Paid or Closed, we should not show it as an active order.
+                // Reset to a new ticket for the next customer.
+                if (Ticket != null && (Ticket.Status == Magidesk.Domain.Enumerations.TicketStatus.Paid || 
+                                       Ticket.Status == Magidesk.Domain.Enumerations.TicketStatus.Closed))
+                {
+                    System.Diagnostics.Debug.WriteLine($"Ticket {Ticket.TicketNumber} is {Ticket.Status}. Resetting for new order.");
+                    Ticket = null;
+                    await CreateNewTicketAsync();
+                }
+            }
+            else
             {
                 System.Diagnostics.Debug.WriteLine("No ticketId provided and no existing ticket - creating new ticket");
                 // Auto-create ticket if none exists
@@ -801,6 +797,27 @@ public partial class OrderEntryViewModel : ViewModelBase
         {
             System.Diagnostics.Debug.WriteLine($"Error in OrderEntryViewModel.InitializeAsync: {ex.Message}");
             System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
+            
+            // T-005: Show blocking error if initialization fails (e.g. DB connection lost)
+            var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+            {
+                Title = "Initialization Error",
+                Content = $"Failed to load order screen.\nReason: {ex.Message}\n\nPlease check system connection.",
+                CloseButtonText = "Go Back",
+                XamlRoot = App.MainWindowInstance.Content.XamlRoot
+            };
+            await _navigationService.ShowDialogAsync(dialog);
+            
+            // Return to safe place
+            if (_navigationService.CanGoBack)
+            {
+                _navigationService.GoBack();
+            }
+            else
+            {
+                // Fallback to Switchboard if can't go back
+                 _navigationService.Navigate(typeof(Magidesk.Presentation.Views.SwitchboardPage));
+            }
         }
     }
 
@@ -863,6 +880,8 @@ public partial class OrderEntryViewModel : ViewModelBase
     public ICommand SendToKitchenCommand => new AsyncRelayCommand(SendToKitchenAsync);
     public ICommand PayNowUiCommand => new AsyncRelayCommand(PayNowAsync);
 
+
+
     private async Task PayNowAsync()
     {
         if (Ticket == null) return;
@@ -875,15 +894,13 @@ public partial class OrderEntryViewModel : ViewModelBase
         // F-0041: Edge case validation
         if (!Ticket.OrderLines.Any())
         {
-            // No items - disable button should prevent this, but add safety check
             return;
         }
 
         if (Ticket.TotalAmount <= 0)
         {
-            // Zero balance - skip payment view, just close ticket
             await LoadTicketAsync(Ticket.Id);
-            Ticket = null;
+            Ticket = null; // Close
             _navigationService.GoBack();
             return;
         }
@@ -891,11 +908,7 @@ public partial class OrderEntryViewModel : ViewModelBase
         IsBusy = true;
         try
         {
-            // F-0006: Pay Now implies immediate full payment (usually Cash for Quick Pay, or triggers Settle)
-            // The UI button usually says "Total" or "Pay". 
-            // If we want "Quick Pay Cash", we pass Amount=0 (full) and Tender=Cash.
-            
-            await _payNowHandler.HandleAsync(new PayNowCommand
+            var result = await _payNowHandler.HandleAsync(new PayNowCommand
             {
                 TicketId = Ticket.Id,
                 Amount = 0, // Full amount
@@ -904,21 +917,39 @@ public partial class OrderEntryViewModel : ViewModelBase
                 TerminalId = _terminalContext.TerminalId.Value
             });
 
+            if (!result.Success)
+            {
+                 var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+                 {
+                     Title = "Payment Failed",
+                     Content = $"Payment could not be processed.\nReason: {result.Message}",
+                     CloseButtonText = "OK",
+                     XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                 };
+                 await _navigationService.ShowDialogAsync(dialog);
+                 return;
+            }
+
             // Reload to check status (should be Closed)
             await LoadTicketAsync(Ticket.Id);
             
             if (Ticket?.Status == Magidesk.Domain.Enumerations.TicketStatus.Closed)
             {
-                // Navigate away or clear? Usually start new ticket.
-                // For now, clear the view.
                 Ticket = null;
-                // Optional: Navigate to Switchboard or stay for next order
                 _navigationService.GoBack(); 
             }
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Pay Now Error: {ex.Message}");
+             var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+             {
+                 Title = "System Error",
+                 Content = $"Critical error during payment processing.\n{ex.Message}",
+                 CloseButtonText = "OK",
+                 XamlRoot = App.MainWindowInstance.Content.XamlRoot
+             };
+             await _navigationService.ShowDialogAsync(dialog);
         }
         finally { IsBusy = false; }
     }
@@ -954,15 +985,58 @@ public partial class OrderEntryViewModel : ViewModelBase
         IsBusy = true;
         try
         {
-            // Use Routing Service to create Kitchen Orders
-            await _kitchenRoutingService.RouteToKitchenAsync(Ticket);
+            // T-002: Use Command Handler which now orchestrates both KDS Routing and Physical Printing
+            // and returns detailed errors on failure.
+            var command = new PrintToKitchenCommand { TicketId = Ticket.Id };
+            var result = await _printToKitchenHandler.HandleAsync(command);
+
+            if (!result.Success)
+            {
+                var errors = result.Errors != null && result.Errors.Any() 
+                    ? string.Join("\n", result.Errors) 
+                    : result.Message;
+
+                var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+                {
+                    Title = "Kitchen Print Failure",
+                    Content = $"Orders may not have reached the kitchen.\n\nReason: {result.Message}\nDetails:\n{errors}",
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                };
+                await _navigationService.ShowDialogAsync(dialog);
+            }
+            else
+            {
+                var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+                {
+                    Title = "Success",
+                    Content = "Order sent to kitchen.",
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                };
+                await _navigationService.ShowDialogAsync(dialog);
+                
+                // Refresh ticket to update "Sent" status on items
+                await LoadTicketAsync(_ticket.Id);
+            }
             
             // In future: Mark items as "Sent" in DB or Ticket state if the routing service doesn't do it implicitly.
             // For now, we assume successful route is enough to count as "Sent".
+            // Refetch ticket to update UI (Printed status)
+            // _ticket = await _getTicketHandler.HandleAsync... (Optional, but good practice)
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Send To Kitchen Error: {ex.Message}");
+            // Handle catastrophic handler failure (e.g. DB down)
+             var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+             {
+                 Title = "System Error",
+                 Content = $"Failed to communicate with Kitchen Services.\n{ex.Message}",
+                 CloseButtonText = "OK",
+                 XamlRoot = App.MainWindowInstance.Content.XamlRoot
+             };
+             await _navigationService.ShowDialogAsync(dialog);
         }
         finally
         {
@@ -983,43 +1057,59 @@ public partial class OrderEntryViewModel : ViewModelBase
         IsBusy = true;
         try
         {
-            // Ticket creation requires authoritative runtime context (user/terminal/open cash session).
-            // The supported entry point for this is Switchboard -> New Ticket.
-            var dialog = new ContentDialog
+            if (_userService.CurrentUser?.Id == null)
             {
-                Title = "Action Required",
-                Content = "Create Ticket is not available from Order Entry. Use Switchboard -> New Ticket.",
-                CloseButtonText = "OK"
+                 // Should invoke login or error
+                 return;
+            }
+            
+            var terminalId = _terminalContext.TerminalId;
+            if (terminalId == null)
+            {
+                 // Handle no terminal error
+                 return;
+            }
+
+            var command = new CreateTicketCommand
+            {
+                CreatedBy = _userService.CurrentUser.Id,
+                TerminalId = terminalId.Value,
+                ShiftId = Guid.Empty, // Should resolve current shift
+                OrderTypeId = Guid.Empty, // Default DineIn
+                NumberOfGuests = 1
             };
-            await _navigationService.ShowDialogAsync(dialog);
+
+            var result = await _createTicketHandler.HandleAsync(command);
+            
+            await LoadTicketAsync(result.TicketId);
         }
         catch (Exception ex)
         {
-             // Handle
+             var dialog = new ContentDialog
+             {
+                 Title = "Creation Error",
+                 Content = ex.Message,
+                 CloseButtonText = "OK",
+                 XamlRoot = App.MainWindowInstance.Content.XamlRoot
+             };
+             await _navigationService.ShowDialogAsync(dialog);
         }
         finally { IsBusy = false; }
     }
 
     private async Task LoadTicketAsync(Guid ticketId)
     {
-        try
+        // T-005: Do NOT swallow DB errors. Propagate to caller (Initialize, PayNow, etc.) for UI handling.
+        System.Diagnostics.Debug.WriteLine($"Loading ticket: {ticketId}");
+        Ticket = await _getTicketHandler.HandleAsync(new GetTicketQuery { TicketId = ticketId });
+        
+        if (Ticket == null)
         {
-            System.Diagnostics.Debug.WriteLine($"Loading ticket: {ticketId}");
-            Ticket = await _getTicketHandler.HandleAsync(new GetTicketQuery { TicketId = ticketId });
-            
-            if (Ticket == null)
-            {
-                System.Diagnostics.Debug.WriteLine($"Ticket {ticketId} not found or failed to load");
-            }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine($"Successfully loaded ticket #{Ticket.TicketNumber} with {Ticket.OrderLines.Count} items");
-            }
+            throw new Exception($"Ticket {ticketId} not found in database.");
         }
-        catch (Exception ex)
+        else
         {
-            System.Diagnostics.Debug.WriteLine($"Error loading ticket {ticketId}: {ex.Message}");
-            Ticket = null;
+            System.Diagnostics.Debug.WriteLine($"Successfully loaded ticket #{Ticket.TicketNumber} with {Ticket.OrderLines.Count} items");
         }
     }
 
@@ -1039,26 +1129,12 @@ public partial class OrderEntryViewModel : ViewModelBase
         if (fullItem.IsVariablePrice)
         {
             var vm = new Magidesk.Presentation.ViewModels.Dialogs.PriceEntryViewModel(fullItem.Name, fullItem.Price.Amount);
-            var dialog = new Magidesk.Views.Dialogs.PriceEntryDialog { ViewModel = vm };
-            dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
             
-            // Wire interaction
-            vm.CloseAction = () => dialog.Hide();
-            vm.CancelAction = () => dialog.Hide();
-
-            await dialog.ShowAsync();
+            await _orderEntryDialogService.ShowPriceEntryAsync(vm);
 
             if (!vm.IsConfirmed)
             {
                 return; // User cancelled
-            }
-            
-            if (vm.Price <= 0)
-            {
-                 // Prevent negative/zero price if strict. 
-                 // Assuming 0 is allowed for open items if free? 
-                 // Audit says "Price cannot be negative". 
-                 // If 0, maybe valid. Let's accept it.
             }
             
             effectivePrice = new Money(vm.Price, fullItem.Price.Currency);
@@ -1074,13 +1150,8 @@ public partial class OrderEntryViewModel : ViewModelBase
         if (sizeGroup != null)
         {
             var vm = new Magidesk.Presentation.ViewModels.Dialogs.SizeSelectionViewModel(sizeGroup);
-            var dialog = new Magidesk.Views.Dialogs.SizeSelectionDialog { ViewModel = vm };
-            dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
             
-            // Wire interaction
-            vm.CloseAction = () => dialog.Hide();
-
-            await dialog.ShowAsync();
+            await _orderEntryDialogService.ShowSizeSelectionAsync(vm);
 
             if (vm.SelectedSize != null)
             {
@@ -1132,15 +1203,8 @@ public partial class OrderEntryViewModel : ViewModelBase
 
                 // Show modifier selection dialog
                 var vm = new Magidesk.ViewModels.Dialogs.ModifierSelectionViewModel(_menuRepository, tempLine);
-                var dialog = new Magidesk.Views.Dialogs.ModifierSelectionDialog(vm)
-                {
-                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
-                };
-
-                // Wire interaction
-                vm.CloseAction = () => dialog.Hide();
-
-                await dialog.ShowAsync();
+                
+                await _orderEntryDialogService.ShowModifierSelectionAsync(vm);
 
                 if (vm.IsConfirmed)
                 {
@@ -1230,13 +1294,7 @@ public partial class OrderEntryViewModel : ViewModelBase
                 vm.SearchText = SearchText;
             }
 
-            var dialog = new Magidesk.Views.Dialogs.ItemSearchDialog { ViewModel = vm };
-            dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
-            
-            // Wire interaction
-            vm.CloseAction = () => dialog.Hide();
-
-            await dialog.ShowAsync();
+            await _orderEntryDialogService.ShowItemSearchAsync(vm);
 
             if (vm.SelectedItem != null)
             {
@@ -1368,23 +1426,42 @@ public partial class OrderEntryViewModel : ViewModelBase
         IsBusy = true;
         try
         {
-            await _payNowHandler.HandleAsync(new PayNowCommand
+            var result = await _payNowHandler.HandleAsync(new PayNowCommand
             {
                 TicketId = Ticket.Id,
                 ProcessedBy = _userService.CurrentUser!.Id,
                 TerminalId = _terminalContext.TerminalId!.Value
             });
 
-            // If we reach here, it succeeded (exceptions handled in catch)
-            // Ticket should be closed by the handler if fully paid.
-            
-            // Navigate back
-            _navigationService.GoBack();
+            if (!result.Success)
+            {
+                var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+                {
+                    Title = "Quick Pay Failed",
+                    Content = $"Payment could not be processed.\nReason: {result.Message}",
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                };
+                await _navigationService.ShowDialogAsync(dialog);
+                return;
+            }
+
+            // If we reach here, it succeeded
+            // Navigate to Switchboard
+            _navigationService.Navigate(typeof(Magidesk.Presentation.Views.SwitchboardPage));
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Quick Pay Error: {ex.Message}");
-            // Ideally show error dialog
+            
+             var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+             {
+                 Title = "System Error",
+                 Content = $"Critical error during Quick Pay.\n{ex.Message}",
+                 CloseButtonText = "OK",
+                 XamlRoot = App.MainWindowInstance.Content.XamlRoot
+             };
+             await _navigationService.ShowDialogAsync(dialog);
         }
         finally
         {

@@ -11,7 +11,11 @@ public class MenuEditorViewModel : ViewModelBase
     private readonly IMenuCategoryRepository _categoryRepository;
     private readonly IMenuGroupRepository _groupRepository;
     private readonly IMenuRepository _menuRepository;
+
     private readonly IInventoryItemRepository _inventoryRepository;
+    private readonly IPrinterGroupRepository _printerGroupRepository;
+    
+    // ... (fields)
 
     private MenuCategory? _selectedCategory;
     private bool _isEditing;
@@ -48,6 +52,14 @@ public class MenuEditorViewModel : ViewModelBase
     public ObservableCollection<MenuCategory> Categories { get; } = new();
     public ObservableCollection<MenuGroup> Groups { get; } = new();
     public ObservableCollection<MenuItem> Items { get; } = new();
+    public ObservableCollection<PrinterGroup> PrinterGroups { get; } = new();
+
+    private PrinterGroup? _selectedPrinterGroup;
+    public PrinterGroup? SelectedPrinterGroup
+    {
+        get => _selectedPrinterGroup;
+        set => SetProperty(ref _selectedPrinterGroup, value);
+    }
 
     // Recipe Editor Properties
     public ObservableCollection<InventoryItem> InventoryOptions { get; } = new();
@@ -161,6 +173,16 @@ public class MenuEditorViewModel : ViewModelBase
                     EditingName = value.Name;
                     EditingPrice = value.Price.Amount.ToString("F2"); 
                     StatusMessage = $"Editing Item: {value.Name}";
+                    
+                    if (value.PrinterGroupId.HasValue)
+                    {
+                        SelectedPrinterGroup = PrinterGroups.FirstOrDefault(pg => pg.Id == value.PrinterGroupId);
+                    }
+                    else
+                    {
+                        SelectedPrinterGroup = null;
+                    }
+
                     _ = LoadRecipeLinesAsync(value);
                 }
                 else if (SelectedGroup != null)
@@ -178,18 +200,18 @@ public class MenuEditorViewModel : ViewModelBase
         get => _isEditing;
         set => SetProperty(ref _isEditing, value);
     }
-    
-
     public MenuEditorViewModel(
         IMenuCategoryRepository categoryRepository,
         IMenuGroupRepository groupRepository,
         IMenuRepository menuRepository,
-        IInventoryItemRepository inventoryRepository)
+        IInventoryItemRepository inventoryRepository,
+        IPrinterGroupRepository printerGroupRepository)
     {
         _categoryRepository = categoryRepository;
         _groupRepository = groupRepository;
         _menuRepository = menuRepository;
         _inventoryRepository = inventoryRepository;
+        _printerGroupRepository = printerGroupRepository;
         Title = "Menu Editor";
 
         LoadDataCommand = new AsyncRelayCommand(LoadDataAsync);
@@ -216,6 +238,10 @@ public class MenuEditorViewModel : ViewModelBase
                  {
                      SelectedItem.UpdatePrice(new Magidesk.Domain.ValueObjects.Money(priceVal));
                  }
+                 
+                 // F-00XX: Printer Group Persistence
+                 SelectedItem.SetPrinterGroup(SelectedPrinterGroup?.Id);
+                 
                  await _menuRepository.UpdateAsync(SelectedItem);
                  StatusMessage = "Saved Item & Recipe successfully.";
             }
@@ -384,6 +410,11 @@ public class MenuEditorViewModel : ViewModelBase
             InventoryOptions.Clear();
             var invItems = await _inventoryRepository.GetAllAsync();
             foreach (var inv in invItems) InventoryOptions.Add(inv);
+
+            // Load Printer Groups
+            PrinterGroups.Clear();
+            var printerGroups = await _printerGroupRepository.GetAllAsync();
+            foreach (var pg in printerGroups) PrinterGroups.Add(pg);
 
             StatusMessage = "Loaded successfully.";
         }

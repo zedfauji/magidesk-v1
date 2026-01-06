@@ -3,19 +3,23 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using Magidesk.Domain.Entities;
 using Magidesk.Presentation.ViewModels;
+using Magidesk.Presentation;
 
 namespace Magidesk.Presentation.Views;
 
 public sealed partial class OrderTypeSelectionDialog : ContentDialog
 {
-    public OrderTypeSelectionViewModel ViewModel { get; }
+    public OrderTypeSelectionViewModel ViewModel { get; set; }
+    public OrderType? SelectedOrderType => ViewModel?.SelectedOrderType;
 
-    public OrderType? SelectedOrderType => ViewModel.SelectedOrderType;
+    public OrderTypeSelectionDialog() : this(App.Services.GetRequiredService<OrderTypeSelectionViewModel>())
+    {
+    }
 
-    public OrderTypeSelectionDialog()
+    public OrderTypeSelectionDialog(OrderTypeSelectionViewModel viewModel)
     {
         InitializeComponent();
-        ViewModel = App.Services.GetRequiredService<OrderTypeSelectionViewModel>();
+        ViewModel = viewModel;
         this.Opened += OrderTypeSelectionDialog_Opened;
     }
 

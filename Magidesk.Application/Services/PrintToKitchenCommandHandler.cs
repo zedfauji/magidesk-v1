@@ -11,15 +11,18 @@ public class PrintToKitchenCommandHandler : ICommandHandler<PrintToKitchenComman
 {
     private readonly ITicketRepository _ticketRepository;
     private readonly IKitchenPrintService _kitchenPrintService;
+    private readonly IKitchenRoutingService _kitchenRoutingService;
     private readonly IAuditEventRepository _auditEventRepository;
 
     public PrintToKitchenCommandHandler(
         ITicketRepository ticketRepository,
         IKitchenPrintService kitchenPrintService,
+        IKitchenRoutingService kitchenRoutingService,
         IAuditEventRepository auditEventRepository)
     {
         _ticketRepository = ticketRepository;
         _kitchenPrintService = kitchenPrintService;
+        _kitchenRoutingService = kitchenRoutingService;
         _auditEventRepository = auditEventRepository;
     }
 
@@ -33,64 +36,96 @@ public class PrintToKitchenCommandHandler : ICommandHandler<PrintToKitchenComman
         }
 
         int orderLinesPrinted = 0;
+        bool printSuccess = true;
+        List<string> errors = new();
+        string message = "Printed successfully";
 
+        // 1. Route to KDS (Database)
+        // This ensures orders appear on Kitchen Screens even if printers fail.
+        try
+        {
+            var ticketDto = MapToDto(ticket);
+            await _kitchenRoutingService.RouteToKitchenAsync(ticketDto, command.OrderLineId.HasValue ? new List<Guid> { command.OrderLineId.Value } : null);
+        }
+        catch (Exception ex)
+        {
+            errors.Add($"KDS Routing Failed: {ex.Message}");
+            // Continue to printing? Yes, redundancy.
+        }
+
+        // 2. Physical Printing
         if (command.OrderLineId.HasValue)
         {
-            // Print specific order line
             var orderLine = ticket.OrderLines.FirstOrDefault(ol => ol.Id == command.OrderLineId.Value);
-            if (orderLine == null)
-            {
-                throw new Domain.Exceptions.BusinessRuleViolationException($"Order line {command.OrderLineId.Value} not found.");
-            }
+            if (orderLine == null) throw new Domain.Exceptions.BusinessRuleViolationException("Order line not found.");
 
-            if (orderLine.ShouldPrintToKitchen && !orderLine.PrintedToKitchen)
-            {
-                var success = await _kitchenPrintService.PrintOrderLineAsync(orderLine, ticket, cancellationToken);
-                if (success)
-                {
-                    orderLine.MarkPrintedToKitchen();
-                    await _kitchenPrintService.MarkOrderLinePrintedAsync(orderLine, cancellationToken);
-                    orderLinesPrinted = 1;
-                }
-            }
+            var result = await _kitchenPrintService.PrintOrderLineAsync(orderLine, ticket, cancellationToken);
+            printSuccess = result.Success;
+            orderLinesPrinted = result.PrintedCount;
+            message = result.Message;
+            if (result.Errors != null) errors.AddRange(result.Errors);
         }
         else
         {
-            // Print all unprinted order lines
-            orderLinesPrinted = await _kitchenPrintService.PrintTicketAsync(ticket, cancellationToken);
-            
-            // Mark all printed order lines
-            foreach (var orderLine in ticket.OrderLines.Where(ol => ol.ShouldPrintToKitchen && !ol.PrintedToKitchen))
-            {
-                orderLine.MarkPrintedToKitchen();
-                await _kitchenPrintService.MarkOrderLinePrintedAsync(orderLine, cancellationToken);
-            }
+            var result = await _kitchenPrintService.PrintTicketAsync(ticket, cancellationToken);
+            printSuccess = result.Success;
+            orderLinesPrinted = result.PrintedCount;
+            message = result.Message;
+            if (result.Errors != null) errors.AddRange(result.Errors);
         }
 
-        // Update ticket
-        await _ticketRepository.UpdateAsync(ticket, cancellationToken);
-
-        // Create audit event
-        var correlationId = Guid.NewGuid();
-        var auditEvent = AuditEvent.Create(
-            Domain.Enumerations.AuditEventType.Modified,
-            nameof(Ticket),
-            ticket.Id,
-            Guid.Empty, // System operation
-            System.Text.Json.JsonSerializer.Serialize(new
-            {
-                OrderLinesPrinted = orderLinesPrinted,
-                OrderLineId = command.OrderLineId
-            }),
-            $"Printed {orderLinesPrinted} order line(s) to kitchen for ticket #{ticket.TicketNumber}",
-            correlationId: correlationId);
-
-        await _auditEventRepository.AddAsync(auditEvent, cancellationToken);
+        // 3. Audit
+        if (orderLinesPrinted > 0)
+        {
+            var auditEvent = AuditEvent.Create(
+                Domain.Enumerations.AuditEventType.Modified,
+                nameof(Ticket),
+                ticket.Id,
+                Guid.Empty,
+                System.Text.Json.JsonSerializer.Serialize(new { OrderLinesPrinted = orderLinesPrinted }),
+                $"Printed {orderLinesPrinted} lines to kitchen. KDS: Sent.",
+                correlationId: Guid.NewGuid());
+            await _auditEventRepository.AddAsync(auditEvent, cancellationToken);
+        }
 
         return new PrintToKitchenResult
         {
             OrderLinesPrinted = orderLinesPrinted,
-            Success = orderLinesPrinted > 0
+            Success = printSuccess,
+            Message = message,
+            Errors = errors
+        };
+    }
+
+    private Magidesk.Application.DTOs.TicketDto MapToDto(Ticket ticket)
+    {
+        return new Magidesk.Application.DTOs.TicketDto
+        {
+            Id = ticket.Id,
+            TicketNumber = ticket.TicketNumber,
+            GlobalId = ticket.GlobalId,
+            TableName = string.Join(", ", ticket.TableNumbers),
+            OwnerName = "Unknown",
+            Status = ticket.Status,
+            CreatedAt = ticket.CreatedAt,
+            ActiveDate = ticket.ActiveDate,
+            OrderLines = ticket.OrderLines.Select(ol => new Magidesk.Application.DTOs.OrderLineDto
+            {
+                Id = ol.Id,
+                TicketId = ol.TicketId,
+                MenuItemId = ol.MenuItemId,
+                MenuItemName = ol.MenuItemName,
+                Quantity = ol.Quantity,
+                ShouldPrintToKitchen = ol.ShouldPrintToKitchen,
+                PrinterGroupId = ol.PrinterGroupId,
+                Instructions = ol.Instructions,
+                Modifiers = ol.Modifiers.Select(m => new Magidesk.Application.DTOs.OrderLineModifierDto
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    ShouldPrintToKitchen = m.ShouldPrintToKitchen
+                }).ToList()
+            }).ToList()
         };
     }
 }

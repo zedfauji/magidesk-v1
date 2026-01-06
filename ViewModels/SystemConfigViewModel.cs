@@ -28,6 +28,7 @@ public partial class SystemConfigViewModel : ViewModelBase
     private readonly ICommandHandler<UpdatePrinterMappingsCommand, UpdatePrinterMappingsResult> _updatePrinterMappings;
     private readonly IPrintingService _printingService;
     private readonly ITerminalContext _terminalContext;
+    private readonly NavigationService _navigationService;
 
     public ObservableCollection<BackupInfoDto> Backups { get; } = new();
     public ObservableCollection<PrinterGroupDto> PrinterGroups { get; } = new();
@@ -96,7 +97,8 @@ public partial class SystemConfigViewModel : ViewModelBase
         ICommandHandler<UpdatePrinterGroupsCommand, UpdatePrinterGroupsResult> updatePrinterGroups,
         ICommandHandler<UpdatePrinterMappingsCommand, UpdatePrinterMappingsResult> updatePrinterMappings,
         IPrintingService printingService,
-        ITerminalContext terminalContext)
+        ITerminalContext terminalContext,
+        NavigationService navigationService)
     {
         _getBackups = getBackups;
         _createBackup = createBackup;
@@ -111,8 +113,10 @@ public partial class SystemConfigViewModel : ViewModelBase
         _getPrinterMappings = getPrinterMappings;
         _updatePrinterGroups = updatePrinterGroups;
         _updatePrinterMappings = updatePrinterMappings;
+        _updatePrinterMappings = updatePrinterMappings;
         _printingService = printingService;
         _terminalContext = terminalContext;
+        _navigationService = navigationService; // Fixed: Assign injected service
 
         Title = "System & Hardware Configuration";
         _terminalConfiguration = new TerminalDto(); // Initialize to avoid null binding issues
@@ -144,7 +148,9 @@ public partial class SystemConfigViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            StatusMessage = $"Error loading configuration: {ex.Message}";
+            StatusMessage = "Error loading configuration.";
+            // T-012: Visible Failure
+            await _navigationService.ShowErrorAsync("Configuration Error", $"Failed to load restaurant config:\n{ex.Message}");
         }
     }
 
@@ -158,7 +164,9 @@ public partial class SystemConfigViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            StatusMessage = $"Error loading terminal configuration: {ex.Message}";
+            StatusMessage = "Error loading terminal configuration.";
+            // T-012: Visible Failure
+            await _navigationService.ShowErrorAsync("Configuration Error", $"Failed to load terminal settings:\n{ex.Message}");
         }
     }
 
@@ -174,7 +182,9 @@ public partial class SystemConfigViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            StatusMessage = $"Error loading card configuration: {ex.Message}";
+            StatusMessage = "Error loading card configuration.";
+             // T-012: Visible Failure
+             await _navigationService.ShowErrorAsync("Configuration Error", $"Failed to load card settings:\n{ex.Message}");
         }
     }
 
@@ -227,7 +237,9 @@ public partial class SystemConfigViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            StatusMessage = $"Error loading printer settings: {ex.Message}";
+            StatusMessage = "Error loading printer settings.";
+            // T-012: Visible Failure
+            await _navigationService.ShowErrorAsync("Configuration Error", $"Failed to load printers:\n{ex.Message}");
         }
     }
 
@@ -246,7 +258,9 @@ public partial class SystemConfigViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            StatusMessage = $"Error saving printer settings: {ex.Message}";
+            StatusMessage = "Error saving printer settings.";
+            // T-011: Visible Failure
+            await _navigationService.ShowErrorAsync("Save Failed", $"Could not save printer settings:\n{ex.Message}");
         }
         finally
         {
@@ -267,7 +281,9 @@ public partial class SystemConfigViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            StatusMessage = $"Error saving card configuration: {ex.Message}";
+            StatusMessage = "Error saving card configuration.";
+            // T-011: Visible Failure
+            await _navigationService.ShowErrorAsync("Save Failed", $"Could not save card settings:\n{ex.Message}");
         }
         finally
         {
@@ -288,7 +304,9 @@ public partial class SystemConfigViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            StatusMessage = $"Error saving configuration: {ex.Message}";
+            StatusMessage = "Error saving configuration.";
+            // T-011: Visible Failure
+             await _navigationService.ShowErrorAsync("Save Failed", $"Could not save restaurant config:\n{ex.Message}");
         }
         finally
         {
@@ -309,7 +327,9 @@ public partial class SystemConfigViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            StatusMessage = $"Error saving terminal configuration: {ex.Message}";
+            StatusMessage = "Error saving terminal configuration.";
+            // T-011: Visible Failure
+            await _navigationService.ShowErrorAsync("Save Failed", $"Could not save terminal settings:\n{ex.Message}");
         }
         finally
         {
@@ -392,6 +412,15 @@ public partial class SystemConfigViewModel : ViewModelBase
         catch (Exception ex)
         {
             StatusMessage = $"Restore failed: {ex.Message}";
+            // T-010: Visible Failure
+             var errorDialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+             {
+                 Title = "Restore Failed",
+                 Content = $"Critical Error during restore:\n{ex.Message}\n\nData may be in an inconsistent state.",
+                 CloseButtonText = "OK",
+                 XamlRoot = App.MainWindowInstance.Content.XamlRoot
+             };
+             await errorDialog.ShowAsync();
         }
         finally
         {

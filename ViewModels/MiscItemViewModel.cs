@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Magidesk.Domain.ValueObjects;
+using System;
 
 namespace Magidesk.ViewModels;
 
@@ -15,6 +16,12 @@ public partial class MiscItemViewModel : ObservableObject
     [ObservableProperty]
     private string _priceString = string.Empty;
 
+    [ObservableProperty]
+    private bool _isConfirmed;
+
+    public Action? CloseAction { get; set; }
+    public Action? CancelAction { get; set; }
+
     // TODO: Add Tax Group support when TaxService is fully implemented
     // For now, allow simple Price/Description entry.
 
@@ -27,8 +34,6 @@ public partial class MiscItemViewModel : ObservableObject
     {
         if (PriceString.Contains(".") && number == ".") return; // Prevent double decimal
         
-        // Basic numpad logic (simulating string entry for now, or could use math)
-        // Similar to QuantityViewModel logic if we want consistency
         PriceString += number;
         if (decimal.TryParse(PriceString, out var result))
         {
@@ -41,5 +46,19 @@ public partial class MiscItemViewModel : ObservableObject
     {
         PriceString = string.Empty;
         Price = 0;
+    }
+
+    [RelayCommand]
+    private void Confirm()
+    {
+        IsConfirmed = true;
+        CloseAction?.Invoke();
+    }
+
+    [RelayCommand]
+    private void Cancel()
+    {
+        IsConfirmed = false;
+        CancelAction?.Invoke();
     }
 }

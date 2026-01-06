@@ -101,7 +101,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.UpdateTicketNoteCommand>, UpdateTicketNoteCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.UpdateOrderLineInstructionCommand>, UpdateOrderLineInstructionCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.VoidTicketCommand>, VoidTicketCommandHandler>();
-        services.AddScoped<ICommandHandler<Commands.PayNowCommand>, PayNowCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.PayNowCommand, Commands.PayNowResult>, PayNowCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.LogoutCommand>, LogoutCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.SettleTicketCommand>, SettleTicketCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.ClockInCommand>, ClockInCommandHandler>();

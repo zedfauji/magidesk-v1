@@ -31,57 +31,53 @@ public class PrintingService : IPrintingService
 
     public async Task PrintTicketAsync(TicketDto ticket, string? printerName = null)
     {
-        try 
+        // 1. Generate Layout (Async)
+        string content = await _defaultAdapter.GenerateLayoutAsync(ticket);
+        
+        // 2. Offload Printing to Backgound Thread (T-003)
+        // GDI+ Print() is blocking and can freeze UI if not offloaded.
+        await Task.Run(() => 
         {
-            Debug.WriteLine($"[PrintingService] Preparing Ticket #{ticket.TicketNumber} for {(printerName ?? "Default Printer")}");
-            
-            // 1. Generate Layout
-            string content = await _defaultAdapter.GenerateLayoutAsync(ticket);
-            
-            // 2. Configure Print Document
-            using var printDoc = new PrintDocument();
-            if (!string.IsNullOrEmpty(printerName))
+            try 
             {
-                printDoc.PrinterSettings.PrinterName = printerName;
-            }
-
-            // 3. Define Print Handler
-            printDoc.PrintPage += (sender, e) => 
-            {
-                // Font: Consolas 9pt (approx 48 chars on 80mm)
-                using var font = new Font("Consolas", 9);
-                using var brush = new SolidBrush(Color.Black);
+                Debug.WriteLine($"[PrintingService] Preparing Ticket #{ticket.TicketNumber} for {(printerName ?? "Default Printer")}");
                 
-                float yPos = 0;
-                float leftMargin = 0; // Thermal printers handle margins
-                
-                // Draw text
-                // Note: Simple text drawing. Does not handle complex pagination manually, 
-                // but Thermal printers act as one long page usually.
-                e.Graphics.DrawString(content, font, brush, leftMargin, yPos);
-                
-                e.HasMorePages = false;
-            };
+                using var printDoc = new PrintDocument();
+                if (!string.IsNullOrEmpty(printerName))
+                {
+                    printDoc.PrinterSettings.PrinterName = printerName;
+                }
 
-            // 4. Print
-            if (printDoc.PrinterSettings.IsValid)
-            {
-               printDoc.Print();
-            }
-            else 
-            {
-                Debug.WriteLine($"[PrintingService] Invalid Printer: {printerName}");
-                // Fallback to debug
-                Debug.WriteLine(content);
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"[PrintingService] Error: {ex.Message}");
-            throw; // Propagate for UI handling
-        }
+                printDoc.PrintPage += (sender, e) => 
+                {
+                    using var font = new Font("Consolas", 9);
+                    using var brush = new SolidBrush(Color.Black);
+                    float yPos = 0;
+                    float leftMargin = 0;
+                    
+                    if (e.Graphics != null)
+                        e.Graphics.DrawString(content, font, brush, leftMargin, yPos);
+                    
+                    e.HasMorePages = false;
+                };
 
-        await Task.CompletedTask;
+                if (printDoc.PrinterSettings.IsValid)
+                {
+                   printDoc.Print();
+                }
+                else 
+                {
+                    Debug.WriteLine($"[PrintingService] Invalid Printer: {printerName}");
+                    Debug.WriteLine(content);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[PrintingService] Error: {ex.Message}");
+                // Rethrow to allow UI handling (captured by Task)
+                throw; 
+            }
+        });
     }
 
     public async Task PrintKitchenTicketAsync(TicketDto ticket)

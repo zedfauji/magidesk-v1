@@ -4,27 +4,30 @@ namespace Magidesk.Application.Commands;
 
 public class OpenCashDrawerCommand
 {
-    public string PrinterName { get; set; } = string.Empty;
+    public string? PrinterName { get; set; }
 }
 
 public class OpenCashDrawerCommandHandler : ICommandHandler<OpenCashDrawerCommand>
 {
     private readonly ICashDrawerService _cashDrawerService;
+    private readonly IReceiptPrintService _receiptPrintService;
 
-    public OpenCashDrawerCommandHandler(ICashDrawerService cashDrawerService)
+    public OpenCashDrawerCommandHandler(ICashDrawerService cashDrawerService, IReceiptPrintService receiptPrintService)
     {
         _cashDrawerService = cashDrawerService;
+        _receiptPrintService = receiptPrintService;
     }
 
     public async Task HandleAsync(OpenCashDrawerCommand command, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(command.PrinterName))
         {
-            // TODO: Fallback to Terminal's Default 'Receipt' Printer if empty
-            // For now, require it
-            throw new ArgumentException("Printer Name is required to open drawer.");
+            // Use service to resolve terminal's default printer
+            await _receiptPrintService.OpenCashDrawerAsync(cancellationToken);
         }
-        
-        await _cashDrawerService.OpenDrawerAsync(command.PrinterName);
+        else
+        {
+            await _cashDrawerService.OpenDrawerAsync(command.PrinterName);
+        }
     }
 }

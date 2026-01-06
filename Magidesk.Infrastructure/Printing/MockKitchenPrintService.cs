@@ -17,7 +17,7 @@ public class MockKitchenPrintService : IKitchenPrintService
         _logger = logger;
     }
 
-    public Task<bool> PrintOrderLineAsync(OrderLine orderLine, Ticket ticket, CancellationToken cancellationToken = default)
+    public Task<KitchenPrintResult> PrintOrderLineAsync(OrderLine orderLine, Ticket ticket, CancellationToken cancellationToken = default)
     {
         if (orderLine.ShouldPrintToKitchen && !orderLine.PrintedToKitchen)
         {
@@ -37,26 +37,31 @@ public class MockKitchenPrintService : IKitchenPrintService
                     modifier.ItemCount);
             }
 
-            return Task.FromResult(true);
+            return Task.FromResult(KitchenPrintResult.SuccessResult(1));
         }
 
-        return Task.FromResult(false);
+        return Task.FromResult(KitchenPrintResult.Failure("Item not configured to print or already printed."));
     }
 
-    public async Task<int> PrintTicketAsync(Ticket ticket, CancellationToken cancellationToken = default)
+    public async Task<KitchenPrintResult> PrintTicketAsync(Ticket ticket, CancellationToken cancellationToken = default)
     {
         int printedCount = 0;
+        List<string> errors = new();
 
         foreach (var orderLine in ticket.OrderLines.Where(ol => ol.ShouldPrintToKitchen && !ol.PrintedToKitchen))
         {
             var result = await PrintOrderLineAsync(orderLine, ticket, cancellationToken);
-            if (result)
+            if (result.Success)
             {
                 printedCount++;
             }
+            else if (result.Errors != null)
+            {
+                errors.AddRange(result.Errors);
+            }
         }
 
-        return printedCount;
+        return new KitchenPrintResult(true, $"Printed {printedCount} lines.", printedCount, errors);
     }
 
     public Task MarkOrderLinePrintedAsync(OrderLine orderLine, CancellationToken cancellationToken = default)

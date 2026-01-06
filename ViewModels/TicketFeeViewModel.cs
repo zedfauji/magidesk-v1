@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.ObjectModel;
 
 namespace Magidesk.ViewModels;
@@ -11,7 +12,7 @@ public enum TicketFeeType
     Adjustment
 }
 
-public class TicketFeeViewModel : ObservableObject
+public partial class TicketFeeViewModel : ObservableObject
 {
     private TicketFeeType _selectedFeeType;
     public TicketFeeType SelectedFeeType
@@ -44,8 +45,28 @@ public class TicketFeeViewModel : ObservableObject
 
     public bool IsReasonVisible => SelectedFeeType == TicketFeeType.Adjustment;
 
+    [ObservableProperty]
+    private bool _isConfirmed;
+
+    public Action? CloseAction { get; set; }
+    public Action? CancelAction { get; set; }
+
     public TicketFeeViewModel()
     {
         SelectedFeeType = TicketFeeType.ServiceCharge;
+    }
+
+    [RelayCommand]
+    private void Confirm()
+    {
+        IsConfirmed = true;
+        CloseAction?.Invoke();
+    }
+
+    [RelayCommand]
+    private void Cancel()
+    {
+        IsConfirmed = false;
+        CancelAction?.Invoke();
     }
 }

@@ -159,4 +159,11 @@ public class MockReceiptPrintService : IReceiptPrintService
 
         return true;
     }
+
+    public async Task<bool> OpenCashDrawerAsync(CancellationToken cancellationToken = default)
+    {
+        _logger?.LogInformation("RECEIPT PRINT: [MOCK] OPEN CASH DRAWER (Pulse Sent)");
+        await Task.Delay(50, cancellationToken); // Simulate hardware latency
+        return true;
+    }
 }

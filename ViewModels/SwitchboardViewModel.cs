@@ -13,6 +13,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Magidesk.Presentation.Views.Dialogs;
 using Magidesk.Domain.Enumerations;
+using System.Linq;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -68,6 +69,10 @@ public class SwitchboardViewModel : ViewModelBase
 
     private readonly ISecurityService _securityService;
     private readonly IAesEncryptionService _encryptionService;
+    private readonly ISwitchboardDialogService _switchboardDialogService;
+    private readonly IOrderTypeRepository _orderTypeRepository;
+    private readonly IShiftRepository _shiftRepository;
+    private readonly ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult> _openSessionHandler;
 
     public SwitchboardViewModel(
         NavigationService navigationService,
@@ -80,7 +85,11 @@ public class SwitchboardViewModel : ViewModelBase
         IUserService userService,
         ITerminalContext terminalContext,
         ISecurityService securityService,
-        IAesEncryptionService encryptionService)
+        IAesEncryptionService encryptionService,
+        ISwitchboardDialogService switchboardDialogService,
+        IOrderTypeRepository orderTypeRepository,
+        IShiftRepository shiftRepository,
+        ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult> openSessionHandler)
     {
         _navigationService = navigationService;
         _cashSessionRepository = cashSessionRepository;
@@ -93,6 +102,10 @@ public class SwitchboardViewModel : ViewModelBase
         _terminalContext = terminalContext;
         _securityService = securityService;
         _encryptionService = encryptionService;
+        _switchboardDialogService = switchboardDialogService;
+        _orderTypeRepository = orderTypeRepository;
+        _shiftRepository = shiftRepository;
+        _openSessionHandler = openSessionHandler;
         Title = "Magidesk POS";
 
         LoadTicketsCommand = new AsyncRelayCommand(LoadTicketsAsync);
@@ -140,14 +153,7 @@ public class SwitchboardViewModel : ViewModelBase
 
             if (user == null)
             {
-                var errorDialog = new ContentDialog
-                {
-                    Title = "Authentication Failed",
-                    Content = "Invalid PIN.",
-                    CloseButtonText = "OK",
-                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
-                };
-                await _navigationService.ShowDialogAsync(errorDialog);
+                await _navigationService.ShowErrorAsync("Authentication Failed", "Invalid PIN.");
                 return;
             }
 
@@ -158,14 +164,7 @@ public class SwitchboardViewModel : ViewModelBase
 
             if ((user.Role.Permissions & adminPermissions) == 0)
             {
-                var errorDialog = new ContentDialog
-                {
-                    Title = "Access Denied",
-                    Content = "Insufficient privileges for Back Office functions.",
-                    CloseButtonText = "OK",
-                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
-                };
-                await _navigationService.ShowDialogAsync(errorDialog);
+                await _navigationService.ShowErrorAsync("Access Denied", "Insufficient privileges for Back Office functions.");
                 return;
             }
 
@@ -174,7 +173,8 @@ public class SwitchboardViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Back Office Auth Error: {ex.Message}");
+            // T-008: Visible Failure
+            await _navigationService.ShowErrorAsync("Access Error", $"Authentication System Error:\n{ex.Message}");
         }
     }
 
@@ -197,14 +197,7 @@ public class SwitchboardViewModel : ViewModelBase
 
             if (user == null)
             {
-                var errorDialog = new ContentDialog
-                {
-                    Title = "Authentication Failed",
-                    Content = "Invalid PIN.",
-                    CloseButtonText = "OK",
-                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
-                };
-                await _navigationService.ShowDialogAsync(errorDialog);
+                await _navigationService.ShowErrorAsync("Authentication Failed", "Invalid PIN.");
                 return;
             }
 
@@ -217,15 +210,8 @@ public class SwitchboardViewModel : ViewModelBase
 
             if ((user.Role.Permissions & managerPermissions) == 0)
             {
-                 var errorDialog = new ContentDialog
-                {
-                    Title = "Access Denied",
-                    Content = "Insufficient privileges for Manager functions.",
-                    CloseButtonText = "OK",
-                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
-                };
-                await _navigationService.ShowDialogAsync(errorDialog);
-                return;
+                 await _navigationService.ShowErrorAsync("Access Denied", "Insufficient privileges for Manager functions.");
+                 return;
             }
 
             // Auth Success - Navigate
@@ -234,107 +220,71 @@ public class SwitchboardViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Manager Auth Error: {ex.Message}");
+            // T-008: Visible Failure
+            await _navigationService.ShowErrorAsync("Access Error", $"Manager Auth System Error:\n{ex.Message}");
         }
     }
-
-    // ... 
 
     private async Task NewTicketAsync()
     {
         // F-0019: New Ticket Action
         // 1. Order Type Selection
-        var dialog = new OrderTypeSelectionDialog();
-        dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot; // Ensure Root
-        await _navigationService.ShowDialogAsync(dialog);
+        var orderTypeVm = new OrderTypeSelectionViewModel(_orderTypeRepository);
+        await _switchboardDialogService.ShowOrderTypeSelectionAsync(orderTypeVm);
 
-        if (dialog.SelectedOrderType != null)
+        if (orderTypeVm.SelectedOrderType != null)
         {
+            var selectedOrderType = orderTypeVm.SelectedOrderType;
+
             // F-0020: Strict Guards
-            if (dialog.SelectedOrderType.RequiresTable)
+            if (selectedOrderType.RequiresTable)
             {
                 // Strict: Must have table.
                 // TODO: F-0082 Table Selection
-                var errorDialog = new ContentDialog
-                {
-                    Title = "Action Required",
-                    Content = $"Order Type '{dialog.SelectedOrderType.Name}' requires a Table. Table Selection is not yet linked.",
-                    CloseButtonText = "OK",
-                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
-                };
-                await _navigationService.ShowDialogAsync(errorDialog);
+                await _navigationService.ShowErrorAsync("Action Required", $"Order Type '{selectedOrderType.Name}' requires a Table. Table Selection is not yet linked.");
                 return; // Block creation
             }
 
-            if (dialog.SelectedOrderType.RequiresCustomer)
+            if (selectedOrderType.RequiresCustomer)
             {
                 // Strict: Must have customer.
                 // TODO: F-0077 Customer Selection
-                var errorDialog = new ContentDialog
-                {
-                    Title = "Action Required",
-                    Content = $"Order Type '{dialog.SelectedOrderType.Name}' requires a Customer. Customer Selection is not yet linked.",
-                    CloseButtonText = "OK",
-                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
-                };
-                await _navigationService.ShowDialogAsync(errorDialog);
-                await _navigationService.ShowDialogAsync(errorDialog);
-                 return; // Block creation
+                await _navigationService.ShowErrorAsync("Action Required", $"Order Type '{selectedOrderType.Name}' requires a Customer. Customer Selection is not yet linked.");
+                return; // Block creation
             }
 
             int numberOfGuests = 1;
 
-            if (dialog.SelectedOrderType.Name.ToUpper().Contains("DINE IN"))
+            if (selectedOrderType.Name.ToUpper().Contains("DINE IN"))
             {
                 // F-0023: Guest Count Entry Dialog
                 // Strict Parity: Prompt for guest count on new Dine In ticket.
-                var guestCountVm = App.Services.GetRequiredService<ViewModels.GuestCountViewModel>();
-                var guestCountDialog = new GuestCountDialog(guestCountVm);
-                guestCountDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                var guestCountVm = new GuestCountViewModel();
                 
-                var result = await _navigationService.ShowDialogAsync(guestCountDialog);
-                if (result == ContentDialogResult.Primary)
+                await _switchboardDialogService.ShowGuestCountAsync(guestCountVm);
+                
+                if (guestCountVm.GuestCount > 0)
                 {
-                    if (guestCountVm.GuestCount > 0)
-                    {
-                        numberOfGuests = guestCountVm.GuestCount;
-                    }
-                    else
-                    {
-                        // Decide policy: if 0 entered, default to 1 or block?
-                        // Audit says "Skip guest count: Default to 1".
-                        numberOfGuests = 1; 
-                    }
+                    numberOfGuests = guestCountVm.GuestCount;
                 }
                 else
                 {
-                    // Cancelled dialog -> Cancel ticket creation?
-                    return; 
+                    // Decide policy: if 0 entered, default to 1 or block?
+                    // Audit says "Skip guest count: Default to 1".
+                    numberOfGuests = 1; 
                 }
             }
 
             // 2. Resolve Context (no fallback IDs)
             if (_userService.CurrentUser?.Id == null)
             {
-                var errorDialog = new ContentDialog
-                {
-                    Title = "Action Required",
-                    Content = "No current user is set. Please login again.",
-                    CloseButtonText = "OK"
-                };
-                await _navigationService.ShowDialogAsync(errorDialog);
+                await _navigationService.ShowErrorAsync("Action Required", "No current user is set. Please login again.");
                 return;
             }
 
             if (_terminalContext.TerminalId == null)
             {
-                var errorDialog = new ContentDialog
-                {
-                    Title = "Action Required",
-                    Content = "Terminal identity is not initialized. Please restart the application.",
-                    CloseButtonText = "OK"
-                };
-                await _navigationService.ShowDialogAsync(errorDialog);
+                await _navigationService.ShowErrorAsync("Action Required", "Terminal identity is not initialized. Please restart the application.");
                 return;
             }
 
@@ -346,20 +296,15 @@ public class SwitchboardViewModel : ViewModelBase
             if (session == null)
             {
                 // F-0060: Shift Start Dialog
-                var shiftDialog = new Magidesk.Presentation.Views.Dialogs.ShiftStartDialog();
-                shiftDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
-                var shiftResult = await _navigationService.ShowDialogAsync(shiftDialog);
-
-                if (shiftResult != Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
-                {
-                    return; // Abort if cancelled
-                }
+                var shiftStartVm = new ShiftStartViewModel(_shiftRepository, _openSessionHandler, _userService, _terminalContext);
+                
+                await _switchboardDialogService.ShowShiftStartAsync(shiftStartVm);
 
                 // Re-fetch session to confirm it started
                 session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
                 if (session == null)
                 {
-                    // If still null, something went wrong
+                    // If still null, something went wrong or user cancelled
                     return;
                 }
             }
@@ -372,7 +317,7 @@ public class SwitchboardViewModel : ViewModelBase
                 CreatedBy = userId,
                 TerminalId = terminalId,
                 ShiftId = shiftId,
-                OrderTypeId = dialog.SelectedOrderType.Id,
+                OrderTypeId = selectedOrderType.Id,
                 NumberOfGuests = numberOfGuests
             };
 
@@ -385,8 +330,8 @@ public class SwitchboardViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Create Ticket Failed: {ex.Message}");
-                // Ideally show error dialog
+                // T-006: Visible Failure
+                await _navigationService.ShowErrorAsync("Create Ticket Failed", $"Critical Error creating ticket:\n{ex.Message}\n\nPlease check database connection.");
             }
         }
     }
@@ -396,12 +341,13 @@ public class SwitchboardViewModel : ViewModelBase
         try
         {
             var tickets = await _getOpenTicketsHandler.HandleAsync(new GetOpenTicketsQuery());
-            OpenTickets = new ObservableCollection<TicketDto>(tickets);
+            OpenTickets = new ObservableCollection<TicketDto>(tickets.OrderBy(t => t.TableNumbers.FirstOrDefault()));
         }
         catch (Exception ex)
         {
-             // Log or show error
-             System.Diagnostics.Debug.WriteLine($"Error loading tickets: {ex.Message}");
+             // T-009: Visible Failure
+             // This is critical; if we can't load tickets, the POS is effectively offline.
+             await _navigationService.ShowErrorAsync("Connection Error", $"Failed to load open tickets:\n{ex.Message}\n\nPlease check network/database.");
         }
     }
 
@@ -479,7 +425,8 @@ public class SwitchboardViewModel : ViewModelBase
         }
         catch (System.Exception ex)
         {
-             System.Diagnostics.Debug.WriteLine($"Open Drawer Error: {ex.Message}");
+             // T-007: Visible Failure
+             await _navigationService.ShowErrorAsync("Drawer Error", $"Failed to open drawer:\n{ex.Message}");
         }
     }
 
@@ -501,18 +448,12 @@ public class SwitchboardViewModel : ViewModelBase
                 message = $"Estimated Drawer Balance:\n\n{session.ExpectedCash:C}";
             }
 
-            var dialog = new ContentDialog
-            {
-                Title = "Drawer Balance",
-                Content = message,
-                CloseButtonText = "OK",
-                DefaultButton = ContentDialogButton.Close
-            };
-            await _navigationService.ShowDialogAsync(dialog);
+            await _navigationService.ShowMessageAsync("Drawer Balance", message);
         }
         catch (System.Exception ex)
         {
-             System.Diagnostics.Debug.WriteLine($"Balance Error: {ex.Message}");
+             // T-007: Visible Failure
+             await _navigationService.ShowErrorAsync("Balance Error", $"Failed to retrieve balance:\n{ex.Message}");
         }
     }
 
@@ -573,7 +514,8 @@ public class SwitchboardViewModel : ViewModelBase
             }
             catch (System.Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Drawer Op Error: {ex.Message}");
+                // T-007: Visible Failure
+                await _navigationService.ShowErrorAsync("Transaction Error", $"Drawer operation failed:\n{ex.Message}");
             }
         }
     }
@@ -590,10 +532,11 @@ public class SwitchboardViewModel : ViewModelBase
          {
              await _clockInHandler.HandleAsync(command);
          }
-         catch (Exception ex)
-         {
-             System.Diagnostics.Debug.WriteLine($"Clock In Error: {ex.Message}");
-         }
+          catch (Exception ex)
+          {
+              // T-004: Visible Failure
+              await _navigationService.ShowErrorAsync("Timeclock Error", $"Failed to Clock In:\n{ex.Message}");
+          }
     }
 
     private async Task ClockOutAsync()
@@ -609,9 +552,10 @@ public class SwitchboardViewModel : ViewModelBase
          {
              await _clockOutHandler.HandleAsync(command);
          }
-         catch (Exception ex)
-         {
-             System.Diagnostics.Debug.WriteLine($"Clock Out Error: {ex.Message}");
-         }
+          catch (Exception ex)
+          {
+              // T-004: Visible Failure
+              await _navigationService.ShowErrorAsync("Timeclock Error", $"Failed to Clock Out:\n{ex.Message}");
+          }
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.UI.Xaml.Controls;
 using Magidesk.Presentation.ViewModels;
+using Magidesk.Presentation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Magidesk.Presentation.Views.Dialogs;
@@ -8,10 +9,14 @@ public sealed partial class ShiftStartDialog : ContentDialog
 {
     public ShiftStartViewModel ViewModel { get; }
 
-    public ShiftStartDialog()
+    public ShiftStartDialog() : this(App.Services.GetRequiredService<ShiftStartViewModel>())
+    {
+    }
+
+    public ShiftStartDialog(ShiftStartViewModel viewModel)
     {
         this.InitializeComponent();
-        ViewModel = App.Services.GetRequiredService<ShiftStartViewModel>();
+        ViewModel = viewModel;
         this.DataContext = ViewModel;
         
         ViewModel.CloseAction = (result) =>

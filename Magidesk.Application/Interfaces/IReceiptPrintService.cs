@@ -35,5 +35,12 @@ public interface IReceiptPrintService
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>True if printing was successful, false otherwise.</returns>
     Task<bool> PrintRefundReceiptAsync(Payment refundPayment, Ticket ticket, Guid? userId = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Opens the cash drawer associated with the receipt printer for the current terminal.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>True if the drawer pulse was sent successfully.</returns>
+    Task<bool> OpenCashDrawerAsync(CancellationToken cancellationToken = default);
 }
 

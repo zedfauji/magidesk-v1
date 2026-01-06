@@ -269,6 +269,7 @@ public class OrderLine
     public void SetPrinterGroup(Guid? printerGroupId)
     {
         PrinterGroupId = printerGroupId;
+        ShouldPrintToKitchen = printerGroupId.HasValue;
     }
 
     /// <summary>
