@@ -117,6 +117,12 @@ public class MenuEditorViewModel : ViewModelBase
                     EditingName = value.Name;
                     EditingSortOrder = value.SortOrder;
                     StatusMessage = $"Editing Category: {value.Name}";
+                    
+                    if (value.PrinterGroupId.HasValue)
+                        SelectedPrinterGroup = PrinterGroups.FirstOrDefault(pg => pg.Id == value.PrinterGroupId);
+                    else
+                        SelectedPrinterGroup = null;
+
                     _ = LoadGroupsAsync(value.Id);
                 }
                 else
@@ -146,6 +152,12 @@ public class MenuEditorViewModel : ViewModelBase
                     EditingName = value.Name;
                     EditingSortOrder = value.SortOrder; 
                     StatusMessage = $"Editing Group: {value.Name}";
+                     
+                    if (value.PrinterGroupId.HasValue)
+                        SelectedPrinterGroup = PrinterGroups.FirstOrDefault(pg => pg.Id == value.PrinterGroupId);
+                    else
+                        SelectedPrinterGroup = null;
+
                     _ = LoadItemsAsync(value.CategoryId, value.Id);
                 }
                 else if (SelectedCategory != null)
@@ -200,6 +212,7 @@ public class MenuEditorViewModel : ViewModelBase
         get => _isEditing;
         set => SetProperty(ref _isEditing, value);
     }
+
     public MenuEditorViewModel(
         IMenuCategoryRepository categoryRepository,
         IMenuGroupRepository groupRepository,
@@ -239,7 +252,7 @@ public class MenuEditorViewModel : ViewModelBase
                      SelectedItem.UpdatePrice(new Magidesk.Domain.ValueObjects.Money(priceVal));
                  }
                  
-                 // F-00XX: Printer Group Persistence
+                 // F-00XX: Printer Group Persistence (Item)
                  SelectedItem.SetPrinterGroup(SelectedPrinterGroup?.Id);
                  
                  await _menuRepository.UpdateAsync(SelectedItem);
@@ -249,6 +262,10 @@ public class MenuEditorViewModel : ViewModelBase
             {
                  SelectedGroup.UpdateName(EditingName);
                  SelectedGroup.UpdateSortOrder(EditingSortOrder);
+                 
+                 // F-00XX: Printer Group Persistence (Group)
+                 SelectedGroup.SetPrinterGroup(SelectedPrinterGroup?.Id);
+                 
                  await _groupRepository.UpdateAsync(SelectedGroup);
                  StatusMessage = "Saved Group successfully.";
             }
@@ -256,6 +273,10 @@ public class MenuEditorViewModel : ViewModelBase
             {
                 SelectedCategory.UpdateName(EditingName);
                 SelectedCategory.UpdateSortOrder(EditingSortOrder);
+                
+                // F-00XX: Printer Group Persistence (Category)
+                SelectedCategory.SetPrinterGroup(SelectedPrinterGroup?.Id);
+                
                 await _categoryRepository.UpdateAsync(SelectedCategory);
                 StatusMessage = "Saved Category successfully.";
             }

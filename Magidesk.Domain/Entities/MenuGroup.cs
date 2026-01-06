@@ -25,6 +25,8 @@ public class MenuGroup
         Name = string.Empty;
     }
 
+    public Guid? PrinterGroupId { get; private set; }
+
     public static MenuGroup Create(
         string name,
         Guid categoryId,
@@ -86,5 +88,10 @@ public class MenuGroup
     public void Activate()
     {
         IsActive = true;
+    }
+
+    public void SetPrinterGroup(Guid? printerGroupId)
+    {
+        PrinterGroupId = printerGroupId;
     }
 }

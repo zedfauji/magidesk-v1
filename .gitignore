@@ -65,4 +65,4 @@ TestResult.xml
 *.binlog
 *.zip
 
-obj/*
+*obj/*

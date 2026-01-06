@@ -137,13 +137,12 @@
                                   Text="{x:Bind ViewModel.EditingPrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                   Visibility="{x:Bind ViewModel.SelectedItem, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"/>
 
-                         <!-- Printer Routing (Item Only) -->
+                         <!-- Printer Routing (All Types) -->
                          <ComboBox Header="Printer Routing" 
                                    ItemsSource="{x:Bind ViewModel.PrinterGroups}" 
                                    SelectedItem="{x:Bind ViewModel.SelectedPrinterGroup, Mode=TwoWay}"
                                    DisplayMemberPath="Name" 
-                                   HorizontalAlignment="Stretch"
-                                   Visibility="{x:Bind ViewModel.SelectedItem, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"/>
+                                   HorizontalAlignment="Stretch"/>
 
                          <!-- Recipe Section -->
                          <Grid Visibility="{x:Bind ViewModel.SelectedItem, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}" Margin="0,16,0,0">

@@ -46,10 +46,22 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
 
         // Populate PrinterGroupId (F-0014)
         // Populate PrinterGroupId (F-0014)
+        // Populate PrinterGroupId (F-0014) with Inheritance Logic
         var menuItem = await _menuRepository.GetByIdAsync(command.MenuItemId, cancellationToken);
         if (menuItem != null)
         {
-            orderLine.SetPrinterGroup(menuItem.PrinterGroupId);
+            if (menuItem.PrinterGroupId.HasValue)
+            {
+                orderLine.SetPrinterGroup(menuItem.PrinterGroupId);
+            }
+            else if (menuItem.Group?.PrinterGroupId.HasValue == true)
+            {
+                 orderLine.SetPrinterGroup(menuItem.Group.PrinterGroupId);
+            }
+            else if (menuItem.Category?.PrinterGroupId.HasValue == true)
+            {
+                 orderLine.SetPrinterGroup(menuItem.Category.PrinterGroupId);
+            }
         }
 
         // Add Modifiers

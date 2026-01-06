@@ -125,8 +125,17 @@ public class KitchenPrintService : IKitchenPrintService
                 // Determine Cut Behavior
                 bool shouldCut = ShouldCut(printerGroup, mapping);
 
-                // Generate ESC/POS
-                var bytes = GenerateTicketBytes(ticket, groupLines, serverName, mapping.PrintableWidthChars, shouldCut);
+                // Generate Ticket Data
+                byte[] bytes;
+                if (mapping.Format == Domain.Enumerations.PrinterFormat.StandardPage)
+                {
+                    bytes = GeneratePlainTextTicket(ticket, groupLines, serverName);
+                }
+                else
+                {
+                    // Default to Thermal ESC/POS
+                    bytes = GenerateTicketBytes(ticket, groupLines, serverName, mapping.PrintableWidthChars, shouldCut);
+                }
                 
                 // Print with Retry Policy
                 bool printed = await ExecutePrintWithRetryAsync(mapping.PhysicalPrinterName, bytes, printerGroup);
@@ -205,6 +214,48 @@ public class KitchenPrintService : IKitchenPrintService
             }
         }
         return false;
+    }
+    
+    private byte[] GeneratePlainTextTicket(Ticket ticket, List<OrderLine> lines, string serverName)
+    {
+        var sb = new System.Text.StringBuilder();
+        
+        // Header
+        sb.AppendLine($"ORDER #{ticket.TicketNumber}");
+        sb.AppendLine($"Table: {(ticket.TableNumbers.Any() ? string.Join(",", ticket.TableNumbers) : "No Table")}");
+        sb.AppendLine($"Server: {serverName}");
+        sb.AppendLine($"Date: {DateTime.Now:MM/dd/yyyy HH:mm}");
+        sb.AppendLine(new string('-', 40));
+        sb.AppendLine();
+
+        // Items
+        foreach (var line in lines)
+        {
+             sb.AppendLine($"{line.Quantity} x {line.MenuItemName}");
+             
+             // Modifiers
+             if (line.Modifiers.Any())
+             {
+                 foreach (var mod in line.Modifiers)
+                 {
+                     sb.AppendLine($"   + {mod.Name}");
+                 }
+             }
+
+             // Instructions
+             if (!string.IsNullOrWhiteSpace(line.Instructions))
+             {
+                 sb.AppendLine($"   ** {line.Instructions} **");
+             }
+             
+             sb.AppendLine();
+        }
+        
+        sb.AppendLine(new string('-', 40));
+        sb.AppendLine();
+        sb.AppendLine(); // Margin at bottom
+        
+        return System.Text.Encoding.ASCII.GetBytes(sb.ToString());
     }
 
     private byte[] GenerateTicketBytes(Ticket ticket, List<OrderLine> lines, string serverName, int widthChars, bool shouldCut)

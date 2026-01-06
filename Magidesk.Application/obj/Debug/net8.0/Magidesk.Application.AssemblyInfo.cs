@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Magidesk.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+98e217bac4326d4ed61542300dd22bb75b0e0e80")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f4556a982fa521a0c7e9f7afd09e7bb1bf518b53")]
 [assembly: System.Reflection.AssemblyProductAttribute("Magidesk.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Magidesk.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

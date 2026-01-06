@@ -22,6 +22,11 @@ public class MenuItem
     // Organization
     public Guid? CategoryId { get; private set; } // References Category (Reference Data)
     public Guid? GroupId { get; private set; }    // References Group (Reference Data)
+    
+    // Navigation Properties
+    public virtual MenuCategory? Category { get; private set; }
+    public virtual MenuGroup? Group { get; private set; }
+
     public Guid? ComboDefinitionId { get; private set; } // Links to Combo Structure
     public int DisplayOrder { get; private set; }
     
