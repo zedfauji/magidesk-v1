@@ -151,6 +151,7 @@
                                 <ListView.Header>
                                     <Grid Padding="12,0" Margin="0,0,0,8" ColumnSpacing="12">
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1.5*"/>
                                             <ColumnDefinition Width="2*"/>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
@@ -159,17 +160,19 @@
                                             <ColumnDefinition Width="0.5*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="Group Name" FontWeight="SemiBold"/>
-                                        <TextBlock Grid.Column="1" Text="Type" FontWeight="SemiBold"/>
-                                        <TextBlock Grid.Column="2" Text="Cut Behavior" FontWeight="SemiBold"/>
-                                        <TextBlock Grid.Column="3" Text="Show $" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-                                        <TextBlock Grid.Column="4" Text="Retry #" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-                                        <TextBlock Grid.Column="5" Text="Delay" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="Template" FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Column="2" Text="Type" FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Column="3" Text="Cut Behavior" FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Column="4" Text="Show $" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="5" Text="Retry #" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="6" Text="Delay" FontWeight="SemiBold" HorizontalAlignment="Center"/>
                                     </Grid>
                                 </ListView.Header>
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="dto:PrinterGroupDto">
                                         <Grid Padding="12,8" ColumnSpacing="12">
                                             <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1.5*"/>
                                                 <ColumnDefinition Width="2*"/>
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="*"/>
@@ -179,7 +182,15 @@
                                             </Grid.ColumnDefinitions>
                                             <TextBox Text="{x:Bind Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
                                             
+                                            <!-- Template Selection -->
                                             <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                                      ItemsSource="{Binding ElementName=RootPage, Path=ViewModel.AvailableTemplates}"
+                                                      DisplayMemberPath="Name"
+                                                      SelectedValuePath="Id"
+                                                      SelectedValue="{x:Bind KitchenTemplateId, Mode=TwoWay}"
+                                                      PlaceholderText="Default System"/>
+
+                                            <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                                       SelectedItem="{x:Bind PrinterTypeString, Mode=TwoWay}">
                                                 <x:String>Receipt</x:String>
                                                 <x:String>Kitchen</x:String>
@@ -188,19 +199,19 @@
                                             </ComboBox>
 
                                             <!-- Cut Behavior -->
-                                            <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                            <ComboBox Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                                       ItemsSource="{Binding ElementName=RootPage, Path=ViewModel.CutBehaviors}"
                                                       SelectedItem="{x:Bind CutBehavior, Mode=TwoWay}"/>
 
                                             <!-- Show Prices -->
-                                            <CheckBox Grid.Column="3" IsChecked="{x:Bind ShowPrices, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <CheckBox Grid.Column="4" IsChecked="{x:Bind ShowPrices, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                                             <!-- Retry Count -->
-                                            <NumberBox Grid.Column="4" Value="{x:Bind RetryCount, Mode=TwoWay, Converter={StaticResource IntToDoubleConverter}}" 
+                                            <NumberBox Grid.Column="5" Value="{x:Bind RetryCount, Mode=TwoWay, Converter={StaticResource IntToDoubleConverter}}" 
                                                        Minimum="0" Maximum="10" SpinButtonPlacementMode="Compact" VerticalAlignment="Center"/>
 
                                             <!-- Retry Delay -->
-                                            <NumberBox Grid.Column="5" Value="{x:Bind RetryDelayMs, Mode=TwoWay, Converter={StaticResource IntToDoubleConverter}}" 
+                                            <NumberBox Grid.Column="6" Value="{x:Bind RetryDelayMs, Mode=TwoWay, Converter={StaticResource IntToDoubleConverter}}" 
                                                        Minimum="0" Maximum="5000" SmallChange="100" LargeChange="500" SpinButtonPlacementMode="Compact" VerticalAlignment="Center"
                                                        ToolTipService.ToolTip="Delay in ms"/>
                                         </Grid>

@@ -22,6 +22,11 @@ public class ReceiptPrintService : IReceiptPrintService
     private readonly ICashDrawerService _cashDrawerService;
     private readonly ILogger<ReceiptPrintService> _logger;
 
+    // TKT-P007: Template Services
+    private readonly ITemplateEngine _templateEngine;
+    private readonly IPrintContextBuilder _contextBuilder;
+    private readonly Func<PrinterFormat, Infrastructure.Printing.Drivers.IPrintDriver> _driverFactory;
+
     public ReceiptPrintService(
         IRawPrintService rawPrintService,
         IPrinterMappingRepository printerMappingRepository,
@@ -30,7 +35,10 @@ public class ReceiptPrintService : IReceiptPrintService
         IUserRepository userRepository,
         IAuditEventRepository auditRepo,
         ICashDrawerService cashDrawerService,
-        ILogger<ReceiptPrintService> logger)
+        ILogger<ReceiptPrintService> logger,
+        ITemplateEngine templateEngine,
+        IPrintContextBuilder contextBuilder,
+        Func<PrinterFormat, Infrastructure.Printing.Drivers.IPrintDriver> driverFactory)
     {
         _rawPrintService = rawPrintService;
         _printerMappingRepository = printerMappingRepository;
@@ -40,6 +48,9 @@ public class ReceiptPrintService : IReceiptPrintService
         _auditRepo = auditRepo;
         _cashDrawerService = cashDrawerService;
         _logger = logger;
+        _templateEngine = templateEngine;
+        _contextBuilder = contextBuilder;
+        _driverFactory = driverFactory;
     }
 
     public async Task<bool> PrintTicketReceiptAsync(Ticket ticket, Guid? userId = null, CancellationToken cancellationToken = default)
@@ -57,14 +68,32 @@ public class ReceiptPrintService : IReceiptPrintService
 
             // 2. Resolve Server Name
             string serverName = await ResolveUserNameAsync(ticket.CreatedBy.Value, cancellationToken);
-
+            
             // 3. Determine Layout Settings
-            bool showPrices = group?.ShowPrices ?? true; // Default to true for Receipts
+            bool showPrices = group?.ShowPrices ?? true;
             bool shouldCut = ShouldCut(group, mapping);
             int width = mapping.PrintableWidthChars > 0 ? mapping.PrintableWidthChars : 32;
 
-            // 3. Generate Data
-            var bytes = GenerateReceiptBytes(ticket, serverName, isRefund: false, width, showPrices, shouldCut);
+            byte[] bytes = null;
+
+            // TKT-P007: Try Template First
+            if (group?.ReceiptTemplate != null)
+            {
+                try 
+                {
+                   bytes = await RenderTemplateAsync(group.ReceiptTemplate, ticket, mapping, cancellationToken);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Template rendering failed. Falling back to legacy layout.");
+                }
+            }
+            
+            // Fallback
+            if (bytes == null)
+            {
+                bytes = GenerateReceiptBytes(ticket, serverName, isRefund: false, width, showPrices, shouldCut);
+            }
 
             // 4. Print with Retry
             bool printed = await ExecutePrintWithRetryAsync(mapping.PhysicalPrinterName, bytes, group);
@@ -229,6 +258,30 @@ public class ReceiptPrintService : IReceiptPrintService
         {
             _logger.LogWarning(ex, "Failed to create audit log for printing.");
         }
+    }
+
+    private async Task<byte[]> RenderTemplateAsync(PrintTemplate template, Ticket ticket, PrinterMapping mapping, CancellationToken cancellationToken)
+    {
+        // 1. Build Model
+        var model = await _contextBuilder.BuildTicketContextAsync(ticket, cancellationToken);
+
+        // 2. Render Liquid to JSON (ADM)
+        var json = await _templateEngine.RenderAsync(template.Content, model);
+        
+        // 3. Deserialize ADM
+        var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        var doc = System.Text.Json.JsonSerializer.Deserialize<Infrastructure.Printing.Models.PrintDocument>(json, options);
+
+        if (doc == null) throw new InvalidOperationException("Template produced null document.");
+
+        // 4. Drive Output
+        // For now, mapping doesn't have format enum (it might need Schema update later), assuming Thermal for now or use Standard logic
+        // Current system assumes ESC/POS for Receipts mostly.
+        // Actually mapping *should* imply format or capability.
+        // For TKT-P007 we use the Thermal driver by default unless we know better.
+        
+        var driver = _driverFactory(PrinterFormat.Thermal80mm); // Defaulting to Thermal 80mm driver
+        return driver.Render(doc, mapping);
     }
 
     private byte[] GenerateReceiptBytes(Ticket ticket, string serverName, bool isRefund, int width, bool showPrices, bool shouldCut)

@@ -16,9 +16,12 @@ public class NavigationService
         _userService = userService;
     }
 
+    private Microsoft.UI.Dispatching.DispatcherQueue? _dispatcherQueue;
+
     public void Initialize(Frame frame)
     {
         _frame = frame;
+        _dispatcherQueue = frame.DispatcherQueue;
     }
 
     public bool CanGoBack => _frame?.CanGoBack == true;
@@ -76,6 +79,25 @@ public class NavigationService
             throw new InvalidOperationException("NavigationService is not initialized. Call Initialize(frame) first.");
         }
 
+        // Ensure we run on UI thread using cached DispatcherQueue (safe from any thread)
+        if (_dispatcherQueue != null && !_dispatcherQueue.HasThreadAccess)
+        {
+            var tcs = new TaskCompletionSource<ContentDialogResult>();
+            _dispatcherQueue.TryEnqueue(async () =>
+            {
+                try
+                {
+                    var result = await ShowDialogAsync(dialog);
+                    tcs.SetResult(result);
+                }
+                catch (Exception ex)
+                {
+                    tcs.SetException(ex);
+                }
+            });
+            return await tcs.Task;
+        }
+
         var attempts = 0;
         while (_frame.XamlRoot == null && attempts < 40)
         {
@@ -85,20 +107,9 @@ public class NavigationService
 
         if (_frame.XamlRoot == null)
         {
-            // T-008: Fallback to Native MessageBox if UI is not rooted.
-            // This prevents critical errors from being swallowed during startup or glitches.
-            System.Diagnostics.Debug.WriteLine($"[NavigationService] Failed to show dialog '{dialog.Title}'. XamlRoot not found after wait. Falling back to MessageBox.");
-            StartupLogger.Log($"[NavigationService] Failed to show dialog '{dialog.Title}'. XamlRoot not found. Fallback.");
-            
-            // Extract message from content
-            var msg = dialog.Content?.ToString() ?? "Unknown Content";
-            
-            // Native MessageBox
-            // 0x10 = MB_ICONHAND (Error/Stop), 0x0 = MB_OK
-            var title = dialog.Title?.ToString() ?? "Error";
-            App.MessageBox(IntPtr.Zero, $"{msg}\n(UI Root Missing)", title, 0x10); 
-            
-            return ContentDialogResult.None; // We handled it via fallback, but return None to indicate XamlDialog didn't run.
+            System.Diagnostics.Debug.WriteLine($"[NavigationService] Failed to show dialog '{dialog.Title}'. XamlRoot not found after wait. Falling back.");
+            // Default panic fallback...
+            return ContentDialogResult.None;
         }
 
         dialog.XamlRoot = _frame.XamlRoot;
@@ -108,14 +119,7 @@ public class NavigationService
         }
         catch (Exception ex)
         {
-            // Catch "Dialog already open" or other WinUI specific errors
-            System.Diagnostics.Debug.WriteLine($"[NavigationService] ShowAsync Failed: {ex.Message}. Falling back.");
-            
-            // Fallback for these crashes too
-            var msg = dialog.Content?.ToString() ?? "Unknown Content";
-            var title = dialog.Title?.ToString() ?? "Error";
-            App.MessageBox(IntPtr.Zero, $"{msg}\n(UI Error: {ex.Message})", title, 0x10);
-            
+            System.Diagnostics.Debug.WriteLine($"[NavigationService] ShowAsync Failed: {ex.Message}.");
             return ContentDialogResult.None;
         }
     }

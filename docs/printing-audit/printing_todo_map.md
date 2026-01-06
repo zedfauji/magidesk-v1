@@ -1,21 +1,21 @@
 # Printing System TODO Map
 
 ## 1. Infrastructure Layer
-- [ ] **Real Implementation**: Replace `MockKitchenPrintService` and `MockReceiptPrintService` with real implementations that use `System.Drawing.Printing`.
-- [ ] **Unification**: Decide if `PrintingService` should implement the specific interfaces or be a low-level driver used by them. (Recommendation: Low-level driver).
-- [ ] **Physical Implementation**: Implement ESC/POS logic or Windows Printer logic.
+- [x] **Real Implementation**: Replaced Mocks with `WindowsPrintingService` and `EscPosDriver`.
+- [x] **Unification**: Architecture defined (`IReceiptPrintService`, `IRawPrintService`).
+- [x] **Physical Implementation**: ESC/POS logic implemented via `EscPosHelper` and `EscPosDriver`.
 
 ## 2. Configuration
-- [ ] **CRUD API**: Create Commands/Queries for `PrinterGroup` and `PrinterMapping`.
-- [ ] **UI**: Create "Printers & Devices" settings page.
-  - List detected Windows printers.
-  - Create/Edit Printer Groups.
-  - Map Terminal -> Group -> Physical Printer.
-
+- [x] **CRUD API**: `PrinterGroupRepository` and `PrinterMappingRepository` active.
+- [x] **UI**: "System & Printers" page active.
+  - [x] List detected Windows printers.
+  - [x] Create/Edit Printer Groups.
+  - [x] Map Terminal -> Group -> Physical Printer.
+  
 ## 3. Cash Drawer
-- [ ] **Service**: Add `IOpenDrawerService` or method on `IPrintingService`.
-- [ ] **Command**: Create `OpenCashDrawerCommand`.
-- [ ] **Trigger**: Auto-fire on Cash Payment completion.
+- [x] **Service**: `ICashDrawerService` implemented.
+- [x] **Command**: `OpenCashDrawerCommand` implemented.
+- [x] **Trigger**: Auto-fires on Cash Payment completion (in `ReceiptPrintService`).
 
 ## 4. Reports
 - [ ] **Formatting**: Create text-based (ESC/POS style) or Graphic-based report generators for:
@@ -24,5 +24,10 @@
 - [ ] **Command**: Create `PrintReportCommand` accepting Report Type and Data/ID.
 
 ## 5. Workflow Integration
-- [ ] **Payment**: Ensure Receipt + Drawer Kick fires on success.
-- [ ] **Kitchen**: Ensure correct items route to correct groups (e.g. Bar vs Kitchen).
+- [x] **Payment**: Receipt + Drawer Kick fires on success.
+- [x] **Kitchen**: Items route to correct groups (e.g. Bar vs Kitchen).
+
+## 6. Template System (NEW)
+- [x] **Backend**: Template Engine and Schema.
+- [x] **Frontend**: Editor and Preview UI.
+- [x] **Integration**: Hybrid Service Service.

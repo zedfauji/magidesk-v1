@@ -57,6 +57,7 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\De
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PaymentPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PaymentProcessWaitDialog.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PrintPage.xbf
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PrintTemplatesPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PurchaseOrdersPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\RoleManagementPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\SalesReportsPage.xbf
@@ -71,6 +72,7 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\De
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TableDesignerTestPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TableExplorerPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TableMapPage.xbf
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TemplateEditorPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TicketManagementPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TicketPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\UserManagementPage.xbf
@@ -83,6 +85,7 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\De
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Magidesk.Presentation.pri
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Microsoft.Web.WebView2.Core.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\CommunityToolkit.Mvvm.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Fluid.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Humanizer.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\MediatR.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\MediatR.Contracts.dll
@@ -159,6 +162,7 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\De
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Mono.TextTemplating.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Npgsql.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Parlot.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\System.CodeDom.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\System.Composition.AttributedModel.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\System.Composition.Convention.dll
@@ -170,6 +174,7 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\De
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\System.Drawing.Common.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\System.IO.Pipelines.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\System.Numerics.Tensors.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\TimeZoneConverter.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\cs\Microsoft.CodeAnalysis.resources.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\de\Microsoft.CodeAnalysis.resources.dll
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\x86\Debug\net8.0-windows10.0.19041.0\win-x86\es\Microsoft.CodeAnalysis.resources.dll
@@ -521,6 +526,8 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\De
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PaymentProcessWaitDialog.g.cs
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PrintPage.g.i.cs
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PrintPage.g.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PrintTemplatesPage.g.i.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PrintTemplatesPage.g.cs
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PurchaseOrdersPage.g.i.cs
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PurchaseOrdersPage.g.cs
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\RoleManagementPage.g.i.cs
@@ -549,6 +556,8 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\De
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TableExplorerPage.g.cs
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TableMapPage.g.i.cs
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TableMapPage.g.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TemplateEditorPage.g.i.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TemplateEditorPage.g.cs
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TicketManagementPage.g.i.cs
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TicketManagementPage.g.cs
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TicketPage.g.i.cs
@@ -611,6 +620,7 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\De
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PaymentPage.xaml
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PaymentProcessWaitDialog.xaml
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PrintPage.xaml
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PrintTemplatesPage.xaml
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PurchaseOrdersPage.xaml
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\RoleManagementPage.xaml
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\SalesReportsPage.xaml
@@ -625,6 +635,7 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\De
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TableDesignerTestPage.xaml
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TableExplorerPage.xaml
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TableMapPage.xaml
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TemplateEditorPage.xaml
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TicketManagementPage.xaml
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TicketPage.xaml
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\UserManagementPage.xaml
@@ -681,6 +692,7 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\De
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PaymentPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PaymentProcessWaitDialog.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PrintPage.xbf
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PrintTemplatesPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\PurchaseOrdersPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\RoleManagementPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\SalesReportsPage.xbf
@@ -695,6 +707,7 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\De
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TableDesignerTestPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TableExplorerPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TableMapPage.xbf
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TemplateEditorPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TicketManagementPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\TicketPage.xbf
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\x86\Debug\net8.0-windows10.0.19041.0\win-x86\Views\UserManagementPage.xbf

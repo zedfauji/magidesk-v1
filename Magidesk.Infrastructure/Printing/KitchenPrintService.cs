@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Magidesk.Application.Interfaces;
 using Magidesk.Domain.Entities;
+using Magidesk.Application.Services.Printing; // Added
 
 namespace Magidesk.Infrastructure.Printing;
 
@@ -17,6 +18,9 @@ public class KitchenPrintService : IKitchenPrintService
     private readonly ITerminalContext _terminalContext;
     private readonly IUserRepository _userRepository;
     private readonly ILogger<KitchenPrintService> _logger;
+    private readonly IPrintContextBuilder _contextBuilder; // Added
+    private readonly IPrintTemplateRepository _templateRepository; // Added
+    private readonly ITemplateEngine _templateEngine; // Added
 
     public KitchenPrintService(
         IRawPrintService rawPrintService,
@@ -24,7 +28,10 @@ public class KitchenPrintService : IKitchenPrintService
         IPrinterGroupRepository printerGroupRepository,
         ITerminalContext terminalContext,
         IUserRepository userRepository,
-        ILogger<KitchenPrintService> logger)
+        ILogger<KitchenPrintService> logger,
+        IPrintContextBuilder contextBuilder,
+        IPrintTemplateRepository templateRepository,
+        ITemplateEngine templateEngine)
     {
         _rawPrintService = rawPrintService;
         _printerMappingRepository = printerMappingRepository;
@@ -32,6 +39,9 @@ public class KitchenPrintService : IKitchenPrintService
         _terminalContext = terminalContext;
         _userRepository = userRepository;
         _logger = logger;
+        _contextBuilder = contextBuilder;
+        _templateRepository = templateRepository;
+        _templateEngine = templateEngine;
     }
 
     public async Task<KitchenPrintResult> PrintOrderLineAsync(OrderLine orderLine, Ticket ticket, CancellationToken cancellationToken = default)
@@ -126,15 +136,54 @@ public class KitchenPrintService : IKitchenPrintService
                 bool shouldCut = ShouldCut(printerGroup, mapping);
 
                 // Generate Ticket Data
-                byte[] bytes;
-                if (mapping.Format == Domain.Enumerations.PrinterFormat.StandardPage)
+                byte[] bytes = Array.Empty<byte>(); // Init
+                
+                // 1. Check for Template
+                bool templateUsed = false;
+                if (printerGroup != null && printerGroup.KitchenTemplateId.HasValue)
                 {
-                    bytes = GeneratePlainTextTicket(ticket, groupLines, serverName);
+                    try
+                    {
+                        var template = await _templateRepository.GetByIdAsync(printerGroup.KitchenTemplateId.Value);
+                        if (template != null)
+                        {
+                            // Build Kitchen Context (Only specific lines)
+                            var context = await _contextBuilder.BuildKitchenContextAsync(ticket, groupLines, cancellationToken);
+                            
+                            // Render
+                            var json = await _templateEngine.RenderAsync(template.Content, context);
+                            
+                            // Deserialize
+                            var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                            var doc = System.Text.Json.JsonSerializer.Deserialize<Models.PrintDocument>(json, options);
+                            
+                            if (doc != null)
+                            {
+                                // Drive to ESC/POS
+                                var driver = new Drivers.EscPosDriver();
+                                bytes = driver.Render(doc, mapping);
+                                templateUsed = true;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, $"Failed to render Kitchen Template for Group {printerGroupId}. Falling back to default.");
+                    }
                 }
-                else
+
+                // 2. Fallback / Default
+                if (!templateUsed)
                 {
-                    // Default to Thermal ESC/POS
-                    bytes = GenerateTicketBytes(ticket, groupLines, serverName, mapping.PrintableWidthChars, shouldCut);
+                    if (mapping.Format == Domain.Enumerations.PrinterFormat.StandardPage)
+                    {
+                        bytes = GeneratePlainTextTicket(ticket, groupLines, serverName);
+                    }
+                    else
+                    {
+                        // Default to Thermal ESC/POS
+                        bytes = GenerateTicketBytes(ticket, groupLines, serverName, mapping.PrintableWidthChars, shouldCut);
+                    }
                 }
                 
                 // Print with Retry Policy

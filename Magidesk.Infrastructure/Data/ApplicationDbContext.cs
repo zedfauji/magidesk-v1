@@ -63,6 +63,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<PurchaseOrderLine> PurchaseOrderLines { get; set; } = null!;
     public DbSet<InventoryAdjustment> InventoryAdjustments { get; set; } = null!;
     public DbSet<ServerSection> ServerSections { get; set; } = null!;
+    public DbSet<PrintTemplate> PrintTemplates { get; set; } = null!;
     // FractionalModifier is part of Set<MenuModifier> via Inheritance
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -120,6 +121,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new PurchaseOrderConfiguration());
         modelBuilder.ApplyConfiguration(new PurchaseOrderLineConfiguration());
         modelBuilder.ApplyConfiguration(new InventoryAdjustmentConfiguration());
+        modelBuilder.ApplyConfiguration(new PrintTemplateConfiguration());
     }
 }
 

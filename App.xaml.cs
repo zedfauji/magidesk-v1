@@ -131,6 +131,8 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<FloorManagementViewModel>();
                     services.AddTransient<ExportImportManagementViewModel>();
                     services.AddTransient<ServerSectionManagementViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.PrintTemplatesViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.TemplateEditorViewModel>();
 
                     // Query handlers
                     services.AddScoped<IQueryHandler<GetServerProductivityReportQuery, ServerProductivityReportDto>, GetServerProductivityReportQueryHandler>();

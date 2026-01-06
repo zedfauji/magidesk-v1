@@ -28,6 +28,10 @@ public class PrinterGroupDto
     public int RetryDelayMs { get; set; }
     public bool AllowReprint { get; set; } = true;
     public Guid? FallbackPrinterGroupId { get; set; }
+    
+    // Templates
+    public Guid? KitchenTemplateId { get; set; }
+    public Guid? ReceiptTemplateId { get; set; }
 }
 
 public class PrinterMappingDto

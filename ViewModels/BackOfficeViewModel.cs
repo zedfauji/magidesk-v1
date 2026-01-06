@@ -53,6 +53,7 @@ public partial class BackOfficeViewModel : ViewModelBase
         NavigationItems.Add(new NavigationItem("Reports", "Sales Summaries", "\uE9F9", typeof(SalesReportsPage)));
         NavigationItems.Add(new NavigationItem("General Settings", "Restaurant Info & Kiosk", "\uE713", typeof(SettingsPage)));
         NavigationItems.Add(new NavigationItem("System & Printers", "Hardware, Config & Backup", "\uE713", typeof(SystemConfigPage)));
+        NavigationItems.Add(new NavigationItem("Print Templates", "Receipt & Ticket Layouts", "\uE74C", typeof(Magidesk.Presentation.Views.PrintTemplatesPage)));
     }
 
     private async Task CaptureBatchAsync()

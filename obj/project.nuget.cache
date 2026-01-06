@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "HdCepjx+9j4=",
+  "dgSpecHash": "5UgAhjFIx90=",
   "success": true,
   "projectFilePath": "C:\\Users\\giris\\Documents\\Code\\Redesign-POS\\Windows Based POS\\Magidesk\\Magidesk.Presentation.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\giris\\.nuget\\packages\\communitytoolkit.mvvm\\8.4.0\\communitytoolkit.mvvm.8.4.0.nupkg.sha512",
+    "C:\\Users\\giris\\.nuget\\packages\\fluid.core\\2.31.0\\fluid.core.2.31.0.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\mediatr\\12.2.0\\mediatr.12.2.0.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
@@ -66,6 +67,7 @@
     "C:\\Users\\giris\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\npgsql\\8.0.0\\npgsql.8.0.0.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\8.0.0\\npgsql.entityframeworkcore.postgresql.8.0.0.nupkg.sha512",
+    "C:\\Users\\giris\\.nuget\\packages\\parlot\\1.5.2\\parlot.1.5.2.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\system.collections.immutable\\8.0.0\\system.collections.immutable.8.0.0.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\system.composition\\6.0.0\\system.composition.6.0.0.nupkg.sha512",
@@ -85,6 +87,7 @@
     "C:\\Users\\giris\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\system.text.json\\8.0.0\\system.text.json.8.0.0.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512",
+    "C:\\Users\\giris\\.nuget\\packages\\timezoneconverter\\7.2.0\\timezoneconverter.7.2.0.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x86\\8.0.22\\microsoft.netcore.app.runtime.win-x86.8.0.22.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.57\\microsoft.windows.sdk.net.ref.10.0.19041.57.nupkg.sha512",
     "C:\\Users\\giris\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x86\\8.0.22\\microsoft.aspnetcore.app.runtime.win-x86.8.0.22.nupkg.sha512",

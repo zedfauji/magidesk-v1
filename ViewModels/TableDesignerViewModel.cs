@@ -145,10 +145,12 @@ public partial class TableDesignerViewModel : ViewModelBase
     {
         if (SelectedFloor == null) return;
 
-        var availableTables = await _tableRepository.GetAvailableAsync();
+        // Phase 1 Core Integrity: Load ALL active tables, not just available ones.
+        // This ensures the designer reflects the true state of the floor.
+        var activeTables = await _tableRepository.GetActiveAsync();
         Tables.Clear();
 
-        foreach (var table in availableTables)
+        foreach (var table in activeTables)
         {
             Tables.Add(new TableDto
             {

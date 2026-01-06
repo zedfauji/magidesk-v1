@@ -29,6 +29,7 @@ public partial class SystemConfigViewModel : ViewModelBase
     private readonly IPrintingService _printingService;
     private readonly ITerminalContext _terminalContext;
     private readonly NavigationService _navigationService;
+    private readonly Magidesk.Application.Interfaces.IPrintTemplateRepository _templateRepository; // Added
 
     public ObservableCollection<BackupInfoDto> Backups { get; } = new();
     public ObservableCollection<PrinterGroupDto> PrinterGroups { get; } = new();
@@ -36,6 +37,7 @@ public partial class SystemConfigViewModel : ViewModelBase
     public ObservableCollection<string> SystemPrinters { get; } = new();
     public ObservableCollection<PrinterFormat> PrinterFormats { get; } = new(Enum.GetValues<PrinterFormat>());
     public ObservableCollection<CutBehavior> CutBehaviors { get; } = new(Enum.GetValues<CutBehavior>());
+    public ObservableCollection<Magidesk.Domain.Entities.PrintTemplate> AvailableTemplates { get; } = new(); // Added
 
     private string _statusMessage = string.Empty;
     public string StatusMessage
@@ -45,43 +47,45 @@ public partial class SystemConfigViewModel : ViewModelBase
     }
 
     public bool HasStatusMessage => !string.IsNullOrEmpty(StatusMessage);
-
     private bool _isRestoring;
     public bool IsRestoring
     {
         get => _isRestoring;
-        set => SetProperty(ref _isRestoring, value);
+        set
+        {
+            SetProperty(ref _isRestoring, value);
+            RestoreBackupCommand?.NotifyCanExecuteChanged();
+        }
     }
-    
-    private RestaurantConfigurationDto _configuration;
-    public RestaurantConfigurationDto Configuration
+
+    private RestaurantConfigurationDto? _configuration;
+    public RestaurantConfigurationDto? Configuration
     {
         get => _configuration;
         set => SetProperty(ref _configuration, value);
     }
 
-    private TerminalDto _terminalConfiguration;
-    public TerminalDto TerminalConfiguration
+    private TerminalDto? _terminalConfiguration;
+    public TerminalDto? TerminalConfiguration
     {
         get => _terminalConfiguration;
         set => SetProperty(ref _terminalConfiguration, value);
     }
 
-    private CardConfigDto _cardConfiguration;
-    public CardConfigDto CardConfiguration
+    private CardConfigDto? _cardConfiguration;
+    public CardConfigDto? CardConfiguration
     {
         get => _cardConfiguration;
         set => SetProperty(ref _cardConfiguration, value);
     }
 
-    public AsyncRelayCommand LoadBackupsCommand { get; }
-    public AsyncRelayCommand CreateBackupCommand { get; }
-    public AsyncRelayCommand<string> RestoreBackupCommand { get; }
-    public AsyncRelayCommand SaveConfigurationCommand { get; }
-    public AsyncRelayCommand SaveTerminalConfigurationCommand { get; }
-    public AsyncRelayCommand SaveCardConfigurationCommand { get; }
-    public AsyncRelayCommand SavePrintersCommand { get; }
-
+    public IAsyncRelayCommand LoadBackupsCommand { get; }
+    public IAsyncRelayCommand CreateBackupCommand { get; }
+    public IAsyncRelayCommand<string> RestoreBackupCommand { get; }
+    public IAsyncRelayCommand SaveConfigurationCommand { get; }
+    public IAsyncRelayCommand SaveTerminalConfigurationCommand { get; }
+    public IAsyncRelayCommand SaveCardConfigurationCommand { get; }
+    public IAsyncRelayCommand SavePrintersCommand { get; }
     public SystemConfigViewModel(
         IQueryHandler<GetSystemBackupsQuery, GetSystemBackupsResult> getBackups,
         ICommandHandler<CreateSystemBackupCommand, CreateSystemBackupResult> createBackup,
@@ -98,7 +102,8 @@ public partial class SystemConfigViewModel : ViewModelBase
         ICommandHandler<UpdatePrinterMappingsCommand, UpdatePrinterMappingsResult> updatePrinterMappings,
         IPrintingService printingService,
         ITerminalContext terminalContext,
-        NavigationService navigationService)
+        NavigationService navigationService,
+        Magidesk.Application.Interfaces.IPrintTemplateRepository templateRepository) // Injected
     {
         _getBackups = getBackups;
         _createBackup = createBackup;
@@ -113,10 +118,10 @@ public partial class SystemConfigViewModel : ViewModelBase
         _getPrinterMappings = getPrinterMappings;
         _updatePrinterGroups = updatePrinterGroups;
         _updatePrinterMappings = updatePrinterMappings;
-        _updatePrinterMappings = updatePrinterMappings;
         _printingService = printingService;
         _terminalContext = terminalContext;
-        _navigationService = navigationService; // Fixed: Assign injected service
+        _navigationService = navigationService;
+        _templateRepository = templateRepository;
 
         Title = "System & Hardware Configuration";
         _terminalConfiguration = new TerminalDto(); // Initialize to avoid null binding issues
@@ -233,6 +238,14 @@ public partial class SystemConfigViewModel : ViewModelBase
                         });
                     }
                 }
+            }
+            
+            // Load templates
+            var templates = await _templateRepository.GetAllAsync();
+            AvailableTemplates.Clear();
+            foreach (var tmpl in templates)
+            {
+                AvailableTemplates.Add(tmpl);
             }
         }
         catch (Exception ex)

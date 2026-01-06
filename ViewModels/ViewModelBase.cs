@@ -21,4 +21,11 @@ public abstract class ViewModelBase : CommunityToolkit.Mvvm.ComponentModel.Obser
         get => _title;
         set => SetProperty(ref _title, value);
     }
+
+    private string? _statusMessage;
+    public string? StatusMessage
+    {
+        get => _statusMessage;
+        set => SetProperty(ref _statusMessage, value);
+    }
 }

@@ -48,6 +48,7 @@ public class UpdatePrinterGroupsCommandHandler : ICommandHandler<UpdatePrinterGr
                         dto.RetryDelayMs,
                         dto.AllowReprint,
                         dto.FallbackPrinterGroupId);
+                    existing.SetTemplates(dto.ReceiptTemplateId, dto.KitchenTemplateId);
                     await _repository.UpdateAsync(existing, cancellationToken);
                 }
                 else
@@ -60,6 +61,7 @@ public class UpdatePrinterGroupsCommandHandler : ICommandHandler<UpdatePrinterGr
                         dto.RetryDelayMs,
                         dto.AllowReprint,
                         dto.FallbackPrinterGroupId);
+                    newGroup.SetTemplates(dto.ReceiptTemplateId, dto.KitchenTemplateId);
                     await _repository.AddAsync(newGroup, cancellationToken);
                 }
             }

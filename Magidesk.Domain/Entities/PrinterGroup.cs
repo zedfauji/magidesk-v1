@@ -20,6 +20,13 @@ public class PrinterGroup
     public bool AllowReprint { get; private set; }
     public Guid? FallbackPrinterGroupId { get; private set; }
 
+    // Template Links
+    public Guid? ReceiptTemplateId { get; private set; }
+    public virtual PrintTemplate? ReceiptTemplate { get; private set; }
+
+    public Guid? KitchenTemplateId { get; private set; }
+    public virtual PrintTemplate? KitchenTemplate { get; private set; }
+
     // Private constructor for EF Core
     private PrinterGroup()
     {
@@ -67,5 +74,10 @@ public class PrinterGroup
         RetryDelayMs = retryDelayMs;
         AllowReprint = allowReprint;
         FallbackPrinterGroupId = fallbackPrinterGroupId;
+    }
+    public void SetTemplates(Guid? receiptTemplateId, Guid? kitchenTemplateId)
+    {
+        ReceiptTemplateId = receiptTemplateId;
+        KitchenTemplateId = kitchenTemplateId;
     }
 }

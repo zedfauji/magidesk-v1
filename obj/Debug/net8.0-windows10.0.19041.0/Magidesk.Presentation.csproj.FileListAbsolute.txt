@@ -555,3 +555,16 @@ C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\Debug\
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\Debug\net8.0-windows10.0.19041.0\qualifiers.txt
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\Debug\net8.0-windows10.0.19041.0\qualifiers.txt.intermediate
 C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\Debug\net8.0-windows10.0.19041.0\MultipleQualifiersPerDimensionFound.txt
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\Debug\net8.0-windows10.0.19041.0\Views\PrintTemplatesPage.xbf
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\Debug\net8.0-windows10.0.19041.0\Views\TemplateEditorPage.xbf
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\Debug\net8.0-windows10.0.19041.0\Fluid.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\Debug\net8.0-windows10.0.19041.0\Parlot.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\bin\Debug\net8.0-windows10.0.19041.0\TimeZoneConverter.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\Debug\net8.0-windows10.0.19041.0\Views\PrintTemplatesPage.g.i.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\Debug\net8.0-windows10.0.19041.0\Views\PrintTemplatesPage.g.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\Debug\net8.0-windows10.0.19041.0\Views\TemplateEditorPage.g.i.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\Debug\net8.0-windows10.0.19041.0\Views\TemplateEditorPage.g.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\Debug\net8.0-windows10.0.19041.0\Views\PrintTemplatesPage.xaml
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\Debug\net8.0-windows10.0.19041.0\Views\TemplateEditorPage.xaml
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\Debug\net8.0-windows10.0.19041.0\Views\PrintTemplatesPage.xbf
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\obj\Debug\net8.0-windows10.0.19041.0\Views\TemplateEditorPage.xbf

@@ -20,12 +20,18 @@ public class PrinterGroupRepository : IPrinterGroupRepository
 
     public async Task<IEnumerable<PrinterGroup>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return await _context.PrinterGroups.ToListAsync(cancellationToken);
+        return await _context.PrinterGroups
+            .Include(g => g.ReceiptTemplate)
+            .Include(g => g.KitchenTemplate)
+            .ToListAsync(cancellationToken);
     }
 
     public async Task<PrinterGroup?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        return await _context.PrinterGroups.FindAsync(new object[] { id }, cancellationToken);
+        return await _context.PrinterGroups
+            .Include(g => g.ReceiptTemplate)
+            .Include(g => g.KitchenTemplate)
+            .FirstOrDefaultAsync(g => g.Id == id, cancellationToken);
     }
 
     public async Task AddAsync(PrinterGroup group, CancellationToken cancellationToken = default)

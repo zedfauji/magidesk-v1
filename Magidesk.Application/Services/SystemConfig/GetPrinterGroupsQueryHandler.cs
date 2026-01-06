@@ -29,7 +29,9 @@ public class GetPrinterGroupsQueryHandler : IQueryHandler<GetPrinterGroupsQuery,
             RetryCount = g.RetryCount,
             RetryDelayMs = g.RetryDelayMs,
             AllowReprint = g.AllowReprint,
-            FallbackPrinterGroupId = g.FallbackPrinterGroupId
+            FallbackPrinterGroupId = g.FallbackPrinterGroupId,
+            KitchenTemplateId = g.KitchenTemplateId,
+            ReceiptTemplateId = g.ReceiptTemplateId
         }).ToList());
     }
 }

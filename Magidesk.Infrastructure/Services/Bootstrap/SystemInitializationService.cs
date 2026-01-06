@@ -210,6 +210,78 @@ namespace Magidesk.Infrastructure.Services.Bootstrap
                     _dbContext.Tables.AddRange(tables);
                     await _dbContext.SaveChangesAsync();
                 }
+
+                // Seed Print Templates
+                // Ensure Receipt Template Exists
+                if (!await _dbContext.PrintTemplates.AnyAsync(t => t.Type == TemplateType.Receipt && t.IsSystem))
+                {
+                    _logger.LogInformation("Seeding Standard Receipt...");
+                    
+                    var receiptContent = @"
+{
+  ""Elements"": [
+    { ""Type"": ""Text"", ""Content"": ""{{ Restaurant.Name }}"", ""Bold"": true, ""DoubleHeight"": true, ""Align"": ""Center"" },
+    { ""Type"": ""Text"", ""Content"": ""{{ Restaurant.Address }}"", ""Align"": ""Center"" },
+    { ""Type"": ""Text"", ""Content"": ""{{ Restaurant.Phone }}"", ""Align"": ""Center"" },
+    { ""Type"": ""LineBreak"" },
+    { ""Type"": ""Separator"" },
+    { ""Type"": ""Text"", ""Content"": ""Check: {{ TicketNumber }}    Server: {{ ServerName }}"" },
+    { ""Type"": ""Text"", ""Content"": ""Date: {{ Date }} {{ Time }}"" },
+    { ""Type"": ""Separator"" }
+    {% for line in Lines %}
+    ,{ ""Type"": ""Text"", ""Content"": ""{{ line.Quantity }} {{ line.Name }}     {{ line.Total }}"" }
+    {% for mod in line.Modifiers %}
+    ,{ ""Type"": ""Text"", ""Content"": ""  + {{ mod }}"" }
+    {% endfor %}
+    {% endfor %}
+    ,{ ""Type"": ""Separator"" },
+    { ""Type"": ""Text"", ""Content"": ""Subtotal: {{ Subtotal }}"", ""Align"": ""Right"" },
+    { ""Type"": ""Text"", ""Content"": ""Tax: {{ Tax }}"", ""Align"": ""Right"" },
+    { ""Type"": ""Text"", ""Content"": ""TOTAL: {{ Total }}"", ""Bold"": true, ""DoubleHeight"": true, ""Align"": ""Right"" },
+    { ""Type"": ""LineBreak"" },
+    { ""Type"": ""Text"", ""Content"": ""Thank You!"", ""Align"": ""Center"" },
+    { ""Type"": ""Cut"" }
+  ]
+}";
+                    var template = PrintTemplate.Create("Standard Receipt", TemplateType.Receipt, receiptContent);
+                    template.UpdateIsSystem(true);
+                    
+                    _dbContext.PrintTemplates.Add(template);
+                }
+                
+                // Ensure Kitchen Template Exists
+                if (!await _dbContext.PrintTemplates.AnyAsync(t => t.Type == TemplateType.Kitchen && t.IsSystem))
+                {
+                    _logger.LogInformation("Seeding Standard Kitchen Ticket...");
+                     var kitchenContent = @"
+{
+  ""Elements"": [
+    { ""Type"": ""Text"", ""Content"": ""KITCHEN TICKET #{{ TicketNumber }}"", ""Bold"": true, ""DoubleHeight"": true, ""DoubleWidth"": true, ""Align"": ""Center"" },
+    { ""Type"": ""Text"", ""Content"": ""Table: {{ TableName }}"", ""Bold"": true, ""DoubleHeight"": true, ""Align"": ""Left"" },
+    { ""Type"": ""Text"", ""Content"": ""Server: {{ ServerName }}"", ""Align"": ""Left"" },
+    { ""Type"": ""Text"", ""Content"": ""Date: {{ Date }} {{ Time }}"", ""Align"": ""Right"" },
+    { ""Type"": ""Separator"" }
+    {% for line in Lines %}
+    ,{ ""Type"": ""Text"", ""Content"": ""{{ line.Quantity }} x {{ line.Name }}"", ""Bold"": true, ""DoubleHeight"": true }
+    {% for mod in line.Modifiers %}
+    ,{ ""Type"": ""Text"", ""Content"": ""   >> {{ mod }}"", ""Bold"": true, ""Invert"": true }
+    {% endfor %}
+    {% if line.Instructions != empty %}
+    ,{ ""Type"": ""Text"", ""Content"": ""   ** {{ line.Instructions }} **"", ""Bold"": true }
+    {% endif %}
+    ,{ ""Type"": ""LineBreak"" }
+    {% endfor %}
+    ,{ ""Type"": ""LineBreak"" },
+    { ""Type"": ""Cut"" }
+  ]
+}";
+                    var kTemplate = PrintTemplate.Create("Standard Kitchen", TemplateType.Kitchen, kitchenContent);
+                    kTemplate.UpdateIsSystem(true);
+                    _dbContext.PrintTemplates.Add(kTemplate);
+                }
+
+                await _dbContext.SaveChangesAsync();
+
             }
             catch (Exception ex)
             {

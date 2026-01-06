@@ -59,7 +59,8 @@
             <converters:IntToDoubleConverter x:Key="IntToDoubleConverter"/>
             <converters:CollectionEmptyToVisibilityConverter x:Key="CollectionEmptyToVisibilityConverter"/>
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
+            <converters:BooleanToStringConverter x:Key="BooleanToStringConverter"/>
+            <converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
 
         <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush" Color="{StaticResource SystemAltHighColor}"/>
             <converters:BoolToDesignModeTextConverter x:Key="BoolToDesignModeTextConverter"/>

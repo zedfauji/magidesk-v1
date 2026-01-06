@@ -14,6 +14,7 @@
     <SourceRoot Include="C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages\" />
   </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)parlot\1.5.2\buildTransitive\Parlot.props" Condition="Exists('$(NuGetPackageRoot)parlot\1.5.2\buildTransitive\Parlot.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore\8.0.0\buildTransitive\net8.0\Microsoft.EntityFrameworkCore.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore\8.0.0\buildTransitive\net8.0\Microsoft.EntityFrameworkCore.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.windows.sdk.buildtools.msix\1.7.20250829.1\buildTransitive\Microsoft.Windows.SDK.BuildTools.MSIX.props" Condition="Exists('$(NuGetPackageRoot)microsoft.windows.sdk.buildtools.msix\1.7.20250829.1\buildTransitive\Microsoft.Windows.SDK.BuildTools.MSIX.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.windows.sdk.buildtools\10.0.26100.7175\buildTransitive\Microsoft.Windows.SDK.BuildTools.props" Condition="Exists('$(NuGetPackageRoot)microsoft.windows.sdk.buildtools\10.0.26100.7175\buildTransitive\Microsoft.Windows.SDK.BuildTools.props')" />

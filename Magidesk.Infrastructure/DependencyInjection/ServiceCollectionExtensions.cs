@@ -15,6 +15,9 @@ using Magidesk.Infrastructure.Printing.Engines;
 using Magidesk.Infrastructure.Printing.Layouts;
 using Magidesk.Domain.Interfaces.Printing;
 using Magidesk.Domain.Enumerations;
+using Magidesk.Infrastructure.Services; // For LiquidTemplateEngine
+using Magidesk.Application.Services.Printing;
+using Magidesk.Infrastructure.Printing.Drivers; // For EscPosDriver, PlainTextDriver
 
 namespace Magidesk.Infrastructure.DependencyInjection;
 
@@ -67,6 +70,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
         services.AddScoped<IInventoryAdjustmentRepository, InventoryAdjustmentRepository>();
         services.AddScoped<IServerSectionRepository, ServerSectionRepository>();
+        services.AddScoped<IPrintTemplateRepository, PrintTemplateRepository>();
 
 
         // Register domain services (stateless, can be singleton or scoped)
@@ -85,6 +89,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRawPrintService, WindowsPrintingService>();
         services.AddScoped<IKitchenPrintService, KitchenPrintService>();
         services.AddScoped<IReceiptPrintService, ReceiptPrintService>();
+        services.AddScoped<ITemplateEngine, LiquidTemplateEngine>();
+        services.AddScoped<IPrintContextBuilder, Magidesk.Application.Services.Printing.PrintContextBuilder>();
 
         // Register Security Services
         services.AddSingleton<IAesEncryptionService, Security.AesEncryptionService>();
@@ -114,6 +120,19 @@ public static class ServiceCollectionExtensions
 
         // Layout Engine
         services.AddScoped<IPrintLayoutEngine, PrintLayoutEngine>();
+
+        // New ADM Drivers
+        services.AddTransient<EscPosDriver>();
+        services.AddTransient<PlainTextDriver>();
+        
+        services.AddScoped<Func<PrinterFormat, IPrintDriver>>(sp => format =>
+        {
+            return format switch
+            {
+                PrinterFormat.StandardPage => sp.GetRequiredService<PlainTextDriver>(),
+                _ => sp.GetRequiredService<EscPosDriver>() // Default to Thermal
+            };
+        });
 
         return services;
     }

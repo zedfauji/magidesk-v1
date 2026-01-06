@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Magidesk.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f4556a982fa521a0c7e9f7afd09e7bb1bf518b53")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+33c746da4c753afc997ea927bb03f783b85109d5")]
 [assembly: System.Reflection.AssemblyProductAttribute("Magidesk.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Magidesk.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

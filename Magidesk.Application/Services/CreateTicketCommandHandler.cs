@@ -11,13 +11,16 @@ namespace Magidesk.Application.Services;
 public class CreateTicketCommandHandler : ICommandHandler<CreateTicketCommand, CreateTicketResult>
 {
     private readonly ITicketRepository _ticketRepository;
+    private readonly ITableRepository _tableRepository;
     private readonly IAuditEventRepository _auditEventRepository;
 
     public CreateTicketCommandHandler(
         ITicketRepository ticketRepository,
+        ITableRepository tableRepository,
         IAuditEventRepository auditEventRepository)
     {
         _ticketRepository = ticketRepository;
+        _tableRepository = tableRepository;
         _auditEventRepository = auditEventRepository;
     }
 
@@ -53,6 +56,21 @@ public class CreateTicketCommandHandler : ICommandHandler<CreateTicketCommand, C
             foreach (var tableNumber in command.TableNumbers)
             {
                 ticket.AddTableNumber(tableNumber);
+                
+                // Phase 1 Core Integrity: Ensure table status is updated
+                var table = await _tableRepository.GetByTableNumberAsync(tableNumber, cancellationToken);
+                if (table != null)
+                {
+                    if (table.Status != Domain.Enumerations.TableStatus.Available)
+                    {
+                        // Double-seat prevention: Blocking if table is already occupied
+                        throw new Domain.Exceptions.BusinessRuleViolationException($"Table {tableNumber} is already occupied (Status: {table.Status}).");
+                    }
+
+                    // Assign table to this ticket (Updates Table Entity Status)
+                    table.AssignTicket(ticket.Id);
+                    await _tableRepository.UpdateAsync(table, cancellationToken);
+                }
             }
         }
 
