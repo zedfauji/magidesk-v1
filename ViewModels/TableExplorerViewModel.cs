@@ -14,8 +14,10 @@ namespace Magidesk.Presentation.ViewModels;
 
 public class TableExplorerViewModel : ViewModelBase
 {
-    private readonly IQueryHandler<GetAvailableTablesQuery, GetAvailableTablesResult> _getAvailableTables;
+    private readonly IQueryHandler<GetTableMapQuery, GetTableMapResult> _getTableMap;
     private readonly NavigationService _navigationService;
+    private readonly ITicketCreationService _ticketCreationService;
+    private readonly IUserService _userService;
 
     public ObservableCollection<TableDto> AllTables { get; } = new();
     public ObservableCollection<TableDto> FilteredTables { get; } = new();
@@ -34,18 +36,22 @@ public class TableExplorerViewModel : ViewModelBase
     }
 
     public AsyncRelayCommand LoadTablesCommand { get; }
-    public IRelayCommand<TableDto> SelectTableCommand { get; }
+    public AsyncRelayCommand<TableDto> SelectTableCommand { get; }
 
     public TableExplorerViewModel(
-        IQueryHandler<GetAvailableTablesQuery, GetAvailableTablesResult> getAvailableTables,
-        NavigationService navigationService)
+        IQueryHandler<GetTableMapQuery, GetTableMapResult> getTableMap,
+        NavigationService navigationService,
+        ITicketCreationService ticketCreationService,
+        IUserService userService)
     {
-        _getAvailableTables = getAvailableTables;
+        _getTableMap = getTableMap;
         _navigationService = navigationService;
+        _ticketCreationService = ticketCreationService;
+        _userService = userService;
 
         Title = "Table Explorer";
         LoadTablesCommand = new AsyncRelayCommand(LoadTablesAsync);
-        SelectTableCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<TableDto>(SelectTable);
+        SelectTableCommand = new AsyncRelayCommand<TableDto>(SelectTableAsync);
     }
 
     private async Task LoadTablesAsync()
@@ -53,7 +59,8 @@ public class TableExplorerViewModel : ViewModelBase
         IsBusy = true;
         try
         {
-            var result = await _getAvailableTables.HandleAsync(new GetAvailableTablesQuery());
+            // Sync with Map: Show all active tables, not just available ones
+            var result = await _getTableMap.HandleAsync(new GetTableMapQuery());
             AllTables.Clear();
             foreach (var table in result.Tables)
             {
@@ -83,19 +90,37 @@ public class TableExplorerViewModel : ViewModelBase
         }
     }
 
-    private void SelectTable(TableDto? table)
+    private async Task SelectTableAsync(TableDto? table)
     {
         if (table == null) return;
 
         // F-0082: Resume/Create logic
         if (table.Status == Domain.Enumerations.TableStatus.Seat && table.CurrentTicketId.HasValue)
         {
+            // Resume existing ticket
             _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(table.CurrentTicketId.Value, true));
         }
-        else
+        else if (table.Status == Domain.Enumerations.TableStatus.Available)
         {
-            // For now, same as Map behavior: pass null ticket for new order if available
-            _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(null, true));
+            // Create new ticket using shared service
+            try
+            {
+                IsBusy = true;
+                
+                if (_userService.CurrentUser?.Id == null) return;
+
+                var ticketId = await _ticketCreationService.CreateTicketForTableAsync(table.Id, _userService.CurrentUser.Id);
+                
+                _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(ticketId, true));
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to create ticket from explorer: {ex.Message}");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }

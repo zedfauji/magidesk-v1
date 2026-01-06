@@ -13,6 +13,7 @@ public class TableLayoutDto
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public bool IsActive { get; set; } = true;
+    public bool IsDraft { get; set; }
     public int Version { get; set; }
 }
 

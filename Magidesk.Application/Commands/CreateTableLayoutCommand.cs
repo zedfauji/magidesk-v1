@@ -7,20 +7,24 @@ namespace Magidesk.Application.Commands;
 public record CreateTableLayoutCommand(
     string Name,
     Guid? FloorId,
-    List<TableDto> Tables
+    List<TableDto> Tables,
+    bool IsDraft = false
 ) : IRequest<TableLayoutDto>;
 
 public record UpdateTablePositionCommand(
     Guid TableId,
-    int X,
-    int Y,
-    TableShapeType Shape
+    double X,
+    double Y,
+    TableShapeType Shape,
+    double Width = 100,
+    double Height = 100
 ) : IRequest<TableDto>;
 
 public record SaveTableLayoutCommand(
     Guid LayoutId,
     string Name,
-    List<TableDto> Tables
+    List<TableDto> Tables,
+    bool? IsDraft = null
 ) : IRequest<TableLayoutDto>;
 
 public record DeleteTableLayoutCommand(
@@ -31,11 +35,11 @@ public record AddTableToLayoutCommand(
     Guid LayoutId,
     int TableNumber,
     int Capacity,
-    int X,
-    int Y,
+    double X,
+    double Y,
     TableShapeType Shape,
-    int Width = 100,
-    int Height = 100
+    double Width = 100,
+    double Height = 100
 ) : IRequest<TableDto>;
 
 public record RemoveTableFromLayoutCommand(

@@ -10,6 +10,7 @@ public class TableDto
     public Guid Id { get; set; }
     public int TableNumber { get; set; }
     public Guid? FloorId { get; set; }
+    public Guid? LayoutId { get; set; }
     public int Capacity { get; set; }
     public double X { get; set; }
     public double Y { get; set; }
@@ -20,5 +21,6 @@ public class TableDto
     public Guid? CurrentTicketId { get; set; }
     public bool IsActive { get; set; }
     public bool IsSelected { get; set; }
+    public bool IsLocked { get; set; }
 }
 

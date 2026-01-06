@@ -71,6 +71,7 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddSingleton<IDefaultViewRoutingService, DefaultViewRoutingService>();
                     services.AddSingleton<IOrderEntryDialogService, OrderEntryDialogService>();
                     services.AddSingleton<ISwitchboardDialogService, SwitchboardDialogService>();
+                    services.AddSingleton<IDialogService, WindowsDialogService>();
                     services.AddSingleton<IUserService, UserService>();
                     services.AddSingleton<Magidesk.Application.Interfaces.ITerminalContext, TerminalContext>();
             // Printing

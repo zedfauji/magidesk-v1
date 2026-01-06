@@ -2,6 +2,8 @@ using Magidesk.Application.Commands;
 using Magidesk.Application.DTOs;
 using Magidesk.Application.Interfaces;
 using Magidesk.Domain.Entities;
+using Magidesk.Domain.Enumerations;
+using Magidesk.Application.Mapping;
 using MediatR;
 
 namespace Magidesk.Application.Services;
@@ -24,7 +26,8 @@ public class CreateTableLayoutCommandHandler : IRequestHandler<CreateTableLayout
         // Create the layout
         var layout = TableLayout.Create(
             request.Name,
-            request.FloorId
+            request.FloorId,
+            request.IsDraft
         );
 
         // Add tables to the layout
@@ -33,8 +36,8 @@ public class CreateTableLayoutCommandHandler : IRequestHandler<CreateTableLayout
             var table = Table.Create(
                 tableDto.TableNumber,
                 tableDto.Capacity,
-                (int)tableDto.X,
-                (int)tableDto.Y,
+                tableDto.X,
+                tableDto.Y,
                 request.FloorId
             );
             
@@ -45,26 +48,7 @@ public class CreateTableLayoutCommandHandler : IRequestHandler<CreateTableLayout
         await _tableLayoutRepository.AddAsync(layout, cancellationToken);
 
         // Return the DTO
-        return new TableLayoutDto
-        {
-            Id = layout.Id,
-            Name = layout.Name,
-            FloorId = layout.FloorId,
-            Tables = layout.Tables.Select(t => new TableDto
-            {
-                Id = t.Id,
-                TableNumber = t.TableNumber,
-                Capacity = t.Capacity,
-                X = t.X,
-                Y = t.Y,
-                Status = t.Status,
-                IsActive = t.IsActive
-            }).ToList(),
-            CreatedAt = layout.CreatedAt,
-            UpdatedAt = layout.UpdatedAt,
-            IsActive = layout.IsActive,
-            Version = layout.Version
-        };
+        return TableMapper.ToLayoutDto(layout);
     }
 }
 
@@ -85,22 +69,12 @@ public class UpdateTablePositionCommandHandler : IRequestHandler<UpdateTablePosi
             throw new KeyNotFoundException($"Table with ID {request.TableId} not found.");
         }
 
-        // Update position and shape
-        table.UpdatePosition(request.X, request.Y);
-        // Note: Shape would need to be added to Table entity in a real implementation
+        // Update full geometry
+        table.UpdateGeometry(request.X, request.Y, request.Shape, request.Width, request.Height);
 
         await _tableRepository.UpdateAsync(table, cancellationToken);
 
-        return new TableDto
-        {
-            Id = table.Id,
-            TableNumber = table.TableNumber,
-            Capacity = table.Capacity,
-            X = table.X,
-            Y = table.Y,
-            Status = table.Status,
-            IsActive = table.IsActive
-        };
+        return TableMapper.ToDto(table);
     }
 }
 
@@ -124,21 +98,77 @@ public class AddTableToLayoutCommandHandler : IRequestHandler<AddTableToLayoutCo
             request.TableNumber,
             request.Capacity,
             request.X,
-            request.Y
+            request.Y,
+            null, // floorId
+            request.LayoutId,
+            true, // isActive
+            request.Shape,
+            request.Width,
+            request.Height
         );
 
         // Save table
         await _tableRepository.AddAsync(table, cancellationToken);
 
-        return new TableDto
+        return TableMapper.ToDto(table);
+    }
+}
+
+public class SaveTableLayoutCommandHandler : IRequestHandler<SaveTableLayoutCommand, TableLayoutDto>
+{
+    private readonly ITableLayoutRepository _tableLayoutRepository;
+    private readonly ITableRepository _tableRepository;
+
+    public SaveTableLayoutCommandHandler(
+        ITableLayoutRepository tableLayoutRepository,
+        ITableRepository tableRepository)
+    {
+        _tableLayoutRepository = tableLayoutRepository;
+        _tableRepository = tableRepository;
+    }
+
+    public async Task<TableLayoutDto> Handle(SaveTableLayoutCommand request, CancellationToken cancellationToken)
+    {
+        var layout = await _tableLayoutRepository.GetByIdAsync(request.LayoutId, cancellationToken);
+        if (layout == null)
         {
-            Id = table.Id,
-            TableNumber = table.TableNumber,
-            Capacity = table.Capacity,
-            X = table.X,
-            Y = table.Y,
-            Status = table.Status,
-            IsActive = table.IsActive
-        };
+            throw new KeyNotFoundException($"Layout with ID {request.LayoutId} not found.");
+        }
+
+        layout.UpdateName(request.Name);
+
+        if (request.IsDraft.HasValue)
+        {
+            layout.SetDraftStatus(request.IsDraft.Value);
+        }
+
+        // Batch update table geometries? 
+        // For simple recovery, we update the layout metadata. 
+        // Tables are usually updated individually via UpdateTablePositionCommand in this architecture.
+
+        await _tableLayoutRepository.UpdateAsync(layout, cancellationToken);
+
+        return TableMapper.ToLayoutDto(layout);
+    }
+}
+
+public class RemoveTableFromLayoutCommandHandler : IRequestHandler<RemoveTableFromLayoutCommand, bool>
+{
+    private readonly ITableLayoutRepository _tableLayoutRepository;
+
+    public RemoveTableFromLayoutCommandHandler(ITableLayoutRepository tableLayoutRepository)
+    {
+        _tableLayoutRepository = tableLayoutRepository;
+    }
+
+    public async Task<bool> Handle(RemoveTableFromLayoutCommand request, CancellationToken cancellationToken)
+    {
+        var layout = await _tableLayoutRepository.GetByIdAsync(request.LayoutId, cancellationToken);
+        if (layout == null) return false;
+
+        layout.RemoveTable(request.TableId);
+        await _tableLayoutRepository.UpdateAsync(layout, cancellationToken);
+
+        return true;
     }
 }

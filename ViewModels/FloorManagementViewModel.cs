@@ -7,6 +7,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Magidesk.Application.DTOs;
 using Magidesk.Application.Interfaces;
+using Magidesk.Domain.Enumerations;
+using Magidesk.Domain.ValueObjects;
 using Magidesk.Presentation.Services;
 
 namespace Magidesk.Presentation.ViewModels;
@@ -16,6 +18,8 @@ public partial class FloorManagementViewModel : ViewModelBase
     private readonly IFloorRepository _floorRepository;
     private readonly ITableLayoutRepository _tableLayoutRepository;
     private readonly NavigationService _navigationService;
+    private readonly IUserService _userService;
+    private readonly ISecurityService _securityService;
 
     [ObservableProperty]
     private ObservableCollection<FloorDto> _floors = new();
@@ -54,17 +58,21 @@ public partial class FloorManagementViewModel : ViewModelBase
     public FloorManagementViewModel(
         IFloorRepository floorRepository,
         ITableLayoutRepository tableLayoutRepository,
-        NavigationService navigationService)
+        NavigationService navigationService,
+        IUserService userService,
+        ISecurityService securityService)
     {
         _floorRepository = floorRepository;
         _tableLayoutRepository = tableLayoutRepository;
         _navigationService = navigationService;
+        _userService = userService;
+        _securityService = securityService;
 
         CreateFloorCommand = new AsyncRelayCommand(CreateFloorAsync);
         UpdateFloorCommand = new AsyncRelayCommand(UpdateFloorAsync);
         DeleteFloorCommand = new AsyncRelayCommand<FloorDto>(DeleteFloorAsync);
         ClearFormCommand = new RelayCommand(ClearForm);
-        NavigateToDesignerCommand = new RelayCommand(NavigateToDesigner);
+        NavigateToDesignerCommand = new AsyncRelayCommand(NavigateToDesignerAsync);
         GoBackCommand = new RelayCommand(GoBack);
 
         Title = "Floor Management";
@@ -241,11 +249,23 @@ public partial class FloorManagementViewModel : ViewModelBase
         IsEditMode = false;
     }
 
-    private void NavigateToDesigner()
+    private async Task NavigateToDesignerAsync()
     {
-        if (SelectedFloor != null)
+        if (SelectedFloor == null) return;
+
+        if (_userService.CurrentUser == null) return;
+
+        var hasPermission = await _securityService.HasPermissionAsync(
+            new UserId(_userService.CurrentUser.Id),
+            UserPermission.ManageTableLayout);
+
+        if (hasPermission)
         {
-            _navigationService.Navigate(typeof(TableDesignerPage));
+            _navigationService.Navigate(typeof(Views.TableDesignerPage));
+        }
+        else
+        {
+            await ShowErrorAsync("You do not have permission to access the Table Designer.");
         }
     }
 

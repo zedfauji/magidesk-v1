@@ -12,10 +12,10 @@ public class Table
     public Guid Id { get; private set; }
     public int TableNumber { get; private set; }
     public int Capacity { get; private set; }
-    public int X { get; private set; } = 0;
-    public int Y { get; private set; } = 0;
-    public int Width { get; private set; } = 100; // Default width
-    public int Height { get; private set; } = 100; // Default height
+    public double X { get; private set; } = 0;
+    public double Y { get; private set; } = 0;
+    public double Width { get; private set; } = 100; // Default width
+    public double Height { get; private set; } = 100; // Default height
     public TableShapeType Shape { get; private set; } = TableShapeType.Rectangle;
     public Guid? FloorId { get; private set; }
     public Guid? LayoutId { get; private set; }
@@ -38,14 +38,14 @@ public class Table
     public static Table Create(
         int tableNumber,
         int capacity,
-        int x = 0,
-        int y = 0,
+        double x = 0,
+        double y = 0,
         Guid? floorId = null,
         Guid? layoutId = null,
         bool isActive = true,
         TableShapeType shape = TableShapeType.Rectangle,
-        int width = 100,
-        int height = 100)
+        double width = 100,
+        double height = 100)
     {
         if (tableNumber <= 0)
         {
@@ -105,10 +105,22 @@ public class Table
     /// <summary>
     /// Updates the table position.
     /// </summary>
-    public void UpdatePosition(int x, int y)
+    public void UpdatePosition(double x, double y)
     {
         X = x;
         Y = y;
+    }
+
+    /// <summary>
+    /// Updates all geometry properties.
+    /// </summary>
+    public void UpdateGeometry(double x, double y, TableShapeType shape, double width, double height)
+    {
+        X = x;
+        Y = y;
+        Shape = shape;
+        Width = width;
+        Height = height;
     }
 
     /// <summary>

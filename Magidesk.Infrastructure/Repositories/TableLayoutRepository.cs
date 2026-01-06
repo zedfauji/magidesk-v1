@@ -34,7 +34,7 @@ public class TableLayoutRepository : ITableLayoutRepository
     {
         var layout = await _context.TableLayouts
             .Include(tl => tl.Tables)
-            .FirstOrDefaultAsync(tl => tl.Name.Equals(name, StringComparison.OrdinalIgnoreCase), cancellationToken);
+            .FirstOrDefaultAsync(tl => tl.Name.ToLower() == name.ToLower(), cancellationToken);
 
         if (layout == null) return null;
 
@@ -122,7 +122,7 @@ public class TableLayoutRepository : ITableLayoutRepository
     public async Task<bool> IsLayoutNameUniqueAsync(string name, Guid? excludeId = null, CancellationToken cancellationToken = default)
     {
         var query = _context.TableLayouts
-            .Where(tl => tl.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            .Where(tl => tl.Name.ToLower() == name.ToLower());
 
         if (excludeId.HasValue)
         {

@@ -70,10 +70,7 @@ public class TableMapViewModel : ViewModelBase
     public AsyncRelayCommand<TableDto> SelectTableCommand { get; }
 
     private readonly IUserService _userService;
-    private readonly ITerminalContext _terminalContext;
-    private readonly ICashSessionRepository _cashSessionRepository;
-    private readonly IOrderTypeRepository _orderTypeRepository;
-    private readonly ICommandHandler<CreateTicketCommand, CreateTicketResult> _createTicketHandler;
+    private readonly ITicketCreationService _ticketCreationService;
     private readonly IServiceScopeFactory _serviceScopeFactory;
     private readonly Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue;
 
@@ -82,20 +79,14 @@ public class TableMapViewModel : ViewModelBase
         ICommandHandler<ChangeTableCommand, ChangeTableResult> changeTable,
         NavigationService navigationService,
         IUserService userService,
-        ITerminalContext terminalContext,
-        ICashSessionRepository cashSessionRepository,
-        IOrderTypeRepository orderTypeRepository,
-        ICommandHandler<CreateTicketCommand, CreateTicketResult> createTicketHandler,
+        ITicketCreationService ticketCreationService,
         IServiceScopeFactory serviceScopeFactory)
     {
         _getTableMap = getTableMap;
         _changeTable = changeTable;
         _navigationService = navigationService;
         _userService = userService;
-        _terminalContext = terminalContext;
-        _cashSessionRepository = cashSessionRepository;
-        _orderTypeRepository = orderTypeRepository;
-        _createTicketHandler = createTicketHandler;
+        _ticketCreationService = ticketCreationService;
         _serviceScopeFactory = serviceScopeFactory;
         _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
 
@@ -118,6 +109,20 @@ public class TableMapViewModel : ViewModelBase
         OnPropertyChanged(nameof(HeaderText));
     }
 
+    private double _canvasWidth = 2000;
+    public double CanvasWidth
+    {
+        get => _canvasWidth;
+        set => SetProperty(ref _canvasWidth, value);
+    }
+
+    private double _canvasHeight = 2000;
+    public double CanvasHeight
+    {
+        get => _canvasHeight;
+        set => SetProperty(ref _canvasHeight, value);
+    }
+
     private async Task LoadTablesAsync()
     {
         IsBusy = true;
@@ -125,10 +130,25 @@ public class TableMapViewModel : ViewModelBase
         {
             var result = await _getTableMap.HandleAsync(new GetTableMapQuery());
             Tables.Clear();
+            
+            double maxX = 2000;
+            double maxY = 2000;
+
             foreach (var table in result.Tables)
             {
                 Tables.Add(table);
+                
+                // Track max extent (+ padding) to resize canvas dynamically
+                double tableRight = table.X + (table.Width > 0 ? table.Width : 150);
+                double tableBottom = table.Y + (table.Height > 0 ? table.Height : 150);
+                
+                if (tableRight > maxX) maxX = tableRight;
+                if (tableBottom > maxY) maxY = tableBottom;
             }
+            
+            // Add margin
+            CanvasWidth = maxX + 200;
+            CanvasHeight = maxY + 200;
         }
         finally
         {
@@ -190,69 +210,28 @@ public class TableMapViewModel : ViewModelBase
         }
         else if (table.Status == TableStatus.Available)
         {
-             // Create new ticket logic
+             // Create new ticket using shared service
              try 
              {
                  IsBusy = true;
-
-                 // 1. Context Validation
-                 if (_userService.CurrentUser?.Id == null)
-                 {
-                     // In a real scenario, might redirect to login, but here just return
-                     return;
-                 }
-                 var userId = _userService.CurrentUser.Id;
-
-                 if (_terminalContext.TerminalId == null)
-                 {
-                     return;
-                 }
-                 var terminalId = _terminalContext.TerminalId.Value;
-
-                // 2. Session Validation
-                 var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
-                 if (session == null)
-                 {
-                     RequestShiftStart?.Invoke(this, EventArgs.Empty);
-                     return;
-                 }
-                 var shiftId = session.Id;
-
-                 // 3. Order Type (DINE IN)
-                 var orderTypes = await _orderTypeRepository.GetActiveAsync();
-                 var dineIn = orderTypes.FirstOrDefault(ot => ot.Name.ToUpper().Contains("DINE IN")) ?? orderTypes.FirstOrDefault();
                  
-                 if (dineIn == null)
-                 {
-                     System.Diagnostics.Debug.WriteLine("No Order Types found.");
-                     return;
-                 }
+                 if (_userService.CurrentUser?.Id == null) return;
+                 
+                 var ticketId = await _ticketCreationService.CreateTicketForTableAsync(table.Id, _userService.CurrentUser.Id);
 
-                 // 4. Create Ticket
-                 var command = new CreateTicketCommand
-                 {
-                     CreatedBy = userId,
-                     TerminalId = terminalId,
-                     ShiftId = shiftId,
-                     OrderTypeId = dineIn.Id,
-                     TableNumbers = new List<int> { table.TableNumber },
-                     NumberOfGuests = 1 // Default
-                 };
-
-                 var result = await _createTicketHandler.HandleAsync(command);
-
-                 // 5. Navigate with new Ticket ID
-                 _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(result.TicketId, true));
+                 // Navigate with new Ticket ID
+                 _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(ticketId, true));
              }
              catch (Exception ex)
              {
+                 // TODO: Show visual error
                  System.Diagnostics.Debug.WriteLine($"Failed to create ticket from map: {ex.Message}");
              }
              finally
              {
                  IsBusy = false;
              }
-        }
+        }    
     }
 
     private void StartRealTimePolling()

@@ -147,7 +147,7 @@ public class Floor
     /// </summary>
     public TableLayout? GetActiveLayout()
     {
-        return TableLayouts.FirstOrDefault(l => l.IsActive);
+        return TableLayouts.FirstOrDefault(l => l.IsActive && !l.IsDraft);
     }
 
     /// <summary>

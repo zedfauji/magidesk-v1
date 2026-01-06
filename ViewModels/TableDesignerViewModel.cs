@@ -20,7 +20,10 @@ public partial class TableDesignerViewModel : ViewModelBase
     private readonly IMediator _mediator;
     private readonly NavigationService _navigationService;
     private readonly ITableRepository _tableRepository;
+
     private readonly ITableLayoutRepository _tableLayoutRepository;
+    private readonly IDialogService _dialogService;
+    private readonly IFloorRepository _floorRepository;
 
     [ObservableProperty]
     private ObservableCollection<TableDto> _tables = new();
@@ -39,6 +42,15 @@ public partial class TableDesignerViewModel : ViewModelBase
 
     [ObservableProperty]
     private string _layoutName = string.Empty;
+    
+    // Track the currently edited layout ID
+    private Guid? _currentLayoutId;
+
+    [ObservableProperty]
+    private bool _isDirty;
+
+    [ObservableProperty]
+    private bool _isDraftMode = true;
 
     [ObservableProperty]
     private TableDto? _selectedTable;
@@ -82,17 +94,23 @@ public partial class TableDesignerViewModel : ViewModelBase
     public IRelayCommand<TableDto> SelectTableCommand { get; }
     public IRelayCommand ToggleDesignModeCommand { get; }
     public IRelayCommand<TableDto> UpdateTablePositionCommand { get; }
+    public IRelayCommand DiscardChangesCommand { get; }
 
     public TableDesignerViewModel(
         IMediator mediator,
         NavigationService navigationService,
         ITableRepository tableRepository,
-        ITableLayoutRepository tableLayoutRepository)
+
+        ITableLayoutRepository tableLayoutRepository,
+        IDialogService dialogService,
+        IFloorRepository floorRepository)
     {
         _mediator = mediator;
         _navigationService = navigationService;
         _tableRepository = tableRepository;
         _tableLayoutRepository = tableLayoutRepository;
+        _dialogService = dialogService;
+        _floorRepository = floorRepository;
 
         AddTableCommand = new AsyncRelayCommand<Point>(AddTableAsync);
         DeleteTableCommand = new AsyncRelayCommand<TableDto>(DeleteTableAsync);
@@ -102,6 +120,7 @@ public partial class TableDesignerViewModel : ViewModelBase
         SelectTableCommand = new RelayCommand<TableDto>(SelectTable);
         ToggleDesignModeCommand = new RelayCommand(ToggleDesignMode);
         UpdateTablePositionCommand = new AsyncRelayCommand<TableDto>(UpdateTablePositionAsync);
+        DiscardChangesCommand = new AsyncRelayCommand(DiscardChangesAsync);
 
         Title = "Table Designer";
     }
@@ -124,21 +143,53 @@ public partial class TableDesignerViewModel : ViewModelBase
 
     private async Task LoadFloorsAsync()
     {
-        // For now, create a default floor
-        Floors.Clear();
-        Floors.Add(new FloorDto
+        IsBusy = true;
+        try
         {
-            Id = Guid.NewGuid(),
-            Name = "Main Floor",
-            Description = "Primary dining area",
-            Width = 2000,
-            Height = 2000,
-            IsActive = true,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
-        });
+            Floors.Clear();
+            var floors = await _floorRepository.GetAllAsync();
 
-        SelectedFloor = Floors.FirstOrDefault();
+            if (!floors.Any())
+            {
+                // Create default floor if none exist
+                var defaultFloor = Magidesk.Domain.Entities.Floor.Create(
+                    "Main Floor",
+                    "Primary dining area",
+                    2000,
+                    2000
+                );
+                
+                await _floorRepository.AddAsync(defaultFloor);
+                floors = new[] { defaultFloor };
+            }
+
+            foreach (var floor in floors)
+            {
+                Floors.Add(new FloorDto
+                {
+                    Id = floor.Id,
+                    Name = floor.Name,
+                    Description = floor.Description,
+                    Width = floor.Width,
+                    Height = floor.Height,
+                    IsActive = floor.IsActive,
+                    CreatedAt = floor.CreatedAt,
+                    UpdatedAt = floor.UpdatedAt,
+                    BackgroundColor = floor.BackgroundColor
+                });
+            }
+
+            SelectedFloor = Floors.FirstOrDefault();
+            _currentLayoutId = null; // Reset current layout when reloading floors
+        }
+        catch (Exception ex)
+        {
+            await ShowErrorAsync($"Error loading floors: {ex.Message}");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     private async Task LoadTablesAsync()
@@ -163,6 +214,7 @@ public partial class TableDesignerViewModel : ViewModelBase
                 IsActive = table.IsActive
             });
         }
+        IsDirty = false;
     }
 
     private async Task AddTableAsync(Point position)
@@ -172,11 +224,11 @@ public partial class TableDesignerViewModel : ViewModelBase
         var nextTableNumber = Tables.Count > 0 ? Tables.Max(t => t.TableNumber) + 1 : 1;
 
         var command = new AddTableToLayoutCommand(
-            Guid.NewGuid(), // Layout ID - would come from selected layout
+            _currentLayoutId ?? Guid.NewGuid(), // Use current layout if exists
             nextTableNumber,
             4, // Default capacity
-            (int)position.X,
-            (int)position.Y,
+            position.X,
+            position.Y,
             SelectedShape
         );
 
@@ -186,9 +238,9 @@ public partial class TableDesignerViewModel : ViewModelBase
             Tables.Add(newTable);
         }
         catch (Exception ex)
+
         {
-            // Handle error - could show a dialog or set an error property
-            System.Diagnostics.Debug.WriteLine($"Error adding table: {ex.Message}");
+             await ShowErrorAsync($"Error adding table: {ex.Message}");
         }
     }
 
@@ -198,11 +250,10 @@ public partial class TableDesignerViewModel : ViewModelBase
 
         try
         {
-            // Check if table has active ticket
+            // T-DR-005: Live Table Lock
             if (table.Status != TableStatus.Available)
             {
-                // Show error - cannot delete table with active ticket
-                await ShowErrorAsync("Cannot delete table with active ticket. Please clear the table first.");
+                await ShowErrorAsync($"Cannot delete Table {table.TableNumber} because it is currently {table.Status}. Please clear the table first.");
                 return;
             }
 
@@ -226,6 +277,14 @@ public partial class TableDesignerViewModel : ViewModelBase
     private async Task<bool> UpdateTablePositionAsync(TableDto? table)
     {
         if (table == null || !IsDesignMode) return false;
+
+        // T-DR-005: Live Table Lock
+        if (table.Status != TableStatus.Available)
+        {
+            await ShowErrorAsync($"Cannot move Table {table.TableNumber} because it is currently {table.Status}. Changes reverted.");
+            await LoadTablesAsync(); // Revert from DB
+            return false;
+        }
 
         try
         {
@@ -254,19 +313,56 @@ public partial class TableDesignerViewModel : ViewModelBase
             }
 
             // Update position in repository
+            var oldX = table.X;
+            var oldY = table.Y;
+
+            // Optimistic update happens via binding, but we need to ensure we can revert
+            // Note: The 'table' object passed here already has the NEW coordinates from the UI drag event
+            // Wait - if the UI binding is TwoWay, table.X/Y are ALREADY the new values.
+            // We need to capture the OLD values *before* the drag starts, but the command is fired *after* drop?
+            // Actually, the command parameter is the table DTO. 
+            // If this is called continuously during drag, it's tricky.
+            // If called on "Drop", table.X/Y are the new values.
+            // We don't have the old values easily here unless we tracked them in StartDrag.
+            
+            // Let's rely on SelectedTable or a tracker. 
+            // If we assume this command is final commit:
+            
             var command = new UpdateTablePositionCommand(
                 table.Id,
-                (int)table.X,
-                (int)table.Y,
-                table.Shape
+                table.X,
+                table.Y,
+                table.Shape,
+                table.Width > 0 ? table.Width : 100,
+                table.Height > 0 ? table.Height : 100
             );
 
-            await _mediator.Send(command);
-            return true;
+            try
+            {
+                await _mediator.Send(command);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Rollback needed. But we don't know the old values here!
+                // We need to modify how this is called or store state in StartDrag.
+                
+                // Let's check StartDrag method.
+                // It sets SelectedTable.
+                
+                // Ideally, we should have stored original position in StartDrag or similar.
+                // For now, let's just show error.
+                // Phase 3 requirement: Implement *Rollback*. 
+                // To do this properly, we need to verify where 'old' state is.
+                
+                await ShowErrorAsync($"Error updating table position: {ex.Message}. Reloading tables...");
+                await LoadTablesAsync(); // Hard reset
+                return false;
+            }
         }
         catch (Exception ex)
         {
-            await ShowErrorAsync($"Error updating table position: {ex.Message}");
+            await ShowErrorAsync($"Unexpected error updating position: {ex.Message}");
             return false;
         }
     }
@@ -288,26 +384,46 @@ public partial class TableDesignerViewModel : ViewModelBase
         IsBusy = true;
         try
         {
-            // Check if layout name is unique
-            var isUnique = await _tableLayoutRepository.IsLayoutNameUniqueAsync(LayoutName);
+            // Check if layout name is unique (exclude current layout if updating)
+            var isUnique = await _tableLayoutRepository.IsLayoutNameUniqueAsync(LayoutName, _currentLayoutId);
             if (!isUnique)
             {
                 await ShowErrorAsync($"Layout name '{LayoutName}' already exists. Please choose a different name.");
                 return;
             }
 
-            var command = new SaveTableLayoutCommand(
-                Guid.NewGuid(), // Would use existing layout ID if editing
-                LayoutName,
-                Tables.ToList()
-            );
+            if (_currentLayoutId.HasValue)
+            {
+                // UPDATE existing layout
+                var command = new SaveTableLayoutCommand(
+                    _currentLayoutId.Value,
+                    LayoutName,
+                    Tables.ToList(),
+                    IsDraftMode
+                );
+                await _mediator.Send(command);
+                await ShowSuccessAsync($"Layout '{LayoutName}' updated successfully.");
+            }
+            else
+            {
+                // CREATE new layout
+                var newLayoutId = Guid.NewGuid();
+                var command = new CreateTableLayoutCommand(
+                    LayoutName,
+                    SelectedFloor?.Id ?? Guid.NewGuid(),
+                    Tables.ToList(),
+                    IsDraftMode
+                );
+                
+                var createdLayout = await _mediator.Send(command);
+                _currentLayoutId = createdLayout.Id;
+                await ShowSuccessAsync($"Layout '{LayoutName}' created successfully.");
+            }
 
-            var savedLayout = await _mediator.Send(command);
+            IsDirty = false;
             
-            await ShowSuccessAsync($"Layout '{LayoutName}' saved successfully with {Tables.Count} tables.");
-            
-            // Clear layout name for next save
-            LayoutName = string.Empty;
+            // Clear layout name for next save? No, keep it as we might keep editing.
+            // LayoutName = string.Empty; 
         }
         catch (Exception ex)
         {
@@ -331,16 +447,28 @@ public partial class TableDesignerViewModel : ViewModelBase
             if (SelectedFloor != null)
             {
                 var layouts = await _tableLayoutRepository.GetLayoutsByFloorAsync(SelectedFloor.Id);
-                if (layouts.Any())
+                // Prefer IsActive = true, or just first one
+                var activeLayout = layouts.FirstOrDefault(l => l.IsActive) ?? layouts.FirstOrDefault();
+                
+                if (activeLayout != null)
                 {
-                    var activeLayout = layouts.FirstOrDefault();
                     LayoutName = activeLayout.Name;
+                    _currentLayoutId = activeLayout.Id;
+                    _isDraftMode = activeLayout.IsDraft;
+                    OnPropertyChanged(nameof(IsDraftMode));
+
                     Tables.Clear();
                     
                     foreach (var tableDto in activeLayout.Tables)
                     {
                         Tables.Add(tableDto);
                     }
+                }
+                else
+                {
+                    // No layout found, reset ID
+                    _currentLayoutId = null;
+                    LayoutName = string.Empty;
                 }
             }
         }
@@ -533,6 +661,18 @@ public partial class TableDesignerViewModel : ViewModelBase
         IsDesignMode = !IsDesignMode;
     }
 
+    private async Task DiscardChangesAsync()
+    {
+        if (IsDirty)
+        {
+            var confirmed = await ShowConfirmationAsync("Discard Changes?", 
+                "Are you sure you want to discard all unsaved changes to this layout?");
+            if (!confirmed) return;
+        }
+
+        await LoadTablesAsync();
+    }
+
     partial void OnSelectedFloorChanged(FloorDto? value)
     {
         if (value != null && !IsBusy)
@@ -548,21 +688,17 @@ public partial class TableDesignerViewModel : ViewModelBase
 
     private async Task<bool> ShowConfirmationAsync(string title, string message)
     {
-        // In a real implementation, this would show a confirmation dialog
-        // For now, return true to simulate user confirmation
-        return true;
+        return await _dialogService.ShowConfirmationAsync(title, message);
     }
 
     private async Task ShowErrorAsync(string message)
     {
-        // In a real implementation, this would show an error dialog
-        System.Diagnostics.Debug.WriteLine($"Error: {message}");
+        await _dialogService.ShowErrorAsync("Table Designer Error", message);
     }
 
     private async Task ShowSuccessAsync(string message)
     {
-        // In a real implementation, this would show a success notification
-        System.Diagnostics.Debug.WriteLine($"Success: {message}");
+        await _dialogService.ShowMessageAsync("Success", message);
     }
 
     // Performance optimization methods

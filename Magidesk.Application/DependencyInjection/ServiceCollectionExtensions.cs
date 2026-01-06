@@ -108,6 +108,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.ClockOutCommand>, ClockOutCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.TransferTicketCommand>, TransferTicketCommandHandler>();
 
+        // Register Domain/App Services
+        services.AddScoped<ITicketCreationService, TicketCreationService>();
+
         // Register query handlers
         services.AddScoped<GetTicketQueryHandler>(); // Concrete class needed by other handlers
         services.AddScoped<IQueryHandler<Queries.GetTicketQuery, DTOs.TicketDto?>, GetTicketQueryHandler>();

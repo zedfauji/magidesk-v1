@@ -1,13 +1,18 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Magidesk.Presentation.Services;
 using CommunityToolkit.Mvvm.Input;
+using Magidesk.Application.Interfaces;
+using Magidesk.Domain.Enumerations;
+using Magidesk.Domain.ValueObjects;
+using Magidesk.Presentation.Services;
 
 namespace Magidesk.Presentation.ViewModels;
 
 public partial class BackOfficeViewModel : ViewModelBase
 {
     private readonly NavigationService _navigationService;
+    private readonly IUserService _userService;
+    private readonly ISecurityService _securityService;
     private string _headerText = "Back Office";
     private Type _currentPageType;
 
@@ -27,16 +32,26 @@ public partial class BackOfficeViewModel : ViewModelBase
     public ICommand GoBackCommand { get; }
     public ICommand CaptureBatchCommand { get; }
 
-    public BackOfficeViewModel(NavigationService navigationService)
+    public BackOfficeViewModel(
+        NavigationService navigationService,
+        IUserService userService,
+        ISecurityService securityService)
     {
         _navigationService = navigationService;
+        _userService = userService;
+        _securityService = securityService;
         Title = "Back Office";
         
         NavigateCommand = new RelayCommand<NavigationItem>(Navigate);
         GoBackCommand = new RelayCommand(GoBack);
         CaptureBatchCommand = new AsyncRelayCommand(CaptureBatchAsync);
         
-        // Define Navigation Items
+        _ = LoadNavigationItemsAsync();
+    }
+
+    private async Task LoadNavigationItemsAsync()
+    {
+        NavigationItems.Clear();
         NavigationItems.Add(new NavigationItem("Menu Editor", "Edit Categories, Groups, Items", "\uE70F", typeof(MenuEditorPage)));
         NavigationItems.Add(new NavigationItem("Modifiers", "Manage Options & Toppings", "\uE74C", typeof(ModifierEditorPage)));
         NavigationItems.Add(new NavigationItem("Inventory", "Manage Stock & Ingredients", "\uE8F2", typeof(InventoryPage)));
@@ -44,7 +59,19 @@ public partial class BackOfficeViewModel : ViewModelBase
         NavigationItems.Add(new NavigationItem("Purchase Orders", "Stock Procurement", "\uEA37", typeof(PurchaseOrdersPage)));
         NavigationItems.Add(new NavigationItem("Table Map", "Spatial Floor Plan", "\uE8F1", typeof(TableMapPage)));
         NavigationItems.Add(new NavigationItem("Table Explorer", "List Floor Plan", "\uE179", typeof(TableExplorerPage)));
-        NavigationItems.Add(new NavigationItem("Table Designer", "Design Table Layouts", "\uE70F", typeof(Magidesk.Presentation.Views.TableDesignerPage)));
+        
+        if (_userService.CurrentUser != null)
+        {
+            var hasDesignerPermission = await _securityService.HasPermissionAsync(
+                new UserId(_userService.CurrentUser.Id), 
+                UserPermission.ManageTableLayout);
+
+            if (hasDesignerPermission)
+            {
+                NavigationItems.Add(new NavigationItem("Table Designer", "Design Table Layouts", "\uE70F", typeof(Magidesk.Presentation.Views.TableDesignerPage)));
+            }
+        }
+
         NavigationItems.Add(new NavigationItem("Users", "Manage Staff & Permissions", "\uE77B", typeof(Magidesk.Presentation.Views.UserManagementPage)));
         NavigationItems.Add(new NavigationItem("Roles", "Manage User Roles", "\uE716", typeof(Magidesk.Presentation.Views.RoleManagementPage)));
         NavigationItems.Add(new NavigationItem("Tax / Discount", "Discount & Tax tools", "\uE8D7", typeof(Magidesk.Presentation.Views.DiscountTaxPage)));

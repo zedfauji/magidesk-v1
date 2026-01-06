@@ -19,6 +19,7 @@ public class TableLayout
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
     public bool IsActive { get; private set; } = true;
+    public bool IsDraft { get; private set; } = false;
     public int Version { get; private set; }
 
     // Private constructor for EF Core
@@ -29,7 +30,7 @@ public class TableLayout
     /// <summary>
     /// Creates a new table layout.
     /// </summary>
-    public static TableLayout Create(string name, Guid? floorId = null)
+    public static TableLayout Create(string name, Guid? floorId = null, bool isDraft = false)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -41,6 +42,7 @@ public class TableLayout
             Id = Guid.NewGuid(),
             Name = name,
             FloorId = floorId,
+            IsDraft = isDraft,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow,
             Version = 1
@@ -116,7 +118,7 @@ public class TableLayout
     /// <summary>
     /// Updates a table's position in the layout.
     /// </summary>
-    public void UpdateTablePosition(Guid tableId, int x, int y)
+    public void UpdateTablePosition(Guid tableId, double x, double y)
     {
         var table = Tables.FirstOrDefault(t => t.Id == tableId);
         if (table != null)
@@ -170,6 +172,16 @@ public class TableLayout
         }
 
         IsActive = false;
+        UpdatedAt = DateTime.UtcNow;
+        Version++;
+    }
+
+    /// <summary>
+    /// Marks the layout as a draft or published.
+    /// </summary>
+    public void SetDraftStatus(bool isDraft)
+    {
+        IsDraft = isDraft;
         UpdatedAt = DateTime.UtcNow;
         Version++;
     }

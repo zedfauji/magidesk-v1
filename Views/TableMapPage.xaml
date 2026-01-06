@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Magidesk.Presentation.ViewModels"
     xmlns:dto="using:Magidesk.Application.DTOs"
+    xmlns:views="using:Magidesk.Presentation.Views"
     xmlns:converters="using:Magidesk.Presentation.Converters"
     mc:Ignorable="d">
 
@@ -40,13 +41,16 @@
 
         <!-- Map Area -->
         <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{x:Bind ViewModel.Tables, Mode=OneWay}">
-                <!-- Panel is a Canvas for absolute positioning -->
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas Width="2000" Height="2000" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+            <Grid Width="{x:Bind ViewModel.CanvasWidth, Mode=OneWay}" 
+                  Height="{x:Bind ViewModel.CanvasHeight, Mode=OneWay}"
+                  Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+                <ItemsControl ItemsSource="{x:Bind ViewModel.Tables, Mode=OneWay}">
+                    <!-- Panel is a Canvas for absolute positioning -->
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
 
                 <!-- Item Template: The Table Button -->
                 <ItemsControl.ItemTemplate>
@@ -78,6 +82,7 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </ScrollViewer>
+        </Grid>
+    </ScrollViewer>
     </Grid>
 </Page>
