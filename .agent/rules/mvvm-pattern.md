@@ -94,16 +94,20 @@
 
 ## Error Handling in ViewModels
 
-### User-Friendly Messages
-- Display user-friendly error messages
-- Log technical details
-- Never expose stack traces
-- Handle exceptions gracefully
+### Visual Feedback (REQUIRED)
+- **REQUIRE**: Use `IDialogService` (`ShowErrorAsync`, `ShowMessageAsync`) for ALL errors
+- **REQUIRE**: Display user-friendly error messages via Toast or Dialog
+- **BLOCK**: `Debug.WriteLine` as the specific method of error reporting (silent failure)
+- **BLOCK**: Empty catch blocks
 
 ### Error Display
 - Use error properties on ViewModel
 - Bind to error display in View
 - Clear errors when user corrects input
+
+### Logging
+- Log technical details specific logger (not just Debug console)
+- Never expose stack traces to end user (unless internally debugging)
 
 ## ViewModel Lifecycle
 

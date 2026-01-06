@@ -73,8 +73,9 @@
 - Catch specific exceptions
 - Don't catch generic Exception unless necessary
 - Log exceptions with context
-- Provide user-friendly messages
-- Don't swallow exceptions
+- **REQUIRE**: Provide user-friendly messages via UI (Toast/Dialog)
+- **BLOCK**: Swallowing exceptions/Silent failures
+- **BLOCK**: `Catch (Exception) {}` without action
 
 ### Validation
 - Validate inputs early

@@ -66,6 +66,8 @@
 - **BLOCK**: Business logic in ViewModels
 - **BLOCK**: Business logic in code-behind
 - **BLOCK**: Direct service instantiation
+- **REQUIRE**: Use IDialogService for all user notifications/errors
+- **BLOCK**: Silent failures (swallowed exceptions without UI feedback)
 
 ### Data Access
 - **BLOCK**: DbContext in Presentation layer
@@ -85,6 +87,8 @@
 - **REQUIRE**: Proper indexing
 - **BLOCK**: SQL injection vulnerabilities
 - **BLOCK**: N+1 queries
+- **REQUIRE**: Use `.ToLower()` for case-insensitive LINQ comparisons (PostgreSQL compatibility)
+- **BLOCK**: `StringComparison.OrdinalIgnoreCase` in LINQ-to-Entities comparisons
 
 ## Code Quality Guardrails
 
