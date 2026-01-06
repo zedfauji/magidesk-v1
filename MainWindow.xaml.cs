@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Magidesk.Infrastructure.Services;
 using Magidesk.Presentation.Services;
+using Magidesk.Services;
 
 namespace Magidesk.Presentation;
 
@@ -10,9 +11,11 @@ public sealed partial class MainWindow : Window
 {
     private readonly NavigationService _navigation;
     private readonly Microsoft.UI.Dispatching.DispatcherQueueTimer _clockTimer;
+    private readonly IErrorService _errorService;
 
-    public MainWindow()
+    public MainWindow(IErrorService errorService)
     {
+        _errorService = errorService;
         StartupLogger.Log("MainWindow Constructor - Start");
         try {
             InitializeComponent();
@@ -23,41 +26,56 @@ public sealed partial class MainWindow : Window
         }
 
         StartupLogger.Log("MainWindow - Navigation initialization Start");
-        try {
-            _navigation = App.Services.GetRequiredService<NavigationService>();
+        _navigation = ServiceResolutionHelper.GetServiceSafely<NavigationService>(App.Services, _errorService);
+        if (_navigation != null)
+        {
             _navigation.Initialize(ContentFrame);
             StartupLogger.Log("MainWindow - Navigation initialization Success");
-        } catch (Exception ex) {
-            StartupLogger.Log($"MainWindow - Navigation initialization FATAL: {ex}");
-            throw;
         }
 
         // Initialize Clock
         StartupLogger.Log("MainWindow - Clock Start");
-        _clockTimer = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread().CreateTimer();
-        _clockTimer.Interval = System.TimeSpan.FromSeconds(1);
-        _clockTimer.Tick += (s, e) => { if (StatusClock != null) StatusClock.Text = System.DateTime.Now.ToString("HH:mm:ss"); };
-        _clockTimer.Start();
-        
-        if (StatusClock != null) StatusClock.Text = System.DateTime.Now.ToString("HH:mm:ss");
+        try
+        {
+            _clockTimer = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread().CreateTimer();
+            _clockTimer.Interval = System.TimeSpan.FromSeconds(1);
+            _clockTimer.Tick += (s, e) => 
+            { 
+                try 
+                { 
+                    if (StatusClock != null) StatusClock.Text = System.DateTime.Now.ToString("HH:mm:ss"); 
+                } 
+                catch (Exception ex) 
+                { 
+                    _ = _errorService.ShowWarningAsync("Clock Error", $"Failed to update clock display: {ex.Message}");
+                }
+            };
+            _clockTimer.Start();
+            
+            if (StatusClock != null) StatusClock.Text = System.DateTime.Now.ToString("HH:mm:ss");
+        }
+        catch (Exception ex)
+        {
+            await _errorService.ShowWarningAsync("Clock Initialization Failed", $"Could not initialize clock timer: {ex.Message}");
+        }
         
         // AUTH GUARD: UI Visibility
-        try 
+        var userService = ServiceResolutionHelper.GetServiceSafely<Magidesk.Application.Interfaces.IUserService>(App.Services, _errorService);
+        if (userService != null)
         {
-            var userService = App.Services.GetRequiredService<Magidesk.Application.Interfaces.IUserService>();
             // FEH-005: Fire-and-Forget Barrier
             userService.UserChanged += (s, u) => 
             {
                 DispatcherQueue.TryEnqueue(() => 
                 { 
-                    try { UpdateUiAuthState(u); } catch (Exception ex) { StartupLogger.Log($"Auth UI Update Failed: {ex}"); }
+                    try { UpdateUiAuthState(u); } 
+                    catch (Exception ex) 
+                    { 
+                        _ = _errorService.ShowWarningAsync("Auth Update Failed", $"Failed to update authentication state: {ex.Message}");
+                    }
                 });
             };
             UpdateUiAuthState(userService.CurrentUser);
-        }
-        catch (Exception ex)
-        {
-             StartupLogger.Log($"MainWindow - UserService FATAL: {ex}");
         }
 
         StartupLogger.Log("MainWindow Constructor - End");
@@ -105,7 +123,7 @@ public sealed partial class MainWindow : Window
         }
     }
 
-    private async void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+    private async Task OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
         // FEH-001: Async Void Barrier
         try
@@ -118,36 +136,25 @@ public sealed partial class MainWindow : Window
             var tag = item.Tag?.ToString();
             if (tag == "home")
             {
-                _navigation.Navigate(typeof(Views.SwitchboardPage));
+                _navigation?.Navigate(typeof(Views.SwitchboardPage));
                 return;
             }
 
             if (tag == "tableMap")
             {
-                _navigation.Navigate(typeof(Views.TableMapPage));
+                _navigation?.Navigate(typeof(Views.TableMapPage));
                 return;
             }
 
             if (tag == "kitchenDisplay")
             {
-                _navigation.Navigate(typeof(Views.KitchenDisplayPage));
+                _navigation?.Navigate(typeof(Views.KitchenDisplayPage));
                 return;
             }
         }
         catch (Exception ex)
         {
-            StartupLogger.Log($"FATAL NAV ERROR: {ex}");
-            try 
-            {
-                // Attempt to retrieve dialog service to show error
-                var dialogService = App.Services.GetRequiredService<Magidesk.Application.Interfaces.IDialogService>();
-                await dialogService.ShowErrorAsync("Navigation Failed", $"Could not navigate to the requested page.\n\nError: {ex.Message}", ex.ToString());
-            }
-            catch (Exception dialogEx)
-            {
-                // Absolute last resort
-                System.Diagnostics.Debug.WriteLine($"Double Fault in Navigation: {dialogEx}");
-            }
+            await _errorService.ShowErrorAsync("Navigation Failed", $"Could not navigate to the requested page.\n\nError: {ex.Message}", ex.ToString());
         }
     }
 

@@ -28,9 +28,11 @@ public class StringColorToBrushConverter : IValueConverter
                     return new SolidColorBrush(Windows.UI.Color.FromArgb(a, r, g, b));
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // Silently fail and return default
+                // T007: Log converter exception and return fallback
+                System.Diagnostics.Debug.WriteLine($"StringColorToBrushConverter Error: {ex.Message}");
+                return new SolidColorBrush(Colors.Gray); // Fallback color
             }
         }
 

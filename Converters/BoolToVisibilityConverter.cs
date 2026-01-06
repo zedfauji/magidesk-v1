@@ -8,28 +8,46 @@ public class BoolToVisibilityConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, string language)
     {
-        bool isReversed = parameter is string s && (s.Equals("Reverse", StringComparison.OrdinalIgnoreCase) || s.Equals("Invert", StringComparison.OrdinalIgnoreCase));
-
-        if (value is bool boolValue)
+        try
         {
-            if (isReversed)
+            bool isReversed = parameter is string s && (s.Equals("Reverse", StringComparison.OrdinalIgnoreCase) || s.Equals("Invert", StringComparison.OrdinalIgnoreCase));
+
+            if (value is bool boolValue)
             {
-                return !boolValue ? Visibility.Visible : Visibility.Collapsed;
+                if (isReversed)
+                {
+                    return !boolValue ? Visibility.Visible : Visibility.Collapsed;
+                }
+                return boolValue ? Visibility.Visible : Visibility.Collapsed;
             }
-            return boolValue ? Visibility.Visible : Visibility.Collapsed;
+            
+            return Visibility.Collapsed;
         }
-        
-        return Visibility.Collapsed;
+        catch (Exception ex)
+        {
+            // T007: Log converter exception and return fallback
+            System.Diagnostics.Debug.WriteLine($"BoolToVisibilityConverter Error: {ex.Message}");
+            return Visibility.Collapsed; // Fallback value
+        }
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)
     {
-        if (value is Visibility visibility)
+        try
         {
-            return visibility == Visibility.Visible;
+            if (value is Visibility visibility)
+            {
+                return visibility == Visibility.Visible;
+            }
+            
+            return false;
         }
-        
-        return false;
+        catch (Exception ex)
+        {
+            // T007: Log converter exception and return fallback
+            System.Diagnostics.Debug.WriteLine($"BoolToVisibilityConverter ConvertBack Error: {ex.Message}");
+            return false; // Fallback value
+        }
     }
 }
 

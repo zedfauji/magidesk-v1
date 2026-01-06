@@ -6,6 +6,7 @@ using Magidesk.Domain.Enumerations;
 using Magidesk.Domain.ValueObjects;
 using Magidesk.Presentation.Services;
 using CommunityToolkit.Mvvm.Input;
+using Magidesk.Services;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -14,6 +15,7 @@ public sealed class PaymentViewModel : ViewModelBase
     private readonly IQueryHandler<GetTicketQuery, TicketDto?> _getTicket;
     private readonly ICommandHandler<ProcessPaymentCommand, ProcessPaymentResult> _processPayment;
     private readonly NavigationService _navigationService;
+    private readonly IErrorService _errorService;
 
     private TicketDto? _ticket;
     private string _ticketIdText = string.Empty;
@@ -32,11 +34,13 @@ public sealed class PaymentViewModel : ViewModelBase
     public PaymentViewModel(
         IQueryHandler<GetTicketQuery, TicketDto?> getTicket,
         ICommandHandler<ProcessPaymentCommand, ProcessPaymentResult> processPayment,
-        NavigationService navigationService)
+        NavigationService navigationService,
+        IErrorService errorService)
     {
         _getTicket = getTicket;
         _processPayment = processPayment;
         _navigationService = navigationService;
+        _errorService = errorService;
 
         Title = "Payment";
 
@@ -155,12 +159,22 @@ public sealed class PaymentViewModel : ViewModelBase
         IsBusy = true;
         try
         {
+            // T004: Null dependency checks
+            if (_getTicket == null)
+            {
+                await _errorService?.ShowFatalAsync("Service Missing", "GetTicket handler is not available.");
+                return;
+            }
+
             if (!Guid.TryParse(TicketIdText, out var ticketId)) { Error = "Invalid TicketId."; return; }
 
             Ticket = await _getTicket.HandleAsync(new GetTicketQuery { TicketId = ticketId });
             if (Ticket == null)
             {
+                // T011: Replace property-only error with ErrorService dialog
+                await _errorService.ShowErrorAsync("Ticket Not Found", "The specified ticket could not be found.", ex.ToString());
                 Error = "Ticket not found.";
+                return;
             }
         }
         catch (Exception ex)
@@ -179,7 +193,22 @@ public sealed class PaymentViewModel : ViewModelBase
         IsBusy = true;
         try
         {
+            // T004: Null dependency checks
             if (Ticket == null) { Error = "Load a ticket first."; return; }
+            if (Ticket.DueAmount <= 0) return; // Nothing to pay
+
+            if (_processPayment == null)
+            {
+                await _errorService?.ShowFatalAsync("Service Missing", "Process payment handler is not available.");
+                return;
+            }
+
+            if (_navigationService == null)
+            {
+                await _errorService?.ShowFatalAsync("Service Missing", "Navigation service is not available.");
+                return;
+            }
+
             if (!Guid.TryParse(ProcessedByText, out var processedBy)) { Error = "Invalid ProcessedBy."; return; }
             if (!Guid.TryParse(TerminalIdText, out var terminalId)) { Error = "Invalid TerminalId."; return; }
             if (!decimal.TryParse(AmountText, out var amount)) { Error = "Invalid Amount."; return; }

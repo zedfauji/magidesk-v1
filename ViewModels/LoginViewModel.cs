@@ -5,6 +5,7 @@ using Magidesk.Application.Interfaces;
 using Magidesk.Application.Commands;
 using Magidesk.Presentation.Services;
 using Microsoft.UI.Xaml.Controls;
+using Magidesk.Services;
 using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
@@ -20,6 +21,7 @@ public class LoginViewModel : ViewModelBase
     private readonly IAttendanceRepository _attendanceRepository;
     private readonly IDefaultViewRoutingService _defaultViewRoutingService;
     private readonly ITerminalContext _terminalContext;
+    private readonly IErrorService _errorService;
 
     private string _pin = string.Empty;
     private string _errorMessage = string.Empty;
@@ -33,7 +35,8 @@ public class LoginViewModel : ViewModelBase
         ICommandHandler<ClockOutCommand> clockOutHandler,
         IAttendanceRepository attendanceRepository,
         IDefaultViewRoutingService defaultViewRoutingService,
-        ITerminalContext terminalContext)
+        ITerminalContext terminalContext,
+        IErrorService errorService)
     {
         _securityService = securityService;
         _encryptionService = encryptionService;
@@ -44,12 +47,13 @@ public class LoginViewModel : ViewModelBase
         _attendanceRepository = attendanceRepository;
         _defaultViewRoutingService = defaultViewRoutingService;
         _terminalContext = terminalContext;
+        _errorService = errorService;
 
         AppendDigitCommand = new RelayCommand<string>(AppendDigit);
         ClearCommand = new RelayCommand(Clear);
         RemoveLastDigitCommand = new RelayCommand(RemoveLastDigit);
         LoginCommand = new AsyncRelayCommand(LoginAsync);
-        ShutdownCommand = new RelayCommand(Shutdown);
+        ShutdownCommand = new AsyncRelayCommand(ShutdownAsync);
         ClockInOutCommand = new AsyncRelayCommand(ClockInOutAsync);
     }
 
@@ -113,6 +117,31 @@ public class LoginViewModel : ViewModelBase
             return;
         }
 
+        // T004: Null dependency checks
+        if (_encryptionService == null)
+        {
+            await _errorService?.ShowFatalAsync("Service Missing", "Encryption service is not available.");
+            return;
+        }
+
+        if (_securityService == null)
+        {
+            await _errorService?.ShowFatalAsync("Service Missing", "Security service is not available.");
+            return;
+        }
+
+        if (_clockInHandler == null || _clockOutHandler == null)
+        {
+            await _errorService?.ShowFatalAsync("Service Missing", "Clock command handlers are not available.");
+            return;
+        }
+
+        if (_attendanceRepository == null)
+        {
+            await _errorService?.ShowFatalAsync("Service Missing", "Attendance repository is not available.");
+            return;
+        }
+
         IsBusy = true;
         ErrorMessage = string.Empty;
 
@@ -172,6 +201,37 @@ public class LoginViewModel : ViewModelBase
             return;
         }
 
+        // T004: Null dependency checks
+        if (_encryptionService == null)
+        {
+            await _errorService?.ShowFatalAsync("Service Missing", "Encryption service is not available.");
+            return;
+        }
+
+        if (_securityService == null)
+        {
+            await _errorService?.ShowFatalAsync("Service Missing", "Security service is not available.");
+            return;
+        }
+
+        if (_userService == null)
+        {
+            await _errorService?.ShowFatalAsync("Service Missing", "User service is not available.");
+            return;
+        }
+
+        if (_navigationService == null)
+        {
+            await _errorService?.ShowFatalAsync("Service Missing", "Navigation service is not available.");
+            return;
+        }
+
+        if (_defaultViewRoutingService == null)
+        {
+            await _errorService?.ShowFatalAsync("Service Missing", "Default view routing service is not available.");
+            return;
+        }
+
         IsBusy = true;
         ErrorMessage = string.Empty;
 
@@ -228,8 +288,27 @@ public class LoginViewModel : ViewModelBase
         }
     }
 
-    private void Shutdown()
+    private async void Shutdown()
     {
-        App.Current.Exit();
+        try
+        {
+            // T012: Enhanced shutdown error handling
+            await _errorService?.ShowInfoAsync("Shutting Down", "Application is shutting down...");
+            App.Current.Exit();
+        }
+        catch (Exception ex)
+        {
+            // T012: Handle shutdown failures with info toast
+            await _errorService?.ShowInfoAsync("Shutdown Failed", $"Could not shut down gracefully: {ex.Message}");
+            // Force exit as last resort
+            try
+            {
+                App.Current.Exit();
+            }
+            catch
+            {
+                // Final fallback - nothing more we can do
+            }
+        }
     }
 }

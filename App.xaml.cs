@@ -16,6 +16,7 @@ using Magidesk.Application.Commands.SystemConfig;
 using Magidesk.Application.DTOs.Reports;
 using Magidesk.Application.Queries.Reports;
 using Magidesk.Application.Services.Reports;
+using Magidesk.Services;
 
 namespace Magidesk.Presentation;
 
@@ -68,6 +69,10 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddSingleton<IDefaultViewRoutingService, DefaultViewRoutingService>();
                     services.AddSingleton<IUserService, UserService>();
                     services.AddSingleton<Magidesk.Application.Interfaces.ITerminalContext, TerminalContext>();
+                    
+                    // Error handling infrastructure (T001)
+                    services.AddSingleton<IErrorService, Services.ErrorService>();
+                    services.AddSingleton<IAsyncOperationManager, Services.AsyncOperationManager>();
             // Printing
             services.AddSingleton<Magidesk.Application.Interfaces.IPrintingService, Infrastructure.Services.PrintingService>();
             services.AddSingleton<Magidesk.Application.Interfaces.IRawPrintService, Infrastructure.Printing.WindowsPrintingService>();
@@ -176,7 +181,7 @@ public partial class App : Microsoft.UI.Xaml.Application
         catch { /* Cant do anything if native call fails */ }
     }
 
-    protected override async void OnLaunched(LaunchActivatedEventArgs args)
+    protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
     {
         StartupLogger.Log("OnLaunched - Start");
         try
@@ -193,59 +198,76 @@ public partial class App : Microsoft.UI.Xaml.Application
             mainWindow.ShowLoading("Initializing System...");
 
             StartupLogger.Log("OnLaunched - Resolving ISystemInitializationService");
-            var initService = Host.Services.GetRequiredService<Magidesk.Application.Interfaces.ISystemInitializationService>();
-            StartupLogger.Log("OnLaunched - Calling InitializeSystemAsync");
-            var result = await initService.InitializeSystemAsync();
-
-            if (result.IsSuccess)
-            {
-                StartupLogger.Log("OnLaunched - Initialization Successful");
-                if (!string.IsNullOrEmpty(result.TerminalId))
-                {
-                    mainWindow.SetTerminalId(result.TerminalId);
-
-                    var terminalContext = Host.Services.GetRequiredService<ITerminalContext>();
-                    terminalContext.SetTerminalIdentity(result.TerminalId, result.TerminalGuid ?? Guid.Empty);
-                }
-
-                mainWindow.HideLoading();
-                var navService = Host.Services.GetRequiredService<NavigationService>();
+                var errorService = Host.Services.GetRequiredService<IErrorService>();
+                var initService = ServiceResolutionHelper.GetServiceSafely<Magidesk.Application.Interfaces.ISystemInitializationService>(Host.Services, errorService);
+                if (initService == null) return; // Error already shown
                 
-                StartupLogger.Log("OnLaunched - Navigating to LoginPage");
-                navService.Navigate(typeof(Views.LoginPage));
-                StartupLogger.Log("OnLaunched - Navigation success");
-            }
-            else
-            {
-                StartupLogger.Log($"OnLaunched - Initialization Failed: {result.Message}");
-                mainWindow.ShowLoading($"Startup Failed: {result.Message}");
-            }
+                var result = initService.InitializeSystemAsync().GetAwaiter().GetResult();
+
+                if (result.IsSuccess)
+                {
+                    StartupLogger.Log("OnLaunched - Initialization Successful");
+                    if (!string.IsNullOrEmpty(result.TerminalId))
+                    {
+                        mainWindow.SetTerminalId(result.TerminalId);
+
+                        var terminalContext = ServiceResolutionHelper.GetServiceSafely<ITerminalContext>(Host.Services, errorService);
+                        if (terminalContext != null)
+                        {
+                            terminalContext.SetTerminalIdentity(result.TerminalId, result.TerminalGuid ?? Guid.Empty);
+                        }
+                    }
+
+                    mainWindow.HideLoading();
+                    var navService = ServiceResolutionHelper.GetServiceSafely<NavigationService>(Host.Services, errorService);
+                    if (navService != null)
+                    {
+                        StartupLogger.Log("OnLaunched - Navigating to LoginPage");
+                        navService.Navigate(typeof(Views.LoginPage));
+                        StartupLogger.Log("OnLaunched - Navigation success");
+                    }
+                }
+                else
+                {
+                    StartupLogger.Log($"OnLaunched - Initialization Failed: {result.Message}");
+                    await errorService.ShowErrorAsync("Startup Failed", result.Message);
+                    mainWindow.HideLoading();
+                }
         }
         catch (System.Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"APP FATAL: {ex}");
-            try
+            var errorService = Host.Services?.GetService<IErrorService>();
+            if (errorService != null)
             {
-                if (_window == null)
-                {
-                    _window = new Window();
-                    _window.Content = new Microsoft.UI.Xaml.Controls.TextBlock { 
-                        Text = $"Fatal Startup Error:\n{ex.Message}\n\nStack:\n{ex.StackTrace}", 
-                        Margin = new Thickness(20),
-                        VerticalAlignment = VerticalAlignment.Center,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        TextWrapping = TextWrapping.Wrap
-                    };
-                    _window.Activate();
-                }
-                else if (MainWindowInstance is MainWindow mw)
-                {
-                    mw.ShowLoading($"Critical Error: {ex.Message}");
-                }
+                await errorService.ShowFatalAsync("Startup Failed", "Application failed to start.", ex.ToString());
             }
-            catch
+            else
             {
-                // Last resort logging
+                // Fallback if ErrorService not available
+                System.Diagnostics.Debug.WriteLine($"APP FATAL: {ex}");
+                try
+                {
+                    if (_window == null)
+                    {
+                        _window = new Window();
+                        _window.Content = new Microsoft.UI.Xaml.Controls.TextBlock { 
+                            Text = $"Fatal Startup Error:\n{ex.Message}\n\nStack:\n{ex.StackTrace}", 
+                            Margin = new Thickness(20),
+                            VerticalAlignment = VerticalAlignment.Center,
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            TextWrapping = TextWrapping.Wrap
+                        };
+                        _window.Activate();
+                    }
+                    else if (MainWindowInstance is MainWindow mw)
+                    {
+                        mw.ShowLoading($"Critical Error: {ex.Message}");
+                    }
+                }
+                catch
+                {
+                    // Last resort logging
+                }
             }
         }
     }

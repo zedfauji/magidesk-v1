@@ -1,5 +1,6 @@
 using Microsoft.UI.Xaml.Controls;
 using Magidesk.Infrastructure.Services;
+using Magidesk.Services;
 
 namespace Magidesk.Presentation.Services;
 
@@ -10,10 +11,12 @@ public class NavigationService
 {
     private Frame? _frame;
     private readonly Application.Interfaces.IUserService _userService;
+    private readonly IErrorService _errorService;
 
-    public NavigationService(Application.Interfaces.IUserService userService)
+    public NavigationService(Application.Interfaces.IUserService userService, IErrorService errorService)
     {
         _userService = userService;
+        _errorService = errorService;
     }
 
     public void Initialize(Frame frame)
@@ -75,10 +78,8 @@ public class NavigationService
 
         if (_frame.XamlRoot == null)
         {
-            // NAV-001: Safe Dialog Failure
-            // Do NOT throw. Log and return None.
-            System.Diagnostics.Debug.WriteLine($"[NavigationService] Failed to show dialog '{dialog.Title}'. XamlRoot not found after 2 seconds.");
-            StartupLogger.Log($"[NavigationService] Failed to show dialog '{dialog.Title}'. XamlRoot not found.");
+            // T008: Replace silent logging with ErrorService
+            await _errorService.ShowErrorAsync("Dialog Failed", $"Could not show dialog '{dialog.Title}'. XamlRoot not found after 2 seconds.");
             return ContentDialogResult.None;
         }
 
@@ -89,8 +90,8 @@ public class NavigationService
         }
         catch (Exception ex)
         {
-            // Catch "Dialog already open" or other WinUI specific errors
-            System.Diagnostics.Debug.WriteLine($"[NavigationService] ShowAsync Failed: {ex.Message}");
+            // T008: Replace silent logging with ErrorService
+            await _errorService.ShowErrorAsync("Dialog Failed", $"Could not show dialog '{dialog.Title}'.\n\nError: {ex.Message}", ex.ToString());
             return ContentDialogResult.None;
         }
     }

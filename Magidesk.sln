@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magidesk.Infrastructure", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magidesk.Presentation", "Magidesk.Presentation.csproj", "{B251C3D8-431B-4561-AA23-7A5B07A4A02F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magidesk.Domain.Tests", "Magidesk.Domain.Tests\Magidesk.Domain.Tests.csproj", "{523C594C-8403-4D55-BF7A-FD6CD435D41A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magidesk.Tests.Workflows", "Magidesk.Tests.Workflows\Magidesk.Tests.Workflows.csproj", "{523C594C-8403-4D55-BF7A-FD6CD435D41A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magidesk.Application.Tests", "Magidesk.Application.Tests\Magidesk.Application.Tests.csproj", "{A2B75A39-9A7D-45BE-9A31-F5F684A84B2A}"
 EndProject

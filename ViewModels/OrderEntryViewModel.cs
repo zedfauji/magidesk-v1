@@ -8,6 +8,7 @@ using Magidesk.Application.Queries;
 using Magidesk.Domain.Entities;
 using Magidesk.Presentation.Services;
 using Microsoft.UI.Xaml.Controls;
+using Magidesk.Services;
 
 using Magidesk.ViewModels;
 using CommunityToolkit.Mvvm.Input;
@@ -41,6 +42,8 @@ public partial class OrderEntryViewModel : ViewModelBase
     private readonly ICommandHandler<SetCustomerCommand, SetCustomerResult> _setCustomerHandler;
     private readonly IServiceProvider _serviceProvider;
     private readonly IKitchenRoutingService _kitchenRoutingService;
+    private readonly IErrorService _errorService;
+    private readonly IAsyncOperationManager _asyncOperationManager;
 
     private TicketDto? _ticket;
     private MenuCategory? _selectedCategory;
@@ -145,7 +148,7 @@ public partial class OrderEntryViewModel : ViewModelBase
                 OnPropertyChanged(nameof(IsSelectionModeCategories));
                 OnPropertyChanged(nameof(IsSelectionModeGroups));
                 OnPropertyChanged(nameof(IsSelectionModeItems));
-                _ = LoadGroupsAsync(value);
+                await _asyncOperationManager.ObserveAsync(LoadGroupsAsync(value), "Load Groups");
                 SelectedGroup = null; // Reset group
             }
         }
@@ -160,7 +163,7 @@ public partial class OrderEntryViewModel : ViewModelBase
             {
                 OnPropertyChanged(nameof(IsSelectionModeGroups));
                 OnPropertyChanged(nameof(IsSelectionModeItems));
-                _ = LoadItemsAsync(value);
+                await _asyncOperationManager.ObserveAsync(LoadItemsAsync(value), "Load Items");
             }
         }
     }
@@ -203,7 +206,9 @@ public partial class OrderEntryViewModel : ViewModelBase
         ICommandHandler<ChangeTableCommand, ChangeTableResult> changeTableHandler,
         ICommandHandler<SetCustomerCommand, SetCustomerResult> setCustomerHandler,
         IServiceProvider serviceProvider,
-        IKitchenRoutingService kitchenRoutingService)
+        IKitchenRoutingService kitchenRoutingService,
+        IErrorService errorService,
+        IAsyncOperationManager asyncOperationManager)
     {
         _categoryRepository = categoryRepository;
         _groupRepository = groupRepository;
@@ -228,6 +233,8 @@ public partial class OrderEntryViewModel : ViewModelBase
         _setCustomerHandler = setCustomerHandler;
         _serviceProvider = serviceProvider;
         _kitchenRoutingService = kitchenRoutingService;
+        _errorService = errorService;
+        _asyncOperationManager = asyncOperationManager;
 
         Title = "Order Entry";
 
@@ -1246,7 +1253,7 @@ public partial class OrderEntryViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-             System.Diagnostics.Debug.WriteLine($"Search Dialog Error: {ex.Message}");
+            await _errorService.ShowErrorAsync("Search Dialog Error", "Failed to search for items", ex.ToString());
         }
         finally { IsBusy = false; }
     }
@@ -1302,7 +1309,7 @@ public partial class OrderEntryViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Modify Qty Error: {ex.Message}");
+            await _errorService.ShowErrorAsync("Modify Quantity Error", "Failed to modify item quantity", ex.ToString());
         }
         finally { IsBusy = false; }
     }
@@ -1347,7 +1354,7 @@ public partial class OrderEntryViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-             System.Diagnostics.Debug.WriteLine($"Remove Item Error: {ex.Message}");
+            await _errorService.ShowErrorAsync("Remove Item Error", "Failed to remove item", ex.ToString());
         }
         finally { IsBusy = false; }
     }
@@ -1383,8 +1390,7 @@ public partial class OrderEntryViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Quick Pay Error: {ex.Message}");
-            // Ideally show error dialog
+            await _errorService.ShowErrorAsync("Quick Pay Error", "Failed to process payment", ex.ToString());
         }
         finally
         {
