@@ -275,19 +275,10 @@ public partial class App : Microsoft.UI.Xaml.Application
                     }
                 }
 
-                // Check if database is seeded
-                StartupLogger.Log("OnLaunched - Checking if database is seeded...");
-                var seedingService = Host.Services.GetRequiredService<IDatabaseSeedingService>();
-                var isSeeded = await seedingService.IsDatabaseSeededAsync();
-                StartupLogger.Log($"OnLaunched - Database seeded check result: {isSeeded}");
-                if (!isSeeded)
-                {
-                    StartupLogger.Log("OnLaunched - Database not seeded, showing setup page");
-                    mainWindow.HideLoading();
-                    var navService = Host.Services.GetRequiredService<NavigationService>();
-                    navService.Navigate(typeof(Views.DatabaseSetupPage));
-                    return; // STOP - database needs seeding
-                }
+                // Database configuration is valid and connection successful
+                // For developers: existing database with data will work fine
+                // For fresh installs: users can run seeding from DatabaseSetupPage UI
+                StartupLogger.Log("OnLaunched - Database configuration valid, proceeding with normal startup");
             }
             catch (Exception ex)
             {
