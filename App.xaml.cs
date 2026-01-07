@@ -242,37 +242,38 @@ public partial class App : Microsoft.UI.Xaml.Application
 
             // CRITICAL: Database Setup Gating Logic
             // Check if database is configured and accessible BEFORE proceeding
-            StartupLogger.Log("OnLaunched - Checking database configuration...");
-            var dbConfigService = Host.Services.GetRequiredService<IDatabaseConfigurationService>();
-            var hasConfig = await dbConfigService.HasConfigurationAsync();
-
-            if (!hasConfig)
+            // All checks wrapped in try-catch to prevent error dialogs during startup
+            try
             {
-                StartupLogger.Log("OnLaunched - No database configuration found, showing setup page");
-                mainWindow.HideLoading();
-                var navService = Host.Services.GetRequiredService<NavigationService>();
-                navService.Navigate(typeof(Views.DatabaseSetupPage));
-                return; // STOP - do not proceed to normal app flow
-            }
+                StartupLogger.Log("OnLaunched - Checking database configuration...");
+                var dbConfigService = Host.Services.GetRequiredService<IDatabaseConfigurationService>();
+                var hasConfig = await dbConfigService.HasConfigurationAsync();
 
-            // Test database connection
-            var config = await dbConfigService.GetConfigurationAsync();
-            if (config != null)
-            {
-                var testResult = await dbConfigService.TestConnectionAsync(config);
-                if (!testResult.Success)
+                if (!hasConfig)
                 {
-                    StartupLogger.Log($"OnLaunched - Database connection failed: {testResult.Message}");
+                    StartupLogger.Log("OnLaunched - No database configuration found, showing setup page");
                     mainWindow.HideLoading();
                     var navService = Host.Services.GetRequiredService<NavigationService>();
                     navService.Navigate(typeof(Views.DatabaseSetupPage));
-                    return; // STOP - connection failed
+                    return; // STOP - do not proceed to normal app flow
                 }
-            }
 
-            // Check if database is seeded
-            try
-            {
+                // Test database connection
+                var config = await dbConfigService.GetConfigurationAsync();
+                if (config != null)
+                {
+                    var testResult = await dbConfigService.TestConnectionAsync(config);
+                    if (!testResult.Success)
+                    {
+                        StartupLogger.Log($"OnLaunched - Database connection failed: {testResult.Message}");
+                        mainWindow.HideLoading();
+                        var navService = Host.Services.GetRequiredService<NavigationService>();
+                        navService.Navigate(typeof(Views.DatabaseSetupPage));
+                        return; // STOP - connection failed
+                    }
+                }
+
+                // Check if database is seeded
                 var seedingService = Host.Services.GetRequiredService<IDatabaseSeedingService>();
                 var isSeeded = await seedingService.IsDatabaseSeededAsync();
                 if (!isSeeded)
@@ -286,8 +287,8 @@ public partial class App : Microsoft.UI.Xaml.Application
             }
             catch (Exception ex)
             {
-                // Expected to fail if database doesn't exist or connection fails
-                StartupLogger.Log($"OnLaunched - Database seeding check failed (expected): {ex.Message}");
+                // ANY database-related error during startup = show setup page
+                StartupLogger.Log($"OnLaunched - Database check failed: {ex.Message}");
                 mainWindow.HideLoading();
                 var navService = Host.Services.GetRequiredService<NavigationService>();
                 navService.Navigate(typeof(Views.DatabaseSetupPage));
