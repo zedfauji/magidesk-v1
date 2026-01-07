@@ -52,14 +52,16 @@ public static class ServiceCollectionExtensions
                 }
                 else
                 {
-                    // No valid config - use fallback that will fail (triggers setup page)
-                    connectionString = "Host=localhost;Port=5432;Database=__setup_required__;Username=postgres;Password=;";
+                    // No valid config - use INVALID connection string to force setup page
+                    // This will cause database operations to fail, triggering the setup flow
+                    connectionString = "Host=localhost;Port=5432;Database=__setup_required__;Username=__invalid__;Password=;";
                 }
             }
             else
             {
-                // Fallback to old method during DI setup (before DatabaseConfigurationService is available)
-                connectionString = DatabaseConnection.GetConnectionString();
+                // During DI setup, configService might not be available yet
+                // Use invalid connection string to force setup on first run
+                connectionString = "Host=localhost;Port=5432;Database=__setup_required__;Username=__invalid__;Password=;";
             }
 
             options.UseNpgsql(
