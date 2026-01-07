@@ -108,6 +108,8 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<Magidesk.Presentation.ViewModels.SplitTicketViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.TableMapViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.TableExplorerViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.DatabaseSetupViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.TableDesignerViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.VendorManagementViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.PurchaseOrderViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.SettleViewModel>();
@@ -237,6 +239,50 @@ public partial class App : Microsoft.UI.Xaml.Application
             var mainWindow = (MainWindow)_window;
             MainWindowInstance = mainWindow;
             _window.Activate();
+
+            // CRITICAL: Database Setup Gating Logic
+            // Check if database is configured and accessible BEFORE proceeding
+            StartupLogger.Log("OnLaunched - Checking database configuration...");
+            var dbConfigService = Host.Services.GetRequiredService<IDatabaseConfigurationService>();
+            var hasConfig = await dbConfigService.HasConfigurationAsync();
+
+            if (!hasConfig)
+            {
+                StartupLogger.Log("OnLaunched - No database configuration found, showing setup page");
+                mainWindow.HideLoading();
+                var navService = Host.Services.GetRequiredService<NavigationService>();
+                navService.Navigate(typeof(Views.DatabaseSetupPage));
+                return; // STOP - do not proceed to normal app flow
+            }
+
+            // Test database connection
+            var config = await dbConfigService.GetConfigurationAsync();
+            if (config != null)
+            {
+                var testResult = await dbConfigService.TestConnectionAsync(config);
+                if (!testResult.Success)
+                {
+                    StartupLogger.Log($"OnLaunched - Database connection failed: {testResult.Message}");
+                    mainWindow.HideLoading();
+                    var navService = Host.Services.GetRequiredService<NavigationService>();
+                    navService.Navigate(typeof(Views.DatabaseSetupPage));
+                    return; // STOP - connection failed
+                }
+            }
+
+            // Check if database is seeded
+            var seedingService = Host.Services.GetRequiredService<IDatabaseSeedingService>();
+            var isSeeded = await seedingService.IsDatabaseSeededAsync();
+            if (!isSeeded)
+            {
+                StartupLogger.Log("OnLaunched - Database not seeded, showing setup page");
+                mainWindow.HideLoading();
+                var navService = Host.Services.GetRequiredService<NavigationService>();
+                navService.Navigate(typeof(Views.DatabaseSetupPage));
+                return; // STOP - database needs seeding
+            }
+
+            StartupLogger.Log("OnLaunched - Database configuration valid, proceeding with normal startup");
 
             System.Diagnostics.Debug.WriteLine("APP: Starting System Initialization...");
             StartupLogger.Log("OnLaunched - Showing Loading");

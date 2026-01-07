@@ -79,7 +79,12 @@ public class DatabaseSeedingService : IDatabaseSeedingService
 
             // Step 3: Seed reference data using existing initialization service
             ReportProgress("Seeding reference data...", 50);
-            await _initService.SeedReferenceDataAsync();
+            var initResult = await _initService.InitializeSystemAsync();
+
+            if (!initResult.IsSuccess)
+            {
+                return SeedingResult.Failed($"Initialization failed: {initResult.Message}");
+            }
 
             if (cancellationToken.IsCancellationRequested)
             {

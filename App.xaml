@@ -69,6 +69,9 @@
             <converters:TableToSelectionVisibilityConverter x:Key="TableToSelectionVisibilityConverter"/>
             <converters:DateTimeToTimeConverter x:Key="DateTimeToTimeConverter"/>
             <converters:TableStatusToBrushConverter x:Key="TableStatusToBrushConverter"/>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+            <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
+            <converters:BoolToInfoBarSeverityConverter x:Key="BoolToSeverityConverter"/>
 
              <!-- Standard Text Styles -->
              <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock">
