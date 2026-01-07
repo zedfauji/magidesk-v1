@@ -66,3 +66,26 @@ TestResult.xml
 *.zip
 
 *obj/*
+
+# IDE and Editor directories
+.cursor/
+.idea/
+.vscode/
+.vs/
+.ionide/
+
+# Development-only directories
+experimental/
+internal-audit/
+screenshots/
+mockups/
+memory-bank/
+site/ui/mockups/
+docs/ui/mockups/
+
+# Temporary and cache files
+*.tmp
+*.temp
+*.cache
+.DS_Store
+Thumbs.db
