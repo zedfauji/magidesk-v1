@@ -101,6 +101,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ISystemService, SystemService>();
         services.AddScoped<IBackupService, Services.PostgresBackupService>();
 
+        // Register Database Setup Services
+        services.AddSingleton<IDatabaseConfigurationService, DatabaseConfigurationService>();
+        services.AddScoped<IDatabaseSeedingService, DatabaseSeedingService>();
+
         // Printing Layout Adapters
         services.AddTransient<Thermal58mmAdapter>();
         services.AddTransient<Thermal80mmAdapter>();
