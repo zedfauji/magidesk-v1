@@ -170,6 +170,47 @@ namespace Magidesk.Infrastructure.Services.Bootstrap
                     _dbContext.MenuItems.AddRange(coke, burger);
                     await _dbContext.SaveChangesAsync();
                 }
+                // Seed Floors & Layouts
+                Guid? defaultFloorId = null;
+                Guid? defaultLayoutId = null;
+
+                if (!await _dbContext.Floors.AnyAsync())
+                {
+                    _logger.LogInformation("Seeding Main Floor...");
+                    var floor = Magidesk.Domain.Entities.Floor.Create("Main Floor", "Primary Dining Area");
+                    _dbContext.Floors.Add(floor);
+                    await _dbContext.SaveChangesAsync();
+                    defaultFloorId = floor.Id;
+                }
+                else
+                {
+                    var floor = await _dbContext.Floors.FirstOrDefaultAsync(f => f.Name == "Main Floor") 
+                                ?? await _dbContext.Floors.FirstOrDefaultAsync();
+                    defaultFloorId = floor?.Id;
+                }
+
+                if (!await _dbContext.TableLayouts.AnyAsync())
+                {
+                    _logger.LogInformation("Seeding Standard Layout...");
+                    if (defaultFloorId.HasValue)
+                    {
+                        var layout = Magidesk.Domain.Entities.TableLayout.Create("Standard Layout", defaultFloorId.Value);
+                        _dbContext.TableLayouts.Add(layout);
+                        await _dbContext.SaveChangesAsync();
+                        defaultLayoutId = layout.Id;
+                    }
+                    else
+                    {
+                         _logger.LogWarning("Skipping Layout seeding: No Floor available.");
+                    }
+                }
+                else
+                {
+                    var layout = await _dbContext.TableLayouts.FirstOrDefaultAsync(l => l.Name == "Standard Layout")
+                                 ?? await _dbContext.TableLayouts.FirstOrDefaultAsync();
+                    defaultLayoutId = layout?.Id;
+                }
+
                 // Seed Tables
                 if (!await _dbContext.Tables.AnyAsync())
                 {
@@ -201,7 +242,8 @@ namespace Magidesk.Infrastructure.Services.Bootstrap
                             4, // Capacity
                             (int)x,
                             (int)y,
-                            null // FloorId (optional)
+                            defaultFloorId, // Link to Main Floor
+                            defaultLayoutId // Link to Standard Layout
                         );
                         
                         tables.Add(table);
