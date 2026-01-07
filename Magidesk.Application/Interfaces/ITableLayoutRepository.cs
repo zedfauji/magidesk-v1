@@ -9,4 +9,7 @@ public interface ITableLayoutRepository : IRepository<TableLayout>
     Task<List<TableLayoutDto>> GetLayoutsByFloorAsync(Guid floorId, CancellationToken cancellationToken = default);
     Task<TableLayoutDto?> GetLayoutWithTablesAsync(Guid layoutId, CancellationToken cancellationToken = default);
     Task<bool> IsLayoutNameUniqueAsync(string name, Guid? excludeId = null, CancellationToken cancellationToken = default);
+    Task<TableLayoutDto?> GetActiveLayoutAsync(Guid floorId, CancellationToken cancellationToken = default);
+    Task DeactivateOtherLayoutsAsync(Guid floorId, Guid activeLayoutId, CancellationToken cancellationToken = default);
+
 }

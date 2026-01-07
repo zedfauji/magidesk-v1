@@ -48,28 +48,32 @@
         <StackPanel Spacing="4">
             <RadioButton Content="Rectangle" 
                         GroupName="TableShapes"
-                        IsChecked="{x:Bind ViewModel.SelectedShape, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Rectangle}"
+                        IsChecked="{x:Bind ViewModel.SelectedShape, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Rectangle}"
+                        Checked="ShapeRadioButton_Checked"
                         Tag="Rectangle"
                         Style="{StaticResource ShapeButtonStyle}"
                         IsEnabled="{x:Bind ViewModel.IsDesignMode}"/>
             
             <RadioButton Content="Square" 
                         GroupName="TableShapes"
-                        IsChecked="{x:Bind ViewModel.SelectedShape, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Square}"
+                        IsChecked="{x:Bind ViewModel.SelectedShape, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Square}"
+                        Checked="ShapeRadioButton_Checked"
                         Tag="Square"
                         Style="{StaticResource ShapeButtonStyle}"
                         IsEnabled="{x:Bind ViewModel.IsDesignMode}"/>
             
             <RadioButton Content="Round" 
                         GroupName="TableShapes"
-                        IsChecked="{x:Bind ViewModel.SelectedShape, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Round}"
+                        IsChecked="{x:Bind ViewModel.SelectedShape, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Round}"
+                        Checked="ShapeRadioButton_Checked"
                         Tag="Round"
                         Style="{StaticResource ShapeButtonStyle}"
                         IsEnabled="{x:Bind ViewModel.IsDesignMode}"/>
             
             <RadioButton Content="Oval" 
                         GroupName="TableShapes"
-                        IsChecked="{x:Bind ViewModel.SelectedShape, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Oval}"
+                        IsChecked="{x:Bind ViewModel.SelectedShape, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Oval}"
+                        Checked="ShapeRadioButton_Checked"
                         Tag="Oval"
                         Style="{StaticResource ShapeButtonStyle}"
                         IsEnabled="{x:Bind ViewModel.IsDesignMode}"/>

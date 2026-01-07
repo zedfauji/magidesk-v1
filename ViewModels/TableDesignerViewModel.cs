@@ -35,6 +35,18 @@ public partial class TableDesignerViewModel : ViewModelBase
     private FloorDto? _selectedFloor;
 
     [ObservableProperty]
+    private ObservableCollection<TableLayoutDto> _layouts = new();
+
+    [ObservableProperty]
+    private TableLayoutDto? _selectedLayout;
+
+    [ObservableProperty]
+    private string _layoutStatusBadge = "● DRAFT";
+
+    [ObservableProperty]
+    private string _layoutStatusText = "Draft";
+
+    [ObservableProperty]
     private TableShapeType _selectedShape = TableShapeType.Rectangle;
 
     [ObservableProperty]
@@ -96,6 +108,14 @@ public partial class TableDesignerViewModel : ViewModelBase
     public IRelayCommand<TableDto> UpdateTablePositionCommand { get; }
     public IRelayCommand DiscardChangesCommand { get; }
 
+    // New Layout Lifecycle Commands
+    public IAsyncRelayCommand NewLayoutCommand { get; }
+    public IAsyncRelayCommand CloneLayoutCommand { get; }
+    public IAsyncRelayCommand DeleteLayoutCommand { get; }
+    public IAsyncRelayCommand PublishLayoutCommand { get; }
+    public IAsyncRelayCommand DeleteSelectedTablesCommand { get; }
+    public IAsyncRelayCommand RevertChangesCommand { get; }
+
     public TableDesignerViewModel(
         IMediator mediator,
         NavigationService navigationService,
@@ -121,6 +141,14 @@ public partial class TableDesignerViewModel : ViewModelBase
         ToggleDesignModeCommand = new RelayCommand(ToggleDesignMode);
         UpdateTablePositionCommand = new AsyncRelayCommand<TableDto>(UpdateTablePositionAsync);
         DiscardChangesCommand = new AsyncRelayCommand(DiscardChangesAsync);
+
+        // New Layout Lifecycle Commands
+        NewLayoutCommand = new AsyncRelayCommand(NewLayoutAsync);
+        CloneLayoutCommand = new AsyncRelayCommand(CloneLayoutAsync);
+        DeleteLayoutCommand = new AsyncRelayCommand(DeleteLayoutAsync);
+        PublishLayoutCommand = new AsyncRelayCommand(PublishLayoutAsync);
+        DeleteSelectedTablesCommand = new AsyncRelayCommand(DeleteSelectedTablesAsync);
+        RevertChangesCommand = new AsyncRelayCommand(RevertChangesAsync);
 
         Title = "Table Designer";
     }
@@ -221,26 +249,40 @@ public partial class TableDesignerViewModel : ViewModelBase
     {
         if (!IsDesignMode) return;
 
-        var nextTableNumber = Tables.Count > 0 ? Tables.Max(t => t.TableNumber) + 1 : 1;
-
-        var command = new AddTableToLayoutCommand(
-            _currentLayoutId ?? Guid.NewGuid(), // Use current layout if exists
-            nextTableNumber,
-            4, // Default capacity
-            position.X,
-            position.Y,
-            SelectedShape
-        );
-
         try
         {
+            // CRITICAL FIX: Ensure layout exists in database before adding tables
+            if (_currentLayoutId == null || _currentLayoutId == Guid.Empty)
+            {
+                // Auto-save the layout first
+                await SaveLayoutAsync();
+                
+                // If save failed or was cancelled, don't add table
+                if (_currentLayoutId == null || _currentLayoutId == Guid.Empty)
+                {
+                    await ShowErrorAsync("Please save the layout before adding tables.");
+                    return;
+                }
+            }
+
+            var nextTableNumber = Tables.Count > 0 ? Tables.Max(t => t.TableNumber) + 1 : 1;
+
+            var command = new AddTableToLayoutCommand(
+                _currentLayoutId.Value,
+                nextTableNumber,
+                4, // Default capacity
+                position.X,
+                position.Y,
+                SelectedShape
+            );
+
             var newTable = await _mediator.Send(command);
             Tables.Add(newTable);
+            IsDirty = true;
         }
         catch (Exception ex)
-
         {
-             await ShowErrorAsync($"Error adding table: {ex.Message}");
+            await ShowErrorAsync($"Error adding table: {ex.Message}");
         }
     }
 
@@ -367,7 +409,7 @@ public partial class TableDesignerViewModel : ViewModelBase
         }
     }
 
-    private async Task SaveLayoutAsync()
+    public async Task SaveLayoutAsync()
     {
         if (string.IsNullOrWhiteSpace(LayoutName))
         {
@@ -379,6 +421,12 @@ public partial class TableDesignerViewModel : ViewModelBase
         {
             await ShowErrorAsync("Cannot save empty layout. Please add tables first.");
             return;
+        }
+
+        // Validate all tables before saving
+        if (!ValidateAllTables())
+        {
+            return; // Validation errors shown in ValidateAllTables
         }
 
         IsBusy = true;
@@ -424,6 +472,24 @@ public partial class TableDesignerViewModel : ViewModelBase
             
             // Clear layout name for next save? No, keep it as we might keep editing.
             // LayoutName = string.Empty; 
+        }
+        catch (Microsoft.EntityFrameworkCore.DbUpdateException dbEx)
+        {
+            // Handle database constraint violations with user-friendly messages
+            var innerMessage = dbEx.InnerException?.Message ?? dbEx.Message;
+            
+            if (innerMessage.Contains("IX_Tables_TableNumber") || innerMessage.Contains("duplicate key"))
+            {
+                await ShowErrorAsync("Cannot save layout: Duplicate table numbers detected. Please ensure all table numbers are unique.");
+            }
+            else if (innerMessage.Contains("FK_") || innerMessage.Contains("foreign key"))
+            {
+                await ShowErrorAsync("Cannot save layout: Invalid floor or layout reference. Please try reloading the page.");
+            }
+            else
+            {
+                await ShowErrorAsync($"Database error while saving layout: {innerMessage}");
+            }
         }
         catch (Exception ex)
         {
@@ -691,9 +757,26 @@ public partial class TableDesignerViewModel : ViewModelBase
         return await _dialogService.ShowConfirmationAsync(title, message);
     }
 
+    private bool _isDialogOpen = false;
+
     private async Task ShowErrorAsync(string message)
     {
-        await _dialogService.ShowErrorAsync("Table Designer Error", message);
+        // Prevent multiple dialogs from opening at once
+        if (_isDialogOpen)
+        {
+            System.Diagnostics.Debug.WriteLine($"Dialog already open, queued error: {message}");
+            return;
+        }
+
+        try
+        {
+            _isDialogOpen = true;
+            await _dialogService.ShowErrorAsync("Table Designer Error", message);
+        }
+        finally
+        {
+            _isDialogOpen = false;
+        }
     }
 
     private async Task ShowSuccessAsync(string message)

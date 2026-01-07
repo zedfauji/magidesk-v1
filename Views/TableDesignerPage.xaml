@@ -15,174 +15,473 @@
         <converters:TableStatusToBrushConverter x:Key="TableStatusConverter"/>
         <converters:ShapeToCornerRadiusConverter x:Key="ShapeToCornerRadiusConverter"/>
         <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        <converters:SelectionToBorderColorConverter x:Key="SelectionToBorderColorConverter"/>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          KeyDown="Page_KeyDown">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="60"/>  <!-- Header Bar -->
+            <RowDefinition Height="*"/>   <!-- Content Area -->
+            <RowDefinition Height="40"/>  <!-- Status Bar -->
         </Grid.RowDefinitions>
 
-        <!-- Header Toolbar -->
-        <CommandBar Grid.Row="0" DefaultLabelPosition="Right" Background="Transparent">
-            <AppBarToggleButton Icon="Edit" Label="Design Mode" 
-                              IsChecked="{x:Bind ViewModel.IsDesignMode, Mode=TwoWay}"
-                              Command="{x:Bind ViewModel.ToggleDesignModeCommand}"/>
-            <AppBarSeparator/>
-            <AppBarButton Icon="Add" Label="Add Table" 
-                         Command="{x:Bind ViewModel.AddTableCommand}"
-                         IsEnabled="{x:Bind ViewModel.IsDesignMode}"/>
-            <AppBarButton Icon="Delete" Label="Delete Table" 
-                         Command="{x:Bind ViewModel.DeleteTableCommand}" CommandParameter="{x:Bind ViewModel.SelectedTable}"
-                         IsEnabled="{x:Bind ViewModel.IsDesignMode}"/>
-            <AppBarSeparator/>
-            <AppBarButton Icon="Save" Label="Save Layout" 
-                         Command="{x:Bind ViewModel.SaveLayoutCommand}"/>
-            <AppBarButton Icon="Refresh" Label="Reload" 
-                         Command="{x:Bind ViewModel.LoadLayoutCommand}"/>
-        </CommandBar>
-
-        <!-- Main Designer Area -->
-        <Grid Grid.Row="1">
+        <!-- ============================================ -->
+        <!-- HEADER BAR (Floor/Layout Selectors + Actions) -->
+        <!-- ============================================ -->
+        <Grid Grid.Row="0" 
+              Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+              BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+              BorderThickness="0,0,0,1"
+              Padding="16,8">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/> <!-- Floor Selector -->
+                <ColumnDefinition Width="Auto"/> <!-- Layout Selector -->
+                <ColumnDefinition Width="Auto"/> <!-- Status Badge -->
+                <ColumnDefinition Width="*"/>    <!-- Spacer -->
+                <ColumnDefinition Width="Auto"/> <!-- Actions -->
             </Grid.ColumnDefinitions>
 
-            <!-- Left Panel - Controls -->
-            <ScrollViewer Grid.Column="0" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
-                <StackPanel Padding="16" Spacing="16">
-                    
-                    <!-- Layout Info -->
-                    <StackPanel Spacing="8">
-                        <TextBlock Text="Layout Information" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                        <TextBox Header="Layout Name" 
-                                Text="{x:Bind ViewModel.LayoutName, Mode=TwoWay}"
-                                IsEnabled="{x:Bind ViewModel.IsDesignMode}"/>
-                        <ComboBox Header="Floor" 
-                                 ItemsSource="{x:Bind ViewModel.Floors, Mode=OneWay}"
-                                 SelectedItem="{x:Bind ViewModel.SelectedFloor, Mode=TwoWay}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="dto:FloorDto">
-                                    <TextBlock Text="{x:Bind Name}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
+            <!-- Floor Selector -->
+            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,16,0">
+                <TextBlock Text="Floor" 
+                           Style="{StaticResource CaptionTextBlockStyle}"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Margin="0,0,0,4"/>
+                <ComboBox ItemsSource="{x:Bind ViewModel.Floors, Mode=OneWay}"
+                          SelectedItem="{x:Bind ViewModel.SelectedFloor, Mode=OneWay}"
+                          SelectionChanged="FloorComboBox_SelectionChanged"
+                          MinWidth="200">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="dto:FloorDto">
+                            <TextBlock Text="{x:Bind Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
 
-                    <!-- Table Shape Selection -->
-                    <components:TableShapePalette x:Name="ShapePalette" Margin="0,0,0,16"/>
+            <!-- Layout Selector -->
+            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="0,0,16,0">
+                <TextBlock Text="Layout" 
+                           Style="{StaticResource CaptionTextBlockStyle}"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Margin="0,0,0,4"/>
+                
+                <!-- Layout Name Input -->
+                <TextBox Text="{x:Bind ViewModel.LayoutName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         PlaceholderText="Enter layout name..."
+                         Margin="0,0,0,8"
+                         MinWidth="200"/>
+                
+                <!-- Existing Layouts Dropdown -->
+                <ComboBox ItemsSource="{x:Bind ViewModel.Layouts, Mode=OneWay}"
+                          SelectedItem="{x:Bind ViewModel.SelectedLayout, Mode=OneWay}"
+                          SelectionChanged="LayoutComboBox_SelectionChanged"
+                          PlaceholderText="Or select existing..."
+                          MinWidth="200">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="dto:TableLayoutDto">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <TextBlock Text="{x:Bind Name}"/>
+                                <TextBlock Text="●" 
+                                           Foreground="Orange" 
+                                           Visibility="{x:Bind IsDraft}"/>
+                                <TextBlock Text="✓" 
+                                           Foreground="Green" 
+                                           Visibility="{x:Bind IsActive}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
 
-                    <!-- Instructions -->
-                    <StackPanel Spacing="8">
-                        <TextBlock Text="Instructions" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                        <TextBlock Text="• Click on canvas to add table" 
-                                  Style="{StaticResource CaptionTextBlockStyle}"
-                                  TextWrapping="Wrap"/>
-                        <TextBlock Text="• Drag tables to reposition" 
-                                  Style="{StaticResource CaptionTextBlockStyle}"
-                                  TextWrapping="Wrap"/>
-                        <TextBlock Text="• Select table and press Delete to remove" 
-                                  Style="{StaticResource CaptionTextBlockStyle}"
-                                  TextWrapping="Wrap"/>
-                        <TextBlock Text="• Toggle Design Mode to enable/disable editing" 
-                                  Style="{StaticResource CaptionTextBlockStyle}"
-                                  TextWrapping="Wrap"/>
-                    </StackPanel>
-
-                </StackPanel>
-            </ScrollViewer>
-
-            <!-- Design Canvas -->
-            <Border Grid.Column="1" 
-                    Background="#f8f8f8" 
-                    BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}" 
-                    BorderThickness="1"
-                    Margin="8">
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" 
-                              VerticalScrollBarVisibility="Auto"
-                              ZoomMode="Disabled">
-                    <Grid Width="{x:Bind ViewModel.SelectedFloor.Width, Mode=OneWay, FallbackValue=2000}" 
-                         Height="{x:Bind ViewModel.SelectedFloor.Height, Mode=OneWay, FallbackValue=2000}"
-                         Background="{x:Bind ViewModel.SelectedFloor.BackgroundColor, Mode=OneWay, FallbackValue=#f8f8f8}">
-                        
-                        <!-- Click to add table area -->
-                        <Grid Tapped="Canvas_Tapped">
-                            <ItemsControl ItemsSource="{x:Bind ViewModel.Tables, Mode=OneWay}">
-                                <!-- Panel is a Canvas for absolute positioning -->
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <Canvas/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-
-                                <!-- Bind Canvas.Left/Top to X/Y properties -->
-                                <ItemsControl.ItemContainerStyle>
-                                    <Style TargetType="ContentPresenter">
-                                        <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                                        <Setter Property="Canvas.Top" Value="{Binding Y}"/>
-                                    </Style>
-                                </ItemsControl.ItemContainerStyle>
-
-                                <!-- Item Template: The Table Button -->
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate x:DataType="dto:TableDto">
-                                        <Grid Width="100" Height="100" 
-                                              CanDrag="{Binding ViewModel.IsDesignMode, ElementName=RootPage}"
-                                              DragStarting="Table_DragStarting"
-                                              Drop="Table_Drop"
-                                              Tapped="Table_Tapped"
-                                              ManipulationMode="TranslateX,TranslateY"
-                                              ManipulationStarted="Table_ManipulationStarted"
-                                              ManipulationDelta="Table_ManipulationDelta"
-                                              ManipulationCompleted="Table_ManipulationCompleted">
-                                            <Grid.Background>
-                                                <SolidColorBrush Color="Transparent"/>
-                                            </Grid.Background>
-                                            
-                                            <!-- Table Visual -->
-                                            <Border Background="{Binding Status, Converter={StaticResource TableStatusConverter}}"
-                                                    CornerRadius="{Binding Shape, Converter={StaticResource ShapeToCornerRadiusConverter}}"
-                                                    BorderThickness="2"
-                                                    BorderBrush="Gray">
-                                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                    <TextBlock Text="{Binding TableNumber}" 
-                                                              FontSize="20" 
-                                                              FontWeight="Bold" 
-                                                              HorizontalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Capacity}" 
-                                                              FontSize="12" 
-                                                              Foreground="Gray" 
-                                                              HorizontalAlignment="Center" 
-                                                              Margin="0,4,0,0"/>
-                                                </StackPanel>
-                                            </Border>
-                                            
-                                            <!-- Selection Indicator -->
-                                            <Border BorderBrush="{ThemeResource SystemAccentColor}"
-                                                   BorderThickness="3"
-                                                   CornerRadius="{Binding Shape, Converter={StaticResource ShapeToCornerRadiusConverter}}"
-                                                   Visibility="{Binding ViewModel.SelectedTable, ElementName=RootPage, Converter={StaticResource TableToSelectionVisibilityConverter}, ConverterParameter={Binding}, Mode=OneWay}"/>
-                                            
-                                            <!-- Drag Indicator -->
-                                            <Border BorderBrush="{ThemeResource SystemAccentColorLight1}"
-                                                   BorderThickness="2"
-                                                   CornerRadius="{Binding Shape, Converter={StaticResource ShapeToCornerRadiusConverter}}"
-                                                   Background="{ThemeResource SystemAccentColorLight1}"
-                                                   Opacity="0.3"
-                                                   Visibility="{Binding ViewModel.IsDesignMode, ElementName=RootPage, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </Grid>
-                    </Grid>
-                </ScrollViewer>
+            <!-- Status Badge -->
+            <Border Grid.Column="2" 
+                    Background="{ThemeResource AccentFillColorDefaultBrush}"
+                    CornerRadius="4"
+                    Padding="12,6"
+                    VerticalAlignment="Center"
+                    Margin="0,0,16,0">
+                <TextBlock Text="{x:Bind ViewModel.LayoutStatusBadge, Mode=OneWay}"
+                           FontWeight="SemiBold"
+                           Foreground="White"/>
             </Border>
+
+            <!-- Action Buttons -->
+            <StackPanel Grid.Column="4" 
+                        Orientation="Horizontal" 
+                        Spacing="8"
+                        VerticalAlignment="Center">
+                <Button Content="New Layout" 
+                        Command="{x:Bind ViewModel.NewLayoutCommand}"
+                        Style="{StaticResource AccentButtonStyle}"/>
+                <Button Content="Clone" 
+                        Command="{x:Bind ViewModel.CloneLayoutCommand}"/>
+                <Button Content="Delete" 
+                        Command="{x:Bind ViewModel.DeleteLayoutCommand}"/>
+                <AppBarSeparator/>
+                <Button Content="Revert" 
+                        Command="{x:Bind ViewModel.RevertChangesCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsDirty, Mode=OneWay}"/>
+                <Button Content="Save Draft" 
+                        Command="{x:Bind ViewModel.SaveLayoutCommand}"/>
+                <Button Content="Publish" 
+                        Command="{x:Bind ViewModel.PublishLayoutCommand}"
+                        Style="{StaticResource AccentButtonStyle}"/>
+            </StackPanel>
         </Grid>
 
-        <!-- Status Bar -->
+        <!-- ============================================ -->
+        <!-- CONTENT AREA (3-Panel Layout) -->
+        <!-- ============================================ -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280"/>  <!-- Left Panel -->
+                <ColumnDefinition Width="*"/>    <!-- Canvas -->
+                <ColumnDefinition Width="320"/>  <!-- Right Panel -->
+            </Grid.ColumnDefinitions>
+
+            <!-- ============================================ -->
+            <!-- LEFT PANEL (Tools, Shapes, Layers) -->
+            <!-- ============================================ -->
+            <Grid Grid.Column="0" 
+                  Background="{ThemeResource LayerFillColorDefaultBrush}"
+                  BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                  BorderThickness="0,0,1,0">
+                <ScrollViewer>
+                    <StackPanel Padding="16" Spacing="24">
+                        
+                        <!-- Design Mode Toggle -->
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Mode" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <ToggleSwitch Header="Design Mode" 
+                                          IsOn="{x:Bind ViewModel.IsDesignMode, Mode=OneWay}"
+                                          Toggled="DesignModeToggle_Toggled"
+                                          OnContent="Edit" 
+                                          OffContent="View"/>
+                        </StackPanel>
+
+                        <!-- Table Shapes -->
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Table Shapes" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <components:TableShapePalette x:Name="ShapePalette"/>
+                        </StackPanel>
+
+                        <!-- Instructions -->
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Instructions" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <TextBlock Text="• Click canvas to add table" 
+                                       Style="{StaticResource CaptionTextBlockStyle}"
+                                       TextWrapping="Wrap"/>
+                            <TextBlock Text="• Drag tables to move" 
+                                       Style="{StaticResource CaptionTextBlockStyle}"
+                                       TextWrapping="Wrap"/>
+                            <TextBlock Text="• Select and press Delete to remove" 
+                                       Style="{StaticResource CaptionTextBlockStyle}"
+                                       TextWrapping="Wrap"/>
+                            <TextBlock Text="• Ctrl+Click for multi-select" 
+                                       Style="{StaticResource CaptionTextBlockStyle}"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <!-- ============================================ -->
+            <!-- CENTER PANEL (Canvas) -->
+            <!-- ============================================ -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/> <!-- Canvas Controls -->
+                    <RowDefinition Height="*"/>    <!-- Canvas -->
+                </Grid.RowDefinitions>
+
+                <!-- Canvas Controls Toolbar -->
+                <Border Grid.Row="0" 
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                        BorderThickness="0,0,0,1"
+                        Padding="16,8">
+                    <StackPanel Orientation="Horizontal" Spacing="16">
+                        <TextBlock Text="Zoom:" VerticalAlignment="Center"/>
+                        <Button Content="-" Width="32" Height="32"/>
+                        <TextBlock Text="100%" VerticalAlignment="Center" MinWidth="50"/>
+                        <Button Content="+" Width="32" Height="32"/>
+                        
+                        <AppBarSeparator/>
+                        
+                        <CheckBox Content="Grid" IsChecked="True"/>
+                        <CheckBox Content="Snap" IsChecked="True"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Scrollable Canvas -->
+                <Border Grid.Row="1" 
+                        Background="#f8f8f8" 
+                        BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" 
+                                  VerticalScrollBarVisibility="Auto"
+                                  ZoomMode="Disabled">
+                        <Grid Width="{x:Bind ViewModel.SelectedFloor.Width, Mode=OneWay, FallbackValue=2000}" 
+                              Height="{x:Bind ViewModel.SelectedFloor.Height, Mode=OneWay, FallbackValue=2000}"
+                              Background="{x:Bind ViewModel.SelectedFloor.BackgroundColor, Mode=OneWay, FallbackValue=#f8f8f8}"
+                              Tapped="Canvas_Tapped"
+                              PointerPressed="Canvas_PointerPressed"
+                              PointerMoved="Canvas_PointerMoved"
+                              PointerReleased="Canvas_PointerReleased">
+                            
+                            <!-- Click to add table area -->
+                            <Grid>
+                                <ItemsControl ItemsSource="{x:Bind ViewModel.Tables, Mode=OneWay}">
+                                    <!-- Panel is a Canvas for absolute positioning -->
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <Canvas/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+
+                                    <!-- Bind Canvas.Left/Top to X/Y properties -->
+                                    <ItemsControl.ItemContainerStyle>
+                                        <Style TargetType="ContentPresenter">
+                                            <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                                            <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                                        </Style>
+                                    </ItemsControl.ItemContainerStyle>
+
+                                    <!-- Item Template: The Table Button -->
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="dto:TableDto">
+                                            <Grid Width="100" Height="100" 
+                                                  Tapped="Table_Tapped"
+                                                  ManipulationMode="TranslateX,TranslateY"
+                                                  ManipulationStarted="Table_ManipulationStarted"
+                                                  ManipulationDelta="Table_ManipulationDelta"
+                                                  ManipulationCompleted="Table_ManipulationCompleted">
+                                                <Grid.Background>
+                                                    <SolidColorBrush Color="Transparent"/>
+                                                </Grid.Background>
+                                                
+                                                <!-- Table Visual -->
+                                                <Border Background="{Binding Status, Converter={StaticResource TableStatusConverter}}"
+                                                        CornerRadius="{Binding Shape, Converter={StaticResource ShapeToCornerRadiusConverter}}"
+                                                        BorderThickness="3"
+                                                        x:Name="TableBorder">
+                                                    <Border.BorderBrush>
+                                                        <SolidColorBrush Color="{Binding IsSelected, Converter={StaticResource SelectionToBorderColorConverter}}"/>
+                                                    </Border.BorderBrush>
+                                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                        <TextBlock Text="{Binding TableNumber}" 
+                                                                   FontSize="20" 
+                                                                   FontWeight="Bold" 
+                                                                   HorizontalAlignment="Center"/>
+                                                        <TextBlock Text="{Binding Capacity}" 
+                                                                   FontSize="12" 
+                                                                   Foreground="Gray" 
+                                                                   HorizontalAlignment="Center" 
+                                                                   Margin="0,4,0,0"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </Grid>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+
+            <!-- ============================================ -->
+            <!-- RIGHT PANEL (Properties) -->
+            <!-- ============================================ -->
+            <Grid Grid.Column="2" 
+                  Background="{ThemeResource LayerFillColorDefaultBrush}"
+                  BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                  BorderThickness="1,0,0,0">
+                <ScrollViewer>
+                    <StackPanel Padding="16" Spacing="16">
+                        
+                        <!-- No Selection State -->
+                        <StackPanel Spacing="8" 
+                                    x:Name="NoSelectionPanel"
+                                    Visibility="{x:Bind ViewModel.HasSelection, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                            <TextBlock Text="Properties" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <TextBlock Text="No table selected" 
+                                       Style="{StaticResource CaptionTextBlockStyle}"
+                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                       TextAlignment="Center"
+                                       Margin="0,32,0,0"/>
+                            <TextBlock Text="Click a table to edit its properties" 
+                                       Style="{StaticResource CaptionTextBlockStyle}"
+                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                       TextAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- Single Selection State -->
+                        <StackPanel Spacing="16" 
+                                    x:Name="SingleSelectionPanel"
+                                    x:Load="{x:Bind ViewModel.IsSingleSelection, Mode=OneWay}"
+                                    Visibility="{x:Bind ViewModel.IsSingleSelection, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <TextBlock Text="Table Properties" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            
+                            <!-- Table Number -->
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Table Number" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                <NumberBox Value="{x:Bind ViewModel.SelectedTable.TableNumber, Mode=OneWay}"
+                                           Tag="TableNumber"
+                                           Minimum="1"
+                                           Maximum="999"
+                                           SpinButtonPlacementMode="Inline"
+                                           ValueChanged="TableProperty_Changed"/>
+                            </StackPanel>
+
+                            <!-- Capacity -->
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Capacity (Seats)" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                <NumberBox Value="{x:Bind ViewModel.SelectedTable.Capacity, Mode=OneWay}"
+                                           Tag="Capacity"
+                                           Minimum="1"
+                                           Maximum="20"
+                                           SpinButtonPlacementMode="Inline"
+                                           ValueChanged="TableProperty_Changed"/>
+                            </StackPanel>
+
+                            <!-- Position -->
+                            <TextBlock Text="Position" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="0,8,0,0"/>
+                            <Grid ColumnSpacing="8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <StackPanel Grid.Column="0" Spacing="4">
+                                    <TextBlock Text="X" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                    <NumberBox Value="{x:Bind ViewModel.SelectedTable.X, Mode=OneWay}"
+                                               Tag="X"
+                                               Minimum="0"
+                                               SpinButtonPlacementMode="Inline"
+                                               ValueChanged="TableProperty_Changed"/>
+                                </StackPanel>
+                                
+                                <StackPanel Grid.Column="1" Spacing="4">
+                                    <TextBlock Text="Y" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                    <NumberBox Value="{x:Bind ViewModel.SelectedTable.Y, Mode=OneWay}"
+                                               Tag="Y"
+                                               Minimum="0"
+                                               SpinButtonPlacementMode="Inline"
+                                               ValueChanged="TableProperty_Changed"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Size -->
+                            <TextBlock Text="Size" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="0,8,0,0"/>
+                            <Grid ColumnSpacing="8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <StackPanel Grid.Column="0" Spacing="4">
+                                    <TextBlock Text="Width" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                    <NumberBox Value="{x:Bind ViewModel.SelectedTable.Width, Mode=OneWay}"
+                                               Tag="Width"
+                                               Minimum="50"
+                                               Maximum="500"
+                                               SpinButtonPlacementMode="Inline"
+                                               ValueChanged="TableProperty_Changed"/>
+                                </StackPanel>
+                                
+                                <StackPanel Grid.Column="1" Spacing="4">
+                                    <TextBlock Text="Height" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                    <NumberBox Value="{x:Bind ViewModel.SelectedTable.Height, Mode=OneWay}"
+                                               Tag="Height"
+                                               Minimum="50"
+                                               Maximum="500"
+                                               SpinButtonPlacementMode="Inline"
+                                               ValueChanged="TableProperty_Changed"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Shape -->
+                            <StackPanel Spacing="4" Margin="0,8,0,0">
+                                <TextBlock Text="Shape" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                <ComboBox SelectedItem="{x:Bind ViewModel.SelectedTable.Shape, Mode=OneWay}"
+                                          HorizontalAlignment="Stretch"
+                                          SelectionChanged="TableProperty_Changed">
+                                    <x:String>Rectangle</x:String>
+                                    <x:String>Circle</x:String>
+                                    <x:String>Square</x:String>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <!-- Validation Errors -->
+                            <StackPanel Spacing="8" 
+                                        Margin="0,16,0,0"
+                                        Visibility="{x:Bind ViewModel.HasValidationErrors, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <TextBlock Text="Validation Errors" 
+                                           Style="{StaticResource BodyStrongTextBlockStyle}"
+                                           Foreground="{ThemeResource SystemErrorTextColor}"/>
+                                <ItemsControl ItemsSource="{x:Bind ViewModel.ValidationErrors, Mode=OneWay}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="x:String">
+                                            <TextBlock Text="{x:Bind}" 
+                                                       Style="{StaticResource CaptionTextBlockStyle}"
+                                                       Foreground="{ThemeResource SystemErrorTextColor}"
+                                                       TextWrapping="Wrap"
+                                                       Margin="0,4,0,0"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Multi Selection State -->
+                        <StackPanel Spacing="16" 
+                                    x:Name="MultiSelectionPanel"
+                                    x:Load="{x:Bind ViewModel.IsMultiSelection, Mode=OneWay}"
+                                    Visibility="{x:Bind ViewModel.IsMultiSelection, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <TextBlock Text="Multiple Tables Selected" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            
+                            <TextBlock Style="{StaticResource CaptionTextBlockStyle}">
+                                <Run Text="{x:Bind ViewModel.SelectedCount, Mode=OneWay}"/>
+                                <Run Text=" tables selected"/>
+                            </TextBlock>
+
+                            <!-- Bulk Actions -->
+                            <StackPanel Spacing="8" Margin="0,16,0,0">
+                                <TextBlock Text="Bulk Actions" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                                
+                                <Button Content="Delete Selected" 
+                                        Command="{x:Bind ViewModel.DeleteSelectedTablesCommand}"
+                                        HorizontalAlignment="Stretch"
+                                        Style="{StaticResource AccentButtonStyle}"/>
+                                
+                                <Button Content="Align Left" 
+                                        Click="AlignLeft_Click"
+                                        HorizontalAlignment="Stretch"/>
+                                
+                                <Button Content="Align Top" 
+                                        Click="AlignTop_Click"
+                                        HorizontalAlignment="Stretch"/>
+                                
+                                <Button Content="Distribute Horizontally" 
+                                        Click="DistributeHorizontally_Click"
+                                        HorizontalAlignment="Stretch"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+
+        <!-- ============================================ -->
+        <!-- STATUS BAR -->
+        <!-- ============================================ -->
         <Border Grid.Row="2" 
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                 BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
@@ -195,12 +494,21 @@
                 </Grid.ColumnDefinitions>
                 
                 <StackPanel Orientation="Horizontal" Spacing="16">
-                    <TextBlock Text="Tables: " Style="{StaticResource CaptionTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Tables.Count, Mode=OneWay}" 
-                              Style="{StaticResource BodyTextBlockStyle}"/>
-                    <TextBlock Text="Mode: " Style="{StaticResource CaptionTextBlockStyle}" Margin="16,0,0,0"/>
-                    <TextBlock Text="{x:Bind ViewModel.IsDesignMode, Mode=OneWay, Converter={StaticResource BoolToDesignModeTextConverter}}" 
-                              Style="{StaticResource BodyTextBlockStyle}"/>
+                    <TextBlock Style="{StaticResource CaptionTextBlockStyle}">
+                        <Run Text="Tables: "/>
+                        <Run Text="{x:Bind ViewModel.Tables.Count, Mode=OneWay}"/>
+                    </TextBlock>
+                    
+                    <TextBlock Style="{StaticResource CaptionTextBlockStyle}">
+                        <Run Text="Mode: "/>
+                        <Run Text="{x:Bind ViewModel.IsDesignMode, Mode=OneWay}"/>
+                    </TextBlock>
+
+                    <TextBlock Style="{StaticResource CaptionTextBlockStyle}"
+                               Foreground="Orange"
+                               Visibility="{x:Bind ViewModel.IsDirty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Run Text="● Unsaved"/>
+                    </TextBlock>
                 </StackPanel>
                 
                 <ProgressRing Grid.Column="1" 
