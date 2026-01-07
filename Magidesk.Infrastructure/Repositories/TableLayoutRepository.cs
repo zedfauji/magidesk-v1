@@ -132,6 +132,51 @@ public class TableLayoutRepository : ITableLayoutRepository
         return !await query.AnyAsync(cancellationToken);
     }
 
+    public async Task<TableLayoutDto?> GetActiveLayoutAsync(Guid floorId, CancellationToken cancellationToken = default)
+    {
+        var layout = await _context.TableLayouts
+            .Include(tl => tl.Tables)
+            .FirstOrDefaultAsync(tl => tl.FloorId == floorId && tl.IsActive && !tl.IsDraft, cancellationToken);
+
+        if (layout == null) return null;
+
+        return new TableLayoutDto
+        {
+            Id = layout.Id,
+            Name = layout.Name,
+            FloorId = layout.FloorId,
+            Tables = layout.Tables.Select(t => new TableDto
+            {
+                Id = t.Id,
+                TableNumber = t.TableNumber,
+                Capacity = t.Capacity,
+                X = t.X,
+                Y = t.Y,
+                Status = t.Status,
+                IsActive = t.IsActive
+            }).ToList(),
+            CreatedAt = layout.CreatedAt,
+            UpdatedAt = layout.UpdatedAt,
+            IsActive = layout.IsActive,
+            IsDraft = layout.IsDraft,
+            Version = layout.Version
+        };
+    }
+
+    public async Task DeactivateOtherLayoutsAsync(Guid floorId, Guid activeLayoutId, CancellationToken cancellationToken = default)
+    {
+        var layouts = await _context.TableLayouts
+            .Where(tl => tl.FloorId == floorId && tl.Id != activeLayoutId && tl.IsActive)
+            .ToListAsync(cancellationToken);
+
+        foreach (var layout in layouts)
+        {
+            layout.Deactivate();
+        }
+
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task AddAsync(TableLayout entity, CancellationToken cancellationToken = default)
     {
         await _context.TableLayouts.AddAsync(entity, cancellationToken);
