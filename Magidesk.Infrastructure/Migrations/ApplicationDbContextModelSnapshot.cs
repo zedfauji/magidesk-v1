@@ -590,6 +590,9 @@ namespace Magidesk.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<Guid?>("PrinterGroupId")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("SortOrder")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
@@ -630,6 +633,9 @@ namespace Magidesk.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<Guid?>("PrinterGroupId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("SortOrder")
                         .ValueGeneratedOnAdd()
@@ -709,6 +715,10 @@ namespace Magidesk.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("GroupId");
 
                     b.ToTable("MenuItems", (string)null);
                 });
@@ -1364,11 +1374,20 @@ namespace Magidesk.Infrastructure.Migrations
                     b.ToTable("Payouts", (string)null);
                 });
 
-            modelBuilder.Entity("Magidesk.Domain.Entities.PrinterGroup", b =>
+            modelBuilder.Entity("Magidesk.Domain.Entities.PrintTemplate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsSystem")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1378,7 +1397,68 @@ namespace Magidesk.Infrastructure.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Version")
+                        .IsConcurrencyToken()
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.ToTable("PrintTemplates");
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.PrinterGroup", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("AllowReprint")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<int>("CutBehavior")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<Guid?>("FallbackPrinterGroupId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("KitchenTemplateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<Guid?>("ReceiptTemplateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("RetryCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("RetryDelayMs")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<bool>("ShowPrices")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KitchenTemplateId");
+
+                    b.HasIndex("ReceiptTemplateId");
 
                     b.ToTable("PrinterGroups", (string)null);
                 });
@@ -1389,13 +1469,51 @@ namespace Magidesk.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<bool>("CutEnabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<int>("Dpi")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(203);
+
+                    b.Property<int>("Format")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PaperWidthMm")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(80);
+
                     b.Property<string>("PhysicalPrinterName")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
+                    b.Property<int>("PrintableWidthChars")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(48);
+
                     b.Property<Guid>("PrinterGroupId")
                         .HasColumnType("uuid");
+
+                    b.Property<bool>("SupportsCashDrawer")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<bool>("SupportsImages")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<bool>("SupportsQr")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<Guid>("TerminalId")
                         .HasColumnType("uuid");
@@ -1668,10 +1786,10 @@ namespace Magidesk.Infrastructure.Migrations
                     b.Property<Guid?>("FloorId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Height")
+                    b.Property<double>("Height")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(100);
+                        .HasColumnType("double precision")
+                        .HasDefaultValue(100.0);
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
@@ -1707,20 +1825,20 @@ namespace Magidesk.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasDefaultValue(1);
 
-                    b.Property<int>("Width")
+                    b.Property<double>("Width")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(100);
+                        .HasColumnType("double precision")
+                        .HasDefaultValue(100.0);
 
-                    b.Property<int>("X")
+                    b.Property<double>("X")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(0);
+                        .HasColumnType("double precision")
+                        .HasDefaultValue(0.0);
 
-                    b.Property<int>("Y")
+                    b.Property<double>("Y")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(0);
+                        .HasColumnType("double precision")
+                        .HasDefaultValue(0.0);
 
                     b.HasKey("Id");
 
@@ -1758,6 +1876,9 @@ namespace Magidesk.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasDefaultValue(true);
+
+                    b.Property<bool>("IsDraft")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -2138,6 +2259,10 @@ namespace Magidesk.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<string>("PreferredLanguage")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
@@ -2718,6 +2843,14 @@ namespace Magidesk.Infrastructure.Migrations
 
             modelBuilder.Entity("Magidesk.Domain.Entities.MenuItem", b =>
                 {
+                    b.HasOne("Magidesk.Domain.Entities.MenuCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("Magidesk.Domain.Entities.MenuGroup", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
+
                     b.OwnsOne("Magidesk.Domain.ValueObjects.Money", "Price", b1 =>
                         {
                             b1.Property<Guid>("MenuItemId")
@@ -2762,6 +2895,10 @@ namespace Magidesk.Infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("MenuItemId");
                         });
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Group");
 
                     b.Navigation("Price")
                         .IsRequired();
@@ -3449,6 +3586,21 @@ namespace Magidesk.Infrastructure.Migrations
 
                     b.Navigation("Amount")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.PrinterGroup", b =>
+                {
+                    b.HasOne("Magidesk.Domain.Entities.PrintTemplate", "KitchenTemplate")
+                        .WithMany()
+                        .HasForeignKey("KitchenTemplateId");
+
+                    b.HasOne("Magidesk.Domain.Entities.PrintTemplate", "ReceiptTemplate")
+                        .WithMany()
+                        .HasForeignKey("ReceiptTemplateId");
+
+                    b.Navigation("KitchenTemplate");
+
+                    b.Navigation("ReceiptTemplate");
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.PurchaseOrder", b =>

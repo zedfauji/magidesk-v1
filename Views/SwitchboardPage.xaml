@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <TextBlock Text="Quick Actions" Style="{StaticResource TitleTextBlockStyle}" Margin="24,24,0,12"/>
+        <TextBlock Text="{Binding Localization[SB_Title], Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}" Margin="24,24,0,12"/>
 
         <!-- Main Switchboard Layout -->
         <Grid Grid.Row="1" Padding="24">
@@ -33,7 +33,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 
-                <TextBlock Text="Open Tickets" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,12"/>
+                <TextBlock Text="{Binding Localization[SB_OpenTickets], Mode=OneWay}" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,12"/>
                 
                 <ListView ItemsSource="{x:Bind ViewModel.OpenTickets, Mode=OneWay}" 
                           SelectedItem="{x:Bind ViewModel.SelectedTicket, Mode=TwoWay}"
@@ -71,7 +71,7 @@
                             HorizontalAlignment="Stretch" Height="80" Background="#2E7D32" CornerRadius="8">
                         <StackPanel Orientation="Horizontal" Spacing="12">
                             <FontIcon Glyph="&#xE710;" FontSize="24" Foreground="White" VerticalAlignment="Center"/>
-                            <TextBlock Text="New Ticket" Foreground="White" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Localization[SB_NewTicket], Mode=OneWay}" Foreground="White" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
@@ -80,7 +80,7 @@
                             HorizontalAlignment="Stretch" Height="80" Background="#1565C0" CornerRadius="8">
                         <StackPanel Orientation="Horizontal" Spacing="12">
                             <FontIcon Glyph="&#xE70F;" FontSize="24" Foreground="White" VerticalAlignment="Center"/>
-                            <TextBlock Text="Edit Selected" Foreground="White" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Localization[SB_EditTicket], Mode=OneWay}" Foreground="White" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
@@ -89,7 +89,7 @@
                             HorizontalAlignment="Stretch" Height="60" CornerRadius="4">
                         <StackPanel Orientation="Horizontal" Spacing="12">
                             <FontIcon Glyph="&#xE90E;" FontSize="20"/>
-                            <TextBlock Text="Table Map" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Localization[SB_TableMap], Mode=OneWay}" FontSize="16" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
@@ -98,7 +98,7 @@
                             HorizontalAlignment="Stretch" Height="60" CornerRadius="4">
                         <StackPanel Orientation="Horizontal" Spacing="12">
                             <FontIcon Glyph="&#xE99A;" FontSize="20"/>
-                            <TextBlock Text="Kitchen Display" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Localization[SB_Kitchen], Mode=OneWay}" FontSize="16" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
@@ -107,7 +107,7 @@
                             HorizontalAlignment="Stretch" Height="80" Background="#4527A0" CornerRadius="8">
                         <StackPanel Orientation="Horizontal" Spacing="12">
                             <FontIcon Glyph="&#xE713;" FontSize="24" Foreground="White" VerticalAlignment="Center"/>
-                            <TextBlock Text="Back Office" Foreground="White" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Localization[SB_BackOffice], Mode=OneWay}" Foreground="White" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
@@ -116,7 +116,7 @@
                             HorizontalAlignment="Stretch" Height="60" CornerRadius="4" Margin="0,12,0,0">
                         <StackPanel Orientation="Horizontal" Spacing="12">
                             <FontIcon Glyph="&#xE716;" FontSize="20"/>
-                            <TextBlock Text="Manager Fn" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Localization[SB_ManagerFn], Mode=OneWay}" FontSize="16" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
@@ -125,7 +125,7 @@
                             HorizontalAlignment="Stretch" Height="60" Background="#C62828" CornerRadius="4">
                         <StackPanel Orientation="Horizontal" Spacing="12">
                             <FontIcon Glyph="&#xE7E8;" FontSize="20" Foreground="White"/>
-                            <TextBlock Text="Logout" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Localization[SB_Logout], Mode=OneWay}" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     
@@ -134,7 +134,7 @@
                             HorizontalAlignment="Stretch" Height="60" Background="#424242" CornerRadius="4">
                         <StackPanel Orientation="Horizontal" Spacing="12">
                             <FontIcon Glyph="&#xE71A;" FontSize="20" Foreground="White"/>
-                            <TextBlock Text="Shutdown" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Localization[SB_Shutdown], Mode=OneWay}" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 

@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Magidesk.Presentation.ViewModels"
     mc:Ignorable="d"
+    x:Name="RootPage"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
@@ -17,10 +18,12 @@
 
         <!-- Header -->
         <CommandBar DefaultLabelPosition="Right" Background="Transparent">
-            <AppBarButton Icon="Back" Label="Back" Command="{x:Bind ViewModel.GoBackCommand}"/>
-            <AppBarButton Icon="Sync" Label="Capture Batch" Command="{x:Bind ViewModel.CaptureBatchCommand}"/>
+            <!-- Using standard Binding for indexers as x:Bind has issues with string keys -->
+            <AppBarButton Icon="Back" Label="{Binding Localization[BO_Back], Mode=OneWay}" Command="{x:Bind ViewModel.GoBackCommand}"/>
+            <AppBarButton Icon="Sync" Label="{Binding Localization[BO_CaptureBatch], Mode=OneWay}" Command="{x:Bind ViewModel.CaptureBatchCommand}"/>
             <AppBarElementContainer>
-                 <TextBlock Text="{x:Bind ViewModel.HeaderText, Mode=OneWay}" VerticalAlignment="Center" Margin="12,0,0,0" Style="{StaticResource TitleTextBlockStyle}"/>
+                 <!-- Binding Localization using the HeaderText property value as the key -->
+                 <TextBlock Text="{Binding Localization[HeaderText], Mode=OneWay}" VerticalAlignment="Center" Margin="12,0,0,0" Style="{StaticResource TitleTextBlockStyle}"/>
             </AppBarElementContainer>
         </CommandBar>
 
@@ -35,7 +38,7 @@
                 <DataTemplate x:DataType="vm:NavigationItem">
                      <StackPanel Orientation="Horizontal" Spacing="12">
                         <FontIcon Glyph="{x:Bind IconData}" VerticalAlignment="Center"/>
-                        <TextBlock Text="{x:Bind Title}" VerticalAlignment="Center"/>
+                        <TextBlock Text="{x:Bind LocalizedTitle, Mode=OneWay}" VerticalAlignment="Center"/>
                     </StackPanel>
                 </DataTemplate>
             </NavigationView.MenuItemTemplate>

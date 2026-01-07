@@ -42,6 +42,8 @@ public partial class OrderEntryViewModel : ViewModelBase
     private readonly ICommandHandler<SetCustomerCommand, SetCustomerResult> _setCustomerHandler;
     private readonly IServiceProvider _serviceProvider;
     private readonly IKitchenRoutingService _kitchenRoutingService;
+    
+    public Services.LocalizationService Localization { get; }
 
     private TicketDto? _ticket;
     private MenuCategory? _selectedCategory;
@@ -207,7 +209,8 @@ public partial class OrderEntryViewModel : ViewModelBase
         ICommandHandler<SetCustomerCommand, SetCustomerResult> setCustomerHandler,
         IServiceProvider serviceProvider,
         IKitchenRoutingService kitchenRoutingService,
-        Services.IOrderEntryDialogService orderEntryDialogService)
+        Services.IOrderEntryDialogService orderEntryDialogService,
+        Services.LocalizationService localizationService)
     {
         _categoryRepository = categoryRepository;
         _groupRepository = groupRepository;
@@ -233,6 +236,8 @@ public partial class OrderEntryViewModel : ViewModelBase
         _serviceProvider = serviceProvider;
         _kitchenRoutingService = kitchenRoutingService;
         _orderEntryDialogService = orderEntryDialogService;
+        
+        Localization = localizationService;
 
         Title = "Order Entry";
 

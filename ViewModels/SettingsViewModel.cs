@@ -14,6 +14,8 @@ public sealed partial class SettingsViewModel : ViewModelBase
     private readonly IQueryHandler<GetRestaurantConfigQuery, GetRestaurantConfigResult> _getQueryHandler;
     private readonly ICommandHandler<UpdateRestaurantConfigCommand, UpdateRestaurantConfigResult> _updateCommandHandler;
 
+    public Services.LocalizationService Localization { get; }
+
     private bool _isKioskMode;
     private string _restaurantName = "";
     private string _restaurantAddress = "";
@@ -25,11 +27,13 @@ public sealed partial class SettingsViewModel : ViewModelBase
 
     public SettingsViewModel(
         IQueryHandler<GetRestaurantConfigQuery, GetRestaurantConfigResult> getQueryHandler,
-        ICommandHandler<UpdateRestaurantConfigCommand, UpdateRestaurantConfigResult> updateCommandHandler)
+        ICommandHandler<UpdateRestaurantConfigCommand, UpdateRestaurantConfigResult> updateCommandHandler,
+        Services.LocalizationService localizationService)
     {
         Title = "Settings";
         _getQueryHandler = getQueryHandler;
         _updateCommandHandler = updateCommandHandler;
+        Localization = localizationService;
         
         LoadSettingsCommand = new AsyncRelayCommand(LoadSettingsAsync);
         SaveSettingsCommand = new AsyncRelayCommand(SaveSettingsAsync);

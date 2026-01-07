@@ -34,6 +34,8 @@ public class SwitchboardViewModel : ViewModelBase
     private readonly IUserService _userService;
     private readonly ITerminalContext _terminalContext;
 
+    public Services.LocalizationService Localization { get; }
+
     private ObservableCollection<TicketDto> _openTickets = new();
     public ObservableCollection<TicketDto> OpenTickets
     {
@@ -92,7 +94,8 @@ public class SwitchboardViewModel : ViewModelBase
         IOrderTypeRepository orderTypeRepository,
         IShiftRepository shiftRepository,
         ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult> openSessionHandler,
-        ILogger<SwitchboardViewModel> logger)
+        ILogger<SwitchboardViewModel> logger,
+        Services.LocalizationService localizationService)
     {
         _navigationService = navigationService;
         _cashSessionRepository = cashSessionRepository;
@@ -110,6 +113,7 @@ public class SwitchboardViewModel : ViewModelBase
         _shiftRepository = shiftRepository;
         _openSessionHandler = openSessionHandler;
         _logger = logger;
+        Localization = localizationService;
         Title = "Magidesk POS";
 
         LoadTicketsCommand = new AsyncRelayCommand(LoadTicketsAsync);

@@ -16,6 +16,8 @@ public class ModifierSelectionViewModel : ViewModelBase
     private MenuItem? _menuItem;
     private string? _validationError;
 
+    public Services.LocalizationService Localization { get; }
+
     public ObservableCollection<ModifierGroupViewModel> ModifierGroups { get; } = new();
 
     public string? ValidationError
@@ -26,9 +28,10 @@ public class ModifierSelectionViewModel : ViewModelBase
     
     public bool HasValidationError => !string.IsNullOrEmpty(ValidationError);
 
-    public ModifierSelectionViewModel(IMenuRepository menuRepository)
+    public ModifierSelectionViewModel(IMenuRepository menuRepository, Services.LocalizationService localizationService)
     {
         _menuRepository = menuRepository;
+        Localization = localizationService;
     }
 
     public void LoadModifiers(MenuItem menuItem)
@@ -45,7 +48,7 @@ public class ModifierSelectionViewModel : ViewModelBase
         {
             if (group.IsActive)
             {
-                ModifierGroups.Add(new ModifierGroupViewModel(group));
+                ModifierGroups.Add(new ModifierGroupViewModel(group, Localization));
             }
         }
     }
@@ -87,10 +90,12 @@ public class ModifierGroupViewModel : ViewModelBase
 {
     public ModifierGroup Group { get; }
     public ObservableCollection<ModifierViewModel> Modifiers { get; } = new();
+    public Services.LocalizationService Localization { get; }
 
-    public ModifierGroupViewModel(ModifierGroup group)
+    public ModifierGroupViewModel(ModifierGroup group, Services.LocalizationService localization)
     {
         Group = group;
+        Localization = localization;
         foreach (var modifier in group.Modifiers.Where(m => m.IsActive).OrderBy(m => m.DisplayOrder))
         {
             Modifiers.Add(new ModifierViewModel(modifier, this));

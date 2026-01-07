@@ -47,6 +47,8 @@ public partial class SalesReportsViewModel : ViewModelBase
     private readonly IQueryHandler<GetAttendanceReportQuery, AttendanceReportDto> _getAttendanceReport;
     private readonly IQueryHandler<GetCashOutReportQuery, CashOutReportDto> _getCashOutReport;
 
+    public Services.LocalizationService Localization { get; }
+
     private DateTimeOffset _startDate = DateTime.Today;
     private DateTimeOffset _endDate = DateTime.Today.AddDays(1).AddSeconds(-1);
     private ReportProperties _selectedReportType;
@@ -90,7 +92,8 @@ public partial class SalesReportsViewModel : ViewModelBase
         IQueryHandler<GetDeliveryReportQuery, DeliveryReportDto> getDeliveryReport,
         IQueryHandler<GetTipReportQuery, TipReportDto> getTipReport,
         IQueryHandler<GetAttendanceReportQuery, AttendanceReportDto> getAttendanceReport,
-        IQueryHandler<GetCashOutReportQuery, CashOutReportDto> getCashOutReport)
+        IQueryHandler<GetCashOutReportQuery, CashOutReportDto> getCashOutReport,
+        Services.LocalizationService localizationService)
     {
         _getSalesSummary = getSalesSummary;
         _getSalesDetail = getSalesDetail;
@@ -108,6 +111,7 @@ public partial class SalesReportsViewModel : ViewModelBase
         _getTipReport = getTipReport;
         _getAttendanceReport = getAttendanceReport;
         _getCashOutReport = getCashOutReport;
+        Localization = localizationService;
 
         Title = "Reporting";
         LoadReportCommand = new AsyncRelayCommand(LoadReportAsync);

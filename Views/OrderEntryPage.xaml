@@ -39,14 +39,14 @@
 
             <!-- Ticket Header -->
             <StackPanel Spacing="8">
-                <TextBlock Text="Current Ticket" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                <TextBlock Text="{Binding Localization[OE_Title], Mode=OneWay}" Style="{StaticResource SubtitleTextBlockStyle}"/>
                 <TextBlock Text="{Binding Ticket.TicketNumber, Mode=OneWay}" 
                            FontSize="14" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                 <TextBlock Text="{Binding GuestCountText, Mode=OneWay}" 
                            FontSize="12" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                  
                  <!-- Search Button (Triggers Dialog F-0034) -->
-                 <Button Content="Search Items" HorizontalAlignment="Stretch" Command="{Binding SearchItemCommand}">
+                 <Button Content="{Binding Localization[OE_SearchItems], Mode=OneWay}" HorizontalAlignment="Stretch" Command="{Binding SearchItemCommand}">
                     <Button.ContentTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Spacing="8">
@@ -154,8 +154,8 @@
             <!-- Fallback when no ticket loaded -->
             <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" 
                         Visibility="{Binding HasTicket, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter='Reverse'}">
-                <TextBlock Text="No ticket loaded" FontSize="18" Foreground="Gray" HorizontalAlignment="Center"/>
-                <TextBlock Text="Select a ticket from the switchboard or create a new ticket" 
+                <TextBlock Text="{Binding Localization[OE_NoTicket], Mode=OneWay}" FontSize="18" Foreground="Gray" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding Localization[OE_SelectTicketPrompt], Mode=OneWay}" 
                            FontSize="14" Foreground="LightGray" HorizontalAlignment="Center" TextAlignment="Center" 
                            Margin="0,8,0,0"/>
             </StackPanel>
@@ -163,20 +163,20 @@
             <!-- Totals and Actions -->
             <StackPanel Grid.Row="2" Spacing="4" Margin="0,12,0,0">
                 <Grid>
-                    <TextBlock Text="Subtotal" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                    <TextBlock Text="{Binding Localization[OE_Subtotal], Mode=OneWay}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                     <TextBlock Text="{Binding SubTotalText}" HorizontalAlignment="Right"/>
                 </Grid>
                 <Grid>
-                    <TextBlock Text="Tax" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                    <TextBlock Text="{Binding Localization[OE_Tax], Mode=OneWay}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                     <TextBlock Text="{Binding TaxText}" HorizontalAlignment="Right"/>
                 </Grid>
                 <Grid Visibility="{Binding HasDiscount, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <TextBlock Text="Discount" Foreground="Red"/>
+                    <TextBlock Text="{Binding Localization[OE_Discount], Mode=OneWay}" Foreground="Red"/>
                     <TextBlock Text="{Binding DiscountText}" Foreground="Red" HorizontalAlignment="Right"/>
                 </Grid>
                 <Rectangle Height="1" Fill="{ThemeResource SystemControlBackgroundBaseLowBrush}" Margin="0,4"/>
                 <Grid>
-                    <TextBlock Text="Total Due" FontSize="18" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Localization[OE_TotalDue], Mode=OneWay}" FontSize="18" FontWeight="Bold"/>
                     <TextBlock Text="{Binding TotalsText}" 
                                FontSize="18" FontWeight="Bold" HorizontalAlignment="Right"/>
                 </Grid>
@@ -187,8 +187,8 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Content="Qty" Command="{Binding SetQuantityCommand}" Width="60"/>
-                        <Button Grid.Column="1" Content="Fee" Command="{Binding AddFeeCommand}" Width="60"/>
+                        <Button Content="{Binding Localization[OE_Qty], Mode=OneWay}" Command="{Binding SetQuantityCommand}" Width="60"/>
+                        <Button Grid.Column="1" Content="{Binding Localization[OE_Fee], Mode=OneWay}" Command="{Binding AddFeeCommand}" Width="60"/>
                         <TextBlock Grid.Column="2" Text="{Binding PendingQuantityText}" 
                                    VerticalAlignment="Center" FontWeight="Bold" 
                                    Visibility="{Binding IsPendingQuantityVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
@@ -201,9 +201,9 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Content="Misc" Command="{Binding AddMiscItemCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
-                    <Button Grid.Column="1" Content="Settle" Command="{Binding SettleCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
-                    <Button Grid.Column="2" Content="Pay Now" Command="{Binding QuickPayCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicketWithItems}" Background="Green" Foreground="White" FontWeight="Bold"/>
+                    <Button Grid.Column="0" Content="{Binding Localization[OE_Misc], Mode=OneWay}" Command="{Binding AddMiscItemCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
+                    <Button Grid.Column="1" Content="{Binding Localization[OE_Settle], Mode=OneWay}" Command="{Binding SettleCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
+                    <Button Grid.Column="2" Content="{Binding Localization[OE_PayNow], Mode=OneWay}" Command="{Binding QuickPayCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicketWithItems}" Background="Green" Foreground="White" FontWeight="Bold"/>
                 </Grid>
 
                 <!-- Row 2: Ticket Management & Output -->
@@ -221,13 +221,13 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Content="Split" Command="{Binding SplitTicketUiCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}" FontSize="11" Padding="2"/>
-                        <Button Grid.Column="1" Content="Merge" Command="{Binding MergeTicketsCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}" FontSize="11" Padding="2"/>
+                        <Button Content="{Binding Localization[OE_Split], Mode=OneWay}" Command="{Binding SplitTicketUiCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}" FontSize="11" Padding="2"/>
+                        <Button Grid.Column="1" Content="{Binding Localization[OE_Merge], Mode=OneWay}" Command="{Binding MergeTicketsCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}" FontSize="11" Padding="2"/>
                     </Grid>
 
-                    <Button Grid.Column="1" Content="Note" Command="{Binding EditNoteCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
-                    <Button Grid.Column="2" Content="Print" Command="{Binding PrintTicketCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
-                    <Button Grid.Column="3" Content="Send" Command="{Binding SendToKitchenCommand}" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" IsEnabled="{Binding HasUnsentItems}"/>
+                    <Button Grid.Column="1" Content="{Binding Localization[OE_Note], Mode=OneWay}" Command="{Binding EditNoteCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
+                    <Button Grid.Column="2" Content="{Binding Localization[OE_Print], Mode=OneWay}" Command="{Binding PrintTicketCommand}" HorizontalAlignment="Stretch" IsEnabled="{Binding HasTicket}"/>
+                    <Button Grid.Column="3" Content="{Binding Localization[OE_Send], Mode=OneWay}" Command="{Binding SendToKitchenCommand}" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" IsEnabled="{Binding HasUnsentItems}"/>
                 </Grid>
             </StackPanel>
         </Grid>
@@ -244,7 +244,7 @@
                 <Button Command="{Binding BackToCategoriesCommand}" Background="Transparent" BorderThickness="0" Padding="4">
                     <StackPanel Orientation="Horizontal" Spacing="4">
                         <FontIcon Glyph="&#xE72B;" FontSize="12"/>
-                        <TextBlock Text="Categories" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding Localization[OE_Categories], Mode=OneWay}" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Button>
                 

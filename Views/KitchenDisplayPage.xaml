@@ -24,16 +24,16 @@
             
             <StackPanel Orientation="Horizontal" Spacing="12">
                 <FontIcon Glyph="&#xE99A;" FontSize="24"/>
-                <TextBlock Text="{x:Bind ViewModel.ViewTitle, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                <TextBlock Text="{Binding Localization[ViewTitle], Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
             </StackPanel>
             
             <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
-                <ToggleButton IsChecked="{x:Bind ViewModel.IsHistoryMode, Mode=TwoWay}" Content="History" />
+                <ToggleButton IsChecked="{x:Bind ViewModel.IsHistoryMode, Mode=TwoWay}" Content="{Binding Localization[KD_History], Mode=OneWay}" />
                 <TextBlock Text="{x:Bind ViewModel.LastUpdated, Mode=OneWay}" VerticalAlignment="Center" Foreground="Gray"/>
                 <Button Command="{x:Bind ViewModel.RefreshCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <FontIcon Glyph="&#xE72C;" FontSize="16"/>
-                        <TextBlock Text="Refresh"/>
+                        <TextBlock Text="{Binding Localization[KD_Refresh], Mode=OneWay}"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -88,19 +88,17 @@
                                         <!-- Modifiers -->
                                         <TextBlock Text="{Binding Modifiers}" Margin="38,2,0,0" FontSize="12" FontStyle="Italic" Opacity="0.8" TextWrapping="Wrap" 
                                                    Visibility="{Binding Modifiers, Converter={StaticResource StringVisibilityConverter}}"/> 
-                                                   <!-- Note: StringFormatConverter might not handle NotEmpty logic directly, fallback to binding if simple -->
                                     </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
                         
                         <!-- Footer / Bump Button -->
-                        <Button Grid.Row="2" Content="BUMP ORDER" HorizontalAlignment="Stretch" Margin="12" 
+                        <Button Grid.Row="2" Content="{Binding ElementName=RootPage, Path=DataContext.Localization[KD_BumpOrder]}" HorizontalAlignment="Stretch" Margin="12" 
                                 Background="{ThemeResource SystemControlBackgroundAccentBrush}" Foreground="White"
-                                Command="{Binding ElementName=PageRoot, Path=ViewModel.BumpCommand}" 
+                                Command="{Binding ElementName=RootPage, Path=ViewModel.BumpCommand}" 
                                 CommandParameter="{Binding}"
-                                Visibility="{Binding ElementName=PageRoot, Path=ViewModel.IsHistoryMode, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Reverse}"/> 
-                                <!-- ElementName binding tricky in x:Bind context inside DataTemplate, might need Resource helper or plain Binding -->
+                                Visibility="{Binding ElementName=RootPage, Path=ViewModel.IsHistoryMode, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Reverse}"/> 
                     </Grid>
                 </DataTemplate>
             </GridView.ItemTemplate>
@@ -109,9 +107,8 @@
         <!-- Empty State -->
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="16" 
                     Visibility="{x:Bind ViewModel.Orders.Count, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Reverse}"> 
-                    <!-- Using count is tricky with standard converters, might need manual check or specific converter. Let's assume non-empty for now or use IValueConverter if available -->
             <FontIcon Glyph="&#xE73E;" FontSize="64" Foreground="Gray"/>
-            <TextBlock Text="No Active Orders" Style="{StaticResource SubtitleTextBlockStyle}" Foreground="Gray"/>
+            <TextBlock Text="{Binding Localization[KD_NoActiveOrders], Mode=OneWay}" Style="{StaticResource SubtitleTextBlockStyle}" Foreground="Gray"/>
         </StackPanel>
     </Grid>
 </Page>

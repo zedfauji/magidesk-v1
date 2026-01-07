@@ -81,6 +81,9 @@ public partial class App : Microsoft.UI.Xaml.Application
             services.AddSingleton<Magidesk.Application.Interfaces.ICashDrawerService, Infrastructure.Services.CashDrawerService>();
             services.AddTransient<Magidesk.Application.Interfaces.ICommandHandler<Magidesk.Application.Commands.OpenCashDrawerCommand>, Magidesk.Application.Commands.OpenCashDrawerCommandHandler>();
             services.AddScoped<Magidesk.Application.Interfaces.IReceiptPrintService, Infrastructure.Printing.ReceiptPrintService>(); // Real Implementation
+            
+            // UI Services
+            services.AddSingleton<Magidesk.Presentation.Services.LocalizationService>();
 
                     // ViewModels
                     StartupLogger.Log("App - Registering ViewModels...");
@@ -136,6 +139,10 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<ServerSectionManagementViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.PrintTemplatesViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.TemplateEditorViewModel>();
+                    
+                    // Language Selection (F-0110)
+                    services.AddTransient<Magidesk.Presentation.ViewModels.LanguageSelectionViewModel>();
+                    services.AddTransient<Magidesk.Presentation.Views.LanguageSelectionDialog>();
 
                     // Query handlers
                     services.AddScoped<IQueryHandler<GetServerProductivityReportQuery, ServerProductivityReportDto>, GetServerProductivityReportQueryHandler>();

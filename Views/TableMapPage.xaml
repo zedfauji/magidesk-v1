@@ -23,14 +23,14 @@
 
         <!-- Header -->
         <CommandBar DefaultLabelPosition="Right" Background="Transparent">
-            <AppBarToggleButton Icon="Sync" Label="Real-time" 
+            <AppBarToggleButton Icon="Sync" Label="{Binding Localization[TM_RealTime], Mode=OneWay}" 
                               IsChecked="{x:Bind ViewModel.IsRealTimeEnabled, Mode=TwoWay}"
                               Command="{x:Bind ViewModel.ToggleRealTimeCommand}"/>
             <AppBarSeparator/>
-            <AppBarButton Icon="Refresh" Label="Refresh" Command="{x:Bind ViewModel.RefreshTablesCommand}"/>
+            <AppBarButton Icon="Refresh" Label="{Binding Localization[TM_Refresh], Mode=OneWay}" Command="{x:Bind ViewModel.RefreshTablesCommand}"/>
             <AppBarElementContainer>
                 <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center" Margin="12,0,0,0">
-                    <TextBlock Text="Last Update:" Style="{StaticResource CaptionTextBlockStyle}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding Localization[TM_LastUpdate], Mode=OneWay}" Style="{StaticResource CaptionTextBlockStyle}" VerticalAlignment="Center"/>
                     <TextBlock Text="{x:Bind ViewModel.LastRefresh, Converter={StaticResource DateTimeToTimeConverter}}" 
                               Style="{StaticResource CaptionTextBlockStyle}" 
                               VerticalAlignment="Center"

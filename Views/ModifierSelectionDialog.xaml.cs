@@ -17,6 +17,7 @@ public sealed partial class ModifierSelectionDialog : ContentDialog
         InitializeComponent();
         _menuItem = menuItem;
         ViewModel = App.Services.GetRequiredService<ModifierSelectionViewModel>();
+        DataContext = ViewModel;
         this.Loaded += ModifierSelectionDialog_Loaded;
         this.Closing += ModifierSelectionDialog_Closing;
     }

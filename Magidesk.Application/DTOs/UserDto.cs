@@ -11,6 +11,7 @@ public class UserDto
     public Guid? TerminalId { get; set; }
     public string Email { get; set; } = string.Empty;
     public bool IsActive { get; set; } = true;
+    public string PreferredLanguage { get; set; } = "en-US";
     
     public string FullName => $"{FirstName} {LastName}";
 }

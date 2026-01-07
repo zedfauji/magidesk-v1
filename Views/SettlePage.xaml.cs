@@ -11,8 +11,9 @@ public sealed partial class SettlePage : Page
 
     public SettlePage()
     {
-        InitializeComponent();
+        this.InitializeComponent();
         ViewModel = App.Services.GetRequiredService<SettleViewModel>();
+        DataContext = ViewModel;
     }
 
     protected override async void OnNavigatedTo(NavigationEventArgs e)

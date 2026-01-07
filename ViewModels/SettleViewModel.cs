@@ -23,6 +23,9 @@ public sealed class SettleViewModel : ViewModelBase
     private readonly ICashSessionRepository _cashSessionRepository;
     private readonly ICommandHandler<OpenCashDrawerCommand> _openCashDrawer;
     private readonly ILogger<SettleViewModel> _logger;
+    private readonly Services.LocalizationService _localizationService;
+
+    public Services.LocalizationService Localization { get; }
 
     private TicketDto? _ticket;
     private decimal _tenderAmount;
@@ -42,7 +45,8 @@ public sealed class SettleViewModel : ViewModelBase
         ITerminalContext terminalContext,
         ICashSessionRepository cashSessionRepository,
         ICommandHandler<OpenCashDrawerCommand> openCashDrawer,
-        ILogger<SettleViewModel> logger)
+        ILogger<SettleViewModel> logger,
+        Services.LocalizationService localizationService)
     {
         _getTicket = getTicket;
         _processPayment = processPayment;
@@ -54,6 +58,8 @@ public sealed class SettleViewModel : ViewModelBase
         _cashSessionRepository = cashSessionRepository;
         _openCashDrawer = openCashDrawer;
         _logger = logger;
+        _localizationService = localizationService;
+        Localization = localizationService;
 
         Title = "Settle Ticket";
 

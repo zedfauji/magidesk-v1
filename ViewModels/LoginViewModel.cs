@@ -24,6 +24,8 @@ public class LoginViewModel : ViewModelBase
     private string _pin = string.Empty;
     private string _errorMessage = string.Empty;
 
+    private readonly IServiceProvider _serviceProvider;
+
     public LoginViewModel(
         ISecurityService securityService,
         IAesEncryptionService encryptionService,
@@ -33,7 +35,9 @@ public class LoginViewModel : ViewModelBase
         ICommandHandler<ClockOutCommand> clockOutHandler,
         IAttendanceRepository attendanceRepository,
         IDefaultViewRoutingService defaultViewRoutingService,
-        ITerminalContext terminalContext)
+        ITerminalContext terminalContext,
+        IServiceProvider serviceProvider,
+        Services.LocalizationService localizationService)
     {
         _securityService = securityService;
         _encryptionService = encryptionService;
@@ -44,6 +48,8 @@ public class LoginViewModel : ViewModelBase
         _attendanceRepository = attendanceRepository;
         _defaultViewRoutingService = defaultViewRoutingService;
         _terminalContext = terminalContext;
+        _serviceProvider = serviceProvider;
+        Localization = localizationService;
 
         AppendDigitCommand = new RelayCommand<string>(AppendDigit);
         ClearCommand = new RelayCommand(Clear);
@@ -51,7 +57,10 @@ public class LoginViewModel : ViewModelBase
         LoginCommand = new AsyncRelayCommand(LoginAsync);
         ShutdownCommand = new RelayCommand(Shutdown);
         ClockInOutCommand = new AsyncRelayCommand(ClockInOutAsync);
+        ChangeLanguageCommand = new AsyncRelayCommand(ChangeLanguageAsync);
     }
+
+    public Services.LocalizationService Localization { get; }
 
     public string Pin
     {
@@ -80,6 +89,7 @@ public class LoginViewModel : ViewModelBase
     public ICommand LoginCommand { get; }
     public ICommand ShutdownCommand { get; }
     public ICommand ClockInOutCommand { get; }
+    public ICommand ChangeLanguageCommand { get; }
 
     private void AppendDigit(string? digit)
     {
@@ -244,6 +254,21 @@ public class LoginViewModel : ViewModelBase
         finally
         {
             IsBusy = false;
+        }
+    }
+
+    private async Task ChangeLanguageAsync()
+    {
+        try 
+        {
+            var dialog = Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<Views.LanguageSelectionDialog>(_serviceProvider);
+            dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+            await dialog.ShowAsync();
+            // Note: Update of UI resources would happen here or via event
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error showing language dialog: {ex}");
         }
     }
 

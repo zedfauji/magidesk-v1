@@ -13,6 +13,7 @@ public sealed partial class TableMapPage : Page
     {
         this.InitializeComponent();
         ViewModel = App.Services.GetRequiredService<TableMapViewModel>();
+        DataContext = ViewModel;
         this.Name = "RootPage"; // For ElementName binding
     }
 

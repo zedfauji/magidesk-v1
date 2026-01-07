@@ -13,6 +13,7 @@ public sealed partial class BackOfficePage : Page
     {
         this.InitializeComponent();
         ViewModel = App.Services.GetRequiredService<BackOfficeViewModel>();
+        DataContext = ViewModel;
         
         // Handle Navigation
         var navView = this.Content as Grid; 

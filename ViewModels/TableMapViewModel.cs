@@ -62,7 +62,7 @@ public class TableMapViewModel : ViewModelBase
         set => SetProperty(ref _sourceTicketId, value);
     }
     
-    public string HeaderText => SourceTicketId.HasValue ? "Select New Table" : "Table Map";
+    public string HeaderText => SourceTicketId.HasValue ? "TM_SelectNewTable" : "TM_Title";
 
     public AsyncRelayCommand LoadTablesCommand { get; }
     public AsyncRelayCommand RefreshTablesCommand { get; }
@@ -74,13 +74,16 @@ public class TableMapViewModel : ViewModelBase
     private readonly IServiceScopeFactory _serviceScopeFactory;
     private readonly Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue;
 
+    public Services.LocalizationService Localization { get; }
+
     public TableMapViewModel(
         IQueryHandler<GetTableMapQuery, GetTableMapResult> getTableMap,
         ICommandHandler<ChangeTableCommand, ChangeTableResult> changeTable,
         NavigationService navigationService,
         IUserService userService,
         ITicketCreationService ticketCreationService,
-        IServiceScopeFactory serviceScopeFactory)
+        IServiceScopeFactory serviceScopeFactory,
+        Services.LocalizationService localizationService)
     {
         _getTableMap = getTableMap;
         _changeTable = changeTable;
@@ -88,6 +91,7 @@ public class TableMapViewModel : ViewModelBase
         _userService = userService;
         _ticketCreationService = ticketCreationService;
         _serviceScopeFactory = serviceScopeFactory;
+        Localization = localizationService;
         _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
 
         LoadTablesCommand = new AsyncRelayCommand(LoadTablesAsync);

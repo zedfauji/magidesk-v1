@@ -23,15 +23,16 @@
             <TextBlock Text="Next Gen Point of Sale" Style="{StaticResource SubtitleTextBlockStyle}" Opacity="0.6" HorizontalAlignment="Center"/>
             
             <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" Margin="0,50,0,0">
-               <Button Content="Clock In/Out" Command="{Binding ClockInOutCommand}" Background="#00695C" Foreground="White" Width="150" Height="40" FontSize="16"/>
-               <Button Content="Shutdown System" Command="{Binding ShutdownCommand}" Background="DarkRed" Foreground="White" Width="150" Height="40" FontSize="16"/>
+               <Button Content="{Binding Localization[Button_ClockIn], Mode=OneWay}" Command="{Binding ClockInOutCommand}" Background="#00695C" Foreground="White" Width="150" Height="40" FontSize="16"/>
+               <Button Content="{Binding Localization[Button_Language], Mode=OneWay}" Command="{Binding ChangeLanguageCommand}" Background="#1565C0" Foreground="White" Width="150" Height="40" FontSize="16"/>
+               <Button Content="{Binding Localization[Button_Shutdown], Mode=OneWay}" Command="{Binding ShutdownCommand}" Background="DarkRed" Foreground="White" Width="150" Height="40" FontSize="16"/>
             </StackPanel>
         </StackPanel>
 
         <!-- Login Logic Side -->
         <Grid Grid.Column="1" Width="400" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" Padding="40">
             <StackPanel VerticalAlignment="Center" Spacing="20">
-                <TextBlock Text="User Login" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding Localization[Login_Title], Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center"/>
                 
                 <!-- PIN Display -->
                  <Border Background="{ThemeResource SystemControlBackgroundAltHighBrush}" Padding="10" CornerRadius="4">
