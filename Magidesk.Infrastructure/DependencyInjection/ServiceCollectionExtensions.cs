@@ -32,11 +32,40 @@ public static class ServiceCollectionExtensions
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
-        // Add DbContext
-        services.AddDbContext<ApplicationDbContext>(options =>
+        // Register Database Setup Services FIRST (needed by DbContext)
+        services.AddSingleton<IDatabaseConfigurationService, DatabaseConfigurationService>();
+        services.AddScoped<IDatabaseSeedingService, DatabaseSeedingService>();
+
+        // Add DbContext with dynamic connection string from DatabaseConfigurationService
+        services.AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
+        {
+            // Try to get connection string from DatabaseConfigurationService
+            var configService = serviceProvider.GetService<IDatabaseConfigurationService>();
+            string connectionString;
+
+            if (configService != null)
+            {
+                var config = configService.GetConfigurationAsync().GetAwaiter().GetResult();
+                if (config != null && config.IsValid())
+                {
+                    connectionString = config.ToConnectionString();
+                }
+                else
+                {
+                    // No valid config - use fallback that will fail (triggers setup page)
+                    connectionString = "Host=localhost;Port=5432;Database=__setup_required__;Username=postgres;Password=;";
+                }
+            }
+            else
+            {
+                // Fallback to old method during DI setup (before DatabaseConfigurationService is available)
+                connectionString = DatabaseConnection.GetConnectionString();
+            }
+
             options.UseNpgsql(
-                DatabaseConnection.GetConnectionString(),
-                npgsqlOptions => npgsqlOptions.MigrationsAssembly("Magidesk.Infrastructure")));
+                connectionString,
+                npgsqlOptions => npgsqlOptions.MigrationsAssembly("Magidesk.Infrastructure"));
+        });
 
         // Register repositories
         services.AddScoped<IUserRepository, UserRepository>();
@@ -100,10 +129,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ISystemInitializationService, SystemInitializationService>();
         services.AddScoped<ISystemService, SystemService>();
         services.AddScoped<IBackupService, Services.PostgresBackupService>();
-
-        // Register Database Setup Services
-        services.AddSingleton<IDatabaseConfigurationService, DatabaseConfigurationService>();
-        services.AddScoped<IDatabaseSeedingService, DatabaseSeedingService>();
 
         // Printing Layout Adapters
         services.AddTransient<Thermal58mmAdapter>();

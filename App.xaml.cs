@@ -271,15 +271,27 @@ public partial class App : Microsoft.UI.Xaml.Application
             }
 
             // Check if database is seeded
-            var seedingService = Host.Services.GetRequiredService<IDatabaseSeedingService>();
-            var isSeeded = await seedingService.IsDatabaseSeededAsync();
-            if (!isSeeded)
+            try
             {
-                StartupLogger.Log("OnLaunched - Database not seeded, showing setup page");
+                var seedingService = Host.Services.GetRequiredService<IDatabaseSeedingService>();
+                var isSeeded = await seedingService.IsDatabaseSeededAsync();
+                if (!isSeeded)
+                {
+                    StartupLogger.Log("OnLaunched - Database not seeded, showing setup page");
+                    mainWindow.HideLoading();
+                    var navService = Host.Services.GetRequiredService<NavigationService>();
+                    navService.Navigate(typeof(Views.DatabaseSetupPage));
+                    return; // STOP - database needs seeding
+                }
+            }
+            catch (Exception ex)
+            {
+                // Expected to fail if database doesn't exist or connection fails
+                StartupLogger.Log($"OnLaunched - Database seeding check failed (expected): {ex.Message}");
                 mainWindow.HideLoading();
                 var navService = Host.Services.GetRequiredService<NavigationService>();
                 navService.Navigate(typeof(Views.DatabaseSetupPage));
-                return; // STOP - database needs seeding
+                return; // STOP - database check failed
             }
 
             StartupLogger.Log("OnLaunched - Database configuration valid, proceeding with normal startup");
