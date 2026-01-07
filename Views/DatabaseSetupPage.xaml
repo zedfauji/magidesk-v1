@@ -170,6 +170,20 @@
                     </StackPanel>
                 </Border>
 
+                <!-- Skip to Login (for when database is already configured) -->
+                <Button
+                    Command="{x:Bind ViewModel.ContinueToAppCommand}"
+                    HorizontalAlignment="Center"
+                    Margin="0,16,0,0"
+                    Style="{StaticResource AccentButtonStyle}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph="&#xE8A7;" FontSize="16"/>
+                            <TextBlock Text="Skip to Login Page"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
                 <!-- Help Text -->
                 <TextBlock 
                     Text="Note: Your database credentials will be encrypted and stored securely on this machine using Windows Data Protection."

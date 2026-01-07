@@ -42,8 +42,8 @@ public class NavigationService
         }
 
         // AUTH GUARD
-        // Allow public access to LoginPage
-        if (pageType == typeof(Views.LoginPage))
+        // Allow public access to LoginPage and DatabaseSetupPage (first-run setup)
+        if (pageType == typeof(Views.LoginPage) || pageType == typeof(Views.DatabaseSetupPage))
         {
              return _frame.Navigate(pageType, parameter);
         }

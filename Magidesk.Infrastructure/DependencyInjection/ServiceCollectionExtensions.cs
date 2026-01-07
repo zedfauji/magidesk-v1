@@ -36,37 +36,15 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IDatabaseConfigurationService, DatabaseConfigurationService>();
         services.AddScoped<IDatabaseSeedingService, DatabaseSeedingService>();
 
-        // Add DbContext with dynamic connection string from DatabaseConfigurationService
-        services.AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
+        // Register DbContext Factory (prevents early database connection during DI initialization)
+        services.AddSingleton<ApplicationDbContextFactory>();
+
+        // Register DbContext as Scoped with factory pattern
+        // This delays database connection until the DbContext is actually requested
+        services.AddScoped<ApplicationDbContext>(serviceProvider =>
         {
-            // Try to get connection string from DatabaseConfigurationService
-            var configService = serviceProvider.GetService<IDatabaseConfigurationService>();
-            string connectionString;
-
-            if (configService != null)
-            {
-                var config = configService.GetConfigurationAsync().GetAwaiter().GetResult();
-                if (config != null && config.IsValid())
-                {
-                    connectionString = config.ToConnectionString();
-                }
-                else
-                {
-                    // No valid config - use INVALID connection string to force setup page
-                    // This will cause database operations to fail, triggering the setup flow
-                    connectionString = "Host=localhost;Port=5432;Database=__setup_required__;Username=__invalid__;Password=;";
-                }
-            }
-            else
-            {
-                // During DI setup, configService might not be available yet
-                // Use invalid connection string to force setup on first run
-                connectionString = "Host=localhost;Port=5432;Database=__setup_required__;Username=__invalid__;Password=;";
-            }
-
-            options.UseNpgsql(
-                connectionString,
-                npgsqlOptions => npgsqlOptions.MigrationsAssembly("Magidesk.Infrastructure"));
+            var factory = serviceProvider.GetRequiredService<ApplicationDbContextFactory>();
+            return factory.CreateDbContext();
         });
 
         // Register repositories

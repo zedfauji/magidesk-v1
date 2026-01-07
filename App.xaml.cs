@@ -254,7 +254,9 @@ public partial class App : Microsoft.UI.Xaml.Application
                     StartupLogger.Log("OnLaunched - No database configuration found, showing setup page");
                     mainWindow.HideLoading();
                     var navService = Host.Services.GetRequiredService<NavigationService>();
+                    StartupLogger.Log("OnLaunched - Navigating to DatabaseSetupPage...");
                     navService.Navigate(typeof(Views.DatabaseSetupPage));
+                    StartupLogger.Log("OnLaunched - Navigation to DatabaseSetupPage completed, RETURNING");
                     return; // STOP - do not proceed to normal app flow
                 }
 
@@ -274,8 +276,10 @@ public partial class App : Microsoft.UI.Xaml.Application
                 }
 
                 // Check if database is seeded
+                StartupLogger.Log("OnLaunched - Checking if database is seeded...");
                 var seedingService = Host.Services.GetRequiredService<IDatabaseSeedingService>();
                 var isSeeded = await seedingService.IsDatabaseSeededAsync();
+                StartupLogger.Log($"OnLaunched - Database seeded check result: {isSeeded}");
                 if (!isSeeded)
                 {
                     StartupLogger.Log("OnLaunched - Database not seeded, showing setup page");
