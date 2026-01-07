@@ -16,6 +16,15 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>Magidesk.Presentation</RootNamespace>
 
+        <!-- Version Information -->
+        <Version>0.1.0</Version>
+        <AssemblyVersion>0.1.0.0</AssemblyVersion>
+        <FileVersion>0.1.0.0</FileVersion>
+        <InformationalVersion>0.1.0-beta</InformationalVersion>
+        <Product>Magidesk POS</Product>
+        <Company>Magidesk</Company>
+        <Copyright>Copyright © 2026 Magidesk</Copyright>
+
         <!--
           IMPORTANT:
           This project file lives at the repository root, so SDK default item globbing would
