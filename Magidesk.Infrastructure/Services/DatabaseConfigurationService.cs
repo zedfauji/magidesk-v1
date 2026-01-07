@@ -52,7 +52,7 @@ public class DatabaseConfigurationService : IDatabaseConfigurationService
             }
 
             // Read encrypted data
-            var encryptedData = await File.ReadAllBytesAsync(_configFilePath);
+            var encryptedData = await File.ReadAllBytesAsync(_configFilePath).ConfigureAwait(false);
 
             // Decrypt using Windows DPAPI (machine-specific)
             var decryptedData = ProtectedData.Unprotect(
@@ -96,7 +96,7 @@ public class DatabaseConfigurationService : IDatabaseConfigurationService
             );
 
             // Write to file
-            await File.WriteAllBytesAsync(_configFilePath, encryptedData);
+            await File.WriteAllBytesAsync(_configFilePath, encryptedData).ConfigureAwait(false);
 
             _logger.LogInformation("Database configuration saved successfully to {Path}", _configFilePath);
         }

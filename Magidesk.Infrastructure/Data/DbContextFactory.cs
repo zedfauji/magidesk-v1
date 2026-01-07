@@ -47,7 +47,7 @@ public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<Applicati
         {
             try
             {
-                var config = await _configService.GetConfigurationAsync();
+                var config = await _configService.GetConfigurationAsync().ConfigureAwait(false);
                 if (config != null && config.IsValid())
                 {
                     connectionString = config.ToConnectionString();
