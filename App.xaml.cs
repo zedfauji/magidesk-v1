@@ -133,6 +133,8 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<Magidesk.Presentation.ViewModels.GroupSettleTicketViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.NotesDialogViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.ManagerPinDialogViewModel>();
+                    services.AddTransient<Magidesk.Presentation.Views.Dialogs.ManagerPinDialog>();
                     services.AddTransient<TableDesignerViewModel>();
                     services.AddTransient<FloorManagementViewModel>();
                     services.AddTransient<ExportImportManagementViewModel>();

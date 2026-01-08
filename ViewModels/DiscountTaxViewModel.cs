@@ -191,6 +191,16 @@ public sealed class DiscountTaxViewModel : ViewModelBase
 
     private async Task SetAdjustmentAsync()
     {
+        // Manager Authorization Required for Discounts/Adjustments
+        var authDialog = App.Services.GetRequiredService<Views.Dialogs.ManagerPinDialog>();
+        authDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        
+        var authResult = await authDialog.ShowForOperationAsync("Apply Discount/Adjustment");
+        if (authResult == null || !authResult.Authorized)
+        {
+            return; // Authorization failed or cancelled
+        }
+
         await SetMoneyAsync(AdjustmentText, async money =>
         {
             var result = await _setAdjustment.HandleAsync(new SetAdjustmentCommand
@@ -246,7 +256,7 @@ public sealed class DiscountTaxViewModel : ViewModelBase
 
     private Guid RequireProcessedBy()
     {
-        if (!Guid.TryParse(ProcessedByText, out var userId)) throw new Exception("Invalid ProcessedBy.");
+        if (!Guid.TryParse(ProcessedByText, out var userId) || userId == Guid.Empty) throw new Exception("Invalid ProcessedBy.");
         return userId;
     }
 }

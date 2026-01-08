@@ -107,6 +107,17 @@ public class VoidTicketViewModel : ViewModelBase
             return;
         }
 
+        // Manager Authorization Required
+        var authDialog = App.Services.GetRequiredService<Views.Dialogs.ManagerPinDialog>();
+        authDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        
+        var authResult = await authDialog.ShowForOperationAsync("Void Ticket");
+        if (authResult == null || !authResult.Authorized)
+        {
+            // Authorization failed or cancelled - do not proceed
+            return;
+        }
+
         try
         {
             var currentUser = _userService.CurrentUser;

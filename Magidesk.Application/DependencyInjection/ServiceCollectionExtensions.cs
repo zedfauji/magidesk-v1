@@ -176,6 +176,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<UpdateRoleCommand, UpdateRoleResult>, UpdateRoleCommandHandler>();
         services.AddScoped<ICommandHandler<DeleteRoleCommand, DeleteRoleResult>, DeleteRoleCommandHandler>();
 
+        // Security Handlers
+        services.AddScoped<ICommandHandler<Commands.Security.AuthorizeManagerCommand, DTOs.Security.AuthorizationResult>, Services.Security.AuthorizeManagerCommandHandler>();
+
         services.AddScoped<IKitchenRoutingService, KitchenRoutingService>();
         services.AddScoped<IKitchenStatusService, KitchenStatusService>();
         services.AddScoped<ICashSessionService, CashSessionService>();

@@ -423,6 +423,16 @@ public class SwitchboardViewModel : ViewModelBase
 
     private async Task PerformOpenDrawerAsync()
     {
+        // Manager Authorization Required
+        var authDialog = App.Services.GetRequiredService<Views.Dialogs.ManagerPinDialog>();
+        authDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        
+        var authResult = await authDialog.ShowForOperationAsync("Open Cash Drawer");
+        if (authResult == null || !authResult.Authorized)
+        {
+            return; // Authorization failed or cancelled
+        }
+
         // "No Sale" operation
         if (_terminalContext.TerminalId == null)
         {
@@ -448,7 +458,7 @@ public class SwitchboardViewModel : ViewModelBase
         catch (System.Exception ex)
         {
              // T-007: Visible Failure
-             await _navigationService.ShowErrorAsync("Drawer Error", $"Failed to open drawer:\n{ex.Message}");
+             await _navigationService.ShowErrorAsync("Drawer Error", $"Failed to open drawer:\\n{ex.Message}");
         }
     }
 

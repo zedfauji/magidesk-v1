@@ -242,6 +242,16 @@ public sealed class SettleViewModel : ViewModelBase
 
     private async Task OnNoSaleAsync()
     {
+        // Manager Authorization Required for Open Drawer (No Sale)
+        var authDialog = App.Services.GetRequiredService<Views.Dialogs.ManagerPinDialog>();
+        authDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        
+        var authResult = await authDialog.ShowForOperationAsync("Open Drawer");
+        if (authResult == null || !authResult.Authorized)
+        {
+            return; 
+        }
+
         // F-0007: NO SALE behavior (drawer kick).
         // Should trigger drawer kick command (if hardware connected) and log audit.
         IsBusy = true;
@@ -316,7 +326,8 @@ public sealed class SettleViewModel : ViewModelBase
     private async Task ToggleTaxExemptAsync()
     {
         if (Ticket == null) return;
-        
+        if (_userService.CurrentUser == null) { Error = "No user logged in."; return; }
+
         IsBusy = true;
         Error = null;
         try
@@ -325,7 +336,7 @@ public sealed class SettleViewModel : ViewModelBase
             {
                 TicketId = Ticket.Id,
                 IsTaxExempt = !Ticket.IsTaxExempt,
-                ModifiedBy = _userService.CurrentUser != null ? new UserId(_userService.CurrentUser.Id) : new UserId(Guid.Empty) 
+                ModifiedBy = new UserId(_userService.CurrentUser.Id)
             });
 
             if (result.Success)
@@ -354,6 +365,17 @@ public sealed class SettleViewModel : ViewModelBase
         if (!Enum.TryParse<Magidesk.Domain.Enumerations.PaymentType>(paymentTypeString, out var paymentType))
         {
             Error = $"Invalid payment type: {paymentTypeString}";
+            return;
+        }
+
+        // Manager Authorization Required for Settle/Payment Operations
+        var authDialog = App.Services.GetRequiredService<Views.Dialogs.ManagerPinDialog>();
+        authDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        
+        var authResult = await authDialog.ShowForOperationAsync("Settle Ticket");
+        if (authResult == null || !authResult.Authorized)
+        {
+            // Authorization failed or cancelled
             return;
         }
         
