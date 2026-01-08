@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="Login_Title" xml:space="preserve">
+    <value>Connexion Utilisateur</value>
+  </data>
+  <data name="Button_ClockIn" xml:space="preserve">
+    <value>Pointer</value>
+  </data>
+  <data name="Button_Shutdown" xml:space="preserve">
+    <value>Éteindre</value>
+  </data>
+  <data name="Button_Language" xml:space="preserve">
+    <value>Langue</value>
+  </data>
+  <data name="SB_Title" xml:space="preserve">
+    <value>Actions Rapides</value>
+  </data>
+  <data name="SB_OpenTickets" xml:space="preserve">
+    <value>Tickets Ouverts</value>
+  </data>
+  <data name="SB_NewTicket" xml:space="preserve">
+    <value>Nouveau Ticket</value>
+  </data>
+  <data name="SB_EditTicket" xml:space="preserve">
+    <value>Modifier Sélection</value>
+  </data>
+  <data name="SB_TableMap" xml:space="preserve">
+    <value>Plan de Salle</value>
+  </data>
+  <data name="SB_Kitchen" xml:space="preserve">
+    <value>Écran Cuisine</value>
+  </data>
+  <data name="SB_BackOffice" xml:space="preserve">
+    <value>Back-Office</value>
+  </data>
+  <data name="SB_ManagerFn" xml:space="preserve">
+    <value>Fonctions Gérant</value>
+  </data>
+  <data name="SB_Logout" xml:space="preserve">
+    <value>Déconnexion</value>
+  </data>
+  <data name="SB_Shutdown" xml:space="preserve">
+    <value>Éteindre</value>
+  </data>
+
+  <!-- Order Entry -->
+  <data name="OE_Title" xml:space="preserve">
+    <value>Ticket Actuel</value>
+  </data>
+  <data name="OE_SearchItems" xml:space="preserve">
+    <value>Chercher Articles</value>
+  </data>
+  <data name="OE_Subtotal" xml:space="preserve">
+    <value>Sous-total</value>
+  </data>
+  <data name="OE_Tax" xml:space="preserve">
+    <value>Taxe</value>
+  </data>
+  <data name="OE_Discount" xml:space="preserve">
+    <value>Remise</value>
+  </data>
+  <data name="OE_TotalDue" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="OE_Qty" xml:space="preserve">
+    <value>Qté</value>
+  </data>
+  <data name="OE_Fee" xml:space="preserve">
+    <value>Frais</value>
+  </data>
+  <data name="OE_Misc" xml:space="preserve">
+    <value>Divers</value>
+  </data>
+  <data name="OE_Settle" xml:space="preserve">
+    <value>Régler</value>
+  </data>
+  <data name="OE_PayNow" xml:space="preserve">
+    <value>Payer</value>
+  </data>
+  <data name="OE_Split" xml:space="preserve">
+    <value>Diviser</value>
+  </data>
+  <data name="OE_Merge" xml:space="preserve">
+    <value>Fusionner</value>
+  </data>
+  <data name="OE_Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="OE_Print" xml:space="preserve">
+    <value>Imprimer</value>
+  </data>
+  <data name="OE_Send" xml:space="preserve">
+    <value>Envoyer</value>
+  </data>
+  <data name="OE_Categories" xml:space="preserve">
+    <value>Catégories</value>
+  </data>
+  <data name="OE_NoTicket" xml:space="preserve">
+    <value>Aucun ticket</value>
+  </data>
+  <data name="OE_SelectTicketPrompt" xml:space="preserve">
+    <value>Sélectionnez un ticket ou créez-en un nouveau</value>
+  </data>
+
+  <!-- Back Office -->
+  <data name="BO_Title" xml:space="preserve">
+    <value>Administration</value>
+  </data>
+  <data name="BO_Back" xml:space="preserve">
+    <value>Retour</value>
+  </data>
+  <data name="BO_CaptureBatch" xml:space="preserve">
+    <value>Capturer Lot</value>
+  </data>
+  
+  <data name="BO_Nav_MenuEditor" xml:space="preserve">
+    <value>Éditeur de Menu</value>
+  </data>
+  <data name="BO_Nav_MenuEditor_Desc" xml:space="preserve">
+    <value>Catégories, Groupes, Articles</value>
+  </data>
+  
+  <data name="BO_Nav_Modifiers" xml:space="preserve">
+    <value>Modificateurs</value>
+  </data>
+  <data name="BO_Nav_Modifiers_Desc" xml:space="preserve">
+    <value>Options et Garnitures</value>
+  </data>
+  
+  <data name="BO_Nav_Inventory" xml:space="preserve">
+    <value>Inventaire</value>
+  </data>
+  <data name="BO_Nav_Inventory_Desc" xml:space="preserve">
+    <value>Stocks et Ingrédients</value>
+  </data>
+  
+  <data name="BO_Nav_Vendors" xml:space="preserve">
+    <value>Fournisseurs</value>
+  </data>
+  <data name="BO_Nav_Vendors_Desc" xml:space="preserve">
+    <value>Gestion des Fournisseurs</value>
+  </data>
+  
+  <data name="BO_Nav_PurchaseOrders" xml:space="preserve">
+    <value>Bons de Commande</value>
+  </data>
+  <data name="BO_Nav_PurchaseOrders_Desc" xml:space="preserve">
+    <value>Approvisionnement</value>
+  </data>
+  
+  <data name="BO_Nav_TableMap" xml:space="preserve">
+    <value>Plan de Salle</value>
+  </data>
+  <data name="BO_Nav_TableMap_Desc" xml:space="preserve">
+    <value>Plan Spatial</value>
+  </data>
+  
+  <data name="BO_Nav_TableExplorer" xml:space="preserve">
+    <value>Explorateur de Tables</value>
+  </data>
+  <data name="BO_Nav_TableExplorer_Desc" xml:space="preserve">
+    <value>Liste des Tables</value>
+  </data>
+  
+  <data name="BO_Nav_TableDesigner" xml:space="preserve">
+    <value>Concepteur de Tables</value>
+  </data>
+  <data name="BO_Nav_TableDesigner_Desc" xml:space="preserve">
+    <value>Créer des Plans</value>
+  </data>
+  
+  <data name="BO_Nav_Users" xml:space="preserve">
+    <value>Utilisateurs</value>
+  </data>
+  <data name="BO_Nav_Users_Desc" xml:space="preserve">
+    <value>Personnel et Permissions</value>
+  </data>
+  
+  <data name="BO_Nav_Roles" xml:space="preserve">
+    <value>Rôles</value>
+  </data>
+  <data name="BO_Nav_Roles_Desc" xml:space="preserve">
+    <value>Rôles Utilisateurs</value>
+  </data>
+  
+  <data name="BO_Nav_TaxDiscount" xml:space="preserve">
+    <value>Taxes / Remises</value>
+  </data>
+  <data name="BO_Nav_TaxDiscount_Desc" xml:space="preserve">
+    <value>Outils de Taxes</value>
+  </data>
+  
+  <data name="BO_Nav_OrderTypes" xml:space="preserve">
+    <value>Types de Commandes</value>
+  </data>
+  <data name="BO_Nav_OrderTypes_Desc" xml:space="preserve">
+    <value>Règles de Commandes</value>
+  </data>
+  
+  <data name="BO_Nav_Shifts" xml:space="preserve">
+    <value>Services</value>
+  </data>
+  <data name="BO_Nav_Shifts_Desc" xml:space="preserve">
+    <value>Définitions de Service</value>
+  </data>
+  
+  <data name="BO_Nav_Reports" xml:space="preserve">
+    <value>Rapports</value>
+  </data>
+  <data name="BO_Nav_Reports_Desc" xml:space="preserve">
+    <value>Résumés des Ventes</value>
+  </data>
+  
+  <data name="BO_Nav_Settings" xml:space="preserve">
+    <value>Paramètres Généraux</value>
+  </data>
+  <data name="BO_Nav_Settings_Desc" xml:space="preserve">
+    <value>Infos Restaurant &amp; Kiosque</value>
+  </data>
+  
+  <data name="BO_Nav_System" xml:space="preserve">
+    <value>Système et Imprimantes</value>
+  </data>
+  <data name="BO_Nav_System_Desc" xml:space="preserve">
+    <value>Matériel et Configuration</value>
+  </data>
+  
+  <data name="BO_Nav_PrintTemplates" xml:space="preserve">
+    <value>Modèles d'Impression</value>
+  </data>
+  <data name="BO_Nav_PrintTemplates_Desc" xml:space="preserve">
+    <value>Reçus et Tickets</value>
+  </data>
+
+  <!-- Table Map -->
+  <data name="TM_Title" xml:space="preserve">
+    <value>Plan de Salle</value>
+  </data>
+  <data name="TM_SelectNewTable" xml:space="preserve">
+    <value>Sélectionner Nouvelle Table</value>
+  </data>
+  <data name="TM_RealTime" xml:space="preserve">
+    <value>Temps Réel</value>
+  </data>
+  <data name="TM_Refresh" xml:space="preserve">
+    <value>Rafraîchir</value>
+  </data>
+  <data name="TM_LastUpdate" xml:space="preserve">
+    <value>Dernière Mise à Jour:</value>
+  </data>
+
+  <!-- Kitchen Display -->
+  <data name="KD_Title" xml:space="preserve">
+    <value>Écran Cuisine</value>
+  </data>
+  <data name="KD_HistoryTitle" xml:space="preserve">
+    <value>Historique Cuisine</value>
+  </data>
+  <data name="KD_History" xml:space="preserve">
+    <value>Historique</value>
+  </data>
+  <data name="KD_Refresh" xml:space="preserve">
+    <value>Rafraîchir</value>
+  </data>
+  <data name="KD_BumpOrder" xml:space="preserve">
+    <value>TERMINER COMMANDE</value>
+  </data>
+  <data name="KD_NoActiveOrders" xml:space="preserve">
+    <value>Aucune commande active</value>
+  </data>
+  <data name="KD_Never" xml:space="preserve">
+    <value>Jamais</value>
+  </data>
+
+  <!-- Payment (SettlePage) -->
+  <data name="PAY_TotalAmount" xml:space="preserve">
+    <value>Montant Total</value>
+  </data>
+  <data name="PAY_TaxAmount" xml:space="preserve">
+    <value>Montant Taxe</value>
+  </data>
+  <data name="PAY_PaidAmount" xml:space="preserve">
+    <value>Montant Payé</value>
+  </data>
+  <data name="PAY_BalanceDue" xml:space="preserve">
+    <value>Solde Dû</value>
+  </data>
+  <data name="PAY_TenderAmount" xml:space="preserve">
+    <value>Montant Versé</value>
+  </data>
+  <data name="PAY_TaxExempt" xml:space="preserve">
+    <value>Exonéré de Taxe</value>
+  </data>
+  <data name="PAY_QuickCash" xml:space="preserve">
+    <value>Espèces Rapide</value>
+  </data>
+  <data name="PAY_NoSale" xml:space="preserve">
+    <value>Sans Vente</value>
+  </data>
+  <data name="PAY_Exact" xml:space="preserve">
+    <value>Exact</value>
+  </data>
+  <data name="PAY_Cash" xml:space="preserve">
+    <value>ESPÈCES</value>
+  </data>
+  <data name="PAY_CreditCard" xml:space="preserve">
+    <value>CARTE DE CRÉDIT</value>
+  </data>
+  <data name="PAY_GiftCard" xml:space="preserve">
+    <value>CARTE CADEAU</value>
+  </data>
+  <data name="PAY_Cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+
+  <!-- Settings (SettingsPage) -->
+  <data name="SET_Title" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
+  <data name="SET_RestaurantInfo" xml:space="preserve">
+    <value>Informations Restaurant</value>
+  </data>
+  <data name="SET_RestaurantName" xml:space="preserve">
+    <value>Nom du Restaurant</value>
+  </data>
+  <data name="SET_Address" xml:space="preserve">
+    <value>Adresse</value>
+  </data>
+  <data name="SET_Phone" xml:space="preserve">
+    <value>Téléphone</value>
+  </data>
+  <data name="SET_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="SET_Website" xml:space="preserve">
+    <value>Site Web</value>
+  </data>
+  <data name="SET_TaxId" xml:space="preserve">
+    <value>Numéro TVA</value>
+  </data>
+  <data name="SET_ReceiptFooter" xml:space="preserve">
+    <value>Pied de Page Reçu</value>
+  </data>
+  <data name="SET_SaveChanges" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="SET_TerminalSettings" xml:space="preserve">
+    <value>Paramètres Terminal</value>
+  </data>
+  <data name="SET_KioskMode" xml:space="preserve">
+    <value>Mode Kiosque</value>
+  </data>
+
+  <!-- Dialogs -->
+  <data name="DLG_SelectModifiers" xml:space="preserve">
+    <value>Sélectionner des Modificateurs</value>
+  </data>
+  <data name="DLG_Done" xml:space="preserve">
+    <value>Terminé</value>
+  </data>
+  <data name="DLG_Cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="DLG_Required" xml:space="preserve">
+    <value>Requis</value>
+  </data>
+
+  <!-- Reports (SalesReportsPage) -->
+  <data name="RPT_Title" xml:space="preserve">
+    <value>Rapports</value>
+  </data>
+  <data name="RPT_StartDate" xml:space="preserve">
+    <value>Date Début</value>
+  </data>
+  <data name="RPT_EndDate" xml:space="preserve">
+    <value>Date Fin</value>
+  </data>
+  <data name="RPT_RunReport" xml:space="preserve">
+    <value>Exécuter</value>
+  </data>
+  <data name="RPT_Today" xml:space="preserve">
+    <value>Aujourd'hui</value>
+  </data>
+  <data name="RPT_Yesterday" xml:space="preserve">
+    <value>Hier</value>
+  </data>
+  <data name="RPT_Week" xml:space="preserve">
+    <value>Semaine</value>
+  </data>
+  <data name="RPT_Month" xml:space="preserve">
+    <value>Mois</value>
+  </data>
+  <!-- Sales Summary -->
+  <data name="RPT_SalesSummary" xml:space="preserve">
+    <value>Résumé des Ventes</value>
+  </data>
+  <data name="RPT_GrossSales" xml:space="preserve">
+    <value>Ventes Brutes</value>
+  </data>
+  <data name="RPT_NetSales" xml:space="preserve">
+    <value>Ventes Nettes</value>
+  </data>
+  <data name="RPT_TotalTax" xml:space="preserve">
+    <value>Total TVA</value>
+  </data>
+  <data name="RPT_Category" xml:space="preserve">
+    <value>Catégorie</value>
+  </data>
+  <data name="RPT_Items" xml:space="preserve">
+    <value>Articles</value>
+  </data>
+  <data name="RPT_Gross" xml:space="preserve">
+    <value>Brut</value>
+  </data>
+  <data name="RPT_Net" xml:space="preserve">
+    <value>Net</value>
+  </data>
+  <data name="RPT_Tax" xml:space="preserve">
+    <value>TVA</value>
+  </data>
+</root>

@@ -9,23 +9,23 @@
 
     <ScrollViewer>
         <StackPanel Spacing="12" Padding="16" MaxWidth="900">
-            <TextBlock Text="Settings" FontSize="24" />
+            <TextBlock Text="{Binding Localization[SET_Title], Mode=OneWay}" FontSize="24" />
 
-            <TextBlock Text="Restaurant Information" FontSize="18" FontWeight="SemiBold" Margin="0,12,0,0"/>
-            <TextBox Header="Restaurant Name" Text="{Binding RestaurantName, Mode=TwoWay}" />
-            <TextBox Header="Address" Text="{Binding RestaurantAddress, Mode=TwoWay}" />
-            <TextBox Header="Phone" Text="{Binding RestaurantPhone, Mode=TwoWay}" InputScope="TelephoneNumber" />
-            <TextBox Header="Email" Text="{Binding RestaurantEmail, Mode=TwoWay}" InputScope="EmailSmtpAddress" />
-            <TextBox Header="Website" Text="{Binding RestaurantWebsite, Mode=TwoWay}" InputScope="Url" />
-            <TextBox Header="Tax ID / VAT" Text="{Binding TaxId, Mode=TwoWay}" />
-            <TextBox Header="Receipt Footer Message" Text="{Binding ReceiptFooter, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="80" />
+            <TextBlock Text="{Binding Localization[SET_RestaurantInfo], Mode=OneWay}" FontSize="18" FontWeight="SemiBold" Margin="0,12,0,0"/>
+            <TextBox Header="{Binding Localization[SET_RestaurantName], Mode=OneWay}" Text="{Binding RestaurantName, Mode=TwoWay}" />
+            <TextBox Header="{Binding Localization[SET_Address], Mode=OneWay}" Text="{Binding RestaurantAddress, Mode=TwoWay}" />
+            <TextBox Header="{Binding Localization[SET_Phone], Mode=OneWay}" Text="{Binding RestaurantPhone, Mode=TwoWay}" InputScope="TelephoneNumber" />
+            <TextBox Header="{Binding Localization[SET_Email], Mode=OneWay}" Text="{Binding RestaurantEmail, Mode=TwoWay}" InputScope="EmailSmtpAddress" />
+            <TextBox Header="{Binding Localization[SET_Website], Mode=OneWay}" Text="{Binding RestaurantWebsite, Mode=TwoWay}" InputScope="Url" />
+            <TextBox Header="{Binding Localization[SET_TaxId], Mode=OneWay}" Text="{Binding TaxId, Mode=TwoWay}" />
+            <TextBox Header="{Binding Localization[SET_ReceiptFooter], Mode=OneWay}" Text="{Binding ReceiptFooter, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="80" />
             
-            <Button Content="Save Changes" Command="{Binding SaveSettingsCommand}" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right" />
+            <Button Content="{Binding Localization[SET_SaveChanges], Mode=OneWay}" Command="{Binding SaveSettingsCommand}" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right" />
 
             <MenuFlyoutSeparator />
 
-            <TextBlock Text="Terminal Settings" FontSize="18" FontWeight="SemiBold" />
-            <ToggleSwitch Header="Kiosk Mode" IsOn="{Binding IsKioskMode, Mode=TwoWay}" />
+            <TextBlock Text="{Binding Localization[SET_TerminalSettings], Mode=OneWay}" FontSize="18" FontWeight="SemiBold" />
+            <ToggleSwitch Header="{Binding Localization[SET_KioskMode], Mode=OneWay}" IsOn="{Binding IsKioskMode, Mode=TwoWay}" />
             <!-- ApiBaseUrl removed as it was a placeholder -->
         </StackPanel>
     </ScrollViewer>

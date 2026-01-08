@@ -29,24 +29,24 @@
             <Border Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" CornerRadius="8" Padding="16">
                 <StackPanel Spacing="12">
                     <Grid>
-                        <TextBlock Text="Total Amount" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="{Binding Localization[PAY_TotalAmount], Mode=OneWay}" Style="{StaticResource SubtitleTextBlockStyle}"/>
                         <TextBlock Text="{x:Bind ViewModel.TotalAmount, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Right" FontWeight="Bold"/>
                     </Grid>
                     
                     <Grid>
-                         <TextBlock Text="Tax Amount"/>
+                         <TextBlock Text="{Binding Localization[PAY_TaxAmount], Mode=OneWay}"/>
                          <TextBlock Text="{x:Bind ViewModel.TaxAmount, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" HorizontalAlignment="Right"/>
                     </Grid>
                     
                     <MenuFlyoutSeparator />
 
                     <Grid>
-                        <TextBlock Text="Paid Amount" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                        <TextBlock Text="{Binding Localization[PAY_PaidAmount], Mode=OneWay}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                         <TextBlock Text="{x:Bind ViewModel.PaidAmount, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" HorizontalAlignment="Right" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                     </Grid>
 
                     <Grid>
-                        <TextBlock Text="Balance Due" Style="{StaticResource TitleTextBlockStyle}" Foreground="{ThemeResource SystemAccentColor}"/>
+                        <TextBlock Text="{Binding Localization[PAY_BalanceDue], Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}" Foreground="{ThemeResource SystemAccentColor}"/>
                         <TextBlock Text="{x:Bind ViewModel.DueAmount, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Right" Foreground="{ThemeResource SystemAccentColor}" FontWeight="Bold"/>
                     </Grid>
                 </StackPanel>
@@ -64,7 +64,7 @@
                          Severity="Success" />
             </StackPanel>
 
-            <Button Command="{x:Bind ViewModel.CloseCommand}" Content="Cancel" Height="48" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Background="DimGray"/>
+            <Button Command="{x:Bind ViewModel.CloseCommand}" Content="{Binding Localization[PAY_Cancel], Mode=OneWay}" Height="48" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Background="DimGray"/>
         </StackPanel>
 
         <!-- Actions -->
@@ -89,7 +89,7 @@
                         CornerRadius="4" 
                         Padding="12,4">
                     <StackPanel>
-                        <TextBlock Text="Tender Amount" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemAccentColor}"/>
+                        <TextBlock Text="{Binding Localization[PAY_TenderAmount], Mode=OneWay}" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemAccentColor}"/>
                         <TextBlock Text="{x:Bind ViewModel.TenderAmount, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" 
                                  FontSize="36" 
                                  FontWeight="Bold" 
@@ -98,7 +98,7 @@
                 </Border>
 
                 <ToggleButton Grid.Column="1" 
-                              Content="Tax Exempt" 
+                              Content="{Binding Localization[PAY_TaxExempt], Mode=OneWay}" 
                               IsChecked="{x:Bind ViewModel.IsTaxExempt, Mode=OneWay}"
                               Command="{x:Bind ViewModel.ToggleTaxExemptCommand}"
                               Height="60" VerticalAlignment="Bottom"/>
@@ -153,14 +153,14 @@
                         </Grid.ColumnDefinitions>
                         <Button Content="TEST WAIT" Command="{x:Bind ViewModel.TestWaitCommand}" Height="48" HorizontalAlignment="Stretch" Background="Orange" Foreground="Black"/>
                         <Button Grid.Column="1" Content="Next $" Command="{x:Bind ViewModel.NextAmountCommand}" Height="48" HorizontalAlignment="Stretch" Background="LightSlateGray" Foreground="White"/>
-                        <Button Grid.Column="2" Content="No Sale" Command="{x:Bind ViewModel.NoSaleCommand}" Height="48" HorizontalAlignment="Stretch" Background="DarkRed" Foreground="White"/>
-                        <Button Grid.Column="3" Content="Exact" Command="{x:Bind ViewModel.ExactAmountCommand}" Height="48" HorizontalAlignment="Stretch" Background="DarkGreen" Foreground="White" IsEnabled="{x:Bind ViewModel.HasDueAmount, Mode=OneWay}"/>
+                        <Button Grid.Column="2" Content="{Binding Localization[PAY_NoSale], Mode=OneWay}" Command="{x:Bind ViewModel.NoSaleCommand}" Height="48" HorizontalAlignment="Stretch" Background="DarkRed" Foreground="White"/>
+                        <Button Grid.Column="3" Content="{Binding Localization[PAY_Exact], Mode=OneWay}" Command="{x:Bind ViewModel.ExactAmountCommand}" Height="48" HorizontalAlignment="Stretch" Background="DarkGreen" Foreground="White" IsEnabled="{x:Bind ViewModel.HasDueAmount, Mode=OneWay}"/>
                     </Grid>
 
                     <!-- F-0043: Quick Cash Buttons -->
                     <Border Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" CornerRadius="8" Padding="12">
                         <StackPanel Spacing="8">
-                            <TextBlock Text="Quick Cash" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding Localization[PAY_QuickCash], Mode=OneWay}" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Center"/>
                             <Grid ColumnSpacing="8" RowSpacing="8">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -188,7 +188,7 @@
                             CommandParameter="Cash">
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <FontIcon Glyph="&#xE8C7;" />
-                            <TextBlock Text="CASH" FontSize="18" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding Localization[PAY_Cash], Mode=OneWay}" FontSize="18" FontWeight="SemiBold"/>
                         </StackPanel>
                     </Button>
 
@@ -196,7 +196,7 @@
                             HorizontalAlignment="Stretch" Height="60" Background="RoyalBlue" Foreground="White">
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <FontIcon Glyph="&#xE8C9;" />
-                            <TextBlock Text="CREDIT CARD" FontSize="18" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding Localization[PAY_CreditCard], Mode=OneWay}" FontSize="18" FontWeight="SemiBold"/>
                         </StackPanel>
                     </Button>
                     
@@ -205,7 +205,7 @@
                             CommandParameter="GiftCertificate">
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <FontIcon Glyph="&#xEC14;" />
-                            <TextBlock Text="GIFT CARD" FontSize="18" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding Localization[PAY_GiftCard], Mode=OneWay}" FontSize="18" FontWeight="SemiBold"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>

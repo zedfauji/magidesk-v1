@@ -12,8 +12,9 @@ public sealed partial class KitchenDisplayPage : Page
     public KitchenDisplayPage()
     {
         this.InitializeComponent();
-        this.Name = "PageRoot"; // Needed for ElementName binding lookup in DataTemplate if using Binding
-        ViewModel = App.Services.GetService<KitchenDisplayViewModel>()!;
+        ViewModel = App.Services.GetRequiredService<KitchenDisplayViewModel>();
+        DataContext = ViewModel;
+        this.Name = "RootPage";
     }
     
     protected override void OnNavigatedTo(NavigationEventArgs e)

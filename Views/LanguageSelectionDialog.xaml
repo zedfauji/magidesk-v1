@@ -1,0 +1,42 @@
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.LanguageSelectionDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:Magidesk.Presentation.ViewModels"
+    mc:Ignorable="d"
+    Title="Select Language / Seleccionar Idioma"
+    PrimaryButtonText="Save / Guardar"
+    CloseButtonText="Cancel / Cancelar"
+    DefaultButton="Primary"
+    RequestedTheme="Dark">
+
+    <ContentDialog.Resources>
+        <Style x:Key="LanguageItemStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+    </ContentDialog.Resources>
+
+    <Grid Padding="20">
+        <ListView 
+            ItemsSource="{Binding SupportedLanguages}" 
+            SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
+            SelectionMode="Single"
+            ItemContainerStyle="{StaticResource LanguageItemStyle}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Flag}" FontSize="24" Margin="0,0,15,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding Name}" FontSize="16" VerticalAlignment="Center" Grid.Column="1"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentDialog>

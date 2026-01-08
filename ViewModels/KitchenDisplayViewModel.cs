@@ -42,16 +42,23 @@ namespace Magidesk.Presentation.ViewModels;
         }
     }
 
-    public string ViewTitle => IsHistoryMode ? "Kitchen History" : "Kitchen Display System";
+    public Services.LocalizationService Localization { get; }
 
-    public KitchenDisplayViewModel(IKitchenOrderRepository repository)
+    public string ViewTitle => IsHistoryMode ? "KD_HistoryTitle" : "KD_Title";
+
+    public KitchenDisplayViewModel(
+        IKitchenOrderRepository repository,
+        Services.LocalizationService localizationService)
     {
         _repository = repository;
+        Localization = localizationService;
         
         BumpCommand = new AsyncRelayCommand<KitchenOrderViewModel>(BumpOrderAsync);
         RefreshCommand = new AsyncRelayCommand(LoadOrdersAsync);
         ToggleHistoryCommand = new RelayCommand(() => IsHistoryMode = !IsHistoryMode);
         
+        _lastUpdated = Localization["KD_Never"];
+
         // Setup Polling Timer (every 10 seconds)
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         if (_dispatcherQueue != null)

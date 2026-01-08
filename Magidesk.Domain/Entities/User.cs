@@ -45,8 +45,17 @@ public class User
             EncryptedPin = encryptedPin,
             EncryptedPassword = encryptedPassword,
             HourlyRate = hourlyRate.HasValue ? new Money(hourlyRate.Value) : Money.Zero(),
+            PreferredLanguage = "en-US",
             IsActive = true
         };
+    }
+
+    public string PreferredLanguage { get; private set; } = "en-US";
+
+    public void SetPreferredLanguage(string languageCode)
+    {
+        if (string.IsNullOrWhiteSpace(languageCode)) throw new ArgumentException("Language code cannot be empty");
+        PreferredLanguage = languageCode;
     }
     
     public void SetRole(Guid roleId)

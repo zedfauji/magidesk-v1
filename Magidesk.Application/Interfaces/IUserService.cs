@@ -7,4 +7,6 @@ public interface IUserService
     UserDto? CurrentUser { get; set; }
     
     event EventHandler<UserDto?>? UserChanged;
+    
+    Task UpdatePreferredLanguageAsync(string languageCode);
 }

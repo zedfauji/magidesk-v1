@@ -13,8 +13,10 @@ public partial class BackOfficeViewModel : ViewModelBase
     private readonly NavigationService _navigationService;
     private readonly IUserService _userService;
     private readonly ISecurityService _securityService;
-    private string _headerText = "Back Office";
+    private string _headerText = "BO_Title"; // Default Key
     private Type _currentPageType;
+
+    public Services.LocalizationService Localization { get; }
 
     public string HeaderText
     {
@@ -35,11 +37,14 @@ public partial class BackOfficeViewModel : ViewModelBase
     public BackOfficeViewModel(
         NavigationService navigationService,
         IUserService userService,
-        ISecurityService securityService)
+        ISecurityService securityService,
+        Services.LocalizationService localizationService)
     {
         _navigationService = navigationService;
         _userService = userService;
         _securityService = securityService;
+        Localization = localizationService;
+        
         Title = "Back Office";
         
         NavigateCommand = new RelayCommand<NavigationItem>(Navigate);
@@ -52,13 +57,14 @@ public partial class BackOfficeViewModel : ViewModelBase
     private async Task LoadNavigationItemsAsync()
     {
         NavigationItems.Clear();
-        NavigationItems.Add(new NavigationItem("Menu Editor", "Edit Categories, Groups, Items", "\uE70F", typeof(MenuEditorPage)));
-        NavigationItems.Add(new NavigationItem("Modifiers", "Manage Options & Toppings", "\uE74C", typeof(ModifierEditorPage)));
-        NavigationItems.Add(new NavigationItem("Inventory", "Manage Stock & Ingredients", "\uE8F2", typeof(InventoryPage)));
-        NavigationItems.Add(new NavigationItem("Vendors", "Supplier Management", "\uE716", typeof(VendorsPage)));
-        NavigationItems.Add(new NavigationItem("Purchase Orders", "Stock Procurement", "\uEA37", typeof(PurchaseOrdersPage)));
-        NavigationItems.Add(new NavigationItem("Table Map", "Spatial Floor Plan", "\uE8F1", typeof(TableMapPage)));
-        NavigationItems.Add(new NavigationItem("Table Explorer", "List Floor Plan", "\uE179", typeof(TableExplorerPage)));
+        // Storing KEYS in Title and Description instead of raw text
+        NavigationItems.Add(new NavigationItem("BO_Nav_MenuEditor", "BO_Nav_MenuEditor_Desc", "\uE70F", typeof(MenuEditorPage), Localization));
+        NavigationItems.Add(new NavigationItem("BO_Nav_Modifiers", "BO_Nav_Modifiers_Desc", "\uE74C", typeof(ModifierEditorPage), Localization));
+        NavigationItems.Add(new NavigationItem("BO_Nav_Inventory", "BO_Nav_Inventory_Desc", "\uE8F2", typeof(InventoryPage), Localization));
+        NavigationItems.Add(new NavigationItem("BO_Nav_Vendors", "BO_Nav_Vendors_Desc", "\uE716", typeof(VendorsPage), Localization));
+        NavigationItems.Add(new NavigationItem("BO_Nav_PurchaseOrders", "BO_Nav_PurchaseOrders_Desc", "\uEA37", typeof(PurchaseOrdersPage), Localization));
+        NavigationItems.Add(new NavigationItem("BO_Nav_TableMap", "BO_Nav_TableMap_Desc", "\uE8F1", typeof(TableMapPage), Localization));
+        NavigationItems.Add(new NavigationItem("BO_Nav_TableExplorer", "BO_Nav_TableExplorer_Desc", "\uE179", typeof(TableExplorerPage), Localization));
         
         if (_userService.CurrentUser != null)
         {
@@ -68,19 +74,19 @@ public partial class BackOfficeViewModel : ViewModelBase
 
             if (hasDesignerPermission)
             {
-                NavigationItems.Add(new NavigationItem("Table Designer", "Design Table Layouts", "\uE70F", typeof(Magidesk.Presentation.Views.TableDesignerPage)));
+                NavigationItems.Add(new NavigationItem("BO_Nav_TableDesigner", "BO_Nav_TableDesigner_Desc", "\uE70F", typeof(Magidesk.Presentation.Views.TableDesignerPage), Localization));
             }
         }
 
-        NavigationItems.Add(new NavigationItem("Users", "Manage Staff & Permissions", "\uE77B", typeof(Magidesk.Presentation.Views.UserManagementPage)));
-        NavigationItems.Add(new NavigationItem("Roles", "Manage User Roles", "\uE716", typeof(Magidesk.Presentation.Views.RoleManagementPage)));
-        NavigationItems.Add(new NavigationItem("Tax / Discount", "Discount & Tax tools", "\uE8D7", typeof(Magidesk.Presentation.Views.DiscountTaxPage)));
-        NavigationItems.Add(new NavigationItem("Order Types", "Manage order type rules", "\uE8A1", typeof(OrderTypeExplorerPage)));
-        NavigationItems.Add(new NavigationItem("Shifts", "Manage shift definitions", "\uE823", typeof(ShiftExplorerPage)));
-        NavigationItems.Add(new NavigationItem("Reports", "Sales Summaries", "\uE9F9", typeof(SalesReportsPage)));
-        NavigationItems.Add(new NavigationItem("General Settings", "Restaurant Info & Kiosk", "\uE713", typeof(SettingsPage)));
-        NavigationItems.Add(new NavigationItem("System & Printers", "Hardware, Config & Backup", "\uE713", typeof(SystemConfigPage)));
-        NavigationItems.Add(new NavigationItem("Print Templates", "Receipt & Ticket Layouts", "\uE74C", typeof(Magidesk.Presentation.Views.PrintTemplatesPage)));
+        NavigationItems.Add(new NavigationItem("BO_Nav_Users", "BO_Nav_Users_Desc", "\uE77B", typeof(Magidesk.Presentation.Views.UserManagementPage), Localization));
+        NavigationItems.Add(new NavigationItem("BO_Nav_Roles", "BO_Nav_Roles_Desc", "\uE716", typeof(Magidesk.Presentation.Views.RoleManagementPage), Localization));
+        NavigationItems.Add(new NavigationItem("BO_Nav_TaxDiscount", "BO_Nav_TaxDiscount_Desc", "\uE8D7", typeof(Magidesk.Presentation.Views.DiscountTaxPage), Localization));
+        NavigationItems.Add(new NavigationItem("BO_Nav_OrderTypes", "BO_Nav_OrderTypes_Desc", "\uE8A1", typeof(OrderTypeExplorerPage), Localization));
+        NavigationItems.Add(new NavigationItem("BO_Nav_Shifts", "BO_Nav_Shifts_Desc", "\uE823", typeof(ShiftExplorerPage), Localization));
+        NavigationItems.Add(new NavigationItem("BO_Nav_Reports", "BO_Nav_Reports_Desc", "\uE9F9", typeof(SalesReportsPage), Localization));
+        NavigationItems.Add(new NavigationItem("BO_Nav_Settings", "BO_Nav_Settings_Desc", "\uE713", typeof(SettingsPage), Localization));
+        NavigationItems.Add(new NavigationItem("BO_Nav_System", "BO_Nav_System_Desc", "\uE713", typeof(SystemConfigPage), Localization));
+        NavigationItems.Add(new NavigationItem("BO_Nav_PrintTemplates", "BO_Nav_PrintTemplates_Desc", "\uE74C", typeof(Magidesk.Presentation.Views.PrintTemplatesPage), Localization));
     }
 
     private async Task CaptureBatchAsync()
@@ -95,7 +101,7 @@ public partial class BackOfficeViewModel : ViewModelBase
     {
         if (item == null) return;
         
-        HeaderText = item.Title;
+        HeaderText = item.Title; // Now setting it to the KEY
         if (item.PageType != typeof(object))
         {
             CurrentPageType = item.PageType;
@@ -108,18 +114,39 @@ public partial class BackOfficeViewModel : ViewModelBase
     }
 }
 
-public class NavigationItem
+public partial class NavigationItem : ObservableObject
 {
-    public string Title { get; }
-    public string Description { get; }
+    private readonly Services.LocalizationService? _localizationService;
+
+    public string TitleKey { get; }
+    public string DescriptionKey { get; }
     public string IconData { get; } 
     public Type PageType { get; }
+    
+    // Kept for compatibility if accessed directly, but returns Key now.
+    public string Title => TitleKey; 
 
-    public NavigationItem(string title, string description, string iconData, Type pageType)
+    public string LocalizedTitle => _localizationService?[TitleKey] ?? TitleKey;
+    public string LocalizedDescription => _localizationService?[DescriptionKey] ?? DescriptionKey;
+
+    public NavigationItem(string titleKey, string descriptionKey, string iconData, Type pageType, Services.LocalizationService? localizationService = null)
     {
-        Title = title;
-        Description = description;
+        TitleKey = titleKey;
+        DescriptionKey = descriptionKey;
         IconData = iconData;
         PageType = pageType;
+        _localizationService = localizationService;
+
+        if (_localizationService != null)
+        {
+            _localizationService.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == "Item[]")
+                {
+                    OnPropertyChanged(nameof(LocalizedTitle));
+                    OnPropertyChanged(nameof(LocalizedDescription));
+                }
+            };
+        }
     }
 }
