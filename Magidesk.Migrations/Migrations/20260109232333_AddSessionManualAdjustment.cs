@@ -11,7 +11,6 @@ namespace Magidesk.Migrations.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            /*
             migrationBuilder.AddColumn<string>(
                 name: "PreferredLanguage",
                 table: "Users",
@@ -133,7 +132,6 @@ namespace Magidesk.Migrations.Migrations
                 principalTable: "TableTypes",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
-            */
         }
 
         /// <inheritdoc />
