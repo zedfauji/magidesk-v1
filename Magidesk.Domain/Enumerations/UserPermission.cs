@@ -24,7 +24,10 @@ public enum UserPermission
     ManageTableLayout = 1 << 9,
     ManageMenu = 1 << 10,
     ViewReports = 1 << 11,
-    SystemConfiguration = 1 << 12
+    SystemConfiguration = 1 << 12,
+    
+    // Feature A.17
+    AdjustSessionTime = 1 << 13
     
     // All = ...
 }

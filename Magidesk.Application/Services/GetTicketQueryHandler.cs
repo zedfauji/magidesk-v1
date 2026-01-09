@@ -11,10 +11,14 @@ namespace Magidesk.Application.Services;
 public class GetTicketQueryHandler : IQueryHandler<GetTicketQuery, TicketDto?>
 {
     private readonly ITicketRepository _ticketRepository;
+    private readonly ITableSessionRepository _sessionRepository;
 
-    public GetTicketQueryHandler(ITicketRepository ticketRepository)
+    public GetTicketQueryHandler(
+        ITicketRepository ticketRepository,
+        ITableSessionRepository sessionRepository)
     {
         _ticketRepository = ticketRepository;
+        _sessionRepository = sessionRepository;
     }
 
     public async Task<TicketDto?> HandleAsync(GetTicketQuery query, CancellationToken cancellationToken = default)
@@ -25,10 +29,13 @@ public class GetTicketQueryHandler : IQueryHandler<GetTicketQuery, TicketDto?>
             return null;
         }
 
-        return MapToDto(ticket);
+        // Get active session for this ticket (if any)
+        var activeSession = await _sessionRepository.GetActiveSessionByTicketIdAsync(query.TicketId, cancellationToken);
+
+        return MapToDto(ticket, activeSession);
     }
 
-    private static TicketDto MapToDto(Domain.Entities.Ticket ticket)
+    private static TicketDto MapToDto(Domain.Entities.Ticket ticket, Domain.Entities.TableSession? activeSession)
     {
         var dto = new TicketDto
         {
@@ -82,6 +89,25 @@ public class GetTicketQueryHandler : IQueryHandler<GetTicketQuery, TicketDto?>
         else
         {
             dto.TableName = "Take Out"; // Default for tickets without table assignment
+        }
+
+        // Populate session data if active session exists (BE-A.15-03)
+        if (activeSession != null)
+        {
+            dto.SessionId = activeSession.Id;
+            dto.SessionStartTime = activeSession.StartTime;
+            dto.SessionHourlyRate = activeSession.HourlyRate;
+            dto.SessionStatus = activeSession.Status;
+            dto.SessionPausedAt = activeSession.PausedAt;
+            
+            // Calculate elapsed time
+            var now = DateTime.UtcNow;
+            var elapsedTime = now - activeSession.StartTime - activeSession.TotalPausedDuration;
+            dto.SessionElapsedTime = elapsedTime > TimeSpan.Zero ? elapsedTime : TimeSpan.Zero;
+            
+            // Calculate running charge (simplified - actual calculation would use PricingService)
+            var hours = dto.SessionElapsedTime.Value.TotalHours;
+            dto.SessionRunningCharge = (decimal)hours * activeSession.HourlyRate;
         }
 
         return dto;

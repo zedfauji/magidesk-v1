@@ -48,6 +48,17 @@ public class TicketDto
     public List<OrderLineDto> OrderLines { get; set; } = new();
     public List<PaymentDto> Payments { get; set; } = new();
     public GratuityDto? Gratuity { get; set; }
+    
+    // Session-related properties (BE-A.15-03)
+    public Guid? SessionId { get; set; }
+    public DateTime? SessionStartTime { get; set; }
+    public decimal? SessionHourlyRate { get; set; }
+    public TimeSpan? SessionElapsedTime { get; set; }
+    public decimal? SessionRunningCharge { get; set; }
+    public TableSessionStatus? SessionStatus { get; set; } // BE-A.16-01
+    public DateTime? SessionPausedAt { get; set; } // BE-A.16-01
+    public bool HasActiveSession => SessionId.HasValue;
+    
     public int Version { get; set; }
 }
 

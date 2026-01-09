@@ -36,7 +36,14 @@ public sealed partial class MainWindow : Window
         StartupLogger.Log("MainWindow - Clock Start");
         _clockTimer = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread().CreateTimer();
         _clockTimer.Interval = System.TimeSpan.FromSeconds(1);
-        _clockTimer.Tick += (s, e) => { if (StatusClock != null) StatusClock.Text = System.DateTime.Now.ToString("HH:mm:ss"); };
+        _clockTimer.Tick += (s, e) => 
+        { 
+            try 
+            {
+                if (StatusClock != null) StatusClock.Text = System.DateTime.Now.ToString("HH:mm:ss"); 
+            }
+            catch { /* Ignore updates if UI is tearing down */ }
+        };
         _clockTimer.Start();
         
         if (StatusClock != null) StatusClock.Text = System.DateTime.Now.ToString("HH:mm:ss");

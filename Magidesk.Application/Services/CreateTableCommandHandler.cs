@@ -38,6 +38,7 @@ public class CreateTableCommandHandler : ICommandHandler<CreateTableCommand, Cre
             command.Y,
             command.FloorId,
             null, // layoutId
+            null, // tableTypeId
             command.IsActive);
 
         // Save table

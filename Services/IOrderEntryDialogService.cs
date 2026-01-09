@@ -17,5 +17,6 @@ namespace Magidesk.Presentation.Services
         Task ShowTicketFeeAsync(TicketFeeViewModel viewModel);
         Task ShowSeatSelectionAsync(SeatSelectionViewModel viewModel);
         Task ShowMiscItemAsync(MiscItemViewModel viewModel);
+        Task ShowErrorAsync(string title, string message);
     }
 }

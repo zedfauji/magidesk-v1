@@ -139,5 +139,20 @@ namespace Magidesk.Presentation.Services
                 viewModel.IsConfirmed = result == ContentDialogResult.Primary;
             }
         }
+
+        public async Task ShowErrorAsync(string title, string message)
+        {
+            if (App.MainWindowInstance?.Content?.XamlRoot != null)
+            {
+                var dialog = new ContentDialog
+                {
+                    Title = title,
+                    Content = message,
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                };
+                await dialog.ShowAsync();
+            }
+        }
     }
 }

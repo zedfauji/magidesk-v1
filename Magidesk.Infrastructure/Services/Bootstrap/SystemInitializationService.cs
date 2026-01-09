@@ -127,6 +127,36 @@ namespace Magidesk.Infrastructure.Services.Bootstrap
                     await _dbContext.SaveChangesAsync();
                 }
 
+                // Seed Table Types
+                if (!await _dbContext.TableTypes.AnyAsync())
+                {
+                    _logger.LogInformation("Seeding Table Types...");
+                    
+                    var standard = TableType.Create(
+                        "Standard",
+                        15.00m,  // $15/hour
+                        "Standard billiard table"
+                    );
+                    standard.SetRounding(0, 15); // No minimum, round to 15 minutes
+                    
+                    var vip = TableType.Create(
+                        "VIP",
+                        25.00m,  // $25/hour
+                        "VIP billiard table with premium amenities"
+                    );
+                    vip.SetRounding(0, 15);
+                    
+                    var poolTable = TableType.Create(
+                        "Pool Table",
+                        12.00m,  // $12/hour
+                        "Standard pool table"
+                    );
+                    poolTable.SetRounding(0, 15);
+                    
+                    _dbContext.TableTypes.AddRange(standard, vip, poolTable);
+                    await _dbContext.SaveChangesAsync();
+                }
+
                 // Users skipped to avoid authentication mismatch (assuming manual seed via Login or existing data)
                 // However, without at least one Manager, system login is impossible from scratch.
                 // If Users count is 0, we should seed a default Admin.
@@ -243,7 +273,8 @@ namespace Magidesk.Infrastructure.Services.Bootstrap
                             (int)x,
                             (int)y,
                             defaultFloorId, // Link to Main Floor
-                            defaultLayoutId // Link to Standard Layout
+                            defaultLayoutId, // Link to Standard Layout
+                            null // tableTypeId - will be assigned later
                         );
                         
                         tables.Add(table);

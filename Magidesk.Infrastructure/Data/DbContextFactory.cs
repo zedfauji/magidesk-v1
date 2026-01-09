@@ -33,7 +33,7 @@ public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<Applicati
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
         optionsBuilder.UseNpgsql(
             DatabaseConnection.GetConnectionString(),
-            npgsqlOptions => npgsqlOptions.MigrationsAssembly("Magidesk.Infrastructure"));
+            npgsqlOptions => npgsqlOptions.MigrationsAssembly("Magidesk.Migrations"));
 
         return new ApplicationDbContext(optionsBuilder.Options);
     }
@@ -76,7 +76,7 @@ public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<Applicati
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
         optionsBuilder.UseNpgsql(
             connectionString,
-            npgsqlOptions => npgsqlOptions.MigrationsAssembly("Magidesk.Infrastructure"));
+            npgsqlOptions => npgsqlOptions.MigrationsAssembly("Magidesk.Migrations"));
 
         return new ApplicationDbContext(optionsBuilder.Options);
     }

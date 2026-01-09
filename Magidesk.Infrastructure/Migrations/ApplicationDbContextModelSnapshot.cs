@@ -1817,6 +1817,9 @@ namespace Magidesk.Infrastructure.Migrations
                     b.Property<int>("TableNumber")
                         .HasColumnType("integer");
 
+                    b.Property<Guid?>("TableTypeId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -1856,6 +1859,8 @@ namespace Magidesk.Infrastructure.Migrations
 
                     b.HasIndex("TableNumber")
                         .IsUnique();
+
+                    b.HasIndex("TableTypeId");
 
                     b.ToTable("Tables", "magidesk");
                 });
@@ -1902,6 +1907,68 @@ namespace Magidesk.Infrastructure.Migrations
                         .HasDatabaseName("IX_TableLayout_Name");
 
                     b.ToTable("TableLayouts", "magidesk");
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.TableSession", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("CustomerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("GuestCount")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("HourlyRate")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<DateTime?>("PausedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("TableId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TableTypeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("TicketId")
+                        .HasColumnType("uuid");
+
+                    b.Property<TimeSpan>("TotalPausedDuration")
+                        .HasColumnType("interval");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("StartTime");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("TableId");
+
+                    b.HasIndex("TicketId");
+
+                    b.ToTable("TableSessions", "magidesk");
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.TableShape", b =>
@@ -1970,6 +2037,61 @@ namespace Magidesk.Infrastructure.Migrations
                         .HasDatabaseName("IX_TableShape_Name");
 
                     b.ToTable("TableShapes", "magidesk");
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.TableType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<decimal?>("FirstHourRate")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<decimal>("HourlyRate")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<int>("MinimumMinutes")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("RoundingMinutes")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1);
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsActive");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("TableTypes", "magidesk");
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.Terminal", b =>
@@ -3653,7 +3775,14 @@ namespace Magidesk.Infrastructure.Migrations
                         .WithMany("Tables")
                         .HasForeignKey("ServerSectionId");
 
+                    b.HasOne("Magidesk.Domain.Entities.TableType", "TableType")
+                        .WithMany()
+                        .HasForeignKey("TableTypeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Layout");
+
+                    b.Navigation("TableType");
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.TableLayout", b =>
@@ -3664,6 +3793,36 @@ namespace Magidesk.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Floor");
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.TableSession", b =>
+                {
+                    b.OwnsOne("Magidesk.Domain.ValueObjects.Money", "TotalCharge", b1 =>
+                        {
+                            b1.Property<Guid>("TableSessionId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasPrecision(10, 2)
+                                .HasColumnType("numeric(10,2)")
+                                .HasColumnName("TotalChargeAmount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("character varying(3)")
+                                .HasColumnName("TotalChargeCurrency");
+
+                            b1.HasKey("TableSessionId");
+
+                            b1.ToTable("TableSessions", "magidesk");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TableSessionId");
+                        });
+
+                    b.Navigation("TotalCharge")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.TerminalTransaction", b =>

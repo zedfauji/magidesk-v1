@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.Dialogs.StartSessionDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="{Binding Title}"
+    PrimaryButtonText="Start Session"
+    CloseButtonText="Cancel"
+    PrimaryButtonCommand="{Binding StartCommand}"
+    DefaultButton="Primary"
+    x:Name="DialogRoot">
+
+    <Grid RowSpacing="16" Width="450">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Table Information -->
+        <StackPanel Grid.Row="0" Spacing="8">
+            <TextBlock Text="Table Information" 
+                       Style="{StaticResource SubtitleTextBlockStyle}"/>
+            
+            <Grid ColumnSpacing="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Table:" FontWeight="SemiBold"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding TableName}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Type:" FontWeight="SemiBold"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding TableTypeName}"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Rate:" FontWeight="SemiBold"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding HourlyRateDisplay}" Foreground="Green"/>
+            </Grid>
+        </StackPanel>
+
+        <!-- Guest Count -->
+        <StackPanel Grid.Row="1" Spacing="8">
+            <TextBlock Text="Number of Guests" 
+                       Style="{StaticResource SubtitleTextBlockStyle}"/>
+            <NumberBox 
+                Value="{Binding GuestCount, Mode=TwoWay}"
+                Minimum="1"
+                Maximum="20"
+                SpinButtonPlacementMode="Inline"
+                Header="Guest Count"
+                PlaceholderText="Enter number of guests"
+                Width="200"
+                HorizontalAlignment="Left"/>
+        </StackPanel>
+
+        <!-- Customer (Optional) -->
+        <StackPanel Grid.Row="2" Spacing="8">
+            <TextBlock Text="Customer (Optional)" 
+                       Style="{StaticResource SubtitleTextBlockStyle}"/>
+            <TextBlock Text="{Binding CustomerName, TargetNullValue='No customer selected'}" 
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+            <!-- TODO: Add customer search button when customer module is ready -->
+        </StackPanel>
+
+        <!-- Error Display -->
+        <InfoBar Grid.Row="3"
+                 Severity="Error"
+                 Message="{Binding Error}"
+                 IsClosable="False"
+                 Visibility="{Binding Error, Converter={StaticResource NullToVisibilityConverter}}"/>
+
+        <!-- Loading Indicator -->
+        <ProgressRing Grid.Row="4"
+                      IsActive="{Binding IsBusy}"
+                      Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"
+                      HorizontalAlignment="Center"/>
+    </Grid>
+</ContentDialog>

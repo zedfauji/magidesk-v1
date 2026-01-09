@@ -21,6 +21,11 @@ try
     startupLogger.Add("Adding Infrastructure services...");
     builder.Services.AddInfrastructure();
 
+    // Register Stub TerminalContext for Migrations/API usage
+    builder.Services.AddSingleton<Magidesk.Application.Interfaces.ITerminalContext, Magidesk.Api.Services.StubTerminalContext>();
+    builder.Services.AddSingleton<Magidesk.Application.Interfaces.ICashDrawerService, Magidesk.Api.Services.StubCashDrawerService>();
+    builder.Services.AddSingleton<Magidesk.Application.Interfaces.IUserService, Magidesk.Api.Services.StubUserService>();
+
     // Health checks
     startupLogger.Add("Adding Health Checks...");
     builder.Services.AddHealthChecks();
@@ -173,7 +178,7 @@ try
 
     app.Run();
 }
-catch (Exception ex)
+catch (Exception ex) when (ex.GetType().Name != "HostAbortedException")
 {
     // F-ENTRY-001 FIX: Fatal Startup Error Handling
     startupLogger.Add($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] FATAL STARTUP ERROR: {ex.Message}");

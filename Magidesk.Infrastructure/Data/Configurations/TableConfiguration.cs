@@ -59,6 +59,9 @@ public class TableConfiguration : IEntityTypeConfiguration<Table>
 
         builder.Property(t => t.CurrentTicketId);
 
+        builder.Property(t => t.TableTypeId)
+            .IsRequired(false); // Nullable - tables can exist without a type initially
+
         builder.Property(t => t.IsActive)
             .IsRequired()
             .HasDefaultValue(true);
@@ -66,6 +69,12 @@ public class TableConfiguration : IEntityTypeConfiguration<Table>
         builder.Property(t => t.Version)
             .IsRequired()
             .HasDefaultValue(1);
+
+        // Foreign key relationship to TableType
+        builder.HasOne(t => t.TableType)
+            .WithMany()
+            .HasForeignKey(t => t.TableTypeId)
+            .OnDelete(DeleteBehavior.Restrict); // Prevent deleting table types that are in use
 
         // Indexes
         builder.HasIndex(t => t.TableNumber)
@@ -76,6 +85,8 @@ public class TableConfiguration : IEntityTypeConfiguration<Table>
         builder.HasIndex(t => t.Status);
 
         builder.HasIndex(t => t.CurrentTicketId);
+
+        builder.HasIndex(t => t.TableTypeId); // Index for foreign key lookups
 
         builder.HasIndex(t => t.IsActive);
     }

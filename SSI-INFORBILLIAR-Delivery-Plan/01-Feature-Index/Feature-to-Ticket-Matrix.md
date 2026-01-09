@@ -26,15 +26,15 @@
 
 | ID | Feature | Audit | Priority | Backend Ticket | BE Status | Frontend Ticket | FE Status |
 |----|---------|-------|----------|----------------|-----------|-----------------|-----------|
-| A.1 | Start/timer session | ❌ NOT | P0 | BE-A.1-01, BE-A.1-02 | ❌ | FE-A.1-01, FE-A.1-02 | ❌ |
-| A.2 | End session | ❌ NOT | P0 | BE-A.2-01 | ❌ | FE-A.2-01 | ❌ |
-| A.3 | List active sessions | ❌ NOT | P0 | BE-A.3-01 | ❌ | FE-A.3-01 | ❌ |
-| A.4 | Real-time status | ⚠️ PART | P0 | BE-A.4-01 | ❌ | FE-A.4-01 | ❌ |
-| A.5 | Table types | ❌ NOT | P0 | BE-A.5-01 | ❌ | FE-A.5-01 | ❌ |
-| A.6 | Type per table | ❌ NOT | P0 | BE-A.6-01 | ❌ | - | - |
+| A.1 | Start/timer session | 5/5 (100%) | P0 | BE-A.1-01 ✅, BE-A.1-02 ✅, BE-A.1-03 ✅ | ✅ | FE-A.1-01 ✅, FE-A.1-02 ✅ | ✅ |
+| A.2 | End session | 2/2 (100%) | P0 | BE-A.2-01 ✅ | ✅ | FE-A.2-01 ✅ | ✅ |
+| A.3 | List active sessions | 2/2 (100%) | P0 | BE-A.3-01 ✅ | ✅ | FE-A.3-01 ✅ | ✅ |
+| A.4 | Real-time status | ✅ FULL | P0 | BE-A.4-01 ✅ | ✅ | FE-A.4-01 ✅ | ✅ |
+| A.5 | Table types | ✅ FULL | P0 | BE-A.5-01 ✅ | ✅ | FE-A.5-01 | ❌ |
+| A.6 | Type per table | ✅ FULL | P0 | BE-A.6-01 ✅ | ✅ | - | - |
 | A.7 | Link equipment | ❌ NOT | P2 | BE-A.7-01 | ❌ | - | ❌ |
 | A.8 | Game history | ❌ NOT | P2 | BE-A.8-01 | ❌ | - | ❌ |
-| A.9 | Time-based pricing | ⚠️ PART | P0 | BE-A.9-01 | ❌ | FE-A.9-01 | ❌ |
+| A.9 | Time-based pricing | ✅ FULL | P0 | BE-A.9-01 ✅ | ✅ | FE-A.9-01 | ❌ |
 | A.10 | First-hour pricing | ❌ NOT | P1 | BE-A.10-01 | ❌ | - | - |
 | A.11 | Time rounding | ❌ NOT | P1 | BE-A.11-01 | ❌ | - | - |
 | A.12 | Minimum charge | ❌ NOT | P1 | BE-A.12-01 | ❌ | - | - |

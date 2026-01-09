@@ -80,7 +80,15 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IInventoryAdjustmentRepository, InventoryAdjustmentRepository>();
         services.AddScoped<IServerSectionRepository, ServerSectionRepository>();
         services.AddScoped<IPrintTemplateRepository, PrintTemplateRepository>();
+        services.AddScoped<ITableTypeRepository, TableTypeRepository>();
+        services.AddScoped<ITableSessionRepository, TableSessionRepository>();
 
+        // Application Services
+        // Legacy PricingService for backward compatibility (EndTableSessionCommandHandler)
+        services.AddScoped<Magidesk.Application.Interfaces.IPricingService, SimplePricingService>();
+        
+        // New PricingService for time-based billing with table types (BE-A.9-01)
+        services.AddScoped<Magidesk.Domain.Services.IPricingService, Magidesk.Domain.Services.PricingService>();
 
         // Register domain services (stateless, can be singleton or scoped)
         services.AddScoped<TaxDomainService>();

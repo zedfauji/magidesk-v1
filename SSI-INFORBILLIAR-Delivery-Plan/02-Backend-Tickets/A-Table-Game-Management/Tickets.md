@@ -4,8 +4,9 @@
 
 | Ticket ID | Feature ID | Title | Priority | Status |
 |-----------|------------|-------|----------|--------|
-| BE-A.1-01 | A.1 | Create TableSession Entity | P0 | NOT_STARTED |
-| BE-A.1-02 | A.1 | Create StartTableSessionCommand | P0 | NOT_STARTED |
+| BE-A.1-01 | A.1 | Create TableSession Entity | P0 | DONE |
+| BE-A.1-02 | A.1 | Create StartTableSessionCommand | P0 | DONE |
+| BE-A.1-03 | A.1 | Add Table Status Management Methods | P0 | NOT_STARTED |
 | BE-A.2-01 | A.2 | Create EndTableSessionCommand | P0 | NOT_STARTED |
 | BE-A.3-01 | A.3 | Create GetActiveSessionsQuery | P0 | NOT_STARTED |
 | BE-A.4-01 | A.4 | Add Session Status to Table Query | P0 | NOT_STARTED |
@@ -182,6 +183,98 @@ public class StartTableSessionCommandHandler : ICommandHandler<StartTableSession
 
 ---
 
+## BE-A.1-03: Add Table Status Management Methods
+
+**Ticket ID:** BE-A.1-03  
+**Feature ID:** A.1  
+**Type:** Backend  
+**Title:** Add Table Status Management Methods  
+**Priority:** P0
+
+### Outcome (measurable, testable)
+Table entity can change status to InUse/Available without requiring ticket assignment, enabling proper session lifecycle management.
+
+### Scope
+- Add `MarkInUse()` method to Table entity
+- Add `MarkAvailable()` method to Table entity
+- Add invariant validation (cannot mark in-use if already in-use)
+- Update `StartTableSessionCommandHandler` to call `MarkInUse()`
+- Update `EndTableSessionCommandHandler` to call `MarkAvailable()`
+- Add unit tests for new methods
+
+### Explicitly Out of Scope
+- Changing existing `AssignTicket()` behavior
+- Modifying ticket-related status transitions
+
+### Implementation Notes
+```csharp
+public class Table
+{
+    // Existing code...
+    
+    /// <summary>
+    /// Marks table as in-use (for sessions without tickets).
+    /// </summary>
+    public void MarkInUse()
+    {
+        if (Status == TableStatus.InUse)
+        {
+            throw new InvalidOperationException("Table is already in use.");
+        }
+        
+        if (Status != TableStatus.Available)
+        {
+            throw new InvalidOperationException($"Cannot mark table in-use from status {Status}.");
+        }
+        
+        Status = TableStatus.InUse;
+        UpdatedAt = DateTime.UtcNow;
+    }
+    
+    /// <summary>
+    /// Marks table as available (releases from session).
+    /// </summary>
+    public void MarkAvailable()
+    {
+        if (CurrentTicketId.HasValue)
+        {
+            throw new InvalidOperationException("Cannot mark table available while ticket is assigned. Release ticket first.");
+        }
+        
+        Status = TableStatus.Available;
+        UpdatedAt = DateTime.UtcNow;
+    }
+}
+```
+
+### Quality & Guardrails
+- **domain-model.md:** Add behavior to entity, not anemic
+- **testing-requirements.md:** Domain layer ≥90% coverage
+- **exception-handling-contract.md:** Throw domain exceptions for invalid state transitions
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | Table entity | Exists |
+| SOFT | StartTableSessionCommand | BE-A.1-02 |
+| SOFT | EndTableSessionCommand | BE-A.2-01 |
+
+### Acceptance Criteria
+- [ ] `MarkInUse()` method added to Table entity
+- [ ] `MarkAvailable()` method added to Table entity
+- [ ] Cannot mark in-use if already in-use (invariant)
+- [ ] Cannot mark available if ticket assigned (invariant)
+- [ ] `StartTableSessionCommandHandler` updated to call `MarkInUse()`
+- [ ] Unit tests for new methods ≥90%
+- [ ] All invariant tests pass
+
+### Failure Modes to Guard Against
+- Marking table in-use when already in-use
+- Marking table available while ticket still assigned
+- Status transition from invalid states
+
+---
+
 ## BE-A.2-01: Create EndTableSessionCommand
 
 **Ticket ID:** BE-A.2-01  
@@ -319,6 +412,148 @@ public class TableType
 - HourlyRate = 0 or negative
 - Invalid rounding values
 - Missing seed data
+
+---
+
+## BE-A.6-01: Add TableTypeId to Table Entity
+
+**Ticket ID:** BE-A.6-01  
+**Feature ID:** A.6  
+**Type:** Backend  
+**Title:** Add TableTypeId to Table Entity  
+**Priority:** P0
+
+### Outcome (measurable, testable)
+Each table is linked to a `TableType` to determine its pricing rules for time-based billing.
+
+### Scope
+- Add `TableTypeId` property to `Table` entity
+- Add `SetTableType()` method to `Table` entity
+- Update `Table.Create()` to accept optional `tableTypeId`
+- Update `TableConfiguration` EF Core mapping
+- Create migration to add `TableTypeId` column
+- Add foreign key constraint to `TableTypes` table
+- Update existing table seeding to assign default table types
+- Add unit tests for new functionality
+
+### Explicitly Out of Scope
+- UI for assigning table types
+- Changing existing table type assignments (handled by UI later)
+- Validation of table type pricing rules (handled in TableType entity)
+
+### Implementation Notes
+```csharp
+public class Table
+{
+    // Existing properties...
+    public Guid? TableTypeId { get; private set; }
+    
+    // Navigation property (optional, for EF Core)
+    public TableType? TableType { get; private set; }
+    
+    // Update Create method signature
+    public static Table Create(
+        int tableNumber,
+        int capacity,
+        double x = 0,
+        double y = 0,
+        Guid? floorId = null,
+        Guid? layoutId = null,
+        Guid? tableTypeId = null,  // NEW PARAMETER
+        bool isActive = true,
+        TableShapeType shape = TableShapeType.Rectangle,
+        double width = 100,
+        double height = 100)
+    {
+        // Validation and creation logic
+        TableTypeId = tableTypeId; // Can be null initially
+    }
+    
+    // New method to assign/change table type
+    public void SetTableType(Guid tableTypeId)
+    {
+        if (tableTypeId == Guid.Empty)
+        {
+            throw new ArgumentException("Table type ID cannot be empty.", nameof(tableTypeId));
+        }
+        
+        TableTypeId = tableTypeId;
+        UpdatedAt = DateTime.UtcNow;
+    }
+    
+    // Method to clear table type (make it nullable)
+    public void ClearTableType()
+    {
+        TableTypeId = null;
+        UpdatedAt = DateTime.UtcNow;
+    }
+}
+```
+
+### EF Core Configuration
+```csharp
+public class TableConfiguration : IEntityTypeConfiguration<Table>
+{
+    public void Configure(EntityTypeBuilder<Table> builder)
+    {
+        // Existing configuration...
+        
+        // Add TableTypeId foreign key
+        builder.Property(t => t.TableTypeId)
+            .IsRequired(false); // Nullable - tables can exist without a type initially
+        
+        builder.HasOne(t => t.TableType)
+            .WithMany()
+            .HasForeignKey(t => t.TableTypeId)
+            .OnDelete(DeleteBehavior.Restrict); // Prevent deleting table types in use
+    }
+}
+```
+
+### Migration Strategy
+```csharp
+// Migration Up():
+// 1. Add TableTypeId column (nullable)
+// 2. Add foreign key constraint to TableTypes
+// 3. Update existing tables to assign default table type (Standard)
+
+// Migration Down():
+// 1. Drop foreign key constraint
+// 2. Drop TableTypeId column
+```
+
+### Quality & Guardrails
+- **domain-model.md:** Rich entity with behavior methods
+- **guardrails.md:** Maintain encapsulation with private setters
+- **testing-requirements.md:** ≥90% coverage for new methods
+- **database-rules.md:** Migration must be reversible
+- **exception-handling-contract.md:** Validate table type ID
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | TableType entity | BE-A.5-01 ✅ |
+| SOFT | Table entity | Exists ✅ |
+
+### Acceptance Criteria
+- [ ] `TableTypeId` property added to Table entity
+- [ ] `SetTableType()` method validates and sets table type
+- [ ] `ClearTableType()` method allows removing table type
+- [ ] `Create()` method accepts optional `tableTypeId` parameter
+- [ ] EF Core configuration includes foreign key
+- [ ] Migration created and runs successfully (Up and Down)
+- [ ] Existing tables assigned default table type in migration
+- [ ] Foreign key constraint prevents deleting table types in use
+- [ ] Unit tests for `SetTableType()` and `ClearTableType()`
+- [ ] Unit tests for validation (empty GUID throws exception)
+- [ ] Tests ≥90% coverage
+
+### Failure Modes to Guard Against
+- Empty GUID for table type ID
+- Deleting a table type that's assigned to tables
+- Migration fails on existing data
+- Null reference when accessing TableType navigation property
+- Breaking existing table creation code
 
 ---
 

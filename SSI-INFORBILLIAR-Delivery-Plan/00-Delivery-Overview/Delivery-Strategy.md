@@ -79,6 +79,9 @@ All development MUST comply with rules defined in `.agent/rules/*`:
 - **A.5** - Table types (BE-A.5-01, FE-A.5-01)
 - **A.6** - Type per table (BE-A.6-01)
 - **A.9** - Time-based pricing (BE-A.9-01, FE-A.9-01)
+- **A.15** - Session workflow fixes (BE-A.15-02, BE-A.15-03, BE-A.15-04, FE-A.15-01, FE-A.15-02, FE-A.15-03)
+  - Backend: Fix validation logic, add session state to TicketDto, link sessions to tickets
+  - Frontend: Button state management, visual indicators, table map sync
 - **A.16** - Pause/resume billing (BE-A.16-01, FE-A.16-01)
 - **A.17** - Manager time override (BE-A.17-01, FE-A.17-01)
 
@@ -96,11 +99,12 @@ All development MUST comply with rules defined in `.agent/rules/*`:
 **Exit Criteria:**
 - [ ] User must login before operations (J.1)
 - [ ] Can start/stop/pause table sessions (A.1, A.2, A.16)
+- [ ] Session buttons properly enabled/disabled (A.15)
 - [ ] Time-based billing functional (A.9, C.2)
 - [ ] Basic customer tracking (F.1, F.2)
 - [ ] Member discounts apply (F.5)
 
-**Ticket Count:** 25 Backend + 16 Frontend + 8 Cross-Cutting = **49 tickets**
+**Ticket Count:** 28 Backend + 19 Frontend + 8 Cross-Cutting = **55 tickets**
 
 ---
 

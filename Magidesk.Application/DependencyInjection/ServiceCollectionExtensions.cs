@@ -107,6 +107,13 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.ClockInCommand>, ClockInCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.ClockOutCommand>, ClockOutCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.TransferTicketCommand>, TransferTicketCommandHandler>();
+        
+        // Table Session command handlers
+        services.AddScoped<ICommandHandler<Commands.TableSessions.StartTableSessionCommand, Commands.TableSessions.StartTableSessionResult>, Commands.TableSessions.StartTableSessionCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.TableSessions.EndTableSessionCommand, Commands.TableSessions.EndTableSessionResult>, Commands.TableSessions.EndTableSessionCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.TableSessions.PauseTableSessionCommand, Commands.TableSessions.PauseTableSessionResult>, Commands.TableSessions.PauseTableSessionCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.TableSessions.ResumeTableSessionCommand, Commands.TableSessions.ResumeTableSessionResult>, Commands.TableSessions.ResumeTableSessionCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.TableSessions.AdjustSessionTimeCommand, Commands.TableSessions.AdjustSessionTimeResult>, Commands.TableSessions.AdjustSessionTimeCommandHandler>();
 
         // Register Domain/App Services
         services.AddScoped<ITicketCreationService, TicketCreationService>();

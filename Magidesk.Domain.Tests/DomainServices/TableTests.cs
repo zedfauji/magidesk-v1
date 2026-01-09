@@ -512,5 +512,117 @@ public class TableTests
         // Assert
         result.Should().BeFalse();
     }
+
+    #region TableType Tests
+
+    [Fact]
+    public void Table_Create_WithTableTypeId_ShouldCreateTableWithTableType()
+    {
+        // Arrange
+        var tableNumber = 1;
+        var capacity = 4;
+        var tableTypeId = Guid.NewGuid();
+
+        // Act
+        var table = Table.Create(tableNumber, capacity, tableTypeId: tableTypeId);
+
+        // Assert
+        table.TableTypeId.Should().Be(tableTypeId);
+    }
+
+    [Fact]
+    public void Table_Create_WithoutTableTypeId_ShouldCreateTableWithNullTableType()
+    {
+        // Arrange
+        var tableNumber = 1;
+        var capacity = 4;
+
+        // Act
+        var table = Table.Create(tableNumber, capacity);
+
+        // Assert
+        table.TableTypeId.Should().BeNull();
+    }
+
+    [Fact]
+    public void Table_SetTableType_WithValidGuid_ShouldSetTableType()
+    {
+        // Arrange
+        var table = Table.Create(1, 4);
+        var tableTypeId = Guid.NewGuid();
+        var originalUpdatedAt = table.UpdatedAt;
+        System.Threading.Thread.Sleep(10); // Ensure time difference
+
+        // Act
+        table.SetTableType(tableTypeId);
+
+        // Assert
+        table.TableTypeId.Should().Be(tableTypeId);
+        table.UpdatedAt.Should().BeAfter(originalUpdatedAt);
+    }
+
+    [Fact]
+    public void Table_SetTableType_WithEmptyGuid_ShouldThrowException()
+    {
+        // Arrange
+        var table = Table.Create(1, 4);
+
+        // Act
+        var act = () => table.SetTableType(Guid.Empty);
+
+        // Assert
+        act.Should().Throw<ArgumentException>()
+            .WithMessage("*Table type ID cannot be empty*")
+            .And.ParamName.Should().Be("tableTypeId");
+    }
+
+    [Fact]
+    public void Table_SetTableType_CanChangeExistingTableType()
+    {
+        // Arrange
+        var table = Table.Create(1, 4);
+        var firstTableTypeId = Guid.NewGuid();
+        table.SetTableType(firstTableTypeId);
+        var secondTableTypeId = Guid.NewGuid();
+
+        // Act
+        table.SetTableType(secondTableTypeId);
+
+        // Assert
+        table.TableTypeId.Should().Be(secondTableTypeId);
+    }
+
+    [Fact]
+    public void Table_ClearTableType_WithAssignedTableType_ShouldClearTableType()
+    {
+        // Arrange
+        var table = Table.Create(1, 4);
+        var tableTypeId = Guid.NewGuid();
+        table.SetTableType(tableTypeId);
+        var originalUpdatedAt = table.UpdatedAt;
+        System.Threading.Thread.Sleep(10); // Ensure time difference
+
+        // Act
+        table.ClearTableType();
+
+        // Assert
+        table.TableTypeId.Should().BeNull();
+        table.UpdatedAt.Should().BeAfter(originalUpdatedAt);
+    }
+
+    [Fact]
+    public void Table_ClearTableType_WithNoTableType_ShouldSucceed()
+    {
+        // Arrange
+        var table = Table.Create(1, 4);
+
+        // Act
+        table.ClearTableType();
+
+        // Assert
+        table.TableTypeId.Should().BeNull();
+    }
+
+    #endregion
 }
 

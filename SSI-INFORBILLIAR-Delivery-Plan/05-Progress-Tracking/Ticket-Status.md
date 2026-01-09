@@ -22,12 +22,13 @@
 
 | Ticket ID | Title | Assignee | Status | Last Updated |
 |-----------|-------|----------|--------|--------------|
-| BE-A.1-01 | Create TableSession Entity | TBD | NOT_STARTED | 2026-01-08 |
-| BE-A.1-02 | Create StartTableSessionCommand | TBD | NOT_STARTED | 2026-01-08 |
-| BE-A.2-01 | Create EndTableSessionCommand | TBD | NOT_STARTED | 2026-01-08 |
-| BE-A.3-01 | Create GetActiveSessionsQuery | TBD | NOT_STARTED | 2026-01-08 |
-| BE-A.4-01 | Add Session Status to Table Query | TBD | NOT_STARTED | 2026-01-08 |
-| BE-A.5-01 | Create TableType Entity | TBD | NOT_STARTED | 2026-01-08 |
+| BE-A.1-01 | Create TableSession Entity | Agent | DONE | 2026-01-08 |
+| BE-A.1-02 | Create StartTableSessionCommand | Agent | DONE | 2026-01-08 |
+| BE-A.1-03 | Add Table Status Management Methods | Agent | DONE | 2026-01-08 |
+| BE-A.2-01 | Create EndTableSessionCommand | Agent | DONE | 2026-01-08 |
+| BE-A.3-01 | Create GetActiveSessionsQuery | Agent | DONE | 2026-01-08 |
+| BE-A.4-01 | Add Session Status to Table Query | Agent | DONE | 2026-01-09 |
+| BE-A.5-01 | Create TableType Entity | Agent | DONE | 2026-01-08 |
 | BE-A.6-01 | Add TableTypeId to Table Entity | TBD | NOT_STARTED | 2026-01-08 |
 | BE-A.9-01 | Create PricingService | TBD | NOT_STARTED | 2026-01-08 |
 | BE-A.16-01 | Create PauseTableSessionCommand | TBD | NOT_STARTED | 2026-01-08 |
@@ -52,11 +53,11 @@
 
 | Ticket ID | Title | Assignee | Status | Last Updated |
 |-----------|-------|----------|--------|--------------|
-| FE-A.1-01 | Create StartSessionDialog | TBD | NOT_STARTED | 2026-01-08 |
-| FE-A.1-02 | Add Session Timer to Table Card | TBD | NOT_STARTED | 2026-01-08 |
-| FE-A.2-01 | Create EndSessionDialog | TBD | NOT_STARTED | 2026-01-08 |
-| FE-A.3-01 | Create Active Sessions Panel | TBD | NOT_STARTED | 2026-01-08 |
-| FE-A.4-01 | Add Status Indicators | TBD | NOT_STARTED | 2026-01-08 |
+| FE-A.1-01 | Create StartSessionDialog | Agent | DONE | 2026-01-08 |
+| FE-A.1-02 | Add Session Timer to Table Card | Agent | DONE | 2026-01-08 |
+| FE-A.2-01 | Create EndSessionDialog | Agent | DONE | 2026-01-08 |
+| FE-A.3-01 | Create Active Sessions Panel | Agent | DONE | 2026-01-08 |
+| FE-A.4-01 | Add Status Indicators | Agent | DONE | 2026-01-09 |
 | FE-A.16-01 | Add Pause/Resume Controls | TBD | NOT_STARTED | 2026-01-08 |
 | FE-E.1-01 | Create ReservationDialog | TBD | NOT_STARTED | 2026-01-08 |
 | FE-E.2-01 | Create ReservationCalendarPage | TBD | NOT_STARTED | 2026-01-08 |
@@ -105,4 +106,4 @@
 
 ---
 
-*Last Updated: 2026-01-08*
+*Last Updated: 2026-01-09*
