@@ -32,21 +32,22 @@ All development MUST comply with rules defined in `.agent/rules/*`:
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| **Fully Implemented** | 37 | 29.4% |
-| **Partially Implemented** | 44 | 34.9% |
-| **Not Implemented** | 45 | 35.7% |
+| **Fully Implemented** | 45 | 35.7% |
+| **Partially Implemented** | 47 | 37.3% |
+| **Not Implemented** | 34 | 27.0% |
 | **Total** | 126 | 100% |
 
 ### 2.1 Category Breakdown
 
 | Category | Total | Full | Partial | Not | Priority |
 |----------|-------|------|---------|-----|----------|
-| A. Table & Game Management | 19 | 0 | 9 | 10 | **P0** |
+| A. Table & Game Management | 19 | 5 | 4 | 10 | **P0** |
 | B. Floor & Layout Management | 18 | 10 | 4 | 4 | P2 |
-| C. Billing, Payments & Pricing | 16 | 4 | 7 | 5 | **P0** |
+| C. Billing, Payments & Pricing | 16 | 7 | 6 | 3 | **P0** |
+| **TOTAL** | **126** | **45** | **40** | **41** | **35.7%** |
 | D. Tax, Currency & Financial Rules | 9 | 1 | 4 | 4 | P1 |
 | E. Reservations & Scheduling | 12 | 0 | 0 | 12 | **P0** |
-| F. Customer & Member Management | 13 | 0 | 0 | 13 | **P0** |
+| F. Customer & Member Management | 13 | 2 | 0 | 11 | **P0** |
 | G. Inventory & Products | 12 | 4 | 5 | 3 | P2 |
 | H. Reporting & Export | 15 | 2 | 4 | 9 | P1 |
 | I. Hardware & Peripherals | 11 | 5 | 2 | 4 | P1 |
@@ -101,7 +102,7 @@ All development MUST comply with rules defined in `.agent/rules/*`:
 - [ ] Can start/stop/pause table sessions (A.1, A.2, A.16)
 - [ ] Session buttons properly enabled/disabled (A.15)
 - [ ] Time-based billing functional (A.9, C.2)
-- [ ] Basic customer tracking (F.1, F.2)
+- [x] Basic customer tracking (F.1, F.2)
 - [ ] Member discounts apply (F.5)
 
 **Ticket Count:** 28 Backend + 19 Frontend + 8 Cross-Cutting = **55 tickets**

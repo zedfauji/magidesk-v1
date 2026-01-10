@@ -82,6 +82,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IPrintTemplateRepository, PrintTemplateRepository>();
         services.AddScoped<ITableTypeRepository, TableTypeRepository>();
         services.AddScoped<ITableSessionRepository, TableSessionRepository>();
+        services.AddScoped<ICustomerRepository, CustomerRepository>();
 
         // Application Services
         // Legacy PricingService for backward compatibility (EndTableSessionCommandHandler)

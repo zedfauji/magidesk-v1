@@ -26,6 +26,8 @@
                 <NavigationViewItem Content="Home" Tag="home" Icon="Home" />
                 <NavigationViewItem Content="Table Map" Tag="tableMap" Icon="Map" />
                 <NavigationViewItem Content="Kitchen Display" Tag="kitchenDisplay" Icon="ViewAll" />
+                <NavigationViewItemSeparator />
+                <NavigationViewItem Content="Customer Records" Tag="customerRecords" Icon="People" />
             </NavigationView.MenuItems>
 
             <Frame x:Name="ContentFrame" />

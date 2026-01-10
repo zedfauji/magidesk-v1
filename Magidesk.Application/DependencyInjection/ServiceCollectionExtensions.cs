@@ -182,6 +182,11 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<CreateRoleCommand, CreateRoleResult>, CreateRoleCommandHandler>();
         services.AddScoped<ICommandHandler<UpdateRoleCommand, UpdateRoleResult>, UpdateRoleCommandHandler>();
         services.AddScoped<ICommandHandler<DeleteRoleCommand, DeleteRoleResult>, DeleteRoleCommandHandler>();
+        
+        // Customer Management Handlers
+        services.AddScoped<ICommandHandler<CreateCustomerCommand, CreateCustomerResult>, CreateCustomerCommandHandler>();
+        services.AddScoped<ICommandHandler<UpdateCustomerCommand, UpdateCustomerResult>, UpdateCustomerCommandHandler>();
+        services.AddScoped<IQueryHandler<SearchCustomersQuery, IEnumerable<CustomerSearchResultDto>>, SearchCustomersQueryHandler>();
 
         // Security Handlers
         services.AddScoped<ICommandHandler<Commands.Security.AuthorizeManagerCommand, DTOs.Security.AuthorizationResult>, Services.Security.AuthorizeManagerCommandHandler>();

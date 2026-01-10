@@ -16,15 +16,15 @@
 
 | Feature ID | Feature Name | BE Status | FE Status | Overall | Notes |
 |------------|--------------|-----------|-----------|---------|-------|
-| A.1 | Start/timer session | NOT_STARTED | NOT_STARTED | 0% | |
-| A.2 | End session | NOT_STARTED | NOT_STARTED | 0% | |
-| A.3 | List active sessions | NOT_STARTED | NOT_STARTED | 0% | |
-| A.4 | Real-time status display | PARTIAL | NOT_STARTED | 25% | Has table status |
-| A.5 | Table types (Pool, Snooker) | NOT_STARTED | NOT_STARTED | 0% | |
-| A.6 | Assign type per table | NOT_STARTED | NOT_STARTED | 0% | |
+| A.1 | Start/timer session | DONE | DONE | 100% | |
+| A.2 | End session | DONE | DONE | 100% | |
+| A.3 | List active sessions | DONE | DONE | 100% | |
+| A.4 | Real-time status display | DONE | DONE | 100% | |
+| A.5 | Table types (Pool, Snooker) | DONE | NOT_STARTED | 50% | BE done |
+| A.6 | Assign type per table | DONE | N/A | 100% | BE done, no FE needed |
 | A.7 | Link game equipment | NOT_STARTED | NOT_STARTED | 0% | |
 | A.8 | Game history logs | NOT_STARTED | NOT_STARTED | 0% | |
-| A.9 | Time-based pricing | NOT_STARTED | NOT_STARTED | 0% | |
+| A.9 | Time-based pricing | DONE | NOT_STARTED | 50% | BE done |
 | A.10 | First-hour pricing | NOT_STARTED | NOT_STARTED | 0% | |
 | A.11 | Time rounding rules | NOT_STARTED | NOT_STARTED | 0% | |
 | A.12 | Minimum charge rules | NOT_STARTED | NOT_STARTED | 0% | |
@@ -36,7 +36,7 @@
 | A.18 | Transfer session | NOT_STARTED | NOT_STARTED | 0% | |
 | A.19 | Guest count tracking | NOT_STARTED | NOT_STARTED | 0% | |
 
-**Category Progress: 0/19 Complete (0%)**
+**Category Progress: 5/19 Complete (26.3%)**
 
 ---
 
@@ -65,8 +65,8 @@
 
 | Feature ID | Feature Name | BE Status | FE Status | Overall | Notes |
 |------------|--------------|-----------|-----------|---------|-------|
-| F.1 | Customer records | NOT_STARTED | NOT_STARTED | 0% | |
-| F.2 | Customer search | NOT_STARTED | NOT_STARTED | 0% | |
+| F.1 | Customer records | DONE | DONE | 100% | |
+| F.2 | Customer search | DONE | DONE | 100% | |
 | F.3 | Member subscriptions | NOT_STARTED | NOT_STARTED | 0% | |
 | F.4 | Membership tiers | NOT_STARTED | NOT_STARTED | 0% | |
 | F.5 | Member discounts | NOT_STARTED | NOT_STARTED | 0% | |
@@ -79,7 +79,7 @@
 | F.12 | Customer merge | NOT_STARTED | NOT_STARTED | 0% | |
 | F.13 | Member analytics | NOT_STARTED | NOT_STARTED | 0% | |
 
-**Category Progress: 0/13 Complete (0%)**
+**Category Progress: 2/13 Complete (15.4%)**
 
 ---
 
@@ -87,12 +87,12 @@
 
 | Category | Features | Complete | In Progress | Not Started | % Complete |
 |----------|----------|----------|-------------|-------------|------------|
-| A. Table & Game | 19 | 0 | 0 | 19 | 0% |
+| A. Table & Game | 19 | 5 | 4 | 10 | 26.3% |
 | B. Floor & Layout | 9 | 5 | 3 | 1 | 55.6% |
-| C. Billing & Payments | 16 | 5 | 6 | 5 | 31.3% |
+| C. Billing & Payments | 16 | 7 | 6 | 3 | 43.8% |
 | D. Tax & Currency | 6 | 3 | 3 | 0 | 50% |
 | E. Reservations | 12 | 0 | 0 | 12 | 0% |
-| F. Customer & Member | 13 | 0 | 0 | 13 | 0% |
+| F. Customer & Member | 13 | 2 | 0 | 11 | 15.4% |
 | G. Inventory & Products | 10 | 3 | 4 | 3 | 30% |
 | H. Reporting & Export | 11 | 2 | 6 | 3 | 18.2% |
 | I. Hardware & Peripherals | 9 | 4 | 4 | 1 | 44.4% |
@@ -108,11 +108,11 @@
 
 | Milestone | Target Features | Complete | % Done | Target Date |
 |-----------|-----------------|----------|--------|-------------|
-| MVP: Time Billing | A.1-A.6, A.9, A.16 | 0/8 | 0% | TBD |
+| MVP: Time Billing | A.1-A.6, A.9, A.16 | 5/8 | 62.5% | TBD |
 | MVP: Reservations | E.1-E.6 | 0/6 | 0% | TBD |
-| MVP: Members | F.1-F.5 | 0/5 | 0% | TBD |
+| MVP: Members | F.1-F.5 | 2/5 | 40% | TBD |
 | MVP: Security | J.1-J.3 | 3/3 | 100% | DONE |
-| **All P0 Features** | 49 tickets | 0 | 0% | TBD |
+| **All P0 Features** | 49 tickets | 20 | 40.8% | TBD |
 
 ---
 

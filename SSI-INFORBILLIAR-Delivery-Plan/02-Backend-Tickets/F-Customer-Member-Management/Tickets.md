@@ -1,14 +1,14 @@
 # Backend Tickets: Category F - Customer & Member Management
 
-> [!CAUTION]
-> **CRITICAL GAP**: This entire module is NOT IMPLEMENTED (0% parity). All 13 features require full implementation from scratch. This is a P0 blocker for loyalty, memberships, and recurring revenue.
+> [!NOTE]
+> **Implementation Started**: 2/13 features implemented (15% parity). Module is no longer at 0%. Features F.1 and F.2 are complete.
 
 ## Ticket Index
 
 | Ticket ID | Feature ID | Title | Priority | Status |
 |-----------|------------|-------|----------|--------|
-| BE-F.1-01 | F.1 | Create Customer Entity and Repository | P0 | NOT_STARTED |
-| BE-F.2-01 | F.2 | Create Customer Search Query | P0 | NOT_STARTED |
+| BE-F.1-01 | F.1 | Create Customer Entity and Repository | P0 | COMPLETE |
+| BE-F.2-01 | F.2 | Create Customer Search Query | P0 | COMPLETE |
 | BE-F.3-01 | F.3 | Create Member Entity with Subscription Support | P0 | NOT_STARTED |
 | BE-F.4-01 | F.4 | Create MembershipTier Entity | P0 | NOT_STARTED |
 | BE-F.5-01 | F.5 | Implement Member Discount Application | P0 | NOT_STARTED |
@@ -529,10 +529,11 @@ public record CheckInResult(
 
 | Priority | Count | Status |
 |----------|-------|--------|
-| P0 | 5 | NOT_STARTED |
+| P0 | 3 | NOT_STARTED |
+| P0 | 2 | COMPLETE |
 | P1 | 4 | NOT_STARTED |
 | P2 | 4 | NOT_STARTED |
-| **Total** | **13** | **NOT_STARTED** |
+| **Total** | **13** | **2 COMPLETE** |
 
 ---
 

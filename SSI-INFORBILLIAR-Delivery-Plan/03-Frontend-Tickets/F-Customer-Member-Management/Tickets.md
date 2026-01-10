@@ -1,15 +1,15 @@
 # Frontend Tickets: Category F - Customer & Member Management
 
-> [!CAUTION]
-> **CRITICAL P0**: Entire customer/member UI module needs to be created from scratch.
+> [!NOTE]
+> **Implementation Started**: Features F.1 and F.2 are complete. Customer list and search functionality are fully implemented.
 
 ## Ticket Index
 
 | Ticket ID | Feature ID | Title | Priority | Status |
 |-----------|------------|-------|----------|--------|
-| FE-F.1-01 | F.1 | Create CustomerListPage | P0 | NOT_STARTED |
-| FE-F.1-02 | F.1 | Create AddCustomerDialog | P0 | NOT_STARTED |
-| FE-F.2-01 | F.2 | Create CustomerSearchControl | P0 | NOT_STARTED |
+| FE-F.1-01 | F.1 | Create CustomerListPage | P0 | COMPLETE |
+| FE-F.1-02 | F.1 | Create AddCustomerDialog | P0 | COMPLETE |
+| FE-F.2-01 | F.2 | Create CustomerSearchControl | P0 | COMPLETE |
 | FE-F.3-01 | F.3 | Create MemberProfilePage | P0 | NOT_STARTED |
 | FE-F.4-01 | F.4 | Create MembershipTierManagementPage | P1 | NOT_STARTED |
 | FE-F.6-01 | F.6 | Create PrepaidBalancePanel | P1 | NOT_STARTED |
@@ -323,9 +323,10 @@ A quick check-in dialog for members arriving at the club.
 
 | Priority | Count | Status |
 |----------|-------|--------|
-| P0 | 4 | NOT_STARTED |
+| P0 | 1 | NOT_STARTED |
+| P0 | 3 | COMPLETE |
 | P1 | 4 | NOT_STARTED |
-| **Total** | **8** | **NOT_STARTED** |
+| **Total** | **8** | **3 COMPLETE** |
 
 ---
 

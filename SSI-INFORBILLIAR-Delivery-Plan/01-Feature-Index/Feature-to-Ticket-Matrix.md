@@ -123,8 +123,8 @@
 
 | ID | Feature | Audit | Priority | Backend Ticket | BE Status | Frontend Ticket | FE Status |
 |----|---------|-------|----------|----------------|-----------|-----------------|-----------|
-| F.1 | Customer records | ❌ NOT | P0 | BE-F.1-01 | ❌ | FE-F.1-01, FE-F.1-02 | ❌ |
-| F.2 | Customer search | ❌ NOT | P0 | BE-F.2-01 | ❌ | FE-F.2-01 | ❌ |
+| F.1 | Customer records | ✅ FULL | P0 | [walkthrough](file:///c:/Users/giris/.gemini/antigravity/brain/06fc728d-db77-4c8a-9dd0-f1e3ce101956/walkthrough.md) | ✅ | FE-F.1-01 ✅, FE-F.1-02 ✅ | ✅ |
+| F.2 | Customer search | ✅ FULL | P0 | [walkthrough](file:///c:/Users/giris/.gemini/antigravity/brain/06fc728d-db77-4c8a-9dd0-f1e3ce101956/f2-walkthrough.md) | ✅ | FE-F.2-01 ✅ | ✅ |
 | F.3 | Memberships | ❌ NOT | P0 | BE-F.3-01 | ❌ | FE-F.3-01 | ❌ |
 | F.4 | Membership tiers | ❌ NOT | P0 | BE-F.4-01 | ❌ | FE-F.4-01 | ❌ |
 | F.5 | Member discounts | ❌ NOT | P0 | BE-F.5-01 | ❌ | - | - |

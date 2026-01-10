@@ -40,8 +40,8 @@
 | BE-E.4-01 | Create CancelReservationCommand | TBD | NOT_STARTED | 2026-01-08 |
 | BE-E.5-01 | Implement AvailabilityService | TBD | NOT_STARTED | 2026-01-08 |
 | BE-E.6-01 | Create ConvertReservationToSession | TBD | NOT_STARTED | 2026-01-08 |
-| BE-F.1-01 | Create Customer Entity | TBD | NOT_STARTED | 2026-01-08 |
-| BE-F.2-01 | Create Customer Search Query | TBD | NOT_STARTED | 2026-01-08 |
+| BE-F.1-01 | Create Customer Entity | Agent | DONE | 2026-01-09 |
+| BE-F.2-01 | Create Customer Search Query | Agent | DONE | 2026-01-09 |
 | BE-F.3-01 | Create Member Entity | TBD | NOT_STARTED | 2026-01-08 |
 | BE-F.4-01 | Create MembershipTier Entity | TBD | NOT_STARTED | 2026-01-08 |
 | BE-F.5-01 | Implement Member Discount Service | TBD | NOT_STARTED | 2026-01-08 |
@@ -63,8 +63,9 @@
 | FE-E.2-01 | Create ReservationCalendarPage | TBD | NOT_STARTED | 2026-01-08 |
 | FE-E.5-01 | Create AvailabilityCheckPanel | TBD | NOT_STARTED | 2026-01-08 |
 | FE-E.6-01 | Create CheckInReservationDialog | TBD | NOT_STARTED | 2026-01-08 |
-| FE-F.1-01 | Create CustomerListPage | TBD | NOT_STARTED | 2026-01-08 |
-| FE-F.2-01 | Create CustomerSearchControl | TBD | NOT_STARTED | 2026-01-08 |
+| FE-F.1-01 | Create CustomerListPage | Agent | DONE | 2026-01-09 |
+| FE-F.1-02 | Create AddCustomerDialog | Agent | DONE | 2026-01-09 |
+| FE-F.2-01 | Create CustomerSearchControl | Agent | DONE | 2026-01-09 |
 | FE-F.3-01 | Create MemberProfilePage | TBD | NOT_STARTED | 2026-01-08 |
 | FE-C.2-01 | Display Time Charges on Ticket | TBD | NOT_STARTED | 2026-01-08 |
 | FE-J.1-01 | Create ManagerPinDialog | User | DONE | 2026-01-08 |
@@ -89,10 +90,10 @@
 
 | Priority | Total | Not Started | In Progress | Done | Completion % |
 |----------|-------|-------------|-------------|------|--------------|
-| P0 | 49 | 49 | 0 | 0 | 0% |
+| P0 | 49 | 29 | 0 | 20 | 40.8% |
 | P1 | 52 | 52 | 0 | 0 | 0% |
 | P2 | 39 | 39 | 0 | 0 | 0% |
-| **Total** | **140** | **140** | **0** | **0** | **0%** |
+| **Total** | **140** | **120** | **0** | **20** | **14.3%** |
 
 ---
 

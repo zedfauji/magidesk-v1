@@ -134,6 +134,12 @@ public sealed partial class MainWindow : Window
                 _navigation.Navigate(typeof(Views.KitchenDisplayPage));
                 return;
             }
+
+            if (tag == "customerRecords")
+            {
+                _navigation.Navigate(typeof(Views.CustomerListPage));
+                return;
+            }
         }
         catch (Exception ex)
         {

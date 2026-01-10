@@ -143,6 +143,7 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<ServerSectionManagementViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.PrintTemplatesViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.TemplateEditorViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.CustomerListViewModel>();
                     
                     // Language Selection (F-0110)
                     services.AddTransient<Magidesk.Presentation.ViewModels.LanguageSelectionViewModel>();
