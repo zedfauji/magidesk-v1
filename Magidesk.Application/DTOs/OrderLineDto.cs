@@ -25,6 +25,12 @@ public class OrderLineDto
     public bool ShouldPrintToKitchen { get; set; }
     public bool PrintedToKitchen { get; set; }
     public Guid? PrinterGroupId { get; set; }
+    
+    // Time Charges (F-C.2)
+    public TimeSpan? Duration { get; set; }
+    public decimal? HourlyRate { get; set; }
+    public bool IsTimeCharge { get; set; }
+
     public string? Instructions { get; set; } // F-0036
     public int? SeatNumber { get; set; }
     public bool TreatAsSeat { get; set; }

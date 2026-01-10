@@ -37,10 +37,25 @@ public partial class EndSessionDialogViewModel : ViewModelBase
     private bool _isLoading;
 
     [ObservableProperty]
+    private Guid? _userId;
+
+    [ObservableProperty]
+    private Guid? _terminalId;
+
+    [ObservableProperty]
+    private Guid? _shiftId;
+
+    [ObservableProperty]
+    private Guid? _orderTypeId;
+
+    [ObservableProperty]
     private string? _errorMessage;
 
     [ObservableProperty]
     private bool _hasError;
+
+    [ObservableProperty]
+    private bool _hasExistingTicket;
 
     public event EventHandler? RequestClose;
     public event EventHandler<EndTableSessionResult>? SessionEnded;
@@ -62,14 +77,40 @@ public partial class EndSessionDialogViewModel : ViewModelBase
     /// <summary>
     /// Initializes the dialog with session data.
     /// </summary>
-    public void Initialize(Guid sessionId, TimeSpan duration, decimal hourlyRate, decimal totalCharge)
+    public void Initialize(
+        Guid sessionId, 
+        TimeSpan duration, 
+        decimal hourlyRate, 
+        decimal totalCharge,
+        Guid? userId = null,
+        Guid? terminalId = null,
+        Guid? shiftId = null,
+        Guid? orderTypeId = null,
+        bool hasExistingTicket = false)
     {
         SessionId = sessionId;
         Duration = $"{(int)duration.TotalHours:D2}:{duration.Minutes:D2}:{duration.Seconds:D2}";
         HourlyRate = hourlyRate;
         TotalCharge = totalCharge;
+        UserId = userId;
+        TerminalId = terminalId;
+        ShiftId = shiftId;
+        OrderTypeId = orderTypeId;
+        HasExistingTicket = hasExistingTicket;
         HasError = false;
         ErrorMessage = null;
+
+        // Auto-select "Add to existing" if a ticket is already linked
+        if (hasExistingTicket)
+        {
+            AddToExistingTicket = true;
+            CreateNewTicket = false;
+        }
+        else
+        {
+            CreateNewTicket = true;
+            AddToExistingTicket = false;
+        }
     }
 
     private async Task EndSessionAsync()
@@ -82,7 +123,11 @@ public partial class EndSessionDialogViewModel : ViewModelBase
 
             var command = new EndTableSessionCommand(
                 SessionId,
-                CreateNewTicket
+                CreateNewTicket,
+                UserId,
+                TerminalId,
+                ShiftId,
+                OrderTypeId
             );
 
             var result = await _endSessionHandler.HandleAsync(command);

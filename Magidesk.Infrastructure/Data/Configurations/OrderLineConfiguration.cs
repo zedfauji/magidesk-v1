@@ -53,6 +53,18 @@ public class OrderLineConfiguration : IEntityTypeConfiguration<OrderLine>
             .IsRequired()
             .HasDefaultValue(false);
 
+        // Time Charges (F-C.2)
+        builder.Property(ol => ol.Duration)
+            .IsRequired(false); // Nullable
+
+        builder.Property(ol => ol.HourlyRate)
+            .HasPrecision(18, 2)
+            .IsRequired(false); // Nullable
+
+        builder.Property(ol => ol.IsTimeCharge)
+            .IsRequired()
+            .HasDefaultValue(false);
+
         // Money value objects
         builder.OwnsOne(ol => ol.UnitPrice, up =>
         {

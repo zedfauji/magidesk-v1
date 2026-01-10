@@ -62,12 +62,7 @@
                         IsChecked="{x:Bind ViewModel.CreateNewTicket, Mode=TwoWay}"/>
             
             <RadioButton Content="Add to Existing Ticket" 
-                        IsChecked="{x:Bind ViewModel.AddToExistingTicket, Mode=TwoWay}"
-                        IsEnabled="False">
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="Feature not yet implemented"/>
-                </ToolTipService.ToolTip>
-            </RadioButton>
+                        IsChecked="{x:Bind ViewModel.AddToExistingTicket, Mode=TwoWay}"/>
         </StackPanel>
 
         <!-- Loading Indicator -->

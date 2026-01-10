@@ -68,8 +68,8 @@
 
 | ID | Feature | Audit | Priority | Backend Ticket | BE Status | Frontend Ticket | FE Status |
 |----|---------|-------|----------|----------------|-----------|-----------------|-----------|
-| C.1 | Create ticket | ⚠️ PART | P0 | BE-C.1-01 | ❌ | - | ⚠️ |
-| C.2 | Time charges on ticket | ⚠️ PART | P0 | BE-C.2-01 | ❌ | FE-C.2-01 | ❌ |
+| C.1 | Create ticket | ✅ FULL | P0 | BE-C.1-01 ✅ | ✅ | FE-C.1-01 ✅ | ✅ |
+| C.2 | Time charges on ticket | ✅ FULL | P0 | BE-C.2-01 ✅ | ✅ | FE-C.2-01 ✅ | ✅ |
 | C.3 | Add products | ⚠️ PART | P1 | BE-C.3-01 | ❌ | - | ⚠️ |
 | C.4 | Multi-payment | ✅ FULL | - | - | ✅ | - | ✅ |
 | C.5 | Split payments | ⚠️ PART | P1 | BE-C.5-01 | ❌ | FE-C.5-01 | ❌ |

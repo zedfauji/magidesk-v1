@@ -41,6 +41,7 @@ public class Ticket
     public Guid ShiftId { get; private set; }
     public Guid OrderTypeId { get; private set; }
     public Guid? CustomerId { get; private set; }
+    public Guid? SessionId { get; private set; }
     public Guid? AssignedDriverId { get; private set; }
     
     // Table Management
@@ -774,6 +775,26 @@ public class Ticket
 
         Gratuity.MarkAsRefunded();
         CalculateTotals();
+    }
+
+    /// <summary>
+    /// Links the ticket to a table session.
+    /// </summary>
+    public void SetSession(Guid sessionId)
+    {
+        if (sessionId == Guid.Empty)
+        {
+             throw new ArgumentException("Session ID cannot be empty.", nameof(sessionId));
+        }
+
+        if (Status == TicketStatus.Closed || Status == TicketStatus.Voided || Status == TicketStatus.Refunded)
+        {
+            throw new DomainInvalidOperationException($"Cannot link session to ticket in {Status} status.");
+        }
+
+        SessionId = sessionId;
+        ActiveDate = DateTime.UtcNow;
+        IncrementVersion();
     }
 
     /// <summary>

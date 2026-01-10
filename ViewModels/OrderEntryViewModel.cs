@@ -1634,7 +1634,18 @@ public partial class OrderEntryViewModel : ViewModelBase
             }
 
             // Initialize dialog
-            dialogViewModel.Initialize(table.Id, tableType.Id, $"Table {tableNumber}", tableType.Name, tableType.HourlyRate, Ticket?.Id);
+            dialogViewModel.Initialize(
+                table.Id, 
+                tableType.Id, 
+                $"Table {tableNumber}", 
+                tableType.Name, 
+                tableType.HourlyRate, 
+                Ticket?.Id,
+                _userService.CurrentUser?.Id,
+                _terminalContext.TerminalId,
+                Ticket?.ShiftId,
+                Ticket?.OrderTypeId,
+                createTicket: false);
             
             // Create and show dialog
             var dialog = new Views.Dialogs.StartSessionDialog(dialogViewModel);
@@ -1669,20 +1680,6 @@ public partial class OrderEntryViewModel : ViewModelBase
 
         try
         {
-            // Check if there's an active session
-            // TODO: Add SessionId property to TicketDto
-            // For now, show a message
-            var confirmDialog = new ContentDialog
-            {
-                Title = "End Session",
-                Content = "End session functionality requires session tracking on the ticket. This will be available once session data is integrated with tickets.",
-                CloseButtonText = "OK",
-                XamlRoot = App.MainWindowInstance.Content.XamlRoot
-            };
-            await _navigationService.ShowDialogAsync(confirmDialog);
-            
-            // TODO: Implement when TicketDto has SessionId
-            /*
             if (!Ticket.SessionId.HasValue)
             {
                 var errorDialog = new ContentDialog
@@ -1697,15 +1694,24 @@ public partial class OrderEntryViewModel : ViewModelBase
             }
 
             // Resolve dialog ViewModel from DI
-            var dialogViewModel = _serviceProvider.GetRequiredService<ViewModels.Dialogs.EndSessionDialogViewModel>();
+            var dialogViewModel = _serviceProvider.GetRequiredService<EndSessionDialogViewModel>();
             
             // Calculate session duration and charge
-            var duration = TimeSpan.Zero; // TODO: Calculate from session start time
-            var hourlyRate = 15.00m; // TODO: Get from session
-            var totalCharge = 0m; // TODO: Calculate
+            var duration = Ticket.SessionElapsedTime ?? TimeSpan.Zero;
+            var hourlyRate = Ticket.SessionHourlyRate ?? 0m;
+            var totalCharge = Ticket.SessionRunningCharge ?? 0m;
             
-            // Initialize dialog
-            dialogViewModel.Initialize(Ticket.SessionId.Value, duration, hourlyRate, totalCharge);
+            // Initialize dialog with context for ticket creation
+            dialogViewModel.Initialize(
+                Ticket.SessionId.Value, 
+                duration, 
+                hourlyRate, 
+                totalCharge,
+                _userService.CurrentUser?.Id,
+                _terminalContext.TerminalId,
+                Ticket.ShiftId,
+                Ticket.OrderTypeId,
+                hasExistingTicket: true);
             
             // Create and show dialog
             var dialog = new Views.Dialogs.EndSessionDialog(dialogViewModel);
@@ -1719,7 +1725,6 @@ public partial class OrderEntryViewModel : ViewModelBase
             };
             
             await dialog.ShowAsync();
-            */
         }
         catch (Exception ex)
         {

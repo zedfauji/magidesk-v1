@@ -7,8 +7,8 @@
 
 | Ticket ID | Feature ID | Title | Priority | Status |
 |-----------|------------|-------|----------|--------|
-| BE-C.1-01 | C.1 | Complete Ticket Creation with Session Link | P0 | NOT_STARTED |
-| BE-C.2-01 | C.2 | Implement Time-Based Line Items | P0 | NOT_STARTED |
+| BE-C.1-01 | C.1 | Complete Ticket Creation with Session Link | P0 | COMPLETED |
+| BE-C.2-01 | C.2 | Implement Time-Based Line Items | P0 | COMPLETED |
 | BE-C.3-01 | C.3 | Complete Product Addition with Modifiers | P1 | NOT_STARTED |
 | BE-C.5-01 | C.5 | Complete Split Payment Processing | P1 | NOT_STARTED |
 | BE-C.6-01 | C.6 | Implement Gratuity Calculations | P1 | NOT_STARTED |

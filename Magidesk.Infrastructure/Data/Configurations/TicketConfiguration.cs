@@ -218,6 +218,10 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
 
         builder.Property(t => t.AssignedDriverId);
 
+        builder.Property(t => t.SessionId);
+
+        builder.HasIndex(t => t.SessionId);
+
         builder.Property(t => t.TableNumbers)
             .HasConversion(
                 v => v == null || v.Count == 0 ? string.Empty : string.Join(",", v),

@@ -8,9 +8,14 @@ namespace Magidesk.Application.Commands.TableSessions;
 public record StartTableSessionCommand(
     Guid TableId,
     Guid TableTypeId,
-    Guid? CustomerId,
     int GuestCount,
-    Guid? TicketId = null
+    Guid? CustomerId = null,
+    Guid? TicketId = null,
+    bool CreateTicket = false,
+    Guid? UserId = null,
+    Guid? TerminalId = null,
+    Guid? ShiftId = null,
+    Guid? OrderTypeId = null
 );
 
 /// <summary>
@@ -20,5 +25,6 @@ public record StartTableSessionResult(
     Guid SessionId,
     DateTime StartTime,
     decimal HourlyRate,
-    string TableTypeName
+    string TableTypeName,
+    Guid? TicketId = null
 );

@@ -23,6 +23,11 @@ public class StartSessionDialogViewModel : ViewModelBase
     private string _tableTypeName = string.Empty;
     private decimal _hourlyRate;
     private Guid? _ticketId;
+    private Guid? _userId;
+    private Guid? _terminalId;
+    private Guid? _shiftId;
+    private Guid? _orderTypeId;
+    private bool _createTicket;
 
     // Input properties
     private int _guestCount = 1;
@@ -93,10 +98,18 @@ public class StartSessionDialogViewModel : ViewModelBase
     /// <summary>
     /// Initializes the dialog with table information.
     /// </summary>
-    /// <summary>
-    /// Initializes the dialog with table information.
-    /// </summary>
-    public void Initialize(Guid tableId, Guid tableTypeId, string tableName, string tableTypeName, decimal hourlyRate, Guid? ticketId = null)
+    public void Initialize(
+        Guid tableId, 
+        Guid tableTypeId, 
+        string tableName, 
+        string tableTypeName, 
+        decimal hourlyRate, 
+        Guid? ticketId = null,
+        Guid? userId = null,
+        Guid? terminalId = null,
+        Guid? shiftId = null,
+        Guid? orderTypeId = null,
+        bool createTicket = false)
     {
         _tableId = tableId;
         _tableTypeId = tableTypeId;
@@ -104,14 +117,17 @@ public class StartSessionDialogViewModel : ViewModelBase
         TableTypeName = tableTypeName;
         _hourlyRate = hourlyRate;
         _ticketId = ticketId;
+        _userId = userId;
+        _terminalId = terminalId;
+        _shiftId = shiftId;
+        _orderTypeId = orderTypeId;
+        _createTicket = createTicket;
         
         // Reset state
         GuestCount = 1;
         _customerId = null;
         CustomerName = null;
         Error = null;
-        
-        Title = $"Start Session - {tableName}";
     }
 
     /// <summary>
@@ -141,9 +157,14 @@ public class StartSessionDialogViewModel : ViewModelBase
             var command = new StartTableSessionCommand(
                 _tableId,
                 _tableTypeId,
-                _customerId,
                 GuestCount,
-                _ticketId
+                _customerId,
+                _ticketId,
+                _createTicket,
+                _userId,
+                _terminalId,
+                _shiftId,
+                _orderTypeId
             );
 
             // Execute

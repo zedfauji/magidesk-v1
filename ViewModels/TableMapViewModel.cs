@@ -88,6 +88,7 @@ public class TableMapViewModel : ViewModelBase
     private readonly IUserService _userService;
     private readonly ITicketCreationService _ticketCreationService;
     private readonly IServiceScopeFactory _serviceScopeFactory;
+    private readonly ITerminalContext _terminalContext;
     private readonly Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue;
     private readonly IServiceProvider _serviceProvider;
 
@@ -100,6 +101,7 @@ public class TableMapViewModel : ViewModelBase
         IUserService userService,
         ITicketCreationService ticketCreationService,
         IServiceScopeFactory serviceScopeFactory,
+        ITerminalContext terminalContext,
         Services.LocalizationService localizationService,
         IServiceProvider serviceProvider)
     {
@@ -109,6 +111,7 @@ public class TableMapViewModel : ViewModelBase
         _userService = userService;
         _ticketCreationService = ticketCreationService;
         _serviceScopeFactory = serviceScopeFactory;
+        _terminalContext = terminalContext;
         Localization = localizationService;
         _serviceProvider = serviceProvider;
         _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
@@ -120,8 +123,6 @@ public class TableMapViewModel : ViewModelBase
         
         // Session dialog commands
         OpenStartSessionDialogCommand = new AsyncRelayCommand<TableDto>(OpenStartSessionDialogAsync);
-        OpenEndSessionDialogCommand = new AsyncRelayCommand<TableDto>(OpenEndSessionDialogAsync);
-        PauseSessionCommand = new AsyncRelayCommand<TableDto>(PauseSessionAsync);
         OpenEndSessionDialogCommand = new AsyncRelayCommand<TableDto>(OpenEndSessionDialogAsync);
         PauseSessionCommand = new AsyncRelayCommand<TableDto>(PauseSessionAsync);
         ResumeSessionCommand = new AsyncRelayCommand<TableDto>(ResumeSessionAsync);
@@ -405,7 +406,18 @@ public class TableMapViewModel : ViewModelBase
             var hourlyRate = 15.00m; // Default rate
             
             // Initialize dialog
-            dialogViewModel.Initialize(table.Id, tableTypeId, $"Table {table.TableNumber}", tableTypeName, hourlyRate);
+            dialogViewModel.Initialize(
+                table.Id, 
+                tableTypeId, 
+                $"Table {table.TableNumber}", 
+                tableTypeName, 
+                hourlyRate, 
+                ticketId: null, // No ticket yet
+                userId: _userService.CurrentUser?.Id,
+                terminalId: _terminalContext.TerminalId,
+                shiftId: null, // TODO: Get current shift
+                orderTypeId: Guid.Parse("00000000-0000-0000-0000-000000000001"), // DEFAULT
+                createTicket: true);
             
             // Create and show dialog
             var dialog = new Views.Dialogs.StartSessionDialog(dialogViewModel);
@@ -442,7 +454,14 @@ public class TableMapViewModel : ViewModelBase
             var totalCharge = table.SessionRunningCharge ?? 0m;
             
             // Initialize dialog with session ID and calculated values
-            dialogViewModel.Initialize(table.SessionId.Value, duration, hourlyRate, totalCharge);
+            dialogViewModel.Initialize(
+                table.SessionId.Value, 
+                duration, 
+                hourlyRate, 
+                totalCharge,
+                userId: _userService.CurrentUser?.Id,
+                terminalId: _terminalContext.TerminalId,
+                hasExistingTicket: true);
             
             // Create and show dialog
             var dialog = new Views.Dialogs.EndSessionDialog(dialogViewModel);

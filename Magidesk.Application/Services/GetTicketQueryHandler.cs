@@ -139,6 +139,12 @@ public class GetTicketQueryHandler : IQueryHandler<GetTicketQuery, TicketDto?>
             Instructions = orderLine.Instructions, // F-0036
             SeatNumber = orderLine.SeatNumber,
             TreatAsSeat = orderLine.TreatAsSeat,
+            
+            // F-C.2: Time Charges
+            Duration = orderLine.Duration,
+            HourlyRate = orderLine.HourlyRate,
+            IsTimeCharge = orderLine.IsTimeCharge,
+
             Modifiers = orderLine.Modifiers.Select(MapModifierToDto).ToList(),
             AddOns = orderLine.AddOns.Select(MapModifierToDto).ToList(),
             CreatedAt = orderLine.CreatedAt

@@ -64,21 +64,28 @@ public class EndTableSessionCommandHandler : ICommandHandler<EndTableSessionComm
         // 6. End session (domain method enforces invariants)
         session.End(totalCharge);
 
-        // 7. Save session
-        await _sessionRepository.UpdateAsync(session);
-
-        // 8. Create or update ticket with time line item
+        // 7. Create or update ticket with time line item
         Guid? ticketId = null;
-        if (command.CreateTicket)
+        
+        // Check if session is already linked to a ticket (Feature C.1)
+        if (session.TicketId.HasValue)
         {
-            ticketId = await CreateTicketWithTimeChargeAsync(session, totalCharge, billableTime, cancellationToken);
+             await AddTimeChargeToTicketAsync(session.TicketId.Value, session, totalCharge, billableTime, cancellationToken);
+             ticketId = session.TicketId.Value;
+        }
+        else if (command.CreateTicket)
+        {
+            ticketId = await CreateTicketWithTimeChargeAsync(session, totalCharge, billableTime, command, cancellationToken);
+            // Ensure session is linked to the new ticket
+            session.LinkToTicket(ticketId.Value);
         }
         else
         {
-            // TODO: Add to existing ticket logic (requires ticket selection)
-            _logger.LogWarning("Add to existing ticket not yet implemented. Creating new ticket instead.");
-            ticketId = await CreateTicketWithTimeChargeAsync(session, totalCharge, billableTime, cancellationToken);
+             _logger.LogWarning("Session ended without ticket creation (CreateTicket=false and no linked ticket).");
         }
+
+        // 8. Save session (persists End state and Ticket Link)
+        await _sessionRepository.UpdateAsync(session);
 
         // 9. Update table status to Available
         table.MarkAvailable();
@@ -98,37 +105,81 @@ public class EndTableSessionCommandHandler : ICommandHandler<EndTableSessionComm
         );
     }
 
-    private async Task<Guid> CreateTicketWithTimeChargeAsync(
+    private async Task AddTimeChargeToTicketAsync(
+        Guid ticketId,
         TableSession session,
         Money totalCharge,
         TimeSpan duration,
         CancellationToken cancellationToken)
     {
-        // TODO: Get proper values from context/session
-        // For now, using placeholder values - full implementation needs:
-        // - Proper ticket number generation
-        // - Current user from context
-        // - Terminal ID from context
-        // - Shift ID from context
-        // - OrderType ID from repository (DineIn)
-        
+        var ticket = await _ticketRepository.GetByIdAsync(ticketId);
+        if (ticket == null)
+        {
+            _logger.LogWarning("Linked ticket {TicketId} not found. Cannot add time charge.", ticketId);
+            return;
+        }
+
+        var timeChargeLine = OrderLine.CreateTimeCharge(
+            ticket.Id,
+            duration,
+            session.HourlyRate,
+            totalCharge
+        );
+
+        ticket.AddOrderLine(timeChargeLine);
+        await _ticketRepository.UpdateAsync(ticket, cancellationToken);
+    }
+
+    private async Task<Guid> CreateTicketWithTimeChargeAsync(
+        TableSession session,
+        Money totalCharge,
+        TimeSpan duration,
+        EndTableSessionCommand command, // Pass full command for context
+        CancellationToken cancellationToken)
+    {
+        // Validate required context for ticket creation
+        if (!command.UserId.HasValue || !command.TerminalId.HasValue || !command.ShiftId.HasValue || !command.OrderTypeId.HasValue)
+        {
+            throw new InvalidOperationException("Cannot create ticket: Missing required context (UserId, TerminalId, ShiftId, OrderTypeId).");
+        }
+
+        // Get next ticket number
+        var ticketNumber = await _ticketRepository.GetNextTicketNumberAsync(cancellationToken);
+
         var ticket = Ticket.Create(
-            ticketNumber: 1, // TODO: Get next ticket number from repository
-            createdBy: new UserId(Guid.Parse("00000000-0000-0000-0000-000000000001")), // TODO: Get current user
-            terminalId: Guid.Parse("00000000-0000-0000-0000-000000000001"), // TODO: Get terminal from context
-            shiftId: Guid.Parse("00000000-0000-0000-0000-000000000001"), // TODO: Get shift from context
-            orderTypeId: Guid.Parse("00000000-0000-0000-0000-000000000001") // TODO: Get DineIn OrderType from repository
+            ticketNumber: ticketNumber,
+            createdBy: new UserId(command.UserId.Value),
+            terminalId: command.TerminalId.Value,
+            shiftId: command.ShiftId.Value,
+            orderTypeId: command.OrderTypeId.Value
         );
 
         // Assign table to ticket
-        // TODO: Get table number from table entity
-        // For now, using placeholder - full implementation needs to get Table entity and use its TableNumber
-        ticket.AssignTable(1); // TODO: Get table.TableNumber from table entity
+        var table = await _tableRepository.GetByIdAsync(session.TableId);
+        if (table != null)
+        {
+            ticket.AssignTable(table.TableNumber);
+        }
+
+        // Link session
+        ticket.SetSession(session.Id);
+        
+        // Auto-assign customer from session
+        if (session.CustomerId.HasValue)
+        {
+            ticket.SetCustomer(session.CustomerId.Value);
+        }
 
         // Add time-based line item
-        // TODO: This is a simplified version. Full implementation should use proper menu item for time charges
-        // For now, we'll add a note to the ticket
-        ticket.SetNote($"Table Time: {duration.TotalHours:F2} hours @ ${session.HourlyRate:F2}/hr = ${totalCharge.Amount:F2}");
+        // F-C.2: Using dedicated factory method
+        var timeChargeLine = OrderLine.CreateTimeCharge(
+            ticket.Id,
+            duration,
+            session.HourlyRate,
+            totalCharge
+        );
+
+        ticket.AddOrderLine(timeChargeLine);
 
         await _ticketRepository.AddAsync(ticket);
 
