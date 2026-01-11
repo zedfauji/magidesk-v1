@@ -39,6 +39,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.CaptureCardPaymentCommand, Commands.CaptureCardPaymentResult>, CaptureCardPaymentCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.VoidCardPaymentCommand, Commands.VoidCardPaymentResult>, VoidCardPaymentCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.AddTipsToCardPaymentCommand, Commands.AddTipsToCardPaymentResult>, AddTipsToCardPaymentCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.ApplyGratuityCommand, Commands.ApplyGratuityResult>, ApplyGratuityCommandHandler>();
         
         // Refund command handlers
         services.AddScoped<ICommandHandler<Commands.RefundPaymentCommand, Commands.RefundPaymentResult>, RefundPaymentCommandHandler>();
@@ -197,6 +198,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IGroupSettleService, GroupSettleService>();
         services.AddScoped<IMerchantBatchService, MerchantBatchService>();
         services.AddScoped<TableLayoutExporter>();
+        
+        // Stock Management Services (G.3)
+        services.AddScoped<ILowStockAlertService, LowStockAlertService>();
 
         return services;
     }

@@ -604,15 +604,24 @@ public class Ticket
                 - DiscountAmount;
         }
 
-        // Add gratuity if present and paid
-        if (Gratuity != null && Gratuity.Paid)
+        // Add gratuity if present
+        if (Gratuity != null)
         {
             TotalAmount = TotalAmount + Gratuity.Amount;
         }
 
         // Recalculate due amount
         RecalculatePaidAmount();
-        DueAmount = TotalAmount - PaidAmount;
+        
+        // Ensure we don't crash if paid > total (e.g. cash overpayment)
+        if (PaidAmount >= TotalAmount)
+        {
+             DueAmount = Money.Zero(TotalAmount.Currency);
+        }
+        else
+        {
+             DueAmount = TotalAmount - PaidAmount;
+        }
     }
 
     /// <summary>
@@ -657,8 +666,8 @@ public class Ticket
                 - DiscountAmount;
         }
 
-        // Add gratuity if present and paid
-        if (Gratuity != null && Gratuity.Paid)
+        // Add gratuity if present
+        if (Gratuity != null)
         {
             TotalAmount = TotalAmount + Gratuity.Amount;
         }
@@ -674,12 +683,27 @@ public class Ticket
     /// </summary>
     private void RecalculatePaidAmount()
     {
-        PaidAmount = _payments
-            .Where(p => !p.IsVoided)
-            .Aggregate(Money.Zero(), (sum, p) => 
-                p.TransactionType == TransactionType.Credit 
-                    ? sum + p.Amount 
-                    : sum - p.Amount); // Refunds (Debit) reduce paid amount
+        var validPayments = _payments.Where(p => !p.IsVoided).ToList();
+
+        var totalCredits = validPayments
+            .Where(p => p.TransactionType == TransactionType.Credit)
+            .Aggregate(Money.Zero(), (sum, p) => sum + p.Amount);
+
+        var totalDebits = validPayments
+            .Where(p => p.TransactionType == TransactionType.Debit)
+            .Aggregate(Money.Zero(), (sum, p) => sum + p.Amount);
+
+        // Ensure we don't crash if debits > credits (e.g. if original credit was voided but refund remains)
+        if (totalDebits > totalCredits)
+        {
+             // In this case, we have more refunds than credits contextually active.
+             // We should clamp to zero to avoid "Negative Money" exception.
+             PaidAmount = Money.Zero(totalCredits.Currency);
+        }
+        else
+        {
+             PaidAmount = totalCredits - totalDebits;
+        }
     }
 
     /// <summary>
@@ -746,6 +770,7 @@ public class Ticket
         }
 
         Gratuity = gratuity;
+        IncrementVersion();
         CalculateTotals();
     }
 

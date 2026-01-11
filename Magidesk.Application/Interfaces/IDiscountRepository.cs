@@ -5,8 +5,8 @@ using Magidesk.Domain.Entities;
 
 namespace Magidesk.Application.Interfaces;
 
-public interface IDiscountRepository
+public interface IDiscountRepository : IRepository<Discount>
 {
-    Task<Discount?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    // GetByIdAsync provided by base interface
     Task<Discount?> GetByCouponCodeAsync(string couponCode, CancellationToken cancellationToken = default);
 }

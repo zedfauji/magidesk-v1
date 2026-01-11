@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="Magidesk.Views.Dialogs.GratuitySelectionDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Magidesk.ViewModels"
+    mc:Ignorable="d"
+    Title="Add Gratuity"
+    PrimaryButtonText="Apply Tip"
+    SecondaryButtonText="Cancel"
+    PrimaryButtonCommand="{x:Bind ViewModel.ApplyGratuityCommand}"
+    SecondaryButtonCommand="{x:Bind ViewModel.CancelCommand}"
+    IsPrimaryButtonEnabled="True"
+    DefaultButton="Primary"
+    Style="{StaticResource DefaultContentDialogStyle}">
+
+    <ContentDialog.Resources>
+        <!-- Animations for smooth interactions -->
+        <Storyboard x:Name="SuggestionSelectedAnimation">
+            <DoubleAnimation
+                Storyboard.TargetName="SelectedIndicator"
+                Storyboard.TargetProperty="Opacity"
+                From="0" To="1"
+                Duration="0:0:0.2"
+                EnableDependentAnimation="True"/>
+            <DoubleAnimation
+                Storyboard.TargetName="SelectedIndicator"
+                Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                From="0.8" To="1.0"
+                Duration="0:0:0.3"
+                EnableDependentAnimation="True">
+                <DoubleAnimation.EasingFunction>
+                    <BackEase EasingMode="EaseOut" Amplitude="0.3"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </ContentDialog.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Ticket Info Header -->
+        <Grid Grid.Row="0" Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="{x:Bind ViewModel.TicketNumber, Mode=OneWay}"
+                           Style="{StaticResource BodyStrongTextBlockStyle}"
+                           Foreground="{ThemeResource TextFillColorPrimaryBrush}"/>
+                <TextBlock Text="Subtotal"
+                           Style="{StaticResource CaptionTextBlockStyle}"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Margin="0,4,0,0"/>
+            </StackPanel>
+            
+            <TextBlock Grid.Column="1"
+                       Text="{x:Bind ViewModel.SubtotalDisplay, Mode=OneWay}"
+                       Style="{StaticResource TitleTextBlockStyle}"
+                       Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                       VerticalAlignment="Center"/>
+        </Grid>
+
+        <!-- Suggested Amounts -->
+        <StackPanel Grid.Row="1" Margin="0,0,0,20">
+            <TextBlock Text="Suggested Amounts"
+                       Style="{StaticResource SubtitleTextBlockStyle}"
+                       Margin="0,0,0,12"/>
+            
+            <GridView ItemsSource="{x:Bind ViewModel.Suggestions, Mode=OneWay}"
+                      SelectedItem="{x:Bind ViewModel.SelectedSuggestion, Mode=TwoWay}"
+                      SelectionMode="Single"
+                      IsItemClickEnabled="True"
+                      Padding="0">
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="4"/>
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+                
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:GratuitySuggestionItem">
+                        <Border Background="{ThemeResource SystemControlBackgroundAltHighBrush}"
+                                BorderBrush="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                BorderThickness="1"
+                                CornerRadius="4"
+                                Padding="20,16"
+                                Width="110"
+                                Height="90"
+                                Margin="0,0,8,8">
+                            <Border.Resources>
+                                <Storyboard x:Name="HoverAnimation">
+                                    <DoubleAnimation Storyboard.TargetName="HoverScale"
+                                                   Storyboard.TargetProperty="ScaleX"
+                                                   To="1.05" Duration="0:0:0.15"/>
+                                    <DoubleAnimation Storyboard.TargetName="HoverScale"
+                                                   Storyboard.TargetProperty="ScaleY"
+                                                   To="1.05" Duration="0:0:0.15"/>
+                                </Storyboard>
+                            </Border.Resources>
+                            
+                            <Border.RenderTransform>
+                                <ScaleTransform x:Name="HoverScale" CenterX="55" CenterY="45"/>
+                            </Border.RenderTransform>
+                            
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="{x:Bind Label}"
+                                           Style="{StaticResource TitleTextBlockStyle}"
+                                           Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="{x:Bind Amount}"
+                                           Style="{StaticResource BodyTextBlockStyle}"
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,4,0,0"/>
+                            </StackPanel>
+                            
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Target="HoverScale.ScaleX" Value="1.05"/>
+                                            <Setter Target="HoverScale.ScaleY" Value="1.05"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Target="Border.BorderBrush" Value="{ThemeResource SystemControlHighlightListAccentHighBrush}"/>
+                                            <Setter Target="Border.Background" Value="{ThemeResource SystemControlHighlightListAccentLowBrush}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Border>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+        </StackPanel>
+
+        <!-- Custom Amount -->
+        <StackPanel Grid.Row="2" Margin="0,0,0,20">
+            <TextBlock Text="Or Enter Custom Amount"
+                       Style="{StaticResource BodyStrongTextBlockStyle}"
+                       Margin="0,0,0,8"/>
+            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBox Grid.Column="0"
+                         Text="{x:Bind ViewModel.CustomAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         PlaceholderText="0.00"
+                         InputScope="Number"
+                         Margin="0,0,8,0"
+                         Style="{StaticResource DefaultTextBoxStyle}">
+                    <TextBox.Header>
+                        <FontIcon Glyph="&#xE8A1;" FontSize="16" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"/>
+                    </TextBox.Header>
+                </TextBox>
+                
+                <Button Grid.Column="1"
+                        Content="Custom"
+                        Command="{x:Bind ViewModel.SelectCustomAmountCommand}"
+                        Style="{StaticResource AccentButtonStyle}"
+                        VerticalAlignment="Bottom"/>
+            </Grid>
+        </StackPanel>
+
+        <!-- Server Selection -->
+        <StackPanel Grid.Row="3" Margin="0,0,0,20">
+            <TextBlock Text="Assign Tip To"
+                       Style="{StaticResource BodyStrongTextBlockStyle}"
+                       Margin="0,0,0,8"/>
+            
+            <ComboBox ItemsSource="{x:Bind ViewModel.AvailableServers, Mode=OneWay}"
+                      SelectedItem="{x:Bind ViewModel.SelectedServer, Mode=TwoWay}"
+                      DisplayMemberPath="DisplayName"
+                      PlaceholderText="Select server..."
+                      HorizontalAlignment="Stretch"/>
+        </StackPanel>
+
+        <!-- Total with Gratuity -->
+        <Border Grid.Row="4"
+                Background="{ThemeResource SystemControlBackgroundAltHighBrush}"
+                BorderBrush="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                BorderThickness="1"
+                CornerRadius="4"
+                Padding="16"
+                Margin="0,0,0,16">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Column="0"
+                           Text="Total with Tip"
+                           Style="{StaticResource SubtitleTextBlockStyle}"
+                           VerticalAlignment="Center"/>
+                
+                <TextBlock Grid.Column="1"
+                           Text="{x:Bind ViewModel.TotalWithGratuityDisplay}"
+                           Style="{StaticResource TitleLargeTextBlockStyle}"
+                           Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                           VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <!-- Error Message -->
+        <InfoBar Grid.Row="5"
+                 IsOpen="{x:Bind ViewModel.HasError, Mode=OneWay}"
+                 Severity="Error"
+                 Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+                 Margin="0,0,0,8"/>
+
+        <!-- Loading Indicator -->
+        <ProgressRing Grid.Row="0" Grid.RowSpan="6"
+                      IsActive="{x:Bind ViewModel.IsProcessing, Mode=OneWay}"
+                      Width="60"
+                      Height="60"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"/>
+    </Grid>
+</ContentDialog>

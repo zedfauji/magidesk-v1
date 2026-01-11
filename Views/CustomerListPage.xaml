@@ -147,10 +147,16 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <Button Content="Save Customer" 
-                                Command="{x:Bind ViewModel.SaveCommand}" 
-                                Style="{StaticResource AccentButtonStyle}" 
-                                MinWidth="120" Margin="0,20,0,0"/>
+                        <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,20,0,0">
+                            <Button Content="Save Customer" 
+                                    Command="{x:Bind ViewModel.SaveCommand}" 
+                                    Style="{StaticResource AccentButtonStyle}" 
+                                    MinWidth="120"/>
+                            <Button Content="View Member Profile" 
+                                    Command="{x:Bind ViewModel.ViewMemberProfileCommand}" 
+                                    Visibility="{x:Bind ViewModel.HasSelection, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                                    MinWidth="160"/>
+                        </StackPanel>
 
                     </StackPanel>
                 </ScrollViewer>

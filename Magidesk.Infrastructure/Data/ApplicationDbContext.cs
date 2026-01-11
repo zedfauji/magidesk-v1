@@ -67,6 +67,9 @@ public class ApplicationDbContext : DbContext
     public DbSet<TableType> TableTypes { get; set; } = null!;
     public DbSet<TableSession> TableSessions { get; set; } = null!;
     public DbSet<Customer> Customers { get; set; } = null!;
+    public DbSet<Member> Members { get; set; } = null!;
+    public DbSet<MembershipTier> MembershipTiers { get; set; } = null!;
+    public DbSet<StockMovement> StockMovements { get; set; } = null!;
     // FractionalModifier is part of Set<MenuModifier> via Inheritance
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -128,6 +131,8 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new TableTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TableSessionConfiguration());
         modelBuilder.ApplyConfiguration(new CustomerConfiguration());
+        modelBuilder.ApplyConfiguration(new MemberConfiguration());
+        modelBuilder.ApplyConfiguration(new MembershipTierConfiguration());
     }
 }
 

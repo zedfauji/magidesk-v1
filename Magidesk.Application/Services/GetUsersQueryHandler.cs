@@ -27,7 +27,9 @@ public class GetUsersQueryHandler : IQueryHandler<GetUsersQuery, IEnumerable<Use
             FirstName = u.FirstName,
             LastName = u.LastName,
             Username = u.Username,
-            // Map other fields as needed
+            IsActive = u.IsActive,
+            PreferredLanguage = u.PreferredLanguage,
+            RoleName = u.Role?.Name ?? "Staff"
         });
     }
 }

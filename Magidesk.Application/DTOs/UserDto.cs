@@ -12,6 +12,7 @@ public class UserDto
     public string Email { get; set; } = string.Empty;
     public bool IsActive { get; set; } = true;
     public string PreferredLanguage { get; set; } = "en-US";
+    public string RoleName { get; set; } = string.Empty;
     
     public string FullName => $"{FirstName} {LastName}";
 }

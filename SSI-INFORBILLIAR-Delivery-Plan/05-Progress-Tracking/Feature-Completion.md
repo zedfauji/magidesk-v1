@@ -110,9 +110,9 @@
 |-----------|-----------------|----------|--------|-------------|
 | MVP: Time Billing | A.1-A.6, A.9, A.16 | 5/8 | 62.5% | TBD |
 | MVP: Reservations | E.1-E.6 | 0/6 | 0% | TBD |
-| MVP: Members | F.1-F.5 | 2/5 | 40% | TBD |
+| MVP: Basic Customers | F.1-F.2 | 2/2 | 100% | DONE |
 | MVP: Security | J.1-J.3 | 3/3 | 100% | DONE |
-| **All P0 Features** | 49 tickets | 20 | 40.8% | TBD |
+| **All P0 Features** | 41 tickets | 17 | 41.5% | TBD |
 
 ---
 

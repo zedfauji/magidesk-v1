@@ -749,7 +749,243 @@ public record AdjustSessionTimeCommand(
 
 ---
 
-*Remaining tickets (BE-A.7-01 through BE-A.19-01) follow same format - lower priority, created as needed.*
+## BE-A.7-01: Link Game Equipment to Table
+
+**Ticket ID:** BE-A.7-01  
+**Feature ID:** A.7  
+**Type:** Backend  
+**Title:** Link Game Equipment to Table  
+**Priority:** P2
+
+### Outcome
+Tables can track associated game equipment (cues, balls, etc.).
+
+### Scope
+- Add equipment tracking to Table entity
+- Create GameEquipment entity
+- Link via many-to-many relationship
+- Query equipment by table
+
+### Implementation Notes
+```csharp
+public class GameEquipment
+{
+    public Guid Id { get; private set; }
+    public string Name { get; private set; }
+    public string Type { get; private set; }
+    public string SerialNumber { get; private set; }
+    public Guid? AssignedTableId { get; private set; }
+}
+```
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | Table entity | Exists |
+
+### Acceptance Criteria
+- [ ] GameEquipment entity created
+- [ ] Can assign equipment to table
+- [ ] Can query equipment by table
+- [ ] Migration runs successfully
+
+---
+
+## BE-A.8-01: Create Game History Query
+
+**Ticket ID:** BE-A.8-01  
+**Feature ID:** A.8  
+**Type:** Backend  
+**Title:** Create Game History Query  
+**Priority:** P2
+
+### Outcome
+Query table usage history for analytics.
+
+### Scope
+- Create GetTableHistoryQuery
+- Return session history per table
+- Include revenue and duration stats
+
+### Implementation Notes
+```csharp
+public record GetTableHistoryQuery(
+    Guid TableId,
+    DateTime? StartDate,
+    DateTime? EndDate
+);
+```
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | TableSession entity | BE-A.1-01 |
+
+### Acceptance Criteria
+- [ ] Query returns session history
+- [ ] Date range filter works
+- [ ] Statistics calculated correctly
+
+---
+
+## BE-A.13-01: Complete Server Assignment Logic
+
+**Ticket ID:** BE-A.13-01  
+**Feature ID:** A.13  
+**Type:** Backend  
+**Title:** Complete Server Assignment Logic  
+**Priority:** P2
+
+### Outcome
+Tables can be assigned to specific servers with tracking.
+
+### Scope
+- Add ServerId to TableSession
+- Track server performance metrics
+- Link to tip distribution
+
+### Implementation Notes
+```csharp
+// Add to TableSession
+public Guid? AssignedServerId { get; private set; }
+
+public void AssignServer(Guid serverId)
+{
+    AssignedServerId = serverId;
+    UpdatedAt = DateTime.UtcNow;
+}
+```
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | TableSession entity | BE-A.1-01 |
+| SOFT | User entity | Exists |
+
+### Acceptance Criteria
+- [ ] Server assignment tracked
+- [ ] Server performance queryable
+- [ ] Tips linked to server
+
+---
+
+## BE-A.14-01: Create MergeTablesCommand
+
+**Ticket ID:** BE-A.14-01  
+**Feature ID:** A.14  
+**Type:** Backend  
+**Title:** Create MergeTablesCommand  
+**Priority:** P2
+
+### Outcome
+Combine multiple tables into single session.
+
+### Scope
+- Create MergeTablesCommand
+- Combine sessions into primary
+- Update all table statuses
+- Merge tickets if needed
+
+### Implementation Notes
+```csharp
+public record MergeTablesCommand(
+    Guid PrimaryTableId,
+    List<Guid> SecondaryTableIds
+);
+```
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | TableSession entity | BE-A.1-01 |
+
+### Acceptance Criteria
+- [ ] Tables merge into one session
+- [ ] Secondary tables linked
+- [ ] Tickets combined correctly
+- [ ] Audit logged
+
+---
+
+## BE-A.15-01: Create SplitTableCommand
+
+**Ticket ID:** BE-A.15-01  
+**Feature ID:** A.15  
+**Type:** Backend  
+**Title:** Create SplitTableCommand  
+**Priority:** P2
+
+### Outcome
+Split merged tables back into separate sessions.
+
+### Scope
+- Create SplitTableCommand
+- Create new sessions from merged
+- Split ticket charges
+- Update table statuses
+
+### Implementation Notes
+```csharp
+public record SplitTableCommand(
+    Guid MergedSessionId,
+    List<Guid> TableIdsToSplit
+);
+```
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | TableSession entity | BE-A.1-01 |
+| SOFT | MergeTablesCommand | BE-A.14-01 |
+
+### Acceptance Criteria
+- [ ] Split creates new sessions
+- [ ] Charges distributed correctly
+- [ ] Table statuses updated
+- [ ] Original merge preserved in history
+
+---
+
+## BE-A.19-01: Add GuestCount to TableSession
+
+**Ticket ID:** BE-A.19-01  
+**Feature ID:** A.19  
+**Type:** Backend  
+**Title:** Add GuestCount to TableSession  
+**Priority:** P1
+
+### Outcome
+Track number of guests per table session.
+
+### Scope
+- Add GuestCount property to TableSession
+- Validate range (1-20)
+- Include in session reports
+
+### Implementation Notes
+```csharp
+// Add to TableSession
+public int GuestCount { get; private set; }
+
+public void UpdateGuestCount(int count)
+{
+    if (count < 1 || count > 20)
+        throw new ArgumentOutOfRangeException(nameof(count));
+    
+    GuestCount = count;
+}
+```
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | TableSession entity | BE-A.1-01 |
+
+### Acceptance Criteria
+- [ ] GuestCount property added
+- [ ] Validation enforces 1-20 range
+- [ ] Included in DTOs and reports
+- [ ] Migration runs successfully
 
 ---
 
@@ -765,3 +1001,96 @@ public record AdjustSessionTimeCommand(
 ---
 
 *Last Updated: 2026-01-08*
+
+---
+
+## BE-A.18-01: Create TransferSessionCommand
+
+**Ticket ID:** BE-A.18-01
+**Feature ID:** A.18
+**Type:** Backend
+**Title:** Create TransferSessionCommand
+**Priority:** P2
+
+### Outcome
+Transfer tickets and sessions between tables with audit trail.
+
+### Scope
+- Create `TransferSessionCommand`
+- Release source table
+- Assign to destination table
+- Track transfer in audit
+- Notify kitchen of table change
+
+### Implementation Notes
+```csharp
+public record TransferSessionCommand(
+    Guid SessionId,
+    Guid DestinationTableId,
+    Guid AuthorizingUserId,
+    string Reason
+);
+
+// Handler:
+// 1. Validate destination table available
+// 2. Release source table
+// 3. Assign to destination
+// 4. Log audit event
+// 5. Update kitchen display if applicable
+```
+
+### Acceptance Criteria
+- [ ] Session transfers to new table
+- [ ] Source table released
+- [ ] Destination table assigned
+- [ ] Audit trail complete
+- [ ] Kitchen notified
+
+---
+
+## BE-A.9-02: Implement Time-Based Line Items
+
+**Ticket ID:** BE-A.9-02
+**Feature ID:** A.9
+**Type:** Backend
+**Title:** Implement Time-Based Line Items
+**Priority:** P0
+
+### Outcome (measurable, testable)
+Ability to add time-based charges as order lines when session ends.
+
+### Scope
+- Create dedicated `TimeChargeOrderLine` type or flag
+- Generate line item from session end
+- Display time duration and rate on ticket
+
+### Implementation Notes
+```csharp
+// Add to OrderLine or create subtype
+public OrderLine CreateTimeChargeLine(
+    Guid ticketId,
+    TimeSpan duration,
+    decimal hourlyRate,
+    Money totalCharge,
+    string description  // e.g., "Table Time: 2h 15m"
+);
+
+// Properties to add to OrderLine
+public TimeSpan? Duration { get; private set; }
+public decimal? HourlyRate { get; private set; }
+public bool IsTimeCharge { get; private set; }
+```
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | PricingService | BE-A.9-01 |
+| HARD | EndTableSessionCommand | BE-A.2-01 |
+
+### Acceptance Criteria
+- [ ] Time charge line item created correctly
+- [ ] Duration displayed on line
+- [ ] Rate displayed on line
+- [ ] Total calculated correctly
+- [ ] Taxable status configurable
+

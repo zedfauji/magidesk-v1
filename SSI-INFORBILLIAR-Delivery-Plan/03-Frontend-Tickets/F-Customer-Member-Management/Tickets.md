@@ -319,6 +319,113 @@ A quick check-in dialog for members arriving at the club.
 
 ---
 
+## FE-F.4-01: Create MembershipTierManagementPage
+
+**Ticket ID:** FE-F.4-01  
+**Feature ID:** F.4  
+**Type:** Frontend  
+**Title:** Create MembershipTierManagementPage  
+**Priority:** P1
+
+### Outcome
+Admin page for managing membership tiers and benefits.
+
+### Scope
+- Create `MembershipTierManagementPage.xaml`
+- List all membership tiers
+- Add/Edit tier dialog
+- Configure discount percentages
+- Define tier benefits
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** No logic in ViewModel
+- **G13:** Accessibility compliant
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | MembershipTier entity | BE-F.4-01 |
+
+### Acceptance Criteria
+- [ ] Page lists all tiers
+- [ ] Add tier works
+- [ ] Edit tier works
+- [ ] Discount configuration works
+- [ ] Benefits defined
+- [ ] Validation enforced
+
+---
+
+## FE-F.6-01: Create PrepaidBalancePanel
+
+**Ticket ID:** FE-F.6-01  
+**Feature ID:** F.6  
+**Type:** Frontend  
+**Title:** Create PrepaidBalancePanel  
+**Priority:** P1
+
+### Outcome
+Panel for managing member prepaid credits.
+
+### Scope
+- Create `PrepaidBalancePanel` control
+- Display current balance
+- Add credit dialog
+- Transaction history
+- Balance alerts
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel pattern
+- **G13:** Form validation
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | Prepaid balance BE | BE-F.6-01 |
+
+### Acceptance Criteria
+- [ ] Balance displayed correctly
+- [ ] Add credit works
+- [ ] Transaction history shown
+- [ ] Low balance alerts work
+
+---
+
+## FE-F.7-01: Create CustomerHistoryTab
+
+**Ticket ID:** FE-F.7-01  
+**Feature ID:** F.7  
+**Type:** Frontend  
+**Title:** Create CustomerHistoryTab  
+**Priority:** P1
+
+### Outcome
+Tab showing customer visit and purchase history.
+
+### Scope
+- Create `CustomerHistoryTab` control
+- List visit history
+- Show purchase history
+- Revenue statistics
+- Filter by date range
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel pattern
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | Customer history BE | BE-F.7-01 |
+
+### Acceptance Criteria
+- [ ] Visit history displayed
+- [ ] Purchase history displayed
+- [ ] Stats calculated
+- [ ] Filtering works
+- [ ] Performance acceptable
+
+---
+
 ## Summary
 
 | Priority | Count | Status |
@@ -330,4 +437,4 @@ A quick check-in dialog for members arriving at the club.
 
 ---
 
-*Last Updated: 2026-01-08*
+*Last Updated: 2026-01-10*

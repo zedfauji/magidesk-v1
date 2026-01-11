@@ -12,6 +12,21 @@ public class RefundTicketCommand
     public UserId ProcessedBy { get; set; } = null!;
     public Guid TerminalId { get; set; }
     public string? Reason { get; set; }
+
+    /// <summary>
+    /// Mode: Full, Partial, or Specific.
+    /// </summary>
+    public Queries.RefundMode Mode { get; set; }
+
+    /// <summary>
+    /// If Partial mode, the total amount to refund.
+    /// </summary>
+    public Money? PartialAmount { get; set; }
+
+    /// <summary>
+    /// If Specific mode, list of specific payment IDs to refund.
+    /// </summary>
+    public List<Guid> SpecificPaymentIds { get; set; } = new();
 }
 
 /// <summary>

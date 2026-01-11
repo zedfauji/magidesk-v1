@@ -9,8 +9,15 @@
 |-----------|------------|-------|----------|--------|
 | BE-B.2-01 | B.2 | Complete Multi-Floor Support | P1 | NOT_STARTED |
 | BE-B.3-01 | B.3 | Complete Object Property Editing | P1 | NOT_STARTED |
+| BE-B.4-01 | B.4 | Implement Background Grid Overlay | P2 | NOT_STARTED |
 | BE-B.6-01 | B.6 | Add Floor Switching Validation | P2 | NOT_STARTED |
 | BE-B.9-01 | B.9 | Implement Layout Undo/Redo Logic | P2 | NOT_STARTED |
+| BE-B.10-01 | B.10 | Implement Alignment Guides | P2 | NOT_STARTED |
+| BE-B.11-01 | B.11 | Add Zoom State Management | P2 | NOT_STARTED |
+| BE-B.12-01 | B.12 | Implement Multi-Select Logic | P2 | NOT_STARTED |
+| BE-B.13-01 | B.13 | Add Layout Scheduling System | P2 | NOT_STARTED |
+| BE-B.14-01 | B.14 | Implement Layout Cloning | P2 | NOT_STARTED |
+| BE-B.16-01 | B.16 | Implement Layout Version History | P2 | NOT_STARTED |
 
 ---
 
@@ -182,14 +189,228 @@ public record RestoreLayoutSnapshotCommand(
 
 ---
 
+## BE-B.4-01: Implement Background Grid Overlay
+
+**Ticket ID:** BE-B.4-01  
+**Feature ID:** B.4  
+**Type:** Backend  
+**Title:** Implement Background Grid Overlay  
+**Priority:** P2
+
+### Outcome
+Backend support for grid overlay configuration on floor layouts.
+
+### Scope
+- Add grid configuration to Floor entity (grid size, color, visibility)
+- Store grid preferences per floor
+- Provide grid snap calculation utilities
+
+### Acceptance Criteria
+- [ ] Grid configuration stored per floor
+- [ ] Grid snap calculations accurate
+- [ ] Tests cover grid logic
+
+---
+
+## BE-B.10-01: Implement Alignment Guides
+
+**Ticket ID:** BE-B.10-01  
+**Feature ID:** B.10  
+**Type:** Backend  
+**Title:** Implement Alignment Guides  
+**Priority:** P2
+
+### Outcome
+Backend logic for calculating alignment guide positions.
+
+### Scope
+- Create alignment calculation service
+- Detect edge/center alignment opportunities
+- Provide snap-to-guide calculations
+
+### Acceptance Criteria
+- [ ] Alignment detection works for edges and centers
+- [ ] Snap calculations accurate
+- [ ] Performance acceptable for 100+ tables
+
+---
+
+## BE-B.11-01: Add Zoom State Management
+
+**Ticket ID:** BE-B.11-01  
+**Feature ID:** B.11  
+**Type:** Backend  
+**Title:** Add Zoom State Management  
+**Priority:** P2
+
+### Outcome
+Backend support for persisting zoom/pan state per floor.
+
+### Scope
+- Add zoom level and pan offset to Floor or user preferences
+- Store last viewed position per floor
+- Restore zoom state on floor load
+
+### Acceptance Criteria
+- [ ] Zoom state persisted per floor
+- [ ] State restored on floor switch
+- [ ] Tests verify persistence
+
+---
+
+## BE-B.12-01: Implement Multi-Select Logic
+
+**Ticket ID:** BE-B.12-01  
+**Feature ID:** B.12  
+**Type:** Backend  
+**Title:** Implement Multi-Select Logic  
+**Priority:** P2
+
+### Outcome
+Backend support for bulk table operations.
+
+### Scope
+- Create `UpdateMultipleTablesCommand`
+- Support bulk position updates
+- Support bulk property updates
+
+### Implementation Notes
+```csharp
+public record UpdateMultipleTablesCommand(
+    List<Guid> TableIds,
+    double? DeltaX,
+    double? DeltaY,
+    string? Color,
+    bool? IsEnabled
+);
+```
+
+### Acceptance Criteria
+- [ ] Bulk updates work for position
+- [ ] Bulk updates work for properties
+- [ ] Transaction ensures all-or-nothing
+- [ ] Tests cover bulk operations
+
+---
+
+## BE-B.13-01: Add Layout Scheduling System
+
+**Ticket ID:** BE-B.13-01  
+**Feature ID:** B.13  
+**Type:** Backend  
+**Title:** Add Layout Scheduling System  
+**Priority:** P2
+
+### Outcome
+Backend system for time-based layout activation.
+
+### Scope
+- Create `LayoutSchedule` entity
+- Add day-of-week and time-of-day rules
+- Implement background service for auto-activation
+- Support manual override
+
+### Implementation Notes
+```csharp
+public class LayoutSchedule
+{
+    public Guid Id { get; set; }
+    public Guid FloorId { get; set; }
+    public Guid LayoutId { get; set; }
+    public DayOfWeek[] ActiveDays { get; set; }
+    public TimeOnly StartTime { get; set; }
+    public TimeOnly EndTime { get; set; }
+    public int Priority { get; set; }
+}
+```
+
+### Acceptance Criteria
+- [ ] Schedules stored correctly
+- [ ] Background service activates layouts
+- [ ] Manual override works
+- [ ] Conflict resolution by priority
+
+---
+
+## BE-B.14-01: Implement Layout Cloning
+
+**Ticket ID:** BE-B.14-01  
+**Feature ID:** B.14  
+**Type:** Backend  
+**Title:** Implement Layout Cloning  
+**Priority:** P2
+
+### Outcome
+Backend command to duplicate layouts with all tables.
+
+### Scope
+- Create `CloneLayoutCommand`
+- Deep copy all tables and properties
+- Generate new IDs for cloned entities
+- Preserve relative positions
+
+### Implementation Notes
+```csharp
+public record CloneLayoutCommand(
+    Guid SourceLayoutId,
+    string NewLayoutName
+);
+```
+
+### Acceptance Criteria
+- [ ] Layout cloned with all tables
+- [ ] New IDs generated
+- [ ] Positions preserved
+- [ ] Tests verify deep copy
+
+---
+
+## BE-B.16-01: Implement Layout Version History
+
+**Ticket ID:** BE-B.16-01  
+**Feature ID:** B.16  
+**Type:** Backend  
+**Title:** Implement Layout Version History  
+**Priority:** P2
+
+### Outcome
+Backend system for layout versioning and rollback.
+
+### Scope
+- Create `LayoutVersion` entity
+- Auto-save versions on publish
+- Implement `RestoreLayoutVersionCommand`
+- Limit history to 10 versions per layout
+
+### Implementation Notes
+```csharp
+public class LayoutVersion
+{
+    public Guid Id { get; set; }
+    public Guid LayoutId { get; set; }
+    public int VersionNumber { get; set; }
+    public string SnapshotData { get; set; } // JSON
+    public DateTime CreatedAt { get; set; }
+    public Guid CreatedBy { get; set; }
+}
+```
+
+### Acceptance Criteria
+- [ ] Versions saved on publish
+- [ ] Restore command works
+- [ ] History limited to 10 versions
+- [ ] Old versions auto-purged
+
+---
+
 ## Summary
 
 | Priority | Count | Status |
 |----------|-------|--------|
 | P1 | 2 | NOT_STARTED |
-| P2 | 2 | NOT_STARTED |
-| **Total** | **4** | **NOT_STARTED** |
+| P2 | 9 | NOT_STARTED |
+| **Total** | **11** | **NOT_STARTED** |
 
 ---
 
-*Last Updated: 2026-01-08*
+*Last Updated: 2026-01-09*

@@ -9,6 +9,10 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <converters:MenuItemToLowStockBrushConverter x:Key="MenuItemToLowStockBrushConverter"/>
+    </Page.Resources>
+
     <Grid Padding="24">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -99,6 +103,8 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Spacing="8" Padding="12">
+                                    <Ellipse Width="8" Height="8" VerticalAlignment="Center" 
+                                             Fill="{Binding Converter={StaticResource MenuItemToLowStockBrushConverter}}"/>
                                     <TextBlock Text="{Binding Name}" />
                                     <TextBlock Text="{Binding Price.Amount, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:C}'}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                                 </StackPanel>
@@ -143,6 +149,22 @@
                                    SelectedItem="{x:Bind ViewModel.SelectedPrinterGroup, Mode=TwoWay}"
                                    DisplayMemberPath="Name" 
                                    HorizontalAlignment="Stretch"/>
+
+                         <!-- Stock Configuration (Item Only) -->
+                         <StackPanel Visibility="{x:Bind ViewModel.SelectedItem, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}" Spacing="12">
+                             <TextBlock Text="Inventory Settings" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="0,8,0,0"/>
+                             
+                             <CheckBox Content="Track Stock Level" IsChecked="{x:Bind ViewModel.EditingTrackStock, Mode=TwoWay}"/>
+                             
+                             <Grid ColumnSpacing="12" Visibility="{x:Bind ViewModel.IsStockTrackingEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                 <Grid.ColumnDefinitions>
+                                     <ColumnDefinition Width="*"/>
+                                     <ColumnDefinition Width="*"/>
+                                 </Grid.ColumnDefinitions>
+                                 <TextBox Header="Current Stock" Text="{x:Bind ViewModel.EditingStockQuantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" InputScope="Number"/>
+                                 <TextBox Grid.Column="1" Header="Low Stock Alert Level" Text="{x:Bind ViewModel.EditingMinStock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" InputScope="Number"/>
+                             </Grid>
+                         </StackPanel>
 
                          <!-- Recipe Section -->
                          <Grid Visibility="{x:Bind ViewModel.SelectedItem, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}" Margin="0,16,0,0">

@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:dto="using:Magidesk.Application.DTOs"
     xmlns:entities="using:Magidesk.Domain.Entities"
+    xmlns:viewmodels="using:Magidesk.Presentation.ViewModels"
     xmlns:converters="using:Magidesk.Presentation.Converters"
     mc:Ignorable="d"
     Name="RootPage"
@@ -430,17 +431,33 @@
                       ItemsSource="{Binding Items}" 
                       Visibility="{Binding IsSelectionModeItems, Converter={StaticResource BoolToVisibilityConverter}}">
                 <GridView.ItemTemplate>
-                    <DataTemplate x:DataType="entities:MenuItem">
+                    <DataTemplate x:DataType="viewmodels:MenuItemViewModel">
                         <Button Command="{Binding ElementName=RootPage, Path=DataContext.AddItemCommand}" 
                                 CommandParameter="{Binding}"
                                 Width="150" Height="100" Margin="4"
                                 Background="{x:Bind ColorCode, Converter={StaticResource StringColorToBrushConverter}, Mode=OneWay}" 
-                                IsEnabled="{x:Bind IsAvailable, Mode=OneWay}"
-                                BorderBrush="Gray" BorderThickness="1">
-                            <StackPanel>
-                                <TextBlock Text="{x:Bind Name}" TextWrapping="Wrap" TextAlignment="Center" FontWeight="SemiBold"/>
-                                <TextBlock Text="{x:Bind Price}" TextAlignment="Center" Margin="0,4,0,0"/>
-                            </StackPanel>
+                                IsEnabled="{x:Bind IsOutOfStock, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
+                                Opacity="{x:Bind Opacity, Mode=OneWay}"
+                                BorderBrush="Gray" BorderThickness="1" Padding="0">
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <StackPanel VerticalAlignment="Center" Margin="8">
+                                    <TextBlock Text="{x:Bind Name}" TextWrapping="Wrap" TextAlignment="Center" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{x:Bind Price}" TextAlignment="Center" Margin="0,4,0,0"/>
+                                </StackPanel>
+                                
+                                <!-- Stock Indicator Overlay -->
+                                <Border VerticalAlignment="Top" HorizontalAlignment="Right" 
+                                        Background="Red" CornerRadius="4" Padding="4,2" Margin="4"
+                                        Visibility="{x:Bind IsOutOfStock, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                    <TextBlock Text="OOS" FontSize="10" Foreground="White" FontWeight="Bold"/>
+                                </Border>
+
+                                <Border VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+                                        Background="#CCFFA500" Padding="4,2"
+                                        Visibility="{x:Bind IsLowStock, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                    <TextBlock Text="{x:Bind StockStatusText}" FontSize="10" Foreground="Black" FontWeight="SemiBold" TextAlignment="Center"/>
+                                </Border>
+                            </Grid>
                         </Button>
                     </DataTemplate>
                 </GridView.ItemTemplate>

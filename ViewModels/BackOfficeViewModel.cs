@@ -81,6 +81,7 @@ public partial class BackOfficeViewModel : ViewModelBase
         NavigationItems.Add(new NavigationItem("BO_Nav_Users", "BO_Nav_Users_Desc", "\uE77B", typeof(Magidesk.Presentation.Views.UserManagementPage), Localization));
         NavigationItems.Add(new NavigationItem("BO_Nav_Roles", "BO_Nav_Roles_Desc", "\uE716", typeof(Magidesk.Presentation.Views.RoleManagementPage), Localization));
         NavigationItems.Add(new NavigationItem("BO_Nav_TaxDiscount", "BO_Nav_TaxDiscount_Desc", "\uE8D7", typeof(Magidesk.Presentation.Views.DiscountTaxPage), Localization));
+        NavigationItems.Add(new NavigationItem("BO_Nav_DiscountRules", "BO_Nav_DiscountRules_Desc", "\uE71A", typeof(Magidesk.Presentation.Views.DiscountManagementPage), Localization));
         NavigationItems.Add(new NavigationItem("BO_Nav_OrderTypes", "BO_Nav_OrderTypes_Desc", "\uE8A1", typeof(OrderTypeExplorerPage), Localization));
         NavigationItems.Add(new NavigationItem("BO_Nav_Shifts", "BO_Nav_Shifts_Desc", "\uE823", typeof(ShiftExplorerPage), Localization));
         NavigationItems.Add(new NavigationItem("BO_Nav_Reports", "BO_Nav_Reports_Desc", "\uE9F9", typeof(SalesReportsPage), Localization));

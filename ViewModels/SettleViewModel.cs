@@ -7,7 +7,18 @@ using Magidesk.Domain.ValueObjects;
 using System.Net.Sockets;
 using Magidesk.Presentation.Services;
 using CommunityToolkit.Mvvm.Input;
+using Magidesk.Application.DTOs;
+using Magidesk.Application.Interfaces;
+using Magidesk.Application.Queries;
+using Magidesk.Domain.Enumerations;
+using Magidesk.Domain.ValueObjects;
+using System.Net.Sockets;
+using Magidesk.Presentation.Services;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection; // Added for IServiceScopeFactory
+using Magidesk.ViewModels; // For GratuitySelectionViewModel
+using Magidesk.Views.Dialogs; // For GratuitySelectionDialog
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -24,6 +35,8 @@ public sealed class SettleViewModel : ViewModelBase
     private readonly ICommandHandler<OpenCashDrawerCommand> _openCashDrawer;
     private readonly ILogger<SettleViewModel> _logger;
     private readonly Services.LocalizationService _localizationService;
+    private readonly Domain.Services.IGratuityService _gratuityService;
+    private readonly IServiceScopeFactory _serviceScopeFactory;
 
     public Services.LocalizationService Localization { get; }
 
@@ -46,7 +59,9 @@ public sealed class SettleViewModel : ViewModelBase
         ICashSessionRepository cashSessionRepository,
         ICommandHandler<OpenCashDrawerCommand> openCashDrawer,
         ILogger<SettleViewModel> logger,
-        Services.LocalizationService localizationService)
+        Services.LocalizationService localizationService,
+        Domain.Services.IGratuityService gratuityService,
+        IServiceScopeFactory serviceScopeFactory)
     {
         _getTicket = getTicket;
         _processPayment = processPayment;
@@ -59,6 +74,8 @@ public sealed class SettleViewModel : ViewModelBase
         _openCashDrawer = openCashDrawer;
         _logger = logger;
         _localizationService = localizationService;
+        _gratuityService = gratuityService ?? throw new ArgumentNullException(nameof(gratuityService));
+        _serviceScopeFactory = serviceScopeFactory ?? throw new ArgumentNullException(nameof(serviceScopeFactory));
         Localization = localizationService;
 
         Title = "Settle Ticket";
@@ -77,6 +94,10 @@ public sealed class SettleViewModel : ViewModelBase
         SwipeCardCommand = new AsyncRelayCommand(SwipeCardAsync);
         ExactAmountCommand = new RelayCommand(OnExactAmount);
         QuickCashCommand = new RelayCommand<string>(OnQuickCash);
+        QuickCashCommand = new RelayCommand<string>(OnQuickCash);
+        ShowGratuityDialogCommand = new AsyncRelayCommand(ShowGratuityDialogAsync);
+        VoidTicketCommand = new AsyncRelayCommand(OnVoidTicketAsync);
+        ReprintReceiptCommand = new AsyncRelayCommand(OnReprintReceiptAsync);
     }
 
     public TicketDto? Ticket
@@ -94,6 +115,9 @@ public sealed class SettleViewModel : ViewModelBase
                 OnPropertyChanged(nameof(TicketNumber));
                 OnPropertyChanged(nameof(TableName));
                 
+                // Explicitly update observable property
+                CanAddGratuity = value != null;
+                
                 // Auto-set tender amount to due amount if input is empty
                 if (string.IsNullOrEmpty(_numpadInput) && value != null)
                 {
@@ -108,6 +132,8 @@ public sealed class SettleViewModel : ViewModelBase
         get => _tenderAmount;
         set => SetProperty(ref _tenderAmount, value);
     }
+    
+    // ... existing NumpadInput ...
 
     public string NumpadInput
     {
@@ -140,6 +166,13 @@ public sealed class SettleViewModel : ViewModelBase
     public string TableName => Ticket?.TableName ?? "No Table";
     
     public bool HasDueAmount => DueAmount > 0;
+    
+    private bool _canAddGratuity;
+    public bool CanAddGratuity
+    {
+        get => _canAddGratuity;
+        set => SetProperty(ref _canAddGratuity, value);
+    }
 
     public string? Error
     {
@@ -178,6 +211,9 @@ public sealed class SettleViewModel : ViewModelBase
     public AsyncRelayCommand LogoutUiCommand { get; }
     public RelayCommand ExactAmountCommand { get; }
     public RelayCommand<string> QuickCashCommand { get; }
+    public AsyncRelayCommand ShowGratuityDialogCommand { get; }
+    public AsyncRelayCommand VoidTicketCommand { get; }
+    public AsyncRelayCommand ReprintReceiptCommand { get; }
 
     private async Task OnLogoutAsync()
     {
@@ -276,10 +312,17 @@ public sealed class SettleViewModel : ViewModelBase
         Error = null;
         try
         {
-            Ticket = await _getTicket.HandleAsync(new GetTicketQuery { TicketId = _ticketId });
-            if (Ticket == null)
+            // Create a fresh scope to ensure we get the latest data from DB
+            // Bypasses any stale tracking in the long-lived ViewModel scope
+            using (var scope = _serviceScopeFactory.CreateScope())
             {
-                Error = "Ticket not found.";
+                var getTicketHandler = scope.ServiceProvider.GetRequiredService<IQueryHandler<GetTicketQuery, TicketDto?>>();
+                Ticket = await getTicketHandler.HandleAsync(new GetTicketQuery { TicketId = _ticketId });
+                
+                if (Ticket == null)
+                {
+                    Error = "Ticket not found.";
+                }
             }
         }
         catch (Exception ex)
@@ -383,107 +426,111 @@ public sealed class SettleViewModel : ViewModelBase
         Error = null;
         try
         {
-            // For card payments in Phase 4 simulation, we don't need Exact amount
-            // But for Cash, we use the Tender Amount
-            
-            var amountToPay = TenderAmount > 0 && TenderAmount < DueAmount 
-                ? TenderAmount 
-                : DueAmount; // If tender >= due, we pay due. If tender 0 (auto), pay due. 
-            
-            if (TenderAmount > 0 && TenderAmount >= DueAmount)
+            using (var scope = _serviceScopeFactory.CreateScope())
             {
-                amountToPay = DueAmount;
-            }
+                var processPaymentHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<ProcessPaymentCommand, ProcessPaymentResult>>();
+                var cashSessionRepository = scope.ServiceProvider.GetRequiredService<ICashSessionRepository>();
 
-            // If user typed 0 or nothing, assume they want to pay Full Due
-            if (TenderAmount <= 0)
-            {
-                amountToPay = DueAmount;
-                TenderAmount = DueAmount; // Treat as exact change
-            }
-            
-            // DTO amounts are pure decimals, so we use default currency (likely USD)
-            var currency = "USD";
-
-            if (_userService.CurrentUser == null || _terminalContext.TerminalId == null)
-            {
-                Error = "User or Terminal context missing.";
-                return;
-            }
-
-            var userId = _userService.CurrentUser.Id;
-            var terminalId = _terminalContext.TerminalId.Value;
-
-            var command = new ProcessPaymentCommand
-            {
-                TicketId = Ticket.Id,
-                PaymentType = paymentType,
-                Amount = new Money(amountToPay, currency),
-                ProcessedBy = new UserId(userId),
-                TerminalId = terminalId,
-                GlobalId = Guid.NewGuid().ToString()
-            };
-
-            if (paymentType == PaymentType.Cash)
-            {
-                 command.TenderAmount = new Money(TenderAmount, currency);
-                 
-                 // Resolve Cash Session
-                 var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
-                 if (session != null)
-                 {
-                     command.CashSessionId = session.Id;
-                 }
-                 else
-                 {
-                     // Strict: Cannot pay cash without open drawer?
-                     // Audit F-0007: "Must have valid cash session"
-                     Error = "No active cash session.";
-                     return;
-                 }
-            }
-            else if (paymentType == PaymentType.CreditCard)
-            {
-                // Simulate Card Data
-                command.Last4 = "1234";
-                command.CardType = "Visa";
-                command.AuthCode = "AUTH123";
-            }
-            else if (paymentType == PaymentType.GiftCertificate)
-            {
-                // Simulate Gift Card
-                command.GiftCardNumber = "GC-SIM-123";
-            }
-
-            var result = await _processPayment.HandleAsync(command);
-            
-            if (result.TicketIsPaid)
-            {
-                // Close and Navigate back
-                OnClose();
-            }
-            else
-            {
-                // Reload to show remaining balance
-                await LoadTicketAsync();
+                // For card payments in Phase 4 simulation, we don't need Exact amount
+                // But for Cash, we use the Tender Amount
                 
-                // Clear numpad for next payment
-                OnClearNumpad();
-            }
-            
-            if (paymentType == PaymentType.Cash && result.ChangeAmount.Amount > 0)
-            {
-                 // Show Change Dialog (Blocking)
-                 var changeDialog = new Microsoft.UI.Xaml.Controls.ContentDialog
-                 {
-                     Title = "Change Due",
-                     Content = $"Please return change to customer:\n\n{result.ChangeAmount}",
-                     CloseButtonText = "OK",
-                     XamlRoot = App.MainWindowInstance.Content.XamlRoot
-                 };
-                 await _navigationService.ShowDialogAsync(changeDialog);
-                 
-                 Error = $"Change Due: {result.ChangeAmount}"; 
+                var amountToPay = TenderAmount > 0 && TenderAmount < DueAmount 
+                    ? TenderAmount 
+                    : DueAmount; // If tender >= due, we pay due. If tender 0 (auto), pay due. 
+                
+                if (TenderAmount > 0 && TenderAmount >= DueAmount)
+                {
+                    amountToPay = DueAmount;
+                }
+
+                // If user typed 0 or nothing, assume they want to pay Full Due
+                if (TenderAmount <= 0)
+                {
+                    amountToPay = DueAmount;
+                    TenderAmount = DueAmount; // Treat as exact change
+                }
+                
+                // DTO amounts are pure decimals, so we use default currency (likely USD)
+                var currency = "USD";
+
+                if (_userService.CurrentUser == null || _terminalContext.TerminalId == null)
+                {
+                    Error = "User or Terminal context missing.";
+                    return;
+                }
+
+                var userId = _userService.CurrentUser.Id;
+                var terminalId = _terminalContext.TerminalId.Value;
+
+                var command = new ProcessPaymentCommand
+                {
+                    TicketId = Ticket.Id,
+                    PaymentType = paymentType,
+                    Amount = new Money(amountToPay, currency),
+                    ProcessedBy = new UserId(userId),
+                    TerminalId = terminalId,
+                    GlobalId = Guid.NewGuid().ToString()
+                };
+
+                if (paymentType == PaymentType.Cash)
+                {
+                     command.TenderAmount = new Money(TenderAmount, currency);
+                     
+                     // Resolve Cash Session from FRESH scope repository
+                     var session = await cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
+                     if (session != null)
+                     {
+                         command.CashSessionId = session.Id;
+                     }
+                     else
+                     {
+                         Error = "No active cash session.";
+                         return;
+                     }
+                }
+                else if (paymentType == PaymentType.CreditCard)
+                {
+                    // Simulate Card Data
+                    command.Last4 = "1234";
+                    command.CardType = "Visa";
+                    command.AuthCode = "AUTH123";
+                }
+                else if (paymentType == PaymentType.GiftCertificate)
+                {
+                    // Simulate Gift Card
+                    command.GiftCardNumber = "GC-SIM-123";
+                }
+
+                var result = await processPaymentHandler.HandleAsync(command);
+                
+                if (result.TicketIsPaid)
+                {
+                    // Close and Navigate back
+                    OnClose();
+                }
+                else
+                {
+                    // Reload to show remaining balance (LoadTicketAsync will need fresh scope too preferably, but minimal fix first)
+                    await LoadTicketAsync();
+                    
+                    // Clear numpad for next payment
+                    OnClearNumpad();
+                }
+                
+                if (paymentType == PaymentType.Cash && result.ChangeAmount.Amount > 0)
+                {
+                     // Show Change Dialog (Blocking)
+                     var changeDialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+                     {
+                         Title = "Change Due",
+                         Content = $"Please return change to customer:\n\n{result.ChangeAmount}",
+                         CloseButtonText = "OK",
+                         XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                     };
+                     await _navigationService.ShowDialogAsync(changeDialog);
+                     
+                     Error = $"Change Due: {result.ChangeAmount}"; 
+                }
             }
         }
         catch (Exception ex)
@@ -676,6 +723,146 @@ public sealed class SettleViewModel : ViewModelBase
                 XamlRoot = App.MainWindowInstance.Content.XamlRoot
             };
             await _navigationService.ShowDialogAsync(dialog);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    private async Task ShowGratuityDialogAsync()
+    {
+        if (Ticket == null)
+        {
+            Error = "No ticket selected.";
+            return;
+        }
+
+        if (_userService.CurrentUser == null)
+        {
+            Error = "No user logged in.";
+            return;
+        }
+
+        try
+        {
+            IsBusy = true;
+
+            // Create a fresh scope for the gratuity operation to ensure fresh DbContext
+            // This prevents ConcurrencyException due to stale tracked entities
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var getUsersQuery = scope.ServiceProvider.GetRequiredService<IQueryHandler<GetUsersQuery, IEnumerable<UserDto>>>();
+                var applyGratuityHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<ApplyGratuityCommand, ApplyGratuityResult>>();
+
+                // Get available servers/staff
+                var users = await getUsersQuery.HandleAsync(new GetUsersQuery());
+                var serverItems = new System.Collections.ObjectModel.ObservableCollection<ServerItem>(
+                    users.Select(u => new ServerItem(
+                        new UserId(u.Id),
+                        $"{u.FirstName} {u.LastName}",
+                        u.RoleName
+                    ))
+                );
+
+                // Create ViewModel with FRESH handler
+                var viewModel = new GratuitySelectionViewModel(
+                    _gratuityService,
+                    applyGratuityHandler,
+                    App.Services.GetRequiredService<IDialogService>(),
+                    App.Services.GetRequiredService<ILogger<GratuitySelectionViewModel>>(),
+                    Ticket.Id,
+                    Ticket.TicketNumber.ToString(),
+                    new Money(Ticket.SubtotalAmount),
+                    new UserId(_userService.CurrentUser.Id),
+                    serverItems
+                );
+
+                // Create and show dialog
+                var dialog = new GratuitySelectionDialog(viewModel);
+                dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+
+                var result = await _navigationService.ShowDialogAsync(dialog);
+
+                if (result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
+                {
+                    // Gratuity applied successfully - reload ticket
+                    await LoadTicketAsync();
+                    StatusMessage = "Gratuity added successfully.";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error showing gratuity dialog for ticket {TicketId}", Ticket.Id);
+            Error = $"Failed to show gratuity dialog: {ex.Message}";
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    private async Task OnVoidTicketAsync()
+    {
+        if (Ticket == null) return;
+        
+        try
+        {
+            var dialog = new Magidesk.Presentation.Views.VoidTicketDialog();
+            dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+            
+            dialog.ViewModel.Initialize(Ticket);
+            
+            await dialog.ShowAsync();
+            
+            // Reload ticket to check status
+            await LoadTicketAsync();
+            
+            if (Ticket != null && Ticket.Status == Domain.Enumerations.TicketStatus.Voided)
+            {
+                // Navigate away if voided
+                 StatusMessage = "Ticket Voided.";
+                 await Task.Delay(1000); // Brief delay to show message
+                 OnClose();
+            }
+        }
+        catch (Exception ex)
+        {
+             Error = ex.Message;
+        }
+    }
+
+    private async Task OnReprintReceiptAsync()
+    {
+        if (Ticket == null) return;
+        
+        IsBusy = true;
+        try
+        {
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var printHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<PrintReceiptCommand, PrintReceiptResult>>();
+                
+                var result = await printHandler.HandleAsync(new PrintReceiptCommand
+                {
+                    TicketId = Ticket.Id,
+                    ReceiptType = ReceiptType.Ticket
+                });
+                
+                if (result.Success)
+                {
+                    StatusMessage = "Receipt Sent to Printer.";
+                }
+                else
+                {
+                    Error = "Failed to print receipt.";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+             Error = $"Print Error: {ex.Message}";
         }
         finally
         {

@@ -27,7 +27,11 @@ public enum UserPermission
     SystemConfiguration = 1 << 12,
     
     // Feature A.17
-    AdjustSessionTime = 1 << 13
+    // Feature A.17
+    AdjustSessionTime = 1 << 13,
+    
+    // Feature C.15
+    RefundTicket = 1 << 14
     
     // All = ...
 }

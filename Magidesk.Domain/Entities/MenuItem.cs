@@ -111,6 +111,58 @@ public class MenuItem
         Name = name;
     }
     
+    // Stock Tracking (G.2)
+    public int StockQuantity { get; private set; }
+    public int MinimumStockLevel { get; private set; }
+    public bool TrackStock { get; private set; }
+
+    public void EnableStockTracking(int initialQuantity, int minimumLevel = 0)
+    {
+        TrackStock = true;
+        StockQuantity = initialQuantity;
+        MinimumStockLevel = minimumLevel;
+    }
+
+    public void DisableStockTracking()
+    {
+        TrackStock = false;
+    }
+
+    public void AdjustStock(int quantityChange)
+    {
+        if (!TrackStock) return;
+        
+        StockQuantity += quantityChange;
+        
+        // Note: We allow negative stock temporarily? 
+        // Or should we enforce non-negative?
+        // Usually systems allow negative to account for data entry lag, 
+        // but "AddOrderLine" might block sale.
+        // Let's enforce strictly non-negative for sales, but allow adjustments?
+        // For now, simple arithmetic. Logic in CommandHandler will enforce availability.
+    }
+
+    public void DeductStock(int quantity)
+    {
+        if (!TrackStock) return;
+        if (quantity < 0) throw new Exceptions.BusinessRuleViolationException("Cannot deduct negative quantity.");
+        
+        if (StockQuantity < quantity)
+        {
+             throw new Exceptions.BusinessRuleViolationException($"Insufficient stock for item '{Name}'. Available: {StockQuantity}, Requested: {quantity}");
+        }
+
+        StockQuantity -= quantity;
+    }
+    
+    public void ReturnStock(int quantity)
+    {
+         if (!TrackStock) return;
+         if (quantity < 0) throw new Exceptions.BusinessRuleViolationException("Cannot return negative quantity.");
+         
+         StockQuantity += quantity;
+    }
+
     public void SetCategory(Guid categoryId)
     {
         if (categoryId == Guid.Empty) throw new ArgumentException("Invalid Category ID");

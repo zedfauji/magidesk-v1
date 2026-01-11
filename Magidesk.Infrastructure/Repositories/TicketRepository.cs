@@ -102,6 +102,22 @@ public class TicketRepository : ITicketRepository
         return tickets;
     }
 
+    public async Task<IEnumerable<Ticket>> GetManageableTicketsAsync(CancellationToken cancellationToken = default)
+    {
+        var tickets = await _context.Tickets
+            .Where(t => t.Status == Domain.Enumerations.TicketStatus.Draft 
+                     || t.Status == Domain.Enumerations.TicketStatus.Open
+                     || t.Status == Domain.Enumerations.TicketStatus.Closed
+                     || t.Status == Domain.Enumerations.TicketStatus.Refunded)
+            .Include(t => t.OrderLines)
+                .ThenInclude(ol => ol.Modifiers)
+            .Include(t => t.Payments)
+            .OrderByDescending(t => t.CreatedAt)
+            .ToListAsync(cancellationToken);
+
+        return tickets;
+    }
+
     public async Task<IEnumerable<Ticket>> GetScheduledTicketsDueAsync(DateTime dueBy, CancellationToken cancellationToken = default)
     {
         var tickets = await _context.Tickets
@@ -238,6 +254,28 @@ public class TicketRepository : ITicketRepository
                     {
                         _context.Payments.Attach(payment);
                     }
+                }
+            }
+
+            // Handle Gratuity Persistence
+            if (ticket.Gratuity != null)
+            {
+                // Check if it exists in DB to decide between Add and Update
+                // We do this regardless of current state because pre-generated GUIDs can confuse EF
+                var exists = await _context.Gratuities.AnyAsync(g => g.Id == ticket.Gratuity.Id, cancellationToken);
+                
+                var gratuityEntry = _context.Entry(ticket.Gratuity);
+                if (!exists) 
+                {
+                    gratuityEntry.State = EntityState.Added;
+                }
+                else 
+                {
+                    if (gratuityEntry.State == EntityState.Detached)
+                    {
+                        _context.Gratuities.Attach(ticket.Gratuity);
+                    }
+                    gratuityEntry.State = EntityState.Modified;
                 }
             }
             await _context.SaveChangesAsync(cancellationToken);

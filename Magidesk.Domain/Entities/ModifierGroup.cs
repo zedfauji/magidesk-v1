@@ -19,6 +19,10 @@ public class ModifierGroup
     public bool IsActive { get; private set; }
     public int Version { get; private set; }
     
+    // Pricing tiers (BE-G.5-01)
+    public int FreeModifiers { get; private set; }  // First N modifiers are free
+    public decimal ExtraModifierPrice { get; private set; }  // Price per modifier beyond free count
+    
     // Navigation
     private readonly List<MenuModifier> _modifiers = new();
     public IReadOnlyCollection<MenuModifier> Modifiers => _modifiers.AsReadOnly();
@@ -40,7 +44,9 @@ public class ModifierGroup
         bool allowMultipleSelections = false,
         string? description = null,
         int displayOrder = 0,
-        bool isActive = true)
+        bool isActive = true,
+        int freeModifiers = 0,
+        decimal extraModifierPrice = 0.00m)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -62,6 +68,16 @@ public class ModifierGroup
             throw new Exceptions.BusinessRuleViolationException("Multiple selections must be allowed when max selections is greater than 1.");
         }
 
+        if (freeModifiers < 0)
+        {
+            throw new Exceptions.BusinessRuleViolationException("Free modifiers count cannot be negative.");
+        }
+
+        if (extraModifierPrice < 0)
+        {
+            throw new Exceptions.BusinessRuleViolationException("Extra modifier price cannot be negative.");
+        }
+
         return new ModifierGroup
         {
             Id = Guid.NewGuid(),
@@ -73,6 +89,8 @@ public class ModifierGroup
             AllowMultipleSelections = allowMultipleSelections,
             DisplayOrder = displayOrder,
             IsActive = isActive,
+            FreeModifiers = freeModifiers,
+            ExtraModifierPrice = extraModifierPrice,
             Version = 1
         };
     }
@@ -153,6 +171,41 @@ public class ModifierGroup
     public void Deactivate()
     {
         IsActive = false;
+    }
+
+    /// <summary>
+    /// Updates the pricing tier configuration.
+    /// </summary>
+    public void UpdatePricingTier(int freeModifiers, decimal extraModifierPrice)
+    {
+        if (freeModifiers < 0)
+        {
+            throw new Exceptions.BusinessRuleViolationException("Free modifiers count cannot be negative.");
+        }
+
+        if (extraModifierPrice < 0)
+        {
+            throw new Exceptions.BusinessRuleViolationException("Extra modifier price cannot be negative.");
+        }
+
+        FreeModifiers = freeModifiers;
+        ExtraModifierPrice = extraModifierPrice;
+    }
+
+    /// <summary>
+    /// Calculates the cost for selected modifiers based on pricing tier.
+    /// </summary>
+    /// <param name="selectedCount">Number of modifiers selected</param>
+    /// <returns>Total cost for modifiers beyond free count</returns>
+    public decimal CalculateModifierCost(int selectedCount)
+    {
+        if (selectedCount <= FreeModifiers)
+        {
+            return 0m;
+        }
+
+        var chargeableCount = selectedCount - FreeModifiers;
+        return chargeableCount * ExtraModifierPrice;
     }
 
     /// <summary>

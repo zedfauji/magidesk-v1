@@ -1,6 +1,6 @@
 # Feature to Ticket Matrix
 
-> **Master Index**: Maps all 126 features to their backend and frontend tickets with priority and status.
+> **Master Index**: Maps all 164 features to their backend and frontend tickets with priority and status.
 
 ---
 
@@ -48,19 +48,28 @@
 
 ---
 
-## Category B: Floor & Layout Management (9 Features)
+## Category B: Floor & Layout Management (18 Features)
 
 | ID | Feature | Audit | Priority | Backend Ticket | BE Status | Frontend Ticket | FE Status |
 |----|---------|-------|----------|----------------|-----------|-----------------|-----------|
-| B.1 | Visual floor plan | ✅ FULL | - | - | ✅ | - | ✅ |
-| B.2 | Multiple floors | ⚠️ PART | P1 | BE-B.2-01 | ❌ | - | ⚠️ |
-| B.3 | Object properties | ⚠️ PART | P1 | BE-B.3-01 | ❌ | FE-B.3-01 | ❌ |
-| B.4 | Drag & drop | ✅ FULL | - | - | ✅ | - | ✅ |
-| B.5 | Save layout | ✅ FULL | - | - | ✅ | - | ✅ |
-| B.6 | Floor switching | ⚠️ PART | P2 | BE-B.6-01 | ❌ | FE-B.6-01 | ❌ |
-| B.7 | Add/remove tables | ✅ FULL | - | - | ✅ | - | ✅ |
-| B.8 | Custom icons | ✅ FULL | - | - | ✅ | - | ✅ |
-| B.9 | Undo/redo | ❌ NOT | P2 | BE-B.9-01 | ❌ | FE-B.9-01 | ❌ |
+| B.1 | Floor / room definitions | ✅ FULL | - | - | ✅ | - | ✅ |
+| B.2 | Multiple floors per venue | ✅ FULL | - | - | ✅ | - | ✅ |
+| B.3 | Floor dimensions | ✅ FULL | - | - | ✅ | - | ✅ |
+| B.4 | Background configuration | ⚠️ PART | P2 | BE-B.4-01 | ❌ | FE-B.4-01 | ❌ |
+| B.5 | Table layout designer | ✅ FULL | - | - | ✅ | - | ✅ |
+| B.6 | Drag-and-drop placement | ✅ FULL | - | - | ✅ | - | ✅ |
+| B.7 | Resize tables | ✅ FULL | - | - | ✅ | - | ✅ |
+| B.8 | Table shape configuration | ✅ FULL | - | - | ✅ | - | ✅ |
+| B.9 | Snap-to-grid alignment | ❌ NOT | P2 | BE-B.9-01 | ❌ | FE-B.9-01 | ❌ |
+| B.10 | Alignment guides | ❌ NOT | P2 | BE-B.10-01 | ❌ | FE-B.10-01 | ❌ |
+| B.11 | Zoom and pan | ⚠️ PART | P2 | BE-B.11-01 | ❌ | FE-B.11-01 | ❌ |
+| B.12 | Multi-select and group move | ❌ NOT | P2 | BE-B.12-01 | ❌ | FE-B.12-01 | ❌ |
+| B.13 | Layout versions per floor | ⚠️ PART | P2 | BE-B.13-01 | ❌ | - | ⚠️ |
+| B.14 | Clone layout | ❌ NOT | P2 | BE-B.14-01 | ❌ | - | ❌ |
+| B.15 | Draft vs published layout | ✅ FULL | - | - | ✅ | - | ✅ |
+| B.16 | Layout rollback / revert | ❌ NOT | P2 | BE-B.16-01 | ❌ | - | ❌ |
+| B.17 | Visual occupancy map | ✅ FULL | - | - | ✅ | - | ✅ |
+| B.18 | Layout persistence and reload safety | ✅ FULL | - | - | ✅ | - | ✅ |
 
 ---
 
@@ -68,26 +77,26 @@
 
 | ID | Feature | Audit | Priority | Backend Ticket | BE Status | Frontend Ticket | FE Status |
 |----|---------|-------|----------|----------------|-----------|-----------------|-----------|
-| C.1 | Create ticket | ✅ FULL | P0 | BE-C.1-01 ✅ | ✅ | FE-C.1-01 ✅ | ✅ |
-| C.2 | Time charges on ticket | ✅ FULL | P0 | BE-C.2-01 ✅ | ✅ | FE-C.2-01 ✅ | ✅ |
-| C.3 | Add products | ⚠️ PART | P1 | BE-C.3-01 | ❌ | - | ⚠️ |
-| C.4 | Multi-payment | ✅ FULL | - | - | ✅ | - | ✅ |
-| C.5 | Split payments | ⚠️ PART | P1 | BE-C.5-01 | ❌ | FE-C.5-01 | ❌ |
-| C.6 | Gratuity/tips | ⚠️ PART | P1 | BE-C.6-01 | ❌ | FE-C.6-01 | ❌ |
-| C.7 | Discounts | ⚠️ PART | P1 | BE-C.7-01 | ❌ | FE-C.7-01 | ❌ |
-| C.8 | Print receipts | ✅ FULL | - | - | ✅ | - | ✅ |
-| C.9 | Refunds | ⚠️ PART | P1 | BE-C.9-01 | ❌ | - | ⚠️ |
-| C.10 | Void tickets | ⚠️ PART | P1 | BE-C.10-01 | ❌ | - | ⚠️ |
-| C.11 | Hold tickets | ❌ NOT | P2 | BE-C.11-01 | ❌ | - | ❌ |
-| C.12 | Transfer tickets | ❌ NOT | P2 | BE-C.12-01 | ❌ | - | ❌ |
-| C.13 | Cash session | ✅ FULL | - | - | ✅ | - | ✅ |
-| C.14 | Customer on ticket | ❌ NOT | P1 | BE-C.14-01 | ❌ | - | ❌ |
-| C.15 | Pay-in/Pay-out | ✅ FULL | - | - | ✅ | - | ✅ |
-| C.16 | Open drawer | ✅ FULL | - | - | ✅ | - | ✅ |
+| C.1 | Real-time billing per table | ❌ NOT | P0 | BE-C.1-01 | ❌ | FE-C.1-01 | ❌ |
+| C.2 | Close now / charge later | ❌ NOT | P0 | BE-C.2-01 | ❌ | - | ❌ |
+| C.3 | Multiple payment methods | ✅ FULL | - | - | ✅ | - | ✅ |
+| C.4 | Split payments | ✅ FULL | - | - | ✅ | - | ✅ |
+| C.5 | Group billing | ⚠️ PART | P1 | BE-C.5-01 | ❌ | FE-C.5-01 | ❌ |
+| C.6 | Tips handling | ⚠️ PART | P1 | BE-C.6-01 | ✅ | FE-C.6-01 | ✅ |
+| C.7 | Discounts (time-only) | ❌ NOT | P1 | BE-C.7-01 | ❌ | - | ❌ |
+| C.8 | Discounts (full bill) | ✅ FULL | - | - | ✅ | - | ✅ |
+| C.9 | Happy Hour / promotional pricing | ⚠️ PART | P1 | BE-C.9-01 | ❌ | FE-C.9-01 | ❌ |
+| C.10 | Automatic promotion scheduling | ❌ NOT | P2 | BE-C.10-01 | ❌ | - | ❌ |
+| C.11 | Manual promotion override | ⚠️ PART | P2 | BE-C.11-01 | ❌ | - | ⚠️ |
+| C.12 | Price override with permission | ⚠️ PART | P1 | BE-C.12-01 | ❌ | FE-C.12-01 | ❌ |
+| C.13 | Price override audit trail | ❌ NOT | P2 | BE-C.13-01 | ❌ | - | ❌ |
+| C.14 | Advanced Refund Management | ❌ NOT | P2 | BE-C.14-01, BE-C.14-02, BE-C.14-03, BE-C.14-04 | ❌ | FE-C.14-01, FE-C.14-02, FE-C.14-03, FE-C.14-04 | ❌ |
+| C.15 | Reprint / void ticket | ⚠️ PART | P1 | BE-C.15-01 | ❌ | FE-C.15-01 | ❌ |
+| C.16 | Cashbox visibility | ⚠️ PART | P2 | BE-C.16-01 | ❌ | - | ⚠️ |
 
 ---
 
-## Category D: Tax, Currency & Financial Rules (6 Features)
+## Category D: Tax, Currency & Financial Rules (9 Features)
 
 | ID | Feature | Audit | Priority | Backend Ticket | BE Status | Frontend Ticket | FE Status |
 |----|---------|-------|----------|----------------|-----------|-----------------|-----------|
@@ -97,6 +106,9 @@
 | D.4 | Tax exemption | ⚠️ PART | P1 | BE-D.4-01 | ❌ | - | ⚠️ |
 | D.5 | Tax breakdown | ⚠️ PART | P2 | BE-D.5-01 | ❌ | - | ⚠️ |
 | D.6 | Rounding rules | ✅ FULL | - | - | ✅ | - | ✅ |
+| D.7 | Service charge configuration | ❌ NOT | P2 | BE-D.7-01 | ❌ | - | ❌ |
+| D.8 | Auto-gratuity rules | ❌ NOT | P2 | BE-D.8-01 | ❌ | - | ❌ |
+| D.9 | Multi-currency support | ❌ NOT | P2 | BE-D.9-01 | ❌ | - | ❌ |
 
 ---
 
@@ -125,38 +137,40 @@
 |----|---------|-------|----------|----------------|-----------|-----------------|-----------|
 | F.1 | Customer records | ✅ FULL | P0 | [walkthrough](file:///c:/Users/giris/.gemini/antigravity/brain/06fc728d-db77-4c8a-9dd0-f1e3ce101956/walkthrough.md) | ✅ | FE-F.1-01 ✅, FE-F.1-02 ✅ | ✅ |
 | F.2 | Customer search | ✅ FULL | P0 | [walkthrough](file:///c:/Users/giris/.gemini/antigravity/brain/06fc728d-db77-4c8a-9dd0-f1e3ce101956/f2-walkthrough.md) | ✅ | FE-F.2-01 ✅ | ✅ |
-| F.3 | Memberships | ❌ NOT | P0 | BE-F.3-01 | ❌ | FE-F.3-01 | ❌ |
-| F.4 | Membership tiers | ❌ NOT | P0 | BE-F.4-01 | ❌ | FE-F.4-01 | ❌ |
-| F.5 | Member discounts | ❌ NOT | P0 | BE-F.5-01 | ❌ | - | - |
-| F.6 | Prepaid accounts | ❌ NOT | P1 | BE-F.6-01 | ❌ | FE-F.6-01 | ❌ |
-| F.7 | Customer history | ❌ NOT | P1 | BE-F.7-01 | ❌ | FE-F.7-01 | ❌ |
-| F.8 | Renewal | ❌ NOT | P1 | BE-F.8-01 | ❌ | - | ❌ |
+| F.3 | Memberships | ❌ NOT | P2 | BE-F.3-01 | ❌ | FE-F.3-01 | ❌ |
+| F.4 | Membership tiers | ❌ NOT | P2 | BE-F.4-01 | ❌ | FE-F.4-01 | ❌ |
+| F.5 | Member discounts | ❌ NOT | P2 | BE-F.5-01 | ❌ | - | - |
+| F.6 | Prepaid accounts | ❌ NOT | P2 | BE-F.6-01 | ❌ | FE-F.6-01 | ❌ |
+| F.7 | Customer history | ❌ NOT | P2 | BE-F.7-01 | ❌ | FE-F.7-01 | ❌ |
+| F.8 | Renewal | ❌ NOT | P2 | BE-F.8-01 | ❌ | - | ❌ |
 | F.9 | Guest passes | ❌ NOT | P2 | BE-F.9-01 | ❌ | - | ❌ |
-| F.10 | Member check-in | ❌ NOT | P1 | BE-F.10-01 | ❌ | FE-F.10-01 | ❌ |
+| F.10 | Member check-in | ❌ NOT | P2 | BE-F.10-01 | ❌ | FE-F.10-01 | ❌ |
 | F.11 | Customer notes | ❌ NOT | P2 | BE-F.11-01 | ❌ | - | ❌ |
 | F.12 | Customer merge | ❌ NOT | P2 | BE-F.12-01 | ❌ | - | ❌ |
 | F.13 | Member analytics | ❌ NOT | P2 | BE-F.13-01 | ❌ | - | ❌ |
 
 ---
 
-## Category G: Inventory & Products (10 Features)
+## Category G: Inventory & Products (12 Features)
 
 | ID | Feature | Audit | Priority | Backend Ticket | BE Status | Frontend Ticket | FE Status |
 |----|---------|-------|----------|----------------|-----------|-----------------|-----------|
 | G.1 | Menu item CRUD | ✅ FULL | - | - | ✅ | - | ✅ |
-| G.2 | Stock level tracking | ⚠️ PART | P1 | BE-G.2-01 | ❌ | FE-G.2-01 | ❌ |
-| G.3 | Low stock alerts | ❌ NOT | P1 | BE-G.3-01 | ❌ | FE-G.3-01 | ❌ |
-| G.4 | Category hierarchy | ⚠️ PART | P2 | BE-G.4-01 | ❌ | - | ⚠️ |
-| G.5 | Modifier groups | ⚠️ PART | P1 | BE-G.5-01 | ❌ | FE-G.5-01 | ❌ |
+| G.2 | Stock level tracking | ✅ FULL | P1 | [walkthrough](file:///c:/Users/giris/.gemini/antigravity/brain/0a093ae8-a242-4323-aadf-1bfeabde64b4/walkthrough.md) | ✅ | FE-G.2-01 | ✅ |
+| G.3 | Low stock alerts | ✅ FULL | P1 | BE-G.3-01 | ✅ | FE-G.3-01 | ✅ |
+| G.4 | Category hierarchy | ✅ FULL | P2 | [walkthrough](file:///C:/Users/giris/.gemini/antigravity/brain/d81c90a1-d025-4732-8393-ef5f6799e279/walkthrough.md) | ✅ | FE-G.4-01 | ✅ |
+| G.5 | Modifier groups | ✅ FULL | P1 | [walkthrough](file:///C:/Users/giris/.gemini/antigravity/brain/d81c90a1-d025-4732-8393-ef5f6799e279/walkthrough.md) | ✅ | FE-G.5-01 | ✅ |
 | G.6 | Product images | ✅ FULL | - | - | ✅ | - | ✅ |
 | G.7 | SKU/barcode | ❌ NOT | P2 | BE-G.7-01 | ❌ | - | ❌ |
 | G.8 | Pricing tiers | ⚠️ PART | P2 | - | ⚠️ | - | ⚠️ |
 | G.9 | Product import | ❌ NOT | P2 | BE-G.9-01 | ❌ | - | ❌ |
 | G.10 | Product export | ❌ NOT | P2 | BE-G.10-01 | ❌ | - | ❌ |
+| G.11 | Recipe / ingredient tracking | ❌ NOT | P2 | BE-G.11-01 | ❌ | - | ❌ |
+| G.12 | Waste tracking | ❌ NOT | P2 | BE-G.12-01 | ❌ | - | ❌ |
 
 ---
 
-## Category H: Reporting & Export (11 Features)
+## Category H: Reporting & Export (15 Features)
 
 | ID | Feature | Audit | Priority | Backend Ticket | BE Status | Frontend Ticket | FE Status |
 |----|---------|-------|----------|----------------|-----------|-----------------|-----------|
@@ -171,10 +185,14 @@
 | H.9 | Custom date range | ✅ FULL | - | - | ✅ | - | ✅ |
 | H.10 | PDF export | ⚠️ PART | P2 | BE-H.10-01 | ❌ | - | ⚠️ |
 | H.11 | Excel export | ⚠️ PART | P2 | BE-H.11-01 | ❌ | - | ⚠️ |
+| H.12 | Payment method breakdown | ❌ NOT | P2 | BE-H.12-01 | ❌ | - | ❌ |
+| H.13 | Discount usage report | ❌ NOT | P2 | BE-H.13-01 | ❌ | - | ❌ |
+| H.14 | Hourly sales trend | ❌ NOT | P2 | BE-H.14-01 | ❌ | - | ❌ |
+| H.15 | Product popularity report | ❌ NOT | P2 | BE-H.15-01 | ❌ | - | ❌ |
 
 ---
 
-## Category I: Hardware & Peripherals (9 Features)
+## Category I: Hardware & Peripherals (11 Features)
 
 | ID | Feature | Audit | Priority | Backend Ticket | BE Status | Frontend Ticket | FE Status |
 |----|---------|-------|----------|----------------|-----------|-----------------|-----------|
@@ -187,6 +205,8 @@
 | I.7 | Scale integration | ✅ FULL | - | - | ✅ | - | ✅ |
 | I.8 | Card reader | ⚠️ PART | P2 | BE-I.8-01 | ❌ | - | ⚠️ |
 | I.9 | Multi-terminal | ✅ FULL | - | - | ✅ | - | ✅ |
+| I.10 | Caller ID integration | ❌ NOT | P2 | BE-I.10-01 | ❌ | - | ❌ |
+| I.11 | Kitchen display system | ❌ NOT | P2 | BE-I.11-01 | ❌ | - | ❌ |
 
 ---
 
@@ -207,7 +227,7 @@
 
 ---
 
-## Category K: Localization & Regionalization (4 Features)
+## Category K: Localization & Regionalization (6 Features)
 
 | ID | Feature | Audit | Priority | Backend Ticket | BE Status | Frontend Ticket | FE Status |
 |----|---------|-------|----------|----------------|-----------|-----------------|-----------|
@@ -215,6 +235,8 @@
 | K.2 | User-level language | ✅ FULL | - | - | ✅ | - | ✅ |
 | K.3 | Currency formatting | ⚠️ PART | P2 | BE-K.3-01 | ❌ | FE-K.3-01 | ❌ |
 | K.4 | Date/time formatting | ⚠️ PART | P2 | BE-K.4-01 | ❌ | FE-K.4-01 | ❌ |
+| K.5 | Number formatting | ❌ NOT | P2 | BE-K.5-01 | ❌ | - | ❌ |
+| K.6 | Translation management | ❌ NOT | P2 | BE-K.6-01 | ❌ | FE-K.6-01 | ❌ |
 
 ---
 
@@ -237,7 +259,7 @@
 
 ---
 
-## Category M: System Safety, Diagnostics & Recovery (5 Features)
+## Category M: System Safety, Diagnostics & Recovery (11 Features)
 
 | ID | Feature | Audit | Priority | Backend Ticket | BE Status | Frontend Ticket | FE Status |
 |----|---------|-------|----------|----------------|-----------|-----------------|-----------|
@@ -246,6 +268,20 @@
 | M.3 | Transaction journal | ⚠️ PART | P1 | BE-M.3-01 | ❌ | - | ⚠️ |
 | M.4 | Health monitoring | ⚠️ PART | P2 | - | ⚠️ | - | ⚠️ |
 | M.5 | Diagnostic tools | ❌ NOT | P2 | - | ❌ | - | ❌ |
+| M.6 | Database integrity check | ❌ NOT | P2 | BE-M.6-01 | ❌ | - | ❌ |
+| M.7 | Performance monitoring | ❌ NOT | P2 | BE-M.7-01 | ❌ | - | ❌ |
+| M.8 | Memory leak detection | ❌ NOT | P2 | BE-M.8-01 | ❌ | - | ❌ |
+| M.9 | Automatic error reporting | ❌ NOT | P2 | BE-M.9-01 | ❌ | - | ❌ |
+| M.10 | System health dashboard | ❌ NOT | P2 | BE-M.10-01 | ❌ | FE-M.10-01 | ❌ |
+| M.11 | Rollback capability | ❌ NOT | P2 | BE-M.11-01 | ❌ | - | ❌ |
+
+---
+
+## Category J: Security & Access Control (Integration Tickets)
+
+| ID | Feature | Audit | Priority | Backend Ticket | BE Status | Frontend Ticket | FE Status |
+|----|---------|-------|----------|----------------|-----------|-----------------|-----------|
+| J.SEC-01 | Manager PIN Authorization (Refund Wizard) | N/A | P1 | - | - | FE-J-SEC-01 | ❌ |
 
 ---
 
@@ -254,10 +290,12 @@
 | Priority | Backend | Frontend | Cross-Cutting | Total |
 |----------|---------|----------|---------------|-------|
 | P0 | 25 | 16 | 8 | 49 |
-| P1 | 30 | 14 | 8 | 52 |
-| P2 | 28 | 10 | 1 | 39 |
-| **Total** | **83** | **40** | **17** | **140** |
+| P1 | 35 | 15 | 8 | 58 |
+| P2 | 60 | 25 | 1 | 86 |
+| **Total** | **120** | **56** | **17** | **193** |
+
+> **Note**: Total tickets (193) exceeds total features (164) because some features require multiple tickets (backend + frontend).
 
 ---
 
-*Last Updated: 2026-01-08*
+*Last Updated: 2026-01-10*

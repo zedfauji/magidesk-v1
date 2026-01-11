@@ -41,6 +41,35 @@ public class MenuEditorViewModel : ViewModelBase
         get => _editingPrice;
         set => SetProperty(ref _editingPrice, value);
     }
+
+    private bool _editingTrackStock;
+    public bool EditingTrackStock
+    {
+        get => _editingTrackStock;
+        set
+        {
+             if (SetProperty(ref _editingTrackStock, value))
+             {
+                 OnPropertyChanged(nameof(IsStockTrackingEnabled));
+             }
+        }
+    }
+    
+    private string _editingStockQuantity = "0";
+    public string EditingStockQuantity
+    {
+        get => _editingStockQuantity;
+        set => SetProperty(ref _editingStockQuantity, value);
+    }
+    
+    private string _editingMinStock = "0";
+    public string EditingMinStock
+    {
+        get => _editingMinStock;
+        set => SetProperty(ref _editingMinStock, value);
+    }
+    
+    public bool IsStockTrackingEnabled => EditingTrackStock;
     
     private string _statusMessage = "Ready";
     public string StatusMessage
@@ -183,7 +212,13 @@ public class MenuEditorViewModel : ViewModelBase
                 {
                     IsEditing = true;
                     EditingName = value.Name;
-                    EditingPrice = value.Price.Amount.ToString("F2"); 
+                    EditingPrice = value.Price.Amount.ToString("F2");
+                    
+                    // Stock Props
+                    EditingTrackStock = value.TrackStock;
+                    EditingStockQuantity = value.StockQuantity.ToString();
+                    EditingMinStock = value.MinimumStockLevel.ToString();
+                    
                     StatusMessage = $"Editing Item: {value.Name}";
                     
                     if (value.PrinterGroupId.HasValue)
@@ -254,6 +289,18 @@ public class MenuEditorViewModel : ViewModelBase
                  
                  // F-00XX: Printer Group Persistence (Item)
                  SelectedItem.SetPrinterGroup(SelectedPrinterGroup?.Id);
+                 
+                 // Stock Tracking Update
+                 if (EditingTrackStock)
+                 {
+                     int.TryParse(EditingStockQuantity, out var qty);
+                     int.TryParse(EditingMinStock, out var min);
+                     SelectedItem.EnableStockTracking(qty, min);
+                 }
+                 else
+                 {
+                     SelectedItem.DisableStockTracking();
+                 }
                  
                  await _menuRepository.UpdateAsync(SelectedItem);
                  StatusMessage = "Saved Item & Recipe successfully.";

@@ -1,14 +1,14 @@
 # SSI-INFORBILLIAR Delivery Plan - Summary
 
-> **Generated**: 2026-01-08  
+> **Generated**: 2026-01-09  
 > **Source**: Feature Audit dated 2026-01-08  
-> **Total Features**: 126 across 13 categories
+> **Total Features**: 164 across 13 categories
 
 ---
 
 ## Executive Overview
 
-This delivery plan translates the SSI-INFORBILLIAR feature parity audit into **140 actionable development tickets** organized by priority, category, and layer (backend/frontend).
+This delivery plan translates the SSI-INFORBILLIAR feature parity audit into **193 actionable development tickets** organized by priority, category, and layer (backend/frontend).
 
 ### Current State
 - **Fully Implemented**: 37 features (29.4%)
@@ -29,10 +29,10 @@ This delivery plan translates the SSI-INFORBILLIAR feature parity audit into **1
 
 | Layer | P0 | P1 | P2 | Total |
 |-------|-----|-----|-----|-------|
-| Backend | 25 | 30 | 28 | **83** |
-| Frontend | 16 | 14 | 10 | **40** |
+| Backend | 25 | 35 | 60 | **120** |
+| Frontend | 16 | 15 | 25 | **56** |
 | Cross-Cutting | 8 | 8 | 1 | **17** |
-| **Total** | **49** | **52** | **39** | **140** |
+| **Total** | **49** | **58** | **86** | **193** |
 
 ---
 

@@ -31,7 +31,8 @@ public class AuthorizeManagerCommandHandler : ICommandHandler<AuthorizeManagerCo
         UserPermission.ManageTableLayout,
         UserPermission.ManageMenu,
         UserPermission.ViewReports,
-        UserPermission.SystemConfiguration
+        UserPermission.SystemConfiguration,
+        UserPermission.RefundTicket
     };
 
     public AuthorizeManagerCommandHandler(

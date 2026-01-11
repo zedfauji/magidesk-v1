@@ -215,6 +215,186 @@ public class TransactionJournal
 
 ---
 
+## BE-J.7-01: Complete Server Assignment
+
+**Ticket ID:** BE-J.7-01  
+**Feature ID:** J.7  
+**Type:** Backend  
+**Title:** Complete Server Assignment  
+**Priority:** P1
+
+### Outcome
+Servers can be assigned to tables for service tracking.
+
+### Scope
+- Add server assignment to TableSession
+- Track server performance
+- Link to tip distribution
+- Query tables by server
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | TableSession | BE-A.1-01 |
+
+### Acceptance Criteria
+- [ ] Server assigned to session
+- [ ] Performance tracking works
+- [ ] Tips linked correctly
+- [ ] Server query functional
+
+---
+
+## BE-J.10-01: Implement Break Tracking
+
+**Ticket ID:** BE-J.10-01  
+**Feature ID:** J.10  
+**Type:** Backend  
+**Title:** Implement Break Tracking  
+**Priority:** P2
+
+### Outcome
+Track employee breaks for labor compliance.
+
+### Scope
+- Create BreakEntry entity
+- Clock in/out for breaks
+- Calculate break duration
+- Labor law compliance reports
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | TimeEntry | BE-J.9-01 |
+
+### Acceptance Criteria
+- [ ] Break tracking works
+- [ ] Duration calculated
+- [ ] Reports generated
+- [ ] Compliance rules enforced
+
+---
+
+## BE-K.4-01: Complete Date/Time Formatting
+
+**Ticket ID:** BE-K.4-01  
+**Feature ID:** K.4  
+**Type:** Backend  
+**Title:** Complete Date/Time Formatting  
+**Priority:** P2
+
+### Outcome
+Locale-aware date and time formatting.
+
+### Scope
+- Support multiple date formats
+- Time zone handling
+- 12/24 hour formats
+- Regional preferences
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | Restaurant config | Exists |
+
+### Acceptance Criteria
+- [ ] Date format configurable
+- [ ] Time zones correct
+- [ ] Regional formats supported
+- [ ] Display consistent
+
+---
+
+## BE-L.4-01: Complete Database Restore
+
+**Ticket ID:** BE-L.4-01  
+**Feature ID:** L.4  
+**Type:** Backend  
+**Title:** Complete Database Restore  
+**Priority:** P1
+
+### Outcome
+Restore database from backup files.
+
+### Scope
+- Create RestoreDatabaseCommand
+- Validate backup files
+- Stop services during restore
+- Verify integrity post-restore
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | Database backup | BE-L.3-01 |
+
+### Acceptance Criteria
+- [ ] Restore works correctly
+- [ ] Data integrity verified
+- [ ] Services restart properly
+- [ ] Error handling robust
+
+---
+
+## BE-L.5-01: Implement Automatic Backups
+
+**Ticket ID:** BE-L.5-01  
+**Feature ID:** L.5  
+**Type:** Backend  
+**Title:** Implement Automatic Backups  
+**Priority:** P2
+
+### Outcome
+Automatic scheduled database backups.
+
+### Scope
+- Create backup scheduler service
+- Configurable backup schedule
+- Retention policy
+- Email notifications
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | Database backup | BE-L.3-01 |
+
+### Acceptance Criteria
+- [ ] Scheduled backups run
+- [ ] Retention policy works
+- [ ] Notifications sent
+- [ ] Error handling complete
+
+---
+
+## BE-M.6-01: Complete Health Check System
+
+**Ticket ID:** BE-M.6-01  
+**Feature ID:** M.6  
+**Type:** Backend  
+**Title:** Complete Health Check System  
+**Priority:** P2
+
+### Outcome
+System health monitoring and diagnostics.
+
+### Scope
+- Create health check service
+- Database connectivity check
+- Peripheral device status
+- Performance metrics
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | System services | Various |
+
+### Acceptance Criteria
+- [ ] Health checks run
+- [ ] All systems monitored
+- [ ] Alerts on failures
+- [ ] Dashboard displays status
+
+---
+
 ## Summary - All Categories
 
 | Category | Tickets | Priority Distribution |
@@ -227,4 +407,4 @@ public class TransactionJournal
 
 ---
 
-*Last Updated: 2026-01-08*
+*Last Updated: 2026-01-10*

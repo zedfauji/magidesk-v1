@@ -88,6 +88,10 @@ public class EndTableSessionCommandHandler : ICommandHandler<EndTableSessionComm
         await _sessionRepository.UpdateAsync(session);
 
         // 9. Update table status to Available
+        if (table.CurrentTicketId.HasValue)
+        {
+            table.ReleaseTicket();
+        }
         table.MarkAvailable();
         await _tableRepository.UpdateAsync(table);
 

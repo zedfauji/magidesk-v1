@@ -60,6 +60,11 @@ internal sealed class InMemoryTicketRepository : ITicketRepository
         return Task.FromResult<IEnumerable<Ticket>>(result);
     }
 
+    public Task<IEnumerable<Ticket>> GetManageableTicketsAsync(CancellationToken cancellationToken = default)
+    {
+        return Task.FromResult<IEnumerable<Ticket>>(_tickets.Values.ToList());
+    }
+
     public Task<int> GetNextTicketNumberAsync(CancellationToken cancellationToken = default)
     {
         return Task.FromResult(_nextTicketNumber++);

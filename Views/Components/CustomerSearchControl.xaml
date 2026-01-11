@@ -11,8 +11,7 @@
     <StackPanel Spacing="8">
         <AutoSuggestBox x:Name="SearchBox"
                         PlaceholderText="Search customer by name, phone or email..."
-                        Text="{x:Bind ViewModel.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        UpdateSourceTrigger="PropertyChanged"
+                        Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}"
                         ItemsSource="{x:Bind ViewModel.SearchResults, Mode=OneWay}"
                         QueryIcon="Find"
                         SuggestionChosen="OnSuggestionChosen">

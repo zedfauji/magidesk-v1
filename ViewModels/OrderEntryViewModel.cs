@@ -72,7 +72,7 @@ public partial class OrderEntryViewModel : ViewModelBase
     public ObservableCollection<MenuCategory> Categories { get; } = new();
     public ObservableCollection<MenuGroup> Groups { get; } = new();
 
-    public ObservableCollection<MenuItem> Items { get; } = new();
+    public ObservableCollection<MenuItemViewModel> Items { get; } = new();
 
     private decimal _pendingQuantity = 1;
     public decimal PendingQuantity
@@ -295,7 +295,7 @@ public partial class OrderEntryViewModel : ViewModelBase
 
         SelectCategoryCommand = new RelayCommand<MenuCategory>(c => SelectedCategory = c);
         SelectGroupCommand = new RelayCommand<MenuGroup>(g => SelectedGroup = g);
-        AddItemCommand = new AsyncRelayCommand<MenuItem>(AddItemAsync);
+        AddItemCommand = new AsyncRelayCommand<MenuItemViewModel>(AddItemAsync);
         BackToCategoriesCommand = new RelayCommand(() => SelectedCategory = null);
         SearchItemCommand = new AsyncRelayCommand(SearchItemAsync);
         
@@ -942,7 +942,7 @@ public partial class OrderEntryViewModel : ViewModelBase
         try
         {
              var items = await _menuRepository.GetByGroupAsync(group.Id);
-             foreach (var i in items) Items.Add(i);
+             foreach (var i in items) Items.Add(new MenuItemViewModel(i));
         }
         finally { IsBusy = false; }
     }
@@ -1184,9 +1184,10 @@ public partial class OrderEntryViewModel : ViewModelBase
         }
     }
 
-    private async Task AddItemAsync(MenuItem? item)
+    private async Task AddItemAsync(MenuItemViewModel? itemVm)
     {
-        if (item == null || Ticket == null) return;
+        if (itemVm == null || Ticket == null) return;
+        var item = itemVm.Model;
 
         // F-0032: Refetch to get full details (Modifiers) - Shallow Item from GridView is insufficient
         var fullItem = await _menuRepository.GetByIdAsync(item.Id);
@@ -1369,7 +1370,7 @@ public partial class OrderEntryViewModel : ViewModelBase
 
             if (vm.SelectedItem != null)
             {
-                await AddItemAsync(vm.SelectedItem);
+                await AddItemAsync(new MenuItemViewModel(vm.SelectedItem));
                 SearchText = string.Empty; // Clear
             }
         }

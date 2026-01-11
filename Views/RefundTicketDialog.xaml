@@ -1,0 +1,69 @@
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.RefundTicketDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:Magidesk.Presentation.ViewModels"
+    xmlns:converters="using:Magidesk.Presentation.Converters"
+    mc:Ignorable="d"
+    Title="Refund Ticket"
+    PrimaryButtonText="Refund Ticket"
+    CloseButtonText="Cancel"
+    PrimaryButtonCommand="{Binding RefundCommand}"
+    PrimaryButtonCommandParameter="{Binding ElementName=RefundDialog}"
+    x:Name="RefundDialog">
+
+    <ContentDialog.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:StringFormatConverter x:Key="StringFormatConverter"/>
+        <x:String x:Key="CurrencyFormat">{0:C}</x:String>
+        <Style TargetType="TextBlock" x:Key="LabelStyle">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+    </ContentDialog.Resources>
+
+    <Grid RowSpacing="16" Width="400">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Ticket Info -->
+        <StackPanel Grid.Row="0" Spacing="4">
+            <TextBlock Text="Ticket Details" Style="{StaticResource LabelStyle}"/>
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBlock Text="Ticket #" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                <TextBlock Text="{Binding Ticket.TicketNumber}" FontWeight="Bold"/>
+                <TextBlock Text="|" Margin="8,0"/>
+                <TextBlock Text="Paid Amount:" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                <TextBlock Text="{Binding Ticket.PaidAmount, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}" FontWeight="Bold"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Refund Reason -->
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Reason for Refund" Style="{StaticResource LabelStyle}"/>
+            <ComboBox ItemsSource="{Binding RefundReasons}" 
+                      SelectedItem="{Binding SelectedReason, Mode=TwoWay}"
+                      HorizontalAlignment="Stretch"
+                      PlaceholderText="Select a reason..."/>
+            <TextBlock Text="{Binding ErrorMessage}" 
+                       Foreground="Red" 
+                       FontSize="12" 
+                       Margin="0,4,0,0"
+                       Visibility="{Binding HasError, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        </StackPanel>
+
+        <!-- Info/Warning -->
+        <InfoBar Grid.Row="2"
+                 Severity="Warning"
+                 Title="Full Refund"
+                 Message="This will refund all payments associated with this ticket."
+                 IsOpen="True"
+                 IsClosable="False"/>
+
+    </Grid>
+</ContentDialog>

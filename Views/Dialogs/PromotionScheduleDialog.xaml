@@ -1,0 +1,88 @@
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.Dialogs.PromotionScheduleDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dto="using:Magidesk.Application.DTOs"
+    mc:Ignorable="d"
+    x:Name="RootDialog"
+    Title="{x:Bind ViewModel.Title, Mode=OneWay}"
+    CloseButtonText="Close"
+    DefaultButton="Close">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Add New Schedule Form -->
+        <Border Grid.Row="0" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" BorderThickness="0,0,0,1" Padding="0,0,0,12" Margin="0,0,0,12">
+            <StackPanel Spacing="12">
+                <TextBlock Text="Add Schedule Window" FontWeight="SemiBold"/>
+                
+                <Grid ColumnSpacing="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <ComboBox Header="Day" 
+                              ItemsSource="{x:Bind ViewModel.DaysOfWeek}" 
+                              SelectedItem="{x:Bind ViewModel.SelectedDay, Mode=TwoWay}"
+                              HorizontalAlignment="Stretch"/>
+                    
+                    <TimePicker Header="Start Time" 
+                                Time="{x:Bind ViewModel.StartTime, Mode=TwoWay}" 
+                                HorizontalAlignment="Stretch"/>
+                    
+                    <TimePicker Header="End Time" 
+                                Time="{x:Bind ViewModel.EndTime, Mode=TwoWay}" 
+                                HorizontalAlignment="Stretch"/>
+                    
+                    <Button Grid.Column="3" 
+                            Content="Add" 
+                            Command="{x:Bind ViewModel.AddScheduleCommand}" 
+                            Style="{StaticResource AccentButtonStyle}" 
+                            VerticalAlignment="Bottom"/>
+                </Grid>
+                
+                <TextBlock Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}" Foreground="Red" TextWrapping="Wrap" Visibility="{x:Bind ViewModel.ErrorMessage, Mode=OneWay, Converter={StaticResource StringVisibilityConverter}}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Existing Schedules List -->
+        <StackPanel Grid.Row="1" Spacing="8">
+            <TextBlock Text="Active Schedules" FontWeight="SemiBold"/>
+            
+            <ListView ItemsSource="{x:Bind ViewModel.Schedules, Mode=OneWay}" MaxHeight="300">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="dto:PromotionScheduleDto">
+                        <Grid Padding="0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Text="{x:Bind DayName}" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="1" Text="{x:Bind TimeWindow}" VerticalAlignment="Center"/>
+                            
+                            <Button Grid.Column="2" Content="&#xE74D;" FontFamily="Segoe MDL2 Assets" 
+                                    Command="{Binding ElementName=RootDialog, Path=ViewModel.DeleteScheduleCommand}"
+                                    CommandParameter="{x:Bind}"
+                                    ToolTipService.ToolTip="Remove Schedule"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+            <TextBlock Text="No schedules defined." Visibility="{x:Bind ViewModel.Schedules.Count, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Reverse}" Opacity="0.5" FontStyle="Italic"/>
+        </StackPanel>
+        
+        <ProgressRing Grid.RowSpan="2" IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Grid>
+</ContentDialog>

@@ -116,14 +116,165 @@ public enum DrawerOperationType
 
 ---
 
+## BE-I.5-01: Complete Barcode Scanner Support
+
+**Ticket ID:** BE-I.5-01  
+**Feature ID:** I.5  
+**Type:** Backend  
+**Title:** Complete Barcode Scanner Support  
+**Priority:** P2
+
+### Outcome
+Barcode scanning integrated for product lookup.
+
+### Scope
+- Create barcode scanning service
+- Product lookup by barcode
+- Quantity entry shortcuts
+- Error handling for invalid codes
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | SKU/Barcode support | BE-G.7-01 |
+
+### Acceptance Criteria
+- [ ] Barcode scanned correctly
+- [ ] Product lookup instant
+- [ ] Invalid codes handled
+- [ ] Multiple scanner types supported
+
+---
+
+## BE-I.6-01: Complete Customer Display Support
+
+**Ticket ID:** BE-I.6-01  
+**Feature ID:** I.6  
+**Type:** Backend  
+**Title:** Complete Customer Display Support  
+**Priority:** P2
+
+### Outcome
+Pole display shows pricing to customers.
+
+### Scope
+- Create customer display service
+- Show item name and price
+- Update on line item changes
+- Support multiple display types
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | OrderLine entity | Exists |
+
+### Acceptance Criteria
+- [ ] Display updates correctly
+- [ ] Formatting readable
+- [ ] Multiple displays supported
+- [ ] Error handling robust
+
+---
+
+## BE-I.8-01: Complete Card Reader Integration
+
+**Ticket ID:** BE-I.8-01  
+**Feature ID:** I.8  
+**Type:** Backend  
+**Title:** Complete Card Reader Integration  
+**Priority:** P2
+
+### Outcome
+Integrated card payment processing.
+
+### Scope
+- Create payment gateway service
+- Process card transactions
+- Handle EMV chip cards
+- Support contactless payments
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | Payment processing | Exists |
+
+### Acceptance Criteria
+- [ ] Card transactions work
+- [ ] EMV supported
+- [ ] Contactless works
+- [ ] Error handling complete
+- [ ] PCI compliance verified
+
+---
+
+## BE-I.10-01: Implement Caller ID Integration
+
+**Ticket ID:** BE-I.10-01  
+**Feature ID:** I.10  
+**Type:** Backend  
+**Title:** Implement Caller ID Integration  
+**Priority:** P2
+
+### Outcome
+Automatic customer lookup from caller ID.
+
+### Scope
+- Create caller ID service
+- Phone number normalization
+- Customer auto-lookup
+- Popup notification
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | Customer search | BE-F.2-01 |
+
+### Acceptance Criteria
+- [ ] Caller ID captured
+- [ ] Customer found automatically
+- [ ] Phone normalization works
+- [ ] Popup displays customer info
+
+---
+
+## BE-I.11-01: Implement Kitchen Display System
+
+**Ticket ID:** BE-I.11-01  
+**Feature ID:** I.11  
+**Type:** Backend  
+**Title:** Implement Kitchen Display System  
+**Priority:** P2
+
+### Outcome
+Kitchen display integration for order management.
+
+### Scope
+- Create KDS service
+- Send orders to kitchen
+- Track order status
+- Support bump/recall
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | OrderLine entity | Exists |
+
+### Acceptance Criteria
+- [ ] Orders sent to KDS
+- [ ] Status tracking works
+- [ ] Bump functionality works
+- [ ] Multiple displays supported
+
+---
+
 ## Summary
 
 | Priority | Count | Status |
 |----------|-------|--------|
 | P1 | 2 | NOT_STARTED |
-| P2 | 3 | NOT_STARTED |
-| **Total** | **5** | **NOT_STARTED** |
+| P2 | 5 | NOT_STARTED |
+| **Total** | **7** | **NOT_STARTED** |
 
 ---
 
-*Last Updated: 2026-01-08*
+*Last Updated: 2026-01-10*

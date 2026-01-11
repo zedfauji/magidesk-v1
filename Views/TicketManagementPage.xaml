@@ -26,49 +26,87 @@
                 <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Spacing="8">
-                <TextBlock Text="Open Tickets" FontSize="18" />
-                <ListView ItemsSource="{Binding OpenTickets}" SelectedItem="{Binding SelectedTicket, Mode=TwoWay}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding TicketNumber}" />
-                                <TextBlock Opacity="0.7" Text="{Binding Status}" />
+            <TabView Grid.Column="0" SelectedIndex="0">
+                <TabView.TabItems>
+                    <TabViewItem Header="Completed Tickets">
+                        <Grid>
+                            <ListView ItemsSource="{Binding CompletedTickets}" 
+                                      SelectedItem="{Binding SelectedTicket, Mode=TwoWay}"
+                                      Visibility="{Binding HasCompletedTickets, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding TicketNumber}" />
+                                            <TextBlock Opacity="0.7" Text="{Binding Status}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <StackPanel VerticalAlignment="Center" 
+                                        HorizontalAlignment="Center"
+                                        Spacing="8"
+                                        Visibility="{Binding HasNoCompletedTickets, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <TextBlock Text="No completed tickets yet." 
+                                           FontSize="16" 
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="Close a ticket to make it available for refund or reprint." 
+                                           FontSize="14" 
+                                           Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                           TextWrapping="Wrap"
+                                           MaxWidth="300"
+                                           HorizontalAlignment="Center"
+                                           TextAlignment="Center"/>
                             </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackPanel>
+                        </Grid>
+                    </TabViewItem>
+                    <TabViewItem Header="Active Tickets">
+                        <Grid>
+                            <ListView ItemsSource="{Binding ActiveTickets}" 
+                                      SelectedItem="{Binding SelectedTicket, Mode=TwoWay}"
+                                      Visibility="{Binding HasActiveTickets, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding TicketNumber}" />
+                                            <TextBlock Opacity="0.7" Text="{Binding Status}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <StackPanel VerticalAlignment="Center" 
+                                        HorizontalAlignment="Center"
+                                        Spacing="8"
+                                        Visibility="{Binding HasNoActiveTickets, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <TextBlock Text="No active tickets." 
+                                           FontSize="16" 
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </TabViewItem>
+                </TabView.TabItems>
+            </TabView>
 
             <ScrollViewer Grid.Column="1">
                 <StackPanel Spacing="12">
                     <TextBlock Text="Selected" FontSize="18" />
                     <TextBlock Text="{Binding SelectedSummaryText}" />
 
-                    <TextBlock Text="Void" FontSize="18" />
+                    <TextBlock Text="Actions" FontSize="18" />
                     <StackPanel Orientation="Horizontal" Spacing="12">
-                        <TextBox Header="VoidedBy (UserId)" Width="260" Text="{Binding VoidedByText, Mode=TwoWay}" />
-                        <Button Content="Void Selected" Command="{Binding VoidSelectedCommand}" />
+                        <Button Content="Void Ticket" 
+                                Command="{Binding VoidSelectedCommand}" 
+                                Visibility="{Binding CanVoidTicket, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        <Button Content="Refund Ticket" 
+                                Command="{Binding RefundSelectedCommand}" 
+                                Visibility="{Binding CanRefundTicket, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        <Button Content="Reprint Receipt" 
+                                Command="{Binding ReprintReceiptCommand}" 
+                                Visibility="{Binding CanReprintTicket, Converter={StaticResource BoolToVisibilityConverter}}" />
                     </StackPanel>
 
-                    <TextBlock Text="Refund (entire ticket)" FontSize="18" />
-                    <StackPanel Orientation="Horizontal" Spacing="12">
-                        <TextBox Header="ProcessedBy (UserId)" Width="260" Text="{Binding RefundProcessedByText, Mode=TwoWay}" />
-                        <TextBox Header="TerminalId" Width="260" Text="{Binding RefundTerminalIdText, Mode=TwoWay}" />
-                    </StackPanel>
-                    <TextBox Header="Reason" Text="{Binding RefundReason, Mode=TwoWay}" />
-                    <Button Content="Refund Selected" Command="{Binding RefundSelectedCommand}" Width="160" />
 
-                    <TextBlock Text="Split (basic: moves first order line)" FontSize="18" />
-                    <StackPanel Orientation="Horizontal" Spacing="12">
-                        <TextBox Header="SplitBy (UserId)" Width="260" Text="{Binding SplitByText, Mode=TwoWay}" />
-                        <TextBox Header="TerminalId" Width="260" Text="{Binding SplitTerminalIdText, Mode=TwoWay}" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Spacing="12">
-                        <TextBox Header="ShiftId" Width="260" Text="{Binding SplitShiftIdText, Mode=TwoWay}" />
-                        <TextBox Header="OrderTypeId" Width="260" Text="{Binding SplitOrderTypeIdText, Mode=TwoWay}" />
-                        <Button Content="Split Selected" Command="{Binding SplitSelectedCommand}" />
-                    </StackPanel>
                 </StackPanel>
             </ScrollViewer>
         </Grid>

@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Magidesk.Application.Commands;
+using Magidesk.Application.DTOs;
 using Magidesk.Application.Interfaces;
 using Magidesk.Domain.Entities;
+using Magidesk.Presentation.Services;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -100,6 +102,7 @@ public sealed partial class CustomerListViewModel : ViewModelBase
     public ICommand AddCommand { get; }
     public ICommand SaveCommand { get; }
     public ICommand ClearSearchCommand { get; }
+    public ICommand ViewMemberProfileCommand { get; }
 
     public CustomerListViewModel(
         ICustomerRepository customerRepository,
@@ -112,6 +115,8 @@ public sealed partial class CustomerListViewModel : ViewModelBase
         _createHandler = createHandler;
         _updateHandler = updateHandler;
         _dialogService = dialogService;
+
+        ViewMemberProfileCommand = new RelayCommand(ViewMemberProfile, () => HasSelection);
 
         LoadCommand = new AsyncRelayCommand(LoadAsync);
         SearchCommand = new AsyncRelayCommand(SearchAsync);
@@ -269,5 +274,13 @@ public sealed partial class CustomerListViewModel : ViewModelBase
             await _dialogService.ShowErrorAsync("Operation Failed", ex.Message);
         }
         finally { IsBusy = false; }
+    }
+
+    private void ViewMemberProfile()
+    {
+        if (SelectedCustomer == null) return;
+        
+        var navService = App.Services.GetRequiredService<NavigationService>();
+        navService.Navigate(typeof(Views.MemberProfilePage), SelectedCustomer.Id);
     }
 }

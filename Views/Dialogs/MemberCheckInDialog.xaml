@@ -1,0 +1,59 @@
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.Dialogs.MemberCheckInDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Magidesk.Presentation.Views.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Member Check-In"
+    PrimaryButtonText="Check In"
+    SecondaryButtonText="Cancel"
+    IsPrimaryButtonEnabled="{x:Bind ViewModel.CanCheckIn, Mode=OneWay}"
+    PrimaryButtonCommand="{x:Bind ViewModel.CheckInCommand}">
+
+    <StackPanel Width="400" Spacing="16">
+        <TextBlock Text="Enter member number or scan card:" Style="{StaticResource BodyTextBlockStyle}"/>
+        
+        <Grid ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Text="{x:Bind ViewModel.SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                     PlaceholderText="Member Number..."
+                     KeyDown="SearchTerm_KeyDown"/>
+            <Button Grid.Column="1" Command="{x:Bind ViewModel.SearchCommand}">
+                <SymbolIcon Symbol="Find"/>
+            </Button>
+        </Grid>
+
+        <Border Visibility="{x:Bind ViewModel.HasSelectedMember, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                Padding="16" CornerRadius="8">
+            <StackPanel Spacing="8">
+                <TextBlock Text="{x:Bind ViewModel.SelectedMember.Customer.FullName, Mode=OneWay}" 
+                           Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
+                
+                <Grid>
+                    <TextBlock Text="Tier:" HorizontalAlignment="Left" Opacity="0.7"/>
+                    <TextBlock Text="{x:Bind ViewModel.SelectedMember.Tier.Name, Mode=OneWay}" HorizontalAlignment="Right" FontWeight="SemiBold"/>
+                </Grid>
+
+                <Grid>
+                    <TextBlock Text="Status:" HorizontalAlignment="Left" Opacity="0.7"/>
+                    <TextBlock Text="{x:Bind ViewModel.SelectedMember.Status, Mode=OneWay}" 
+                               HorizontalAlignment="Right" 
+                               Foreground="{x:Bind ViewModel.SelectedMember.IsActive, Mode=OneWay, Converter={StaticResource ActiveStatusBrushConverter}}"/>
+                </Grid>
+
+                <Grid>
+                    <TextBlock Text="Prepaid Balance:" HorizontalAlignment="Left" Opacity="0.7"/>
+                    <TextBlock Text="{x:Bind ViewModel.SelectedMember.PrepaidBalance, Mode=OneWay}" HorizontalAlignment="Right" FontWeight="SemiBold" Foreground="{ThemeResource SystemAccentColor}"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <ProgressRing IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}" HorizontalAlignment="Center"/>
+    </StackPanel>
+</ContentDialog>
