@@ -237,6 +237,76 @@ namespace Magidesk.Migrations.Migrations
                     b.ToTable("ComboGroupItems", (string)null);
                 });
 
+            modelBuilder.Entity("Magidesk.Domain.Entities.Customer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime?>("LastVisitAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("PostalCode")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<int>("TotalVisits")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email");
+
+                    b.HasIndex("FirstName");
+
+                    b.HasIndex("LastName");
+
+                    b.HasIndex("Phone")
+                        .IsUnique();
+
+                    b.ToTable("Customers", "magidesk");
+                });
+
             modelBuilder.Entity("Magidesk.Domain.Entities.Discount", b =>
                 {
                     b.Property<Guid>("Id")
@@ -560,6 +630,83 @@ namespace Magidesk.Migrations.Migrations
                     b.ToTable("KitchenOrderItems", (string)null);
                 });
 
+            modelBuilder.Entity("Magidesk.Domain.Entities.Member", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ExpirationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("JoinDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("MemberNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("TierId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId")
+                        .IsUnique();
+
+                    b.HasIndex("MemberNumber")
+                        .IsUnique();
+
+                    b.HasIndex("TierId");
+
+                    b.ToTable("Members");
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.MembershipTier", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("DiscountPercent")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("FreeGuestsPerVisit")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal?>("HourlyRateDiscount")
+                        .HasColumnType("numeric");
+
+                    b.Property<bool>("IncludesFreeGuests")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MembershipTiers");
+                });
+
             modelBuilder.Entity("Magidesk.Domain.Entities.MenuCategory", b =>
                 {
                     b.Property<Guid>("Id")
@@ -590,6 +737,9 @@ namespace Magidesk.Migrations.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<Guid?>("ParentCategoryId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid?>("PrinterGroupId")
                         .HasColumnType("uuid");
 
@@ -602,6 +752,9 @@ namespace Magidesk.Migrations.Migrations
 
                     b.HasIndex("Name")
                         .IsUnique();
+
+                    b.HasIndex("ParentCategoryId")
+                        .HasDatabaseName("IX_MenuCategories_ParentCategoryId");
 
                     b.ToTable("MenuCategories", (string)null);
                 });
@@ -690,6 +843,9 @@ namespace Magidesk.Migrations.Migrations
                     b.Property<bool>("IsVisible")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("MinimumStockLevel")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -708,8 +864,14 @@ namespace Magidesk.Migrations.Migrations
                     b.Property<bool>("ShowInKiosk")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("StockQuantity")
+                        .HasColumnType("integer");
+
                     b.Property<decimal>("TaxRate")
                         .HasColumnType("decimal(5,4)");
+
+                    b.Property<bool>("TrackStock")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("Version")
                         .HasColumnType("integer");
@@ -927,6 +1089,12 @@ namespace Magidesk.Migrations.Migrations
                         .HasColumnType("integer")
                         .HasDefaultValue(0);
 
+                    b.Property<decimal>("ExtraModifierPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("FreeModifiers")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
@@ -982,9 +1150,16 @@ namespace Magidesk.Migrations.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<TimeSpan?>("Duration")
+                        .HasColumnType("interval");
+
                     b.Property<string>("GroupName")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<decimal?>("HourlyRate")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<string>("Instructions")
                         .HasMaxLength(500)
@@ -996,6 +1171,11 @@ namespace Magidesk.Migrations.Migrations
                         .HasDefaultValue(false);
 
                     b.Property<bool>("IsFractionalUnit")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsTimeCharge")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
@@ -1768,6 +1948,36 @@ namespace Magidesk.Migrations.Migrations
                     b.ToTable("Shifts", (string)null);
                 });
 
+            modelBuilder.Entity("Magidesk.Domain.Entities.StockMovement", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("MenuItemId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("QuantityChange")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Reference")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StockMovements");
+                });
+
             modelBuilder.Entity("Magidesk.Domain.Entities.Table", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1817,6 +2027,9 @@ namespace Magidesk.Migrations.Migrations
                     b.Property<int>("TableNumber")
                         .HasColumnType("integer");
 
+                    b.Property<Guid?>("TableTypeId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -1856,6 +2069,8 @@ namespace Magidesk.Migrations.Migrations
 
                     b.HasIndex("TableNumber")
                         .IsUnique();
+
+                    b.HasIndex("TableTypeId");
 
                     b.ToTable("Tables", "magidesk");
                 });
@@ -1902,6 +2117,71 @@ namespace Magidesk.Migrations.Migrations
                         .HasDatabaseName("IX_TableLayout_Name");
 
                     b.ToTable("TableLayouts", "magidesk");
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.TableSession", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("CustomerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("GuestCount")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("HourlyRate")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<TimeSpan>("ManualAdjustment")
+                        .HasColumnType("interval");
+
+                    b.Property<DateTime?>("PausedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("TableId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TableTypeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("TicketId")
+                        .HasColumnType("uuid");
+
+                    b.Property<TimeSpan>("TotalPausedDuration")
+                        .HasColumnType("interval");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("StartTime");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("TableId");
+
+                    b.HasIndex("TicketId");
+
+                    b.ToTable("TableSessions", "magidesk");
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.TableShape", b =>
@@ -1970,6 +2250,61 @@ namespace Magidesk.Migrations.Migrations
                         .HasDatabaseName("IX_TableShape_Name");
 
                     b.ToTable("TableShapes", "magidesk");
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.TableType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<decimal?>("FirstHourRate")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<decimal>("HourlyRate")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<int>("MinimumMinutes")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("RoundingMinutes")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1);
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsActive");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("TableTypes", "magidesk");
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.Terminal", b =>
@@ -2152,6 +2487,9 @@ namespace Magidesk.Migrations.Migrations
                     b.Property<DateTime?>("ReadyTime")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid?>("SessionId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("ShiftId")
                         .HasColumnType("uuid");
 
@@ -2188,6 +2526,8 @@ namespace Magidesk.Migrations.Migrations
                     b.HasIndex("GlobalId")
                         .IsUnique()
                         .HasFilter("\"GlobalId\" IS NOT NULL");
+
+                    b.HasIndex("SessionId");
 
                     b.HasIndex("ShiftId");
 
@@ -2259,6 +2599,10 @@ namespace Magidesk.Migrations.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<string>("PreferredLanguage")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
@@ -2685,6 +3029,38 @@ namespace Magidesk.Migrations.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Magidesk.Domain.Entities.Customer", b =>
+                {
+                    b.OwnsOne("Magidesk.Domain.ValueObjects.Money", "TotalSpent", b1 =>
+                        {
+                            b1.Property<Guid>("CustomerId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("numeric(18,2)")
+                                .HasColumnName("TotalSpentAmount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .ValueGeneratedOnAdd()
+                                .HasMaxLength(3)
+                                .HasColumnType("character varying(3)")
+                                .HasDefaultValue("USD")
+                                .HasColumnName("TotalSpentCurrency");
+
+                            b1.HasKey("CustomerId");
+
+                            b1.ToTable("Customers", "magidesk");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CustomerId");
+                        });
+
+                    b.Navigation("TotalSpent")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Magidesk.Domain.Entities.Discount", b =>
                 {
                     b.OwnsOne("Magidesk.Domain.ValueObjects.Money", "MinimumBuy", b1 =>
@@ -2824,6 +3200,113 @@ namespace Magidesk.Migrations.Migrations
                         .HasForeignKey("KitchenOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.Member", b =>
+                {
+                    b.HasOne("Magidesk.Domain.Entities.Customer", "Customer")
+                        .WithOne()
+                        .HasForeignKey("Magidesk.Domain.Entities.Member", "CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Magidesk.Domain.Entities.MembershipTier", "Tier")
+                        .WithMany()
+                        .HasForeignKey("TierId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.OwnsOne("Magidesk.Domain.ValueObjects.Money", "PrepaidBalance", b1 =>
+                        {
+                            b1.Property<Guid>("MemberId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasColumnType("numeric")
+                                .HasColumnName("PrepaidBalanceAmount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("PrepaidBalanceCurrency");
+
+                            b1.HasKey("MemberId");
+
+                            b1.ToTable("Members");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MemberId");
+                        });
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("PrepaidBalance")
+                        .IsRequired();
+
+                    b.Navigation("Tier");
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.MembershipTier", b =>
+                {
+                    b.OwnsOne("Magidesk.Domain.ValueObjects.Money", "AnnualFee", b1 =>
+                        {
+                            b1.Property<Guid>("MembershipTierId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasColumnType("numeric")
+                                .HasColumnName("AnnualFeeAmount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("AnnualFeeCurrency");
+
+                            b1.HasKey("MembershipTierId");
+
+                            b1.ToTable("MembershipTiers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MembershipTierId");
+                        });
+
+                    b.OwnsOne("Magidesk.Domain.ValueObjects.Money", "MonthlyFee", b1 =>
+                        {
+                            b1.Property<Guid>("MembershipTierId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasColumnType("numeric")
+                                .HasColumnName("MonthlyFeeAmount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("MonthlyFeeCurrency");
+
+                            b1.HasKey("MembershipTierId");
+
+                            b1.ToTable("MembershipTiers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MembershipTierId");
+                        });
+
+                    b.Navigation("AnnualFee")
+                        .IsRequired();
+
+                    b.Navigation("MonthlyFee")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.MenuCategory", b =>
+                {
+                    b.HasOne("Magidesk.Domain.Entities.MenuCategory", "Parent")
+                        .WithMany("Subcategories")
+                        .HasForeignKey("ParentCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.MenuGroup", b =>
@@ -3649,7 +4132,14 @@ namespace Magidesk.Migrations.Migrations
                         .WithMany("Tables")
                         .HasForeignKey("ServerSectionId");
 
+                    b.HasOne("Magidesk.Domain.Entities.TableType", "TableType")
+                        .WithMany()
+                        .HasForeignKey("TableTypeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Layout");
+
+                    b.Navigation("TableType");
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.TableLayout", b =>
@@ -3660,6 +4150,36 @@ namespace Magidesk.Migrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Floor");
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.TableSession", b =>
+                {
+                    b.OwnsOne("Magidesk.Domain.ValueObjects.Money", "TotalCharge", b1 =>
+                        {
+                            b1.Property<Guid>("TableSessionId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasPrecision(10, 2)
+                                .HasColumnType("numeric(10,2)")
+                                .HasColumnName("TotalChargeAmount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("character varying(3)")
+                                .HasColumnName("TotalChargeCurrency");
+
+                            b1.HasKey("TableSessionId");
+
+                            b1.ToTable("TableSessions", "magidesk");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TableSessionId");
+                        });
+
+                    b.Navigation("TotalCharge")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.TerminalTransaction", b =>
@@ -4182,6 +4702,11 @@ namespace Magidesk.Migrations.Migrations
             modelBuilder.Entity("Magidesk.Domain.Entities.KitchenOrder", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.MenuCategory", b =>
+                {
+                    b.Navigation("Subcategories");
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.MenuItem", b =>

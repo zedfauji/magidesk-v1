@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.Dialogs.EndSessionDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Magidesk.Presentation.ViewModels.Dialogs"
+    mc:Ignorable="d"
+    Title="End Table Session"
+    PrimaryButtonText="End Session"
+    SecondaryButtonText="Cancel"
+    DefaultButton="Primary"
+    PrimaryButtonCommand="{x:Bind ViewModel.EndSessionCommand}"
+    SecondaryButtonCommand="{x:Bind ViewModel.CancelCommand}">
+
+    <StackPanel Spacing="16" Padding="8">
+        <!-- Error Display -->
+        <InfoBar
+            IsOpen="{x:Bind ViewModel.HasError, Mode=OneWay}"
+            Severity="Error"
+            Title="Error"
+            Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+            IsClosable="False"/>
+
+        <!-- Session Summary -->
+        <StackPanel Spacing="8">
+            <TextBlock Text="Session Summary" FontWeight="SemiBold" FontSize="16"/>
+            
+            <!-- Duration -->
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBlock Text="Duration:" Width="120"/>
+                <TextBlock Text="{x:Bind ViewModel.Duration, Mode=OneWay}" FontWeight="Bold"/>
+            </StackPanel>
+
+            <!-- Hourly Rate -->
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBlock Text="Hourly Rate:" Width="120"/>
+                <TextBlock Text="{x:Bind ViewModel.HourlyRate, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" FontWeight="Bold"/>
+            </StackPanel>
+
+            <!-- Total Charge -->
+            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" 
+                    BorderThickness="0,1,0,0" 
+                    Padding="0,8,0,0" 
+                    Margin="0,8,0,0">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <TextBlock Text="Total Charge:" Width="120" FontSize="18" FontWeight="SemiBold"/>
+                    <TextBlock Text="{x:Bind ViewModel.TotalCharge, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" 
+                              FontSize="24" 
+                              FontWeight="Bold" 
+                              Foreground="{ThemeResource SystemAccentColor}"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <!-- Action Options -->
+        <StackPanel Spacing="8">
+            <TextBlock Text="Ticket Options" FontWeight="SemiBold" FontSize="16"/>
+            
+            <RadioButton Content="Create New Ticket" 
+                        IsChecked="{x:Bind ViewModel.CreateNewTicket, Mode=TwoWay}"/>
+            
+            <RadioButton Content="Add to Existing Ticket" 
+                        IsChecked="{x:Bind ViewModel.AddToExistingTicket, Mode=TwoWay}"/>
+        </StackPanel>
+
+        <!-- Loading Indicator -->
+        <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" 
+                     Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"/>
+    </StackPanel>
+</ContentDialog>

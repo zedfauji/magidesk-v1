@@ -8,6 +8,12 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <d:CurrencyConverter x:Key="CurrencyConverter" xmlns:d="using:Magidesk.Presentation.Converters"/>
+        <d:StringToBoolConverter x:Key="StringToBoolConverter" xmlns:d="using:Magidesk.Presentation.Converters"/>
+        <d:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" xmlns:d="using:Magidesk.Presentation.Converters"/>
+    </Page.Resources>
+
     <Grid Padding="24">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" /> <!-- Ticket Summary -->
@@ -144,6 +150,24 @@
 
                 <!-- Payment Methods -->
                 <StackPanel Grid.Column="1" Spacing="12">
+                    <Button Command="{x:Bind ViewModel.ShowGratuityDialogCommand}" 
+                            HorizontalAlignment="Stretch" Height="50" Background="{ThemeResource SystemAccentColor}" Foreground="White"
+                            IsEnabled="{x:Bind ViewModel.CanAddGratuity, Mode=OneWay}">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <FontIcon Glyph="&#xE1CB;" /> <!-- Heart/Tip Icon -->
+                            <TextBlock Text="Add Tip" FontSize="18" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Reprint Receipt" Command="{x:Bind ViewModel.ReprintReceiptCommand}" HorizontalAlignment="Stretch" Background="LightSlateGray" Foreground="White"/>
+                        <Button Grid.Column="1" Content="Void Ticket" Command="{x:Bind ViewModel.VoidTicketCommand}" HorizontalAlignment="Stretch" Background="DarkRed" Foreground="White"/>
+                    </Grid>
+
                      <Grid ColumnSpacing="8" RowSpacing="8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>

@@ -329,6 +329,151 @@ UI controls to pause and resume active sessions.
 
 ---
 
+## FE-A.5-01: Create TableType Management Page
+
+**Ticket ID:** FE-A.5-01  
+**Feature ID:** A.5  
+**Type:** Frontend  
+**Title:** Create TableType Management Page  
+**Priority:** P1
+
+### Outcome  
+Admin page for managing table types and pricing.
+
+### Scope
+- Create `TableTypeManagementPage.xaml`
+- List all table types
+- Add/Edit dialog
+- Set pricing rules per type
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** No business logic in ViewModel
+- **no-silent-failure.md:** All errors shown
+- **G13:** Accessibility compliant
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | TableType entity | BE-A.5-01 |
+
+### Acceptance Criteria
+- [ ] Page loads table types
+- [ ] Add dialog works
+- [ ] Edit dialog works
+- [ ] Pricing rules saved
+- [ ] Validation enforced
+- [ ] Localized strings used
+
+---
+
+## FE-A.9-01: Create Pricing Configuration Dialog
+
+**Ticket ID:** FE-A.9-01  
+**Feature ID:** A.9  
+**Type:** Frontend  
+**Title:** Create Pricing Configuration Dialog  
+**Priority:** P1
+
+### Outcome
+Dialog for configuring time-based pricing rules.
+
+### Scope
+- Create `PricingConfigDialog.xaml`
+- Configure hourly rate
+- Configure first-hour rate
+- Configure rounding rules
+- Configure minimum charges
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel calls Application layer
+- **G13:** Proper form validation
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | TableType entity | BE-A.5-01 |
+
+### Acceptance Criteria
+- [ ] Dialog opens correctly
+- [ ] All pricing fields editable
+- [ ] Validation enforced
+- [ ] Save persists changes
+- [ ] Cancel discards changes
+
+---
+
+## FE-A.17-01: Create Time Adjustment Dialog
+
+**Ticket ID:** FE-A.17-01  
+**Feature ID:** A.17  
+**Type:** Frontend  
+**Title:** Create Time Adjustment Dialog  
+**Priority:** P1
+
+### Outcome
+Manager dialog for adjusting session time.
+
+### Scope
+- Create `TimeAdjustmentDialog.xaml`
+- Show current session time
+- Allow time adjustment (+ or -)
+- Require manager PIN
+- Capture adjustment reason
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** No business logic in ViewModel
+- **G08:** Security - manager auth required
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | AdjustSessionTimeCommand | BE-A.17-01 |
+| HARD | ManagerPinDialog | FE-J.1-01 |
+
+### Acceptance Criteria
+- [ ] Dialog shows current time
+- [ ] Adjustment controls work
+- [ ] Manager PIN required
+- [ ] Reason required
+- [ ] Adjustment logged
+- [ ] Session time updated
+
+---
+
+## FE-A.19-01: Add Guest Count Input
+
+**Ticket ID:** FE-A.19-01  
+**Feature ID:** A.19  
+**Type:** Frontend  
+**Title:** Add Guest Count Input  
+**Priority:** P1
+
+### Outcome
+Guest count input in session dialogs.
+
+### Scope
+- Add guest count to StartSessionDialog
+- Validate range (1-20)
+- Display in session panels
+- Update guest count control
+
+### Quality & Guardrails
+- **G13:** Accessibility - keyboard input
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | GuestCount backend | BE-A.19-01 |
+
+### Acceptance Criteria
+- [ ] Input shown in start dialog
+- [ ] Validation enforces 1-20
+- [ ] Default value is 1
+- [ ] Guest count displayed in panels
+- [ ] Update functionality works
+
+---
+
 ## Summary
 
 | Priority | Count | Status |
@@ -339,4 +484,4 @@ UI controls to pause and resume active sessions.
 
 ---
 
-*Last Updated: 2026-01-08*
+*Last Updated: 2026-01-10*

@@ -61,6 +61,7 @@
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <converters:BooleanToStringConverter x:Key="BooleanToStringConverter"/>
             <converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
+            <converters:ActiveStatusBrushConverter x:Key="ActiveStatusBrushConverter"/>
 
         <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush" Color="{StaticResource SystemAltHighColor}"/>
             <converters:BoolToDesignModeTextConverter x:Key="BoolToDesignModeTextConverter"/>

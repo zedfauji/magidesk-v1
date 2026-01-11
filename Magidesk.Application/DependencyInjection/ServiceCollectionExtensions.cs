@@ -39,6 +39,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.CaptureCardPaymentCommand, Commands.CaptureCardPaymentResult>, CaptureCardPaymentCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.VoidCardPaymentCommand, Commands.VoidCardPaymentResult>, VoidCardPaymentCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.AddTipsToCardPaymentCommand, Commands.AddTipsToCardPaymentResult>, AddTipsToCardPaymentCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.ApplyGratuityCommand, Commands.ApplyGratuityResult>, ApplyGratuityCommandHandler>();
         
         // Refund command handlers
         services.AddScoped<ICommandHandler<Commands.RefundPaymentCommand, Commands.RefundPaymentResult>, RefundPaymentCommandHandler>();
@@ -107,6 +108,13 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.ClockInCommand>, ClockInCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.ClockOutCommand>, ClockOutCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.TransferTicketCommand>, TransferTicketCommandHandler>();
+        
+        // Table Session command handlers
+        services.AddScoped<ICommandHandler<Commands.TableSessions.StartTableSessionCommand, Commands.TableSessions.StartTableSessionResult>, Commands.TableSessions.StartTableSessionCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.TableSessions.EndTableSessionCommand, Commands.TableSessions.EndTableSessionResult>, Commands.TableSessions.EndTableSessionCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.TableSessions.PauseTableSessionCommand, Commands.TableSessions.PauseTableSessionResult>, Commands.TableSessions.PauseTableSessionCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.TableSessions.ResumeTableSessionCommand, Commands.TableSessions.ResumeTableSessionResult>, Commands.TableSessions.ResumeTableSessionCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.TableSessions.AdjustSessionTimeCommand, Commands.TableSessions.AdjustSessionTimeResult>, Commands.TableSessions.AdjustSessionTimeCommandHandler>();
 
         // Register Domain/App Services
         services.AddScoped<ITicketCreationService, TicketCreationService>();
@@ -175,6 +183,11 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<CreateRoleCommand, CreateRoleResult>, CreateRoleCommandHandler>();
         services.AddScoped<ICommandHandler<UpdateRoleCommand, UpdateRoleResult>, UpdateRoleCommandHandler>();
         services.AddScoped<ICommandHandler<DeleteRoleCommand, DeleteRoleResult>, DeleteRoleCommandHandler>();
+        
+        // Customer Management Handlers
+        services.AddScoped<ICommandHandler<CreateCustomerCommand, CreateCustomerResult>, CreateCustomerCommandHandler>();
+        services.AddScoped<ICommandHandler<UpdateCustomerCommand, UpdateCustomerResult>, UpdateCustomerCommandHandler>();
+        services.AddScoped<IQueryHandler<SearchCustomersQuery, IEnumerable<CustomerSearchResultDto>>, SearchCustomersQueryHandler>();
 
         // Security Handlers
         services.AddScoped<ICommandHandler<Commands.Security.AuthorizeManagerCommand, DTOs.Security.AuthorizationResult>, Services.Security.AuthorizeManagerCommandHandler>();
@@ -185,6 +198,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IGroupSettleService, GroupSettleService>();
         services.AddScoped<IMerchantBatchService, MerchantBatchService>();
         services.AddScoped<TableLayoutExporter>();
+        
+        // Stock Management Services (G.3)
+        services.AddScoped<ILowStockAlertService, LowStockAlertService>();
 
         return services;
     }

@@ -8,24 +8,15 @@ using Magidesk.Infrastructure.Data;
 
 namespace Magidesk.Infrastructure.Repositories;
 
-public class DiscountRepository : IDiscountRepository
+public class DiscountRepository : EfRepository<Discount>, IDiscountRepository
 {
-    private readonly ApplicationDbContext _context;
-
-    public DiscountRepository(ApplicationDbContext context)
+    public DiscountRepository(ApplicationDbContext dbContext) : base(dbContext)
     {
-        _context = context ?? throw new ArgumentNullException(nameof(context));
-    }
-
-    public async Task<Discount?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-    {
-        return await _context.Set<Discount>()
-            .FirstOrDefaultAsync(d => d.Id == id, cancellationToken);
     }
 
     public async Task<Discount?> GetByCouponCodeAsync(string couponCode, CancellationToken cancellationToken = default)
     {
-        return await _context.Set<Discount>()
+        return await _dbContext.Set<Discount>()
             .FirstOrDefaultAsync(d => d.CouponCode == couponCode, cancellationToken);
     }
 }

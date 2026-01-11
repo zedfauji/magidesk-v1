@@ -16,6 +16,8 @@ using Magidesk.Application.Commands.SystemConfig;
 using Magidesk.Application.DTOs.Reports;
 using Magidesk.Application.Queries.Reports;
 using Magidesk.Application.Services.Reports;
+using Magidesk.Presentation.ViewModels.Dialogs;
+using Magidesk.Application.Queries;
 
 namespace Magidesk.Presentation;
 
@@ -122,6 +124,7 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<Magidesk.Presentation.ViewModels.ShiftStartViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.CashDropManagementViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.VoidTicketViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.RefundTicketViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.OpenTicketsListViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.PaymentProcessWaitViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.SwipeCardViewModel>();
@@ -134,13 +137,23 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.NotesDialogViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.ManagerPinDialogViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.StartSessionDialogViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.EndSessionDialogViewModel>();
                     services.AddTransient<Magidesk.Presentation.Views.Dialogs.ManagerPinDialog>();
                     services.AddTransient<TableDesignerViewModel>();
                     services.AddTransient<FloorManagementViewModel>();
                     services.AddTransient<ExportImportManagementViewModel>();
                     services.AddTransient<ServerSectionManagementViewModel>();
+                    services.AddTransient<DiscountManagementViewModel>();
+                    services.AddTransient<PromotionScheduleDialogViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.PrintTemplatesViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.TemplateEditorViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.CustomerListViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.MemberProfileViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.MemberCheckInViewModel>();
+                    services.AddTransient<Magidesk.Presentation.Views.Dialogs.MemberCheckInDialog>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.CustomerSearchViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.CategoryTreeViewModel>();
                     
                     // Language Selection (F-0110)
                     services.AddTransient<Magidesk.Presentation.ViewModels.LanguageSelectionViewModel>();
@@ -150,6 +163,9 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddScoped<IQueryHandler<GetServerProductivityReportQuery, ServerProductivityReportDto>, GetServerProductivityReportQueryHandler>();
                     services.AddScoped<IQueryHandler<GetHourlyLaborReportQuery, HourlyLaborReportDto>, GetHourlyLaborReportQueryHandler>();
                     services.AddScoped<IQueryHandler<GetTipReportQuery, TipReportDto>, GetTipReportQueryHandler>();
+                    services.AddScoped<IQueryHandler<GetDiscountsQuery, IEnumerable<DiscountDto>>, GetDiscountsQueryHandler>();
+                    services.AddScoped<IQueryHandler<GetPromotionSchedulesQuery, IEnumerable<PromotionScheduleDto>>, GetPromotionSchedulesQueryHandler>();
+                    services.AddScoped<IQueryHandler<CalculateRefundPreviewQuery, RefundPreviewDto>, CalculateRefundPreviewQueryHandler>();
 
                     // Command handlers
                     services.AddTransient<ICommandHandler<GroupSettleCommand, GroupSettleResult>, GroupSettleCommandHandler>();
@@ -159,11 +175,14 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<ICommandHandler<MergeTicketsCommand>, MergeTicketsCommandHandler>();
                     services.AddTransient<ICommandHandler<ChangeTableCommand, ChangeTableResult>, ChangeTableCommandHandler>();
                     services.AddTransient<ICommandHandler<SetCustomerCommand, SetCustomerResult>, SetCustomerCommandHandler>();
+                    services.AddTransient<ICommandHandler<AddPromotionScheduleCommand, AddPromotionScheduleResult>, AddPromotionScheduleCommandHandler>();
+                    services.AddTransient<ICommandHandler<DeletePromotionScheduleCommand, DeletePromotionScheduleResult>, DeletePromotionScheduleCommandHandler>();
                     
                     // User Management (TECH-U003)
                     services.AddTransient<ICommandHandler<CreateUserCommand, CreateUserResult>, CreateUserCommandHandler>();
                     services.AddTransient<ICommandHandler<UpdateUserCommand, UpdateUserResult>, UpdateUserCommandHandler>();
                     services.AddTransient<ICommandHandler<DeleteUserCommand, DeleteUserResult>, DeleteUserCommandHandler>();
+                    services.AddTransient<IRequestHandler<CheckInMemberCommand, CheckInMemberResult>, CheckInMemberCommandHandler>();
                     
                     services.AddTransient<ITableRepository, TableRepository>();
                     services.AddTransient<ITableLayoutRepository, TableLayoutRepository>();

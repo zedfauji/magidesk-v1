@@ -1,23 +1,22 @@
 # Backend Tickets: Category C - Billing, Payments & Pricing
 
 > [!IMPORTANT]
-> This category has 31.3% full parity. Critical time-based billing features depend on Category A tickets.
+> This category definition has been **NORMALIZED** to match Feature Universe v2. Previous ID conflicts (C.9 Refund, C.12 Transfer) have been resolved.
 
 ## Ticket Index
 
 | Ticket ID | Feature ID | Title | Priority | Status |
 |-----------|------------|-------|----------|--------|
-| BE-C.1-01 | C.1 | Complete Ticket Creation with Session Link | P0 | NOT_STARTED |
-| BE-C.2-01 | C.2 | Implement Time-Based Line Items | P0 | NOT_STARTED |
-| BE-C.3-01 | C.3 | Complete Product Addition with Modifiers | P1 | NOT_STARTED |
-| BE-C.5-01 | C.5 | Complete Split Payment Processing | P1 | NOT_STARTED |
+| BE-C.1-01 | C.1 | Complete Ticket Creation with Session Link | P0 | COMPLETED |
+| BE-C.1-02 | C.1 | Link Customer to Transaction | P1 | NOT_STARTED |
+| BE-C.2-01 | C.2 | Implement Hold Ticket (Charge Later) | P2 | NOT_STARTED |
+| BE-C.4-01 | C.4 | Complete Split Payment Processing | P1 | NOT_STARTED |
 | BE-C.6-01 | C.6 | Implement Gratuity Calculations | P1 | NOT_STARTED |
 | BE-C.7-01 | C.7 | Complete Discount Application | P1 | NOT_STARTED |
-| BE-C.9-01 | C.9 | Complete Refund Processing | P1 | NOT_STARTED |
-| BE-C.10-01 | C.10 | Complete Void Ticket Processing | P1 | NOT_STARTED |
-| BE-C.11-01 | C.11 | Implement Hold/Release Ticket | P2 | NOT_STARTED |
-| BE-C.12-01 | C.12 | Complete Ticket Transfer | P2 | NOT_STARTED |
-| BE-C.14-01 | C.14 | Add Customer to Ticket | P1 | NOT_STARTED |
+| BE-C.9-01 | C.9 | Implement Happy Hour Scheduling | P1 | NOT_STARTED |
+| BE-C.12-01 | C.12 | Implement Price Override | P1 | NOT_STARTED |
+| BE-C.15-01 | C.15 | Complete Void Ticket Processing | P1 | NOT_STARTED |
+| BE-C.15-02 | C.15 | Complete Refund Processing | P1 | NOT_STARTED |
 
 ---
 
@@ -25,11 +24,10 @@
 
 **Ticket ID:** BE-C.1-01  
 **Feature ID:** C.1  
-**Type:** Backend  
 **Title:** Complete Ticket Creation with Session Link  
 **Priority:** P0
 
-### Outcome (measurable, testable)
+### Outcome
 Ticket creation that properly links to table sessions for time-based billing.
 
 ### Scope
@@ -37,110 +35,89 @@ Ticket creation that properly links to table sessions for time-based billing.
 - Link Ticket to TableSession
 - Auto-populate customer from session if exists
 
-### Current State (Partial)
-- Ticket creation exists
-- **Missing:** Session linkage, auto-customer
-
-### Implementation Notes
-```csharp
-public record CreateTicketCommand(
-    Guid TableId,
-    Guid? SessionId,    // NEW: Link to table session
-    Guid? CustomerId,   // Explicit or auto from session
-    int GuestCount
-);
-
-// Handler modifications:
-// 1. If SessionId provided, validate session
-// 2. Auto-populate CustomerId from session.CustomerId if not provided
-// 3. Set Ticket.SessionId
-```
-
-### Dependencies
-| Type | Dependency | Ticket ID |
-|------|------------|-----------|
-| HARD | TableSession entity | BE-A.1-01 |
-
 ### Acceptance Criteria
 - [ ] Ticket links to session
 - [ ] Customer auto-populated from session
 - [ ] Works without session (walk-in)
-- [ ] Tests pass
 
 ---
 
-## BE-C.2-01: Implement Time-Based Line Items
+## BE-C.1-02: Link Customer to Transaction
+
+**Ticket ID:** BE-C.1-02  
+**Feature ID:** C.1  
+**Title:** Link Customer to Transaction  
+**Priority:** P1
+
+### Outcome
+Link customers to tickets for tracking purchase history and enabling member benefits.
+
+### Scope
+- Add CustomerId to Ticket entity (if not in C.1)
+- Create `AssignCustomerToTicketCommand`
+- Auto-apply member discounts when customer assigned
+- Update customer stats
+
+### Acceptance Criteria
+- [ ] Customer assigned to ticket
+- [ ] Member discounts auto-apply
+- [ ] Purchase history updated
+
+---
+
+## BE-C.2-01: Implement Hold Ticket (Charge Later)
 
 **Ticket ID:** BE-C.2-01  
 **Feature ID:** C.2  
-**Type:** Backend  
-**Title:** Implement Time-Based Line Items  
-**Priority:** P0
+**Title:** Implement Hold Ticket (Charge Later)  
+**Priority:** P2
 
-### Outcome (measurable, testable)
-Ability to add time-based charges as order lines when session ends.
+### Outcome
+Ability to hold tickets for later completion (deferred payment/tab).
 
 ### Scope
-- Create dedicated `TimeChargeOrderLine` type or flag
-- Generate line item from session end
-- Display time duration and rate on ticket
-
-### Current State (Partial)
-- Order lines exist
-- **Missing:** Time-specific line type
+- Add ticket status: Held
+- Create `HoldTicketCommand` and `ReleaseTicketCommand`
+- Store hold reason and timestamp
+- List all held tickets
+- Auto-release table when held
 
 ### Implementation Notes
 ```csharp
-// Add to OrderLine or create subtype
-public OrderLine CreateTimeChargeLine(
-    Guid ticketId,
-    TimeSpan duration,
-    decimal hourlyRate,
-    Money totalCharge,
-    string description  // e.g., "Table Time: 2h 15m"
-);
+public enum TicketStatus
+{
+    Open,
+    Held,      // NEW
+    Closed,
+    Voided
+}
 
-// Properties to add to OrderLine
-public TimeSpan? Duration { get; private set; }
-public decimal? HourlyRate { get; private set; }
-public bool IsTimeCharge { get; private set; }
+public record HoldTicketCommand(Guid TicketId, string Reason);
+public record ReleaseHeldTicketCommand(Guid TicketId);
 ```
 
-### Dependencies
-| Type | Dependency | Ticket ID |
-|------|------------|-----------|
-| HARD | PricingService | BE-A.9-01 |
-| HARD | EndTableSessionCommand | BE-A.2-01 |
-
 ### Acceptance Criteria
-- [ ] Time charge line item created correctly
-- [ ] Duration displayed on line
-- [ ] Rate displayed on line
-- [ ] Total calculated correctly
-- [ ] Taxable status configurable
+- [ ] Tickets can be held
+- [ ] Held tickets listed
+- [ ] Tickets can be released
+- [ ] Table released when held
 
 ---
 
-## BE-C.5-01: Complete Split Payment Processing
+## BE-C.4-01: Complete Split Payment Processing
 
-**Ticket ID:** BE-C.5-01  
-**Feature ID:** C.5  
-**Type:** Backend  
+**Ticket ID:** BE-C.4-01  
+**Feature ID:** C.4  
 **Title:** Complete Split Payment Processing  
 **Priority:** P1
 
-### Outcome (measurable, testable)
+### Outcome
 Multiple payment methods/split amounts properly tracked.
 
 ### Scope
 - Enhance `ProcessPaymentCommand` for split tracking
-- Track multiple payments against one ticket
-- Calculate remaining balance
+- Track multiple payments
 - Handle partial payments
-
-### Current State (Partial)
-- Single payment works
-- **Missing:** Split tracking, partial payment handling
 
 ### Implementation Notes
 ```csharp
@@ -148,32 +125,13 @@ public record ProcessSplitPaymentCommand(
     Guid TicketId,
     IEnumerable<SplitPaymentEntry> Payments
 );
-
-public record SplitPaymentEntry(
-    PaymentType Type,
-    Money Amount,
-    string Reference // Card last 4, check #, etc.
-);
-
-// Handler:
-// 1. Validate sum >= remaining balance
-// 2. Create Payment records for each entry
-// 3. Update ticket balance
-// 4. Close ticket if fully paid
 ```
-
-### Dependencies
-| Type | Dependency | Ticket ID |
-|------|------------|-----------|
-| SOFT | Payment entity | Exists |
-| SOFT | Ticket entity | Exists |
 
 ### Acceptance Criteria
 - [ ] Multiple payments recorded
 - [ ] Balance calculated correctly
 - [ ] Ticket closes when fully paid
-- [ ] Overpayment handled (change due)
-- [ ] Transaction audit complete
+- [ ] Overpayment handled
 
 ---
 
@@ -181,48 +139,21 @@ public record SplitPaymentEntry(
 
 **Ticket ID:** BE-C.6-01  
 **Feature ID:** C.6  
-**Type:** Backend  
 **Title:** Implement Gratuity Calculations  
 **Priority:** P1
 
-### Outcome (measurable, testable)
+### Outcome
 Proper tip/gratuity handling with suggested amounts.
 
 ### Scope
 - Add gratuity to Ticket entity
 - Create gratuity calculation service
 - Support percentage and flat amount
-- Track server gratuity assignment
-
-### Current State (Partial)
-- Basic tip concept exists
-- **Missing:** Suggested amounts, proper calculation
-
-### Implementation Notes
-```csharp
-public interface IGratuityService
-{
-    GratuitySuggestions GetSuggestions(Money subtotal);
-    void ApplyGratuity(Ticket ticket, Money amount);
-}
-
-public record GratuitySuggestions(
-    Money Percent15,
-    Money Percent18,
-    Money Percent20,
-    Money Percent25
-);
-
-// Add to Ticket
-public Money GratuityAmount { get; private set; }
-public Guid? GratuityServerUserId { get; private set; }
-```
 
 ### Acceptance Criteria
 - [ ] Suggested tips calculated
 - [ ] Gratuity added to ticket
 - [ ] Server assignment tracked
-- [ ] Reports show gratuity totals
 
 ---
 
@@ -230,22 +161,17 @@ public Guid? GratuityServerUserId { get; private set; }
 
 **Ticket ID:** BE-C.7-01  
 **Feature ID:** C.7  
-**Type:** Backend  
 **Title:** Complete Discount Application  
 **Priority:** P1
 
-### Outcome (measurable, testable)
+### Outcome
 Full discount application including member, promotional, and manager discounts.
 
 ### Scope
-- Integrate member discounts (from F.5)
+- Integrate member discounts
 - Complete percentage and fixed discounts
 - Add manager override discounts
-- Audit all discounts applied
-
-### Current State (Partial)
-- Basic discount exists
-- **Missing:** Member integration, manager override
+- Audit applied discounts
 
 ### Implementation Notes
 ```csharp
@@ -257,20 +183,7 @@ public enum DiscountType
     ManagerOverride,
     Promotional
 }
-
-public record ApplyDiscountCommand(
-    Guid TicketId,
-    DiscountType Type,
-    decimal Value,           // Percent or amount
-    string Reason,           // Required for manager override
-    Guid? AuthorizingUserId  // Required for manager override
-);
 ```
-
-### Dependencies
-| Type | Dependency | Ticket ID |
-|------|------------|-----------|
-| SOFT | MemberDiscountService | BE-F.5-01 |
 
 ### Acceptance Criteria
 - [ ] Percentage discounts work
@@ -281,15 +194,229 @@ public record ApplyDiscountCommand(
 
 ---
 
-## Summary
+## BE-C.9-01: Implement Happy Hour Scheduling
 
-| Priority | Count | Status |
-|----------|-------|--------|
-| P0 | 2 | NOT_STARTED |
-| P1 | 7 | NOT_STARTED |
-| P2 | 2 | NOT_STARTED |
-| **Total** | **11** | **NOT_STARTED** |
+**Ticket ID:** BE-C.9-01  
+**Feature ID:** C.9  
+**Title:** Implement Happy Hour Scheduling  
+**Priority:** P1
+
+### Outcome
+Automatic application of promotional pricing based on time/day.
+
+### Scope
+- Create `PromotionSchedule` entity (Days, StartTime, EndTime, DiscountId)
+- Create `ApplyScheduledPromotions` service (or integrate into Pricing/Discount service)
+- Validate Happy Hour applicability during billing
+
+### Implementation Notes
+```csharp
+public class PromotionSchedule {
+    public DayOfWeek Day { get; set; }
+    public TimeSpan Start { get; set; }
+    public TimeSpan End { get; set; }
+    public Guid DiscountId { get; set; }
+}
+```
+
+### Acceptance Criteria
+- [ ] Can define time-based promotion rules
+- [ ] Promotions apply automatically during configured window
+- [ ] Promotions do NOT apply outside window
 
 ---
 
-*Last Updated: 2026-01-08*
+## BE-C.12-01: Implement Price Override
+
+**Ticket ID:** BE-C.12-01  
+**Feature ID:** C.12  
+**Title:** Implement Price Override  
+**Priority:** P1
+
+### Outcome
+Manager can override line item prices with permission.
+
+### Scope
+- Create `OverrideLinePriceCommand`
+- Require Manager Permission
+- Log override Reason and User
+- Update OrderLine.UnitPrice (or apply as 100% discount/adjustment)
+
+### Implementation Notes
+```csharp
+public record OverrideLinePriceCommand(
+    Guid TicketId, 
+    Guid OrderLineId, 
+    Money NewPrice, 
+    string Reason, 
+    Guid AuthorizingUserId
+);
+```
+
+### Acceptance Criteria
+- [ ] Line item price updated
+- [ ] Requires manager auth
+- [ ] Audit event created for price change
+- [ ] Totals recalculated
+
+---
+
+## BE-C.14-01: Refund Preview Calculation
+
+**Ticket ID:** BE-C.14-01
+**Feature ID:** C.14
+**Title:** Refund Preview Calculation
+**Priority:** P2
+
+### Outcome
+Ability to calculate and preview the result of a refund before committing.
+
+### Scope
+- Create `CalculateRefundPreviewQuery`
+- Return `RefundPreviewDto` containing:
+  - Original Totals
+  - Projected Totals (Paid, Due)
+  - List of Payments to be Refunded
+  - List of New Debit Payments to be Created
+- **ReadOnly** operation - no state changes
+
+### Acceptance Criteria
+- [ ] Returns correct projected totals for full refund
+- [ ] Returns correct projected totals for partial refund
+- [ ] Returns correct list of affected payments
+- [ ] No database changes occur
+
+---
+
+## BE-C.14-02: Partial Refund Command
+
+**Ticket ID:** BE-C.14-02
+**Feature ID:** C.14
+**Title:** Partial Refund Command
+**Priority:** P2
+
+### Outcome
+Support for arbitrary partial refund amounts.
+
+### Scope
+- Update `RefundTicketCommand` or create new `ProcessPartialRefundCommand`
+- Support `RefundAmount` parameter
+- Logic rule: If Amount < Total, process as partial
+- Refund logic: Credit card refund amount passed to gateway
+- Entity logic: Create debit payment for partial amount
+
+### Dependencies
+- BE-C.15-02 (Refund Core)
+
+### Acceptance Criteria
+- [ ] Can refund specific amount (less than total)
+- [ ] Ticket status remains `Closed` if not fully refunded (or Paid < Total?) -> *Check domain rules: Likely remains Closed but PaidAmount decreases. If Paid < Total, is it Closed? No, it becomes Open/Unpaid details.*
+  - *Correction: If Paid < Total, ticket is effectively Due. Status should revert to Open? Or PartialRefund state?*
+  - **Decision:** Ticket status reverts to `Open` if DueAmount > 0.
+- [ ] Payment record created for exact partial amount
+
+---
+
+## BE-C.14-03: Payment-Level Refund Validation
+
+**Ticket ID:** BE-C.14-03
+**Feature ID:** C.14
+**Title:** Payment-Level Refund Validation
+**Priority:** P2
+
+### Outcome
+Validate refunds against specific individual payments.
+
+### Scope
+- Logic to ensure Refund Amount <= Payment.Amount
+- Prevent refunding same payment twice (track RemainingAmount?)
+- Support "Include/Exclude" payment logic in RefundCommand
+- Validate total refund <= Total Paid
+
+### Acceptance Criteria
+- [ ] Cannot refund more than original payment amount
+- [ ] Cannot refund already refunded payment
+- [ ] Sum of refunds <= Total Ticket Paid amount
+
+---
+
+## BE-C.14-04: Audit & Permission Enforcement
+
+**Ticket ID:** BE-C.14-04
+**Feature ID:** C.14
+**Title:** Audit & Permission Enforcement
+**Priority:** P2
+
+### Outcome
+Comprehensive audit trail for advanced refund actions.
+
+### Scope
+- Enhance `RefundProcessed` audit event
+- Include "Before/After" snapshot in log
+- Log specific refund mode (Full vs Partial vs Specific)
+- Enforce `UserPermission.RefundTicket` (Existing)
+
+### Acceptance Criteria
+- [ ] Audit log clearly shows Partial vs Full
+- [ ] "Before" and "After" amounts captured in logs
+- [ ] Permission check enforces Manager PIN
+
+---
+
+## BE-C.15-01: Complete Void Ticket Processing
+
+**Ticket ID:** BE-C.15-01  
+**Feature ID:** C.15  
+**Title:** Complete Void Ticket Processing  
+**Priority:** P1
+
+### Outcome
+Proper ticket voiding with authorization and audit.
+
+### Scope
+- Enhance `VoidTicketCommand`
+- Require manager authorization
+- Track void reason
+- Update table status
+
+### Acceptance Criteria
+- [ ] Void requires manager auth
+- [ ] Void reason required
+- [ ] Paid tickets cannot be voided
+- [ ] Table released on void
+
+---
+
+## BE-C.15-02: Complete Refund Processing
+
+**Ticket ID:** BE-C.15-02  
+**Feature ID:** C.15  
+**Title:** Complete Refund Processing  
+**Priority:** P1
+
+### Outcome
+Full refund processing with audit trail.
+
+### Scope
+- Create `RefundTicketCommand`
+- Support full and partial refunds
+- Track refund reason and authorization
+- Update payment records
+- Generate refund receipt
+
+### Implementation Notes
+```csharp
+public record RefundTicketCommand(
+    Guid TicketId,
+    Money RefundAmount,
+    string Reason,
+    Guid AuthorizingUserId,
+    RefundMethod Method
+);
+```
+
+### Acceptance Criteria
+- [ ] Full refunds work
+- [ ] Partial refunds work
+- [ ] Refund reason required
+- [ ] Audit trail complete

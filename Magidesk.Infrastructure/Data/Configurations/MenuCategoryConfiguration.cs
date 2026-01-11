@@ -34,5 +34,20 @@ public class MenuCategoryConfiguration : IEntityTypeConfiguration<MenuCategory>
         // Unique constraint on Name
         builder.HasIndex(x => x.Name)
             .IsUnique();
+        
+        // G.4: Hierarchy support - Self-referencing relationship
+        builder.Property(e => e.ParentCategoryId)
+            .IsRequired(false);
+        
+        builder.HasOne(e => e.Parent)
+            .WithMany(e => e.Subcategories)
+            .HasForeignKey(e => e.ParentCategoryId)
+            .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete of hierarchy
+        
+        builder.HasIndex(e => e.ParentCategoryId)
+            .HasDatabaseName("IX_MenuCategories_ParentCategoryId");
+        
+        builder.Property(e => e.PrinterGroupId)
+            .IsRequired(false);
     }
 }

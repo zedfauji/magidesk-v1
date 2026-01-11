@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:dto="using:Magidesk.Application.DTOs"
     xmlns:entities="using:Magidesk.Domain.Entities"
+    xmlns:viewmodels="using:Magidesk.Presentation.ViewModels"
     xmlns:converters="using:Magidesk.Presentation.Converters"
     mc:Ignorable="d"
     Name="RootPage"
@@ -56,6 +57,133 @@
                         </DataTemplate>
                     </Button.ContentTemplate>
                  </Button>
+                 
+                 <!-- Session Info Panel (FE-A.15-02) -->
+                 <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="12"
+                        Visibility="{Binding HasActiveSession}">
+                    <StackPanel Spacing="8">
+                        <!-- Session Status Badge -->
+                        <Border Background="{ThemeResource SystemFillColorSuccessBrush}"
+                               CornerRadius="4"
+                               Padding="8,4"
+                               HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <FontIcon Glyph="&#xE768;" FontSize="14" Foreground="White"/>
+                                <TextBlock Text="{Binding SessionStatusText}" 
+                                          FontWeight="SemiBold" 
+                                          FontSize="12"
+                                          Foreground="White"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <!-- Session Timer -->
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph="&#xE916;" FontSize="16"/>
+                            <TextBlock Text="{Binding SessionTimerText}" 
+                                      FontSize="20" 
+                                      FontWeight="Bold"
+                                      FontFamily="Consolas"/>
+                        </StackPanel>
+                        
+                        <!-- Running Charge -->
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph="&#xE7EF;" FontSize="16"/>
+                            <TextBlock Text="{Binding SessionRunningChargeText}" 
+                                      FontSize="18" 
+                                      FontWeight="SemiBold"
+                                      Foreground="{ThemeResource SystemFillColorSuccessBrush}"/>
+                        </StackPanel>
+                        
+                        <!-- Session Start Time -->
+                        <TextBlock Text="{Binding SessionStartTimeText}" 
+                                  FontSize="11"
+                                  Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                    </StackPanel>
+                 </Border>
+                 
+                 <Grid ColumnSpacing="8" RowSpacing="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Row 0: Start / End -->
+                    <Button Grid.Row="0" Grid.Column="0" 
+                           Content="Start Session" 
+                           HorizontalAlignment="Stretch"
+                           Command="{Binding StartSessionCommand}"
+                           IsEnabled="{Binding CanStartSession}"
+                           Background="Green"
+                           Foreground="White">
+                        <Button.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon Glyph="&#xE768;" Foreground="White"/>
+                                    <TextBlock Text="{Binding}" Foreground="White"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </Button.ContentTemplate>
+                    </Button>
+                    
+                    <Button Grid.Row="0" Grid.Column="1" 
+                           Content="End Session" 
+                           HorizontalAlignment="Stretch"
+                           Command="{Binding EndSessionCommand}"
+                           IsEnabled="{Binding CanEndSession}"
+                           Background="Red"
+                           Foreground="White">
+                        <Button.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon Glyph="&#xE71A;" Foreground="White"/>
+                                    <TextBlock Text="{Binding}" Foreground="White"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </Button.ContentTemplate>
+                    </Button>
+
+                    <!-- Row 1: Pause / Resume -->
+                    <Button Grid.Row="1" Grid.Column="0" 
+                           Content="Pause Session" 
+                           HorizontalAlignment="Stretch"
+                           Command="{Binding PauseSessionCommand}"
+                           Visibility="{Binding ShowPauseButton, Converter={StaticResource BoolToVisibilityConverter}}"
+                           Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+                        <Button.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon Glyph="&#xE769;"/>
+                                    <TextBlock Text="{Binding}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </Button.ContentTemplate>
+                    </Button>
+
+                    <Button Grid.Row="1" Grid.Column="0" 
+                           Content="Resume Session" 
+                           HorizontalAlignment="Stretch"
+                           Command="{Binding ResumeSessionCommand}"
+                           Visibility="{Binding ShowResumeButton, Converter={StaticResource BoolToVisibilityConverter}}"
+                           Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                           Foreground="White">
+                        <Button.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon Glyph="&#xE768;" Foreground="White"/>
+                                    <TextBlock Text="{Binding}" Foreground="White"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </Button.ContentTemplate>
+                    </Button>
+                 </Grid>
             </StackPanel>
 
             <!-- Order Lines -->
@@ -303,17 +431,33 @@
                       ItemsSource="{Binding Items}" 
                       Visibility="{Binding IsSelectionModeItems, Converter={StaticResource BoolToVisibilityConverter}}">
                 <GridView.ItemTemplate>
-                    <DataTemplate x:DataType="entities:MenuItem">
+                    <DataTemplate x:DataType="viewmodels:MenuItemViewModel">
                         <Button Command="{Binding ElementName=RootPage, Path=DataContext.AddItemCommand}" 
                                 CommandParameter="{Binding}"
                                 Width="150" Height="100" Margin="4"
                                 Background="{x:Bind ColorCode, Converter={StaticResource StringColorToBrushConverter}, Mode=OneWay}" 
-                                IsEnabled="{x:Bind IsAvailable, Mode=OneWay}"
-                                BorderBrush="Gray" BorderThickness="1">
-                            <StackPanel>
-                                <TextBlock Text="{x:Bind Name}" TextWrapping="Wrap" TextAlignment="Center" FontWeight="SemiBold"/>
-                                <TextBlock Text="{x:Bind Price}" TextAlignment="Center" Margin="0,4,0,0"/>
-                            </StackPanel>
+                                IsEnabled="{x:Bind IsOutOfStock, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
+                                Opacity="{x:Bind Opacity, Mode=OneWay}"
+                                BorderBrush="Gray" BorderThickness="1" Padding="0">
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <StackPanel VerticalAlignment="Center" Margin="8">
+                                    <TextBlock Text="{x:Bind Name}" TextWrapping="Wrap" TextAlignment="Center" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{x:Bind Price}" TextAlignment="Center" Margin="0,4,0,0"/>
+                                </StackPanel>
+                                
+                                <!-- Stock Indicator Overlay -->
+                                <Border VerticalAlignment="Top" HorizontalAlignment="Right" 
+                                        Background="Red" CornerRadius="4" Padding="4,2" Margin="4"
+                                        Visibility="{x:Bind IsOutOfStock, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                    <TextBlock Text="OOS" FontSize="10" Foreground="White" FontWeight="Bold"/>
+                                </Border>
+
+                                <Border VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+                                        Background="#CCFFA500" Padding="4,2"
+                                        Visibility="{x:Bind IsLowStock, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                    <TextBlock Text="{x:Bind StockStatusText}" FontSize="10" Foreground="Black" FontWeight="SemiBold" TextAlignment="Center"/>
+                                </Border>
+                            </Grid>
                         </Button>
                     </DataTemplate>
                 </GridView.ItemTemplate>

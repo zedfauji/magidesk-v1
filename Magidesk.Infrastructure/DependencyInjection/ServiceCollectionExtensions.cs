@@ -57,6 +57,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ITableRepository, TableRepository>();
         services.AddScoped<IAuditEventRepository, AuditEventRepository>();
         services.AddScoped<ITableLayoutRepository, TableLayoutRepository>();
+        services.AddScoped<ITableSessionRepository, TableSessionRepository>();
         services.AddScoped<IKitchenOrderRepository, KitchenOrderRepository>();
         services.AddScoped<IGroupSettlementRepository, GroupSettlementRepository>();
         services.AddScoped<ITicketRepository, TicketRepository>();
@@ -80,7 +81,18 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IInventoryAdjustmentRepository, InventoryAdjustmentRepository>();
         services.AddScoped<IServerSectionRepository, ServerSectionRepository>();
         services.AddScoped<IPrintTemplateRepository, PrintTemplateRepository>();
+        services.AddScoped<ITableTypeRepository, TableTypeRepository>();
+        services.AddScoped<ICustomerRepository, CustomerRepository>();
+        services.AddScoped<IMemberRepository, MemberRepository>();
+        services.AddScoped<IMembershipTierRepository, MembershipTierRepository>();
+        services.AddScoped<Magidesk.Application.Interfaces.IRepository<Magidesk.Domain.Entities.StockMovement>, StockMovementRepository>();
 
+        // Application Services
+        // Legacy PricingService for backward compatibility (EndTableSessionCommandHandler)
+        services.AddScoped<Magidesk.Application.Interfaces.IPricingService, SimplePricingService>();
+        
+        // New PricingService for time-based billing with table types (BE-A.9-01)
+        services.AddScoped<Magidesk.Domain.Services.IPricingService, Magidesk.Domain.Services.PricingService>();
 
         // Register domain services (stateless, can be singleton or scoped)
         services.AddScoped<TaxDomainService>();
@@ -90,6 +102,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<DiscountDomainService>();
         services.AddScoped<ServiceChargeDomainService>();
         services.AddScoped<PriceCalculator>();
+        services.AddScoped<IGratuityService, GratuityService>();
+        services.AddScoped<ILowStockAlertService, LowStockAlertService>();
 
         // Register payment gateway (using mock for development)
         services.AddScoped<IPaymentGateway, MockPaymentGateway>();

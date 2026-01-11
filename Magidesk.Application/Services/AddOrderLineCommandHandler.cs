@@ -13,15 +13,18 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
     private readonly ITicketRepository _ticketRepository;
     private readonly IMenuRepository _menuRepository;
     private readonly IAuditEventRepository _auditEventRepository;
+    private readonly IRepository<StockMovement> _stockMovementRepository;
 
     public AddOrderLineCommandHandler(
         ITicketRepository ticketRepository,
         IMenuRepository menuRepository,
-        IAuditEventRepository auditEventRepository)
+        IAuditEventRepository auditEventRepository,
+        IRepository<StockMovement> stockMovementRepository)
     {
         _ticketRepository = ticketRepository;
         _menuRepository = menuRepository;
         _auditEventRepository = auditEventRepository;
+        _stockMovementRepository = stockMovementRepository;
     }
 
     public async Task<AddOrderLineResult> HandleAsync(AddOrderLineCommand command, CancellationToken cancellationToken = default)
@@ -33,6 +36,30 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
             throw new Domain.Exceptions.BusinessRuleViolationException($"Ticket {command.TicketId} not found.");
         }
 
+        // 1. Get MenuItem and Handle Stock (G.2)
+        var menuItem = await _menuRepository.GetByIdAsync(command.MenuItemId, cancellationToken);
+        if (menuItem != null) // Should check null? Yes.
+        {
+             // Deduct Stock if tracked
+             if (menuItem.TrackStock)
+             {
+                 // This throws BusinessRuleViolationException if insufficient
+                 menuItem.DeductStock((int)command.Quantity); 
+
+                 // Record Movement
+                 var movement = StockMovement.Create(
+                     menuItem.Id,
+                     -(int)command.Quantity, // Method takes change amount? No, Constructor takes change. Sale is negative.
+                     StockMovementType.Sale,
+                     $"Ticket #{ticket.TicketNumber}",
+                     command.AddedBy?.Value
+                 );
+                 
+                 await _stockMovementRepository.AddAsync(movement, cancellationToken);
+                 await _menuRepository.UpdateAsync(menuItem, cancellationToken);
+             }
+        }
+        
         // Create order line
         var orderLine = OrderLine.Create(
             command.TicketId,
@@ -45,9 +72,6 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
             command.GroupName);
 
         // Populate PrinterGroupId (F-0014)
-        // Populate PrinterGroupId (F-0014)
-        // Populate PrinterGroupId (F-0014) with Inheritance Logic
-        var menuItem = await _menuRepository.GetByIdAsync(command.MenuItemId, cancellationToken);
         if (menuItem != null)
         {
             if (menuItem.PrinterGroupId.HasValue)

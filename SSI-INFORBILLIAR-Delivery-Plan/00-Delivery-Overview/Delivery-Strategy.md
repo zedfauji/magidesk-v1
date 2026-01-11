@@ -32,32 +32,57 @@ All development MUST comply with rules defined in `.agent/rules/*`:
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| **Fully Implemented** | 37 | 29.4% |
-| **Partially Implemented** | 44 | 34.9% |
-| **Not Implemented** | 45 | 35.7% |
-| **Total** | 126 | 100% |
+| **Fully Implemented** | 59 | 36.0% |
+| **Partially Implemented** | 61 | 37.2% |
+| **Not Implemented** | 44 | 26.8% |
+| **Total** | 164 | 100% |
 
 ### 2.1 Category Breakdown
 
 | Category | Total | Full | Partial | Not | Priority |
 |----------|-------|------|---------|-----|----------|
-| A. Table & Game Management | 19 | 0 | 9 | 10 | **P0** |
+| A. Table & Game Management | 19 | 5 | 4 | 10 | **P0** |
 | B. Floor & Layout Management | 18 | 10 | 4 | 4 | P2 |
-| C. Billing, Payments & Pricing | 16 | 4 | 7 | 5 | **P0** |
-| D. Tax, Currency & Financial Rules | 9 | 1 | 4 | 4 | P1 |
+| C. Billing, Payments & Pricing | 16 | 7 | 6 | 3 | **P0** |
+| D. Tax, Currency & Financial Rules | 9 | 3 | 3 | 3 | P1 |
 | E. Reservations & Scheduling | 12 | 0 | 0 | 12 | **P0** |
-| F. Customer & Member Management | 13 | 0 | 0 | 13 | **P0** |
+| F. Customer & Member Management | 13 | 2 | 0 | 11 | **P0** |
 | G. Inventory & Products | 12 | 4 | 5 | 3 | P2 |
 | H. Reporting & Export | 15 | 2 | 4 | 9 | P1 |
 | I. Hardware & Peripherals | 11 | 5 | 2 | 4 | P1 |
 | J. Security, Users & Staff | 10 | 5 | 3 | 2 | **P0** |
-| K. Localization & Regionalization | 6 | 3 | 3 | 0 | P2 |
+| K. Localization & Regionalization | 6 | 2 | 2 | 2 | P2 |
 | L. Operations, Deployment & Config | 12 | 7 | 3 | 2 | P2 |
-| M. System Safety & Recovery | 11 | 1 | 5 | 5 | P1 |
+| M. System Safety & Recovery | 11 | 2 | 4 | 5 | P1 |
+| **TOTAL** | **164** | **59** | **61** | **44** | **36.0%** |
 
 ---
 
-## 3. Delivery Phases
+## 3. Phase Definitions
+
+### Phase 1: Parity Blockers (Weeks 1-4)
+**Intent**: Enable basic billiard club operation - the minimum viable functionality required to run the core business.
+**Priority Mapping**: P0 features only (critical blockers)
+**Scope**: CORE POS functionality - table sessions, time-based billing, payment processing, and user authentication.
+
+### Phase 2: Competitive Parity (Weeks 5-10)
+**Intent**: Match competitor capabilities in the market.
+**Priority Mapping**: P0 + P1 features
+**Scope**: Advanced operational features including reservations, complete billing features, and core reporting.
+
+### Phase 3: Differentiation (Weeks 11-14)
+**Intent**: Surpass competitors with modern features and complete business-growth modules.
+**Priority Mapping**: P2 features
+**Scope**: Advanced features, complete membership management module, and competitive advantages.
+
+### Phase 4: Polish (Weeks 15-17)
+**Intent**: Production readiness and quality assurance.
+**Priority Mapping**: Complete all PARTIAL implementations
+**Scope**: Testing, documentation, performance optimization, and production deployment.
+
+---
+
+## 4. Delivery Phases
 
 > **Note**: All feature IDs reference [Feature-to-Ticket-Matrix.md](../01-Feature-Index/Feature-to-Ticket-Matrix.md)
 
@@ -79,26 +104,28 @@ All development MUST comply with rules defined in `.agent/rules/*`:
 - **A.5** - Table types (BE-A.5-01, FE-A.5-01)
 - **A.6** - Type per table (BE-A.6-01)
 - **A.9** - Time-based pricing (BE-A.9-01, FE-A.9-01)
+- **A.15** - Session workflow fixes (BE-A.15-02, BE-A.15-03, BE-A.15-04, FE-A.15-01, FE-A.15-02, FE-A.15-03)
+  - Backend: Fix validation logic, add session state to TicketDto, link sessions to tickets
+  - Frontend: Button state management, visual indicators, table map sync
 - **A.16** - Pause/resume billing (BE-A.16-01, FE-A.16-01)
 - **A.17** - Manager time override (BE-A.17-01, FE-A.17-01)
 
-#### Category F: Customer & Member Management (Basic)
+#### Category F: Customer Management (Basic Tracking Only)
 - **F.1** - Customer records (BE-F.1-01, FE-F.1-01, FE-F.1-02)
 - **F.2** - Customer search (BE-F.2-01, FE-F.2-01)
-- **F.3** - Memberships (BE-F.3-01, FE-F.3-01)
-- **F.4** - Membership tiers (BE-F.4-01, FE-F.4-01)
-- **F.5** - Member discounts (BE-F.5-01)
 
-#### Category C: Billing (Time Charges)
-- **C.1** - Create ticket with session link (BE-C.1-01)
-- **C.2** - Time charges on ticket (BE-C.2-01, FE-C.2-01)
+> **Note**: Membership features (F.3-F.13) are deferred to Phase 3. Basic customer tracking is included in Phase 1 only for ticket association purposes.
+
+#### Category C: Billing (Real-time Billing)
+- **C.1** - Real-time billing per table (BE-C.1-01, FE-C.1-01)
+- **C.2** - Close now / charge later (BE-C.2-01)
 
 **Exit Criteria:**
 - [ ] User must login before operations (J.1)
 - [ ] Can start/stop/pause table sessions (A.1, A.2, A.16)
+- [ ] Session buttons properly enabled/disabled (A.15)
 - [ ] Time-based billing functional (A.9, C.2)
-- [ ] Basic customer tracking (F.1, F.2)
-- [ ] Member discounts apply (F.5)
+- [x] Basic customer tracking for ticket association (F.1, F.2)
 
 **Ticket Count:** 25 Backend + 16 Frontend + 8 Cross-Cutting = **49 tickets**
 
@@ -120,12 +147,6 @@ All development MUST comply with rules defined in `.agent/rules/*`:
 - **E.8** - Customer association (BE-E.8-01)
 - **E.9** - Club schedule (BE-E.9-01, FE-E.9-01)
 
-#### Category F: Customer & Member (Advanced Features)
-- **F.6** - Prepaid accounts (BE-F.6-01, FE-F.6-01)
-- **F.7** - Customer history (BE-F.7-01, FE-F.7-01)
-- **F.8** - Membership renewal (BE-F.8-01)
-- **F.10** - Member check-in (BE-F.10-01, FE-F.10-01)
-
 #### Category A: Table & Game (Pricing Rules)
 - **A.10** - First-hour pricing (BE-A.10-01)
 - **A.11** - Time rounding rules (BE-A.11-01)
@@ -133,13 +154,12 @@ All development MUST comply with rules defined in `.agent/rules/*`:
 - **A.19** - Guest count tracking (BE-A.19-01, FE-A.19-01)
 
 #### Category C: Billing (Complete Features)
-- **C.3** - Add products (BE-C.3-01)
-- **C.5** - Split payments (BE-C.5-01, FE-C.5-01)
-- **C.6** - Gratuity/tips (BE-C.6-01, FE-C.6-01)
-- **C.7** - Discounts (BE-C.7-01, FE-C.7-01)
-- **C.9** - Refunds (BE-C.9-01)
-- **C.10** - Void tickets (BE-C.10-01)
-- **C.14** - Customer on ticket (BE-C.14-01)
+- **C.5** - Group billing (BE-C.5-01, FE-C.5-01)
+- **C.6** - Tips handling (BE-C.6-01, FE-C.6-01)
+- **C.7** - Discounts (time-only) (BE-C.7-01)
+- **C.9** - Happy Hour / promotional pricing (BE-C.9-01, FE-C.9-01)
+- **C.12** - Price override with permission (BE-C.12-01, FE-C.12-01)
+- **C.15** - Reprint / void ticket (BE-C.15-01, FE-C.15-01)
 
 #### Category D: Tax & Currency
 - **D.2** - Multi-tax rates (BE-D.2-01)
@@ -174,13 +194,12 @@ All development MUST comply with rules defined in `.agent/rules/*`:
 
 **Exit Criteria:**
 - [ ] Reservation calendar functional (E.1-E.6)
-- [ ] Membership plans operational (F.6-F.10)
 - [ ] All pricing rules implemented (A.10-A.12)
 - [ ] Split payments working (C.5)
 - [ ] Core reports available (H.1, H.4, H.5)
 - [ ] Lamp control integrated (I.4)
 
-**Ticket Count:** 30 Backend + 14 Frontend + 8 Cross-Cutting = **52 tickets**
+**Ticket Count:** 35 Backend + 15 Frontend + 8 Cross-Cutting = **58 tickets**
 
 ---
 
@@ -188,6 +207,19 @@ All development MUST comply with rules defined in `.agent/rules/*`:
 **Goal:** Surpass competitors with modern features
 
 **Features (P2 Priority):**
+
+#### Category F: Customer & Member Management (Complete Module)
+- **F.3** - Memberships (BE-F.3-01, FE-F.3-01)
+- **F.4** - Membership tiers (BE-F.4-01, FE-F.4-01)
+- **F.5** - Member discounts (BE-F.5-01)
+- **F.6** - Prepaid accounts (BE-F.6-01, FE-F.6-01)
+- **F.7** - Customer history (BE-F.7-01, FE-F.7-01)
+- **F.8** - Membership renewal (BE-F.8-01)
+- **F.9** - Guest passes (BE-F.9-01)
+- **F.10** - Member check-in (BE-F.10-01, FE-F.10-01)
+- **F.11** - Customer notes (BE-F.11-01)
+- **F.12** - Customer merge (BE-F.12-01)
+- **F.13** - Member analytics (BE-F.13-01)
 
 #### Category A: Table & Game (Advanced)
 - **A.7** - Link game equipment (BE-A.7-01)
@@ -198,32 +230,42 @@ All development MUST comply with rules defined in `.agent/rules/*`:
 - **A.18** - Transfer session (BE-A.18-01)
 
 #### Category B: Floor & Layout (Gaps)
+- **B.4** - Background grid overlay (BE-B.4-01, FE-B.4-01)
 - **B.6** - Floor switching validation (BE-B.6-01, FE-B.6-01)
 - **B.9** - Undo/redo (BE-B.9-01, FE-B.9-01)
+- **B.10** - Alignment guides (BE-B.10-01, FE-B.10-01)
+- **B.11** - Zoom and pan (BE-B.11-01, FE-B.11-01)
+- **B.12** - Multi-select and group move (BE-B.12-01, FE-B.12-01)
+- **B.13** - Layout versions per floor (BE-B.13-01)
+- **B.14** - Clone layout (BE-B.14-01)
+- **B.16** - Layout rollback/revert (BE-B.16-01)
 
 #### Category C: Billing (Advanced)
-- **C.11** - Hold tickets (BE-C.11-01)
-- **C.12** - Transfer tickets (BE-C.12-01)
+- **C.10** - Automatic promotion scheduling (BE-C.10-01)
+- **C.11** - Manual promotion override (BE-C.11-01)
+- **C.13** - Price override audit trail (BE-C.13-01)
+- **C.14** - Advanced Refund Management (BE-C.14-01, FE-C.14-01)
+- **C.16** - Cashbox visibility (BE-C.16-01)
 
 #### Category D: Tax
 - **D.5** - Tax breakdown (BE-D.5-01)
+- **D.7** - Service charge configuration (BE-D.7-01)
+- **D.8** - Auto-gratuity rules (BE-D.8-01)
+- **D.9** - Multi-currency support (BE-D.9-01)
 
 #### Category E: Reservations (Advanced)
 - **E.10** - Recurring reservations (BE-E.10-01)
 - **E.11** - Reminder system (BE-E.11-01)
 - **E.12** - Waiting list (BE-E.12-01)
 
-#### Category F: Customer (Advanced)
-- **F.9** - Guest passes (BE-F.9-01)
-- **F.11** - Customer notes (BE-F.11-01)
-- **F.12** - Customer merge (BE-F.12-01)
-- **F.13** - Member analytics (BE-F.13-01)
-
 #### Category G: Inventory (Advanced)
 - **G.4** - Category hierarchy (BE-G.4-01)
 - **G.7** - SKU/barcode (BE-G.7-01)
+- **G.8** - Pricing tiers
 - **G.9** - Product import (BE-G.9-01)
 - **G.10** - Product export (BE-G.10-01)
+- **G.11** - Recipe/ingredient tracking (BE-G.11-01)
+- **G.12** - Waste tracking (BE-G.12-01)
 
 #### Category H: Reporting (Advanced)
 - **H.3** - Server performance (BE-H.3-01)
@@ -231,29 +273,52 @@ All development MUST comply with rules defined in `.agent/rules/*`:
 - **H.8** - Tax report (BE-H.8-01)
 - **H.10** - PDF export (BE-H.10-01)
 - **H.11** - Excel export (BE-H.11-01)
+- **H.12** - Payment method breakdown (BE-H.12-01)
+- **H.13** - Discount usage report (BE-H.13-01)
+- **H.14** - Hourly sales trend (BE-H.14-01)
+- **H.15** - Product popularity report (BE-H.15-01)
 
 #### Category I: Hardware (Advanced)
 - **I.5** - Barcode scanner (BE-I.5-01)
 - **I.6** - Customer display (BE-I.6-01)
 - **I.8** - Card reader (BE-I.8-01)
+- **I.10** - Caller ID integration (BE-I.10-01)
+- **I.11** - Kitchen display system (BE-I.11-01)
 
 #### Category J: Security (Advanced)
+- **J.8** - User activity log
 - **J.10** - Break tracking (BE-J.10-01)
 
 #### Category K: Localization
 - **K.3** - Currency formatting (BE-K.3-01, FE-K.3-01)
 - **K.4** - Date/time formatting (BE-K.4-01, FE-K.4-01)
+- **K.5** - Number formatting (BE-K.5-01)
+- **K.6** - Translation management (BE-K.6-01, FE-K.6-01)
 
 #### Category L: Operations (Advanced)
 - **L.5** - Auto-backup schedule (BE-L.5-01)
+- **L.9** - Data sync
+- **L.12** - Config import
+
+#### Category M: System Safety (Advanced)
+- **M.4** - Health monitoring
+- **M.5** - Diagnostic tools
+- **M.6** - Database integrity check (BE-M.6-01)
+- **M.7** - Performance monitoring (BE-M.7-01)
+- **M.8** - Memory leak detection (BE-M.8-01)
+- **M.9** - Automatic error reporting (BE-M.9-01)
+- **M.10** - System health dashboard (BE-M.10-01, FE-M.10-01)
+- **M.11** - Rollback capability (BE-M.11-01)
 
 **Exit Criteria:**
+- [ ] Complete membership management module operational (F.3-F.13)
+- [ ] Member discounts, tiers, and prepaid accounts functional
 - [ ] PDF/Excel export functional (H.10, H.11)
 - [ ] Advanced reservation features (E.10-E.12)
 - [ ] Member analytics available (F.13)
 - [ ] All hardware integrations complete (I.5, I.6, I.8)
 
-**Ticket Count:** 28 Backend + 10 Frontend + 1 Cross-Cutting = **39 tickets**
+**Ticket Count:** 60 Backend + 25 Frontend + 1 Cross-Cutting = **86 tickets**
 
 ---
 
@@ -286,7 +351,7 @@ All development MUST comply with rules defined in `.agent/rules/*`:
 
 ---
 
-## 4. Ticket Classification
+## 5. Ticket Classification
 
 ### 4.1 Ticket Types
 
@@ -315,7 +380,7 @@ All development MUST comply with rules defined in `.agent/rules/*`:
 
 ---
 
-## 5. Ticket Granularity Rules
+## 6. Ticket Granularity Rules
 
 ### 5.1 Backend Ticket Boundaries
 
@@ -352,7 +417,7 @@ Split if ticket spans:
 
 ---
 
-## 6. Dependency Management
+## 7. Dependency Management
 
 ### 6.1 Dependency Types
 
@@ -378,7 +443,7 @@ F.1-F.3 (Customer/Member)
 
 ---
 
-## 7. Quality Gates
+## 8. Quality Gates
 
 ### 7.1 Per-Ticket Quality Criteria
 
@@ -405,7 +470,7 @@ Before phase exit:
 
 ---
 
-## 8. Progress Tracking
+## 9. Progress Tracking
 
 ### 8.1 Tracking Artifacts
 
@@ -436,7 +501,7 @@ All tracking files use machine-parseable formats:
 
 ---
 
-## 9. Risk Mitigation
+## 10. Risk Mitigation
 
 ### 9.1 Identified Risks
 
@@ -458,7 +523,7 @@ All tracking files use machine-parseable formats:
 
 ---
 
-## 10. Success Metrics
+## 11. Success Metrics
 
 ### 10.1 Velocity Metrics
 
@@ -487,6 +552,7 @@ All tracking files use machine-parseable formats:
 
 ---
 
-*Document Version: 1.0*  
+*Document Version: 1.1*  
 *Created: 2026-01-08*  
+*Last Updated: 2026-01-09*  
 *Based on: SSI-INFORBILLIAR-Audit-2026-08-01-FULL*

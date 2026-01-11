@@ -7,6 +7,14 @@ public class ApplyDiscountCommand
 {
     public Guid TicketId { get; set; }
     public Guid? OrderLineId { get; set; } // If null, applies to entire ticket
-    public Guid DiscountId { get; set; }
+    
+    // Original property - made nullable for ad-hoc discounts
+    public Guid? DiscountId { get; set; }
+    
+    // New properties for C.7 (Ad-hoc / Manager Override / Member)
+    public Magidesk.Domain.Enumerations.DiscountType? Type { get; set; }
+    public decimal? Value { get; set; } // Percentage or Amount
+    public string? Reason { get; set; } // Required for overrides
+    public Guid? AuthorizingUserId { get; set; } // Required for overrides
 }
 

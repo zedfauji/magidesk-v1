@@ -62,6 +62,11 @@ public class OrderLine
     public Guid? PrinterGroupId { get; private set; }
     public DateTime CreatedAt { get; private set; }
 
+    // Time Charges (F-C.2)
+    public TimeSpan? Duration { get; private set; }
+    public decimal? HourlyRate { get; private set; }
+    public bool IsTimeCharge { get; private set; }
+
     // Private constructor for EF Core
     private OrderLine()
     {
@@ -111,6 +116,47 @@ public class OrderLine
             UnitPrice = unitPrice,
             TaxRate = taxRate,
             CreatedAt = DateTime.UtcNow
+        };
+
+        orderLine.CalculatePrice();
+        return orderLine;
+    }
+
+    /// <summary>
+    /// Creates a time charge order line.
+    /// </summary>
+    public static OrderLine CreateTimeCharge(
+        Guid ticketId,
+        TimeSpan duration,
+        decimal hourlyRate,
+        Money totalCharge)
+    {
+        if (duration < TimeSpan.Zero)
+            throw new BusinessRuleViolationException("Duration cannot be negative.");
+            
+        if (hourlyRate < 0)
+            throw new BusinessRuleViolationException("Hourly rate cannot be negative.");
+
+        if (totalCharge < Money.Zero())
+             throw new BusinessRuleViolationException("Total charge cannot be negative.");
+
+        var orderLine = new OrderLine
+        {
+            Id = Guid.NewGuid(),
+            TicketId = ticketId,
+            MenuItemId = Guid.Empty, // No specific menu item for ad-hoc time charges
+            MenuItemName = "Table Time Charge",
+            CategoryName = "Time Charges",
+            GroupName = "System",
+            Quantity = 1,
+            ItemCount = 1,
+            UnitPrice = totalCharge,
+            TaxRate = 0, // Configurable in future, default 0 for now
+            Duration = duration,
+            HourlyRate = hourlyRate,
+            IsTimeCharge = true,
+            CreatedAt = DateTime.UtcNow,
+            Instructions = $"{duration.TotalHours:F2} hrs @ {hourlyRate:C}/hr"
         };
 
         orderLine.CalculatePrice();

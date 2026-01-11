@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using Magidesk.Domain.ValueObjects;
 using System.Windows.Input;
 using Magidesk.Application.Commands;
+using Magidesk.Application.Commands.TableSessions;
 using Magidesk.Application.DTOs;
 using Magidesk.Application.Interfaces;
 using Magidesk.Application.Queries;
@@ -42,6 +43,8 @@ public partial class OrderEntryViewModel : ViewModelBase
     private readonly ICommandHandler<SetCustomerCommand, SetCustomerResult> _setCustomerHandler;
     private readonly IServiceProvider _serviceProvider;
     private readonly IKitchenRoutingService _kitchenRoutingService;
+    private readonly ITableRepository _tableRepository;
+    private readonly ITableTypeRepository _tableTypeRepository;
     
     public Services.LocalizationService Localization { get; }
 
@@ -69,7 +72,7 @@ public partial class OrderEntryViewModel : ViewModelBase
     public ObservableCollection<MenuCategory> Categories { get; } = new();
     public ObservableCollection<MenuGroup> Groups { get; } = new();
 
-    public ObservableCollection<MenuItem> Items { get; } = new();
+    public ObservableCollection<MenuItemViewModel> Items { get; } = new();
 
     private decimal _pendingQuantity = 1;
     public decimal PendingQuantity
@@ -108,6 +111,23 @@ public partial class OrderEntryViewModel : ViewModelBase
                  OnPropertyChanged(nameof(HasDiscount));
                  OnPropertyChanged(nameof(HasUnsentItems));
                  OnPropertyChanged(nameof(HasTicketWithItems));
+                 // Session state properties (FE-A.15-01)
+                 OnPropertyChanged(nameof(HasActiveSession));
+                 OnPropertyChanged(nameof(CanStartSession));
+                 OnPropertyChanged(nameof(CanEndSession));
+                 // Session visual properties (FE-A.15-02)
+                 OnPropertyChanged(nameof(SessionStatusText));
+                 OnPropertyChanged(nameof(SessionTimerText));
+                 OnPropertyChanged(nameof(SessionRunningChargeText));
+                 OnPropertyChanged(nameof(SessionStartTimeText));
+                 
+                 // Feature A.16 - Update commands
+                 (PauseSessionCommand as AsyncRelayCommand)?.NotifyCanExecuteChanged();
+                 (ResumeSessionCommand as AsyncRelayCommand)?.NotifyCanExecuteChanged();
+                 
+                 // Feature A.16 - Update visibility
+                 OnPropertyChanged(nameof(ShowPauseButton));
+                 OnPropertyChanged(nameof(ShowResumeButton));
              }
         }
     }
@@ -134,6 +154,23 @@ public partial class OrderEntryViewModel : ViewModelBase
     public string TotalsText => Ticket == null
         ? "$0.00"
         : $"{Ticket.TotalAmount:C}";
+
+    // Session state properties (FE-A.15-01)
+    public bool HasActiveSession => Ticket?.HasActiveSession ?? false;
+    public bool CanStartSession => Ticket != null && !HasActiveSession;
+    public bool CanEndSession => Ticket != null && HasActiveSession;
+
+    // Session visual properties (FE-A.15-02)
+    public string SessionStatusText => HasActiveSession ? "Session Active" : "No Active Session";
+    public string SessionTimerText => Ticket?.SessionElapsedTime != null 
+        ? $"{Ticket.SessionElapsedTime.Value:hh\\:mm\\:ss}" 
+        : "00:00:00";
+    public string SessionRunningChargeText => Ticket?.SessionRunningCharge != null 
+        ? $"{Ticket.SessionRunningCharge.Value:C}" 
+        : "$0.00";
+    public string SessionStartTimeText => Ticket?.SessionStartTime != null 
+        ? $"Started: {Ticket.SessionStartTime.Value.ToLocalTime():hh:mm tt}" 
+        : "";
 
     public bool IsSelectionModeCategories => SelectedCategory == null;
     public bool IsSelectionModeGroups => SelectedCategory != null && SelectedGroup == null;
@@ -184,6 +221,13 @@ public partial class OrderEntryViewModel : ViewModelBase
     // ... existing fields ...
 
     public ICommand PrintTicketCommand { get; }
+    
+    // Feature A.16 - Pause/Resume
+    private readonly ICommandHandler<PauseTableSessionCommand, PauseTableSessionResult> _pauseSessionHandler;
+    private readonly ICommandHandler<ResumeTableSessionCommand, ResumeTableSessionResult> _resumeSessionHandler;
+    
+    public ICommand PauseSessionCommand { get; }
+    public ICommand ResumeSessionCommand { get; }
 
     public OrderEntryViewModel(
         IMenuCategoryRepository categoryRepository,
@@ -208,9 +252,13 @@ public partial class OrderEntryViewModel : ViewModelBase
         ICommandHandler<ChangeTableCommand, ChangeTableResult> changeTableHandler,
         ICommandHandler<SetCustomerCommand, SetCustomerResult> setCustomerHandler,
         IServiceProvider serviceProvider,
+        ICommandHandler<PauseTableSessionCommand, PauseTableSessionResult> pauseSessionHandler,
+        ICommandHandler<ResumeTableSessionCommand, ResumeTableSessionResult> resumeSessionHandler,
         IKitchenRoutingService kitchenRoutingService,
         Services.IOrderEntryDialogService orderEntryDialogService,
-        Services.LocalizationService localizationService)
+        Services.LocalizationService localizationService,
+        ITableRepository tableRepository,
+        ITableTypeRepository tableTypeRepository)
     {
         _categoryRepository = categoryRepository;
         _groupRepository = groupRepository;
@@ -234,8 +282,12 @@ public partial class OrderEntryViewModel : ViewModelBase
         _changeTableHandler = changeTableHandler;
         _setCustomerHandler = setCustomerHandler;
         _serviceProvider = serviceProvider;
+        _pauseSessionHandler = pauseSessionHandler ?? throw new ArgumentNullException(nameof(pauseSessionHandler));
+        _resumeSessionHandler = resumeSessionHandler ?? throw new ArgumentNullException(nameof(resumeSessionHandler));
         _kitchenRoutingService = kitchenRoutingService;
         _orderEntryDialogService = orderEntryDialogService;
+        _tableRepository = tableRepository;
+        _tableTypeRepository = tableTypeRepository;
         
         Localization = localizationService;
 
@@ -243,7 +295,7 @@ public partial class OrderEntryViewModel : ViewModelBase
 
         SelectCategoryCommand = new RelayCommand<MenuCategory>(c => SelectedCategory = c);
         SelectGroupCommand = new RelayCommand<MenuGroup>(g => SelectedGroup = g);
-        AddItemCommand = new AsyncRelayCommand<MenuItem>(AddItemAsync);
+        AddItemCommand = new AsyncRelayCommand<MenuItemViewModel>(AddItemAsync);
         BackToCategoriesCommand = new RelayCommand(() => SelectedCategory = null);
         SearchItemCommand = new AsyncRelayCommand(SearchItemAsync);
         
@@ -264,6 +316,12 @@ public partial class OrderEntryViewModel : ViewModelBase
         SettleCommand = new AsyncRelayCommand(SettleAsync);
         QuickPayCommand = new AsyncRelayCommand(QuickPayAsync);
         EditNoteCommand = new AsyncRelayCommand<OrderLineDto>(EditNoteAsync);
+        
+        // Session Management Commands
+        StartSessionCommand = new AsyncRelayCommand(StartSessionAsync);
+        EndSessionCommand = new AsyncRelayCommand(EndSessionAsync);
+        PauseSessionCommand = new AsyncRelayCommand(PauseSessionAsync, CanPauseSession);
+        ResumeSessionCommand = new AsyncRelayCommand(ResumeSessionAsync, CanResumeSession);
     }
 
     public ICommand EditNoteCommand { get; }
@@ -303,6 +361,14 @@ public partial class OrderEntryViewModel : ViewModelBase
     public ICommand MergeTicketsCommand { get; }
     public ICommand ChangeTableCommand { get; }
     public ICommand AssignCustomerCommand { get; }
+    
+    // Session Management Commands
+    public ICommand StartSessionCommand { get; }
+    public ICommand EndSessionCommand { get; }
+    
+    // Feature A.16 - Visibility Properties
+    public bool ShowPauseButton => HasActiveSession && Ticket?.SessionStatus == TableSessionStatus.Active;
+    public bool ShowResumeButton => HasActiveSession && Ticket?.SessionStatus == TableSessionStatus.Paused;
 
 
 
@@ -876,7 +942,7 @@ public partial class OrderEntryViewModel : ViewModelBase
         try
         {
              var items = await _menuRepository.GetByGroupAsync(group.Id);
-             foreach (var i in items) Items.Add(i);
+             foreach (var i in items) Items.Add(new MenuItemViewModel(i));
         }
         finally { IsBusy = false; }
     }
@@ -1118,9 +1184,10 @@ public partial class OrderEntryViewModel : ViewModelBase
         }
     }
 
-    private async Task AddItemAsync(MenuItem? item)
+    private async Task AddItemAsync(MenuItemViewModel? itemVm)
     {
-        if (item == null || Ticket == null) return;
+        if (itemVm == null || Ticket == null) return;
+        var item = itemVm.Model;
 
         // F-0032: Refetch to get full details (Modifiers) - Shallow Item from GridView is insufficient
         var fullItem = await _menuRepository.GetByIdAsync(item.Id);
@@ -1303,7 +1370,7 @@ public partial class OrderEntryViewModel : ViewModelBase
 
             if (vm.SelectedItem != null)
             {
-                await AddItemAsync(vm.SelectedItem);
+                await AddItemAsync(new MenuItemViewModel(vm.SelectedItem));
                 SearchText = string.Empty; // Clear
             }
         }
@@ -1492,6 +1559,247 @@ public partial class OrderEntryViewModel : ViewModelBase
             _navigationService.GoBack();
         }
     }
+
+    #region Session Management
+
+    private async Task StartSessionAsync()
+    {
+        if (Ticket == null) return;
+
+        try
+        {
+            // Check if ticket has table information
+            if (Ticket.TableNumbers == null || !Ticket.TableNumbers.Any())
+            {
+                var errorDialog = new ContentDialog
+                {
+                    Title = "No Table",
+                    Content = "This ticket is not associated with a table. Sessions can only be started for table orders.",
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                };
+                await _navigationService.ShowDialogAsync(errorDialog);
+                return;
+            }
+
+            // Get the first table number
+            var tableNumber = Ticket.TableNumbers.First();
+            
+            // Get table from repository
+            var table = await _tableRepository.GetByTableNumberAsync(tableNumber);
+            
+            if (table == null)
+            {
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Table Not Found",
+                    Content = $"Could not find table {tableNumber} in the system.",
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                };
+                await _navigationService.ShowDialogAsync(errorDialog);
+                return;
+            }
+
+            // Resolve dialog ViewModel from DI
+            var dialogViewModel = _serviceProvider.GetRequiredService<ViewModels.Dialogs.StartSessionDialogViewModel>();
+            
+            // Get table type information from table
+            if (table.TableTypeId == null)
+            {
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Error",
+                    Content = "This table does not have a table type assigned. Please assign a table type first.",
+                    CloseButtonText = "OK"
+                };
+                errorDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                await _navigationService.ShowDialogAsync(errorDialog);
+                return;
+            }
+
+            // Fetch TableType to get name and hourly rate
+            // Fetch TableType to get name and hourly rate
+            var tableType = await _tableTypeRepository.GetByIdAsync(table.TableTypeId.Value);
+            if (tableType == null)
+            {
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Error",
+                    Content = $"Table type {table.TableTypeId} not found.",
+                    CloseButtonText = "OK"
+                };
+                errorDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                await _navigationService.ShowDialogAsync(errorDialog);
+                return;
+            }
+
+            // Initialize dialog
+            dialogViewModel.Initialize(
+                table.Id, 
+                tableType.Id, 
+                $"Table {tableNumber}", 
+                tableType.Name, 
+                tableType.HourlyRate, 
+                Ticket?.Id,
+                _userService.CurrentUser?.Id,
+                _terminalContext.TerminalId,
+                Ticket?.ShiftId,
+                Ticket?.OrderTypeId,
+                createTicket: false);
+            
+            // Create and show dialog
+            var dialog = new Views.Dialogs.StartSessionDialog(dialogViewModel);
+            dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+            
+            // Handle dialog result
+            dialogViewModel.SessionStarted += async (s, result) =>
+            {
+                // Refresh ticket to show session info
+                await LoadTicketAsync(Ticket.Id);
+            };
+            
+            await dialog.ShowAsync();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error opening start session dialog: {ex.Message}");
+            var errorDialog = new ContentDialog
+            {
+                Title = "Error",
+                Content = $"Failed to start session: {ex.Message}\n\nStack: {ex.StackTrace}",
+                CloseButtonText = "OK",
+                XamlRoot = App.MainWindowInstance.Content.XamlRoot
+            };
+            await _navigationService.ShowDialogAsync(errorDialog);
+        }
+    }
+
+    private async Task EndSessionAsync()
+    {
+        if (Ticket == null) return;
+
+        try
+        {
+            if (!Ticket.SessionId.HasValue)
+            {
+                var errorDialog = new ContentDialog
+                {
+                    Title = "No Active Session",
+                    Content = "There is no active session for this table.",
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
+                };
+                await _navigationService.ShowDialogAsync(errorDialog);
+                return;
+            }
+
+            // Resolve dialog ViewModel from DI
+            var dialogViewModel = _serviceProvider.GetRequiredService<EndSessionDialogViewModel>();
+            
+            // Calculate session duration and charge
+            var duration = Ticket.SessionElapsedTime ?? TimeSpan.Zero;
+            var hourlyRate = Ticket.SessionHourlyRate ?? 0m;
+            var totalCharge = Ticket.SessionRunningCharge ?? 0m;
+            
+            // Initialize dialog with context for ticket creation
+            dialogViewModel.Initialize(
+                Ticket.SessionId.Value, 
+                duration, 
+                hourlyRate, 
+                totalCharge,
+                _userService.CurrentUser?.Id,
+                _terminalContext.TerminalId,
+                Ticket.ShiftId,
+                Ticket.OrderTypeId,
+                hasExistingTicket: true);
+            
+            // Create and show dialog
+            var dialog = new Views.Dialogs.EndSessionDialog(dialogViewModel);
+            dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+            
+            // Handle dialog result
+            dialogViewModel.SessionEnded += async (s, result) =>
+            {
+                // Refresh ticket
+                await LoadTicketAsync(Ticket.Id);
+            };
+            
+            await dialog.ShowAsync();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error opening end session dialog: {ex.Message}");
+            var errorDialog = new ContentDialog
+            {
+                Title = "Error",
+                Content = $"Failed to end session: {ex.Message}",
+                CloseButtonText = "OK",
+                XamlRoot = App.MainWindowInstance.Content.XamlRoot
+            };
+            await _navigationService.ShowDialogAsync(errorDialog);
+        }
+    }
+
+    // Feature A.16 - Pause Logic
+    private bool CanPauseSession()
+    {
+        return Ticket != null && 
+               Ticket.HasActiveSession && 
+               Ticket.SessionStatus == TableSessionStatus.Active;
+    }
+
+    private async Task PauseSessionAsync()
+    {
+        if (!CanPauseSession() || Ticket == null || !Ticket.SessionId.HasValue) return;
+
+        IsBusy = true;
+        try
+        {
+            var command = new PauseTableSessionCommand(Ticket.SessionId.Value);
+            var result = await _pauseSessionHandler.HandleAsync(command);
+            
+            // Refresh ticket to update status
+            await LoadTicketAsync(Ticket.Id);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error pausing session: {ex.Message}");
+            await _orderEntryDialogService.ShowErrorAsync("Failed to pause session", ex.Message);
+        }
+        finally { IsBusy = false; }
+    }
+
+    // Feature A.16 - Resume Logic
+    private bool CanResumeSession()
+    {
+        return Ticket != null && 
+               Ticket.HasActiveSession && 
+               Ticket.SessionStatus == TableSessionStatus.Paused;
+    }
+
+    private async Task ResumeSessionAsync()
+    {
+        if (!CanResumeSession() || Ticket == null || !Ticket.SessionId.HasValue) return;
+
+        IsBusy = true;
+        try
+        {
+            var command = new ResumeTableSessionCommand(Ticket.SessionId.Value);
+            var result = await _resumeSessionHandler.HandleAsync(command);
+            
+            // Refresh ticket to update status
+            await LoadTicketAsync(Ticket.Id);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error resuming session: {ex.Message}");
+            await _orderEntryDialogService.ShowErrorAsync("Failed to resume session", ex.Message);
+        }
+        finally { IsBusy = false; }
+    }
+
+    #endregion
 }
 
 public record OrderEntryNavigationContext(Guid? TicketId, bool FromTableMap = false);

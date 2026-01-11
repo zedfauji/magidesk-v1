@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -99,6 +100,44 @@ public class ModifierGroupViewModel : ViewModelBase
         foreach (var modifier in group.Modifiers.Where(m => m.IsActive).OrderBy(m => m.DisplayOrder))
         {
             Modifiers.Add(new ModifierViewModel(modifier, this));
+        }
+    }
+    
+    // Pricing tier display (FE-G.5-01)
+    public bool HasFreeModifiers => Group.FreeModifiers > 0;
+    
+    public string FreeModifiersText => HasFreeModifiers 
+        ? $"First {Group.FreeModifiers} free" 
+        : string.Empty;
+    
+    public string ExtraModifierPriceText => Group.ExtraModifierPrice > 0 
+        ? $"+${Group.ExtraModifierPrice:F2} each additional" 
+        : string.Empty;
+    
+    public string SelectionCountText
+    {
+        get
+        {
+            var selectedCount = Modifiers.Count(m => m.IsSelected);
+            var freeCount = Math.Min(selectedCount, Group.FreeModifiers);
+            var paidCount = Math.Max(0, selectedCount - Group.FreeModifiers);
+            
+            if (!HasFreeModifiers)
+                return $"{selectedCount} selected";
+            
+            if (paidCount == 0)
+                return $"{selectedCount} of {Group.FreeModifiers} free selected";
+            
+            return $"{freeCount} free, {paidCount} paid ({selectedCount} total)";
+        }
+    }
+    
+    public decimal CalculatedCost
+    {
+        get
+        {
+            var selectedCount = Modifiers.Count(m => m.IsSelected);
+            return Group.CalculateModifierCost(selectedCount);
         }
     }
     

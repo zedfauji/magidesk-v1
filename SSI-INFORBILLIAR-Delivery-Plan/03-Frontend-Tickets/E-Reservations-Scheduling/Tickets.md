@@ -293,15 +293,224 @@ A dialog for checking in a reservation and starting a table session.
 
 ---
 
+## FE-E.2-02: Create ReservationListView
+
+**Ticket ID:** FE-E.2-02  
+**Feature ID:** E.2  
+**Type:** Frontend  
+**Title:** Create ReservationListView  
+**Priority:** P0
+
+### Outcome
+List view of reservations for quick search and filtering.
+
+### Scope
+- Create `ReservationListView` control
+- Search and filter functionality
+- Sort by date, customer, table
+- Quick actions (edit, cancel, check-in)
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel only
+- **G13:** Accessibility compliant
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | GetReservationsQuery | BE-E.2-01 |
+
+### Acceptance Criteria
+- [ ] List displays all reservations
+- [ ] Search works
+- [ ] Filtering functional
+- [ ] Sorting works
+- [ ] Quick actions available
+- [ ] Performance acceptable
+
+---
+
+## FE-E.3-01: Create EditReservationDialog
+
+**Ticket ID:** FE-E.3-01  
+**Feature ID:** E.3  
+**Type:** Frontend  
+**Title:** Create EditReservationDialog  
+**Priority:** P1
+
+### Outcome
+Dialog for editing existing reservations.
+
+### Scope
+- Create `EditReservationDialog.xaml`
+- Pre-populate existing data
+- Support all fields from create
+- Conflict detection on save
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** No business logic in ViewModel
+- **G01:** No silent failures
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | UpdateReservationCommand | BE-E.3-01 |
+| SOFT | ReservationDialog | FE-E.1-01 |
+
+### Acceptance Criteria
+- [ ] Dialog loads reservation data
+- [ ] All fields editable
+- [ ] Conflict detection works
+- [ ] Save updates reservation
+- [ ] Error handling complete
+
+---
+
+## FE-E.9-01: Create ClubScheduleSettingsPage
+
+**Ticket ID:** FE-E.9-01  
+**Feature ID:** E.9  
+**Type:** Frontend  
+**Title:** Create ClubScheduleSettingsPage  
+**Priority:** P2
+
+### Outcome
+Admin page for setting club operating hours.
+
+### Scope
+- Create `ClubScheduleSettingsPage.xaml`
+- Set daily operating hours
+- Set holiday closures
+- Blackout periods configuration
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel pattern
+- **G13:** Form validation
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | ClubSchedule entity | BE-E.9-01 |
+
+### Acceptance Criteria
+- [ ] Page loads schedule
+- [ ] Hours editable per day
+- [ ] Holiday dates work
+- [ ] Save persists changes
+- [ ] Validation enforced
+
+---
+
+## FE-E.10-01: Create RecurringReservationDialog
+
+**Ticket ID:** FE-E.10-01  
+**Feature ID:** E.10  
+**Type:** Frontend  
+**Title:** Create RecurringReservationDialog  
+**Priority:** P2
+
+### Outcome
+Dialog for creating recurring reservations.
+
+### Scope
+- Extend ReservationDialog for recurrence
+- Weekly pattern selection
+- End date configuration
+- Preview before creation
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel pattern
+- **G01:** Show conflicts clearly
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | Recurring reservations BE | BE-E.10-01 |
+
+### Acceptance Criteria
+- [ ] Recurrence pattern configurable
+- [ ] Preview shown
+- [ ] Conflicts detected
+- [ ] Batch creation works
+- [ ] Error handling complete
+
+---
+
+## FE-E.11-01: Create ReminderSettingsDialog
+
+**Ticket ID:** FE-E.11-01  
+**Feature ID:** E.11  
+**Type:** Frontend  
+**Title:** Create ReminderSettingsDialog  
+**Priority:** P2
+
+### Outcome
+Configure automated reservation reminders.
+
+### Scope
+- Create reminder settings dialog
+- Configure reminder timing
+- Message template editing
+- Test reminder functionality
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel pattern
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | Reminder service | BE-E.11-01 |
+
+### Acceptance Criteria
+- [ ] Settings configurable
+- [ ] Template editable
+- [ ] Test send works
+- [ ] Save persists settings
+
+---
+
+## FE-E.12-01: Create WaitingListPanel
+
+**Ticket ID:** FE-E.12-01  
+**Feature ID:** E.12  
+**Type:** Frontend  
+**Title:** Create WaitingListPanel  
+**Priority:** P2
+
+### Outcome
+Panel for managing waiting list for tables.
+
+### Scope
+- Create `WaitingListPanel` control
+- Add customer to waiting list
+- Notify when table available
+- Remove from list
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel pattern
+- **G13:** Accessible notifications
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | Waiting list BE | BE-E.12-01 |
+
+### Acceptance Criteria
+- [ ] Add to list works
+- [ ] Notify functionality works
+- [ ] Remove from list works
+- [ ] Priority ordering functional
+
+---
+
 ## Summary
 
 | Priority | Count | Status |
 |----------|-------|--------|
 | P0 | 5 | NOT_STARTED |
 | P1 | 1 | NOT_STARTED |
-| P2 | 1 | NOT_STARTED |
-| **Total** | **7** | **NOT_STARTED** |
+| P2 | 4 | NOT_STARTED |
+| **Total** | **10** | **NOT_STARTED** |
 
 ---
 
-*Last Updated: 2026-01-08*
+*Last Updated: 2026-01-10*

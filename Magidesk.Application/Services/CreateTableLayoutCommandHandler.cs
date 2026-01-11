@@ -38,7 +38,9 @@ public class CreateTableLayoutCommandHandler : IRequestHandler<CreateTableLayout
                 tableDto.Capacity,
                 tableDto.X,
                 tableDto.Y,
-                request.FloorId
+                request.FloorId,
+                null, // layoutId
+                null  // tableTypeId
             );
             
             layout.AddTable(table);
@@ -101,6 +103,7 @@ public class AddTableToLayoutCommandHandler : IRequestHandler<AddTableToLayoutCo
             request.Y,
             null, // floorId
             request.LayoutId,
+            null, // tableTypeId
             true, // isActive
             request.Shape,
             request.Width,

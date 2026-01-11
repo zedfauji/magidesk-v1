@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.Dialogs.TableSessions.AdjustSessionTimeDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Adjust Session Time"
+    PrimaryButtonText="Confirm Adjustment"
+    CloseButtonText="Cancel"
+    PrimaryButtonCommand="{Binding ConfirmCommand}"
+    PrimaryButtonCommandParameter="{Binding ElementName=DialogRoot}"
+    DefaultButton="Primary"
+    x:Name="DialogRoot">
+
+    <Grid RowSpacing="16" Width="400">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Description -->
+        <TextBlock Grid.Row="0" 
+                   Text="Manually adjust the billable time for this session. Use positive values to add time, negative to subtract." 
+                   TextWrapping="Wrap" 
+                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+
+        <!-- Adjustment Minutes -->
+        <NumberBox Grid.Row="1"
+                   Header="Adjustment (Minutes)"
+                   Value="{Binding AdjustmentMinutes, Mode=TwoWay}"
+                   SpinButtonPlacementMode="Inline"
+                   PlaceholderText="e.g. 15 or -10"
+                   SmallChange="1"
+                   LargeChange="15"
+                   HorizontalAlignment="Stretch"/>
+
+        <!-- Reason -->
+        <TextBox Grid.Row="2"
+                 Header="Reason (Required)"
+                 Text="{Binding Reason, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 PlaceholderText="e.g. System glitch, Manager comp"
+                 TextWrapping="Wrap"
+                 AcceptsReturn="False"
+                 HorizontalAlignment="Stretch"/>
+
+        <!-- Error Display -->
+        <InfoBar Grid.Row="3"
+                 Severity="Error"
+                 Message="{Binding ErrorMessage}"
+                 IsOpen="{Binding HasError, Mode=OneWay}"
+                 IsClosable="False"/>
+    </Grid>
+</ContentDialog>

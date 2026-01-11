@@ -25,7 +25,7 @@ public class GetOpenTicketsQueryHandler : IQueryHandler<GetOpenTicketsQuery, IEn
 
     public async Task<IEnumerable<TicketDto>> HandleAsync(GetOpenTicketsQuery query, CancellationToken cancellationToken = default)
     {
-        var tickets = await _ticketRepository.GetOpenTicketsAsync(cancellationToken);
+        var tickets = await _ticketRepository.GetManageableTicketsAsync(cancellationToken);
         
         var result = new List<TicketDto>();
         foreach (var ticket in tickets)

@@ -12,15 +12,18 @@ public class CreateTicketCommandHandler : ICommandHandler<CreateTicketCommand, C
 {
     private readonly ITicketRepository _ticketRepository;
     private readonly ITableRepository _tableRepository;
+    private readonly ITableSessionRepository _tableSessionRepository;
     private readonly IAuditEventRepository _auditEventRepository;
 
     public CreateTicketCommandHandler(
         ITicketRepository ticketRepository,
         ITableRepository tableRepository,
+        ITableSessionRepository tableSessionRepository,
         IAuditEventRepository auditEventRepository)
     {
         _ticketRepository = ticketRepository;
         _tableRepository = tableRepository;
+        _tableSessionRepository = tableSessionRepository;
         _auditEventRepository = auditEventRepository;
     }
 
@@ -44,11 +47,32 @@ public class CreateTicketCommandHandler : ICommandHandler<CreateTicketCommand, C
             ticket.SetNumberOfGuests(command.NumberOfGuests);
         }
 
+        // Feature C.1: Link to Table Session
+        if (command.SessionId.HasValue)
+        {
+            var session = await _tableSessionRepository.GetByIdAsync(command.SessionId.Value);
+            if (session == null)
+            {
+                throw new Domain.Exceptions.BusinessRuleViolationException($"Table Session {command.SessionId} not found.");
+            }
+            
+            // Link Session
+            ticket.SetSession(session.Id);
+
+            // Auto-populate customer from session if not explicitly provided
+            if (!command.CustomerId.HasValue && session.CustomerId.HasValue)
+            {
+                // Note: SetCustomer expects Id, Address, ExtraInfo. We only have ID here.
+                ticket.SetCustomer(session.CustomerId);
+            }
+        }
+
         // Set optional properties
+        // Prioritize explicit customer ID from command if present, otherwise it might have been set above
         if (command.CustomerId.HasValue)
         {
-            // Note: CustomerId would need a setter or constructor parameter in Ticket entity
-            // For now, we'll handle this in the entity if needed
+             // If command has explicit customer, it overrides session customer
+             ticket.SetCustomer(command.CustomerId);
         }
 
         if (command.TableNumbers != null)
@@ -84,7 +108,7 @@ public class CreateTicketCommandHandler : ICommandHandler<CreateTicketCommand, C
             nameof(Ticket),
             ticket.Id,
             command.CreatedBy.Value,
-            System.Text.Json.JsonSerializer.Serialize(new { ticket.TicketNumber, ticket.Status }),
+            System.Text.Json.JsonSerializer.Serialize(new { ticket.TicketNumber, ticket.Status, ticket.SessionId }),
             $"Ticket {ticketNumber} created",
             correlationId: correlationId);
 

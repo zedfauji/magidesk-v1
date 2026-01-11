@@ -22,6 +22,8 @@ public class Table
     public TableLayout? Layout { get; private set; }
     public TableStatus Status { get; private set; } = TableStatus.Available;
     public Guid? CurrentTicketId { get; private set; }
+    public Guid? TableTypeId { get; private set; }
+    public TableType? TableType { get; private set; }
     public bool IsActive { get; private set; } = true;
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
@@ -42,6 +44,7 @@ public class Table
         double y = 0,
         Guid? floorId = null,
         Guid? layoutId = null,
+        Guid? tableTypeId = null,
         bool isActive = true,
         TableShapeType shape = TableShapeType.Rectangle,
         double width = 100,
@@ -70,6 +73,7 @@ public class Table
             Shape = shape,
             Status = TableStatus.Available,
             CurrentTicketId = null,
+            TableTypeId = tableTypeId,
             LayoutId = layoutId,
             IsActive = isActive,
             Version = 1
@@ -132,6 +136,31 @@ public class Table
     }
 
     /// <summary>
+    /// Assigns a table type to this table for pricing purposes.
+    /// </summary>
+    /// <param name="tableTypeId">The ID of the table type to assign.</param>
+    /// <exception cref="ArgumentException">Thrown when tableTypeId is empty.</exception>
+    public void SetTableType(Guid tableTypeId)
+    {
+        if (tableTypeId == Guid.Empty)
+        {
+            throw new ArgumentException("Table type ID cannot be empty.", nameof(tableTypeId));
+        }
+
+        TableTypeId = tableTypeId;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    /// <summary>
+    /// Removes the table type assignment from this table.
+    /// </summary>
+    public void ClearTableType()
+    {
+        TableTypeId = null;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    /// <summary>
     /// Assigns a ticket to this table.
     /// </summary>
     public void AssignTicket(Guid ticketId)
@@ -181,6 +210,40 @@ public class Table
         }
 
         Status = TableStatus.Booked;
+    }
+
+    /// <summary>
+    /// Marks table as in-use (for sessions without tickets).
+    /// </summary>
+    public void MarkInUse()
+    {
+        if (Status == TableStatus.Seat)
+        {
+            // Already in use, no-op
+            return;
+        }
+
+        if (Status != TableStatus.Available && Status != TableStatus.Booked)
+        {
+            throw new Exceptions.InvalidOperationException($"Cannot mark table in-use from status {Status}.");
+        }
+
+        Status = TableStatus.Seat;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    /// <summary>
+    /// Marks table as available (releases from session).
+    /// </summary>
+    public void MarkAvailable()
+    {
+        if (CurrentTicketId.HasValue)
+        {
+            throw new Exceptions.InvalidOperationException("Cannot mark table available while ticket is assigned. Release ticket first.");
+        }
+
+        Status = TableStatus.Available;
+        UpdatedAt = DateTime.UtcNow;
     }
 
     /// <summary>

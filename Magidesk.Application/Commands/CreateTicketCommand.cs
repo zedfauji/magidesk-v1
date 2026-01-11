@@ -12,9 +12,12 @@ public class CreateTicketCommand
     public Guid ShiftId { get; set; }
     public Guid OrderTypeId { get; set; }
     public Guid? CustomerId { get; set; }
+    public Guid? SessionId { get; set; }
     public List<int>? TableNumbers { get; set; }
+    public Guid? TableId { get; set; }
     public int NumberOfGuests { get; set; } = 1;
     public string? GlobalId { get; set; }
+    public string? Note { get; set; }
 }
 
 /// <summary>

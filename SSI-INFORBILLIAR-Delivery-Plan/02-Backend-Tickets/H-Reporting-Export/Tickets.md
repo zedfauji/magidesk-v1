@@ -233,14 +233,314 @@ public record MemberActivityReportDto(
 
 ---
 
+## BE-H.2-01: Create Shift Summary Report
+
+**Ticket ID:** BE-H.2-01  
+**Feature ID:** H.2  
+**Type:** Backend  
+**Title:** Create Shift Summary Report  
+**Priority:** P1
+
+### Outcome
+Shift report showing server performance and sales.
+
+### Scope
+- Create GetShiftSummaryQuery
+- Include cash drawer reconciliation
+- Server sales breakdown
+- Payment method totals
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | CashSession entity | Exists |
+
+### Acceptance Criteria
+- [ ] Shift summary generated
+- [ ] Cash reconciliation accurate
+- [ ] Server breakdown included
+- [ ] Payment totals correct
+
+---
+
+## BE-H.3-01: Create Server Performance Report
+
+**Ticket ID:** BE-H.3-01  
+**Feature ID:** H.3  
+**Type:** Backend  
+**Title:** Create Server Performance Report  
+**Priority:** P2
+
+### Outcome
+Analytics on individual server sales and performance.
+
+### Scope
+- Create GetServerPerformanceQuery
+- Track sales per server
+- Track tips per server
+- Compare server metrics
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | Server assignment | BE-A.13-01 |
+
+### Acceptance Criteria
+- [ ] Server stats calculated
+- [ ] Ranking functional
+- [ ] Date range filtering works
+- [ ] Tip tracking accurate
+
+---
+
+## BE-H.7-01: Complete Inventory Report
+
+**Ticket ID:** BE-H.7-01  
+**Feature ID:** H.7  
+**Type:** Backend  
+**Title:** Complete Inventory Report  
+**Priority:** P2
+
+### Outcome
+Comprehensive inventory status report.
+
+### Scope
+- Create GetInventoryReportQuery
+- Show current stock levels
+- Include low stock items
+- Calculate inventory value
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | Stock tracking | BE-G.2-01 |
+
+### Acceptance Criteria
+- [ ] Stock levels accurate
+- [ ] Value calculation correct
+- [ ] Low stock highlighted
+- [ ] Export capability works
+
+---
+
+## BE-H.8-01: Complete Tax Report
+
+**Ticket ID:** BE-H.8-01  
+**Feature ID:** H.8  
+**Type:** Backend  
+**Title:** Complete Tax Report  
+**Priority:** P2
+
+### Outcome
+Tax collection report for compliance.
+
+### Scope
+- Create GetTaxReportQuery
+- Breakdown by tax rate
+- Total tax collected
+- Export for filing
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | Tax calculation | Exists |
+
+### Acceptance Criteria
+- [ ] Tax breakdown accurate
+- [ ] All rates included
+- [ ] Date range works
+- [ ] Export format compliant
+
+---
+
+## BE-H.10-01: Implement PDF Export
+
+**Ticket ID:** BE-H.10-01  
+**Feature ID:** H.10  
+**Type:** Backend  
+**Title:** Implement PDF Export  
+**Priority:** P2
+
+### Outcome
+Export reports to PDF format.
+
+### Scope
+- Create PDF generation service
+- Template-based generation
+- Logo and branding support
+- Print-ready formatting
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | Report queries | Various |
+
+### Acceptance Criteria
+- [ ] PDF generation works
+- [ ] Templates customizable
+- [ ] Branding included
+- [ ] Print quality acceptable
+
+---
+
+## BE-H.11-01: Implement Excel Export
+
+**Ticket ID:** BE-H.11-01  
+**Feature ID:** H.11  
+**Type:** Backend  
+**Title:** Implement Excel Export  
+**Priority:** P2
+
+### Outcome
+Export reports to Excel format.
+
+### Scope
+- Create Excel export service
+- Support multiple sheets
+- Formatting preserved
+- Formulas included
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | Report queries | Various |
+
+### Acceptance Criteria
+- [ ] Excel generation works
+- [ ] Multiple sheets supported
+- [ ] Formatting correct
+- [ ] Opens in Excel/LibreOffice
+
+---
+
+## BE-H.12-01: Payment Method Breakdown Report
+
+**Ticket ID:** BE-H.12-01  
+**Feature ID:** H.12  
+**Type:** Backend  
+**Title:** Payment Method Breakdown Report  
+**Priority:** P2
+
+### Outcome
+Report showing sales by payment method.
+
+### Scope
+- Create GetPaymentMethodReportQuery
+- Breakdown by method (cash, card, etc.)
+- Include transaction counts
+- Show fees/costs
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | Payment entity | Exists |
+
+### Acceptance Criteria
+- [ ] All payment methods listed
+- [ ] Amounts accurate
+- [ ] Transaction counts correct
+- [ ] Fee tracking works
+
+---
+
+## BE-H.13-01: Discount Usage Report
+
+**Ticket ID:** BE-H.13-01  
+**Feature ID:** H.13  
+**Type:** Backend  
+**Title:** Discount Usage Report  
+**Priority:** P2
+
+### Outcome
+Track discount and promotion effectiveness.
+
+### Scope
+- Create GetDiscountUsageQuery
+- Show usage by discount type
+- Calculate revenue impact
+- Identify popular promotions
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | Discount application | BE-C.7-01 |
+
+### Acceptance Criteria
+- [ ] All discounts tracked
+- [ ] Impact calculated
+- [ ] Usage frequency shown
+- [ ] ROI analysis included
+
+---
+
+## BE-H.14-01: Hourly Sales Trend Report
+
+**Ticket ID:** BE-H.14-01  
+**Feature ID:** H.14  
+**Type:** Backend  
+**Title:** Hourly Sales Trend Report  
+**Priority:** P2
+
+### Outcome
+Sales patterns by hour of day.
+
+### Scope
+- Create GetHourlySalesTrendQuery
+- Group sales by hour
+- Show peak hours
+- Compare weekday vs weekend
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | Sales data | Exists |
+
+### Acceptance Criteria
+- [ ] Hourly breakdown accurate
+- [ ] Peak hours identified
+- [ ] Day type comparison works
+- [ ] Trends visualizable
+
+---
+
+## BE-H.15-01: Product Popularity Report
+
+**Ticket ID:** BE-H.15-01  
+**Feature ID:** H.15  
+**Type:** Backend  
+**Title:** Product Popularity Report  
+**Priority:** P2
+
+### Outcome
+Top selling products and trends.
+
+### Scope
+- Create GetProductPopularityQuery
+- Rank by quantity sold
+- Rank by revenue
+- Track trends over time
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | OrderLine entity | Exists |
+
+### Acceptance Criteria
+- [ ] Rankings accurate
+- [ ] Multiple sort options
+- [ ] Trend calculation works
+- [ ] Category filtering works
+
+---
+
 ## Summary
 
 | Priority | Count | Status |
 |----------|-------|--------|
-| P1 | 5 | NOT_STARTED |
-| P2 | 5 | NOT_STARTED |
-| **Total** | **10** | **NOT_STARTED** |
+| P1 | 6 | NOT_STARTED |
+| P2 | 9 | NOT_STARTED |
+| **Total** | **15** | **NOT_STARTED** |
 
 ---
 
-*Last Updated: 2026-01-08*
+*Last Updated: 2026-01-10*

@@ -246,20 +246,338 @@
 
 ---
 
+## FE-G.4-01: Create Category Hierarchy Tree View
+
+**Ticket ID:** FE-G.4-01  
+**Feature ID:** G.4  
+**Type:** Frontend  
+**Title:** Create Category Hierarchy Tree View  
+**Priority:** P2
+
+### Outcome
+Hierarchical tree view for nested product categories.
+
+### Scope
+- Create `CategoryTreeView` control
+- Support drag-drop reordering
+- Show parent-child relationships
+- Expand/collapse nodes
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel pattern
+- **G13:** Accessibility compliant
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | Category hierarchy BE | BE-G.4-01 |
+
+### Acceptance Criteria
+- [ ] Tree displays nested categories
+- [ ] Drag-drop works
+- [ ] Expand/collapse functional
+- [ ] Add subcategory works
+- [ ] Delete maintains integrity
+
+---
+
+## FE-C.6-01: Add Gratuity Selection Panel
+
+**Ticket ID:** FE-C.6-01  
+**Feature ID:** C.6  
+**Type:** Frontend  
+**Title:** Add Gratuity Selection Panel  
+**Priority:** P1
+
+### Outcome
+Quick gratuity selection during payment.
+
+### Scope
+- Create gratuity selection control
+- Preset percentage buttons
+- Custom amount input
+- Auto-calculate based on subtotal
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel pattern
+- **G13:** Accessible buttons
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | Payment processing | Exists |
+
+### Acceptance Criteria
+- [ ] Preset buttons work
+- [ ] Custom input works
+- [ ] Calculation correct
+- [ ] Selection persists through payment
+
+---
+
+## FE-C.7-01: Improve Discount Application UI
+
+**Ticket ID:** FE-C.7-01  
+**Feature ID:** C.7  
+**Type:** Frontend  
+**Title:** Improve Discount Application UI  
+**Priority:** P1
+
+### Outcome
+Enhanced discount selection interface.
+
+### Scope
+- Improve discount selector dialog
+- Show available discounts
+- Highlight member discounts
+- Preview total with discount
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel pattern
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | Discount BE | BE-C.7-01 |
+
+### Acceptance Criteria
+- [ ] Available discounts shown
+- [ ] Member discounts highlighted
+- [ ] Preview displays correctly
+- [ ] Apply discount works
+
+---
+
+## FE-H.1-01: Create Daily Sales Report Page
+
+**Ticket ID:** FE-H.1-01  
+**Feature ID:** H.1  
+**Type:** Frontend  
+**Title:** Create Daily Sales Report Page  
+**Priority:** P1
+
+### Outcome
+Page displaying daily sales analytics.
+
+### Scope
+- Create `DailySalesReportPage.xaml`
+- Display revenue charts
+- Breakdown tables
+- Export functionality
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel pattern
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | Daily sales query | BE-H.1-01 |
+
+### Acceptance Criteria
+- [ ] Report displays correctly
+- [ ] Charts render
+- [ ] Data accurate
+- [ ] Export works
+
+---
+
+## FE-H.5-01: Create Time Revenue Analytics Page
+
+**Ticket ID:** FE-H.5-01  
+**Feature ID:** H.5  
+**Type:** Frontend  
+**Title:** Create Time Revenue Analytics Page  
+**Priority:** P1
+
+### Outcome
+Analytics page for time-based billing revenue.
+
+### Scope
+- Create `TimeRevenueAnalyticsPage.xaml`
+- Revenue charts by table type
+- Peak hours visualization
+- Weekday vs weekend comparison
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel pattern
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | Time revenue query | BE-H.5-01 |
+
+### Acceptance Criteria
+- [ ] Page loads data
+- [ ] Charts display correctly
+- [ ] Filtering works
+- [ ] Export functional
+
+---
+
 ## Summary - All Consolidated Frontend Tickets
 
 | Category | Tickets | Priority Distribution |
 |----------|---------|----------------------|
 | B | 3 | P1: 1, P2: 2 |
-| C | 4 | P0: 1, P1: 3 |
-| G | 3 | P1: 3 |
-| H | 4 | P1: 3, P2: 1 |
+| C | 6 | P0: 1, P1: 5 |
+| G | 4 | P1: 3, P2: 1 |
+| H | 6 | P1: 5, P2: 1 |
 | I | 1 | P1: 1 |
 | J | 3 | P0: 2, P1: 1 |
 | K | 2 | P2: 2 |
 | L | 1 | P1: 1 |
-| **Total** | **21** | **P0: 3, P1: 13, P2: 5** |
+| **Total** | **26** | **P0: 3, P1: 17, P2: 6** |
 
 ---
 
-*Last Updated: 2026-01-08*
+*Last Updated: 2026-01-10*
+
+
+**Ticket ID:** FE-C.6-01  
+**Feature ID:** C.6  
+**Type:** Frontend  
+**Title:** Add Gratuity Selection Panel  
+**Priority:** P1
+
+### Outcome
+Quick gratuity selection during payment.
+
+### Scope
+- Create gratuity selection control
+- Preset percentage buttons
+- Custom amount input
+- Auto-calculate based on subtotal
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel pattern
+- **G13:** Accessible buttons
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | Payment processing | Exists |
+
+### Acceptance Criteria
+- [ ] Preset buttons work
+- [ ] Custom input works
+- [ ] Calculation correct
+- [ ] Selection persists through payment
+
+---
+
+## FE-C.7-01: Improve Discount Application UI
+
+**Ticket ID:** FE-C.7-01  
+**Feature ID:** C.7  
+**Type:** Frontend  
+**Title:** Improve Discount Application UI  
+**Priority:** P1
+
+### Outcome
+Enhanced discount selection interface.
+
+### Scope
+- Improve discount selector dialog
+- Show available discounts
+- Highlight member discounts
+- Preview total with discount
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel pattern
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| SOFT | Discount BE | BE-C.7-01 |
+
+### Acceptance Criteria
+- [ ] Available discounts shown
+- [ ] Member discounts highlighted
+- [ ] Preview displays correctly
+- [ ] Apply discount works
+
+---
+
+## FE-H.1-01: Create Daily Sales Report Page
+
+**Ticket ID:** FE-H.1-01  
+**Feature ID:** H.1  
+**Type:** Frontend  
+**Title:** Create Daily Sales Report Page  
+**Priority:** P1
+
+### Outcome
+Page displaying daily sales analytics.
+
+### Scope
+- Create `DailySalesReportPage.xaml`
+- Display revenue charts
+- Breakdown tables
+- Export functionality
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel pattern
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | Daily sales query | BE-H.1-01 |
+
+### Acceptance Criteria
+- [ ] Report displays correctly
+- [ ] Charts render
+- [ ] Data accurate
+- [ ] Export works
+
+---
+
+## FE-H.5-01: Create Time Revenue Analytics Page
+
+**Ticket ID:** FE-H.5-01  
+**Feature ID:** H.5  
+**Type:** Frontend  
+**Title:** Create Time Revenue Analytics Page  
+**Priority:** P1
+
+### Outcome
+Analytics page for time-based billing revenue.
+
+### Scope
+- Create `TimeRevenueAnalyticsPage.xaml`
+- Revenue charts by table type
+- Peak hours visualization
+- Weekday vs weekend comparison
+
+### Quality & Guardrails
+- **mvvm-pattern.md:** ViewModel pattern
+
+### Dependencies
+| Type | Dependency | Ticket ID |
+|------|------------|-----------|
+| HARD | Time revenue query | BE-H.5-01 |
+
+### Acceptance Criteria
+- [ ] Page loads data
+- [ ] Charts display correctly
+- [ ] Filtering works
+- [ ] Export functional
+
+---
+
+## Summary - All Consolidated Frontend Tickets
+
+| Category | Tickets | Priority Distribution |
+|----------|---------|----------------------|
+| B | 3 | P1: 1, P2: 2 |
+| C | 6 | P0: 1, P1: 5 |
+| G | 3 | P1: 3 |
+| H | 6 | P1: 5, P2: 1 |
+| I | 1 | P1: 1 |
+| J | 3 | P0: 2, P1: 1 |
+| K | 2 | P2: 2 |
+| L | 1 | P1: 1 |
+| **Total** | **25** | **P0: 3, P1: 17, P2: 5** |
+
+---
+
+*Last Updated: 2026-01-10*
