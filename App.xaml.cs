@@ -153,7 +153,6 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<Magidesk.Presentation.ViewModels.MemberCheckInViewModel>();
                     services.AddTransient<Magidesk.Presentation.Views.Dialogs.MemberCheckInDialog>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.CustomerSearchViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.CategoryTreeViewModel>();
                     
                     // Language Selection (F-0110)
                     services.AddTransient<Magidesk.Presentation.ViewModels.LanguageSelectionViewModel>();

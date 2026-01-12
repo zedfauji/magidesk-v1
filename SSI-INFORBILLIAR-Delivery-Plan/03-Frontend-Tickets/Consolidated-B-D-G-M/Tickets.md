@@ -94,6 +94,7 @@
 | FE-G.2-01 | G.2 | Add Stock Level Display | P1 | NOT_STARTED |
 | FE-G.3-01 | G.3 | Create Low Stock Alert Badge | P1 | NOT_STARTED |
 | FE-G.5-01 | G.5 | Improve Modifier Selection UI | P1 | NOT_STARTED |
+| FE-G.8-01 | G.8 | Price Level Management UI | P2 | COMPLETED |
 
 ### FE-G.2-01: Add Stock Level Display
 
@@ -119,6 +120,16 @@
 | FE-H.4-01 | H.4 | Create Table Utilization Dashboard | P1 | NOT_STARTED |
 | FE-H.5-01 | H.5 | Create Time Revenue Analytics Page | P1 | NOT_STARTED |
 | FE-H.6-01 | H.6 | Create Member Analytics Dashboard | P2 | NOT_STARTED |
+| FE-H.2-01 | H.2 | Create Shift Summary Report | P1 | NOT_STARTED |
+| FE-H.3-01 | H.3 | Create Server Performance Report | P2 | NOT_STARTED |
+| FE-H.7-01 | H.7 | Create Inventory Report Page | P2 | NOT_STARTED |
+| FE-H.8-01 | H.8 | Create Tax Report Page | P2 | NOT_STARTED |
+| FE-H.10-01 | H.10 | Implement Global PDF Export UI | P2 | NOT_STARTED |
+| FE-H.11-01 | H.11 | Implement Global Excel Export UI | P2 | NOT_STARTED |
+| FE-H.12-01 | H.12 | Create Payment Method Report | P2 | NOT_STARTED |
+| FE-H.13-01 | H.13 | Create Discount Usage Report | P2 | NOT_STARTED |
+| FE-H.14-01 | H.14 | Create Hourly Sales Report | P2 | NOT_STARTED |
+| FE-H.15-01 | H.15 | Create Product Popularity Report | P2 | NOT_STARTED |
 
 ### FE-H.4-01: Create Table Utilization Dashboard
 
@@ -580,4 +591,276 @@ Analytics page for time-based billing revenue.
 
 ---
 
-*Last Updated: 2026-01-10*
+*Last Updated: 2026-01-11*
+
+---
+
+## FE-H.6-01: Create Member Analytics Dashboard
+
+**Ticket ID:** FE-H.6-01
+**Feature ID:** H.6
+**Type:** Frontend
+**Title:** Create Member Analytics Dashboard
+**Priority:** P2
+**Status:** NOT_STARTED
+
+### Outcome
+Dashboard showing member engagement and value metrics.
+
+### Scope
+- Member visits chart
+- Top spending members list
+- New vs Returning members breakdown
+- Churn risk indicators
+
+### Acceptance Criteria
+- [ ] Charts render correctly
+- [ ] Top members list populated
+- [ ] Date filtering works
+- [ ] Export to PDF/Excel
+
+---
+
+## FE-H.2-01: Create Shift Summary Report
+
+**Ticket ID:** FE-H.2-01
+**Feature ID:** H.2
+**Type:** Frontend
+**Title:** Create Shift Summary Report
+**Priority:** P1
+**Status:** NOT_STARTED
+
+### Outcome
+End-of-shift report UI for servers and managers.
+
+### Scope
+- Cash drawer reconciliation UI
+- Sales summary by category
+- Tips and gratuity totals
+- Print button
+
+### Acceptance Criteria
+- [ ] Reconciliation inputs work
+- [ ] Totals match backend calculation
+- [ ] Printing works
+- [ ] Manager approval flow
+
+---
+
+## FE-H.3-01: Create Server Performance Report
+
+**Ticket ID:** FE-H.3-01
+**Feature ID:** H.3
+**Type:** Frontend
+**Title:** Create Server Performance Report
+**Priority:** P2
+**Status:** NOT_STARTED
+
+### Outcome
+UI for analyzing server sales and efficiency.
+
+### Scope
+- Server ranking grid
+- Sales per hour metric
+- Tip averages
+- Table turnover rate
+
+### Acceptance Criteria
+- [ ] Server comparison view
+- [ ] Metric sorting
+- [ ] Date range selection
+
+---
+
+## FE-H.7-01: Create Inventory Report Page
+
+**Ticket ID:** FE-H.7-01
+**Feature ID:** H.7
+**Type:** Frontend
+**Title:** Create Inventory Report Page
+**Priority:** P2
+**Status:** NOT_STARTED
+
+### Outcome
+UI for viewing current stock and value.
+
+### Scope
+- Stock level grid with filtering
+- Low stock highlighting
+- Total inventory value display
+- Adjustment history view
+
+### Acceptance Criteria
+- [ ] Grid functional
+- [ ] Filtering by category
+- [ ] Low stock alert visual
+
+---
+
+## FE-H.8-01: Create Tax Report Page
+
+**Ticket ID:** FE-H.8-01
+**Feature ID:** H.8
+**Type:** Frontend
+**Title:** Create Tax Report Page
+**Priority:** P2
+**Status:** NOT_STARTED
+
+### Outcome
+Tax collection reporting UI.
+
+### Scope
+- Tax breakdown by rate/type
+- Net vs Gross sales
+- Export for accounting
+
+### Acceptance Criteria
+- [ ] GoodTax totals display correctly
+- [ ] Date range filtering
+- [ ] Export button functional
+
+---
+
+## FE-H.10-01: Implement Global PDF Export UI
+
+**Ticket ID:** FE-H.10-01
+**Feature ID:** H.10
+**Type:** Frontend
+**Title:** Implement Global PDF Export UI
+**Priority:** P2
+**Status:** NOT_STARTED
+
+### Outcome
+Standardized UI for exporting any report to PDF.
+
+### Scope
+- "Export to PDF" button on standard report toolbar
+- Export options dialog (Paper size, Orientation)
+- Save File Picker integration
+- Progress indication during generation
+
+### Acceptance Criteria
+- [ ] Button appears on all reports
+- [ ] File save dialog opens
+- [ ] Success notification shown
+
+---
+
+## FE-H.11-01: Implement Global Excel Export UI
+
+**Ticket ID:** FE-H.11-01
+**Feature ID:** H.11
+**Type:** Frontend
+**Title:** Implement Global Excel Export UI
+**Priority:** P2
+**Status:** NOT_STARTED
+
+### Outcome
+Standardized UI for exporting data to Excel/CSV.
+
+### Scope
+- "Export to Excel" button
+- Export options (Raw Data vs Formatted)
+- Save File Picker integration
+
+### Acceptance Criteria
+- [ ] Button appears on all reports
+- [ ] Data exported matches view
+- [ ] File opens correctly in Excel
+
+---
+
+## FE-H.12-01: Create Payment Method Report
+
+**Ticket ID:** FE-H.12-01
+**Feature ID:** H.12
+**Type:** Frontend
+**Title:** Create Payment Method Report
+**Priority:** P2
+**Status:** NOT_STARTED
+
+### Outcome
+Report UI for payment types.
+
+### Scope
+- Chart: Cash vs Card vs Other
+- Transaction count vs Volume
+- Refund summary
+
+---
+
+## FE-H.13-01: Create Discount Usage Report
+
+**Ticket ID:** FE-H.13-01
+**Feature ID:** H.13
+**Type:** Frontend
+**Title:** Create Discount Usage Report
+**Priority:** P2
+**Status:** NOT_STARTED
+
+### Scope
+- Usage count by discount reason
+- Total amount discounted
+- Employee association
+
+---
+
+## FE-H.14-01: Create Hourly Sales Report
+
+**Ticket ID:** FE-H.14-01
+**Feature ID:** H.14
+**Type:** Frontend
+**Title:** Create Hourly Sales Report
+**Priority:** P2
+**Status:** NOT_STARTED
+
+### Scope
+- Heatmap or Bar chart of sales by hour
+- Peak time identification
+- Staffing recommendation overlay (optional)
+
+---
+
+## FE-H.15-01: Create Product Popularity Report
+
+**Ticket ID:** FE-H.15-01
+**Feature ID:** H.15
+**Type:** Frontend
+**Title:** Create Product Popularity Report
+**Priority:** P2
+**Status:** NOT_STARTED
+
+### Scope
+- Top 10 / Bottom 10 items
+- Sales velocity
+- Product mix percentage
+
+---
+
+---
+
+## FE-G.8-01: Price Level Management UI
+
+**Ticket ID:** FE-G.8-01
+**Feature ID:** G.8
+**Type:** Frontend
+**Title:** Price Level Management UI
+**Priority:** P2
+**Status:** COMPLETED
+
+### Outcome
+User interface for managing pricing tiers and setting item prices.
+
+### Scope
+- Create `PriceLevelManagementPage` (CRUD)
+- Update `MenuEditorPage` to support multi-tier price entry
+- Add active price level selector to `OrderEntryPage`
+
+### Acceptance Criteria
+- [x] Create/Edit/Delete Price Levels
+- [x] Set time-based schedules for price levels
+- [x] Edit prices for each level in Menu Editor
+- [x] Switch active price level in Order Entry
+- [x] Prices update in real-time on Order Entry grid
+
+---

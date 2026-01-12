@@ -12,6 +12,7 @@
 | BE-G.4-01 | G.4 | Complete Category Hierarchy | P2 | NOT_STARTED |
 | BE-G.5-01 | G.5 | Complete Modifier Group Pricing | P1 | NOT_STARTED |
 | BE-G.7-01 | G.7 | Implement SKU/Barcode Support | P2 | NOT_STARTED |
+| BE-G.8-01 | G.8 | Implement Price Level System | P2 | COMPLETED |
 | BE-G.9-01 | G.9 | Implement Product Import | P2 | NOT_STARTED |
 | BE-G.10-01 | G.10 | Implement Product Export | P2 | NOT_STARTED |
 
@@ -408,6 +409,32 @@ public record SelectedModifier(
 - [ ] Tests cover modifier scenarios
 - [ ] Min/max selection enforced
 - [ ] Unit tests ≥80% coverage
+
+---
+
+## BE-G.8-01: Implement Price Level System
+
+**Ticket ID:** BE-G.8-01
+**Feature ID:** G.8
+**Type:** Backend
+**Title:** Implement Price Level System
+**Priority:** P2
+**Status:** COMPLETED
+
+### Outcome
+Support for multi-tier pricing (e.g., Happy Hour, Delivery, VIP).
+
+### Scope
+- Create `PriceLevel` entity
+- Create `MenuItemPrice` entity
+- Update `MenuItem` to support multiple prices
+- Update `MenuRepository` to load prices
+
+### Acceptance Criteria
+- [x] PriceLevel CRUD
+- [x] MenuItem links to prices
+- [x] Repository Include() added
+- [x] Effective price calculation logic
 
 ---
 

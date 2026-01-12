@@ -906,6 +906,29 @@ namespace Magidesk.Migrations.Migrations
                     b.ToTable("MenuItemModifierGroups", (string)null);
                 });
 
+            modelBuilder.Entity("Magidesk.Domain.Entities.MenuItemPrice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("MenuItemId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PriceLevelId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PriceLevelId");
+
+                    b.HasIndex("MenuItemId", "PriceLevelId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_MenuItemPrices_MenuItem_PriceLevel");
+
+                    b.ToTable("MenuItemPrices", (string)null);
+                });
+
             modelBuilder.Entity("Magidesk.Domain.Entities.MenuModifier", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1552,6 +1575,45 @@ namespace Magidesk.Migrations.Migrations
                     b.HasIndex("CashSessionId");
 
                     b.ToTable("Payouts", (string)null);
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.PriceLevel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("Version")
+                        .IsConcurrencyToken()
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_PriceLevels_IsActive");
+
+                    b.HasIndex("IsDefault")
+                        .HasDatabaseName("IX_PriceLevels_IsDefault");
+
+                    b.ToTable("PriceLevels", (string)null);
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.PrintTemplate", b =>
@@ -3404,6 +3466,51 @@ namespace Magidesk.Migrations.Migrations
                     b.Navigation("ModifierGroup");
                 });
 
+            modelBuilder.Entity("Magidesk.Domain.Entities.MenuItemPrice", b =>
+                {
+                    b.HasOne("Magidesk.Domain.Entities.MenuItem", "MenuItem")
+                        .WithMany("PriceLevels")
+                        .HasForeignKey("MenuItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Magidesk.Domain.Entities.PriceLevel", "PriceLevel")
+                        .WithMany()
+                        .HasForeignKey("PriceLevelId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.OwnsOne("Magidesk.Domain.ValueObjects.Money", "Price", b1 =>
+                        {
+                            b1.Property<Guid>("MenuItemPriceId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasColumnType("decimal(18,2)")
+                                .HasColumnName("PriceAmount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("character varying(3)")
+                                .HasColumnName("PriceCurrency");
+
+                            b1.HasKey("MenuItemPriceId");
+
+                            b1.ToTable("MenuItemPrices");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MenuItemPriceId");
+                        });
+
+                    b.Navigation("MenuItem");
+
+                    b.Navigation("Price")
+                        .IsRequired();
+
+                    b.Navigation("PriceLevel");
+                });
+
             modelBuilder.Entity("Magidesk.Domain.Entities.MenuModifier", b =>
                 {
                     b.HasOne("Magidesk.Domain.Entities.ModifierGroup", null)
@@ -4712,6 +4819,8 @@ namespace Magidesk.Migrations.Migrations
             modelBuilder.Entity("Magidesk.Domain.Entities.MenuItem", b =>
                 {
                     b.Navigation("ModifierGroups");
+
+                    b.Navigation("PriceLevels");
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.ModifierGroup", b =>

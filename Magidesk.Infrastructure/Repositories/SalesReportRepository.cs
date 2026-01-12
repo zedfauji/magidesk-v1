@@ -906,115 +906,7 @@ public class SalesReportRepository : ISalesReportRepository
         return Math.Max(1, timeSpan.TotalHours); // Minimum 1 hour to avoid division by zero
     }
 
-    public async Task<HourlyLaborReportDto> GetHourlyLaborReportAsync(DateTime startDate, DateTime endDate, Guid? employeeIdFilter = null, CancellationToken cancellationToken = default)
-    {
-        startDate = ToUtc(startDate);
-        endDate = ToUtc(endDate);
-        var report = new HourlyLaborReportDto
-        {
-            StartDate = ToSafeDisplayDate(startDate),
-            EndDate = ToSafeDisplayDate(endDate)
-        };
 
-        // Build base query for attendance histories in date range
-        var query = _context.AttendanceHistories
-            .AsNoTracking()
-            .Where(cio => cio.ClockInTime >= startDate && (cio.ClockOutTime == null || cio.ClockOutTime <= endDate));
-
-        // Apply employee filter if provided
-        if (employeeIdFilter.HasValue)
-        {
-            query = query.Where(cio => cio.UserId == new UserId(employeeIdFilter.Value));
-        }
-
-        // Execute query and group by hour
-        var clockEntries = await query
-            .Select(cio => new
-            {
-                UserId = (Guid)cio.UserId,
-                Hour = cio.ClockInTime.Hour,
-                cio.ClockInTime,
-                ClockOutTime = cio.ClockOutTime ?? DateTime.UtcNow,
-            })
-            .ToListAsync(cancellationToken);
-
-        // Resolve user names and wages
-        var userIds = clockEntries.Select(e => e.UserId).Distinct().ToList();
-        var users = await _context.Users
-            .AsNoTracking()
-            .Where(u => userIds.Contains(u.Id))
-            .ToDictionaryAsync(u => u.Id, u => new { Name = $"{u.FirstName} {u.LastName}", Wage = u.HourlyRate?.Amount ?? 0m }, cancellationToken);
-
-        // Group by hour and employee
-        var hourlyGroups = clockEntries
-            .Select(cio => new
-            {
-                cio.Hour,
-                cio.UserId,
-                UserName = users.GetValueOrDefault(cio.UserId)?.Name ?? "Unknown",
-                HoursWorked = (decimal)(cio.ClockOutTime - cio.ClockInTime).TotalHours,
-                Wage = users.GetValueOrDefault(cio.UserId)?.Wage ?? 0m
-            })
-            .GroupBy(cio => new { cio.Hour, cio.UserId, cio.UserName })
-            .Select(g => new
-            {
-                g.Key.Hour,
-                g.Key.UserId,
-                g.Key.UserName,
-                HoursWorked = g.Sum(cio => cio.HoursWorked),
-                LaborCost = g.Sum(cio => cio.HoursWorked * cio.Wage)
-            })
-            .GroupBy(x => x.Hour)
-            .Select(h => new HourlyLaborDto
-            {
-                Hour = h.Key,
-                Employees = h.Select(e => new EmployeeLaborDto
-                {
-                    EmployeeId = e.UserId,
-                    EmployeeName = e.UserName,
-                    HoursWorked = e.HoursWorked,
-                    LaborCost = e.LaborCost
-                }).ToList(),
-                TotalLaborHours = h.Sum(e => e.HoursWorked),
-                TotalLaborCost = h.Sum(e => e.LaborCost),
-                TotalSales = GetSalesForHour(h.Key, startDate, endDate),
-                LaborPercentage = 0
-            })
-            .OrderBy(g => g.Hour)
-            .ToList();
-
-        // Calculate labor percentages
-        var totalSales = hourlyGroups.Sum(g => g.TotalSales);
-        foreach (var hour in hourlyGroups)
-        {
-            hour.LaborPercentage = hour.TotalSales > 0 ? (hour.TotalLaborCost / hour.TotalSales) * 100 : 0;
-            hour.IsHighLaborPercentage = hour.LaborPercentage > 15.0m;
-        }
-
-        report.Hours = hourlyGroups;
-
-        // Calculate totals
-        report.Totals.TotalLaborHours = hourlyGroups.Sum(g => g.TotalLaborHours);
-        report.Totals.TotalLaborCost = hourlyGroups.Sum(g => g.TotalLaborCost);
-        report.Totals.TotalSales = totalSales;
-        report.Totals.AverageLaborPercentage = totalSales > 0 ? (report.Totals.TotalLaborCost / totalSales) * 100 : 0;
-        report.Totals.TotalEmployees = hourlyGroups.SelectMany(g => g.Employees).Select(e => e.EmployeeId).Distinct().Count();
-
-        return report;
-    }
-
-    private decimal GetSalesForHour(int hour, DateTime startDate, DateTime endDate)
-    {
-        // Simple implementation: get sales for the specified hour across the date range
-        // In a real implementation, this would be more sophisticated
-        var hourStart = startDate.Date.AddHours(hour);
-        var hourEnd = hourStart.AddHours(1);
-        
-        return _context.Tickets
-            .AsNoTracking()
-            .Where(t => t.ClosedAt >= hourStart && t.ClosedAt < hourEnd && t.Status == TicketStatus.Closed)
-            .Sum(t => t.TotalAmount.Amount);
-    }
 
     public async Task<DeliveryReportDto> GetDeliveryReportAsync(DateTime startDate, DateTime endDate, CancellationToken cancellationToken = default)
     {
@@ -1482,4 +1374,453 @@ public class SalesReportRepository : ISalesReportRepository
 
         return report;
     }
+
+
+
+    public async Task<DailySalesReportDto> GetDailySalesReportAsync(DateTime date, CancellationToken cancellationToken = default)
+    {
+        var startDate = ToUtc(date.Date);
+        var endDate = ToUtc(date.Date.AddDays(1).AddTicks(-1));
+
+        var report = new DailySalesReportDto
+        {
+            Date = ToSafeDisplayDate(startDate)
+        };
+
+        // Fetch data with projection to minimize bandwidth
+        var tickets = await _context.Tickets
+            .AsNoTracking()
+            .Where(t => t.ClosedAt >= startDate && t.ClosedAt <= endDate && t.Status == TicketStatus.Closed)
+            .Select(t => new
+            {
+                t.Id,
+                t.ClosedAt,
+                t.TableNumbers,
+                t.NumberOfGuests,
+                TotalAmount = t.TotalAmount.Amount,
+                TaxAmount = t.TaxAmount.Amount,
+                GratuityAmount = t.Gratuity != null ? t.Gratuity.Amount.Amount : 0m,
+                
+                // Project OrderLines
+                Items = t.OrderLines.Select(ol => new 
+                {
+                    ol.CategoryName,
+                    ol.IsTimeCharge,
+                    ol.Duration,
+                    TotalAmount = ol.TotalAmount.Amount,
+                    ItemCount = ol.ItemCount
+                }).ToList(),
+
+                // Project Payments
+                Payments = t.Payments
+                    .Where(p => !p.IsVoided)
+                    .Select(p => new 
+                    {
+                        p.PaymentType,
+                        p.TransactionType,
+                        Amount = p.Amount.Amount
+                    }).ToList()
+            })
+            .ToListAsync(cancellationToken);
+
+        if (!tickets.Any()) return report;
+
+        // --- Aggregations (In-Memory) ---
+
+        // 1. Totals
+        report.TotalSales = tickets.Sum(t => t.TotalAmount);
+        report.TotalTax = tickets.Sum(t => t.TaxAmount);
+        report.TotalGratuity = tickets.Sum(t => t.GratuityAmount);
+        report.TotalTransactions = tickets.Count;
+        report.TotalCustomers = tickets.Sum(t => t.NumberOfGuests);
+        
+        report.TotalTimeSales = tickets
+            .SelectMany(t => t.Items)
+            .Where(i => i.IsTimeCharge)
+            .Sum(i => i.TotalAmount);
+
+        report.TotalProductSales = report.TotalSales - report.TotalTimeSales;
+
+        // 2. Hourly Breakdown
+        report.HourlyBreakdown = tickets
+            .GroupBy(t => t.ClosedAt?.Hour ?? 0)
+            .Select(g => new HourlySalesDto
+            {
+                Hour = g.Key,
+                Sales = g.Sum(t => t.TotalAmount),
+                TransactionCount = g.Count()
+            })
+            .OrderBy(h => h.Hour)
+            .ToList();
+
+        // 3. Category Breakdown
+        var allItems = tickets.SelectMany(t => t.Items);
+        report.CategoryBreakdown = allItems
+            .GroupBy(i => i.CategoryName ?? "Uncategorized")
+            .Select(g => new CategorySalesDto
+            {
+                CategoryName = g.Key,
+                Sales = g.Sum(i => i.TotalAmount),
+                ItemCount = g.Sum(i => i.ItemCount)
+            })
+            .OrderByDescending(c => c.Sales)
+            .ToList();
+
+        // 4. Payment Breakdown
+        var allPayments = tickets.SelectMany(t => t.Payments);
+        report.PaymentBreakdown = allPayments
+            .GroupBy(p => p.PaymentType)
+            .Select(g => new PaymentMethodSalesDto
+            {
+                MethodName = GetPaymentTypeDisplayName(g.Key),
+                Amount = g.Sum(p => p.TransactionType == TransactionType.Credit ? p.Amount : -p.Amount),
+                Count = g.Count()
+            })
+            .OrderByDescending(p => p.Amount)
+            .ToList();
+
+        // 5. Table Breakdown (Time Charges Only)
+        var timeChargeTickets = tickets.Where(t => t.Items.Any(i => i.IsTimeCharge));
+        
+        var tableGroups = new List<TableSalesDto>();
+
+        foreach (var t in timeChargeTickets)
+        {
+            var timeItems = t.Items.Where(i => i.IsTimeCharge);
+            var totalTimeRevenue = timeItems.Sum(i => i.TotalAmount);
+            var totalDuration = timeItems.Aggregate(TimeSpan.Zero, (sum, i) => sum + (i.Duration ?? TimeSpan.Zero));
+            
+            var tableName = t.TableNumbers != null && t.TableNumbers.Count > 0
+                ? string.Join(", ", t.TableNumbers.OrderBy(n => n))
+                : "No Table";
+
+            tableGroups.Add(new TableSalesDto
+            {
+                TableName = tableName,
+                TimeRevenue = totalTimeRevenue,
+                Duration = totalDuration
+            });
+        }
+
+        report.TableBreakdown = tableGroups
+            .GroupBy(x => x.TableName)
+            .Select(g => new TableSalesDto
+            {
+                TableName = g.Key,
+                TimeRevenue = g.Sum(x => x.TimeRevenue),
+                Duration = g.Aggregate(TimeSpan.Zero, (sum, x) => sum + x.Duration)
+            })
+            .OrderByDescending(t => t.TimeRevenue)
+            .ToList();
+
+        return report;
+    }
+
+    public async Task<ShiftSummaryReportDto> GetShiftSummaryAsync(DateTime date, Guid shiftId, CancellationToken cancellationToken = default)
+    {
+        date = ToUtc(date);
+        var shift = await _context.Shifts.FindAsync(new object[] { shiftId }, cancellationToken);
+        var report = new ShiftSummaryReportDto
+        {
+            Date = date,
+            ShiftName = shift?.Name ?? "Unknown Shift"
+        };
+
+        var startOfDay = date.Date;
+        var endOfDay = date.Date.AddDays(1);
+
+        var sessions = await _context.CashSessions
+            .AsNoTracking()
+            .Include(s => s.Payments)
+            .Where(s => s.ShiftId == shiftId && s.OpenedAt >= startOfDay && s.OpenedAt < endOfDay)
+            .ToListAsync(cancellationToken);
+
+        if (!sessions.Any())
+        {
+            return report;
+        }
+
+        var userIds = sessions.Select(s => s.UserId.Value).Distinct().ToList();
+        var terminalIds = sessions.Select(s => s.TerminalId).Distinct().ToList();
+        
+        var allPayments = sessions.SelectMany(s => s.Payments).ToList();
+        var ticketIds = allPayments.Select(p => p.TicketId).Distinct().ToList();
+
+        var tickets = await _context.Tickets
+            .AsNoTracking()
+            .Where(t => ticketIds.Contains(t.Id))
+            .Select(t => new { t.Id, t.CreatedBy })
+            .ToListAsync(cancellationToken);
+
+        var extraUserIds = tickets.Select(t => t.CreatedBy.Value).Except(userIds).ToList();
+        userIds.AddRange(extraUserIds);
+
+        var users = await _context.Users
+            .AsNoTracking()
+            .Where(u => userIds.Contains(u.Id))
+            .ToDictionaryAsync(u => u.Id, u => $"{u.FirstName} {u.LastName}", cancellationToken);
+
+        var terminals = await _context.Terminals
+            .AsNoTracking()
+            .Where(t => terminalIds.Contains(t.Id))
+            .ToDictionaryAsync(t => t.Id, t => t.Name, cancellationToken);
+        
+        var ticketOwnerMap = tickets.ToDictionary(t => t.Id, t => t.CreatedBy.Value);
+
+        foreach (var session in sessions)
+        {
+            report.Drawers.Add(new DrawerSummaryDto
+            {
+                CashSessionId = session.Id,
+                TerminalName = terminals.GetValueOrDefault(session.TerminalId, "Unknown Terminal"),
+                UserName = users.GetValueOrDefault(session.UserId.Value, "Unknown User"),
+                Status = session.Status.ToString(),
+                OpeningBalance = session.OpeningBalance.Amount,
+                ExpectedCash = session.ExpectedCash.Amount,
+                ActualCash = session.ActualCash?.Amount ?? 0,
+                Difference = session.Difference?.Amount ?? 0
+            });
+        }
+
+        report.TotalSales = allPayments.Sum(p => p.Amount.Amount);
+        report.TotalTips = allPayments.Sum(p => p.TipsAmount.Amount);
+        report.TotalCash = allPayments.Where(p => p.PaymentType == PaymentType.Cash).Sum(p => p.Amount.Amount);
+        
+        var cardTypes = new[] 
+        { 
+            PaymentType.CreditCard, PaymentType.CreditVisa, PaymentType.CreditMasterCard, 
+            PaymentType.CreditAmex, PaymentType.CreditDiscover, 
+            PaymentType.DebitCard, PaymentType.DebitVisa, PaymentType.DebitMasterCard 
+        };
+        report.TotalCard = allPayments.Where(p => cardTypes.Contains(p.PaymentType)).Sum(p => p.Amount.Amount);
+        report.TotalVariance = report.Drawers.Sum(d => d.Difference);
+
+        var paymentGroups = allPayments.GroupBy(p => p.PaymentType);
+        foreach (var group in paymentGroups)
+        {
+            report.PaymentBreakdown.Add(new PaymentMethodSalesDto
+            {
+                MethodName = GetPaymentTypeDisplayName(group.Key),
+                Count = group.Count(),
+                Amount = group.Sum(p => p.Amount.Amount)
+            });
+        }
+
+        var serverGroups = allPayments
+            .GroupBy(p => ticketOwnerMap.ContainsKey(p.TicketId) ? ticketOwnerMap[p.TicketId] : Guid.Empty);
+
+        foreach (var group in serverGroups)
+        {
+            if (group.Key == Guid.Empty) continue;
+
+            report.ServerSales.Add(new ServerSalesDto
+            {
+                UserId = group.Key,
+                ServerName = users.GetValueOrDefault(group.Key, "Unknown Server"),
+                TicketCount = group.Select(p => p.TicketId).Distinct().Count(),
+                TotalSales = group.Sum(p => p.Amount.Amount),
+                TipAmount = group.Sum(p => p.TipsAmount.Amount)
+            });
+        }
+
+        return report;
+    }
+
+    public async Task<ServerPerformanceReportDto> GetServerPerformanceAsync(DateTime startDate, DateTime endDate, CancellationToken cancellationToken = default)
+    {
+        startDate = DateTime.SpecifyKind(startDate, DateTimeKind.Utc);
+        endDate = DateTime.SpecifyKind(endDate, DateTimeKind.Utc);
+
+        var report = new ServerPerformanceReportDto
+        {
+            StartDate = startDate,
+            EndDate = endDate
+        };
+
+        var tickets = await _context.Tickets
+            .AsNoTracking()
+            .Where(t => t.ClosedAt >= startDate && t.ClosedAt <= endDate && t.Status == TicketStatus.Closed)
+            .Include(t => t.Payments)
+            .ToListAsync(cancellationToken);
+
+        if (!tickets.Any())
+            return report;
+
+        var userIds = tickets.Select(t => t.CreatedBy.Value).Distinct().ToList();
+        var users = await _context.Users
+            .AsNoTracking()
+            .Where(u => userIds.Contains(u.Id))
+            .ToDictionaryAsync(u => u.Id, u => u.FirstName + " " + u.LastName, cancellationToken);
+
+        var serverGroups = tickets.GroupBy(t => t.CreatedBy.Value);
+
+        foreach (var group in serverGroups)
+        {
+            var userId = group.Key;
+            var serverTickets = group.ToList();
+
+            var item = new ServerPerformanceItemDto
+            {
+                UserId = userId,
+                ServerName = users.GetValueOrDefault(userId, "Unknown Server"),
+                TicketCount = serverTickets.Count,
+                TotalSales = serverTickets.Sum(t => t.TotalAmount.Amount),
+                TotalTips = serverTickets.Sum(t => t.Payments.Sum(p => p.TipsAmount.Amount))
+            };
+
+            var days = serverTickets.GroupBy(t => t.ClosedAt!.Value.Date);
+            decimal totalHours = 0;
+            
+            foreach (var dayGroup in days)
+            {
+                if (dayGroup.Count() > 1)
+                {
+                    var first = dayGroup.Min(t => t.ClosedAt!.Value);
+                    var last = dayGroup.Max(t => t.ClosedAt!.Value);
+                    var duration = (last - first).TotalHours;
+                    totalHours += (decimal)Math.Max(duration, 1.0); 
+                }
+                else
+                {
+                    totalHours += 1; 
+                }
+            }
+
+            item.HoursWorked = Math.Round(totalHours, 2);
+            report.Items.Add(item);
+        }
+
+        report.Items = report.Items.OrderByDescending(i => i.TotalSales).ToList();
+
+        return report;
+    }
+
+    public async Task<HourlyLaborReportDto> GetHourlyLaborReportAsync(DateTime startDate, DateTime endDate, Guid? employeeIdFilter = null, CancellationToken cancellationToken = default)
+    {
+        startDate = ToUtc(startDate);
+        endDate = ToUtc(endDate);
+
+        var report = new HourlyLaborReportDto
+        {
+            StartDate = ToSafeDisplayDate(startDate),
+            EndDate = ToSafeDisplayDate(endDate)
+        };
+
+        for (int i = 0; i < 24; i++)
+        {
+            report.Hours.Add(new HourlyLaborDto { Hour = i });
+        }
+
+        var ticketsQuery = _context.Tickets
+            .AsNoTracking()
+            .Where(t => t.ClosedAt >= startDate && t.ClosedAt <= endDate && t.Status == TicketStatus.Closed);
+
+        if (employeeIdFilter.HasValue)
+        {
+            var uid = new UserId(employeeIdFilter.Value);
+            ticketsQuery = ticketsQuery.Where(t => t.CreatedBy == uid);
+        }
+
+        var tickets = await ticketsQuery
+            .Select(t => new
+            {
+                t.Id,
+                t.TotalAmount.Amount,
+                t.ClosedAt,
+                t.CreatedBy
+            })
+            .ToListAsync(cancellationToken);
+
+        foreach (var t in tickets)
+        {
+            if (t.ClosedAt.HasValue)
+            {
+                var hour = t.ClosedAt.Value.Hour;
+                report.Hours[hour].TotalSales += t.Amount;
+            }
+        }
+
+        var userIds = tickets.Select(t => t.CreatedBy.Value).Distinct().ToList();
+        var users = await _context.Users
+            .AsNoTracking()
+            .Where(u => userIds.Contains(u.Id))
+            .ToDictionaryAsync(u => u.Id, u => new { Name = u.FirstName + " " + u.LastName, Rate = u.HourlyRate != null ? u.HourlyRate.Amount : 0m }, cancellationToken);
+
+        var userDailyActivity = tickets
+            .GroupBy(t => new { t.CreatedBy.Value, Date = t.ClosedAt!.Value.Date })
+            .ToList();
+
+        foreach (var activity in userDailyActivity)
+        {
+            var userId = activity.Key.Value;
+            if (!users.TryGetValue(userId, out var user)) continue;
+
+            var shiftStart = activity.Min(t => t.ClosedAt!.Value);
+            var shiftEnd = activity.Max(t => t.ClosedAt!.Value);
+            
+            if ((shiftEnd - shiftStart).TotalMinutes < 60)
+            {
+                shiftEnd = shiftStart.AddMinutes(60);
+            }
+
+            var startHour = new DateTime(shiftStart.Year, shiftStart.Month, shiftStart.Day, shiftStart.Hour, 0, 0, shiftStart.Kind);
+            
+            while (startHour < shiftEnd)
+            {
+                var nextHour = startHour.AddHours(1);
+                var overlapStart = startHour > shiftStart ? startHour : shiftStart;
+                var overlapEnd = nextHour < shiftEnd ? nextHour : shiftEnd;
+                
+                if (overlapEnd > overlapStart)
+                {
+                    var durationHours = (decimal)(overlapEnd - overlapStart).TotalHours;
+                    var cost = durationHours * user.Rate;
+                    var hourBucket = startHour.Hour;
+
+                    var bucket = report.Hours[hourBucket];
+                    
+                    bucket.TotalLaborHours += durationHours;
+                    bucket.TotalLaborCost += cost;
+
+                    var empDto = bucket.Employees.FirstOrDefault(e => e.EmployeeId == userId);
+                    if (empDto == null)
+                    {
+                        empDto = new EmployeeLaborDto 
+                        { 
+                            EmployeeId = userId, 
+                            EmployeeName = user.Name 
+                        };
+                        bucket.Employees.Add(empDto);
+                    }
+                    empDto.HoursWorked += durationHours;
+                    empDto.LaborCost += cost;
+                }
+
+                startHour = nextHour;
+            }
+        }
+
+        foreach (var h in report.Hours)
+        {
+            report.Totals.TotalSales += h.TotalSales;
+            report.Totals.TotalLaborCost += h.TotalLaborCost;
+            report.Totals.TotalLaborHours += h.TotalLaborHours;
+
+            if (h.TotalSales > 0)
+            {
+                h.LaborPercentage = (h.TotalLaborCost / h.TotalSales) * 100;
+                h.IsHighLaborPercentage = h.LaborPercentage > 30;
+            }
+        }
+
+        if (report.Totals.TotalSales > 0)
+        {
+            report.Totals.AverageLaborPercentage = (report.Totals.TotalLaborCost / report.Totals.TotalSales) * 100;
+        }
+
+        report.Totals.TotalEmployees = userIds.Count;
+
+        return report;
+    }
+
 }

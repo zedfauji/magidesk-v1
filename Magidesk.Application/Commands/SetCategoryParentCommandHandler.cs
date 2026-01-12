@@ -23,30 +23,30 @@ public class SetCategoryParentCommandHandler : IRequestHandler<SetCategoryParent
             return new SetCategoryParentResult(false, "Category not found.");
 
         // Validate circular reference if setting a parent
-        if (request.ParentCategoryId.HasValue)
-        {
-            if (await WouldCreateCircularReference(request.CategoryId, request.ParentCategoryId.Value, cancellationToken))
+            // Fetch parent if ID is provided
+            MenuCategory? parent = null;
+            if (request.ParentCategoryId.HasValue)
             {
-                return new SetCategoryParentResult(false, "Cannot create circular reference in category hierarchy.");
+                if (await WouldCreateCircularReference(request.CategoryId, request.ParentCategoryId.Value, cancellationToken))
+                {
+                    return new SetCategoryParentResult(false, "Cannot create circular reference in category hierarchy.");
+                }
+
+                parent = await _categoryRepository.GetByIdAsync(request.ParentCategoryId.Value, cancellationToken);
+                if (parent == null)
+                    return new SetCategoryParentResult(false, "Parent category not found.");
             }
 
-            // Verify parent exists
-            var parent = await _categoryRepository.GetByIdAsync(request.ParentCategoryId.Value, cancellationToken);
-            if (parent == null)
-                return new SetCategoryParentResult(false, "Parent category not found.");
-        }
-
-        // Set parent (domain validation handles self-reference)
-        try
-        {
-            category.SetParent(request.ParentCategoryId);
-            await _categoryRepository.UpdateAsync(category, cancellationToken);
-            return new SetCategoryParentResult(true, "Category parent updated successfully.");
-        }
-        catch (Domain.Exceptions.BusinessRuleViolationException ex)
-        {
-            return new SetCategoryParentResult(false, ex.Message);
-        }
+            try
+            {
+                category.SetParent(parent);
+                await _categoryRepository.UpdateAsync(category, cancellationToken);
+                return new SetCategoryParentResult(true, "Category parent updated successfully.");
+            }
+            catch (Domain.Exceptions.BusinessRuleViolationException ex)
+            {
+                return new SetCategoryParentResult(false, ex.Message);
+            }
     }
 
     /// <summary>

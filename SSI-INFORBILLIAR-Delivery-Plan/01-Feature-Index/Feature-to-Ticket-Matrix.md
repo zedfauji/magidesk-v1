@@ -162,7 +162,7 @@
 | G.5 | Modifier groups | ✅ FULL | P1 | [walkthrough](file:///C:/Users/giris/.gemini/antigravity/brain/d81c90a1-d025-4732-8393-ef5f6799e279/walkthrough.md) | ✅ | FE-G.5-01 | ✅ |
 | G.6 | Product images | ✅ FULL | - | - | ✅ | - | ✅ |
 | G.7 | SKU/barcode | ❌ NOT | P2 | BE-G.7-01 | ❌ | - | ❌ |
-| G.8 | Pricing tiers | ⚠️ PART | P2 | - | ⚠️ | - | ⚠️ |
+| G.8 | Pricing tiers | ✅ FULL | P2 | BE-G.8-01 ✅ | ✅ | FE-G.8-01 ✅ | ✅ |
 | G.9 | Product import | ❌ NOT | P2 | BE-G.9-01 | ❌ | - | ❌ |
 | G.10 | Product export | ❌ NOT | P2 | BE-G.10-01 | ❌ | - | ❌ |
 | G.11 | Recipe / ingredient tracking | ❌ NOT | P2 | BE-G.11-01 | ❌ | - | ❌ |
@@ -174,21 +174,21 @@
 
 | ID | Feature | Audit | Priority | Backend Ticket | BE Status | Frontend Ticket | FE Status |
 |----|---------|-------|----------|----------------|-----------|-----------------|-----------|
-| H.1 | Daily sales report | ⚠️ PART | P1 | BE-H.1-01 | ❌ | FE-H.1-01 | ❌ |
-| H.2 | Shift summary | ⚠️ PART | P1 | BE-H.2-01 | ❌ | - | ⚠️ |
-| H.3 | Server performance | ❌ NOT | P2 | BE-H.3-01 | ❌ | - | ❌ |
-| H.4 | Table utilization | ❌ NOT | P1 | BE-H.4-01 | ❌ | FE-H.4-01 | ❌ |
+| H.1 | Daily sales report | ✅ FULL | P1 | BE-H.1-01 | ✅ | FE-H.1-01 | ✅ |
+| H.2 | Shift Summary Report | ✅ FULL | P1 | BE-H.2-01 ✅ | ✅ | FE-H.2-01 ✅ | ✅ |
+| H.3 | Server Performance Report | ✅ FULL | FE-H.3-01<br>BE-H.3-01 | [FE] SalesReportsPage.xaml (Server Perf Grid)<br>[BE] GetServerPerformanceQuery/Handler | ✅ | FE-H.3-01 | ✅ |
+| H.4 | Hourly Labor Report | 🔴 TODO | FE-H.4-01<br>BE-H.4-01 | | ❌ | FE-H.5-01 | ❌ |
 | H.5 | Time-based revenue | ❌ NOT | P1 | BE-H.5-01 | ❌ | FE-H.5-01 | ❌ |
 | H.6 | Member activity | ❌ NOT | P1 | BE-H.6-01 | ❌ | FE-H.6-01 | ❌ |
-| H.7 | Inventory report | ⚠️ PART | P2 | BE-H.7-01 | ❌ | - | ⚠️ |
-| H.8 | Tax report | ⚠️ PART | P2 | BE-H.8-01 | ❌ | - | ⚠️ |
+| H.7 | Inventory report | ⚠️ PART | P2 | BE-H.7-01 | ❌ | FE-H.7-01 | ⚠️ |
+| H.8 | Tax report | ⚠️ PART | P2 | BE-H.8-01 | ❌ | FE-H.8-01 | ⚠️ |
 | H.9 | Custom date range | ✅ FULL | - | - | ✅ | - | ✅ |
-| H.10 | PDF export | ⚠️ PART | P2 | BE-H.10-01 | ❌ | - | ⚠️ |
-| H.11 | Excel export | ⚠️ PART | P2 | BE-H.11-01 | ❌ | - | ⚠️ |
-| H.12 | Payment method breakdown | ❌ NOT | P2 | BE-H.12-01 | ❌ | - | ❌ |
-| H.13 | Discount usage report | ❌ NOT | P2 | BE-H.13-01 | ❌ | - | ❌ |
-| H.14 | Hourly sales trend | ❌ NOT | P2 | BE-H.14-01 | ❌ | - | ❌ |
-| H.15 | Product popularity report | ❌ NOT | P2 | BE-H.15-01 | ❌ | - | ❌ |
+| H.10 | PDF export | ⚠️ PART | P2 | BE-H.10-01 | ❌ | FE-H.10-01 | ❌ |
+| H.11 | Excel export | ⚠️ PART | P2 | BE-H.11-01 | ❌ | FE-H.11-01 | ❌ |
+| H.12 | Payment method breakdown | ❌ NOT | P2 | BE-H.12-01 | ❌ | FE-H.12-01 | ❌ |
+| H.13 | Discount usage report | ❌ NOT | P2 | BE-H.13-01 | ❌ | FE-H.13-01 | ❌ |
+| H.14 | Hourly sales trend | ❌ NOT | P2 | BE-H.14-01 | ❌ | FE-H.14-01 | ❌ |
+| H.15 | Product popularity report | ❌ NOT | P2 | BE-H.15-01 | ❌ | FE-H.15-01 | ❌ |
 
 ---
 

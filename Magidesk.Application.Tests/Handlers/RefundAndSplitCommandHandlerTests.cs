@@ -6,6 +6,9 @@ using Magidesk.Domain.DomainServices;
 using Magidesk.Domain.Entities;
 using Magidesk.Domain.ValueObjects;
 
+using Moq;
+using Magidesk.Application.Interfaces;
+
 namespace Magidesk.Application.Tests.Handlers;
 
 public class RefundAndSplitCommandHandlerTests
@@ -20,8 +23,9 @@ public class RefundAndSplitCommandHandlerTests
         var paymentDomain = new PaymentDomainService();
         var tax = new TaxDomainService();
         var ticketDomain = new TicketDomainService(tax);
+        var securityMock = new Mock<ISecurityService>();
 
-        var handler = new RefundTicketCommandHandler(tickets, payments, gateway, audits, paymentDomain, ticketDomain);
+        var handler = new RefundTicketCommandHandler(tickets, payments, gateway, audits, paymentDomain, ticketDomain, securityMock.Object);
 
         var userId = new UserId(Guid.NewGuid());
         var terminalId = Guid.NewGuid();

@@ -198,9 +198,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IGroupSettleService, GroupSettleService>();
         services.AddScoped<IMerchantBatchService, MerchantBatchService>();
         services.AddScoped<TableLayoutExporter>();
-        
-        // Stock Management Services (G.3)
-        services.AddScoped<ILowStockAlertService, LowStockAlertService>();
 
         return services;
     }

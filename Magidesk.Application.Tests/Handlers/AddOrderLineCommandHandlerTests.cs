@@ -4,6 +4,9 @@ using Magidesk.Application.Services;
 using Magidesk.Application.Tests.TestDoubles;
 using Magidesk.Domain.Entities;
 using Magidesk.Domain.ValueObjects;
+using Magidesk.Application.Interfaces;
+
+using Moq;
 
 namespace Magidesk.Application.Tests.Handlers;
 
@@ -15,7 +18,8 @@ public class AddOrderLineCommandHandlerTests
         var tickets = new InMemoryTicketRepository();
         var menu = new InMemoryMenuRepository();
         var audits = new InMemoryAuditEventRepository();
-        var handler = new AddOrderLineCommandHandler(tickets, menu, audits);
+        var stockMock = new Mock<IRepository<StockMovement>>();
+        var handler = new AddOrderLineCommandHandler(tickets, menu, audits, stockMock.Object);
 
         var userId = new UserId(Guid.NewGuid());
         var ticketNumber = await tickets.GetNextTicketNumberAsync();
@@ -48,7 +52,8 @@ public class AddOrderLineCommandHandlerTests
         var tickets = new InMemoryTicketRepository();
         var menu = new InMemoryMenuRepository();
         var audits = new InMemoryAuditEventRepository();
-        var handler = new AddOrderLineCommandHandler(tickets, menu, audits);
+        var stockMock = new Mock<IRepository<StockMovement>>();
+        var handler = new AddOrderLineCommandHandler(tickets, menu, audits, stockMock.Object);
 
         var cmd = new AddOrderLineCommand
         {
