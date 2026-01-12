@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Magidesk.Application.Interfaces;
+using Magidesk.Application.Interfaces.Persistence;
 using Magidesk.Application.Services.Reports;
 using Magidesk.Infrastructure.Data;
 using Magidesk.Infrastructure.PaymentGateways;
@@ -86,6 +87,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IMemberRepository, MemberRepository>();
         services.AddScoped<IMembershipTierRepository, MembershipTierRepository>();
         services.AddScoped<Magidesk.Application.Interfaces.IRepository<Magidesk.Domain.Entities.StockMovement>, StockMovementRepository>();
+        services.AddScoped<IPriceLevelRepository, PriceLevelRepository>(); // G.8
+        services.AddScoped<IPromotionRepository, PromotionRepository>();
 
         // Application Services
         // Legacy PricingService for backward compatibility (EndTableSessionCommandHandler)

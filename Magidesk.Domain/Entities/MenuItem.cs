@@ -92,6 +92,10 @@ public class MenuItem
     
     private readonly List<RecipeLine> _recipeLines = new();
     public IReadOnlyCollection<RecipeLine> RecipeLines => _recipeLines.AsReadOnly();
+    
+    // G.8 Pricing Tiers
+    private readonly List<MenuItemPrice> _menuItemPrices = new();
+    public virtual IReadOnlyCollection<MenuItemPrice> MenuItemPrices => _menuItemPrices.AsReadOnly();
 
     public void AddRecipeLine(Guid inventoryItemId, decimal quantity)
     {
@@ -191,5 +195,45 @@ public class MenuItem
         // Typically handled via aggregate roots or dedicated service if simpler,
         // but DDD prefers methods here.
         // Assuming MenuItemModifierGroup is the join entity.
+    }
+
+    public void SetPriceForLevel(PriceLevel level, Money price)
+    {
+        if (level == null) throw new ArgumentNullException(nameof(level));
+        if (price == null) throw new ArgumentNullException(nameof(price));
+
+        var existing = _menuItemPrices.Find(x => x.PriceLevelId == level.Id);
+        if (existing != null)
+        {
+            existing.UpdatePrice(price);
+        }
+        else
+        {
+            _menuItemPrices.Add(MenuItemPrice.Create(Id, level.Id, price));
+        }
+    }
+
+    /// <summary>
+    /// Gets the price for a specific price level.
+    /// Fallback logic:
+    /// 1. Specific Level Price
+    /// 2. Default Level Price (if defaultLevelId provided)
+    /// 3. Base Price
+    /// </summary>
+    public Money GetPriceForLevel(Guid levelId, Guid? defaultLevelId = null)
+    {
+        // 1. Check specific level
+        var specificPrice = _menuItemPrices.Find(x => x.PriceLevelId == levelId);
+        if (specificPrice != null) return specificPrice.Price;
+
+        // 2. Check default level
+        if (defaultLevelId.HasValue && defaultLevelId.Value != levelId)
+        {
+            var defaultPrice = _menuItemPrices.Find(x => x.PriceLevelId == defaultLevelId.Value);
+            if (defaultPrice != null) return defaultPrice.Price;
+        }
+
+        // 3. Fallback to base price
+        return Price;
     }
 }

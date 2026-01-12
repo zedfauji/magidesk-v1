@@ -31,19 +31,19 @@
 | A.3 | List active sessions | 2/2 (100%) | P0 | BE-A.3-01 ✅ | ✅ | FE-A.3-01 ✅ | ✅ |
 | A.4 | Real-time status | ✅ FULL | P0 | BE-A.4-01 ✅ | ✅ | FE-A.4-01 ✅ | ✅ |
 | A.5 | Table types | ✅ FULL | P0 | BE-A.5-01 ✅ | ✅ | FE-A.5-01 | ❌ |
-| A.6 | Type per table | ✅ FULL | P0 | BE-A.6-01 ✅ | ✅ | - | - |
-| A.7 | Link equipment | ❌ NOT | P2 | BE-A.7-01 | ❌ | - | ❌ |
-| A.8 | Game history | ❌ NOT | P2 | BE-A.8-01 | ❌ | - | ❌ |
+| A.6 | Type per table | ✅ FULL | P0 | BE-A.6-01 ✅ | ✅ | FE-A.6-01 | ❌ |
+| A.7 | Link equipment | ❌ NOT | P2 | BE-A.7-01 | ❌ | FE-A.7-01 | ❌ |
+| A.8 | Game history | ❌ NOT | P2 | BE-A.8-01 | ❌ | FE-A.8-01 | ❌ |
 | A.9 | Time-based pricing | ✅ FULL | P0 | BE-A.9-01 ✅ | ✅ | FE-A.9-01 | ❌ |
-| A.10 | First-hour pricing | ❌ NOT | P1 | BE-A.10-01 | ❌ | - | - |
-| A.11 | Time rounding | ❌ NOT | P1 | BE-A.11-01 | ❌ | - | - |
-| A.12 | Minimum charge | ❌ NOT | P1 | BE-A.12-01 | ❌ | - | - |
-| A.13 | Server assignment | ⚠️ PART | P2 | BE-A.13-01 | ❌ | - | ❌ |
-| A.14 | Merge tables | ❌ NOT | P2 | BE-A.14-01 | ❌ | - | ❌ |
-| A.15 | Split tables | ❌ NOT | P2 | BE-A.15-01 | ❌ | - | ❌ |
+| A.10 | First-hour pricing | ❌ NOT | P1 | BE-A.10-01 | ❌ | FE-A.10-01 | ❌ |
+| A.11 | Time rounding | ❌ NOT | P1 | BE-A.11-01 | ❌ | FE-A.11-01 | ❌ |
+| A.12 | Minimum charge | ❌ NOT | P1 | BE-A.12-01 | ❌ | FE-A.12-01 | ❌ |
+| A.13 | Server assignment | ⚠️ PART | P2 | BE-A.13-01 | ❌ | FE-A.13-01 | ❌ |
+| A.14 | Merge tables | ❌ NOT | P2 | BE-A.14-01 | ❌ | FE-A.14-01 | ❌ |
+| A.15 | Split tables | ❌ NOT | P2 | BE-A.15-01 | ❌ | FE-A.15-01 | ❌ |
 | A.16 | Pause/resume | ❌ NOT | P0 | BE-A.16-01 | ❌ | FE-A.16-01 | ❌ |
 | A.17 | Manager override | ❌ NOT | P0 | BE-A.17-01 | ❌ | FE-A.17-01 | ❌ |
-| A.18 | Transfer session | ❌ NOT | P2 | BE-A.18-01 | ❌ | - | ❌ |
+| A.18 | Transfer session | ❌ NOT | P2 | BE-A.18-01 | ❌ | FE-A.18-01 | ❌ |
 | A.19 | Guest count | ⚠️ PART | P1 | BE-A.19-01 | ❌ | FE-A.19-01 | ❌ |
 
 ---
@@ -52,24 +52,24 @@
 
 | ID | Feature | Audit | Priority | Backend Ticket | BE Status | Frontend Ticket | FE Status |
 |----|---------|-------|----------|----------------|-----------|-----------------|-----------|
-| B.1 | Floor / room definitions | ✅ FULL | - | - | ✅ | - | ✅ |
-| B.2 | Multiple floors per venue | ✅ FULL | - | - | ✅ | - | ✅ |
-| B.3 | Floor dimensions | ✅ FULL | - | - | ✅ | - | ✅ |
+| B.1 | Floor / room definitions | ✅ FULL | - | BE-B.1-01 ✅ | ✅ | FE-B.1-01 ✅ | ✅ |
+| B.2 | Multiple floors per venue | ✅ FULL | - | BE-B.2-01 ✅ | ✅ | FE-B.2-01 ✅ | ✅ |
+| B.3 | Floor dimensions | ✅ FULL | - | BE-B.3-01 ✅ | ✅ | FE-B.3-01 ✅ | ✅ |
 | B.4 | Background configuration | ⚠️ PART | P2 | BE-B.4-01 | ❌ | FE-B.4-01 | ❌ |
-| B.5 | Table layout designer | ✅ FULL | - | - | ✅ | - | ✅ |
-| B.6 | Drag-and-drop placement | ✅ FULL | - | - | ✅ | - | ✅ |
-| B.7 | Resize tables | ✅ FULL | - | - | ✅ | - | ✅ |
-| B.8 | Table shape configuration | ✅ FULL | - | - | ✅ | - | ✅ |
+| B.5 | Table layout designer | ✅ FULL | - | BE-B.5-01 ✅ | ✅ | FE-B.5-01 ✅ | ✅ |
+| B.6 | Drag-and-drop placement | ✅ FULL | - | BE-B.6-01 ✅ | ✅ | FE-B.6-01 ✅ | ✅ |
+| B.7 | Resize tables | ✅ FULL | - | BE-B.7-01 ✅ | ✅ | FE-B.7-01 ✅ | ✅ |
+| B.8 | Table shape configuration | ✅ FULL | - | BE-B.8-01 ✅ | ✅ | FE-B.8-01 ✅ | ✅ |
 | B.9 | Snap-to-grid alignment | ❌ NOT | P2 | BE-B.9-01 | ❌ | FE-B.9-01 | ❌ |
 | B.10 | Alignment guides | ❌ NOT | P2 | BE-B.10-01 | ❌ | FE-B.10-01 | ❌ |
 | B.11 | Zoom and pan | ⚠️ PART | P2 | BE-B.11-01 | ❌ | FE-B.11-01 | ❌ |
 | B.12 | Multi-select and group move | ❌ NOT | P2 | BE-B.12-01 | ❌ | FE-B.12-01 | ❌ |
-| B.13 | Layout versions per floor | ⚠️ PART | P2 | BE-B.13-01 | ❌ | - | ⚠️ |
-| B.14 | Clone layout | ❌ NOT | P2 | BE-B.14-01 | ❌ | - | ❌ |
-| B.15 | Draft vs published layout | ✅ FULL | - | - | ✅ | - | ✅ |
-| B.16 | Layout rollback / revert | ❌ NOT | P2 | BE-B.16-01 | ❌ | - | ❌ |
-| B.17 | Visual occupancy map | ✅ FULL | - | - | ✅ | - | ✅ |
-| B.18 | Layout persistence and reload safety | ✅ FULL | - | - | ✅ | - | ✅ |
+| B.13 | Layout versions per floor | ⚠️ PART | P2 | BE-B.13-01 | ❌ | FE-B.13-01 | ⚠️ |
+| B.14 | Clone layout | ❌ NOT | P2 | BE-B.14-01 | ❌ | FE-B.14-01 | ❌ |
+| B.15 | Draft vs published layout | ✅ FULL | - | BE-B.15-01 ✅ | ✅ | FE-B.15-01 ✅ | ✅ |
+| B.16 | Layout rollback / revert | ❌ NOT | P2 | BE-B.16-01 | ❌ | FE-B.16-01 | ❌ |
+| B.17 | Visual occupancy map | ✅ FULL | - | BE-B.17-01 ✅ | ✅ | FE-B.17-01 ✅ | ✅ |
+| B.18 | Layout persistence and reload safety | ✅ FULL | - | BE-B.18-01 ✅ | ✅ | FE-B.18-01 ✅ | ✅ |
 
 ---
 

@@ -10,9 +10,9 @@ namespace Magidesk.Application.Queries;
 
 public class GetCategoryHierarchyQueryHandler : IRequestHandler<GetCategoryHierarchyQuery, GetCategoryHierarchyResult>
 {
-    private readonly IRepository<MenuCategory> _categoryRepository;
+    private readonly IMenuCategoryRepository _categoryRepository;
 
-    public GetCategoryHierarchyQueryHandler(IRepository<MenuCategory> categoryRepository)
+    public GetCategoryHierarchyQueryHandler(IMenuCategoryRepository categoryRepository)
     {
         _categoryRepository = categoryRepository;
     }

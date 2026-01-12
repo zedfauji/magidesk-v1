@@ -1,7 +1,9 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Magidesk.Application.Interfaces;
+using Magidesk.Application.Interfaces.Persistence;
 using Magidesk.Domain.Entities;
+using Magidesk.Domain.ValueObjects;
 using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
@@ -11,11 +13,16 @@ public class MenuEditorViewModel : ViewModelBase
     private readonly IMenuCategoryRepository _categoryRepository;
     private readonly IMenuGroupRepository _groupRepository;
     private readonly IMenuRepository _menuRepository;
+    private readonly IPriceLevelRepository _priceLevelRepository; // G.8
 
     private readonly IInventoryItemRepository _inventoryRepository;
     private readonly IPrinterGroupRepository _printerGroupRepository;
     
     // ... (fields)
+
+    // Pricing Tiers (G.8)
+    private List<PriceLevel> _allPriceLevels = new();
+    public ObservableCollection<ItemPriceViewModel> ItemPrices { get; } = new();
 
     private MenuCategory? _selectedCategory;
     private bool _isEditing;
@@ -230,6 +237,14 @@ public class MenuEditorViewModel : ViewModelBase
                         SelectedPrinterGroup = null;
                     }
 
+                    // Load Pricing Tiers (G.8)
+                    ItemPrices.Clear();
+                    foreach (var level in _allPriceLevels)
+                    {
+                        var existing = value.MenuItemPrices.FirstOrDefault(mp => mp.PriceLevelId == level.Id);
+                        ItemPrices.Add(new ItemPriceViewModel(level, existing?.Price));
+                    }
+
                     _ = LoadRecipeLinesAsync(value);
                 }
                 else if (SelectedGroup != null)
@@ -252,12 +267,14 @@ public class MenuEditorViewModel : ViewModelBase
         IMenuCategoryRepository categoryRepository,
         IMenuGroupRepository groupRepository,
         IMenuRepository menuRepository,
+        IPriceLevelRepository priceLevelRepository,
         IInventoryItemRepository inventoryRepository,
         IPrinterGroupRepository printerGroupRepository)
     {
         _categoryRepository = categoryRepository;
         _groupRepository = groupRepository;
         _menuRepository = menuRepository;
+        _priceLevelRepository = priceLevelRepository;
         _inventoryRepository = inventoryRepository;
         _printerGroupRepository = printerGroupRepository;
         Title = "Menu Editor";
@@ -300,6 +317,19 @@ public class MenuEditorViewModel : ViewModelBase
                  else
                  {
                      SelectedItem.DisableStockTracking();
+                 }
+
+                 // Pricing Tiers (G.8)
+                 foreach (var priceVm in ItemPrices)
+                 {
+                     if (decimal.TryParse(priceVm.Amount, out var amount))
+                     {
+                         var level = _allPriceLevels.FirstOrDefault(l => l.Id == priceVm.PriceLevelId);
+                         if (level != null)
+                         {
+                             SelectedItem.SetPriceForLevel(level, new Magidesk.Domain.ValueObjects.Money(amount));
+                         }
+                     }
                  }
                  
                  await _menuRepository.UpdateAsync(SelectedItem);
@@ -484,6 +514,9 @@ public class MenuEditorViewModel : ViewModelBase
             var printerGroups = await _printerGroupRepository.GetAllAsync();
             foreach (var pg in printerGroups) PrinterGroups.Add(pg);
 
+            // Load Price Levels (G.8)
+            _allPriceLevels = (await _priceLevelRepository.GetAllAsync()).OrderBy(l => l.DisplayOrder).ToList();
+
             StatusMessage = "Loaded successfully.";
         }
         catch (Exception ex)
@@ -576,3 +609,5 @@ public class MenuEditorViewModel : ViewModelBase
         StatusMessage = "Recipe line removed.";
     }
 }
+
+

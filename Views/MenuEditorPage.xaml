@@ -138,10 +138,29 @@
                                   Visibility="{x:Bind ViewModel.SelectedItem, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=Reverse}"/>
                                   
                          <!-- Price (Item Only) -->
-                         <TextBox Header="Price" 
+                         <TextBox Header="Base Price" 
                                   InputScope="Number"
                                   Text="{x:Bind ViewModel.EditingPrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                   Visibility="{x:Bind ViewModel.SelectedItem, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"/>
+
+                         <!-- Pricing Tiers (G.8) -->
+                         <StackPanel Visibility="{x:Bind ViewModel.SelectedItem, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}">
+                             <TextBlock Text="Tiered Pricing" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="0,12,0,8"/>
+                             <ItemsControl ItemsSource="{x:Bind ViewModel.ItemPrices, Mode=OneWay}">
+                                 <ItemsControl.ItemTemplate>
+                                     <DataTemplate>
+                                          <Grid Margin="0,0,0,8">
+                                              <Grid.ColumnDefinitions>
+                                                  <ColumnDefinition Width="*"/>
+                                                  <ColumnDefinition Width="120"/>
+                                              </Grid.ColumnDefinitions>
+                                              <TextBlock Text="{Binding LevelName}" VerticalAlignment="Center" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                              <TextBox Grid.Column="1" Text="{Binding Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="0.00" InputScope="Number" HorizontalAlignment="Stretch"/>
+                                          </Grid>
+                                     </DataTemplate>
+                                 </ItemsControl.ItemTemplate>
+                             </ItemsControl>
+                         </StackPanel>
 
                          <!-- Printer Routing (All Types) -->
                          <ComboBox Header="Printer Routing" 

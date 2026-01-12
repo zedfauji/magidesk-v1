@@ -70,6 +70,9 @@ public class ApplicationDbContext : DbContext
     public DbSet<Member> Members { get; set; } = null!;
     public DbSet<MembershipTier> MembershipTiers { get; set; } = null!;
     public DbSet<StockMovement> StockMovements { get; set; } = null!;
+    // G.8 Pricing Tiers
+    public DbSet<PriceLevel> PriceLevels { get; set; } = null!;
+    public DbSet<MenuItemPrice> MenuItemPrices { get; set; } = null!;
     // FractionalModifier is part of Set<MenuModifier> via Inheritance
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -133,6 +136,8 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new CustomerConfiguration());
         modelBuilder.ApplyConfiguration(new MemberConfiguration());
         modelBuilder.ApplyConfiguration(new MembershipTierConfiguration());
+        modelBuilder.ApplyConfiguration(new PriceLevelConfiguration());
+        modelBuilder.ApplyConfiguration(new MenuItemPriceConfiguration());
     }
 }
 

@@ -1,0 +1,25 @@
+root = true
+
+# Global Analyzer Settings
+[*.{cs,vb}]
+dotnet_analyzer_diagnostic.category.Style.severity = warning
+dotnet_analyzer_diagnostic.category.CodeQuality.severity = warning
+dotnet_analyzer_diagnostic.category.Performance.severity = warning
+dotnet_analyzer_diagnostic.category.Reliability.severity = warning
+dotnet_analyzer_diagnostic.category.Usage.severity = warning
+dotnet_analyzer_diagnostic.category.Security.severity = warning
+dotnet_analyzer_diagnostic.category.Design.severity = warning
+
+# generated code
+[*.Generated.cs]
+generated_code = true
+dotnet_analyzer_diagnostic.severity = none
+
+# standard visual studio generated files
+[TemporaryGeneratedFile_*.cs]
+generated_code = true
+dotnet_analyzer_diagnostic.severity = none
+
+# known noisy rules - can be uncommented as we discover them
+# dotnet_diagnostic.CA1062.severity = none # Validate arguments of public methods
+# dotnet_diagnostic.CA2007.severity = none # Consider calling ConfigureAwait on the awaited task (often noisy in UI apps)

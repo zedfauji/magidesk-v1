@@ -9,12 +9,12 @@ namespace Magidesk.Application.Commands;
 
 public class AdjustStockCommandHandler : IRequestHandler<AdjustStockCommand, Unit>
 {
-    private readonly IRepository<MenuItem> _menuItemRepository;
+    private readonly IMenuRepository _menuItemRepository;
     private readonly IRepository<StockMovement> _stockMovementRepository;
     private readonly ILowStockAlertService _alertService;
 
     public AdjustStockCommandHandler(
-        IRepository<MenuItem> menuItemRepository,
+        IMenuRepository menuItemRepository,
         IRepository<StockMovement> stockMovementRepository,
         ILowStockAlertService alertService)
     {

@@ -92,6 +92,7 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<Magidesk.Presentation.ViewModels.OrderEntryViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.BackOfficeViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.MenuEditorViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.PriceLevelManagementViewModel>(); // G.8
                     services.AddTransient<Magidesk.Presentation.ViewModels.ModifierEditorViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.InventoryViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.CashSessionViewModel>();

@@ -22,6 +22,7 @@ public class MenuRepository : IMenuRepository
     public async Task<MenuItem?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _context.MenuItems
+            .Include(m => m.MenuItemPrices)
             .Include(m => m.ModifierGroups)
                 .ThenInclude(mmg => mmg.ModifierGroup)
                     .ThenInclude(mg => mg.Modifiers)
@@ -31,6 +32,7 @@ public class MenuRepository : IMenuRepository
     public async Task<IEnumerable<MenuItem>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         return await _context.MenuItems
+            .Include(m => m.MenuItemPrices)
             .Where(m => m.IsActive)
             .ToListAsync(cancellationToken);
     }
@@ -38,6 +40,7 @@ public class MenuRepository : IMenuRepository
     public async Task<IEnumerable<MenuItem>> GetByGroupAsync(Guid groupId, CancellationToken cancellationToken = default)
     {
         return await _context.MenuItems
+            .Include(m => m.MenuItemPrices)
             .Where(m => m.GroupId == groupId && m.IsActive)
             .ToListAsync(cancellationToken);
     }

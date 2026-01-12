@@ -9,9 +9,9 @@ namespace Magidesk.Application.Commands;
 
 public class SetCategoryParentCommandHandler : IRequestHandler<SetCategoryParentCommand, SetCategoryParentResult>
 {
-    private readonly IRepository<MenuCategory> _categoryRepository;
+    private readonly IMenuCategoryRepository _categoryRepository;
 
-    public SetCategoryParentCommandHandler(IRepository<MenuCategory> categoryRepository)
+    public SetCategoryParentCommandHandler(IMenuCategoryRepository categoryRepository)
     {
         _categoryRepository = categoryRepository;
     }
