@@ -36,8 +36,7 @@ public sealed partial class ManagerPinDialog : ContentDialog
     public async Task<AuthorizationResult?> ShowForOperationAsync(string operationType)
     {
         ViewModel.OperationType = operationType;
-        ViewModel.Pin = string.Empty;
-        ViewModel.ErrorMessage = string.Empty;
+        ViewModel.Reset(); // Reset state including lockout
         _authorizationResult = null;
 
         await ShowAsync();

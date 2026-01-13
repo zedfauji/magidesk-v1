@@ -49,6 +49,13 @@
             Severity="Error"
             Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"/>
 
+        <!-- Lockout Message -->
+        <InfoBar 
+            IsOpen="{x:Bind ViewModel.IsLocked, Mode=OneWay}"
+            Severity="Warning"
+            Title="Account Temporarily Locked"
+            Message="{x:Bind ViewModel.LockoutMessage, Mode=OneWay}"/>
+
         <!-- Numeric Keypad -->
         <Grid RowSpacing="8" ColumnSpacing="8">
             <Grid.RowDefinitions>

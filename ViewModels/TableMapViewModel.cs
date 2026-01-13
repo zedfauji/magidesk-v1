@@ -42,7 +42,7 @@ public class TableMapViewModel : ViewModelBase
         set => SetProperty(ref _isRealTimeEnabled, value);
     }
 
-    private int _refreshInterval = 5000; // 5 seconds
+    private int _refreshInterval = 60000; // 1 minute for billing data
     public int RefreshInterval
     {
         get => _refreshInterval;
@@ -84,6 +84,11 @@ public class TableMapViewModel : ViewModelBase
     public AsyncRelayCommand<TableDto> PauseSessionCommand { get; }
     public AsyncRelayCommand<TableDto> ResumeSessionCommand { get; }
     public AsyncRelayCommand<TableDto> PerformTimeAdjustmentCommand { get; }
+    
+    // Enhanced session management commands
+    public AsyncRelayCommand<TableDto> OpenSessionControlDialogCommand { get; }
+    public AsyncRelayCommand<TableDto> OpenManagerOverrideDialogCommand { get; }
+    public AsyncRelayCommand<TableDto> OpenTableOperationsDialogCommand { get; }
 
     private readonly IUserService _userService;
     private readonly ITicketCreationService _ticketCreationService;
@@ -127,6 +132,11 @@ public class TableMapViewModel : ViewModelBase
         PauseSessionCommand = new AsyncRelayCommand<TableDto>(PauseSessionAsync);
         ResumeSessionCommand = new AsyncRelayCommand<TableDto>(ResumeSessionAsync);
         PerformTimeAdjustmentCommand = new AsyncRelayCommand<TableDto>(PerformTimeAdjustmentAsync);
+        
+        // Enhanced session management commands
+        OpenSessionControlDialogCommand = new AsyncRelayCommand<TableDto>(OpenSessionControlDialogAsync);
+        OpenManagerOverrideDialogCommand = new AsyncRelayCommand<TableDto>(OpenManagerOverrideDialogAsync);
+        OpenTableOperationsDialogCommand = new AsyncRelayCommand<TableDto>(OpenTableOperationsDialogAsync);
         
         // Check permissions
         _ = CheckPermissionsAsync();
@@ -292,12 +302,56 @@ public class TableMapViewModel : ViewModelBase
         _uiRefreshTimer.Tick += (s, e) =>
         {
             // Force UI update for calculated properties (SessionElapsedTime, SessionRunningCharge)
-            // This triggers property change notifications for all tables
-            foreach (var table in Tables)
+            // This triggers property change notifications for all tables with active sessions
+            var tablesWithSessions = Tables.Where(t => t.SessionId.HasValue && t.SessionStatus == TableSessionStatus.Active).ToList();
+            
+            if (tablesWithSessions.Any())
             {
-                // Trigger property changed for calculated properties
-                // Since TableDto doesn't implement INotifyPropertyChanged, we need to update the collection
-                // The UI will re-evaluate bindings on the next layout pass
+                // Create a new collection to trigger UI updates for calculated properties
+                // This is necessary because TableDto doesn't implement INotifyPropertyChanged
+                var updatedTables = new List<TableDto>();
+                
+                foreach (var table in Tables)
+                {
+                    if (table.SessionId.HasValue && table.SessionStatus == TableSessionStatus.Active)
+                    {
+                        // Create a copy with updated calculated values to trigger UI refresh
+                        var updatedTable = new TableDto
+                        {
+                            Id = table.Id,
+                            TableNumber = table.TableNumber,
+                            Status = table.Status,
+                            X = table.X,
+                            Y = table.Y,
+                            Width = table.Width,
+                            Height = table.Height,
+                            Shape = table.Shape,
+                            CurrentTicketId = table.CurrentTicketId,
+                            SessionId = table.SessionId,
+                            SessionStartTime = table.SessionStartTime,
+                            SessionStatus = table.SessionStatus,
+                            SessionHourlyRate = table.SessionHourlyRate,
+                            SessionPausedDuration = table.SessionPausedDuration,
+                            FloorId = table.FloorId,
+                            LayoutId = table.LayoutId,
+                            Capacity = table.Capacity,
+                            IsActive = table.IsActive,
+                            IsSelected = table.IsSelected,
+                            IsLocked = table.IsLocked
+                        };
+                        updatedTables.Add(updatedTable);
+                    }
+                }
+                
+                // Update the tables in the collection to trigger UI refresh
+                foreach (var updatedTable in updatedTables)
+                {
+                    var index = Tables.ToList().FindIndex(t => t.Id == updatedTable.Id);
+                    if (index >= 0)
+                    {
+                        Tables[index] = updatedTable;
+                    }
+                }
             }
         };
         _uiRefreshTimer.Start();
@@ -399,11 +453,36 @@ public class TableMapViewModel : ViewModelBase
             // Resolve dialog ViewModel from DI
             var dialogViewModel = _serviceProvider.GetRequiredService<ViewModels.Dialogs.StartSessionDialogViewModel>();
             
-            // TODO: Get table type information - for now using placeholder
-            // This should be fetched from the table or a default table type
-            var tableTypeId = Guid.Parse("00000000-0000-0000-0000-000000000001"); // Placeholder
-            var tableTypeName = "Standard";
-            var hourlyRate = 15.00m; // Default rate
+            // Get table type information from the table or use default
+            var tableTypeRepository = _serviceProvider.GetRequiredService<ITableTypeRepository>();
+            
+            // For now, use a default table type since TableDto doesn't have TableTypeId
+            // In a future version, this should be retrieved from table configuration
+            var defaultTableTypes = await tableTypeRepository.GetAllAsync();
+            var tableType = defaultTableTypes.FirstOrDefault();
+            
+            Guid tableTypeId;
+            string tableTypeName;
+            decimal hourlyRate;
+            
+            if (tableType != null)
+            {
+                tableTypeId = tableType.Id;
+                tableTypeName = tableType.Name;
+                hourlyRate = tableType.HourlyRate;
+            }
+            else
+            {
+                // Fallback to default values if no table type found
+                tableTypeId = Guid.Parse("00000000-0000-0000-0000-000000000001"); // Placeholder
+                tableTypeName = "Standard";
+                hourlyRate = 15.00m; // Default rate
+            }
+            
+            // Get current shift
+            var getCurrentShiftHandler = _serviceProvider.GetRequiredService<IQueryHandler<GetCurrentShiftQuery, GetCurrentShiftResult>>();
+            var currentShiftResult = await getCurrentShiftHandler.HandleAsync(new GetCurrentShiftQuery());
+            var currentShiftId = currentShiftResult.Shift?.Id;
             
             // Initialize dialog
             dialogViewModel.Initialize(
@@ -415,7 +494,7 @@ public class TableMapViewModel : ViewModelBase
                 ticketId: null, // No ticket yet
                 userId: _userService.CurrentUser?.Id,
                 terminalId: _terminalContext.TerminalId,
-                shiftId: null, // TODO: Get current shift
+                shiftId: currentShiftId,
                 orderTypeId: Guid.Parse("00000000-0000-0000-0000-000000000001"), // DEFAULT
                 createTicket: true);
             
@@ -489,17 +568,22 @@ public class TableMapViewModel : ViewModelBase
 
         try
         {
-            // TODO: Implement PauseTableSessionCommand
-            // For now, just log
-            System.Diagnostics.Debug.WriteLine($"Pause session not yet implemented for table {table.TableNumber}");
+            var pauseHandler = _serviceProvider.GetRequiredService<ICommandHandler<PauseTableSessionCommand, PauseTableSessionResult>>();
+            var command = new PauseTableSessionCommand(table.SessionId.Value);
             
-            // This will be implemented in ticket FE-A.16-01
-            var dialogService = _serviceProvider.GetRequiredService<IDialogService>();
-            await dialogService.ShowMessageAsync("Not Implemented", "Pause/Resume functionality will be available in a future update.");
+            var result = await pauseHandler.HandleAsync(command);
+            
+            // Refresh the table map to show updated status
+            await RefreshTablesAsync();
+            
+            System.Diagnostics.Debug.WriteLine($"Session paused for table {table.TableNumber} at {result.PausedAt}");
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Error pausing session: {ex.Message}");
+            
+            var dialogService = _serviceProvider.GetRequiredService<IDialogService>();
+            await dialogService.ShowMessageAsync("Error", $"Failed to pause session: {ex.Message}");
         }
     }
 
@@ -509,17 +593,22 @@ public class TableMapViewModel : ViewModelBase
 
         try
         {
-            // TODO: Implement ResumeTableSessionCommand
-            // For now, just log
-            System.Diagnostics.Debug.WriteLine($"Resume session not yet implemented for table {table.TableNumber}");
+            var resumeHandler = _serviceProvider.GetRequiredService<ICommandHandler<ResumeTableSessionCommand, ResumeTableSessionResult>>();
+            var command = new ResumeTableSessionCommand(table.SessionId.Value);
             
-            // This will be implemented in ticket FE-A.16-01
-            var dialogService = _serviceProvider.GetRequiredService<IDialogService>();
-            await dialogService.ShowMessageAsync("Not Implemented", "Pause/Resume functionality will be available in a future update.");
+            var result = await resumeHandler.HandleAsync(command);
+            
+            // Refresh the table map to show updated status
+            await RefreshTablesAsync();
+            
+            System.Diagnostics.Debug.WriteLine($"Session resumed for table {table.TableNumber} at {result.ResumedAt}. Total paused duration: {result.TotalPausedDuration}");
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Error resuming session: {ex.Message}");
+            
+            var dialogService = _serviceProvider.GetRequiredService<IDialogService>();
+            await dialogService.ShowMessageAsync("Error", $"Failed to resume session: {ex.Message}");
         }
     }
 
@@ -574,6 +663,209 @@ public class TableMapViewModel : ViewModelBase
         {
             System.Diagnostics.Debug.WriteLine($"Error checking permissions: {ex.Message}");
             CanAdjustTime = false;
+        }
+    }
+
+    #endregion
+
+    #region Enhanced Session Management Methods
+
+    private async Task OpenSessionControlDialogAsync(TableDto? table)
+    {
+        if (table == null || !table.SessionId.HasValue) return;
+
+        try
+        {
+            // Resolve dialog ViewModel from DI
+            var dialogViewModel = _serviceProvider.GetRequiredService<ViewModels.Dialogs.SessionControlDialogViewModel>();
+            
+            // Initialize dialog with session information
+            dialogViewModel.Initialize(
+                table.SessionId.Value,
+                $"Table {table.TableNumber}",
+                table.SessionStatus ?? TableSessionStatus.Ended,
+                4, // TODO: Get actual guest count from session data
+                table.SessionElapsedTime ?? TimeSpan.Zero,
+                table.SessionPausedDuration ?? TimeSpan.Zero,
+                table.SessionRunningCharge ?? 0m
+            );
+            
+            // Create and show dialog
+            var dialog = new Views.Dialogs.SessionControlDialog(dialogViewModel);
+            dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+            
+            // Handle dialog result
+            dialogViewModel.SessionControlCompleted += async (s, result) =>
+            {
+                // Refresh table map to show updated session state
+                await RefreshTablesAsync();
+            };
+            
+            await dialog.ShowAsync();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error opening session control dialog: {ex.Message}");
+            // TODO: Show error to user via IDialogService
+        }
+    }
+
+    private async Task OpenManagerOverrideDialogAsync(TableDto? table)
+    {
+        if (table == null || !table.SessionId.HasValue) return;
+
+        try
+        {
+            // Show override type selection first
+            var overrideTypeDialog = new ContentDialog
+            {
+                Title = "Select Override Type",
+                PrimaryButtonText = "Continue",
+                SecondaryButtonText = "Cancel",
+                XamlRoot = App.MainWindowInstance.Content.XamlRoot
+            };
+
+            var overrideTypeSelection = new ComboBox
+            {
+                PlaceholderText = "Select override type...",
+                HorizontalAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Stretch,
+                Margin = new Microsoft.UI.Xaml.Thickness(0, 8, 0, 0)
+            };
+
+            overrideTypeSelection.Items.Add("Time Adjustment");
+            overrideTypeSelection.Items.Add("Pricing Override");
+            overrideTypeSelection.Items.Add("Force End Session");
+
+            var stackPanel = new StackPanel();
+            stackPanel.Children.Add(new TextBlock { Text = "Select the type of manager override to perform:" });
+            stackPanel.Children.Add(overrideTypeSelection);
+
+            overrideTypeDialog.Content = stackPanel;
+
+            var typeResult = await overrideTypeDialog.ShowAsync();
+            if (typeResult != ContentDialogResult.Primary || overrideTypeSelection.SelectedItem == null)
+                return;
+
+            // Determine override type
+            var overrideType = overrideTypeSelection.SelectedItem.ToString() switch
+            {
+                "Time Adjustment" => ViewModels.Dialogs.ManagerOverrideType.TimeAdjustment,
+                "Pricing Override" => ViewModels.Dialogs.ManagerOverrideType.PricingOverride,
+                "Force End Session" => ViewModels.Dialogs.ManagerOverrideType.ForceEnd,
+                _ => ViewModels.Dialogs.ManagerOverrideType.TimeAdjustment
+            };
+
+            // Resolve dialog ViewModel from DI
+            var dialogViewModel = _serviceProvider.GetRequiredService<ViewModels.Dialogs.ManagerOverrideDialogViewModel>();
+            
+            // Initialize dialog with session and override information
+            dialogViewModel.Initialize(
+                table.SessionId.Value,
+                $"Table {table.TableNumber}",
+                overrideType,
+                table.SessionElapsedTime ?? TimeSpan.Zero,
+                table.SessionRunningCharge ?? 0m
+            );
+            
+            // Create and show dialog
+            var dialog = new Views.Dialogs.ManagerOverrideDialog(dialogViewModel);
+            dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+            
+            // Handle dialog result
+            dialogViewModel.OverrideCompleted += async (s, result) =>
+            {
+                // Refresh table map to show updated session state
+                await RefreshTablesAsync();
+            };
+            
+            await dialog.ShowAsync();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error opening manager override dialog: {ex.Message}");
+            // TODO: Show error to user via IDialogService
+        }
+    }
+
+    private async Task OpenTableOperationsDialogAsync(TableDto? table)
+    {
+        if (table == null) return;
+
+        try
+        {
+            // Show operation type selection first
+            var operationTypeDialog = new ContentDialog
+            {
+                Title = "Select Table Operation",
+                PrimaryButtonText = "Continue",
+                SecondaryButtonText = "Cancel",
+                XamlRoot = App.MainWindowInstance.Content.XamlRoot
+            };
+
+            var operationTypeSelection = new ComboBox
+            {
+                PlaceholderText = "Select operation type...",
+                HorizontalAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Stretch,
+                Margin = new Microsoft.UI.Xaml.Thickness(0, 8, 0, 0)
+            };
+
+            operationTypeSelection.Items.Add("Merge Tables");
+            operationTypeSelection.Items.Add("Split Tables");
+            if (table.SessionId.HasValue)
+            {
+                operationTypeSelection.Items.Add("Transfer Session");
+            }
+
+            var stackPanel = new StackPanel();
+            stackPanel.Children.Add(new TextBlock { Text = "Select the table operation to perform:" });
+            stackPanel.Children.Add(operationTypeSelection);
+
+            operationTypeDialog.Content = stackPanel;
+
+            var typeResult = await operationTypeDialog.ShowAsync();
+            if (typeResult != ContentDialogResult.Primary || operationTypeSelection.SelectedItem == null)
+                return;
+
+            // Determine operation type
+            var operationType = operationTypeSelection.SelectedItem.ToString() switch
+            {
+                "Merge Tables" => ViewModels.Dialogs.TableOperationType.Merge,
+                "Split Tables" => ViewModels.Dialogs.TableOperationType.Split,
+                "Transfer Session" => ViewModels.Dialogs.TableOperationType.Transfer,
+                _ => ViewModels.Dialogs.TableOperationType.Merge
+            };
+
+            // Resolve dialog ViewModel from DI
+            var dialogViewModel = _serviceProvider.GetRequiredService<ViewModels.Dialogs.TableOperationsDialogViewModel>();
+            
+            // Initialize dialog with table and operation information
+            await dialogViewModel.InitializeAsync(
+                operationType,
+                table.Id,
+                $"Table {table.TableNumber}",
+                table.SessionId,
+                table.SessionRunningCharge ?? 0m,
+                table.SessionElapsedTime ?? TimeSpan.Zero,
+                4 // TODO: Get actual guest count from session data
+            );
+            
+            // Create and show dialog
+            var dialog = new Views.Dialogs.TableOperationsDialog(dialogViewModel);
+            dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+            
+            // Handle dialog result
+            dialogViewModel.OperationCompleted += async (s, result) =>
+            {
+                // Refresh table map to show updated table states
+                await RefreshTablesAsync();
+            };
+            
+            await dialog.ShowAsync();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error opening table operations dialog: {ex.Message}");
+            // TODO: Show error to user via IDialogService
         }
     }
 

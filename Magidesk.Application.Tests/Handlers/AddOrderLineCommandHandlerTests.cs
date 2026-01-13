@@ -4,6 +4,7 @@ using Magidesk.Application.Services;
 using Magidesk.Application.Tests.TestDoubles;
 using Magidesk.Domain.Entities;
 using Magidesk.Domain.ValueObjects;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Magidesk.Application.Tests.Handlers;
 
@@ -15,7 +16,10 @@ public class AddOrderLineCommandHandlerTests
         var tickets = new InMemoryTicketRepository();
         var menu = new InMemoryMenuRepository();
         var audits = new InMemoryAuditEventRepository();
-        var handler = new AddOrderLineCommandHandler(tickets, menu, audits);
+        var stockMovements = new InMemoryStockMovementRepository();
+        var kitchenRouting = new StubKitchenRoutingService();
+        var logger = NullLogger<AddOrderLineCommandHandler>.Instance;
+        var handler = new AddOrderLineCommandHandler(tickets, menu, audits, stockMovements, kitchenRouting, logger);
 
         var userId = new UserId(Guid.NewGuid());
         var ticketNumber = await tickets.GetNextTicketNumberAsync();
@@ -48,7 +52,10 @@ public class AddOrderLineCommandHandlerTests
         var tickets = new InMemoryTicketRepository();
         var menu = new InMemoryMenuRepository();
         var audits = new InMemoryAuditEventRepository();
-        var handler = new AddOrderLineCommandHandler(tickets, menu, audits);
+        var stockMovements = new InMemoryStockMovementRepository();
+        var kitchenRouting = new StubKitchenRoutingService();
+        var logger = NullLogger<AddOrderLineCommandHandler>.Instance;
+        var handler = new AddOrderLineCommandHandler(tickets, menu, audits, stockMovements, kitchenRouting, logger);
 
         var cmd = new AddOrderLineCommand
         {

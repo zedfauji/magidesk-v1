@@ -85,6 +85,11 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<IMemberRepository, MemberRepository>();
         services.AddScoped<IMembershipTierRepository, MembershipTierRepository>();
+        services.AddScoped<IOverrideAuditRepository, OverrideAuditRepository>();
+        services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+        services.AddScoped<IGameHistoryRepository, GameHistoryRepository>();
+        services.AddScoped<IServerAssignmentRepository, ServerAssignmentRepository>();
+        services.AddScoped<IAuditRepository<Magidesk.Domain.ValueObjects.SessionAuditEntry>, SessionAuditRepository>();
         services.AddScoped<Magidesk.Application.Interfaces.IRepository<Magidesk.Domain.Entities.StockMovement>, StockMovementRepository>();
 
         // Application Services
@@ -93,6 +98,15 @@ public static class ServiceCollectionExtensions
         
         // New PricingService for time-based billing with table types (BE-A.9-01)
         services.AddScoped<Magidesk.Domain.Services.IPricingService, Magidesk.Domain.Services.PricingService>();
+        
+        // Advanced PricingService for enhanced pricing features (table-game-management)
+        services.AddScoped<Magidesk.Domain.Services.IAdvancedPricingService, Magidesk.Domain.Services.AdvancedPricingService>();
+        
+        // Session Control Service for pause/resume and session management (table-game-management)
+        services.AddScoped<Magidesk.Domain.Services.ISessionControlService, Magidesk.Application.Services.SessionControlService>();
+        
+        // Manager Override Service for authorization and override operations (table-game-management)
+        services.AddScoped<Magidesk.Domain.Services.IManagerOverrideService, Magidesk.Application.Services.ManagerOverrideService>();
 
         // Register domain services (stateless, can be singleton or scoped)
         services.AddScoped<TaxDomainService>();
@@ -112,6 +126,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRawPrintService, WindowsPrintingService>();
         services.AddScoped<IKitchenPrintService, KitchenPrintService>();
         services.AddScoped<IReceiptPrintService, ReceiptPrintService>();
+        services.AddScoped<IReportPrintService, ReportPrintService>();
+        
+        // Register cash services
+        services.AddSingleton<ICashBalanceTrackingService, CashBalanceTrackingService>();
         services.AddScoped<ITemplateEngine, LiquidTemplateEngine>();
         services.AddScoped<IPrintContextBuilder, Magidesk.Application.Services.Printing.PrintContextBuilder>();
 
@@ -123,6 +141,14 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ISystemInitializationService, SystemInitializationService>();
         services.AddScoped<ISystemService, SystemService>();
         services.AddScoped<IBackupService, Services.PostgresBackupService>();
+
+        // Enhanced Infrastructure Services for Table & Game Management
+        services.AddScoped<IAlertService, Services.AlertService>();
+        services.AddScoped<IPerformanceMonitoringService, Services.PerformanceMonitoringService>();
+        services.AddSingleton<IEnhancedCachingService, Services.EnhancedCachingService>();
+
+        // Report Performance Optimization Services
+        services.AddScoped<IReportOptimizationService, Services.ReportOptimizationService>();
 
         // Printing Layout Adapters
         services.AddTransient<Thermal58mmAdapter>();

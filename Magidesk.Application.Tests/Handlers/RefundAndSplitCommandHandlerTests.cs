@@ -1,10 +1,12 @@
 using FluentAssertions;
 using Magidesk.Application.Commands;
+using Magidesk.Application.Interfaces;
 using Magidesk.Application.Services;
 using Magidesk.Application.Tests.TestDoubles;
 using Magidesk.Domain.DomainServices;
 using Magidesk.Domain.Entities;
 using Magidesk.Domain.ValueObjects;
+using Moq;
 
 namespace Magidesk.Application.Tests.Handlers;
 
@@ -17,11 +19,12 @@ public class RefundAndSplitCommandHandlerTests
         var payments = new InMemoryPaymentRepository();
         var gateway = new StubPaymentGateway();
         var audits = new InMemoryAuditEventRepository();
+        var securityService = new Mock<ISecurityService>();
         var paymentDomain = new PaymentDomainService();
         var tax = new TaxDomainService();
         var ticketDomain = new TicketDomainService(tax);
 
-        var handler = new RefundTicketCommandHandler(tickets, payments, gateway, audits, paymentDomain, ticketDomain);
+        var handler = new RefundTicketCommandHandler(tickets, payments, gateway, audits, paymentDomain, ticketDomain, securityService.Object);
 
         var userId = new UserId(Guid.NewGuid());
         var terminalId = Guid.NewGuid();

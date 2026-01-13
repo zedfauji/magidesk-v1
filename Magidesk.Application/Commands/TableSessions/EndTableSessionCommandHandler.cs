@@ -81,19 +81,56 @@ public class EndTableSessionCommandHandler : ICommandHandler<EndTableSessionComm
         }
         else
         {
-             _logger.LogWarning("Session ended without ticket creation (CreateTicket=false and no linked ticket).");
+             // CRITICAL FIX: If CreateTicket=false but no linked ticket, this is an error state
+             // This should not happen in normal workflow, but we should handle it gracefully
+             _logger.LogError("Session {SessionId} ended without ticket creation and no linked ticket. Time charges will be lost!", session.Id);
+             throw new InvalidOperationException($"Cannot end session {session.Id}: No linked ticket and CreateTicket=false. Time charges cannot be applied.");
         }
 
         // 8. Save session (persists End state and Ticket Link)
         await _sessionRepository.UpdateAsync(session);
 
-        // 9. Update table status to Available
-        if (table.CurrentTicketId.HasValue)
+        // 9. Update table status - CRITICAL FIX: Don't mark available if ticket still has charges
+        // The table should remain occupied until the ticket is settled
+        if (ticketId.HasValue)
         {
-            table.ReleaseTicket();
+            // Get the ticket to check if it has any charges
+            var ticket = await _ticketRepository.GetByIdAsync(ticketId.Value, cancellationToken);
+            if (ticket != null && ticket.TotalAmount.Amount > 0)
+            {
+                // Table should remain occupied (Seat status) until ticket is settled
+                // If table doesn't already have this ticket assigned, assign it
+                if (table.CurrentTicketId != ticketId.Value)
+                {
+                    table.AssignTicket(ticketId.Value);
+                }
+                // If already assigned, the status should already be Seat
+                _logger.LogInformation("Table {TableNumber} remains as Seat - has ticket {TicketId} with charges {Amount}", 
+                    table.TableNumber, ticketId, ticket.TotalAmount.Amount);
+            }
+            else
+            {
+                // No charges, safe to mark available
+                if (table.CurrentTicketId.HasValue)
+                {
+                    table.ReleaseTicket();
+                }
+                table.MarkAvailable();
+                _logger.LogInformation("Table {TableNumber} marked as Available - no charges on ticket", table.TableNumber);
+            }
         }
-        table.MarkAvailable();
-        await _tableRepository.UpdateAsync(table);
+        else
+        {
+            // No ticket, mark available
+            if (table.CurrentTicketId.HasValue)
+            {
+                table.ReleaseTicket();
+            }
+            table.MarkAvailable();
+            _logger.LogInformation("Table {TableNumber} marked as Available - no ticket", table.TableNumber);
+        }
+        
+        await _tableRepository.UpdateAsync(table, cancellationToken);
 
         _logger.LogInformation(
             "Ended session {SessionId} for table {TableId}. Duration: {Duration}, Charge: {Charge}",

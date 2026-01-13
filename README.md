@@ -27,6 +27,7 @@ This project follows **Clean Architecture** with strict layer separation:
 
 ## Documentation
 
+### Core Architecture & Design
 - [ARCHITECTURE.md](./ARCHITECTURE.md) - Clean Architecture design
 - [DOMAIN_MODEL_FULL.md](./DOMAIN_MODEL_FULL.md) - Complete domain model (full POS)
 - [DOMAIN_MODEL.md](./DOMAIN_MODEL.md) - Domain model summary
@@ -35,9 +36,20 @@ This project follows **Clean Architecture** with strict layer separation:
 - [SCOPE.md](./SCOPE.md) - Full POS scope definition
 - [FLOREANTPOS_ANALYSIS.md](./FLOREANTPOS_ANALYSIS.md) - Reference system analysis
 - [ASSUMPTIONS.md](./ASSUMPTIONS.md) - Design assumptions and decisions
+
+### Implementation Specifications
+- [.kiro/specs/core-pos-operations/requirements.md](./.kiro/specs/core-pos-operations/requirements.md) - Core POS operations requirements
+- [.kiro/specs/core-pos-operations/design.md](./.kiro/specs/core-pos-operations/design.md) - Core POS operations design
+- [.kiro/specs/core-pos-operations/tasks.md](./.kiro/specs/core-pos-operations/tasks.md) - Core POS operations implementation plan
+- [.kiro/specs/reporting-export/requirements.md](./.kiro/specs/reporting-export/requirements.md) - Reporting & export requirements
+- [.kiro/specs/reporting-export/design.md](./.kiro/specs/reporting-export/design.md) - Reporting & export design
+- [.kiro/specs/reporting-export/tasks.md](./.kiro/specs/reporting-export/tasks.md) - Reporting & export implementation plan
+
+### Operations & Deployment
 - [EXECUTION_PLAN.md](./EXECUTION_PLAN.md) - 24-week implementation plan
 - [DATABASE_SETUP.md](./DATABASE_SETUP.md) - PostgreSQL configuration
 - [PROJECT_STATUS.md](./PROJECT_STATUS.md) - Current project status
+- [SSI-INFORBILLIAR-Delivery-Plan/README.md](./SSI-INFORBILLIAR-Delivery-Plan/README.md) - Delivery plan overview
 
 ## Solution Structure
 

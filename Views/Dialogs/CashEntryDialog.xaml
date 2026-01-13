@@ -1,26 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ContentDialog
     x:Class="Magidesk.Presentation.Views.Dialogs.CashEntryDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Magidesk.Presentation.Views.Dialogs"
+    xmlns:vm="using:Magidesk.Presentation.ViewModels.Dialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="Cash Operation"
-    PrimaryButtonText="Confirm"
-    CloseButtonText="Cancel"
-    DefaultButton="Primary">
+    Title="{x:Bind ViewModel.Title, Mode=OneWay}"
+    PrimaryButtonText="OK"
+    SecondaryButtonText="Cancel"
+    DefaultButton="Primary"
+    MinWidth="500"
+    MaxWidth="600">
 
-    <StackPanel Spacing="16" Width="300">
-        <TextBlock x:Name="MessageTextBlock" Text="Enter amount for this operation." TextWrapping="Wrap"/>
-        
-        <TextBox x:Name="AmountBox" 
-                   Header="Amount" 
-                   PlaceholderText="0.00"
-                   InputScope="Number"/>
-                   
-        <TextBox x:Name="ReasonBox"
-                 Header="Reason / Vendor"
-                 PlaceholderText="Optional note (e.g. 'Safe Drop', 'Coke Delivery')"
-                 AcceptsReturn="False"/>
-    </StackPanel>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="600">
+        <StackPanel Spacing="16">
+            <!-- Message -->
+            <TextBlock 
+                Text="{x:Bind ViewModel.Message, Mode=OneWay}" 
+                Style="{StaticResource BodyTextBlockStyle}"
+                TextWrapping="Wrap"/>
+
+            <!-- Error Message -->
+            <InfoBar 
+                IsOpen="{x:Bind ViewModel.HasError, Mode=OneWay}"
+                Severity="Error"
+                Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+                IsClosable="False"/>
+
+            <!-- Reason Entry -->
+            <StackPanel Spacing="8" Visibility="{x:Bind ViewModel.RequireReason, Mode=OneWay}">
+                <TextBlock Text="Reason:" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                <TextBox 
+                    Text="{x:Bind ViewModel.Reason, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    PlaceholderText="Enter reason for this transaction..."
+                    MaxLength="200"/>
+            </StackPanel>
+
+            <!-- Total Amount Display -->
+            <Border 
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="8"
+                Padding="16">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Total Amount:" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                    <TextBlock 
+                        Text="{x:Bind ViewModel.TotalAmount, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:C}'}"
+                        Style="{StaticResource TitleTextBlockStyle}"
+                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Denomination Breakdown -->
+            <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.ShowDenominationBreakdown, Mode=OneWay}">
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <TextBlock Text="Denomination Breakdown:" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                    <Button 
+                        Content="Clear All" 
+                        Command="{x:Bind ViewModel.ClearAllCommand}"
+                        Style="{StaticResource AccentButtonStyle}"
+                        FontSize="12"
+                        Padding="8,4"/>
+                </StackPanel>
+
+                <ItemsControl ItemsSource="{x:Bind ViewModel.Denominations}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:CashDenominationViewModel">
+                            <Border 
+                                Background="{ThemeResource LayerFillColorDefaultBrush}"
+                                CornerRadius="4"
+                                Padding="12,8"
+                                Margin="0,2">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock 
+                                        Grid.Column="0"
+                                        Text="{x:Bind Name}"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource BodyTextBlockStyle}"/>
+
+                                    <NumberBox 
+                                        Grid.Column="1"
+                                        Value="{x:Bind Count, Mode=TwoWay}"
+                                        Minimum="0"
+                                        Maximum="9999"
+                                        SpinButtonPlacementMode="Inline"
+                                        SmallChange="1"
+                                        LargeChange="10"/>
+
+                                    <TextBlock 
+                                        Grid.Column="2"
+                                        Text="{x:Bind Total, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:C}'}"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Right"
+                                        Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <!-- Manual Amount Entry (when denomination breakdown is hidden) -->
+            <StackPanel Spacing="8" Visibility="{x:Bind ViewModel.ShowDenominationBreakdown, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+                <TextBlock Text="Amount:" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                <NumberBox 
+                    Value="{x:Bind ViewModel.TotalAmount, Mode=TwoWay, Converter={StaticResource DecimalToDoubleConverter}}"
+                    Minimum="0"
+                    Maximum="999999"
+                    NumberFormatter="{x:Bind CurrencyFormatter}"
+                    SpinButtonPlacementMode="Inline"
+                    SmallChange="0.01"
+                    LargeChange="1.00"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </ContentDialog>

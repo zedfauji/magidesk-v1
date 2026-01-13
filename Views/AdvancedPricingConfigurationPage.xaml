@@ -1,0 +1,196 @@
+<Page
+    x:Class="Magidesk.Presentation.Views.AdvancedPricingConfigurationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dto="using:Magidesk.Application.DTOs"
+    mc:Ignorable="d">
+
+    <Grid Padding="24">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Panel: Table Types List -->
+        <Grid Margin="0,0,24,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Table Types" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,12"/>
+            
+            <Button Grid.Row="1" Command="{x:Bind ViewModel.CreateNewTableTypeCommand}" HorizontalAlignment="Stretch" Margin="0,0,0,12">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <FontIcon Glyph="&#xE710;" FontSize="16"/>
+                    <TextBlock Text="Add New Type"/>
+                </StackPanel>
+            </Button>
+
+            <ListView Grid.Row="2" ItemsSource="{x:Bind ViewModel.TableTypes, Mode=OneWay}"
+                      SelectedItem="{x:Bind ViewModel.SelectedTableType, Mode=TwoWay}"
+                      SelectionMode="Single"
+                      BorderThickness="1" BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}" CornerRadius="4">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="dto:TableTypeDto">
+                        <StackPanel Padding="12">
+                            <TextBlock Text="{x:Bind Name}" FontWeight="SemiBold"/>
+                            <TextBlock Text="{x:Bind Description}" FontSize="12" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" TextTrimming="CharacterEllipsis"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <!-- Right Panel: Configuration Details -->
+        <ScrollViewer Grid.Column="1">
+            <StackPanel Spacing="24" MaxWidth="800" HorizontalAlignment="Left">
+                
+                <!-- Status Bar -->
+                <InfoBar IsOpen="{x:Bind ViewModel.HasError, Mode=OneWay}" Severity="Error" Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"/>
+                <InfoBar IsOpen="{x:Bind ViewModel.HasUnsavedChanges, Mode=OneWay}" Severity="Warning" Message="You have unsaved changes."/>
+
+                <!-- Header -->
+                <StackPanel Spacing="16">
+                    <TextBlock Text="Configuration" Style="{StaticResource HeaderTextBlockStyle}"/>
+                    <Grid ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Header="Name" Text="{x:Bind ViewModel.TableTypeName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Grid.Column="1" Header="Description" Text="{x:Bind ViewModel.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                </StackPanel>
+
+                <MenuFlyoutSeparator/>
+
+                <!-- Pricing Rules -->
+                <StackPanel Spacing="16">
+                    <TextBlock Text="Pricing Rules" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                    
+                    <Grid ColumnSpacing="16" RowSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Standard Rate -->
+                        <NumberBox Header="Hourly Rate ($)" 
+                                   Value="{x:Bind ViewModel.HourlyRate, Mode=TwoWay, Converter={StaticResource DecimalToDoubleConverter}}" 
+                                   Minimum="0" SmallChange="1" LargeChange="5" SpinButtonPlacementMode="Inline"/>
+
+                        <!-- Minimum Charge -->
+                        <NumberBox Grid.Column="1" Header="Minimum Charge ($)" 
+                                   Value="{x:Bind ViewModel.MinimumCharge, Mode=TwoWay, Converter={StaticResource DecimalToDoubleConverter}}" 
+                                   Minimum="0" SmallChange="1" LargeChange="5" SpinButtonPlacementMode="Inline"/>
+
+                        <!-- First Hour Special Price -->
+                        <StackPanel Grid.Row="1" Spacing="8">
+                            <CheckBox Content="Enable First Hour Special Pricing" IsChecked="{x:Bind ViewModel.HasFirstHourPricing, Mode=TwoWay}"/>
+                            <NumberBox Header="First Hour Rate ($)" 
+                                       Value="{x:Bind ViewModel.FirstHourRate, Mode=TwoWay, Converter={StaticResource DecimalToDoubleConverter}}" 
+                                       IsEnabled="{x:Bind ViewModel.HasFirstHourPricing, Mode=OneWay}"
+                                       Minimum="0" SmallChange="1" LargeChange="5" SpinButtonPlacementMode="Inline"/>
+                        </StackPanel>
+
+                        <!-- Rounding Rules -->
+                        <ComboBox Grid.Row="1" Grid.Column="1" Header="Time Rounding" 
+                                  ItemsSource="{x:Bind ViewModel.RoundingRules}"
+                                  SelectedItem="{x:Bind ViewModel.TimeRoundingRule, Mode=TwoWay}"
+                                  HorizontalAlignment="Stretch">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource StringFormatConverter}, ConverterParameter='Round to nearest {0}'}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </Grid>
+                </StackPanel>
+
+                <!-- Actions -->
+                <StackPanel Orientation="Horizontal" Spacing="16">
+                    <Button Content="Save Configuration" Command="{x:Bind ViewModel.SaveConfigurationCommand}" Style="{StaticResource AccentButtonStyle}"/>
+                    <Button Content="Reset Changes" Command="{x:Bind ViewModel.ResetChangesCommand}"/>
+                    <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"/>
+                </StackPanel>
+
+                <MenuFlyoutSeparator/>
+
+                <!-- Simulator -->
+                <Expander Header="Pricing Simulator" IsExpanded="True">
+                    <Grid RowSpacing="16" ColumnSpacing="24" Padding="16">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Inputs -->
+                        <StackPanel Spacing="12">
+                            <NumberBox Header="Duration (Hours)" 
+                                       Value="{x:Bind ViewModel.SimulationDurationHours, Mode=TwoWay}" 
+                                       Minimum="0.25" Maximum="24" SmallChange="0.25" SpinButtonPlacementMode="Inline"/>
+                            
+                            <NumberBox Header="Guest Count" 
+                                       Value="{x:Bind ViewModel.SimulationGuestCount, Mode=TwoWay, Converter={StaticResource IntToDoubleConverter}}" 
+                                       Minimum="1" Maximum="20" SpinButtonPlacementMode="Inline"/>
+
+                            <Button Content="Calculate" Command="{x:Bind ViewModel.SimulatePricingCommand}" Margin="0,8,0,0"/>
+                        </StackPanel>
+
+                        <!-- Results -->
+                        <Border Grid.Column="1" Grid.RowSpan="3" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" BorderThickness="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" CornerRadius="8" Padding="16">
+                            <Grid>
+                                <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.SimulationResult, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}">
+                                    <TextBlock Text="Simulation Result" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                                    
+                                    <Grid ColumnSpacing="24">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+    
+                                        <TextBlock Text="Base Charge:" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                        <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.SimulationResult.BaseCharge, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" HorizontalAlignment="Right"/>
+    
+                                        <TextBlock Grid.Row="1" Text="Rounding Adjustment:" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.SimulationResult.RoundingAdjustment, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" HorizontalAlignment="Right"/>
+    
+                                        <Rectangle Grid.Row="2" Grid.ColumnSpan="2" Height="1" Fill="{ThemeResource SurfaceStrokeColorDefaultBrush}" Margin="0,8"/>
+    
+                                        <TextBlock Grid.Row="3" Text="Final Total:" FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.SimulationResult.FinalCharge, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" FontWeight="SemiBold" HorizontalAlignment="Right" Foreground="{ThemeResource SystemFillColorSuccessBrush}"/>
+                                    </Grid>
+                                </StackPanel>
+                                
+                                <TextBlock Text="Click Calculate to see pricing breakdown." 
+                                           VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                           Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                           Visibility="{x:Bind ViewModel.SimulationResult, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=Reverse}"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Expander>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

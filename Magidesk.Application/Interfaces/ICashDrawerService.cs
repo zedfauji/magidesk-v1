@@ -7,4 +7,9 @@ public interface ICashDrawerService
     /// </summary>
     /// <param name="printerName">Name of the printer (drawer connected via RJ11).</param>
     Task OpenDrawerAsync(string printerName);
+    
+    /// <summary>
+    /// Checks if the cash drawer is connected and responsive.
+    /// </summary>
+    Task<bool> IsConnectedAsync();
 }

@@ -1,0 +1,23 @@
+﻿C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Infrastructure\Seeding\TestDataFactory.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Infrastructure\WorkflowTestBase.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\UnitTest1.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\Foundation\SessionTests.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\Foundation\ShiftTests.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\OrderEntry\AddItemTests.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\OrderEntry\AddOnTests.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\OrderEntry\ComboTests.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\OrderEntry\ItemManipulationTests.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\OrderEntry\ModifierTests.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\OrderEntry\TicketCreationTests.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\Settlement\ZeroDollarSettlementTest.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\Switchboard\SwitchboardViewModelTests.cs
+C:\Users\giris\.nuget\packages\microsoft.net.test.sdk\17.8.0\build\netcoreapp3.1\Microsoft.NET.Test.Sdk.Program.cs
+C:\Users\giris\.nuget\packages\microsoft.testplatform.testhost\17.8.0\build\netcoreapp3.1\x86\testhost.x86.exe
+C:\Users\giris\.nuget\packages\microsoft.testplatform.testhost\17.8.0\build\netcoreapp3.1\x86\testhost.x86.dll
+C:\Users\giris\.nuget\packages\xunit.runner.visualstudio\2.5.3\build\net6.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+C:\Users\giris\.nuget\packages\xunit.runner.visualstudio\2.5.3\build\net6.0\xunit.runner.reporters.netcoreapp10.dll
+C:\Users\giris\.nuget\packages\xunit.runner.visualstudio\2.5.3\build\net6.0\xunit.runner.utility.netcoreapp10.dll
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\README.md
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\seeding.md
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\workflow_catalog.md
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\workflow_coverage.md

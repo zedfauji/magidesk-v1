@@ -94,7 +94,21 @@ namespace Magidesk.Presentation.ViewModels
             CloseAction?.Invoke();
             await Task.Delay(100);
 
-            if (_userService.CurrentUser?.Id == null) return;
+            if (_userService.CurrentUser?.Id == null) 
+            {
+                var errorDialog = new Views.Dialogs.ConfirmationDialog();
+                errorDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                
+                await errorDialog.ShowConfirmationAsync(
+                    "Error",
+                    "No user is currently logged in.",
+                    "OK",
+                    "",
+                    "❌",
+                    "Error",
+                    "Please log in before using the time clock.");
+                return;
+            }
 
             // Simple dialog to choose action
             var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
@@ -116,40 +130,49 @@ namespace Magidesk.Presentation.ViewModels
                     // Clock In
                     await _clockInHandler.HandleAsync(new ClockInCommand { UserId = _userService.CurrentUser.Id });
                     
-                    var success = new Microsoft.UI.Xaml.Controls.ContentDialog
-                    {
-                         Title = "Success",
-                         Content = "Clocked In Successfully",
-                         CloseButtonText = "OK",
-                         XamlRoot = App.MainWindowInstance.Content.XamlRoot
-                    };
-                    await _navigationService.ShowDialogAsync(success);
+                    var successDialog = new Views.Dialogs.ConfirmationDialog();
+                    successDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                    
+                    await successDialog.ShowConfirmationAsync(
+                        "Clock In Successful",
+                        "You have been clocked in successfully.",
+                        "OK",
+                        "",
+                        "✅",
+                        "Success",
+                        $"Time: {DateTime.Now:g}\nUser: {_userService.CurrentUser.FirstName} {_userService.CurrentUser.LastName}");
                 }
                 else if (result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Secondary)
                 {
                     // Clock Out
                     await _clockOutHandler.HandleAsync(new ClockOutCommand { UserId = _userService.CurrentUser.Id });
 
-                    var success = new Microsoft.UI.Xaml.Controls.ContentDialog
-                    {
-                         Title = "Success",
-                         Content = "Clocked Out Successfully",
-                         CloseButtonText = "OK",
-                         XamlRoot = App.MainWindowInstance.Content.XamlRoot
-                    };
-                    await _navigationService.ShowDialogAsync(success);
+                    var successDialog = new Views.Dialogs.ConfirmationDialog();
+                    successDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                    
+                    await successDialog.ShowConfirmationAsync(
+                        "Clock Out Successful",
+                        "You have been clocked out successfully.",
+                        "OK",
+                        "",
+                        "✅",
+                        "Success",
+                        $"Time: {DateTime.Now:g}\nUser: {_userService.CurrentUser.FirstName} {_userService.CurrentUser.LastName}");
                 }
             }
             catch (Exception ex)
             {
-                var error = new Microsoft.UI.Xaml.Controls.ContentDialog
-                {
-                        Title = "Error",
-                        Content = $"Clock Action Failed: {ex.Message}",
-                        CloseButtonText = "OK",
-                        XamlRoot = App.MainWindowInstance.Content.XamlRoot
-                };
-                await _navigationService.ShowDialogAsync(error);
+                var errorDialog = new Views.Dialogs.ConfirmationDialog();
+                errorDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                
+                await errorDialog.ShowConfirmationAsync(
+                    "Clock Action Failed",
+                    "The time clock operation could not be completed.",
+                    "OK",
+                    "",
+                    "❌",
+                    "Error",
+                    $"Error details: {ex.Message}\n\nPlease try again or contact your manager if the problem persists.");
             }
         }
 
@@ -174,31 +197,81 @@ namespace Magidesk.Presentation.ViewModels
             // F-0061: End Shift
             if (_userService.CurrentUser?.Id == null || _terminalContext.TerminalId == null)
             {
+                var errorDialog = new Views.Dialogs.ConfirmationDialog();
+                errorDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                
+                await errorDialog.ShowConfirmationAsync(
+                    "Error",
+                    "Unable to end shift: missing user or terminal context.",
+                    "OK",
+                    "",
+                    "❌",
+                    "Error",
+                    "Please ensure you are logged in and the terminal is properly configured.");
                 return;
             }
 
             var terminalId = _terminalContext.TerminalId.Value;
-            var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
-
-            if (session == null)
-            {
-                var noSessionDialog = new Microsoft.UI.Xaml.Controls.ContentDialog
-                {
-                    Title = "No Active Session",
-                    Content = "There is no active cash session to close.",
-                    CloseButtonText = "OK",
-                    XamlRoot = App.MainWindowInstance.Content.XamlRoot
-                };
-                await _navigationService.ShowDialogAsync(noSessionDialog);
-                return;
-            }
-
-            // Create ViewModel manually to pass session
-            var vm = new Dialogs.ShiftEndViewModel(session, _userService.CurrentUser.Id, _closeSessionHandler);
-            var dialog = new Views.Dialogs.ShiftEndDialog(vm);
-            dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
             
-            await _navigationService.ShowDialogAsync(dialog);
+            try
+            {
+                var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
+
+                if (session == null)
+                {
+                    var noSessionDialog = new Views.Dialogs.ConfirmationDialog();
+                    noSessionDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                    
+                    await noSessionDialog.ShowConfirmationAsync(
+                        "No Active Session",
+                        "There is no active cash session to close.",
+                        "OK",
+                        "",
+                        "ℹ️",
+                        "Info",
+                        "A cash session must be active to end a shift. Please start a cash session first.");
+                    return;
+                }
+
+                // Show confirmation dialog
+                var confirmationDialog = new Views.Dialogs.ConfirmationDialog();
+                confirmationDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                
+                var confirmed = await confirmationDialog.ShowConfirmationAsync(
+                    "End Shift",
+                    "Are you sure you want to end the current shift?",
+                    "End Shift",
+                    "Cancel",
+                    "🕐",
+                    "Warning",
+                    "This will close the active cash session and require reconciliation.");
+
+                if (!confirmed)
+                {
+                    return; // User cancelled
+                }
+
+                // Create ViewModel manually to pass session
+                var vm = new Dialogs.ShiftEndViewModel(session, _userService.CurrentUser.Id, _closeSessionHandler);
+                var dialog = new Views.Dialogs.ShiftEndDialog(vm);
+                dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                
+                await _navigationService.ShowDialogAsync(dialog);
+            }
+            catch (Exception ex)
+            {
+                var errorDialog = new Views.Dialogs.ConfirmationDialog();
+                errorDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                
+                await errorDialog.ShowConfirmationAsync(
+                    "Error",
+                    "An error occurred while ending the shift.",
+                    "OK",
+                    "",
+                    "❌",
+                    "Error",
+                    $"Error details: {ex.Message}\n\nPlease try again or contact your system administrator.");
+            }
         }
 
         [RelayCommand]

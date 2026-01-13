@@ -79,5 +79,9 @@ public class TableDto
             return $"${SessionRunningCharge.Value:F2}";
         }
     }
+
+    public bool IsOccupied => Status == TableStatus.Seat;
+    public string Name => $"Table {TableNumber}";
+    public string StatusDisplay => Status.ToString();
 }
 

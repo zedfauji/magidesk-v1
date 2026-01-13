@@ -2,16 +2,25 @@ using System;
 using System.Threading.Tasks;
 using Magidesk.Application.Interfaces;
 using Magidesk.Domain.Exceptions;
+using Magidesk.Domain.Enumerations;
+using Microsoft.Extensions.Logging;
 
 namespace Magidesk.Application.Services;
 
 public class KitchenStatusService : IKitchenStatusService
 {
     private readonly IKitchenOrderRepository _kitchenOrderRepository;
+    private readonly IOrderNotificationService _notificationService;
+    private readonly ILogger<KitchenStatusService> _logger;
 
-    public KitchenStatusService(IKitchenOrderRepository kitchenOrderRepository)
+    public KitchenStatusService(
+        IKitchenOrderRepository kitchenOrderRepository,
+        IOrderNotificationService notificationService,
+        ILogger<KitchenStatusService> logger)
     {
         _kitchenOrderRepository = kitchenOrderRepository;
+        _notificationService = notificationService;
+        _logger = logger;
     }
 
     public async Task BumpOrderAsync(Guid kitchenOrderId)
@@ -23,6 +32,7 @@ public class KitchenStatusService : IKitchenStatusService
             // In a real app, use NotFoundException or similar
         }
 
+        var previousStatus = order.Status;
         order.Bump();
         
         // Repository needs Update method.
@@ -32,6 +42,25 @@ public class KitchenStatusService : IKitchenStatusService
         // Standard pattern: Repository.Update(entity) -> Context.Update/Attach + SaveChanges.
         
         await _kitchenOrderRepository.UpdateAsync(order);
+
+        // Send notification for status change
+        await _notificationService.NotifyOrderStatusChangeAsync(
+            kitchenOrderId, 
+            order.Status, 
+            order.TableNumber, 
+            order.ServerName);
+
+        // Send specific notification when order becomes ready (Done status)
+        if (order.Status == KitchenStatus.Done)
+        {
+            await _notificationService.NotifyOrderReadyAsync(
+                kitchenOrderId,
+                order.TableNumber,
+                order.ServerName);
+        }
+
+        _logger.LogInformation("Kitchen order {KitchenOrderId} status changed from {PreviousStatus} to {NewStatus}", 
+            kitchenOrderId, previousStatus, order.Status);
     }
 
     public async Task VoidOrderAsync(Guid kitchenOrderId)
@@ -42,7 +71,18 @@ public class KitchenStatusService : IKitchenStatusService
              throw new Exception($"Kitchen Order not found: {kitchenOrderId}");
         }
 
+        var previousStatus = order.Status;
         order.Void();
         await _kitchenOrderRepository.UpdateAsync(order);
+
+        // Send notification for void status change
+        await _notificationService.NotifyOrderStatusChangeAsync(
+            kitchenOrderId, 
+            order.Status, 
+            order.TableNumber, 
+            order.ServerName);
+
+        _logger.LogInformation("Kitchen order {KitchenOrderId} voided (was {PreviousStatus})", 
+            kitchenOrderId, previousStatus);
     }
 }

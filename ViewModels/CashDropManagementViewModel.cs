@@ -20,6 +20,7 @@ public class CashDropManagementViewModel : ViewModelBase
     private readonly ISecurityService _securityService; // To get usernames if needed
     private readonly IUserService _userService;
     private readonly ITerminalContext _terminalContext;
+    private readonly ICashBalanceTrackingService _cashBalanceService;
 
     private ObservableCollection<CashTransactionUiDto> _transactions = new();
     public ObservableCollection<CashTransactionUiDto> Transactions
@@ -51,13 +52,15 @@ public class CashDropManagementViewModel : ViewModelBase
         NavigationService navigationService,
         ISecurityService securityService,
         IUserService userService,
-        ITerminalContext terminalContext)
+        ITerminalContext terminalContext,
+        ICashBalanceTrackingService cashBalanceService)
     {
         _cashSessionRepository = cashSessionRepository;
         _navigationService = navigationService;
         _securityService = securityService;
         _userService = userService;
         _terminalContext = terminalContext;
+        _cashBalanceService = cashBalanceService;
 
         AddCashDropCommand = new AsyncRelayCommand(AddCashDropAsync);
         AddDrawerBleedCommand = new AsyncRelayCommand(AddDrawerBleedAsync);
@@ -118,63 +121,184 @@ public class CashDropManagementViewModel : ViewModelBase
     private async Task PerformDrawerOperationAsync(bool isBleed)
     {
         string title = isBleed ? "New Drawer Bleed" : "New Cash Drop";
-        string message = isBleed ? "Enter amount to bleed." : "Enter amount to drop.";
+        string message = isBleed ? "Enter amount to bleed from drawer." : "Enter amount to drop from drawer.";
 
-        var dialog = new Magidesk.Presentation.Views.CashEntryDialog(title, message);
+        var dialog = new Views.Dialogs.CashEntryDialog();
         dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
-        var result = await _navigationService.ShowDialogAsync(dialog);
+        
+        var (result, amount, reason) = await dialog.ShowCashEntryAsync(title, message, true, true);
 
         if (result == ContentDialogResult.Primary)
         {
             if (_terminalContext.TerminalId == null || _userService.CurrentUser?.Id == null)
             {
+                var errorDialog = new Views.Dialogs.ConfirmationDialog();
+                errorDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                
+                await errorDialog.ShowConfirmationAsync(
+                    "Error",
+                    "Unable to process transaction: missing terminal or user context.",
+                    "OK",
+                    "",
+                    "❌",
+                    "Error",
+                    "Please ensure you are logged in and the terminal is properly configured.");
                 return;
             }
 
-            var terminalId = _terminalContext.TerminalId.Value;
-            var userId = _userService.CurrentUser.Id;
-            var amount = new Magidesk.Domain.ValueObjects.Money(dialog.Amount);
-            var reason = dialog.Reason;
-
-            var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
-            if (session != null)
+            // Manager Authorization Required for cash operations
+            var authDialog = App.Services.GetRequiredService<Views.Dialogs.ManagerPinDialog>();
+            authDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+            
+            var operationType = isBleed ? $"Drawer Bleed ({amount:C})" : $"Cash Drop ({amount:C})";
+            var authResult = await authDialog.ShowForOperationAsync(operationType);
+            if (authResult == null || !authResult.Authorized)
             {
+                return;
+            }
+
+            try
+            {
+                var terminalId = _terminalContext.TerminalId.Value;
+                var userId = _userService.CurrentUser.Id;
+                var moneyAmount = new Magidesk.Domain.ValueObjects.Money(amount);
+
+                var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
+                if (session == null)
+                {
+                    var errorDialog = new Views.Dialogs.ConfirmationDialog();
+                    errorDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                    
+                    await errorDialog.ShowConfirmationAsync(
+                        "No Active Session",
+                        "No active cash session found for this terminal.",
+                        "OK",
+                        "",
+                        "⚠️",
+                        "Warning",
+                        "Please start a cash session before performing cash operations.");
+                    return;
+                }
+
                 if (isBleed)
                 {
-                    var bleed = DrawerBleed.Create(session.Id, amount, userId, reason);
+                    var bleed = DrawerBleed.Create(session.Id, moneyAmount, userId, reason);
                     session.AddDrawerBleed(bleed);
                 }
                 else
                 {
-                    var drop = CashDrop.Create(session.Id, amount, userId, reason);
+                    var drop = CashDrop.Create(session.Id, moneyAmount, userId, reason);
                     session.AddCashDrop(drop);
                 }
 
                 await _cashSessionRepository.UpdateAsync(session);
+                
+                // Update real-time cash balance tracking
+                var transactionType = isBleed ? 
+                    Magidesk.Application.Interfaces.CashTransactionType.DrawerBleed : 
+                    Magidesk.Application.Interfaces.CashTransactionType.CashDrop;
+                await _cashBalanceService.UpdateCashBalanceAsync(terminalId, amount, transactionType);
+                
                 await LoadTransactionsAsync(); // Refresh list
+
+                // Show success confirmation
+                var successDialog = new Views.Dialogs.ConfirmationDialog();
+                successDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                
+                var operationName = isBleed ? "Drawer bleed" : "Cash drop";
+                await successDialog.ShowConfirmationAsync(
+                    "Success",
+                    $"{operationName} processed successfully.",
+                    "OK",
+                    "",
+                    "✅",
+                    "Success",
+                    $"Amount: {moneyAmount.Amount:C}\nReason: {reason}\nAuthorized by: {authResult.AuthorizingUserName}");
+            }
+            catch (Exception ex)
+            {
+                var errorDialog = new Views.Dialogs.ConfirmationDialog();
+                errorDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                
+                var operationName = isBleed ? "drawer bleed" : "cash drop";
+                await errorDialog.ShowConfirmationAsync(
+                    "Error",
+                    $"Failed to process {operationName}.",
+                    "OK",
+                    "",
+                    "❌",
+                    "Error",
+                    $"Error details: {ex.Message}");
             }
         }
     }
 
     private async Task DeleteTransactionAsync()
     {
-        // TODO: Implement delete logic in Domain/Repository
-        // Domain currently doesn't expose RemoveCashDrop/RemoveDrawerBleed on CashSession
-        // This might be a limitation of the current domain model.
-        // For F-0010 parity, delete is required.
-        // We need to add Remove methods to CashSession.
-        
         if (SelectedTransaction == null) return;
 
-        // Placeholder message until domain supports removal
-        var dialog = new ContentDialog
+        // Show confirmation dialog
+        var confirmationDialog = new Views.Dialogs.ConfirmationDialog();
+        confirmationDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        
+        var confirmed = await confirmationDialog.ShowConfirmationAsync(
+            "Delete Transaction",
+            $"Are you sure you want to delete this {SelectedTransaction.Type.ToLower()}?",
+            "Delete",
+            "Cancel",
+            "🗑️",
+            "Warning",
+            $"Amount: {SelectedTransaction.Amount:C}\nReason: {SelectedTransaction.Reason}\nProcessed: {SelectedTransaction.ProcessedAt:g}");
+
+        if (!confirmed)
         {
-            Title = "Not Implemented",
-            Content = "Deleting cash drops is not yet supported in the domain model.",
-            CloseButtonText = "OK",
-            XamlRoot = App.MainWindowInstance.Content.XamlRoot
-        };
-        await _navigationService.ShowDialogAsync(dialog);
+            return; // User cancelled
+        }
+
+        // Manager Authorization Required
+        var authDialog = App.Services.GetRequiredService<Views.Dialogs.ManagerPinDialog>();
+        authDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        
+        var authResult = await authDialog.ShowForOperationAsync($"Delete {SelectedTransaction.Type}");
+        if (authResult == null || !authResult.Authorized)
+        {
+            return;
+        }
+
+        try
+        {
+            // TODO: Implement delete logic in Domain/Repository
+            // Domain currently doesn't expose RemoveCashDrop/RemoveDrawerBleed on CashSession
+            // This is a domain model limitation that needs to be addressed
+            
+            // For now, show a more informative error message
+            var errorDialog = new Views.Dialogs.ConfirmationDialog();
+            errorDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+            
+            await errorDialog.ShowConfirmationAsync(
+                "Feature Not Available",
+                "Cash transaction deletion is not currently supported by the system.",
+                "OK",
+                "",
+                "ℹ️",
+                "Info",
+                "This feature requires domain model enhancements. Please contact your system administrator if this functionality is needed.");
+        }
+        catch (Exception ex)
+        {
+            // Show error dialog
+            var errorDialog = new Views.Dialogs.ConfirmationDialog();
+            errorDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+            
+            await errorDialog.ShowConfirmationAsync(
+                "Error",
+                "An error occurred while deleting the transaction.",
+                "OK",
+                "",
+                "❌",
+                "Error",
+                $"Error details: {ex.Message}");
+        }
     }
 
     private void Close()

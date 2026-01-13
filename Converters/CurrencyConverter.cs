@@ -18,6 +18,10 @@ public class CurrencyConverter : IValueConverter
         {
             return doubleValue.ToString("C", CultureInfo.CurrentCulture);
         }
+        if (value is Magidesk.Domain.ValueObjects.Money moneyValue)
+        {
+            return moneyValue.Amount.ToString("C", CultureInfo.CurrentCulture);
+        }
         return value?.ToString() ?? string.Empty;
     }
 

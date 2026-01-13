@@ -40,6 +40,7 @@
           Magidesk.Application.Tests\**;
           Magidesk.Domain.Tests\**;
           Magidesk.Infrastructure.Tests\**;
+          Magidesk.Presentation.Tests\**;
           Magidesk.Tests.Workflows\**;
           generate_pins.cs;
           terminals\**;

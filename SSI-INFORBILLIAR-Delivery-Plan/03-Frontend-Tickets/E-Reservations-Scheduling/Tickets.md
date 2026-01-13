@@ -514,3 +514,72 @@ Panel for managing waiting list for tables.
 ---
 
 *Last Updated: 2026-01-10*
+
+---
+
+## FE-E.4-01: Move Reservation UI
+
+**Ticket ID:** FE-E.4-01  
+**Feature ID:** E.4  
+**Type:** Frontend  
+**Title:** Move Reservation UI  
+**Priority:** P1
+
+### Outcome
+Ability to change the table assigned to an existing reservation.
+
+### Scope
+- Drag-and-drop on Calendar/Timeline view
+- Conflict check on drop
+- Confirmation dialog
+
+### Acceptance Criteria
+- [ ] Drag works smoothly
+- [ ] Invalid moves (conflicts) bounce back or warn
+- [ ] Drop updates reservation table
+
+---
+
+## FE-E.7-01: Cancel Reservation Dialog
+
+**Ticket ID:** FE-E.7-01  
+**Feature ID:** E.7  
+**Type:** Frontend  
+**Title:** Cancel Reservation Dialog  
+**Priority:** P1
+
+### Outcome
+Cancel a reservation with reason capture and optional fee logic.
+
+### Scope
+- "Cancel" action on reservation
+- Reason dropdown (Customer Request, Duplicate, etc.)
+- Fee warning (if configured)
+
+### Acceptance Criteria
+- [ ] Reason required
+- [ ] Status updates to Cancelled
+- [ ] Table becomes available
+
+---
+
+## FE-E.8-01: Mark No-Show UI
+
+**Ticket ID:** FE-E.8-01  
+**Feature ID:** E.8  
+**Type:** Frontend  
+**Title:** Mark No-Show UI  
+**Priority:** P2
+
+### Outcome
+Flag a reservation as a No-Show if customer doesn't arrive.
+
+### Scope
+- Action button "No Show"
+- Visual tag "No Show" on reservation list
+- Customer profile strike/history update
+
+### Acceptance Criteria
+- [ ] Updates status
+- [ ] Adds entry to customer history (negative flag)
+- [ ] Releases table

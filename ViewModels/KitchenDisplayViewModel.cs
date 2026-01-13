@@ -12,6 +12,8 @@ namespace Magidesk.Presentation.ViewModels;
     public class KitchenDisplayViewModel : ViewModelBase
     {
         private readonly IKitchenOrderRepository _repository;
+        private readonly IKitchenStatusService _statusService;
+        private readonly IOrderNotificationService _notificationService;
         private readonly DispatcherQueue _dispatcherQueue;
         private readonly DispatcherQueueTimer _timer;
 
@@ -48,9 +50,13 @@ namespace Magidesk.Presentation.ViewModels;
 
     public KitchenDisplayViewModel(
         IKitchenOrderRepository repository,
+        IKitchenStatusService statusService,
+        IOrderNotificationService notificationService,
         Services.LocalizationService localizationService)
     {
         _repository = repository;
+        _statusService = statusService;
+        _notificationService = notificationService;
         Localization = localizationService;
         
         BumpCommand = new AsyncRelayCommand<KitchenOrderViewModel>(BumpOrderAsync);
@@ -124,31 +130,31 @@ namespace Magidesk.Presentation.ViewModels;
 
         try
         {
-            var order = await _repository.GetByIdAsync(vm.Id);
-            if (order != null)
-            {
-                // Advance status: New -> Cooking -> Done
-                // Actually KitchenOrder.Bump() handles logic
-                order.Bump();
-                
-                await _repository.UpdateAsync(order);
-                
-                // If Done, remove from list immediately for responsiveness
-                if (order.Status == Domain.Enumerations.KitchenStatus.Done)
-                {
-                    Orders.Remove(vm);
-                }
-                else
-                {
-                   // Refresh to update status color/text if we had different VM states
-                   // For now, reload serves as refresh
-                   await LoadOrdersAsync();
-                }
-            }
+            // Use the enhanced KitchenStatusService which now sends notifications
+            await _statusService.BumpOrderAsync(vm.Id);
+            
+            // Refresh the orders list to show updated status
+            await LoadOrdersAsync();
         }
         catch (Exception ex)
         {
-            // Log or show error
+            System.Diagnostics.Debug.WriteLine($"Bump Order Error: {ex.Message}");
+            
+            // Show error dialog
+            var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+            {
+                Title = "Error",
+                Content = $"Failed to update order status: {ex.Message}",
+                CloseButtonText = "OK"
+            };
+            
+            // Set XamlRoot if available
+            if (App.MainWindowInstance?.Content?.XamlRoot != null)
+            {
+                dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+            }
+            
+            await dialog.ShowAsync();
         }
     }
 }

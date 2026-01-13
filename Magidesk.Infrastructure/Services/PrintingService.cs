@@ -82,14 +82,40 @@ public class PrintingService : IPrintingService
 
     public async Task PrintKitchenTicketAsync(TicketDto ticket)
     {
-        // TODO: Implement Kitchen logic (grouping by PrinterGroup)
         Debug.WriteLine($"[PrintingService] Printing KITCHEN Ticket #{ticket.TicketNumber}");
-        await Task.CompletedTask;
+        
+        // Route kitchen printing through the proper KitchenPrintService
+        // This method is a legacy wrapper - the real kitchen routing happens via PrintToKitchenCommand
+        // which uses KitchenPrintService for proper printer group routing
+        
+        // For now, we'll print to default printer as a fallback
+        // In production, this should route through PrintToKitchenCommand instead
+        await PrintTicketAsync(ticket);
     }
 
     public async Task PrintReceiptAsync(TicketDto ticket)
     {
         // Re-use PrintTicketAsync for receipt for now
         await PrintTicketAsync(ticket);
+    }
+
+    public async Task<bool> IsPrinterOnlineAsync(string printerName)
+    {
+        return await Task.Run(() =>
+        {
+            try
+            {
+                using var printDoc = new PrintDocument();
+                printDoc.PrinterSettings.PrinterName = printerName;
+                
+                // Check if printer exists and is valid
+                return printDoc.PrinterSettings.IsValid;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[PrintingService] Error checking printer status for {printerName}: {ex.Message}");
+                return false;
+            }
+        });
     }
 }

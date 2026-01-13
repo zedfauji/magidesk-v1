@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Page
     x:Class="Magidesk.Presentation.Views.SwitchboardPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -7,148 +6,79 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="using:Magidesk.Presentation.ViewModels"
     xmlns:dtos="using:Magidesk.Application.DTOs"
+    xmlns:converters="using:Magidesk.Presentation.Converters"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Padding="24">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <!-- Header -->
-            <RowDefinition Height="*"/>    <!-- Quick Access Grid -->
-            <RowDefinition Height="Auto"/> <!-- Status Bar -->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Header -->
-        <TextBlock Text="{Binding Localization[SB_Title], Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}" Margin="24,24,0,12"/>
+        <!-- Header Actions -->
+        <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,0,0,24">
+            <TextBox PlaceholderText="Search tickets..." Width="300">
+                <TextBox.Header>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <FontIcon Glyph="&#xE721;" FontSize="14"/>
+                        <TextBlock Text="Search"/>
+                    </StackPanel>
+                </TextBox.Header>
+            </TextBox>
 
-        <!-- Main Switchboard Layout -->
-        <Grid Grid.Row="1" Padding="24">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/> <!-- Open Tickets List (66%) -->
-                <ColumnDefinition Width="1*"/> <!-- Action Panel (33%) -->
-            </Grid.ColumnDefinitions>
+            <ComboBox Header="Filter Status" SelectedIndex="0" Width="200">
+                <ComboBoxItem Content="All Open Tickets"/>
+                <ComboBoxItem Content="Unpaid"/>
+                <ComboBoxItem Content="Paid"/>
+            </ComboBox>
 
-            <!-- Left: Open Tickets List -->
-            <Grid Grid.Column="0" Margin="0,0,24,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                
-                <TextBlock Text="{Binding Localization[SB_OpenTickets], Mode=OneWay}" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,12"/>
-                
-                <ListView ItemsSource="{x:Bind ViewModel.OpenTickets, Mode=OneWay}" 
-                          SelectedItem="{x:Bind ViewModel.SelectedTicket, Mode=TwoWay}"
-                          SelectionMode="Single">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="dtos:TicketDto">
-                            <Grid Padding="12" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" CornerRadius="4" Margin="0,4">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/> <!-- ID Badge -->
-                                    <ColumnDefinition Width="*"/>    <!-- Details -->
-                                    <ColumnDefinition Width="Auto"/> <!-- Total -->
-                                </Grid.ColumnDefinitions>
-                                
-                                <Border Background="{ThemeResource SystemControlHighlightAccentBrush}" CornerRadius="4" Padding="8,4">
-                                    <TextBlock Text="{x:Bind TicketNumber}" Foreground="White" FontWeight="Bold"/>
-                                </Border>
-                                
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="12,0">
-                                    <TextBlock Text="{x:Bind TableName, TargetNullValue='Take Out'}" FontWeight="SemiBold"/>
-                                    <TextBlock Text="{x:Bind OwnerName}" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                </StackPanel>
-                                
-                                <TextBlock Grid.Column="2" Text="{x:Bind TotalAmount, Mode=OneWay}" FontWeight="Bold" VerticalAlignment="Center" Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
-
-            <!-- Right: Action Buttons -->
-            <ScrollViewer Grid.Column="1">
-                <StackPanel Spacing="12">
-                    <!-- New Ticket -->
-                    <Button Command="{x:Bind ViewModel.NewTicketCommand}" 
-                            HorizontalAlignment="Stretch" Height="80" Background="#2E7D32" CornerRadius="8">
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <FontIcon Glyph="&#xE710;" FontSize="24" Foreground="White" VerticalAlignment="Center"/>
-                            <TextBlock Text="{Binding Localization[SB_NewTicket], Mode=OneWay}" Foreground="White" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-
-                    <!-- Edit Ticket -->
-                    <Button Command="{x:Bind ViewModel.EditTicketCommand}" 
-                            HorizontalAlignment="Stretch" Height="80" Background="#1565C0" CornerRadius="8">
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <FontIcon Glyph="&#xE70F;" FontSize="24" Foreground="White" VerticalAlignment="Center"/>
-                            <TextBlock Text="{Binding Localization[SB_EditTicket], Mode=OneWay}" Foreground="White" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-
-                    <!-- Tables -->
-                    <Button Command="{x:Bind ViewModel.TablesCommand}" 
-                            HorizontalAlignment="Stretch" Height="60" CornerRadius="4">
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <FontIcon Glyph="&#xE90E;" FontSize="20"/>
-                            <TextBlock Text="{Binding Localization[SB_TableMap], Mode=OneWay}" FontSize="16" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-
-                    <!-- Kitchen (KDS) -->
-                    <Button Command="{x:Bind ViewModel.KitchenCommand}" 
-                            HorizontalAlignment="Stretch" Height="60" CornerRadius="4">
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <FontIcon Glyph="&#xE99A;" FontSize="20"/>
-                            <TextBlock Text="{Binding Localization[SB_Kitchen], Mode=OneWay}" FontSize="16" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-
-                    <!-- Back Office -->
-                    <Button Command="{x:Bind ViewModel.BackOfficeCommand}" 
-                            HorizontalAlignment="Stretch" Height="80" Background="#4527A0" CornerRadius="8">
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <FontIcon Glyph="&#xE713;" FontSize="24" Foreground="White" VerticalAlignment="Center"/>
-                            <TextBlock Text="{Binding Localization[SB_BackOffice], Mode=OneWay}" Foreground="White" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-
-                    <!-- Manager Functions -->
-                    <Button Command="{x:Bind ViewModel.ManagerFunctionsCommand}" 
-                            HorizontalAlignment="Stretch" Height="60" CornerRadius="4" Margin="0,12,0,0">
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <FontIcon Glyph="&#xE716;" FontSize="20"/>
-                            <TextBlock Text="{Binding Localization[SB_ManagerFn], Mode=OneWay}" FontSize="16" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-
-                     <!-- Logout -->
-                    <Button Command="{x:Bind ViewModel.LogoutCommand}" 
-                            HorizontalAlignment="Stretch" Height="60" Background="#C62828" CornerRadius="4">
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <FontIcon Glyph="&#xE7E8;" FontSize="20" Foreground="White"/>
-                            <TextBlock Text="{Binding Localization[SB_Logout], Mode=OneWay}" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    
-                    <!-- Shutdown -->
-                    <Button Command="{x:Bind ViewModel.ShutdownCommand}" 
-                            HorizontalAlignment="Stretch" Height="60" Background="#424242" CornerRadius="4">
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <FontIcon Glyph="&#xE71A;" FontSize="20" Foreground="White"/>
-                            <TextBlock Text="{Binding Localization[SB_Shutdown], Mode=OneWay}" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-
+            <Button Style="{StaticResource AccentButtonStyle}" VerticalAlignment="Bottom">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <FontIcon Glyph="&#xE710;" FontSize="16"/>
+                    <TextBlock Text="New Ticket"/>
                 </StackPanel>
-            </ScrollViewer>
-        </Grid>
+            </Button>
+        </StackPanel>
 
-        <!-- Footer / Clock / Info -->
-        <Border Grid.Row="2" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Padding="12">
-            <StackPanel Orientation="Horizontal" Spacing="20" HorizontalAlignment="Right">
-                <TextBlock Text="Terminal: 01" VerticalAlignment="Center"/>
-                <TextBlock Text="Server: Admin" VerticalAlignment="Center"/>
-                <TextBlock Text="Online" Foreground="Green" VerticalAlignment="Center" FontWeight="Bold"/>
-            </StackPanel>
-        </Border>
+        <!-- Tickets Grid -->
+        <GridView Grid.Row="1" ItemsSource="{x:Bind ViewModel.OpenTickets}" SelectionMode="Single">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="dtos:TicketDto">
+                    <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" 
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1" CornerRadius="8" Padding="12" Width="280" Height="160">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Border Background="{ThemeResource AccentFillColorDefaultBrush}" CornerRadius="4" Padding="8,4">
+                                    <TextBlock Text="{Binding TicketNumber}" Foreground="White" FontWeight="Bold"/>
+                                </Border>
+                                <TextBlock Text="{x:Bind TableName}" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Margin="0,12">
+                                <TextBlock Text="{x:Bind OwnerName}" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                                <TextBlock Text="{x:Bind CreatedAt}" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Text="{x:Bind Status}" Margin="0,4,0,0" Foreground="{ThemeResource SystemFillColorSuccessBrush}"/>
+                            </StackPanel>
+
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding TotalAmount, Converter={StaticResource CurrencyConverter}}" Style="{StaticResource SubtitleTextBlockStyle}" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" Content="Open" Command="{Binding ElementName=RootPage, Path=ViewModel.OpenTicketCommand}" CommandParameter="{x:Bind Id}"/>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
     </Grid>
 </Page>

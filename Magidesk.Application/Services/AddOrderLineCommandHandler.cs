@@ -2,11 +2,13 @@ using Magidesk.Application.Commands;
 using Magidesk.Application.Interfaces;
 using Magidesk.Domain.Entities;
 using Magidesk.Domain.Enumerations;
+using Microsoft.Extensions.Logging;
 
 namespace Magidesk.Application.Services;
 
 /// <summary>
 /// Handler for AddOrderLineCommand.
+/// Enhanced with automatic kitchen routing (requirement 9.1).
 /// </summary>
 public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, AddOrderLineResult>
 {
@@ -14,17 +16,23 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
     private readonly IMenuRepository _menuRepository;
     private readonly IAuditEventRepository _auditEventRepository;
     private readonly IRepository<StockMovement> _stockMovementRepository;
+    private readonly IKitchenRoutingService _kitchenRoutingService;
+    private readonly ILogger<AddOrderLineCommandHandler> _logger;
 
     public AddOrderLineCommandHandler(
         ITicketRepository ticketRepository,
         IMenuRepository menuRepository,
         IAuditEventRepository auditEventRepository,
-        IRepository<StockMovement> stockMovementRepository)
+        IRepository<StockMovement> stockMovementRepository,
+        IKitchenRoutingService kitchenRoutingService,
+        ILogger<AddOrderLineCommandHandler> logger)
     {
         _ticketRepository = ticketRepository;
         _menuRepository = menuRepository;
         _auditEventRepository = auditEventRepository;
         _stockMovementRepository = stockMovementRepository;
+        _kitchenRoutingService = kitchenRoutingService;
+        _logger = logger;
     }
 
     public async Task<AddOrderLineResult> HandleAsync(AddOrderLineCommand command, CancellationToken cancellationToken = default)
@@ -132,6 +140,36 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
             correlationId: correlationId);
 
         await _auditEventRepository.AddAsync(auditEvent, cancellationToken);
+
+        // Automatic kitchen routing (requirement 9.1)
+        // Route the newly added order line to kitchen if it should be printed
+        if (orderLine.ShouldPrintToKitchen)
+        {
+            try
+            {
+                var autoRouted = await _kitchenRoutingService.AutoRouteOrderLinesAsync(
+                    ticket.Id, 
+                    new List<Guid> { orderLine.Id });
+
+                if (autoRouted)
+                {
+                    _logger.LogInformation("Automatically routed order line {OrderLineId} to kitchen for ticket {TicketId}", 
+                        orderLine.Id, ticket.Id);
+                }
+                else
+                {
+                    _logger.LogWarning("Failed to automatically route order line {OrderLineId} to kitchen for ticket {TicketId}", 
+                        orderLine.Id, ticket.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Don't fail the order line addition if kitchen routing fails
+                // This ensures the order is still recorded even if kitchen systems are down
+                _logger.LogError(ex, "Error during automatic kitchen routing for order line {OrderLineId} on ticket {TicketId}", 
+                    orderLine.Id, ticket.Id);
+            }
+        }
 
         return new AddOrderLineResult
         {

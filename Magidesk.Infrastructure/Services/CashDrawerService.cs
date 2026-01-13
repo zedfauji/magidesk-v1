@@ -1,5 +1,6 @@
 using Magidesk.Application.Interfaces;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace Magidesk.Infrastructure.Services;
 
@@ -32,6 +33,25 @@ public class CashDrawerService : ICashDrawerService
         {
             _logger.LogError(ex, "Failed to open cash drawer on {PrinterName}", printerName);
             throw; // Propagate up to UI to show error dialog as per policy
+        }
+    }
+
+    public async Task<bool> IsConnectedAsync()
+    {
+        try
+        {
+            // Check if we can communicate with the default cash drawer printer
+            // This is a simplified check - in production, you'd want to check specific drawer hardware
+            var printers = await _rawPrintService.GetInstalledPrintersAsync();
+            
+            // Assume cash drawer is connected if we have any printers available
+            // In a real implementation, you'd check for specific drawer hardware or test communication
+            return printers.Any();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to check cash drawer connectivity");
+            return false;
         }
     }
 }

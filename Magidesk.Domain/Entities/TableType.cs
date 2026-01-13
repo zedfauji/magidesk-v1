@@ -1,11 +1,13 @@
 using System;
 using Magidesk.Domain.Exceptions;
+using Magidesk.Domain.ValueObjects;
+using Magidesk.Domain.Enumerations;
 
 namespace Magidesk.Domain.Entities;
 
 /// <summary>
 /// Represents a table type category (e.g., Pool Table, Snooker Table, Billiards Table).
-/// Defines pricing rules for time-based billing.
+/// Defines pricing rules for time-based billing with advanced pricing capabilities.
 /// </summary>
 public class TableType
 {
@@ -16,6 +18,8 @@ public class TableType
     public decimal? FirstHourRate { get; private set; }
     public int MinimumMinutes { get; private set; }
     public int RoundingMinutes { get; private set; }
+    public Money MinimumCharge { get; private set; } = Money.Zero();
+    public TimeRoundingRule RoundingRule { get; private set; } = TimeRoundingRule.None;
     public bool IsActive { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
@@ -59,6 +63,8 @@ public class TableType
             FirstHourRate = null,
             MinimumMinutes = 0,
             RoundingMinutes = 1, // Default: no rounding
+            MinimumCharge = Money.Zero(),
+            RoundingRule = TimeRoundingRule.None,
             IsActive = true,
             CreatedAt = now,
             UpdatedAt = now
@@ -145,5 +151,62 @@ public class TableType
     {
         IsActive = true;
         UpdatedAt = DateTime.UtcNow;
+    }
+
+    /// <summary>
+    /// Sets the minimum charge for this table type.
+    /// </summary>
+    /// <param name="minimumCharge">Minimum charge amount</param>
+    /// <exception cref="ArgumentNullException">Thrown when minimumCharge is null</exception>
+    public void SetMinimumCharge(Money minimumCharge)
+    {
+        MinimumCharge = minimumCharge ?? throw new ArgumentNullException(nameof(minimumCharge));
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    /// <summary>
+    /// Sets the time rounding rule for billing calculations.
+    /// </summary>
+    /// <param name="roundingRule">The rounding rule to apply</param>
+    public void SetRoundingRule(TimeRoundingRule roundingRule)
+    {
+        RoundingRule = roundingRule;
+        
+        // Update legacy RoundingMinutes for backward compatibility
+        RoundingMinutes = roundingRule switch
+        {
+            TimeRoundingRule.None => 1,
+            TimeRoundingRule.FifteenMinutes => 15,
+            TimeRoundingRule.ThirtyMinutes => 30,
+            TimeRoundingRule.SixtyMinutes => 60,
+            _ => 1
+        };
+        
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    /// <summary>
+    /// Validates that the pricing configuration is mathematically consistent.
+    /// </summary>
+    /// <returns>True if configuration is valid</returns>
+    public bool ValidatePricingConfiguration()
+    {
+        // First hour rate should not be less than minimum charge
+        if (FirstHourRate.HasValue && MinimumCharge.Amount > 0)
+        {
+            var firstHourMoney = new Money(FirstHourRate.Value);
+            if (firstHourMoney < MinimumCharge)
+            {
+                return false;
+            }
+        }
+
+        // Hourly rate should be positive
+        if (HourlyRate <= 0)
+        {
+            return false;
+        }
+
+        return true;
     }
 }

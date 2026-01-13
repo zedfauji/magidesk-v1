@@ -45,6 +45,7 @@ public partial class OrderEntryViewModel : ViewModelBase
     private readonly IKitchenRoutingService _kitchenRoutingService;
     private readonly ITableRepository _tableRepository;
     private readonly ITableTypeRepository _tableTypeRepository;
+    private readonly IOrderNotificationService _orderNotificationService;
     
     public Services.LocalizationService Localization { get; }
 
@@ -258,7 +259,8 @@ public partial class OrderEntryViewModel : ViewModelBase
         Services.IOrderEntryDialogService orderEntryDialogService,
         Services.LocalizationService localizationService,
         ITableRepository tableRepository,
-        ITableTypeRepository tableTypeRepository)
+        ITableTypeRepository tableTypeRepository,
+        IOrderNotificationService orderNotificationService)
     {
         _categoryRepository = categoryRepository;
         _groupRepository = groupRepository;
@@ -288,6 +290,7 @@ public partial class OrderEntryViewModel : ViewModelBase
         _orderEntryDialogService = orderEntryDialogService;
         _tableRepository = tableRepository;
         _tableTypeRepository = tableTypeRepository;
+        _orderNotificationService = orderNotificationService;
         
         Localization = localizationService;
 
@@ -833,6 +836,16 @@ public partial class OrderEntryViewModel : ViewModelBase
             await LoadCategoriesAsync();
             System.Diagnostics.Debug.WriteLine($"Categories loaded: {Categories.Count}");
 
+            // Subscribe to order notifications for this terminal (requirement 9.3)
+            if (_terminalContext.TerminalId.HasValue && _userService.CurrentUser?.Id != null)
+            {
+                await _orderNotificationService.SubscribeToNotificationsAsync(
+                    _terminalContext.TerminalId.Value,
+                    _userService.CurrentUser.Id);
+                
+                System.Diagnostics.Debug.WriteLine($"Subscribed to order notifications for terminal {_terminalContext.TerminalId.Value}");
+            }
+
             if (ticketId.HasValue)
             {
                 System.Diagnostics.Debug.WriteLine($"Loading existing ticket: {ticketId.Value}");
@@ -1078,10 +1091,15 @@ public partial class OrderEntryViewModel : ViewModelBase
             }
             else
             {
+                // Enhanced success message with automatic routing information
+                var message = result.OrderLinesPrinted > 0 
+                    ? $"Successfully sent {result.OrderLinesPrinted} items to kitchen.\n\nNote: New items are automatically routed to kitchen when added."
+                    : "Order sent to kitchen.\n\nNote: New items are automatically routed to kitchen when added.";
+
                 var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
                 {
                     Title = "Success",
-                    Content = "Order sent to kitchen.",
+                    Content = message,
                     CloseButtonText = "OK",
                     XamlRoot = App.MainWindowInstance.Content.XamlRoot
                 };
@@ -1388,8 +1406,12 @@ public partial class OrderEntryViewModel : ViewModelBase
         // F-0026: Backend Guard - Cannot modify sent items
         if (line.PrintedToKitchen)
         {
-             // TODO: Notify user "Cannot modify sent items. Use Void."
-             return;
+            // Check if manager authorization allows modification of sent items
+            if (await RequestManagerAuthorizationForSentItemsAsync("modify"))
+            {
+                await ModifyQuantityAsync(line, line.Quantity + 1);
+            }
+            return;
         }
 
         await ModifyQuantityAsync(line, line.Quantity + 1);
@@ -1402,7 +1424,21 @@ public partial class OrderEntryViewModel : ViewModelBase
         // F-0026: Backend Guard - Cannot modify sent items
         if (line.PrintedToKitchen)
         {
-             return;
+            // Check if manager authorization allows modification of sent items
+            if (await RequestManagerAuthorizationForSentItemsAsync("modify"))
+            {
+                if (line.Quantity > 1)
+                {
+                    await ModifyQuantityAsync(line, line.Quantity - 1);
+                }
+                else
+                {
+                    // Optionally confirm delete if quantity becomes 0?
+                    // For now, adhere to scope: Decrement stops at 1, or use Remove.
+                    // Requirement F-0028 is explicit delete action.
+                }
+            }
+            return;
         }
 
         if (line.Quantity > 1)
@@ -1461,25 +1497,16 @@ public partial class OrderEntryViewModel : ViewModelBase
         // F-0028: Backend Guard - Cannot delete sent items (Must use Void)
         if (line.PrintedToKitchen)
         {
-             // TODO: Notify user "Cannot delete sent items. Use Void action."
-             return;
+            // Check if manager authorization allows deletion of sent items
+            if (await RequestManagerAuthorizationForSentItemsAsync("delete"))
+            {
+                // Proceed with removal after manager authorization
+                await ExecuteRemoveItemAsync(line);
+            }
+            return;
         }
 
-        IsBusy = true;
-        try
-        {
-             await _removeOrderLineHandler.HandleAsync(new RemoveOrderLineCommand
-             {
-                 TicketId = Ticket.Id,
-                 OrderLineId = line.Id
-             });
-             await LoadTicketAsync(Ticket.Id);
-        }
-        catch (Exception ex)
-        {
-             System.Diagnostics.Debug.WriteLine($"Remove Item Error: {ex.Message}");
-        }
-        finally { IsBusy = false; }
+        await ExecuteRemoveItemAsync(line);
     }
 
     private async Task SettleAsync()
@@ -1797,6 +1824,172 @@ public partial class OrderEntryViewModel : ViewModelBase
             await _orderEntryDialogService.ShowErrorAsync("Failed to resume session", ex.Message);
         }
         finally { IsBusy = false; }
+    }
+
+    #endregion
+
+    #region Manager Authorization for Sent Items
+
+    /// <summary>
+    /// Requests manager authorization for modifying or deleting sent items.
+    /// Implements requirement 3.5 for proper authorization of sent item modifications.
+    /// </summary>
+    /// <param name="operation">The operation being performed (modify/delete)</param>
+    /// <returns>True if authorization was granted, false otherwise</returns>
+    private async Task<bool> RequestManagerAuthorizationForSentItemsAsync(string operation)
+    {
+        try
+        {
+            // Get enhanced dialog service for user-friendly error messages
+            var enhancedDialogService = _serviceProvider.GetService<IEnhancedDialogService>();
+            
+            // First, show a warning about modifying sent items
+            var confirmMessage = operation == "modify" 
+                ? "This item has already been sent to the kitchen. Modifying it may cause confusion with food preparation. Do you want to proceed with manager authorization?"
+                : "This item has already been sent to the kitchen. Deleting it may cause confusion with food preparation. Do you want to proceed with manager authorization?";
+                
+            var shouldProceed = await (enhancedDialogService?.ShowConfirmationAsync(
+                "Modify Sent Item", 
+                confirmMessage, 
+                "Yes, Get Authorization", 
+                "Cancel") ?? Task.FromResult(false));
+                
+            if (!shouldProceed)
+            {
+                return false;
+            }
+
+            // Request manager authorization
+            var authDialog = _serviceProvider.GetRequiredService<Views.Dialogs.ManagerPinDialog>();
+            authDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+            authDialog.ViewModel.OperationType = $"Modify Sent Item ({operation})";
+
+            var authResult = await authDialog.ShowAsync();
+            
+            if (authResult == ContentDialogResult.Primary)
+            {
+                // Get the authorization result from the dialog
+                var authorizationResult = await authDialog.ViewModel.AuthorizeAsync();
+                
+                if (authorizationResult?.Authorized == true)
+                {
+                    // Log the authorization for audit purposes
+                    System.Diagnostics.Debug.WriteLine($"Manager authorization granted for {operation} sent item. Manager: {authorizationResult.AuthorizingUserId}");
+                    return true;
+                }
+            }
+            
+            // Show appropriate message for failed authorization
+            if (enhancedDialogService != null)
+            {
+                await enhancedDialogService.ShowValidationErrorAsync(
+                    "Authorization", 
+                    "Manager authorization is required to modify items that have been sent to the kitchen.",
+                    "Please ask a manager to authorize this operation or use the Void function instead.");
+            }
+            
+            return false;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error requesting manager authorization: {ex.Message}");
+            
+            // Use enhanced dialog service for better error handling
+            var enhancedDialogService = _serviceProvider.GetService<IEnhancedDialogService>();
+            if (enhancedDialogService != null)
+            {
+                await enhancedDialogService.ShowSystemErrorAsync("Manager Authorization", ex, true);
+            }
+            
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Executes the actual removal of an order line item with proper error handling.
+    /// Implements requirement 3.5 for inventory conflict handling.
+    /// </summary>
+    /// <param name="line">The order line to remove</param>
+    private async Task ExecuteRemoveItemAsync(OrderLineDto line)
+    {
+        IsBusy = true;
+        try
+        {
+            await _removeOrderLineHandler.HandleAsync(new RemoveOrderLineCommand
+            {
+                TicketId = Ticket!.Id,
+                OrderLineId = line.Id
+            });
+            await LoadTicketAsync(Ticket.Id);
+        }
+        catch (InvalidOperationException ex) when (ex.Message.Contains("inventory"))
+        {
+            // Handle inventory conflicts with enhanced error dialog
+            var enhancedDialogService = _serviceProvider.GetService<IEnhancedDialogService>();
+            if (enhancedDialogService != null)
+            {
+                await enhancedDialogService.ShowCategorizedErrorAsync(
+                    "Inventory Conflict",
+                    $"Cannot remove '{line.MenuItemName}' due to inventory constraints: {ex.Message}",
+                    Application.DTOs.ErrorCategory.Data,
+                    Application.DTOs.ErrorSeverity.Medium,
+                    ex.ToString(),
+                    new[]
+                    {
+                        new Application.DTOs.ErrorRecoverySuggestion 
+                        { 
+                            Title = "Check Inventory", 
+                            Description = "Verify current inventory levels for this item", 
+                            ActionText = "Check" 
+                        },
+                        new Application.DTOs.ErrorRecoverySuggestion 
+                        { 
+                            Title = "Use Void Instead", 
+                            Description = "Consider using the Void function if the item was already prepared", 
+                            ActionText = "Void" 
+                        }
+                    });
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"Inventory conflict removing item: {ex.Message}");
+            }
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            // Handle authorization errors
+            var enhancedDialogService = _serviceProvider.GetService<IEnhancedDialogService>();
+            if (enhancedDialogService != null)
+            {
+                await enhancedDialogService.ShowCategorizedErrorAsync(
+                    "Authorization Required",
+                    "You do not have permission to remove this item.",
+                    Application.DTOs.ErrorCategory.User,
+                    Application.DTOs.ErrorSeverity.Medium,
+                    ex.ToString());
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"Authorization error removing item: {ex.Message}");
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle general errors with enhanced error dialog
+            var enhancedDialogService = _serviceProvider.GetService<IEnhancedDialogService>();
+            if (enhancedDialogService != null)
+            {
+                await enhancedDialogService.ShowSystemErrorAsync("Remove Item", ex, true);
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"Remove Item Error: {ex.Message}");
+            }
+        }
+        finally 
+        { 
+            IsBusy = false; 
+        }
     }
 
     #endregion

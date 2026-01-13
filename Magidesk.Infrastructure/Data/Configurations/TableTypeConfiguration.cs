@@ -40,6 +40,22 @@ public class TableTypeConfiguration : IEntityTypeConfiguration<TableType>
             .IsRequired()
             .HasDefaultValue(1);
 
+        builder.OwnsOne(t => t.MinimumCharge, mc =>
+        {
+            mc.Property(m => m.Amount)
+                .HasColumnName("MinimumChargeAmount")
+                .HasPrecision(18, 2)
+                .IsRequired()
+                .HasDefaultValue(0m);
+
+            mc.Property(m => m.Currency)
+                .HasColumnName("MinimumChargeCurrency")
+                .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
+                .IsRequired();
+        });
+
         builder.Property(t => t.IsActive)
             .IsRequired()
             .HasDefaultValue(true);

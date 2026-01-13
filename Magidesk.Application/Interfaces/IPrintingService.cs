@@ -9,4 +9,5 @@ public interface IPrintingService
     Task PrintTicketAsync(TicketDto ticket, string? printerName = null);
     Task PrintKitchenTicketAsync(TicketDto ticket);
     Task PrintReceiptAsync(TicketDto ticket);
+    Task<bool> IsPrinterOnlineAsync(string printerName);
 }

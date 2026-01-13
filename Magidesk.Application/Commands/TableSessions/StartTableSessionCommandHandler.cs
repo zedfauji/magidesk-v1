@@ -123,6 +123,10 @@ public class StartTableSessionCommandHandler : ICommandHandler<StartTableSession
                 ticket.SetSession(session.Id);
                 await _ticketRepository.UpdateAsync(ticket, cancellationToken);
             }
+            
+            // CRITICAL FIX: Link session back to ticket for proper end session workflow
+            session.LinkToTicket(ticketId.Value);
+            await _sessionRepository.UpdateAsync(session);
         }
 
         // 9. Return result

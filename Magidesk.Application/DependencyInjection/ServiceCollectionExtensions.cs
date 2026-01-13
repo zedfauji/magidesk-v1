@@ -194,6 +194,7 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IKitchenRoutingService, KitchenRoutingService>();
         services.AddScoped<IKitchenStatusService, KitchenStatusService>();
+        services.AddScoped<IOrderNotificationService, OrderNotificationService>();
         services.AddScoped<ICashSessionService, CashSessionService>();
         services.AddScoped<IGroupSettleService, GroupSettleService>();
         services.AddScoped<IMerchantBatchService, MerchantBatchService>();
@@ -201,6 +202,11 @@ public static class ServiceCollectionExtensions
         
         // Stock Management Services (G.3)
         services.AddScoped<ILowStockAlertService, LowStockAlertService>();
+
+        // Report Performance Optimization Services
+        services.AddScoped<IReportCacheService, Services.Reports.ReportCacheService>();
+        services.AddScoped<IMemoryOptimizationService, Services.Reports.MemoryOptimizationService>();
+        services.AddScoped<IReportExportService, Services.Reports.ReportExportService>();
 
         return services;
     }

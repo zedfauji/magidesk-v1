@@ -70,6 +70,13 @@ public class ApplicationDbContext : DbContext
     public DbSet<Member> Members { get; set; } = null!;
     public DbSet<MembershipTier> MembershipTiers { get; set; } = null!;
     public DbSet<StockMovement> StockMovements { get; set; } = null!;
+    public DbSet<Repositories.OverrideAuditEntity> OverrideAuditEntries { get; set; } = null!;
+    public DbSet<Equipment> Equipment { get; set; } = null!;
+    public DbSet<GameHistory> GameHistory { get; set; } = null!;
+    public DbSet<ServerAssignment> ServerAssignments { get; set; } = null!;
+    public DbSet<Repositories.SessionAuditEntity> SessionAuditEntries { get; set; } = null!;
+    public DbSet<Services.AlertEntity> Alerts { get; set; } = null!;
+    public DbSet<Services.PerformanceMetricEntity> PerformanceMetrics { get; set; } = null!;
     // FractionalModifier is part of Set<MenuModifier> via Inheritance
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -133,6 +140,13 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new CustomerConfiguration());
         modelBuilder.ApplyConfiguration(new MemberConfiguration());
         modelBuilder.ApplyConfiguration(new MembershipTierConfiguration());
+        modelBuilder.ApplyConfiguration(new OverrideAuditEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new EquipmentConfiguration());
+        modelBuilder.ApplyConfiguration(new GameHistoryConfiguration());
+        modelBuilder.ApplyConfiguration(new ServerAssignmentConfiguration());
+        modelBuilder.ApplyConfiguration(new SessionAuditEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new AlertEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new PerformanceMetricEntityConfiguration());
     }
 }
 

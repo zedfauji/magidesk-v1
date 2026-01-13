@@ -178,3 +178,161 @@
 - [ ] Triggers backend print job
 - [ ] Visual feedback provided
 
+
+---
+
+## FE-C.3-01: Multiple Payment Method Selection
+
+**Ticket ID:** FE-C.3-01  
+**Feature ID:** C.3  
+**Type:** Frontend  
+**Title:** Multiple Payment Method Selection  
+**Priority:** P0
+
+### Scope
+- Allow selecting multiple payment methods for a single ticket
+- UI to add/remove payment lines
+- Validate total matches ticket amount
+
+### Acceptance Criteria
+- [ ] User can mix Cash, Card, Gift Card
+- [ ] Payments sum correctly
+- [ ] Change calculated only on Cash portion
+
+---
+
+## FE-C.4-01: Split Payment UI
+
+**Ticket ID:** FE-C.4-01  
+**Feature ID:** C.4  
+**Type:** Frontend  
+**Title:** Split Payment UI  
+**Priority:** P0
+
+### Scope
+- Extend SettlePage to support splitting by amount or item
+- "Split by N" quick action
+- Drag-and-drop items to separate sub-tickets (if full bill split)
+
+### Acceptance Criteria
+- [ ] Split by Amount working
+- [ ] Split by Item working
+- [ ] Each split can be paid separately
+
+---
+
+## FE-C.8-01: Bill-Level Discount UI
+
+**Ticket ID:** FE-C.8-01  
+**Feature ID:** C.8  
+**Type:** Frontend  
+**Title:** Bill-Level Discount UI  
+**Priority:** P1
+
+### Scope
+- UI to apply percentage or fixed amount discount to entire bill
+- Permission check for high discounts
+- Reason capture
+
+### Acceptance Criteria
+- [ ] Apply 10%, 20%, Custom
+- [ ] Recalculates tax/total
+- [ ] Discount reason persisted
+
+---
+
+## FE-C.9-01: Happy Hour Indicator
+
+**Ticket ID:** FE-C.9-01  
+**Feature ID:** C.9  
+**Type:** Frontend  
+**Title:** Happy Hour Indicator  
+**Priority:** P1
+
+### Scope
+- Visual indicator when Happy Hour pricing is active
+- Show original vs discounted price on order lines
+- Banner on main screen during active times
+
+### Acceptance Criteria
+- [ ] Clear "Happy Hour" badge
+- [ ] Price strikethrough logic (Regular -> Promo)
+
+---
+
+## FE-C.10-01: Promotion Schedule UI
+
+**Ticket ID:** FE-C.10-01  
+**Feature ID:** C.10  
+**Type:** Frontend  
+**Title:** Promotion Schedule UI  
+**Priority:** P2
+
+### Scope
+- Admin page to schedule price changes
+- Set recurring rules (e.g., Every Friday 5-7 PM)
+- Select applicable items/categories
+
+### Acceptance Criteria
+- [ ] Calendar view of promotions
+- [ ] Conflict detection
+- [ ] CRUD operations for promotions
+
+---
+
+## FE-C.11-01: Manual Promotion Override
+
+**Ticket ID:** FE-C.11-01  
+**Feature ID:** C.11  
+**Type:** Frontend  
+**Title:** Manual Promotion Override  
+**Priority:** P2
+
+### Scope
+- Toggle to disable automatic promotion for a specific ticket
+- Manager authorization required
+- Reason capture
+
+### Acceptance Criteria
+- [ ] "Remove Promo" button
+- [ ] Reverts to standard pricing
+- [ ] Audited action
+
+---
+
+## FE-C.12-01: Price Override UI
+
+**Ticket ID:** FE-C.12-01  
+**Feature ID:** C.12  
+**Type:** Frontend  
+**Title:** Price Override UI  
+**Priority:** P1
+
+### Scope
+- Tap price on Order Line to edit
+- Numpad for new price
+- Hard manager PIN requirement
+
+### Acceptance Criteria
+- [ ] Opens edit price dialog
+- [ ] Enforces manager auth
+- [ ] Visual indicator of "Manual Price" on line item
+
+---
+
+## FE-C.13-01: Price Override Audit Log
+
+**Ticket ID:** FE-C.13-01  
+**Feature ID:** C.13  
+**Type:** Frontend  
+**Title:** Price Override Audit Log  
+**Priority:** P2
+
+### Scope
+- Admin report showing all manual price changes
+- Filter by user, date, amount variance
+
+### Acceptance Criteria
+- [ ] List view of overrides
+- [ ] Highlights large variances
+- [ ] Searchable

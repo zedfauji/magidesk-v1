@@ -6,16 +6,24 @@ using Magidesk.Application.Interfaces;
 using Magidesk.Domain.Entities;
 using Magidesk.Domain.Enumerations;
 using Magidesk.Application.DTOs;
+using Microsoft.Extensions.Logging;
 
 namespace Magidesk.Application.Services;
 
 public class KitchenRoutingService : IKitchenRoutingService
 {
     private readonly IKitchenOrderRepository _kitchenOrderRepository;
+    private readonly ITicketRepository _ticketRepository;
+    private readonly ILogger<KitchenRoutingService> _logger;
 
-    public KitchenRoutingService(IKitchenOrderRepository kitchenOrderRepository)
+    public KitchenRoutingService(
+        IKitchenOrderRepository kitchenOrderRepository,
+        ITicketRepository ticketRepository,
+        ILogger<KitchenRoutingService> logger)
     {
         _kitchenOrderRepository = kitchenOrderRepository;
+        _ticketRepository = ticketRepository;
+        _logger = logger;
     }
 
     public async Task<List<Guid>> RouteToKitchenAsync(TicketDto ticket, List<Guid>? itemIds = null)
@@ -62,6 +70,94 @@ public class KitchenRoutingService : IKitchenRoutingService
         
         createdOrderIds.Add(kitchenOrder.Id);
 
+        _logger.LogInformation("Routed {ItemCount} items to kitchen for ticket {TicketId}, created kitchen order {KitchenOrderId}", 
+            itemsToRoute.Count, ticket.Id, kitchenOrder.Id);
+
         return createdOrderIds;
+    }
+
+    public async Task<bool> AutoRouteOrderLinesAsync(Guid ticketId, List<Guid> orderLineIds)
+    {
+        try
+        {
+            _logger.LogInformation("Auto-routing order lines {OrderLineIds} for ticket {TicketId}", 
+                string.Join(", ", orderLineIds), ticketId);
+
+            // Get the ticket with order lines
+            var ticket = await _ticketRepository.GetByIdAsync(ticketId);
+            if (ticket == null)
+            {
+                _logger.LogWarning("Ticket {TicketId} not found for auto-routing", ticketId);
+                return false;
+            }
+
+            // Convert to DTO for routing service
+            var ticketDto = MapToDto(ticket);
+            
+            // Filter order lines that should be auto-routed
+            var linesToRoute = ticketDto.OrderLines
+                .Where(ol => orderLineIds.Contains(ol.Id) && ShouldAutoRoute(ol))
+                .Select(ol => ol.Id)
+                .ToList();
+
+            if (!linesToRoute.Any())
+            {
+                _logger.LogInformation("No order lines require auto-routing for ticket {TicketId}", ticketId);
+                return true; // Not an error, just nothing to route
+            }
+
+            // Route the filtered lines
+            var kitchenOrderIds = await RouteToKitchenAsync(ticketDto, linesToRoute);
+            
+            _logger.LogInformation("Auto-routed {LineCount} order lines for ticket {TicketId}, created {OrderCount} kitchen orders", 
+                linesToRoute.Count, ticketId, kitchenOrderIds.Count);
+
+            return kitchenOrderIds.Any();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to auto-route order lines {OrderLineIds} for ticket {TicketId}", 
+                string.Join(", ", orderLineIds), ticketId);
+            return false;
+        }
+    }
+
+    public bool ShouldAutoRoute(OrderLineDto orderLine)
+    {
+        // Auto-route if the item should print to kitchen and hasn't been printed yet
+        return orderLine.ShouldPrintToKitchen && !orderLine.PrintedToKitchen;
+    }
+
+    private TicketDto MapToDto(Ticket ticket)
+    {
+        return new TicketDto
+        {
+            Id = ticket.Id,
+            TicketNumber = ticket.TicketNumber,
+            GlobalId = ticket.GlobalId,
+            TableName = string.Join(", ", ticket.TableNumbers),
+            OwnerName = "Unknown", // TODO: Get from user service or ticket
+            Status = ticket.Status,
+            CreatedAt = ticket.CreatedAt,
+            ActiveDate = ticket.ActiveDate,
+            OrderLines = ticket.OrderLines.Select(ol => new OrderLineDto
+            {
+                Id = ol.Id,
+                TicketId = ol.TicketId,
+                MenuItemId = ol.MenuItemId,
+                MenuItemName = ol.MenuItemName,
+                Quantity = ol.Quantity,
+                ShouldPrintToKitchen = ol.ShouldPrintToKitchen,
+                PrintedToKitchen = ol.PrintedToKitchen,
+                PrinterGroupId = ol.PrinterGroupId,
+                Instructions = ol.Instructions,
+                Modifiers = ol.Modifiers.Select(m => new OrderLineModifierDto
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    ShouldPrintToKitchen = m.ShouldPrintToKitchen
+                }).ToList()
+            }).ToList()
+        };
     }
 }

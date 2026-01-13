@@ -74,6 +74,8 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddSingleton<IOrderEntryDialogService, OrderEntryDialogService>();
                     services.AddSingleton<ISwitchboardDialogService, SwitchboardDialogService>();
                     services.AddSingleton<IDialogService, WindowsDialogService>();
+                    services.AddSingleton<IEnhancedDialogService, EnhancedDialogService>();
+                    services.AddSingleton<IErrorReportingService, ErrorReportingService>();
                     services.AddSingleton<IUserService, UserService>();
                     services.AddSingleton<Magidesk.Application.Interfaces.ITerminalContext, TerminalContext>();
             // Printing
@@ -134,9 +136,13 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<Magidesk.Presentation.ViewModels.ManagerFunctionsViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.GroupSettleTicketSelectionViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.GroupSettleTicketViewModel>();
+                    
+                    // Dialog ViewModels
+                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.ConfirmationDialogViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.NotesDialogViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.ManagerPinDialogViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.CashEntryDialogViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.StartSessionDialogViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.EndSessionDialogViewModel>();
                     services.AddTransient<Magidesk.Presentation.Views.Dialogs.ManagerPinDialog>();
@@ -154,6 +160,7 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<Magidesk.Presentation.Views.Dialogs.MemberCheckInDialog>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.CustomerSearchViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.CategoryTreeViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.ErrorManagementViewModel>();
                     
                     // Language Selection (F-0110)
                     services.AddTransient<Magidesk.Presentation.ViewModels.LanguageSelectionViewModel>();

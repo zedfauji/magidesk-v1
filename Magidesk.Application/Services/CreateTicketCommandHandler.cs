@@ -56,8 +56,10 @@ public class CreateTicketCommandHandler : ICommandHandler<CreateTicketCommand, C
                 throw new Domain.Exceptions.BusinessRuleViolationException($"Table Session {command.SessionId} not found.");
             }
             
-            // Link Session
+            // Link Session to Ticket (bidirectional)
             ticket.SetSession(session.Id);
+            session.LinkToTicket(ticket.Id);
+            await _tableSessionRepository.UpdateAsync(session);
 
             // Auto-populate customer from session if not explicitly provided
             if (!command.CustomerId.HasValue && session.CustomerId.HasValue)

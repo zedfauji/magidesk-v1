@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "Documentation Update Hook",
+  "description": "Automatically updates documentation, progress tracking documents, and index files whenever tickets are completed and features are implemented",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "docs/**/*.md",
+      "*.md",
+      "SSI-INFORBILLIAR-Delivery-Plan/**/*.md",
+      "audit-*/**/*.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A documentation file has been updated. Please review the changes and:\n\n1. Update any related documentation files that reference this content\n2. Update progress tracking documents in the SSI-INFORBILLIAR-Delivery-Plan folder to reflect completion status\n3. Update index files and master documentation lists to ensure they include any new features or completed tickets\n4. Ensure cross-references between documentation files are maintained\n5. Update any relevant audit reports or feature matrices if this represents a completed ticket or implemented feature\n\nFocus on maintaining documentation consistency and ensuring all progress tracking is accurate."
+  }
+}

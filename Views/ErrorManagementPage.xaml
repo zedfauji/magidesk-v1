@@ -1,0 +1,166 @@
+<Page
+    x:Class="Magidesk.Presentation.Views.ErrorManagementPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Magidesk.Presentation.Views"
+    xmlns:vm="using:Magidesk.Presentation.ViewModels"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" 
+                Padding="20" Margin="10">
+            <StackPanel>
+                <TextBlock Text="Error Management Dashboard" 
+                          Style="{ThemeResource TitleTextBlockStyle}" 
+                          Margin="0,0,0,10"/>
+                <TextBlock Text="Monitor and resolve system errors across all terminals" 
+                          Style="{ThemeResource BodyTextBlockStyle}" 
+                          Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Error List -->
+            <Border Grid.Column="0" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" 
+                    Padding="15" Margin="0,0,5,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Filter Controls -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="10" Margin="0,0,0,10">
+                        <Button Content="Refresh" Command="{Binding RefreshCommand}" 
+                               Style="{ThemeResource AccentButtonStyle}"/>
+                        <Button Content="Export" Command="{Binding ExportErrorsCommand}"/>
+                    </StackPanel>
+
+                    <!-- Error List -->
+                    <ListView Grid.Row="1" ItemsSource="{Binding RecentErrors}" 
+                             SelectedItem="{Binding SelectedError, Mode=TwoWay}"
+                             SelectionMode="Single">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="10" Background="{ThemeResource SubtleFillColorTransparentBrush}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" 
+                                              Text="{Binding OccurredAt}" 
+                                              Style="{ThemeResource CaptionTextBlockStyle}" 
+                                              Margin="5" Width="80"/>
+                                    
+                                    <StackPanel Grid.Column="1" Margin="5">
+                                        <TextBlock Text="{Binding Title}" 
+                                                  Style="{ThemeResource BodyStrongTextBlockStyle}" 
+                                                  TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Text="{Binding Message}" 
+                                                  Style="{ThemeResource CaptionTextBlockStyle}" 
+                                                  Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                  TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+
+                                    <Border Grid.Column="2" Background="LightBlue" 
+                                           CornerRadius="8" Padding="6,2" Margin="5">
+                                        <TextBlock Text="{Binding Category}" 
+                                                  Style="{ThemeResource CaptionTextBlockStyle}" 
+                                                  Foreground="DarkBlue"/>
+                                    </Border>
+
+                                    <Border Grid.Column="3" Background="Orange" 
+                                           CornerRadius="8" Padding="6,2" Margin="5">
+                                        <TextBlock Text="{Binding Severity}" 
+                                                  Style="{ThemeResource CaptionTextBlockStyle}" 
+                                                  Foreground="White"/>
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
+
+            <!-- Error Details Panel -->
+            <Border Grid.Column="1" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" 
+                    Padding="15" Margin="5,0,0,0">
+                <ScrollViewer>
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="Error Details" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                        
+                        <StackPanel Spacing="5">
+                            <TextBlock Text="Title:" Style="{ThemeResource CaptionTextBlockStyle}" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding SelectedError.Title}" 
+                                      Style="{ThemeResource BodyTextBlockStyle}" TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <StackPanel Spacing="5">
+                            <TextBlock Text="Message:" Style="{ThemeResource CaptionTextBlockStyle}" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding SelectedError.Message}" 
+                                      Style="{ThemeResource BodyTextBlockStyle}" TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <StackPanel Spacing="5">
+                            <TextBlock Text="Occurred:" Style="{ThemeResource CaptionTextBlockStyle}" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding SelectedError.OccurredAt}" 
+                                      Style="{ThemeResource BodyTextBlockStyle}"/>
+                        </StackPanel>
+
+                        <StackPanel Spacing="5">
+                            <TextBlock Text="Terminal:" Style="{ThemeResource CaptionTextBlockStyle}" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding SelectedError.TerminalId}" 
+                                      Style="{ThemeResource BodyTextBlockStyle}"/>
+                        </StackPanel>
+
+                        <StackPanel Spacing="5">
+                            <TextBlock Text="User:" Style="{ThemeResource CaptionTextBlockStyle}" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding SelectedError.UserContext}" 
+                                      Style="{ThemeResource BodyTextBlockStyle}"/>
+                        </StackPanel>
+
+                        <!-- Action Buttons -->
+                        <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,10,0,0">
+                            <Button Content="Mark Resolved" 
+                                   Command="{Binding ResolveErrorCommand}"
+                                   Style="{ThemeResource AccentButtonStyle}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" 
+                Padding="20,10" Margin="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="{Binding StatusMessage}" 
+                          Style="{ThemeResource CaptionTextBlockStyle}"/>
+                
+                <ProgressRing Grid.Column="1" IsActive="{Binding IsLoading}" 
+                             Width="16" Height="16"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Magidesk.Infrastructure.Services;
 using Magidesk.Presentation.Services;
+using Magidesk.Application.Interfaces;
 
 namespace Magidesk.Presentation;
 
@@ -10,6 +11,9 @@ public sealed partial class MainWindow : Window
 {
     private readonly NavigationService _navigation;
     private readonly Microsoft.UI.Dispatching.DispatcherQueueTimer _clockTimer;
+    private readonly Microsoft.UI.Dispatching.DispatcherQueueTimer _cashBalanceTimer;
+    private readonly ICashBalanceTrackingService _cashBalanceService;
+    private readonly ITerminalContext _terminalContext;
 
     public MainWindow()
     {
@@ -32,6 +36,10 @@ public sealed partial class MainWindow : Window
             throw;
         }
 
+        // Initialize services
+        _cashBalanceService = App.Services.GetRequiredService<ICashBalanceTrackingService>();
+        _terminalContext = App.Services.GetRequiredService<ITerminalContext>();
+
         // Initialize Clock
         StartupLogger.Log("MainWindow - Clock Start");
         _clockTimer = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread().CreateTimer();
@@ -47,6 +55,16 @@ public sealed partial class MainWindow : Window
         _clockTimer.Start();
         
         if (StatusClock != null) StatusClock.Text = System.DateTime.Now.ToString("HH:mm:ss");
+
+        // Initialize Cash Balance Timer
+        StartupLogger.Log("MainWindow - Cash Balance Timer Start");
+        _cashBalanceTimer = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread().CreateTimer();
+        _cashBalanceTimer.Interval = System.TimeSpan.FromSeconds(30); // Update every 30 seconds
+        _cashBalanceTimer.Tick += async (s, e) => await UpdateCashBalanceAsync();
+        _cashBalanceTimer.Start();
+        
+        // Initial cash balance update
+        _ = UpdateCashBalanceAsync();
         
         // AUTH GUARD: UI Visibility
         try 
@@ -68,18 +86,41 @@ public sealed partial class MainWindow : Window
     {
         if (RootNavigationView != null)
         {
-            RootNavigationView.IsPaneVisible = user != null;
-            RootNavigationView.IsSettingsVisible = user != null;
-            
-            // Optionally disable interaction or hide completely
-            // RootNavigationView.Visibility = user != null ? Visibility.Visible : Visibility.Collapsed;
-            // But if we collapse it, the ContentFrame inside might also hide if it's content?
-            // NavigationView content property is the frame. Hiding NavigationView hides the frame.
-            // So we must ONLY hide the PANE.
-            
-            RootNavigationView.PaneDisplayMode = user != null ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftMinimal;
-            RootNavigationView.IsPaneOpen = false;
-            RootNavigationView.IsPaneToggleButtonVisible = user != null;
+            try
+            {
+                // CRITICAL STABILITY FIX:
+                // Do NOT toggle PaneDisplayMode or IsSettingsVisible dynamically.
+                // Changing these properties during navigation/layout transitions is the root cause
+                // of the persistent E_INVALIDARG (0xc000027b) MeasureOverride crash.
+                
+                bool isLoggedIn = user != null;
+
+                // DEBUG: Commenting out Pane visibility toggles to isolate MeasureOverride crash.
+                // If the app survives login with the Pane always visible, we know this property is the culprit.
+                /*
+                if (RootNavigationView.IsPaneVisible != isLoggedIn)
+                {
+                    RootNavigationView.IsPaneVisible = isLoggedIn;
+                }
+
+                if (RootNavigationView.IsPaneToggleButtonVisible != isLoggedIn)
+                {
+                    RootNavigationView.IsPaneToggleButtonVisible = isLoggedIn;
+                }
+                */
+
+                RootNavigationView.IsPaneOpen = false;
+
+                // Force Left mode always
+                if (RootNavigationView.PaneDisplayMode != NavigationViewPaneDisplayMode.Left)
+                {
+                    RootNavigationView.PaneDisplayMode = NavigationViewPaneDisplayMode.Left;
+                }
+            }
+            catch (Exception ex)
+            {
+                StartupLogger.Log($"Error updating NavigationView state: {ex}");
+            }
         }
 
         if (StatusUser != null)
@@ -96,6 +137,61 @@ public sealed partial class MainWindow : Window
     public void SetUser(string userName)
     {
         if (StatusUser != null) StatusUser.Text = userName;
+    }
+
+    private async Task UpdateCashBalanceAsync()
+    {
+        try
+        {
+            if (_terminalContext.TerminalId == null)
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    if (StatusCashBalance != null) StatusCashBalance.Text = "N/A";
+                });
+                return;
+            }
+
+            var balance = await _cashBalanceService.GetCurrentCashBalanceAsync(_terminalContext.TerminalId.Value);
+            
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                if (StatusCashBalance != null)
+                {
+                    if (balance != null)
+                    {
+                        StatusCashBalance.Text = balance.CurrentBalance.ToString("C");
+                        
+                        // Change color based on balance status
+                        if (balance.IsLowCash)
+                        {
+                            StatusCashBalance.Foreground = new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.Orange);
+                        }
+                        else if (balance.IsHighCash)
+                        {
+                            StatusCashBalance.Foreground = new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.Red);
+                        }
+                        else
+                        {
+                            StatusCashBalance.ClearValue(Microsoft.UI.Xaml.Controls.TextBlock.ForegroundProperty);
+                        }
+                    }
+                    else
+                    {
+                        StatusCashBalance.Text = "No Session";
+                        StatusCashBalance.ClearValue(Microsoft.UI.Xaml.Controls.TextBlock.ForegroundProperty);
+                    }
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            StartupLogger.Log($"Cash Balance Update Failed: {ex}");
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                if (StatusCashBalance != null) StatusCashBalance.Text = "Error";
+            });
+        }
     }
 
     private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)

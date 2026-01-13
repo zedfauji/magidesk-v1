@@ -58,7 +58,8 @@
             <converters:DecimalToDoubleConverter x:Key="DecimalToDoubleConverter"/>
             <converters:IntToDoubleConverter x:Key="IntToDoubleConverter"/>
             <converters:CollectionEmptyToVisibilityConverter x:Key="CollectionEmptyToVisibilityConverter"/>
-            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <converters:BoolToSuccessColorConverter x:Key="BoolToSuccessColorConverter"/>
+            <!-- <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/> REMOVED: Class does not exist -->
             <converters:BooleanToStringConverter x:Key="BooleanToStringConverter"/>
             <converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
             <converters:ActiveStatusBrushConverter x:Key="ActiveStatusBrushConverter"/>
@@ -73,6 +74,11 @@
             <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
             <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
             <converters:BoolToInfoBarSeverityConverter x:Key="BoolToSeverityConverter"/>
+            <converters:SeverityToBrushConverter x:Key="SeverityToBrushConverter"/>
+            <converters:BooleanToStatusConverter x:Key="BooleanToStatusConverter"/>
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverter"/>
+            <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
+            <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
 
              <!-- Standard Text Styles -->
              <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock">

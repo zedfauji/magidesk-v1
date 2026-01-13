@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.Dialogs.TableOperationsDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dto="using:Magidesk.Application.DTOs"
+    xmlns:viewmodels="using:Magidesk.Presentation.ViewModels.Dialogs"
+    mc:Ignorable="d"
+    Title="{x:Bind ViewModel.OperationTypeDisplay, Mode=OneWay}"
+    PrimaryButtonText="Execute Operation"
+    SecondaryButtonText="Cancel"
+    DefaultButton="Primary"
+    IsPrimaryButtonEnabled="{x:Bind ViewModel.CanExecuteOperation, Mode=OneWay}"
+    PrimaryButtonCommand="{x:Bind ViewModel.ExecuteOperationCommand}"
+    SecondaryButtonCommand="{x:Bind ViewModel.CancelCommand}">
+
+    <ScrollViewer MaxHeight="600" VerticalScrollBarVisibility="Auto">
+        <StackPanel Spacing="16" Margin="24">
+            <!-- Summary & Validation -->
+            <InfoBar IsOpen="{x:Bind ViewModel.HasError, Mode=OneWay}"
+                     Severity="Error"
+                     Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+                     Margin="0,0,0,12"/>
+
+            <!-- Primary Session Info -->
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="12">
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <FontIcon Glyph="&#xE7C1;" FontSize="24" VerticalAlignment="Center" Foreground="{ThemeResource AccentFillColorDefaultBrush}"/>
+                    
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="{x:Bind ViewModel.PrimaryTableName, Mode=OneWay}" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                        <TextBlock Text="Current Source Table" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                        <TextBlock Text="{x:Bind ViewModel.PrimarySessionCharge, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" 
+                                   Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Right"/>
+                        <TextBlock Text="{x:Bind ViewModel.PrimarySessionDuration, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}" 
+                                   Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Right"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- MERGE Operation: Select tables to merge FROM -->
+            <StackPanel Spacing="8" Visibility="{x:Bind ViewModel.IsMergeOperation, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock Text="Select tables to merge into this session:" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                <ListView ItemsSource="{x:Bind ViewModel.AvailableTables, Mode=OneWay}"
+                          SelectionMode="Multiple"
+                          SelectionChanged="OnSelectionChanged"
+                          Height="200"
+                          BorderThickness="1" BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}" CornerRadius="4">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="dto:TableDto">
+                            <Grid Padding="0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="{x:Bind TableNumber, Converter={StaticResource TableNumberFormatter}}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{x:Bind Status, Converter={StaticResource TableStatusToStringConverter}}" FontSize="12" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                </StackPanel>
+                                <FontIcon Grid.Column="1" Glyph="&#xE73E;" FontSize="12" Visibility="{x:Bind IsOccupied, Mode=OneWay}" ToolTipService.ToolTip="Occupied"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+
+            <!-- TRANSFER Operation: Select target table -->
+            <StackPanel Spacing="8" Visibility="{x:Bind ViewModel.IsTransferOperation, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock Text="Select target table to transfer session to:" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                <ListView ItemsSource="{x:Bind ViewModel.AvailableTables, Mode=OneWay}"
+                          SelectionMode="Single"
+                          SelectionChanged="OnSelectionChanged"
+                          Height="200"
+                          BorderThickness="1" BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}" CornerRadius="4">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="dto:TableDto">
+                            <Grid Padding="0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="{x:Bind TableNumber, Converter={StaticResource TableNumberFormatter}}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{x:Bind Capacity, Converter={StaticResource StringFormatConverter}, ConverterParameter='Capacity: {0}'}" FontSize="12" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="1" Text="Available" Foreground="Green" VerticalAlignment="Center" FontSize="12"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+
+            <!-- SPLIT Operation: Define split allocations -->
+            <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsSplitOperation, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Grid>
+                    <TextBlock Text="Allocations" Style="{StaticResource BodyStrongTextBlockStyle}" VerticalAlignment="Center"/>
+                    <Button Content="Add Split" Command="{x:Bind ViewModel.AddSplitAllocationCommand}" HorizontalAlignment="Right" Style="{StaticResource AccentButtonStyle}"/>
+                </Grid>
+                
+                <ItemsControl ItemsSource="{x:Bind ViewModel.SplitAllocations, Mode=OneWay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="viewmodels:TableSplitAllocation">
+                            <Grid Margin="0,0,0,8" ColumnSpacing="8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="1.5*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBox Header="Target Table" Text="{x:Bind TargetTableName, Mode=TwoWay}" IsReadOnly="True" PlaceholderText="Auto-assigned"/>
+                                <NumberBox Header="Amount ($)" Value="{x:Bind AllocatedAmount, Mode=TwoWay, Converter={StaticResource DecimalToDoubleConverter}}" Minimum="0"/>
+                                <NumberBox Header="Guests" Value="{x:Bind GuestCount, Mode=TwoWay, Converter={StaticResource IntToDoubleConverter}}" Minimum="1" SpinButtonPlacementMode="Inline"/>
+                                
+                                <Button Command="{Binding ElementName=RootDialog, Path=ViewModel.RemoveSplitAllocationCommand}" CommandParameter="{x:Bind}" 
+                                        VerticalAlignment="Bottom" Background="Transparent" BorderThickness="0">
+                                    <FontIcon Glyph="&#xE74D;" Foreground="{ThemeResource SystemFillColorCriticalBrush}" FontSize="16"/>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Border Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" CornerRadius="4" Padding="12">
+                     <Grid>
+                         <TextBlock Text="Total Allocated:" VerticalAlignment="Center"/>
+                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                             <TextBlock Text="{x:Bind ViewModel.TotalSplitAllocation, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" FontWeight="SemiBold"/>
+                             <TextBlock Text="/" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                             <TextBlock Text="{x:Bind ViewModel.PrimarySessionCharge, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                             
+                             <FontIcon Glyph="&#xE73E;" Foreground="Green" Visibility="{x:Bind ViewModel.IsSplitAllocationValid, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                             <FontIcon Glyph="&#xE783;" Foreground="Red" Visibility="{x:Bind ViewModel.IsSplitAllocationValid, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Reverse}"/>
+                         </StackPanel>
+                     </Grid>
+                </Border>
+            </StackPanel>
+
+            <!-- Operation Reason -->
+            <StackPanel Spacing="8">
+                <TextBlock Text="Reason" Style="{StaticResource BodyTextBlockStyle}"/>
+                <ComboBox ItemsSource="{x:Bind ViewModel.CurrentReasons, Mode=OneWay}"
+                          HorizontalAlignment="Stretch"
+                          IsEditable="True"
+                          Text="{x:Bind ViewModel.OperationReason, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          PlaceholderText="Select or enter reason..."/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</ContentDialog>

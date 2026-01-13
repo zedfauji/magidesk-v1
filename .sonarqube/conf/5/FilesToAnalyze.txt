@@ -1,0 +1,16 @@
+﻿C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\MigrationsContextFactory.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260104154305_AddPrinterSupportColumns.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260104154305_AddPrinterSupportColumns.Designer.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260104171112_AddPrinterDetailedConfiguration.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260104171112_AddPrinterDetailedConfiguration.Designer.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260106150426_AddIsDraftCol.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260106150426_AddIsDraftCol.Designer.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\ApplicationDbContextModelSnapshot.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\DbResetter.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\FullPosSeeder.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\ReflectionUtil.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\SeedGuards.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\SeedOptions.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\SeedProfileWriter.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\SeedResult.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\appsettings.json

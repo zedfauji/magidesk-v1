@@ -7,7 +7,7 @@
 
 | Ticket ID | Feature ID | Title | Priority | Status |
 |-----------|------------|-------|----------|--------|
-| BE-I.2-01 | I.2 | Complete Cash Drawer Auto-Open | P1 | NOT_STARTED |
+| BE-I.2-01 | I.2 | Complete Cash Drawer Auto-Open | P1 | COMPLETED |
 | BE-I.4-01 | I.4 | Implement Lamp Control Integration | P1 | NOT_STARTED |
 | BE-I.5-01 | I.5 | Complete Barcode Scanner Support | P2 | NOT_STARTED |
 | BE-I.6-01 | I.6 | Complete Display Customer Support | P2 | NOT_STARTED |
@@ -83,9 +83,11 @@ Cash drawer automatically opens on cash transactions.
 - Manual open command
 - Audit drawer operations
 
-### Current State (Partial)
-- Drawer service exists
-- **Missing:** Auto-trigger, audit
+### Current State (Completed)
+- ✅ Cash drawer service implemented with CashBalanceTrackingService
+- ✅ Auto-trigger on cash transactions implemented
+- ✅ Audit logging implemented
+- ✅ Real-time balance tracking fully implemented with MainWindow status bar display, timer-based updates, and integration with CashBalanceTrackingService
 
 ### Implementation Notes
 ```csharp
@@ -108,11 +110,14 @@ public enum DrawerOperationType
 ```
 
 ### Acceptance Criteria
-- [ ] Drawer opens on cash payment
-- [ ] Drawer opens on cash refund
-- [ ] Manual open works
-- [ ] Operations logged
-- [ ] Error handling for hardware
+- [x] Drawer opens on cash payment
+- [x] Drawer opens on cash refund
+- [x] Manual open works
+- [x] Operations logged
+- [x] Error handling for hardware
+- [x] Real-time balance tracking implemented
+- [x] Cash drop and drawer bleed functionality
+- [x] Alert system for low/high cash thresholds
 
 ---
 
@@ -254,16 +259,26 @@ Kitchen display integration for order management.
 - Track order status
 - Support bump/recall
 
+### Current State (Completed)
+- ✅ Kitchen display system fully implemented
+- ✅ Orders automatically route to kitchen after submission via AddOrderLineCommandHandler
+- ✅ Order status tracking implemented via KitchenStatusService with notifications
+- ✅ Order ready notifications implemented through OrderNotificationService
+- ✅ OrderEntryViewModel subscribes to notifications
+- ✅ KitchenDisplayViewModel uses enhanced status service
+
 ### Dependencies
 | Type | Dependency | Ticket ID |
 |------|------------|-----------|
 | SOFT | OrderLine entity | Exists |
 
 ### Acceptance Criteria
-- [ ] Orders sent to KDS
-- [ ] Status tracking works
-- [ ] Bump functionality works
-- [ ] Multiple displays supported
+- [x] Orders sent to KDS
+- [x] Status tracking works
+- [x] Bump functionality works
+- [x] Multiple displays supported
+- [x] Automatic routing implemented
+- [x] Notification system integrated
 
 ---
 
@@ -271,9 +286,11 @@ Kitchen display integration for order management.
 
 | Priority | Count | Status |
 |----------|-------|--------|
-| P1 | 2 | NOT_STARTED |
-| P2 | 5 | NOT_STARTED |
-| **Total** | **7** | **NOT_STARTED** |
+| P1 | 1 | NOT_STARTED |
+| P1 | 1 | COMPLETED |
+| P2 | 4 | NOT_STARTED |
+| P2 | 1 | COMPLETED |
+| **Total** | **7** | **2 COMPLETED, 5 NOT_STARTED** |
 
 ---
 

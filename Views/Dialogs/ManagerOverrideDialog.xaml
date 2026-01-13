@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.Dialogs.ManagerOverrideDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Manager Override Required"
+    PrimaryButtonText="Apply Override"
+    SecondaryButtonText="Cancel"
+    DefaultButton="Primary"
+    IsPrimaryButtonEnabled="{x:Bind ViewModel.IsAuthorized, Mode=OneWay}"
+    PrimaryButtonCommand="{x:Bind ViewModel.ApplyOverrideCommand}"
+    SecondaryButtonCommand="{x:Bind ViewModel.CancelCommand}">
+
+    <ScrollViewer MaxHeight="600" VerticalScrollBarVisibility="Auto">
+        <StackPanel Spacing="16" Margin="24">
+            
+            <!-- Header Information -->
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" 
+                    CornerRadius="8" Padding="16">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{x:Bind ViewModel.OverrideTypeDisplay, Mode=OneWay}" 
+                               Style="{StaticResource SubtitleTextBlockStyle}"/>
+                    <TextBlock Text="{x:Bind ViewModel.TableName, Mode=OneWay}" 
+                               Style="{StaticResource BodyTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                    
+                    <!-- Current Session Info -->
+                    <StackPanel Orientation="Horizontal" Spacing="16">
+                        <TextBlock Text="Current Time:" Style="{StaticResource CaptionTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.CurrentSessionTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}" 
+                                   Style="{StaticResource CaptionTextBlockStyle}" FontWeight="SemiBold"/>
+                        <TextBlock Text="Current Charge:" Style="{StaticResource CaptionTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.CurrentCharge, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" 
+                                   Style="{StaticResource CaptionTextBlockStyle}" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Error Display -->
+            <InfoBar IsOpen="{x:Bind ViewModel.HasError, Mode=OneWay}"
+                     Severity="Error"
+                     Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+                     Margin="0,0,0,8"/>
+
+            <!-- Manager Authorization Section -->
+            <StackPanel Spacing="12">
+                <TextBlock Text="Manager Authorization" Style="{StaticResource BaseTextBlockStyle}" FontWeight="SemiBold"/>
+                
+                <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" 
+                        CornerRadius="8" Padding="16">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Enter Manager PIN to authorize this override operation:" 
+                                   Style="{StaticResource CaptionTextBlockStyle}"/>
+                        
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <PasswordBox x:Name="ManagerPinBox"
+                                         Password="{x:Bind ViewModel.ManagerPin, Mode=TwoWay}"
+                                         PlaceholderText="Manager PIN"
+                                         Width="150"
+                                         IsEnabled="{x:Bind ViewModel.IsAuthorized, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"/>
+                            
+                            <Button Content="Authorize" 
+                                    Command="{x:Bind ViewModel.AuthorizeCommand}"
+                                    IsEnabled="{x:Bind ViewModel.IsAuthorized, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                    Style="{StaticResource AccentButtonStyle}"/>
+                        </StackPanel>
+
+                        <!-- Authorization Status -->
+                        <StackPanel Orientation="Horizontal" Spacing="8" 
+                                    Visibility="{x:Bind ViewModel.IsAuthorized, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <FontIcon Glyph="&#xE73E;" Foreground="Green" FontSize="16"/>
+                            <TextBlock Text="Manager authorization successful" 
+                                       Style="{StaticResource CaptionTextBlockStyle}" 
+                                       Foreground="Green" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Override Configuration Section -->
+            <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsAuthorized, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock Text="Override Configuration" Style="{StaticResource BaseTextBlockStyle}" FontWeight="SemiBold"/>
+                
+                <!-- Time Adjustment Section -->
+                <StackPanel Spacing="8" Visibility="{x:Bind ViewModel.OverrideType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=TimeAdjustment}">
+                    <TextBlock Text="Time Adjustment" Style="{StaticResource BodyTextBlockStyle}" FontWeight="SemiBold"/>
+                    <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,8,0,0">
+                        <NumberBox Header="Minutes to adjust (+ to add, - to subtract):"
+                                   Value="{x:Bind ViewModel.TimeAdjustmentMinutes, Mode=TwoWay}"
+                                   Minimum="-480" Maximum="480"
+                                   SpinButtonPlacementMode="Inline"
+                                   Width="200"/>
+                        <TextBlock Text="{x:Bind ViewModel.TimeAdjustmentDisplay, Mode=OneWay}" 
+                                   Style="{StaticResource CaptionTextBlockStyle}" 
+                                   VerticalAlignment="Bottom" Margin="0,0,0,8"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Pricing Override Section -->
+                <StackPanel Spacing="8" Visibility="{x:Bind ViewModel.OverrideType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=PricingOverride}">
+                    <TextBlock Text="Pricing Override" Style="{StaticResource BodyTextBlockStyle}" FontWeight="SemiBold"/>
+                    <NumberBox Header="New charge amount:"
+                               Value="{x:Bind ViewModel.PricingOverrideAmount, Mode=TwoWay, Converter={StaticResource DecimalToDoubleConverter}}"
+                               Minimum="0" Maximum="9999"
+                               SpinButtonPlacementMode="Inline"
+                               Width="200"/>
+                </StackPanel>
+
+                <!-- Force End Section -->
+                <StackPanel Spacing="8" Visibility="{x:Bind ViewModel.OverrideType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=ForceEnd}">
+                    <TextBlock Text="Force End Session" Style="{StaticResource BodyTextBlockStyle}" FontWeight="SemiBold"/>
+                    <TextBlock Text="This will immediately end the session regardless of current state." 
+                               Style="{StaticResource CaptionTextBlockStyle}" 
+                               Foreground="{ThemeResource SystemFillColorCriticalBrush}"/>
+                </StackPanel>
+
+                <!-- Reason Selection -->
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Reason" Style="{StaticResource BodyTextBlockStyle}" FontWeight="SemiBold"/>
+                    <ComboBox ItemsSource="{x:Bind ViewModel.CurrentReasonCodes, Mode=OneWay}"
+                              SelectedItem="{x:Bind ViewModel.SelectedReasonCode, Mode=TwoWay}"
+                              PlaceholderText="Select a reason..."
+                              HorizontalAlignment="Stretch"/>
+                    
+                    <TextBox Header="Additional notes (optional):"
+                             Text="{x:Bind ViewModel.Reason, Mode=TwoWay}"
+                             PlaceholderText="Enter additional details..."
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             MaxHeight="80"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Warning Section -->
+            <Border Background="{ThemeResource SystemFillColorCautionBackgroundBrush}" 
+                    CornerRadius="8" Padding="12"
+                    Visibility="{x:Bind ViewModel.IsAuthorized, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <FontIcon Glyph="&#xE7BA;" Foreground="{ThemeResource SystemFillColorCautionBrush}" FontSize="16"/>
+                    <TextBlock Text="This override operation will be logged and audited. Ensure you have proper authorization and justification." 
+                               Style="{StaticResource CaptionTextBlockStyle}" 
+                               TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</ContentDialog>

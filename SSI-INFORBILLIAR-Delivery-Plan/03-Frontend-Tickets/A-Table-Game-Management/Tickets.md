@@ -485,3 +485,208 @@ Guest count input in session dialogs.
 ---
 
 *Last Updated: 2026-01-10*
+
+---
+
+## FE-A.6-01: Table Type per Table Configuration
+
+**Ticket ID:** FE-A.6-01  
+**Feature ID:** A.6  
+**Type:** Frontend  
+**Title:** Table Type per Table Configuration  
+**Priority:** P1
+
+### Outcome
+Ability to assign specific table types (and thus pricing) to individual tables.
+
+### Scope
+- Add "Table Type" dropdown to Table Property Editor
+- Updates `Table.TableTypeId`
+- Filters available types from A.5 configuration
+
+### Acceptance Criteria
+- [ ] Dropdown lists all active Table Types
+- [ ] Changing type updates table icon/color immediately
+- [ ] Pricing rules automatically shift to new type
+
+---
+
+## FE-A.7-01: Link Equipment UI
+
+**Ticket ID:** FE-A.7-01  
+**Feature ID:** A.7  
+**Type:** Frontend  
+**Title:** Link Equipment UI  
+**Priority:** P2
+
+### Outcome
+Interface to associate equipment (cues, balls, controllers) with a table.
+
+### Scope
+- Create `EquipmentLinkDialog`
+- Manage inventory checklist per table
+- Equipment status tracking (Working/Damaged)
+
+### Acceptance Criteria
+- [ ] Can select equipment from inventory
+- [ ] Shows current equipment status on table details
+- [ ] Alert if equipment is marked damaged
+
+---
+
+## FE-A.8-01: Game History View
+
+**Ticket ID:** FE-A.8-01  
+**Feature ID:** A.8  
+**Type:** Frontend  
+**Title:** Game History View  
+**Priority:** P2
+
+### Outcome
+View historical sessions and games played on a specific table.
+
+### Scope
+- Add "History" tab to Table Details
+- List past sessions (Start/End time, Customer, Total)
+- Link to Ticket details
+
+### Acceptance Criteria
+- [ ] Lists last 50 sessions
+- [ ] Shows accurate duration and revenue
+- [ ] Drill-down to full ticket works
+
+---
+
+## FE-A.10-01: First-Hour Pricing Configuration
+
+**Ticket ID:** FE-A.10-01  
+**Feature ID:** A.10  
+**Type:** Frontend  
+**Title:** First-Hour Pricing Configuration  
+**Priority:** P1
+
+### Outcome
+UI to configure special pricing for the first hour (or fraction) of valid sessions.
+
+### Scope
+- Add to `TableTypeManagementPage`
+- toggle for "Special First Hour Rate"
+- Input for Rate and Duration (e.g., first 30 mins vs 60 mins)
+
+### Acceptance Criteria
+- [ ] Settings persist to backend
+- [ ] Validation ensures First Hour >= 0
+- [ ] Visual graph of pricing curve (optional but nice)
+
+---
+
+## FE-A.11-01: Time Rounding Settings
+
+**Ticket ID:** FE-A.11-01  
+**Feature ID:** A.11  
+**Type:** Frontend  
+**Title:** Time Rounding Settings  
+**Priority:** P1
+
+### Outcome
+Configuration for how session time is rounded (e.g., up to nearest 15 mins).
+
+### Scope
+- Add to `PricingConfigDialog`
+- Options: None, Round Up 5/10/15/30/60 mins
+- Grace period settings
+
+### Acceptance Criteria
+- [ ] Selection reflects in pricing engine
+- [ ] Grace period input validates
+
+---
+
+## FE-A.12-01: Minimum Charge Configuration
+
+**Ticket ID:** FE-A.12-01  
+**Feature ID:** A.12  
+**Type:** Frontend  
+**Title:** Minimum Charge Configuration  
+**Priority:** P1
+
+### Outcome
+Set a minimum fee per session regardless of duration.
+
+### Scope
+- Add to `PricingConfigDialog`
+- Currency input for Min Charge
+- Toggle for "Apply to all times" or "Peak only"
+
+### Acceptance Criteria
+- [ ] Value persists
+- [ ] Validates >= 0
+
+---
+
+## FE-A.13-01: Server Assignment UI
+
+**Ticket ID:** FE-A.13-01  
+**Feature ID:** A.13  
+**Type:** Frontend  
+**Title:** Server Assignment UI  
+**Priority:** P2
+
+### Outcome
+Quickly assign or change the waitstaff responsible for a table.
+
+### Scope
+- Context menu option "Assign Server"
+- Server selection dialog (User list)
+- Visual indicator of assigned server on Table Card
+
+### Acceptance Criteria
+- [ ] Only lists users with "Server" role
+- [ ] Updates real-time
+- [ ] Shows current server name on card
+
+---
+
+## FE-A.14-01: Merge Tables UI
+
+**Ticket ID:** FE-A.14-01  
+**Feature ID:** A.14  
+**Type:** Frontend  
+**Title:** Merge Tables UI  
+**Priority:** P2
+
+### Outcome
+Combine two or more tables into a single session/ticket.
+
+### Scope
+- "Merge" action in table context menu
+- Selection mode to pick target table(s)
+- Resolution dialog (Which session stays? Combine charges?)
+
+### Acceptance Criteria
+- [ ] Select source and target tables
+- [ ] Combines active sessions correctly
+- [ ] Single ticket created/maintained
+
+---
+
+## FE-A.18-01: Transfer Session UI
+
+**Ticket ID:** FE-A.18-01  
+**Feature ID:** A.18  
+**Type:** Frontend  
+**Title:** Transfer Session UI  
+**Priority:** P2
+
+### Outcome
+Move an active session from one table to another (e.g., Customer moves seats).
+
+### Scope
+- "Transfer" action
+- Target table selector (must be Available)
+- Confirmation dialog
+
+### Acceptance Criteria
+- [ ] Source table becomes Available
+- [ ] Target table becomes Occupied
+- [ ] Session timer and charges persist seamlessly

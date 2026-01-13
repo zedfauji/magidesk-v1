@@ -9,4 +9,9 @@ public class StubCashDrawerService : ICashDrawerService
     {
         return Task.CompletedTask;
     }
+
+    public Task<bool> IsConnectedAsync()
+    {
+        return Task.FromResult(true);
+    }
 }

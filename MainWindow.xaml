@@ -55,6 +55,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel Orientation="Horizontal" Grid.Column="0" Spacing="5" Margin="0,0,20,0">
@@ -70,11 +71,11 @@
             <!-- Spacer -->
 
             <StackPanel Orientation="Horizontal" Grid.Column="3" Spacing="5" Margin="0,0,20,0">
-                 <TextBlock Text="TAX INCLUDED:" FontWeight="Bold" Style="{StaticResource CaptionTextBlockStyle}"/>
-                 <TextBlock x:Name="StatusTaxIncluded" Text="YES" Style="{StaticResource CaptionTextBlockStyle}"/>
+                 <TextBlock Text="CASH BALANCE:" FontWeight="Bold" Style="{StaticResource CaptionTextBlockStyle}"/>
+                 <TextBlock x:Name="StatusCashBalance" Text="$0.00" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"/>
             </StackPanel>
 
-            <TextBlock x:Name="StatusClock" Grid.Column="4" Text="00:00:00" FontWeight="SemiBold" Style="{StaticResource BodyStrongTextBlockStyle}" VerticalAlignment="Center"/>
+            <TextBlock x:Name="StatusClock" Grid.Column="5" Text="00:00:00" FontWeight="SemiBold" Style="{StaticResource BodyStrongTextBlockStyle}" VerticalAlignment="Center"/>
         </Grid>
 
         <!-- Loading Overlay -->

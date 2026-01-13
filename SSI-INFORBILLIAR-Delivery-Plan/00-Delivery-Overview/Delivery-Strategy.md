@@ -48,13 +48,13 @@ All development MUST comply with rules defined in `.agent/rules/*`:
 | E. Reservations & Scheduling | 12 | 0 | 0 | 12 | **P0** |
 | F. Customer & Member Management | 13 | 2 | 0 | 11 | **P0** |
 | G. Inventory & Products | 12 | 4 | 5 | 3 | P2 |
-| H. Reporting & Export | 15 | 2 | 4 | 9 | P1 |
+| H. Reporting & Export | 15 | 7 | 4 | 4 | P1 |
 | I. Hardware & Peripherals | 11 | 5 | 2 | 4 | P1 |
 | J. Security, Users & Staff | 10 | 5 | 3 | 2 | **P0** |
 | K. Localization & Regionalization | 6 | 2 | 2 | 2 | P2 |
 | L. Operations, Deployment & Config | 12 | 7 | 3 | 2 | P2 |
 | M. System Safety & Recovery | 11 | 2 | 4 | 5 | P1 |
-| **TOTAL** | **164** | **59** | **61** | **44** | **36.0%** |
+| **TOTAL** | **164** | **64** | **61** | **39** | **39.0%** |
 
 ---
 

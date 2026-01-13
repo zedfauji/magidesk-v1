@@ -107,11 +107,32 @@ public class VoidTicketViewModel : ViewModelBase
             return;
         }
 
+        // Show confirmation dialog first
+        var confirmationDialog = new Views.Dialogs.ConfirmationDialog();
+        confirmationDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        
+        var totalAmount = Ticket.TotalAmount;
+        var wasteText = IsWasted ? "Items will be returned to inventory." : "Items will not be returned to inventory.";
+        
+        var confirmed = await confirmationDialog.ShowConfirmationAsync(
+            "Confirm Void",
+            $"Are you sure you want to void this ticket?",
+            "Void Ticket",
+            "Cancel",
+            "🗑️",
+            "Error",
+            $"Ticket #{Ticket.TicketNumber} - Total: {totalAmount:C}\nReason: {SelectedReason}\n{wasteText}");
+
+        if (!confirmed)
+        {
+            return; // User cancelled
+        }
+
         // Manager Authorization Required
         var authDialog = App.Services.GetRequiredService<Views.Dialogs.ManagerPinDialog>();
         authDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
         
-        var authResult = await authDialog.ShowForOperationAsync("Void Ticket");
+        var authResult = await authDialog.ShowForOperationAsync($"Void Ticket #{Ticket.TicketNumber}");
         if (authResult == null || !authResult.Authorized)
         {
             // Authorization failed or cancelled - do not proceed
@@ -138,6 +159,19 @@ public class VoidTicketViewModel : ViewModelBase
 
             await _voidTicketHandler.HandleAsync(command);
 
+            // Show success confirmation
+            var successDialog = new Views.Dialogs.ConfirmationDialog();
+            successDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+            
+            await successDialog.ShowConfirmationAsync(
+                "Void Successful",
+                $"Ticket #{Ticket.TicketNumber} has been voided successfully.",
+                "OK",
+                "",
+                "✅",
+                "Success",
+                $"Total voided: {totalAmount:C}\nAuthorized by: {authResult.AuthorizingUserName}\n{wasteText}");
+
             if (dialog is ContentDialog cd)
             {
                 cd.Hide();
@@ -145,7 +179,7 @@ public class VoidTicketViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            ErrorMessage = ex.Message;
+            ErrorMessage = $"Void failed: {ex.Message}";
             HasError = true;
         }
     }

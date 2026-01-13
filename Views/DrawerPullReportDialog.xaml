@@ -58,50 +58,54 @@
                 </Grid>
             </StackPanel>
 
-            <!-- Cash Accountability -->
-            <StackPanel Grid.Row="2" Spacing="8" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}" BorderThickness="0,0,0,1" Padding="0,0,0,16">
-                <TextBlock Text="Cash Accountability" Style="{StaticResource SubtitleTextBlockStyle}"/>
+    <!-- Cash Accountability -->
+    <StackPanel Grid.Row="2" Spacing="8" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}" BorderThickness="0,0,0,1" Padding="0,0,0,16">
+        <StackPanel Orientation="Horizontal" Spacing="12">
+            <TextBlock Text="Cash Accountability" Style="{StaticResource SubtitleTextBlockStyle}"/>
+            <Button Content="Count Cash" Command="{Binding CountCashCommand}" Style="{StaticResource AccentButtonStyle}" FontSize="12" Padding="8,4"/>
+        </StackPanel>
 
-                <Grid ColumnDefinitions="*,Auto" RowSpacing="4">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/> <!-- Divider -->
-                        <RowDefinition Height="Auto"/> <!-- Expected -->
-                        <RowDefinition Height="Auto"/> <!-- Actual -->
-                        <RowDefinition Height="Auto"/> <!-- Difference -->
-                    </Grid.RowDefinitions>
+        <Grid ColumnDefinitions="*,Auto" RowSpacing="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/> <!-- Divider -->
+                <RowDefinition Height="Auto"/> <!-- Expected -->
+                <RowDefinition Height="Auto"/> <!-- Actual -->
+                <RowDefinition Height="Auto"/> <!-- Difference -->
+            </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Opening Balance"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Report.OpeningBalance, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}"/>
+            <TextBlock Grid.Row="0" Text="Opening Balance"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Report.OpeningBalance, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}"/>
 
-                    <TextBlock Grid.Row="1" Text="Cash Sales (Receipts)"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Report.TotalCashReceipts, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}"/>
+            <TextBlock Grid.Row="1" Text="Cash Sales (Receipts)"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Report.TotalCashReceipts, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}"/>
 
-                    <TextBlock Grid.Row="2" Text="Cash Deposits/Drops"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Report.TotalCashDrops, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}"/>
+            <TextBlock Grid.Row="2" Text="Cash Deposits/Drops"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Report.TotalCashDrops, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}"/>
 
-                    <TextBlock Grid.Row="3" Text="Tips Paid Out"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Report.TotalTips, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}"/>
-                    
-                    <TextBlock Grid.Row="4" Text="Payouts"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Report.TotalPayouts, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}"/>
-                    
-                    <Rectangle Grid.Row="5" Grid.ColumnSpan="2" Height="1" Fill="{ThemeResource SystemControlBackgroundBaseLowBrush}" Margin="0,8"/>
+            <TextBlock Grid.Row="3" Text="Tips Paid Out"/>
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Report.TotalTips, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}"/>
+            
+            <TextBlock Grid.Row="4" Text="Payouts"/>
+            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Report.TotalPayouts, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}"/>
+            
+            <Rectangle Grid.Row="5" Grid.ColumnSpan="2" Height="1" Fill="{ThemeResource SystemControlBackgroundBaseLowBrush}" Margin="0,8"/>
 
-                    <TextBlock Grid.Row="6" Text="Expected in Drawer" FontWeight="SemiBold"/>
-                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Report.ExpectedCash, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}" FontWeight="SemiBold"/>
+            <TextBlock Grid.Row="6" Text="Expected in Drawer" FontWeight="SemiBold"/>
+            <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding ExpectedCashBalance, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}" FontWeight="SemiBold"/>
 
-                    <TextBlock Grid.Row="7" Text="Actual Amount" Visibility="{Binding Report.ActualCash, Converter={StaticResource NullToVisibilityConverter}}"/>
-                    <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding Report.ActualCash, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}" Visibility="{Binding Report.ActualCash, Converter={StaticResource NullToVisibilityConverter}}"/>
+            <TextBlock Grid.Row="7" Text="Actual Amount Counted" FontWeight="SemiBold"/>
+            <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding ActualCashBalance, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}" FontWeight="SemiBold"/>
 
-                    <TextBlock Grid.Row="8" Text="Difference" FontWeight="Bold" Foreground="{ThemeResource SystemFillColorCriticalBrush}"/>
-                    <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding Report.Difference, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}" FontWeight="Bold" Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
-                </Grid>
-            </StackPanel>
+            <TextBlock Grid.Row="8" Text="{Binding VarianceStatus}" FontWeight="Bold"/>
+            <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding CashVariance, Converter={StaticResource StringFormatConverter}, ConverterParameter={StaticResource CurrencyFormat}}" 
+                       FontWeight="Bold"/>
+        </Grid>
+    </StackPanel>
 
             <!-- Exceptions List -->
              <StackPanel Grid.Row="3" Spacing="8" Padding="0,16,0,0">

@@ -101,11 +101,30 @@ public class RefundTicketViewModel : ViewModelBase
             return;
         }
 
+        // Show confirmation dialog first
+        var confirmationDialog = new Views.Dialogs.ConfirmationDialog();
+        confirmationDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+        
+        var refundAmount = Ticket.PaidAmount;
+        var confirmed = await confirmationDialog.ShowConfirmationAsync(
+            "Confirm Refund",
+            $"Are you sure you want to refund this ticket?",
+            "Refund Ticket",
+            "Cancel",
+            "💰",
+            "Warning",
+            $"Ticket #{Ticket.TicketNumber} - Amount: {refundAmount:C}\nReason: {SelectedReason}");
+
+        if (!confirmed)
+        {
+            return; // User cancelled
+        }
+
         // Manager Authorization Required
         var authDialog = App.Services.GetRequiredService<Views.Dialogs.ManagerPinDialog>();
         authDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
         
-        var authResult = await authDialog.ShowForOperationAsync("Refund Ticket");
+        var authResult = await authDialog.ShowForOperationAsync($"Refund Ticket #{Ticket.TicketNumber}");
         if (authResult == null || !authResult.Authorized)
         {
             return;
@@ -140,6 +159,19 @@ public class RefundTicketViewModel : ViewModelBase
 
             if (result.Success)
             {
+                // Show success confirmation
+                var successDialog = new Views.Dialogs.ConfirmationDialog();
+                successDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                
+                await successDialog.ShowConfirmationAsync(
+                    "Refund Successful",
+                    $"Ticket #{Ticket.TicketNumber} has been refunded successfully.",
+                    "OK",
+                    "",
+                    "✅",
+                    "Success",
+                    $"Amount refunded: {refundAmount:C}\nAuthorized by: {authResult.AuthorizingUserName}");
+
                 if (dialog is ContentDialog cd)
                 {
                     cd.Hide();
@@ -153,7 +185,7 @@ public class RefundTicketViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            ErrorMessage = ex.Message;
+            ErrorMessage = $"Refund failed: {ex.Message}";
             HasError = true;
         }
     }

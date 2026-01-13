@@ -438,3 +438,92 @@ Tab showing customer visit and purchase history.
 ---
 
 *Last Updated: 2026-01-10*
+
+---
+
+## FE-F.5-01: Member Portal Configuration
+
+**Ticket ID:** FE-F.5-01  
+**Feature ID:** F.5  
+**Type:** Frontend  
+**Title:** Member Portal Configuration  
+**Priority:** P3
+
+### Outcome
+Admin UI to configure what members see in their external portal (if applicable).
+
+### Scope
+- Toggle features enabled in portal (History, Booking, Balance)
+- Branding settings (Logo, Colors)
+
+### Acceptance Criteria
+- [ ] Settings persist
+- [ ] Preview changes functionality
+
+---
+
+## FE-F.8-01: Customer Notes UI
+
+**Ticket ID:** FE-F.8-01  
+**Feature ID:** F.8  
+**Type:** Frontend  
+**Title:** Customer Notes UI  
+**Priority:** P2
+
+### Outcome
+Add and view free-text notes for a customer.
+
+### Scope
+- "Notes" tab in Customer Profile
+- Add Note dialog
+- Pins important notes to top
+
+### Acceptance Criteria
+- [ ] Rich text or plain text notes
+- [ ] Timestamped entries
+- [ ] Pinned notes visible on profile summary
+
+---
+
+## FE-F.9-01: Customer Data Export
+
+**Ticket ID:** FE-F.9-01  
+**Feature ID:** F.9  
+**Type:** Frontend  
+**Title:** Customer Data Export  
+**Priority:** P2
+
+### Outcome
+Export customer database for external use.
+
+### Scope
+- "Export" button on Customer List
+- Format selection (CSV, Excel, JSON)
+- Field selection (optional)
+
+### Acceptance Criteria
+- [ ] Generates valid file
+- [ ] Respects applied filters
+
+---
+
+## FE-F.11-01: Merge Customer Profiles UI
+
+**Ticket ID:** FE-F.11-01  
+**Feature ID:** F.11  
+**Type:** Frontend  
+**Title:** Merge Customer Profiles UI  
+**Priority:** P2
+
+### Outcome
+Tool to combine duplicate customer records.
+
+### Scope
+- Admin tool: Merge Duplicates
+- Select Primary vs Secondary record
+- Preview data to be merged (History, Balance)
+
+### Acceptance Criteria
+- [ ] Warns this is irreversible
+- [ ] Merges balance and history
+- [ ] Deletes secondary record
