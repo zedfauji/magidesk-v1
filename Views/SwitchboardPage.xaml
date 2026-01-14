@@ -22,10 +22,11 @@
             <Setter Property="Padding" Value="8"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Background" Value="#5A5A5A"/>
-            <Setter Property="BorderBrush" Value="#808080"/>
-            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Background" Value="#E0E0E0"/>
+            <Setter Property="BorderBrush" Value="#FFFFFF"/>
+            <Setter Property="BorderThickness" Value="4"/>
             <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Foreground" Value="#000000"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -34,26 +35,39 @@
                               BorderBrush="{TemplateBinding BorderBrush}"
                               BorderThickness="{TemplateBinding BorderThickness}"
                               CornerRadius="{TemplateBinding CornerRadius}">
+                            <Grid.Shadow>
+                                <ThemeShadow />
+                            </Grid.Shadow>
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="Normal">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.Translation" Value="0,0,8"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
                                     <VisualState x:Name="PointerOver">
                                         <VisualState.Setters>
-                                            <Setter Target="RootGrid.Background" Value="#707070"/>
-                                            <Setter Target="RootGrid.BorderBrush" Value="#0078D4"/>
+                                            <Setter Target="RootGrid.Background" Value="#F5F5F5"/>
+                                            <Setter Target="RootGrid.BorderBrush" Value="#00A4EF"/>
+                                            <Setter Target="RootGrid.BorderThickness" Value="5"/>
+                                            <Setter Target="RootGrid.Translation" Value="0,0,16"/>
                                         </VisualState.Setters>
                                     </VisualState>
                                     <VisualState x:Name="Pressed">
                                         <VisualState.Setters>
                                             <Setter Target="RootGrid.Background" Value="#0078D4"/>
-                                            <Setter Target="RootGrid.BorderBrush" Value="#0078D4"/>
+                                            <Setter Target="RootGrid.BorderBrush" Value="#FFFFFF"/>
+                                            <Setter Target="RootGrid.BorderThickness" Value="5"/>
+                                            <Setter Target="ContentPresenter.Foreground" Value="#FFFFFF"/>
+                                            <Setter Target="RootGrid.Translation" Value="0,0,4"/>
                                         </VisualState.Setters>
                                     </VisualState>
                                     <VisualState x:Name="Disabled">
                                         <VisualState.Setters>
-                                            <Setter Target="RootGrid.Background" Value="#3A3A3A"/>
-                                            <Setter Target="RootGrid.BorderBrush" Value="#505050"/>
+                                            <Setter Target="RootGrid.Background" Value="#808080"/>
+                                            <Setter Target="RootGrid.BorderBrush" Value="#A0A0A0"/>
                                             <Setter Target="ContentPresenter.Opacity" Value="0.4"/>
+                                            <Setter Target="RootGrid.Translation" Value="0,0,0"/>
                                         </VisualState.Setters>
                                     </VisualState>
                                 </VisualStateGroup>
@@ -63,7 +77,8 @@
                                             ContentTemplate="{TemplateBinding ContentTemplate}"
                                             Padding="{TemplateBinding Padding}"
                                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            Foreground="{TemplateBinding Foreground}"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
