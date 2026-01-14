@@ -12,6 +12,10 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+                <!-- UI Polish and Optimization Styles -->
+                <ResourceDictionary Source="Styles/TouchOptimizedStyles.xaml"/>
+                <ResourceDictionary Source="Styles/AccessibilityStyles.xaml"/>
+                <ResourceDictionary Source="Styles/ConsistentSpacing.xaml"/>
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
             <!-- Other app resources here -->

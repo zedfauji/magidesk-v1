@@ -15,6 +15,9 @@
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>Magidesk.Presentation</RootNamespace>
+        <!-- Fix for "Windows App SDK requires Microsoft.Windows.SDK.NET.Ref" error -->
+        <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
         <!-- Version Information -->
         <Version>0.1.0</Version>
@@ -76,8 +79,8 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.*" />
-        <PackageReference Include="Microsoft.Web.WebView2" Version="1.*" />
+        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240829007" />
+        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2792.45" />
         <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.*" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
 

@@ -305,3 +305,61 @@
 ---
 
 *Last Updated: 2026-01-10*
+
+
+---
+
+## Category UI: UI Polish and Optimization (New Category)
+
+> **📋 SPEC STATUS**: ✅ **Requirements Complete** - Comprehensive requirements document created with 15 detailed requirements covering Switchboard redesign, toast notifications, session timers, manager PIN dialogs, confirmation dialogs, enhanced table map, missing critical pages, dialog patterns, keyboard shortcuts, touch optimization, accessibility, visual consistency, error handling, and performance.
+> 
+> **🎨 DESIGN STATUS**: ✅ **Design Complete** - Complete technical design with component architecture, visual mockups, data models, 12 correctness properties, error handling strategies, and comprehensive testing strategy.
+> 
+> **📝 TASKS STATUS**: ✅ **Tasks Complete** - 26 detailed implementation tasks with property-based testing requirements. All property tests made required for comprehensive validation.
+
+| ID | Feature | Priority | Frontend Ticket | FE Status |
+|----|---------|----------|-----------------|-----------|
+| UI.1 | Toast Notification System | P1 | FE-UI-01 | ❌ |
+| UI.2 | Session Timer Control | P1 | FE-UI-02 | ❌ |
+| UI.3 | Loading Overlay Component | P1 | FE-UI-03 | ❌ |
+| UI.4 | Manager PIN Dialog | P1 | FE-UI-04 | ❌ |
+| UI.5 | Confirmation Dialog | P1 | FE-UI-05 | ❌ |
+| UI.6 | Switchboard Redesign | P1 | FE-UI-06 | ❌ |
+| UI.7 | Keyboard Shortcut Service | P1 | FE-UI-07 | ❌ |
+| UI.8 | Login Page | P0 | FE-UI-08 | ❌ |
+| UI.9 | Enhanced Table Map | P1 | FE-UI-09 | ❌ |
+| UI.10 | Reservation Calendar Page | P0 | FE-UI-10 | ❌ |
+| UI.11 | Customer List Page | P0 | FE-UI-11 | ❌ |
+| UI.12 | Member Management Page | P1 | FE-UI-12 | ❌ |
+| UI.13 | Table Session Page | P1 | FE-UI-13 | ❌ |
+| UI.14 | Inventory Management Page | P1 | FE-UI-14 | ❌ |
+| UI.15 | Audit Log Page | P2 | FE-UI-15 | ❌ |
+| UI.16 | Convert Settle to Modal Dialog | P1 | FE-UI-16 | ❌ |
+| UI.17 | Customer Search Dialog | P1 | FE-UI-17 | ❌ |
+| UI.18 | Touch Optimization | P1 | FE-UI-18 | ❌ |
+| UI.19 | Accessibility Features | P1 | FE-UI-19 | ❌ |
+| UI.20 | Visual Consistency Audit | P1 | FE-UI-20 | ❌ |
+| UI.21 | Error State Handling | P1 | FE-UI-21 | ❌ |
+| UI.22 | Performance Optimization | P1 | FE-UI-22 | ❌ |
+| UI.23 | Integration Testing | P1 | FE-UI-23 | ❌ |
+| UI.24 | Manual Accessibility Testing | P1 | FE-UI-24 | ❌ |
+| UI.25 | Manual Touch Testing | P1 | FE-UI-25 | ❌ |
+| UI.26 | Visual Consistency Testing | P1 | FE-UI-26 | ❌ |
+
+---
+
+## Updated Summary Statistics
+
+| Priority | Backend | Frontend | Cross-Cutting | UI Polish | Total |
+|----------|---------|----------|---------------|-----------|-------|
+| P0 | 25 | 16 | 8 | 3 | 52 |
+| P1 | 35 | 15 | 8 | 22 | 80 |
+| P2 | 60 | 25 | 1 | 1 | 87 |
+| **Total** | **120** | **56** | **17** | **26** | **219** |
+
+> **Note**: UI Polish tickets (26) added to frontend total. New grand total: 219 tickets.
+
+---
+
+*Last Updated: 2026-01-13*
+

@@ -41,7 +41,7 @@
         </StackPanel>
 
         <!-- Tickets Grid -->
-        <GridView Grid.Row="1" ItemsSource="{x:Bind ViewModel.OpenTickets}" SelectionMode="Single">
+        <GridView Grid.Row="1" ItemsSource="{x:Bind ViewModel.OpenTickets, Mode=OneWay}" SelectionMode="Single">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="dtos:TicketDto">
                     <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" 

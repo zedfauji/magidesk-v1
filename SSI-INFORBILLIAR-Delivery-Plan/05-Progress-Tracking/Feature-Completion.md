@@ -211,7 +211,8 @@
 | K. Localization | 4 | 2 | 2 | 0 | 50% |
 | L. Operations & Config | 12 | 7 | 3 | 2 | 58.3% |
 | M. System Safety | 11 | 3 | 2 | 6 | 27.3% |
-| **TOTAL** | **161** | **57** | **38** | **66** | **35.4%** |
+| UI. UI Polish & Optimization | 26 | 0 | 0 | 26 | 0% |
+| **TOTAL** | **187** | **57** | **38** | **92** | **30.5%** |
 
 ---
 
@@ -227,4 +228,51 @@
 
 ---
 
-*Last Updated: 2026-01-12 (Table & Game Management Requirements Complete: Comprehensive specification with 15 requirements covering advanced pricing, session control, and table operations. Implementation tasks refined with property-based testing requirements.)*
+## Category UI: UI Polish and Optimization (26 Features)
+
+> **📋 SPEC STATUS**: ✅ **Requirements Complete** - Comprehensive requirements document created with 15 detailed requirements covering Switchboard redesign, toast notifications, session timers, manager PIN dialogs, confirmation dialogs, enhanced table map, missing critical pages, dialog patterns, keyboard shortcuts, touch optimization, accessibility, visual consistency, error handling, and performance.
+> 
+> **🎨 DESIGN STATUS**: ✅ **Design Complete** - Complete technical design with component architecture, visual mockups, data models, 12 correctness properties, error handling strategies, and comprehensive testing strategy.
+> 
+> **📝 TASKS STATUS**: ✅ **Tasks Complete** - 26 detailed implementation tasks with property-based testing requirements. All property tests made required for comprehensive validation.
+
+| Feature ID | Feature Name | FE Status | Overall | Notes |
+|------------|--------------|-----------|---------|-------|
+| UI.1 | Toast Notification System | NOT_STARTED | 0% | Requirements and design complete |
+| UI.2 | Session Timer Control | NOT_STARTED | 0% | Requirements and design complete |
+| UI.3 | Loading Overlay Component | NOT_STARTED | 0% | Requirements and design complete |
+| UI.4 | Manager PIN Dialog | NOT_STARTED | 0% | Requirements and design complete |
+| UI.5 | Confirmation Dialog | NOT_STARTED | 0% | Requirements and design complete |
+| UI.6 | Switchboard Redesign | NOT_STARTED | 0% | Requirements and design complete |
+| UI.7 | Keyboard Shortcut Service | NOT_STARTED | 0% | Requirements and design complete |
+| UI.8 | Login Page | NOT_STARTED | 0% | Requirements and design complete |
+| UI.9 | Enhanced Table Map | NOT_STARTED | 0% | Requirements and design complete |
+| UI.10 | Reservation Calendar Page | NOT_STARTED | 0% | Requirements and design complete |
+| UI.11 | Customer List Page | NOT_STARTED | 0% | Requirements and design complete |
+| UI.12 | Member Management Page | NOT_STARTED | 0% | Requirements and design complete |
+| UI.13 | Table Session Page | NOT_STARTED | 0% | Requirements and design complete |
+| UI.14 | Inventory Management Page | NOT_STARTED | 0% | Requirements and design complete |
+| UI.15 | Audit Log Page | NOT_STARTED | 0% | Requirements and design complete |
+| UI.16 | Convert Settle to Modal Dialog | NOT_STARTED | 0% | Requirements and design complete |
+| UI.17 | Customer Search Dialog | NOT_STARTED | 0% | Requirements and design complete |
+| UI.18 | Touch Optimization | NOT_STARTED | 0% | Requirements and design complete |
+| UI.19 | Accessibility Features | NOT_STARTED | 0% | Requirements and design complete |
+| UI.20 | Visual Consistency Audit | NOT_STARTED | 0% | Requirements and design complete |
+| UI.21 | Error State Handling | NOT_STARTED | 0% | Requirements and design complete |
+| UI.22 | Performance Optimization | NOT_STARTED | 0% | Requirements and design complete |
+| UI.23 | Integration Testing | NOT_STARTED | 0% | Requirements and design complete |
+| UI.24 | Manual Accessibility Testing | NOT_STARTED | 0% | Requirements and design complete |
+| UI.25 | Manual Touch Testing | NOT_STARTED | 0% | Requirements and design complete |
+| UI.26 | Visual Consistency Testing | NOT_STARTED | 0% | Requirements and design complete |
+
+**Category Progress: 0/26 Complete (0%), Specification and Design Complete**
+
+### Requirements Documentation Status (COMPLETED - 2026-01-13)
+- ✅ **UI Polish & Optimization Requirements**: Comprehensive 15-requirement specification created covering Switchboard redesign, toast notifications, session timers, manager PIN dialogs, confirmation dialogs, enhanced table map, missing critical pages, dialog patterns, keyboard shortcuts, touch optimization, accessibility, visual consistency, error handling, and performance
+- ✅ **UI Polish & Optimization Design**: Complete technical design with component architecture, visual mockups, data models, 12 correctness properties, error handling strategies, and comprehensive testing strategy
+- ✅ **UI Polish & Optimization Tasks**: 26 detailed implementation tasks with property-based testing requirements covering core UI components, pages, dialogs, accessibility, and performance optimization
+- ✅ **Spec Traceability**: All requirements mapped to specific implementation tasks and validation criteria
+
+---
+
+*Last Updated: 2026-01-13 (UI Polish & Optimization Requirements Complete: Comprehensive specification with 15 requirements covering Switchboard redesign, toast notifications, session timers, dialogs, accessibility, and performance. Implementation tasks defined with property-based testing requirements.)*

@@ -6,10 +6,7 @@
   "when": {
     "type": "fileEdited",
     "patterns": [
-      "docs/**/*.md",
-      "*.md",
-      "SSI-INFORBILLIAR-Delivery-Plan/**/*.md",
-      "audit-*/**/*.md"
+      "SSI-INFORBILLIAR-Delivery-Plan/**/*.md"
     ]
   },
   "then": {

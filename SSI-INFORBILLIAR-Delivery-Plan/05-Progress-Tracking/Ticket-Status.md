@@ -126,10 +126,10 @@
 
 | Priority | Total | Not Started | In Progress | Done | Completion % |
 |----------|-------|-------------|-------------|------|--------------|
-| P0 | 43 | 19 | 0 | 24 | 55.8% |
-| P1 | 55 | 35 | 0 | 20 | 36.4% |
-| P2 | 55 | 53 | 0 | 2 | 3.6% |
-| **Total** | **153** | **107** | **0** | **46** | **30.1%** |
+| P0 | 52 | 28 | 0 | 24 | 46.2% |
+| P1 | 80 | 60 | 0 | 20 | 25.0% |
+| P2 | 87 | 85 | 0 | 2 | 2.3% |
+| **Total** | **219** | **173** | **0** | **46** | **21.0%** |
 
 ## P0 Critical Issues Status (COMPLETED - 2026-01-12)
 
@@ -158,4 +158,49 @@ The Core POS Operations UI Gap Analysis has been resolved with all P0 blocking i
 
 ---
 
-*Last Updated: 2026-01-12 (P0 Foundation Complete: All critical blocking issues resolved, system ready for P1 implementation)*
+## UI Polish and Optimization Tickets (P0-P2)
+
+### Frontend UI Polish P0
+
+| Ticket ID | Title | Assignee | Status | Last Updated |
+|-----------|-------|----------|--------|--------------|
+| FE-UI-08 | Login Page | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-10 | Reservation Calendar Page | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-11 | Customer List Page | TBD | NOT_STARTED | 2026-01-13 |
+
+### Frontend UI Polish P1
+
+| Ticket ID | Title | Assignee | Status | Last Updated |
+|-----------|-------|----------|--------|--------------|
+| FE-UI-01 | Toast Notification System | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-02 | Session Timer Control | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-03 | Loading Overlay Component | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-04 | Manager PIN Dialog | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-05 | Confirmation Dialog | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-06 | Switchboard Redesign | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-07 | Keyboard Shortcut Service | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-09 | Enhanced Table Map | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-12 | Member Management Page | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-13 | Table Session Page | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-14 | Inventory Management Page | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-16 | Convert Settle to Modal Dialog | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-17 | Customer Search Dialog | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-18 | Touch Optimization | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-19 | Accessibility Features | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-20 | Visual Consistency Audit | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-21 | Error State Handling | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-22 | Performance Optimization | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-23 | Integration Testing | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-24 | Manual Accessibility Testing | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-25 | Manual Touch Testing | TBD | NOT_STARTED | 2026-01-13 |
+| FE-UI-26 | Visual Consistency Testing | TBD | NOT_STARTED | 2026-01-13 |
+
+### Frontend UI Polish P2
+
+| Ticket ID | Title | Assignee | Status | Last Updated |
+|-----------|-------|----------|--------|--------------|
+| FE-UI-15 | Audit Log Page | TBD | NOT_STARTED | 2026-01-13 |
+
+---
+
+*Last Updated: 2026-01-13 (UI Polish & Optimization Requirements Complete: Comprehensive specification with 15 requirements covering Switchboard redesign, toast notifications, session timers, dialogs, accessibility, and performance. 26 implementation tasks defined with property-based testing requirements.)*

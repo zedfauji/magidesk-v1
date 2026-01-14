@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Push Code After Task Completion",
+  "description": "Automatically pushes all tracked files to the current branch when a task or feature is completed",
+  "version": "1",
+  "when": {
+    "type": "agentStop"
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "git add -A && git commit -m \"Auto-commit: Task completed\" && git push origin HEAD"
+  }
+}

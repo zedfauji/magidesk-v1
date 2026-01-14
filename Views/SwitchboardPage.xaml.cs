@@ -8,12 +8,20 @@ namespace Magidesk.Presentation.Views;
 public sealed partial class SwitchboardPage : Page
 {
     public SwitchboardViewModel ViewModel { get; }
+    private IServiceScope? _scope;
 
     public SwitchboardPage()
     {
         InitializeComponent();
-        ViewModel = App.Services.GetRequiredService<SwitchboardViewModel>();
+        _scope = App.Services.CreateScope();
+        ViewModel = _scope.ServiceProvider.GetRequiredService<SwitchboardViewModel>();
         DataContext = ViewModel;
+
+        this.Unloaded += (s, e) =>
+        {
+             _scope?.Dispose();
+             _scope = null;
+        };
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)

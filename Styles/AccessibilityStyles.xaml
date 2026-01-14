@@ -1,0 +1,87 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- High Contrast Theme Support -->
+    <SolidColorBrush x:Key="AccessibleFocusBorderBrush" Color="{ThemeResource SystemAccentColor}"/>
+    <Thickness x:Key="AccessibleFocusBorderThickness">2</Thickness>
+
+    <!-- Accessible Button Style with Focus Indicator -->
+    <Style x:Key="AccessibleButtonStyle" TargetType="Button">
+        <Setter Property="MinWidth" Value="44"/>
+        <Setter Property="MinHeight" Value="44"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="UseSystemFocusVisuals" Value="True"/>
+        <Setter Property="FocusVisualMargin" Value="-3"/>
+    </Style>
+
+    <!-- Accessible TextBox with Clear Focus -->
+    <Style x:Key="AccessibleTextBoxStyle" TargetType="TextBox">
+        <Setter Property="MinHeight" Value="44"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="UseSystemFocusVisuals" Value="True"/>
+        <Setter Property="FocusVisualMargin" Value="-3"/>
+    </Style>
+
+    <!-- Accessible ComboBox -->
+    <Style x:Key="AccessibleComboBoxStyle" TargetType="ComboBox">
+        <Setter Property="MinHeight" Value="44"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="UseSystemFocusVisuals" Value="True"/>
+        <Setter Property="FocusVisualMargin" Value="-3"/>
+    </Style>
+
+    <!-- Relative Font Sizes (Respect System Scaling) -->
+    <x:Double x:Key="AccessibleFontSizeSmall">12</x:Double>
+    <x:Double x:Key="AccessibleFontSizeNormal">14</x:Double>
+    <x:Double x:Key="AccessibleFontSizeMedium">16</x:Double>
+    <x:Double x:Key="AccessibleFontSizeLarge">18</x:Double>
+    <x:Double x:Key="AccessibleFontSizeExtraLarge">24</x:Double>
+
+    <!-- Accessible Text Styles -->
+    <Style x:Key="AccessibleTitleTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="{StaticResource AccessibleFontSizeExtraLarge}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="AccessibleBodyTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="{StaticResource AccessibleFontSizeNormal}"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="AccessibleCaptionTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="{StaticResource AccessibleFontSizeSmall}"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <!-- Focus Visual Style for Custom Controls -->
+    <Style x:Key="AccessibleFocusVisualStyle" TargetType="Control">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Control">
+                    <Rectangle Stroke="{StaticResource AccessibleFocusBorderBrush}"
+                               StrokeThickness="{StaticResource AccessibleFocusBorderThickness}"
+                               StrokeDashArray="2,2"
+                               RadiusX="4"
+                               RadiusY="4"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- High Contrast Aware Styles -->
+    <Style x:Key="HighContrastButtonStyle" TargetType="Button" BasedOn="{StaticResource AccessibleButtonStyle}">
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
+    </Style>
+
+    <!-- Screen Reader Friendly Styles (Hidden but accessible) -->
+    <Style x:Key="ScreenReaderOnlyTextStyle" TargetType="TextBlock">
+        <Setter Property="Visibility" Value="Collapsed"/>
+        <Setter Property="AutomationProperties.LiveSetting" Value="Polite"/>
+    </Style>
+
+</ResourceDictionary>

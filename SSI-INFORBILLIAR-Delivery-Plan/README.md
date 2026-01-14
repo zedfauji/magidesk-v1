@@ -16,7 +16,10 @@ This delivery plan translates the SSI-INFORBILLIAR feature parity audit into **1
 - **Partially Implemented**: 44 features (34.9%)
 - **Not Implemented**: 45 features (35.7%)
 
-### Recent Completions (2026-01-12)
+### Recent Completions (2026-01-13)
+- ✅ **UI Polish & Optimization Specification**: Comprehensive requirements document with 15 detailed requirements covering Switchboard redesign, toast notifications, session timers, manager PIN dialogs, confirmation dialogs, enhanced table map, missing critical pages, dialog patterns, keyboard shortcuts, touch optimization, accessibility, visual consistency, error handling, and performance
+- ✅ **UI Polish & Optimization Design**: Complete technical design with component architecture, visual mockups, data models, 12 correctness properties, error handling strategies, and comprehensive testing strategy
+- ✅ **UI Polish & Optimization Tasks**: 26 detailed implementation tasks with property-based testing requirements covering core UI components, pages, dialogs, accessibility, and performance optimization
 - ✅ **Table & Game Management Specification**: Comprehensive requirements document with 15 detailed requirements covering advanced pricing rules, session pause/resume, manager overrides, guest count management, table operations, and performance requirements
 - 🎉 **MAJOR MILESTONE**: **Table & Game Management Core Implementation Complete** - Tasks 1-4 + all property tests implemented and passing. Enhanced Domain Layer, Advanced Pricing Service, Session Control Service, and Manager Override Service fully implemented with comprehensive property-based testing.
 - 🔄 **NEW TASK IN PROGRESS**: Task 12 - Enhanced Presentation Layer Components implementation started (session ViewModels with pause/resume, manager override dialogs, equipment management interfaces, advanced pricing configuration, real-time monitoring dashboard, table operations interfaces)
@@ -43,8 +46,9 @@ This delivery plan translates the SSI-INFORBILLIAR feature parity audit into **1
 |-------|-----|-----|-----|-------|
 | Backend | 25 | 35 | 60 | **120** |
 | Frontend | 16 | 15 | 25 | **56** |
+| UI Polish | 3 | 22 | 1 | **26** |
 | Cross-Cutting | 8 | 8 | 1 | **17** |
-| **Total** | **49** | **58** | **86** | **193** |
+| **Total** | **52** | **80** | **87** | **219** |
 
 ---
 
@@ -96,14 +100,15 @@ SSI-INFORBILLIAR-Delivery-Plan/
 
 **Tickets**: 25 backend P0 + 8 cross-cutting P0 = **33 tickets**
 
-### Phase 2: Core UI (Weeks 5-8) — P0 Frontend
+### Phase 2: Core UI (Weeks 5-8) — P0 Frontend + UI Polish
 - Login page (security critical)
 - Session dialogs (start/end/pause)
 - Reservation calendar
 - Customer management pages
 - Manager PIN dialog
+- Core UI components (toast notifications, loading overlays)
 
-**Tickets**: 16 frontend P0 = **16 tickets**
+**Tickets**: 16 frontend P0 + 3 UI polish P0 = **19 tickets**
 
 ### Phase 3: Competitive Parity (Weeks 9-12) — P1
 - First-hour and rounding pricing rules
@@ -111,8 +116,9 @@ SSI-INFORBILLIAR-Delivery-Plan/
 - Reporting dashboards
 - Split payment improvements
 - Stock tracking
+- UI polish and optimization (Switchboard redesign, enhanced table map, touch optimization, accessibility)
 
-**Tickets**: 30 backend P1 + 14 frontend P1 + 8 CC P1 = **52 tickets**
+**Tickets**: 30 backend P1 + 14 frontend P1 + 22 UI polish P1 + 8 CC P1 = **74 tickets**
 
 ### Phase 4: Differentiation (Weeks 13-17) — P2
 - Recurring reservations
@@ -120,8 +126,9 @@ SSI-INFORBILLIAR-Delivery-Plan/
 - Hardware integrations
 - Export capabilities
 - Polish features
+- UI polish final touches (audit log page, visual consistency testing)
 
-**Tickets**: 28 backend P2 + 10 frontend P2 + 1 CC P2 = **39 tickets**
+**Tickets**: 28 backend P2 + 10 frontend P2 + 1 UI polish P2 + 1 CC P2 = **40 tickets**
 
 ---
 
