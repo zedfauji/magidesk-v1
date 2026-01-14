@@ -147,6 +147,7 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.CashEntryDialogViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.StartSessionDialogViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.EndSessionDialogViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.HoldTicketDialogViewModel>();
                     services.AddTransient<Magidesk.Presentation.Views.Dialogs.ManagerPinDialog>();
                     services.AddTransient<TableDesignerViewModel>();
                     services.AddTransient<FloorManagementViewModel>();
