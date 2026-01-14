@@ -65,6 +65,12 @@ internal sealed class InMemoryTicketRepository : ITicketRepository
         return Task.FromResult<IEnumerable<Ticket>>(_tickets.Values.ToList());
     }
 
+    public Task<IEnumerable<Ticket>> GetHeldTicketsAsync(CancellationToken cancellationToken = default)
+    {
+        var held = _tickets.Values.Where(t => t.Status == Magidesk.Domain.Enumerations.TicketStatus.Held).ToList();
+        return Task.FromResult<IEnumerable<Ticket>>(held);
+    }
+
     public Task<int> GetNextTicketNumberAsync(CancellationToken cancellationToken = default)
     {
         return Task.FromResult(_nextTicketNumber++);

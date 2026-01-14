@@ -99,6 +99,7 @@ public sealed class SettleViewModel : ViewModelBase
         VoidTicketCommand = new AsyncRelayCommand(OnVoidTicketAsync);
         ReprintReceiptCommand = new AsyncRelayCommand(OnReprintReceiptAsync);
         HoldTicketCommand = new AsyncRelayCommand(OnHoldTicketAsync);
+        SplitPaymentCommand = new AsyncRelayCommand(OnSplitPaymentAsync);
     }
 
     public TicketDto? Ticket
@@ -217,6 +218,7 @@ public sealed class SettleViewModel : ViewModelBase
     public AsyncRelayCommand VoidTicketCommand { get; }
     public AsyncRelayCommand ReprintReceiptCommand { get; }
     public AsyncRelayCommand HoldTicketCommand { get; }
+    public AsyncRelayCommand SplitPaymentCommand { get; }
 
     private async Task OnLogoutAsync()
     {
@@ -907,6 +909,46 @@ public sealed class SettleViewModel : ViewModelBase
         catch (Exception ex)
         {
             Error = $"Failed to hold ticket: {ex.Message}";
+        }
+    }
+
+    private async Task OnSplitPaymentAsync()
+    {
+        if (Ticket == null) return;
+        
+        try
+        {
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                // Create and show the Split Payment dialog
+                var viewModel = scope.ServiceProvider.GetRequiredService<Magidesk.Presentation.ViewModels.Dialogs.SplitPaymentViewModel>();
+                viewModel.Initialize(Ticket.Id, new Domain.ValueObjects.Money(Ticket.DueAmount));
+                
+                var dialog = new Magidesk.Presentation.Views.Dialogs.SplitPaymentDialog(viewModel);
+                dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                
+                var result = await _navigationService.ShowDialogAsync(dialog);
+                
+                if (result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary && dialog.IsSuccess)
+                {
+                    // Show change amount if there was overpayment
+                    if (dialog.ChangeAmount > Domain.ValueObjects.Money.Zero())
+                    {
+                        StatusMessage = $"Payment processed successfully. Change: {dialog.ChangeAmount}";
+                    }
+                    else
+                    {
+                        StatusMessage = "Split payment processed successfully.";
+                    }
+                    
+                    // Reload ticket to show updated payment status
+                    await LoadTicketAsync();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Error = $"Failed to process split payment: {ex.Message}";
         }
     }
 }
