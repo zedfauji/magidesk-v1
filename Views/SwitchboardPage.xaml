@@ -16,17 +16,17 @@
         
         <!-- Navigation Button Style -->
         <Style x:Key="NavigationButtonStyle" TargetType="Button">
-            <Setter Property="Width" Value="120"/>
+            <Setter Property="Width" Value="130"/>
             <Setter Property="Height" Value="120"/>
-            <Setter Property="Margin" Value="8"/>
+            <Setter Property="Margin" Value="6"/>
             <Setter Property="Padding" Value="8"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Background" Value="#E0E0E0"/>
-            <Setter Property="BorderBrush" Value="#FFFFFF"/>
-            <Setter Property="BorderThickness" Value="4"/>
+            <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource AccentFillColorDefaultBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="CornerRadius" Value="8"/>
-            <Setter Property="Foreground" Value="#000000"/>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -42,32 +42,25 @@
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal">
                                         <VisualState.Setters>
-                                            <Setter Target="RootGrid.Translation" Value="0,0,8"/>
                                         </VisualState.Setters>
                                     </VisualState>
                                     <VisualState x:Name="PointerOver">
                                         <VisualState.Setters>
-                                            <Setter Target="RootGrid.Background" Value="#F5F5F5"/>
-                                            <Setter Target="RootGrid.BorderBrush" Value="#00A4EF"/>
-                                            <Setter Target="RootGrid.BorderThickness" Value="5"/>
-                                            <Setter Target="RootGrid.Translation" Value="0,0,16"/>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource SystemFillColorNeutralBrush}"/>
+                                            <Setter Target="RootGrid.BorderThickness" Value="2"/>
                                         </VisualState.Setters>
                                     </VisualState>
                                     <VisualState x:Name="Pressed">
                                         <VisualState.Setters>
-                                            <Setter Target="RootGrid.Background" Value="#0078D4"/>
-                                            <Setter Target="RootGrid.BorderBrush" Value="#FFFFFF"/>
-                                            <Setter Target="RootGrid.BorderThickness" Value="5"/>
-                                            <Setter Target="ContentPresenter.Foreground" Value="#FFFFFF"/>
-                                            <Setter Target="RootGrid.Translation" Value="0,0,4"/>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource AccentFillColorDefaultBrush}"/>
+                                            <Setter Target="ContentPresenter.Foreground" Value="White"/>
                                         </VisualState.Setters>
                                     </VisualState>
                                     <VisualState x:Name="Disabled">
                                         <VisualState.Setters>
-                                            <Setter Target="RootGrid.Background" Value="#808080"/>
-                                            <Setter Target="RootGrid.BorderBrush" Value="#A0A0A0"/>
-                                            <Setter Target="ContentPresenter.Opacity" Value="0.4"/>
-                                            <Setter Target="RootGrid.Translation" Value="0,0,0"/>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource SystemFillColorDisabledBrush}"/>
+                                            <Setter Target="RootGrid.BorderBrush" Value="Transparent"/>
+                                            <Setter Target="ContentPresenter.Opacity" Value="0.5"/>
                                         </VisualState.Setters>
                                     </VisualState>
                                 </VisualStateGroup>
@@ -180,7 +173,7 @@
                                FontWeight="SemiBold"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
                     
-                    <ItemsControl ItemsSource="{x:Bind ViewModel.NavigationButtons, Mode=OneWay}">
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.OperationsButtons, Mode=OneWay}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="8"/>
@@ -191,7 +184,7 @@
                             <DataTemplate x:DataType="services:NavigationButton">
                                 <Button Style="{StaticResource NavigationButtonStyle}"
                                         Command="{Binding DataContext.NavigateCommand, ElementName=RootPage}"
-                                        CommandParameter="{x:Bind Route}"
+                                        CommandParameter="{x:Bind}"
                                         IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
                                         AutomationProperties.Name="{x:Bind Label}">
                                     <Grid>
@@ -205,6 +198,7 @@
                                         <FontIcon Grid.Row="0" 
                                                   Glyph="{x:Bind Icon}" 
                                                   FontSize="32"
+                                                  Foreground="White"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"/>
 
@@ -213,6 +207,133 @@
                                                    Text="{x:Bind Label}" 
                                                    FontSize="14"
                                                    FontWeight="SemiBold"
+                                                   Foreground="White"
+                                                   TextAlignment="Center"
+                                                   TextWrapping="Wrap"
+                                                   Margin="0,8,0,0"
+                                                   HorizontalAlignment="Center"/>
+
+                                        <!-- Keyboard Shortcut -->
+                                        <TextBlock Grid.Row="2" 
+                                                   Text="{x:Bind KeyboardShortcut}" 
+                                                   FontSize="11"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                   TextAlignment="Center"
+                                                   Margin="0,4,0,0"
+                                                   HorizontalAlignment="Center"
+                                                   Visibility="{x:Bind KeyboardShortcut, Converter={StaticResource StringVisibilityConverter}}"/>
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <!-- Management Section -->
+                <StackPanel Spacing="16">
+                    <TextBlock Text="MANAGEMENT" 
+                               Style="{StaticResource SubtitleTextBlockStyle}"
+                               FontWeight="SemiBold"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                    
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.ManagementButtons, Mode=OneWay}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="8"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="services:NavigationButton">
+                                <Button Style="{StaticResource NavigationButtonStyle}"
+                                        Command="{Binding DataContext.NavigateCommand, ElementName=RootPage}"
+                                        CommandParameter="{x:Bind}"
+                                        IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
+                                        AutomationProperties.Name="{x:Bind Label}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Icon -->
+                                        <FontIcon Grid.Row="0" 
+                                                  Glyph="{x:Bind Icon}" 
+                                                  FontSize="32"
+                                                  Foreground="White"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+
+                                        <!-- Label -->
+                                        <TextBlock Grid.Row="1" 
+                                                   Text="{x:Bind Label}" 
+                                                   FontSize="14"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="White"
+                                                   TextAlignment="Center"
+                                                   TextWrapping="Wrap"
+                                                   Margin="0,8,0,0"
+                                                   HorizontalAlignment="Center"/>
+
+                                        <!-- Keyboard Shortcut -->
+                                        <TextBlock Grid.Row="2" 
+                                                   Text="{x:Bind KeyboardShortcut}" 
+                                                   FontSize="11"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                   TextAlignment="Center"
+                                                   Margin="0,4,0,0"
+                                                   HorizontalAlignment="Center"
+                                                   Visibility="{x:Bind KeyboardShortcut, Converter={StaticResource StringVisibilityConverter}}"/>
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <!-- Quick Actions Section -->
+                <StackPanel Spacing="16">
+                    <TextBlock Text="QUICK ACTIONS" 
+                               Style="{StaticResource SubtitleTextBlockStyle}"
+                               FontWeight="SemiBold"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                    
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.QuickActionButtons, Mode=OneWay}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="8"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="services:NavigationButton">
+                                <Button Style="{StaticResource NavigationButtonStyle}"
+                                        Command="{Binding DataContext.NavigateCommand, ElementName=RootPage}"
+                                        CommandParameter="{x:Bind}"
+                                        IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
+                                        AutomationProperties.Name="{x:Bind Label}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Icon -->
+                                        <FontIcon Grid.Row="0" 
+                                                  Glyph="{x:Bind Icon}" 
+                                                  FontSize="32"
+                                                  Foreground="White"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+
+                                        <!-- Label -->
+                                        <TextBlock Grid.Row="1" 
+                                                   Text="{x:Bind Label}" 
+                                                   FontSize="14"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="White"
                                                    TextAlignment="Center"
                                                    TextWrapping="Wrap"
                                                    Margin="0,8,0,0"

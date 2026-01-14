@@ -46,6 +46,28 @@ public class SwitchboardViewModel : ViewModelBase
         set => SetProperty(ref _navigationButtons, value);
     }
 
+    // Category-based Button Collections
+    private ObservableCollection<NavigationButton> _operationsButtons = new();
+    public ObservableCollection<NavigationButton> OperationsButtons
+    {
+        get => _operationsButtons;
+        set => SetProperty(ref _operationsButtons, value);
+    }
+
+    private ObservableCollection<NavigationButton> _managementButtons = new();
+    public ObservableCollection<NavigationButton> ManagementButtons
+    {
+        get => _managementButtons;
+        set => SetProperty(ref _managementButtons, value);
+    }
+
+    private ObservableCollection<NavigationButton> _quickActionButtons = new();
+    public ObservableCollection<NavigationButton> QuickActionButtons
+    {
+        get => _quickActionButtons;
+        set => SetProperty(ref _quickActionButtons, value);
+    }
+
     // User Context Properties
     private string _currentUserName = string.Empty;
     public string CurrentUserName
@@ -800,6 +822,14 @@ public class SwitchboardViewModel : ViewModelBase
         // For now, show all buttons - permission checks will happen when buttons are clicked
         // This matches the existing pattern in the application
         NavigationButtons = new ObservableCollection<NavigationButton>(buttons);
+        
+        // Populate category-specific collections
+        OperationsButtons = new ObservableCollection<NavigationButton>(
+            buttons.Where(b => b.Category == "Operations"));
+        ManagementButtons = new ObservableCollection<NavigationButton>(
+            buttons.Where(b => b.Category == "Management"));
+        QuickActionButtons = new ObservableCollection<NavigationButton>(
+            buttons.Where(b => b.Category == "Quick Actions"));
     }
 
     /// <summary>
@@ -857,7 +887,7 @@ public class SwitchboardViewModel : ViewModelBase
     /// Refreshes live counts for open tickets and active sessions.
     /// Requirements: 1.5
     /// </summary>
-    private async Task RefreshLiveCountsAsync()
+    public async Task RefreshLiveCountsAsync()
     {
         try
         {
