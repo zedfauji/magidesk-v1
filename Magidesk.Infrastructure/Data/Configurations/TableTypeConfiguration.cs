@@ -40,6 +40,11 @@ public class TableTypeConfiguration : IEntityTypeConfiguration<TableType>
             .IsRequired()
             .HasDefaultValue(1);
 
+        builder.Property(t => t.RoundingRule)
+            .IsRequired()
+            .HasConversion<string>()
+            .HasDefaultValue(Domain.Enumerations.TimeRoundingRule.None);
+
         builder.OwnsOne(t => t.MinimumCharge, mc =>
         {
             mc.Property(m => m.Amount)

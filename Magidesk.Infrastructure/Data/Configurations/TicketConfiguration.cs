@@ -261,6 +261,18 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
         builder.Property(t => t.Note)
             .HasMaxLength(500);
 
+        // Hold Ticket Support (C.2)
+        builder.Property(t => t.HeldAt);
+
+        builder.Property(t => t.HoldReason)
+            .HasMaxLength(500);
+
+        builder.Property(t => t.HeldBy)
+            .HasConversion(
+                v => v != null ? v.Value : (Guid?)null,
+                v => v.HasValue ? new UserId(v.Value) : null)
+            .HasColumnName("HeldBy");
+
         builder.Property(t => t.CustomerWillPickup)
             .IsRequired()
             .HasDefaultValue(false);
@@ -316,6 +328,10 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
         builder.HasIndex(t => t.CreatedAt);
 
         builder.HasIndex(t => t.ActiveDate);
+
+        // Index for held tickets query performance
+        builder.HasIndex(t => t.HeldAt)
+            .HasFilter($"\"Status\" = {(int)TicketStatus.Held}");
     }
 }
 

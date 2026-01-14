@@ -1,0 +1,113 @@
+<UserControl
+    x:Class="Magidesk.Presentation.Controls.EnhancedTableControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dto="using:Magidesk.Application.DTOs"
+    xmlns:controls="using:Magidesk.Presentation.Controls"
+    xmlns:converters="using:Magidesk.Presentation.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="150"
+    d:DesignWidth="150"
+    AllowDrop="True"
+    PointerEntered="OnPointerEntered"
+    PointerExited="OnPointerExited"
+    PointerPressed="OnPointerPressed"
+    RightTapped="OnRightTapped"
+    DragOver="OnDragOver"
+    Drop="OnDrop">
+
+    <UserControl.Resources>
+        <converters:TableStatusToBrushConverter x:Key="TableStatusConverter"/>
+        <converters:TableDtoToStatusBrushConverter x:Key="TableDtoToStatusBrushConverter"/>
+        <converters:TableSessionStatusToIconConverter x:Key="SessionStatusToIconConverter"/>
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <!-- Main Table Visual -->
+        <Border x:Name="TableBorder" 
+                CornerRadius="{x:Bind GetCornerRadius(Table.Shape), Mode=OneWay}" 
+                BorderThickness="3"
+                BorderBrush="{x:Bind GetStatusBorderBrush(Table), Mode=OneWay}"
+                Background="{x:Bind GetStatusBackgroundBrush(Table), Mode=OneWay}"
+                PointerEntered="OnPointerEntered"
+                PointerExited="OnPointerExited">
+            
+            <!-- Hover Effect -->
+            <Border.Shadow>
+                <ThemeShadow />
+            </Border.Shadow>
+            
+            <Grid>
+                <!-- Main Content -->
+                <StackPanel VerticalAlignment="Center" 
+                           HorizontalAlignment="Center" 
+                           Spacing="4"
+                           Padding="8">
+                    
+                    <!-- Table Number -->
+                    <TextBlock Text="{x:Bind Table.TableNumber, Mode=OneWay}" 
+                              FontSize="24" 
+                              FontWeight="Bold" 
+                              HorizontalAlignment="Center"
+                              Foreground="{ThemeResource TextFillColorPrimaryBrush}"/>
+                    
+                    <!-- Capacity -->
+                    <TextBlock Text="{x:Bind GetCapacityText(Table.Capacity), Mode=OneWay}" 
+                              FontSize="12" 
+                              Foreground="{ThemeResource TextFillColorSecondaryBrush}" 
+                              HorizontalAlignment="Center"/>
+                    
+                    <!-- Session Timer (visible when session exists and active) -->
+                    <controls:SessionTimerControl 
+                        x:Name="SessionTimer"
+                        Visibility="{x:Bind GetSessionTimerVisibility(Table), Mode=OneWay}"
+                        SessionStartTime="{x:Bind Table.SessionStartTime, Mode=OneWay}"
+                        IsPaused="{x:Bind IsSessionPaused(Table), Mode=OneWay}"
+                        Margin="0,4,0,0"
+                        HorizontalAlignment="Center"/>
+                    
+                    <!-- Running Charge (visible when session exists) -->
+                    <TextBlock Text="{x:Bind Table.SessionRunningChargeDisplay, Mode=OneWay}" 
+                              FontSize="12" 
+                              FontWeight="SemiBold"
+                              Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" 
+                              HorizontalAlignment="Center"
+                              Visibility="{x:Bind Table.SessionId, Converter={StaticResource NullToVisibilityConverter}, Mode=OneWay}"/>
+                </StackPanel>
+                
+                <!-- Status Icon Overlay (top-right corner) -->
+                <FontIcon x:Name="StatusIcon"
+                         Glyph="{x:Bind GetStatusIcon(Table), Mode=OneWay}"
+                         HorizontalAlignment="Right" 
+                         VerticalAlignment="Top"
+                         Margin="8" 
+                         FontSize="20" 
+                         Foreground="White"
+                         Visibility="{x:Bind GetStatusIconVisibility(Table), Mode=OneWay}"/>
+                
+                <!-- Drag-and-Drop Indicator -->
+                <Border x:Name="DragIndicator"
+                       Background="{ThemeResource AccentFillColorDefaultBrush}"
+                       Opacity="0.3"
+                       Visibility="Collapsed"
+                       CornerRadius="{x:Bind GetCornerRadius(Table.Shape), Mode=OneWay}">
+                    <TextBlock Text="Drop to Assign"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              FontWeight="Bold"
+                              Foreground="White"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Context Menu (Right-Click) -->
+        <FlyoutBase.AttachedFlyout>
+            <MenuFlyout x:Name="ContextMenu" Placement="Bottom">
+                <!-- Menu items will be dynamically added in code-behind -->
+            </MenuFlyout>
+        </FlyoutBase.AttachedFlyout>
+    </Grid>
+</UserControl>

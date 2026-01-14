@@ -82,7 +82,7 @@
 | ID | Feature | Audit | Priority | Backend Ticket | BE Status | Frontend Ticket | FE Status |
 |----|---------|-------|----------|----------------|-----------|-----------------|-----------|
 | C.1 | Real-time billing per table | ✅ FULL | P0 | BE-C.1-02 ✅ | ✅ | FE-C.1-01 ✅ | ✅ |
-| C.2 | Close now / charge later | ❌ NOT | P0 | BE-C.2-01 | ❌ | FE-C.2-01 | ❌ |
+| C.2 | Close now / charge later | ❌ NOT | P0 | BE-C.2-01 | 📋 READY | FE-C.2-01 | 📋 READY |
 | C.3 | Multiple payment methods | ✅ FULL | P0 | BE-C.3-01 ✅ | ✅ | FE-C.3-01 ✅ | ✅ |
 | C.4 | Split payments | ⚠️ PART | P1 | BE-C.4-01 | ⚠️ | FE-C.4-01 | ⚠️ |
 | C.5 | Group billing | ❌ NOT | P1 | BE-C.5-01 | ❌ | FE-C.5-01 | ❌ |

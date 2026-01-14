@@ -3,7 +3,8 @@
 | Ticket ID | Feature ID | Title | Priority | Status |
 |-----------|------------|-------|----------|--------|
 | FE-C.1-01 | C.1 | Automate Ticket Creation on Session Start | P0 | IN_PROGRESS |
-| FE-C.2-01 | C.2 | Display Time Charges and Duration | P0 | COMPLETED |
+| FE-C.2-01 | C.2 | Hold Ticket UI | P0 | READY_FOR_IMPLEMENTATION |
+| FE-C.2-02 | C.2 | Display Time Charges and Duration | P0 | COMPLETED |
 | FE-C.15-01 | C.15 | Implement Ticket Void UI | P1 | COMPLETED |
 | FE-C.15-02 | C.15 | Implement Refund UI | P1 | COMPLETED |
 | FE-C.15-03 | C.15 | Implement Ticket Reprint UI | P2 | COMPLETED |
@@ -24,9 +25,43 @@
 
 ---
 
-## FE-C.2-01: Display Time Charges and Duration
+## FE-C.2-01: Hold Ticket UI
 
 **Ticket ID:** FE-C.2-01  
+**Feature ID:** C.2  
+**Title:** Hold Ticket UI  
+**Priority:** P0  
+**Status:** READY_FOR_IMPLEMENTATION  
+**Dependencies:** BE-C.2-01
+
+### Scope
+- Create `HoldTicketDialog` to capture hold reason
+- Create `HeldTicketsPage` to display all held tickets
+- Add "Hold Ticket" button to `SettlePage`
+- Implement release ticket functionality
+- Update navigation for held tickets view
+
+### Detailed Implementation
+See [FE-C.2-01-DETAILED.md](./FE-C.2-01-DETAILED.md) for comprehensive implementation guide including:
+- Complete ViewModels (HoldTicketDialogViewModel, HeldTicketsViewModel)
+- XAML views and layouts
+- Integration with SettlePage
+- Navigation updates
+- Testing checklist
+
+### Acceptance Criteria
+- [ ] "Hold Ticket" button available on SettlePage
+- [ ] Hold Ticket dialog captures reason
+- [ ] Held tickets page displays all held tickets
+- [ ] Can release held ticket from list
+- [ ] Table status updates when ticket held
+- [ ] Visual feedback for success/error
+
+---
+
+## FE-C.2-02: Display Time Charges and Duration
+
+**Ticket ID:** FE-C.2-02  
 **Feature ID:** C.2  
 **Title:** Display Time Charges and Duration  
 **Priority:** P0

@@ -9,11 +9,13 @@ using Magidesk.Domain.Enumerations;
 using Magidesk.Domain.ValueObjects;
 using Magidesk.Presentation.Views;
 using Magidesk.Presentation.Services;
+using Magidesk.Presentation.Controls;
 using CommunityToolkit.Mvvm.Input;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Linq;
 using Magidesk.Application.Commands.TableSessions;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -89,6 +91,14 @@ public class TableMapViewModel : ViewModelBase
     public AsyncRelayCommand<TableDto> OpenSessionControlDialogCommand { get; }
     public AsyncRelayCommand<TableDto> OpenManagerOverrideDialogCommand { get; }
     public AsyncRelayCommand<TableDto> OpenTableOperationsDialogCommand { get; }
+    
+    // Table action commands for context menu
+    public AsyncRelayCommand<TableDto> StartSessionCommand { get; }
+    public AsyncRelayCommand<TableDto> ViewDetailsCommand { get; }
+    public AsyncRelayCommand<TableDto> EndSessionCommand { get; }
+    
+    // Server assignment command
+    public AsyncRelayCommand<ServerAssignmentEventArgs> AssignServerCommand { get; }
 
     private readonly IUserService _userService;
     private readonly ITicketCreationService _ticketCreationService;
@@ -137,6 +147,14 @@ public class TableMapViewModel : ViewModelBase
         OpenSessionControlDialogCommand = new AsyncRelayCommand<TableDto>(OpenSessionControlDialogAsync);
         OpenManagerOverrideDialogCommand = new AsyncRelayCommand<TableDto>(OpenManagerOverrideDialogAsync);
         OpenTableOperationsDialogCommand = new AsyncRelayCommand<TableDto>(OpenTableOperationsDialogAsync);
+        
+        // Table action commands for context menu
+        StartSessionCommand = new AsyncRelayCommand<TableDto>(StartSessionAsync);
+        ViewDetailsCommand = new AsyncRelayCommand<TableDto>(ViewDetailsAsync);
+        EndSessionCommand = new AsyncRelayCommand<TableDto>(EndSessionAsync);
+        
+        // Server assignment command
+        AssignServerCommand = new AsyncRelayCommand<ServerAssignmentEventArgs>(AssignServerAsync);
         
         // Check permissions
         _ = CheckPermissionsAsync();
@@ -441,6 +459,143 @@ public class TableMapViewModel : ViewModelBase
             StopRealTimePolling();
         }
     }
+
+    #region Table Action Commands
+
+    private async Task StartSessionAsync(TableDto? table)
+    {
+        if (table == null) return;
+        await OpenStartSessionDialogAsync(table);
+    }
+
+    private async Task ViewDetailsAsync(TableDto? table)
+    {
+        if (table == null || !table.SessionId.HasValue) return;
+        
+        // Navigate to session details or show session control dialog
+        await OpenSessionControlDialogAsync(table);
+    }
+
+    private async Task EndSessionAsync(TableDto? table)
+    {
+        if (table == null || !table.SessionId.HasValue) return;
+        await OpenEndSessionDialogAsync(table);
+    }
+
+    #endregion
+
+    #region Server Assignment
+
+    private async Task AssignServerAsync(ServerAssignmentEventArgs? args)
+    {
+        if (args == null || args.Table == null) return;
+
+        try
+        {
+            // TODO: Implement server assignment logic
+            // This would call a command handler to assign the server to the table/session
+            
+            System.Diagnostics.Debug.WriteLine($"Assigning server {args.ServerName} (ID: {args.ServerId}) to table {args.Table.TableNumber}");
+            
+            // For now, just show a success message
+            // In a full implementation, this would:
+            // 1. Call a command handler to update the table/session with the server assignment
+            // 2. Refresh the table map to show the updated assignment
+            // 3. Show a toast notification for success/failure
+            
+            await RefreshTablesAsync();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error assigning server: {ex.Message}");
+            // TODO: Show error to user via IDialogService or IToastNotificationService
+        }
+    }
+
+    #endregion
+
+    #region Context Menu Generation
+
+    /// <summary>
+    /// Generates context menu items based on table status
+    /// </summary>
+    /// <param name="table">The table to generate menu items for</param>
+    /// <returns>Collection of menu flyout items</returns>
+    public ObservableCollection<MenuFlyoutItemBase> GetContextMenuItems(TableDto table)
+    {
+        var items = new ObservableCollection<MenuFlyoutItemBase>();
+
+        if (table == null) return items;
+
+        // Available table actions
+        if (table.Status == TableStatus.Available)
+        {
+            items.Add(CreateMenuFlyoutItem(
+                "Start Session",
+                Symbol.Play,
+                StartSessionCommand,
+                table
+            ));
+        }
+
+        // Occupied table actions
+        if (table.Status == TableStatus.Seat && table.SessionId.HasValue)
+        {
+            items.Add(CreateMenuFlyoutItem(
+                "View Details",
+                Symbol.View,
+                ViewDetailsCommand,
+                table
+            ));
+
+            items.Add(new MenuFlyoutSeparator());
+
+            // Pause/Resume based on session status
+            if (table.SessionStatus == TableSessionStatus.Active)
+            {
+                items.Add(CreateMenuFlyoutItem(
+                    "Pause Session",
+                    Symbol.Pause,
+                    PauseSessionCommand,
+                    table
+                ));
+            }
+            else if (table.SessionStatus == TableSessionStatus.Paused)
+            {
+                items.Add(CreateMenuFlyoutItem(
+                    "Resume Session",
+                    Symbol.Play,
+                    ResumeSessionCommand,
+                    table
+                ));
+            }
+
+            items.Add(new MenuFlyoutSeparator());
+
+            items.Add(CreateMenuFlyoutItem(
+                "End Session",
+                Symbol.Stop,
+                EndSessionCommand,
+                table
+            ));
+        }
+
+        return items;
+    }
+
+    private MenuFlyoutItem CreateMenuFlyoutItem(string text, Symbol icon, ICommand command, TableDto table)
+    {
+        var item = new MenuFlyoutItem
+        {
+            Text = text,
+            Icon = new SymbolIcon(icon),
+            Command = command,
+            CommandParameter = table
+        };
+        return item;
+    }
+
+    #endregion
 
     #region Session Dialog Commands
 

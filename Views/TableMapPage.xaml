@@ -8,6 +8,7 @@
     xmlns:vm="using:Magidesk.Presentation.ViewModels"
     xmlns:dto="using:Magidesk.Application.DTOs"
     xmlns:views="using:Magidesk.Presentation.Views"
+    xmlns:controls="using:Magidesk.Presentation.Controls"
     xmlns:converters="using:Magidesk.Presentation.Converters"
     mc:Ignorable="d">
 
@@ -22,7 +23,9 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Header -->
@@ -44,8 +47,21 @@
             </AppBarElementContainer>
         </CommandBar>
 
+        <!-- Interaction Instructions -->
+        <InfoBar Grid.Row="1"
+                 IsOpen="True"
+                 IsClosable="True"
+                 Severity="Informational"
+                 Title="Table Map Interactions"
+                 Message="Click a table to start a session or view details. Right-click for more options. Drag servers onto tables to assign them."
+                 Margin="12,8,12,8">
+            <InfoBar.ActionButton>
+                <HyperlinkButton Content="Learn More" NavigateUri="https://docs.magidesk.com/table-map"/>
+            </InfoBar.ActionButton>
+        </InfoBar>
+
         <!-- Map Area -->
-        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid Width="{x:Bind ViewModel.CanvasWidth, Mode=OneWay}" 
                   Height="{x:Bind ViewModel.CanvasHeight, Mode=OneWay}"
                   Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
@@ -57,116 +73,102 @@
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
 
-                <!-- Item Template: The Table Button -->
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="dto:TableDto">
-                        <Button Width="{Binding Width}" Height="{Binding Height}" 
-                                Command="{Binding ElementName=RootPage, Path=ViewModel.SelectTableCommand}"
-                                CommandParameter="{x:Bind}">
-                            
-                            <!-- Context Menu (Right-Click) -->
-                            <Button.ContextFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Text="Start Session" 
-                                                   Icon="Play"
-                                                   Command="{Binding ElementName=RootPage, Path=ViewModel.OpenStartSessionDialogCommand}"
-                                                   CommandParameter="{x:Bind}">
-                                        <MenuFlyoutItem.KeyboardAccelerators>
-                                            <KeyboardAccelerator Key="S" Modifiers="Control"/>
-                                        </MenuFlyoutItem.KeyboardAccelerators>
-                                    </MenuFlyoutItem>
-                                    
-                                    <MenuFlyoutItem Text="End Session" 
-                                                   Icon="Stop"
-                                                   Command="{Binding ElementName=RootPage, Path=ViewModel.OpenEndSessionDialogCommand}"
-                                                   CommandParameter="{x:Bind}">
-                                        <MenuFlyoutItem.KeyboardAccelerators>
-                                            <KeyboardAccelerator Key="E" Modifiers="Control"/>
-                                        </MenuFlyoutItem.KeyboardAccelerators>
-                                    </MenuFlyoutItem>
-                                    
-                                    <MenuFlyoutSeparator/>
-                                    
-                                    <MenuFlyoutItem Text="Pause Session" 
-                                                   Icon="Pause"
-                                                   Command="{Binding ElementName=RootPage, Path=ViewModel.PauseSessionCommand}"
-                                                   CommandParameter="{x:Bind}"/>
-                                    
-                                    <MenuFlyoutItem Text="Resume Session" 
-                                                   Icon="Play"
-                                                   Command="{Binding ElementName=RootPage, Path=ViewModel.ResumeSessionCommand}"
-                                                   CommandParameter="{x:Bind}"/>
+                    <!-- Item Template: Enhanced Table Control -->
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="dto:TableDto">
+                            <controls:EnhancedTableControl 
+                                Table="{x:Bind}"
+                                Width="{x:Bind Width}"
+                                Height="{x:Bind Height}"
+                                TableClicked="OnTableClicked"
+                                TableRightClicked="OnTableRightClicked"
+                                ServerAssigned="OnServerAssigned">
+                                <controls:EnhancedTableControl.RenderTransform>
+                                    <TranslateTransform X="{x:Bind X}" Y="{x:Bind Y}"/>
+                                </controls:EnhancedTableControl.RenderTransform>
+                            </controls:EnhancedTableControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
 
-                                    <MenuFlyoutSeparator Visibility="{Binding ElementName=RootPage, Path=ViewModel.CanAdjustTime, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <!-- Status Legend -->
+        <Border Grid.Row="3"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="16,12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                                    <MenuFlyoutItem Text="Adjust Time" 
-                                                   Icon="Edit"
-                                                   Command="{Binding ElementName=RootPage, Path=ViewModel.PerformTimeAdjustmentCommand}"
-                                                   CommandParameter="{x:Bind}"
-                                                   Visibility="{Binding ElementName=RootPage, Path=ViewModel.CanAdjustTime, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                                </MenuFlyout>
-                            </Button.ContextFlyout>
-                            
-                            <Button.RenderTransform>
-                                <TranslateTransform X="{x:Bind X}" Y="{x:Bind Y}"/>
-                            </Button.RenderTransform>
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Grid>
-                                        <!-- Visual Representation -->
-                                        <Border x:Name="TableShape" 
-                                                CornerRadius="{Binding Shape, Converter={StaticResource ShapeToCornerRadiusConverter}}" 
-                                                BorderThickness="2"
-                                                BorderBrush="Gray"
-                                                Background="{Binding Converter={StaticResource TableDtoToStatusBrushConverter}}">
-                                            
-                                            <!-- Tooltip with detailed status information -->
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{Binding Converter={StaticResource TableStatusToTooltipConverter}}"/>
-                                            </ToolTipService.ToolTip>
-                                            
-                                            <Grid>
-                                                <!-- Main Content -->
-                                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="4">
-                                                    <TextBlock Text="{Binding TableNumber}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Capacity}" FontSize="12" Foreground="Gray" HorizontalAlignment="Center"/>
-                                                    
-                                                    <!-- Session Timer (visible when session exists) -->
-                                                    <StackPanel Visibility="{Binding SessionId, Converter={StaticResource NullToVisibilityConverter}}" 
-                                                               Spacing="2" Margin="0,4,0,0">
-                                                        <!-- Elapsed Time -->
-                                                        <TextBlock Text="{Binding SessionElapsedTimeDisplay}" 
-                                                                  FontSize="16" 
-                                                                  FontWeight="SemiBold" 
-                                                                  Foreground="DarkGreen" 
-                                                                  HorizontalAlignment="Center"/>
-                                                        
-                                                        <!-- Running Charge -->
-                                                        <TextBlock Text="{Binding SessionRunningChargeDisplay}" 
-                                                                  FontSize="12" 
-                                                                  Foreground="DarkGreen" 
-                                                                  HorizontalAlignment="Center"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                
-                                                <!-- Status Icon Overlay (top-right corner) -->
-                                                <FontIcon Glyph="{Binding SessionStatus, Converter={StaticResource SessionStatusToIconConverter}}"
-                                                         HorizontalAlignment="Right" 
-                                                         VerticalAlignment="Top"
-                                                         Margin="4" 
-                                                         FontSize="16" 
-                                                         Foreground="White"
-                                                         Visibility="{Binding SessionId, Converter={StaticResource NullToVisibilityConverter}}"/>
-                                            </Grid>
-                                        </Border>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </Grid>
-    </ScrollViewer>
+                <!-- Legend Title -->
+                <TextBlock Grid.Column="0"
+                          Text="Status Legend:"
+                          FontWeight="SemiBold"
+                          VerticalAlignment="Center"
+                          Margin="0,0,16,0"/>
+
+                <!-- Legend Items -->
+                <StackPanel Grid.Column="1"
+                           Orientation="Horizontal"
+                           Spacing="24">
+                    
+                    <!-- Available -->
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Border Width="24" Height="24"
+                               Background="#4CAF50"
+                               BorderBrush="#2E7D32"
+                               BorderThickness="2"
+                               CornerRadius="4"/>
+                        <TextBlock Text="Available" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Occupied -->
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Border Width="24" Height="24"
+                               Background="#F44336"
+                               BorderBrush="#C62828"
+                               BorderThickness="2"
+                               CornerRadius="4"/>
+                        <TextBlock Text="Occupied" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Reserved -->
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Border Width="24" Height="24"
+                               Background="#FFC107"
+                               BorderBrush="#F57C00"
+                               BorderThickness="2"
+                               CornerRadius="4"/>
+                        <TextBlock Text="Reserved" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Dirty -->
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Border Width="24" Height="24"
+                               Background="#9E9E9E"
+                               BorderBrush="#616161"
+                               BorderThickness="2"
+                               CornerRadius="4"/>
+                        <TextBlock Text="Dirty" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Paused -->
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Border Width="24" Height="24"
+                               Background="#FF9800"
+                               BorderBrush="#E65100"
+                               BorderThickness="2"
+                               CornerRadius="4"/>
+                        <TextBlock Text="Paused" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

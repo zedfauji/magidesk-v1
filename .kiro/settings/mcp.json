@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "postgres-mcp": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "DATABASE_URI",
+        "crystaldba/postgres-mcp",
+        "--access-mode=unrestricted"
+      ],
+      "env": {
+        "DATABASE_URI": "postgresql://postgres:postgres@localhost:5432/magidesk_new"
+      },
+      "autoApprove": [
+        "list_schemas",
+        "get_object_details",
+        "execute_sql",
+        "list_objects"
+      ]
+    },
+    "context7": {
+      "serverUrl": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "ctx7sk-254cb549-adc0-45f9-9f04-dde3c47ce231"
+      }
+    }
+  }
+}

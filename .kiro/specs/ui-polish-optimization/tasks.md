@@ -199,7 +199,7 @@ The implementation leverages the existing WinUI 3 MVVM architecture and integrat
     - _Requirements: 8.1_
 
 - [ ] 10. Enhance Table Map with Interactive Features
-  - [ ] 10.1 Create EnhancedTableControl UserControl
+  - [x] 10.1 Create EnhancedTableControl UserControl
     - Add context menu on right-click
     - Implement SessionTimerControl overlay for occupied tables
     - Add visual status indicators (color-coded borders)
@@ -207,13 +207,13 @@ The implementation leverages the existing WinUI 3 MVVM architecture and integrat
     - Add drag-and-drop support for server assignment
     - _Requirements: 7.1-7.7_
 
-- [ ] 10.2 Update TableMapViewModel
+- [x] 10.2 Update TableMapViewModel
     - Add commands for table actions (Start Session, View Details, End Session)
     - Implement context menu item generation based on table status
     - Add server assignment logic
     - _Requirements: 7.1-7.7_
 
-- [ ] 10.3 Update TableMapPage XAML
+- [x] 10.3 Update TableMapPage XAML
     - Replace existing table controls with EnhancedTableControl
     - Add legend for status colors
     - Add interaction instructions
@@ -300,7 +300,7 @@ The implementation leverages the existing WinUI 3 MVVM architecture and integrat
     - _Requirements: 8.4_
 
 - [ ] 14. Implement Table Session Page
-  - [ ] 14.1 Create TableSessionViewModel
+  - [x] 14.1 Create TableSessionViewModel
     - Implement active session loading
     - Add session control commands (Pause, Resume, End)
     - Implement session transfer logic
@@ -308,7 +308,7 @@ The implementation leverages the existing WinUI 3 MVVM architecture and integrat
     - Implement real-time session monitoring
     - _Requirements: 8.5_
 
-- [ ] 14.2 Create TableSessionPage XAML
+- [x] 14.2 Create TableSessionPage XAML
     - Design session list with SessionTimerControl for each
     - Add session control buttons (Pause, Resume, End)
     - Display current charges for each session
@@ -353,14 +353,14 @@ The implementation leverages the existing WinUI 3 MVVM architecture and integrat
     - _Requirements: 8.6_
 
 - [ ] 17. Implement Audit Log Page
-  - [ ] 17.1 Create AuditLogViewModel
+  - [x] 17.1 Create AuditLogViewModel
     - Implement audit log loading with pagination
     - Implement filter by user, action type, date range
     - Implement search functionality
     - Add export command
     - _Requirements: 8.7_
 
-- [ ] 17.2 Create AuditLogPage XAML
+- [x] 17.2 Create AuditLogPage XAML
     - Design audit log list with DataGrid
     - Add filter controls (user, action type, date range)
     - Add search bar

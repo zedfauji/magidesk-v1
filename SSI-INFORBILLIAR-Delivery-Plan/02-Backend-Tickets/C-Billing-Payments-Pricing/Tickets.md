@@ -9,7 +9,7 @@
 |-----------|------------|-------|----------|--------|
 | BE-C.1-01 | C.1 | Complete Ticket Creation with Session Link | P0 | COMPLETED |
 | BE-C.1-02 | C.1 | Link Customer to Transaction | P1 | NOT_STARTED |
-| BE-C.2-01 | C.2 | Implement Hold Ticket (Charge Later) | P2 | NOT_STARTED |
+| BE-C.2-01 | C.2 | Implement Hold Ticket (Charge Later) | P0 | READY_FOR_IMPLEMENTATION |
 | BE-C.4-01 | C.4 | Complete Split Payment Processing | P1 | NOT_STARTED |
 | BE-C.6-01 | C.6 | Implement Gratuity Calculations | P1 | NOT_STARTED |
 | BE-C.7-01 | C.7 | Complete Discount Application | P1 | NOT_STARTED |
@@ -70,7 +70,8 @@ Link customers to tickets for tracking purchase history and enabling member bene
 **Ticket ID:** BE-C.2-01  
 **Feature ID:** C.2  
 **Title:** Implement Hold Ticket (Charge Later)  
-**Priority:** P2
+**Priority:** P0  
+**Status:** READY_FOR_IMPLEMENTATION
 
 ### Outcome
 Ability to hold tickets for later completion (deferred payment/tab).
@@ -95,6 +96,14 @@ public enum TicketStatus
 public record HoldTicketCommand(Guid TicketId, string Reason);
 public record ReleaseHeldTicketCommand(Guid TicketId);
 ```
+
+### Detailed Implementation
+See [BE-C.2-01-DETAILED.md](./BE-C.2-01-DETAILED.md) for comprehensive implementation guide including:
+- Complete domain layer changes
+- Application layer commands and handlers
+- Infrastructure layer updates
+- Database migration scripts
+- Testing strategy with unit and integration tests
 
 ### Acceptance Criteria
 - [ ] Tickets can be held

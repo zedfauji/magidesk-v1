@@ -2294,6 +2294,11 @@ namespace Magidesk.Migrations.Migrations
                         .HasColumnType("integer")
                         .HasDefaultValue(1);
 
+                    b.Property<string>("RoundingRule")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasDefaultValue("None");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -2305,6 +2310,35 @@ namespace Magidesk.Migrations.Migrations
                         .IsUnique();
 
                     b.ToTable("TableTypes", "magidesk");
+
+                    b.OwnsOne("Magidesk.Domain.ValueObjects.Money", "MinimumCharge", b1 =>
+                        {
+                            b1.Property<Guid>("TableTypeId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("numeric(18,2)")
+                                .HasColumnName("MinimumChargeAmount")
+                                .HasDefaultValue(0m);
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("character varying(3)")
+                                .HasColumnName("MinimumChargeCurrency")
+                                .HasDefaultValue("USD");
+
+                            b1.HasKey("TableTypeId");
+
+                            b1.ToTable("TableTypes", "magidesk");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TableTypeId");
+                        });
+
+                    b.Navigation("MinimumCharge")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.Terminal", b =>

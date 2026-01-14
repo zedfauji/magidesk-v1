@@ -28,6 +28,11 @@ public interface ITicketRepository
     Task<IEnumerable<Ticket>> GetOpenTicketsAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Gets all held tickets (tickets with Held status).
+    /// </summary>
+    Task<IEnumerable<Ticket>> GetHeldTicketsAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Gets all manageable tickets (Draft, Open, Closed, Refunded) for Ticket Management UI.
     /// </summary>
     Task<IEnumerable<Ticket>> GetManageableTicketsAsync(CancellationToken cancellationToken = default);

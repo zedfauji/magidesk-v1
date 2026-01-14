@@ -102,6 +102,29 @@ public class TicketRepository : ITicketRepository
         return tickets;
     }
 
+    public async Task<IEnumerable<Ticket>> GetHeldTicketsAsync(CancellationToken cancellationToken = default)
+    {
+        var tickets = await _context.Tickets
+            .Where(t => t.Status == Domain.Enumerations.TicketStatus.Held)
+            .Include(t => t.OrderLines)
+            .Include(t => t.Payments)
+            .OrderByDescending(t => t.HeldAt)
+            .ToListAsync(cancellationToken);
+
+        // Load modifiers for all order lines
+        foreach (var ticket in tickets)
+        {
+            foreach (var orderLine in ticket.OrderLines)
+            {
+                await _context.Entry(orderLine)
+                    .Collection(ol => ol.Modifiers)
+                    .LoadAsync(cancellationToken);
+            }
+        }
+
+        return tickets;
+    }
+
     public async Task<IEnumerable<Ticket>> GetManageableTicketsAsync(CancellationToken cancellationToken = default)
     {
         var tickets = await _context.Tickets
