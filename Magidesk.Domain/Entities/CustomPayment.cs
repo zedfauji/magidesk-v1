@@ -24,8 +24,10 @@ public class CustomPayment : Payment
         string paymentName,
         string? referenceNumber = null,
         Dictionary<string, string>? properties = null,
-        string? globalId = null)
-        : base(ticketId, PaymentType.CustomPayment, amount, processedBy, terminalId, globalId)
+        string? globalId = null,
+        Guid? splitGroupId = null,
+        int? splitSequence = null)
+        : base(ticketId, PaymentType.CustomPayment, amount, processedBy, terminalId, globalId, splitGroupId, splitSequence)
     {
         if (string.IsNullOrWhiteSpace(paymentName))
         {
@@ -49,7 +51,9 @@ public class CustomPayment : Payment
         string paymentName,
         string? referenceNumber = null,
         Dictionary<string, string>? properties = null,
-        string? globalId = null)
+        string? globalId = null,
+        Guid? splitGroupId = null,
+        int? splitSequence = null)
     {
         return new CustomPayment(
             ticketId,
@@ -59,7 +63,9 @@ public class CustomPayment : Payment
             paymentName,
             referenceNumber,
             properties,
-            globalId);
+            globalId,
+            splitGroupId,
+            splitSequence);
     }
 
     /// <summary>

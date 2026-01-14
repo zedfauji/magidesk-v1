@@ -32,8 +32,10 @@ public class DebitCardPayment : Payment
         string? referenceNumber = null,
         string? cardType = null,
         string? pinNumber = null,
-        string? globalId = null)
-        : base(ticketId, PaymentType.DebitCard, amount, processedBy, terminalId, globalId)
+        string? globalId = null,
+        Guid? splitGroupId = null,
+        int? splitSequence = null)
+        : base(ticketId, PaymentType.DebitCard, amount, processedBy, terminalId, globalId, splitGroupId, splitSequence)
     {
         CardNumber = cardNumber;
         CardHolderName = cardHolderName;
@@ -58,7 +60,9 @@ public class DebitCardPayment : Payment
         string? referenceNumber = null,
         string? cardType = null,
         string? pinNumber = null,
-        string? globalId = null)
+        string? globalId = null,
+        Guid? splitGroupId = null,
+        int? splitSequence = null)
     {
         return new DebitCardPayment(
             ticketId,
@@ -71,7 +75,9 @@ public class DebitCardPayment : Payment
             referenceNumber,
             cardType,
             pinNumber,
-            globalId);
+            globalId,
+            splitGroupId,
+            splitSequence);
     }
 
     /// <summary>

@@ -59,6 +59,12 @@ public abstract class Payment
     public Guid? CashSessionId { get; protected set; }
     public Guid? BatchId { get; protected set; }
     public string? Note { get; protected set; }
+    
+    // Split Payment Support
+    public Guid? SplitGroupId { get; protected set; }
+    public int? SplitSequence { get; protected set; }
+    public Money RefundedAmount { get; protected set; }
+    public bool IsRefunded { get; protected set; }
 
     /// <summary>
     /// Sets the batch ID for this payment (when included in a merchant batch).
@@ -75,6 +81,8 @@ public abstract class Payment
         TipsExceedAmount = Money.Zero();
         TenderAmount = Money.Zero();
         ChangeAmount = Money.Zero();
+        RefundedAmount = Money.Zero();
+        IsRefunded = false;
     }
 
     protected Payment(
@@ -83,7 +91,9 @@ public abstract class Payment
         Money amount,
         UserId processedBy,
         Guid terminalId,
-        string? globalId = null)
+        string? globalId = null,
+        Guid? splitGroupId = null,
+        int? splitSequence = null)
     {
         Id = Guid.NewGuid();
         GlobalId = globalId;
@@ -95,12 +105,16 @@ public abstract class Payment
         TipsExceedAmount = Money.Zero();
         TenderAmount = Money.Zero();
         ChangeAmount = Money.Zero();
+        RefundedAmount = Money.Zero();
         TransactionTime = DateTime.UtcNow;
         ProcessedBy = processedBy;
         TerminalId = terminalId;
         IsCaptured = false;
         IsVoided = false;
         IsAuthorizable = false;
+        IsRefunded = false;
+        SplitGroupId = splitGroupId;
+        SplitSequence = splitSequence;
     }
 
     /// <summary>

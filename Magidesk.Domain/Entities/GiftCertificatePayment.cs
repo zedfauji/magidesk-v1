@@ -26,8 +26,10 @@ public class GiftCertificatePayment : Payment
         string giftCertificateNumber,
         Money originalAmount,
         Money remainingBalance,
-        string? globalId = null)
-        : base(ticketId, PaymentType.GiftCertificate, amount, processedBy, terminalId, globalId)
+        string? globalId = null,
+        Guid? splitGroupId = null,
+        int? splitSequence = null)
+        : base(ticketId, PaymentType.GiftCertificate, amount, processedBy, terminalId, globalId, splitGroupId, splitSequence)
     {
         if (string.IsNullOrWhiteSpace(giftCertificateNumber))
         {
@@ -51,7 +53,9 @@ public class GiftCertificatePayment : Payment
         string giftCertificateNumber,
         Money originalAmount,
         Money remainingBalance,
-        string? globalId = null)
+        string? globalId = null,
+        Guid? splitGroupId = null,
+        int? splitSequence = null)
     {
         if (amount > remainingBalance)
         {
@@ -67,7 +71,9 @@ public class GiftCertificatePayment : Payment
             giftCertificateNumber,
             originalAmount,
             remainingBalance,
-            globalId);
+            globalId,
+            splitGroupId,
+            splitSequence);
     }
 
     /// <summary>

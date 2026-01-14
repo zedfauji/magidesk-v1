@@ -17,8 +17,10 @@ public class CashPayment : Payment
         Money amount,
         UserId processedBy,
         Guid terminalId,
-        string? globalId = null)
-        : base(ticketId, PaymentType.Cash, amount, processedBy, terminalId, globalId)
+        string? globalId = null,
+        Guid? splitGroupId = null,
+        int? splitSequence = null)
+        : base(ticketId, PaymentType.Cash, amount, processedBy, terminalId, globalId, splitGroupId, splitSequence)
     {
         IsAuthorizable = false; // Cash payments are not authorizable
     }
@@ -31,9 +33,11 @@ public class CashPayment : Payment
         Money amount,
         UserId processedBy,
         Guid terminalId,
-        string? globalId = null)
+        string? globalId = null,
+        Guid? splitGroupId = null,
+        int? splitSequence = null)
     {
-        return new CashPayment(ticketId, amount, processedBy, terminalId, globalId);
+        return new CashPayment(ticketId, amount, processedBy, terminalId, globalId, splitGroupId, splitSequence);
     }
 }
 

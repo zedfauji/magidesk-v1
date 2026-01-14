@@ -30,8 +30,10 @@ public class CreditCardPayment : Payment
         string? authorizationCode = null,
         string? referenceNumber = null,
         string? cardType = null,
-        string? globalId = null)
-        : base(ticketId, PaymentType.CreditCard, amount, processedBy, terminalId, globalId)
+        string? globalId = null,
+        Guid? splitGroupId = null,
+        int? splitSequence = null)
+        : base(ticketId, PaymentType.CreditCard, amount, processedBy, terminalId, globalId, splitGroupId, splitSequence)
     {
         // F-0016: Always mask the card number to ensure full PAN is never stored
         CardNumber = MaskCardNumber(cardNumber);
@@ -55,7 +57,9 @@ public class CreditCardPayment : Payment
         string? authorizationCode = null,
         string? referenceNumber = null,
         string? cardType = null,
-        string? globalId = null)
+        string? globalId = null,
+        Guid? splitGroupId = null,
+        int? splitSequence = null)
     {
         return new CreditCardPayment(
             ticketId,
@@ -67,7 +71,9 @@ public class CreditCardPayment : Payment
             authorizationCode,
             referenceNumber,
             cardType,
-            globalId);
+            globalId,
+            splitGroupId,
+            splitSequence);
     }
 
     /// <summary>

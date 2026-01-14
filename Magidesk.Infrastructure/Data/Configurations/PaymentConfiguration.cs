@@ -146,6 +146,29 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
         builder.Property(p => p.Note)
             .HasMaxLength(1000);
 
+        // Split Payment Support
+        builder.Property(p => p.SplitGroupId);
+
+        builder.Property(p => p.SplitSequence);
+
+        builder.OwnsOne(p => p.RefundedAmount, ra =>
+        {
+            ra.Property(r => r.Amount)
+                .HasColumnName("RefundedAmount")
+                .HasPrecision(18, 2)
+                .IsRequired();
+            ra.Property(r => r.Currency)
+                .HasColumnName("RefundedCurrency")
+                .HasMaxLength(3)
+                .HasDefaultValue("USD")
+                .HasConversion(v => v, v => string.IsNullOrWhiteSpace(v) ? "USD" : v)
+                .IsRequired();
+        });
+
+        builder.Property(p => p.IsRefunded)
+            .IsRequired()
+            .HasDefaultValue(false);
+
         // Indexes
         builder.HasIndex(p => p.TicketId);
         builder.HasIndex(p => p.CashSessionId)
@@ -156,6 +179,8 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
             .IsUnique()
             .HasFilter("\"GlobalId\" IS NOT NULL");
         builder.HasIndex(p => p.TransactionTime);
+        builder.HasIndex(p => p.SplitGroupId)
+            .HasFilter("\"SplitGroupId\" IS NOT NULL");
     }
 }
 
