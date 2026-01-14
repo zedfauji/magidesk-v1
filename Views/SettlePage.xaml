@@ -159,13 +159,42 @@
                         </StackPanel>
                     </Button>
 
-                    <Grid ColumnSpacing="8">
+                    <Grid ColumnSpacing="8" RowSpacing="8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Content="Reprint Receipt" Command="{x:Bind ViewModel.ReprintReceiptCommand}" HorizontalAlignment="Stretch" Background="LightSlateGray" Foreground="White"/>
-                        <Button Grid.Column="1" Content="Void Ticket" Command="{x:Bind ViewModel.VoidTicketCommand}" HorizontalAlignment="Stretch" Background="DarkRed" Foreground="White"/>
+                        
+                        <!-- Row 1: Hold Ticket and Reprint Receipt -->
+                        <Button Grid.Row="0" Grid.Column="0" 
+                                Command="{x:Bind ViewModel.HoldTicketCommand}" 
+                                HorizontalAlignment="Stretch" 
+                                Background="Orange" 
+                                Foreground="White"
+                                IsEnabled="{x:Bind ViewModel.CanHoldTicket, Mode=OneWay}">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <FontIcon Glyph="&#xE769;" FontSize="16"/> <!-- Pause icon -->
+                                <TextBlock Text="Hold Ticket"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Grid.Row="0" Grid.Column="1" 
+                                Content="Reprint Receipt" 
+                                Command="{x:Bind ViewModel.ReprintReceiptCommand}" 
+                                HorizontalAlignment="Stretch" 
+                                Background="LightSlateGray" 
+                                Foreground="White"/>
+                        
+                        <!-- Row 2: Void Ticket (spans both columns) -->
+                        <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                Content="Void Ticket" 
+                                Command="{x:Bind ViewModel.VoidTicketCommand}" 
+                                HorizontalAlignment="Stretch" 
+                                Background="DarkRed" 
+                                Foreground="White"/>
                     </Grid>
 
                      <Grid ColumnSpacing="8" RowSpacing="8">

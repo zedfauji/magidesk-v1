@@ -98,6 +98,7 @@ public sealed class SettleViewModel : ViewModelBase
         ShowGratuityDialogCommand = new AsyncRelayCommand(ShowGratuityDialogAsync);
         VoidTicketCommand = new AsyncRelayCommand(OnVoidTicketAsync);
         ReprintReceiptCommand = new AsyncRelayCommand(OnReprintReceiptAsync);
+        HoldTicketCommand = new AsyncRelayCommand(OnHoldTicketAsync);
     }
 
     public TicketDto? Ticket
@@ -214,6 +215,7 @@ public sealed class SettleViewModel : ViewModelBase
     public AsyncRelayCommand ShowGratuityDialogCommand { get; }
     public AsyncRelayCommand VoidTicketCommand { get; }
     public AsyncRelayCommand ReprintReceiptCommand { get; }
+    public AsyncRelayCommand HoldTicketCommand { get; }
 
     private async Task OnLogoutAsync()
     {
@@ -869,4 +871,42 @@ public sealed class SettleViewModel : ViewModelBase
             IsBusy = false;
         }
     }
+
+    /// <summary>
+    /// Can hold ticket if ticket exists and status is Open.
+    /// </summary>
+    public bool CanHoldTicket => Ticket != null && Ticket.Status == TicketStatus.Open;
+
+    private async Task OnHoldTicketAsync()
+    {
+        if (Ticket == null) return;
+        
+        try
+        {
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                // Create and show the Hold Ticket dialog
+                var viewModel = scope.ServiceProvider.GetRequiredService<Magidesk.Presentation.ViewModels.Dialogs.HoldTicketDialogViewModel>();
+                viewModel.TicketId = Ticket.Id;
+                
+                var dialog = new Magidesk.Presentation.Views.Dialogs.HoldTicketDialog(viewModel);
+                dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                
+                var result = await _navigationService.ShowDialogAsync(dialog);
+                
+                if (result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary && dialog.IsSuccess)
+                {
+                    StatusMessage = "Ticket held successfully. Table has been released.";
+                    
+                    // Navigate back to switchboard or table map
+                    _navigationService.Navigate(typeof(Magidesk.Presentation.Views.SwitchboardPage));
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Error = $"Failed to hold ticket: {ex.Message}";
+        }
+    }
 }
+
