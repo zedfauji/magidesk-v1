@@ -98,11 +98,11 @@ public class ApplyDiscountCommandHandler : ICommandHandler<ApplyDiscountCommand>
         // 3. Apply Discount
         if (command.OrderLineId.HasValue)
         {
-            await ApplyToOrderLine(ticket, command.OrderLineId.Value, discountType, discountValue, discountName, minimumQuantity);
+            await ApplyToOrderLine(ticket, command.OrderLineId.Value, discountType, discountValue, discountName, minimumQuantity, command);
         }
         else
         {
-             await ApplyToTicket(ticket, discountType, discountValue, discountName, minimumBuy);
+             await ApplyToTicket(ticket, discountType, discountValue, discountName, minimumBuy, command);
         }
 
         // 4. Audit Log (Placeholder)
@@ -112,7 +112,7 @@ public class ApplyDiscountCommandHandler : ICommandHandler<ApplyDiscountCommand>
         await _ticketRepository.UpdateAsync(ticket, cancellationToken);
     }
 
-    private async Task ApplyToOrderLine(Domain.Entities.Ticket ticket, Guid lineId, DiscountType type, decimal value, string name, int? minQty)
+    private async Task ApplyToOrderLine(Domain.Entities.Ticket ticket, Guid lineId, DiscountType type, decimal value, string name, int? minQty, ApplyDiscountCommand command)
     {
         var line = ticket.OrderLines.FirstOrDefault(x => x.Id == lineId);
         if (line == null) throw new Domain.Exceptions.BusinessRuleViolationException("Order line not found.");
@@ -172,7 +172,7 @@ public class ApplyDiscountCommandHandler : ICommandHandler<ApplyDiscountCommand>
         await Task.CompletedTask;
     }
 
-    private async Task ApplyToTicket(Domain.Entities.Ticket ticket, DiscountType type, decimal value, string name, Money? minBuy)
+    private async Task ApplyToTicket(Domain.Entities.Ticket ticket, DiscountType type, decimal value, string name, Money? minBuy, ApplyDiscountCommand command)
     {
         if (minBuy != null && ticket.SubtotalAmount < minBuy)
         {
@@ -197,7 +197,9 @@ public class ApplyDiscountCommandHandler : ICommandHandler<ApplyDiscountCommand>
             type,
             value,
             amount,
-            minBuy
+            appliedBy: command.AuthorizingUserId ?? new UserId(Guid.NewGuid()), // TODO: Add AppliedBy to command
+            authorizedBy: command.AuthorizingUserId.HasValue ? new UserId(command.AuthorizingUserId.Value) : null,
+            minimumAmount: minBuy
         );
 
         ticket.ApplyDiscount(ticketDiscount);

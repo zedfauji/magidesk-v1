@@ -206,7 +206,7 @@ public class SalesReportRepositoryTests : IDisposable
         _context.Tickets.Add(tDiscount);
         await _context.SaveChangesAsync();
 
-        var discount = TicketDiscount.Create(tDiscount.Id, Guid.NewGuid(), "Promo 10", DiscountType.Percentage, 10, new Money(10m));
+        var discount = TicketDiscount.Create(tDiscount.Id, Guid.NewGuid(), "Promo 10", DiscountType.Percentage, 10, new Money(10m), appliedBy: new UserId(Guid.NewGuid()), authorizedBy: null);
         // Need to set AppliedAt manually as Create sets it to Now? 
         // Create sets AppliedAt = DateTime.UtcNow.
         // If we want it in range, Now is fine if Start/End covers it.

@@ -989,7 +989,7 @@ public static class FullPosSeeder
             {
                 var d = discounts[0];
                 var amount = new Money(Math.Min(5m, ticket.SubtotalAmount.Amount));
-                ticket.ApplyDiscount(TicketDiscount.Create(ticket.Id, d.Id, d.Name, d.Type, d.Value, amount));
+                ticket.ApplyDiscount(TicketDiscount.Create(ticket.Id, d.Id, d.Name, d.Type, d.Value, amount, appliedBy: server.Id, authorizedBy: null));
             }
 
             tickets.Add(ticket);
@@ -1133,7 +1133,7 @@ public static class FullPosSeeder
                 {
                     var d = discounts[rng.Next(discounts.Count)];
                     var amount = new Money(Math.Min(3m + (i % 3), ticket.SubtotalAmount.Amount));
-                    ticket.ApplyDiscount(TicketDiscount.Create(ticket.Id, d.Id, d.Name, d.Type, d.Value, amount));
+                    ticket.ApplyDiscount(TicketDiscount.Create(ticket.Id, d.Id, d.Name, d.Type, d.Value, amount, appliedBy: server.Id, authorizedBy: null));
                 }
 
                 // Tax exempt sometimes
@@ -1378,7 +1378,7 @@ public static class FullPosSeeder
                 {
                     var d = discounts[0];
                     var amount = new Money(Math.Min(5m, t.SubtotalAmount.Amount));
-                    t.ApplyDiscount(TicketDiscount.Create(t.Id, d.Id, d.Name, d.Type, d.Value, amount));
+                    t.ApplyDiscount(TicketDiscount.Create(t.Id, d.Id, d.Name, d.Type, d.Value, amount, appliedBy: server.Id, authorizedBy: null));
                     await ticketRepo.UpdateAsync(t, cancellationToken);
                 }
             }
@@ -1527,7 +1527,7 @@ public static class FullPosSeeder
                 {
                     var d = discounts[rng.Next(discounts.Count)];
                     var amount = new Money(Math.Min(3m + (i % 3), ticket.SubtotalAmount.Amount));
-                    ticket.ApplyDiscount(TicketDiscount.Create(ticket.Id, d.Id, d.Name, d.Type, d.Value, amount));
+                    ticket.ApplyDiscount(TicketDiscount.Create(ticket.Id, d.Id, d.Name, d.Type, d.Value, amount, appliedBy: server.Id, authorizedBy: null));
                 }
 
                 // Sometimes mark tax exempt

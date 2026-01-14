@@ -66,7 +66,9 @@ public class ApplyCouponCommandHandler : ICommandHandler<ApplyCouponCommand>
             discount.Type,
             discount.Value,
             amount,
-            discount.MinimumBuy);
+            appliedBy: command.AppliedBy,
+            authorizedBy: null, // Coupons don't require authorization
+            minimumAmount: discount.MinimumBuy);
 
         // 6. Apply to Ticket
         ticket.ApplyDiscount(ticketDiscount);
