@@ -102,6 +102,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICommandHandler<Commands.UpdateTicketNoteCommand>, UpdateTicketNoteCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.UpdateOrderLineInstructionCommand>, UpdateOrderLineInstructionCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.VoidTicketCommand>, VoidTicketCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.HoldTicketCommand>, Services.HoldTicketCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.ReleaseHeldTicketCommand>, Services.ReleaseHeldTicketCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.PayNowCommand, Commands.PayNowResult>, PayNowCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.LogoutCommand>, LogoutCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.SettleTicketCommand>, SettleTicketCommandHandler>();
@@ -124,6 +126,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IQueryHandler<Queries.GetTicketQuery, DTOs.TicketDto?>, GetTicketQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetTicketByNumberQuery, DTOs.TicketDto?>, GetTicketByNumberQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetOpenTicketsQuery, IEnumerable<DTOs.TicketDto>>, GetOpenTicketsQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.GetHeldTicketsQuery, IEnumerable<DTOs.HeldTicketDto>>, Services.GetHeldTicketsQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetCurrentCashSessionQuery, Queries.GetCurrentCashSessionResult>, GetCurrentCashSessionQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetCashSessionQuery, Queries.GetCashSessionResult>, GetCashSessionQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetDrawerPullReportQuery, Queries.GetDrawerPullReportResult>, GetDrawerPullReportQueryHandler>();

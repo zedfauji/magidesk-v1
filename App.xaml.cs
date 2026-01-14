@@ -136,6 +136,7 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<Magidesk.Presentation.ViewModels.ManagerFunctionsViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.GroupSettleTicketSelectionViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.GroupSettleTicketViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.HeldTicketsViewModel>();
                     
                     // Dialog ViewModels
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.ConfirmationDialogViewModel>();

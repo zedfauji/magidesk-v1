@@ -27,6 +27,11 @@
                 <NavigationViewItem Content="Table Map" Tag="tableMap" Icon="Map" />
                 <NavigationViewItem Content="Kitchen Display" Tag="kitchenDisplay" Icon="ViewAll" />
                 <NavigationViewItemSeparator />
+                <NavigationViewItem Content="Held Tickets" Tag="heldTickets">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE769;" Foreground="Orange"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
                 <NavigationViewItem Content="Customer Records" Tag="customerRecords" Icon="People" />
             </NavigationView.MenuItems>
 

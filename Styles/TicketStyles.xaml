@@ -1,0 +1,86 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:Magidesk.Presentation.Converters">
+
+    <!-- Ticket Status Converter -->
+    <converters:TicketStatusToColorConverter x:Key="TicketStatusToColorConverter"/>
+
+    <!-- Ticket Status Badge Style -->
+    <Style x:Key="TicketStatusBadgeStyle" TargetType="Border">
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="Padding" Value="8,4"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <!-- Ticket Status Icon Style -->
+    <Style x:Key="TicketStatusIconStyle" TargetType="FontIcon">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <!-- Held Ticket Badge Style (Orange) -->
+    <Style x:Key="HeldTicketBadgeStyle" TargetType="Border" BasedOn="{StaticResource TicketStatusBadgeStyle}">
+        <Setter Property="Background" Value="Orange"/>
+        <Setter Property="BorderBrush" Value="DarkOrange"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+    <!-- Held Ticket Icon Style -->
+    <Style x:Key="HeldTicketIconStyle" TargetType="FontIcon" BasedOn="{StaticResource TicketStatusIconStyle}">
+        <Setter Property="Glyph" Value="&#xE769;"/> <!-- Pause icon -->
+        <Setter Property="Foreground" Value="Orange"/>
+    </Style>
+
+    <!-- Open Ticket Badge Style (Green) -->
+    <Style x:Key="OpenTicketBadgeStyle" TargetType="Border" BasedOn="{StaticResource TicketStatusBadgeStyle}">
+        <Setter Property="Background" Value="Green"/>
+        <Setter Property="BorderBrush" Value="DarkGreen"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+    <!-- Paid Ticket Badge Style (Blue) -->
+    <Style x:Key="PaidTicketBadgeStyle" TargetType="Border" BasedOn="{StaticResource TicketStatusBadgeStyle}">
+        <Setter Property="Background" Value="Blue"/>
+        <Setter Property="BorderBrush" Value="DarkBlue"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+    <!-- Voided Ticket Badge Style (Red) -->
+    <Style x:Key="VoidedTicketBadgeStyle" TargetType="Border" BasedOn="{StaticResource TicketStatusBadgeStyle}">
+        <Setter Property="Background" Value="Red"/>
+        <Setter Property="BorderBrush" Value="DarkRed"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+    <!-- Ticket Status Text Style -->
+    <Style x:Key="TicketStatusTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <!-- Ticket List Item Style with Status Indicator -->
+    <Style x:Key="TicketListItemStyle" TargetType="Border">
+        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Padding" Value="16"/>
+        <Setter Property="Margin" Value="0,4"/>
+    </Style>
+
+    <!-- Held Ticket Highlight Style -->
+    <Style x:Key="HeldTicketHighlightStyle" TargetType="Border" BasedOn="{StaticResource TicketListItemStyle}">
+        <Setter Property="BorderBrush" Value="Orange"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="Orange" Opacity="0.1"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

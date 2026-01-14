@@ -231,6 +231,12 @@ public sealed partial class MainWindow : Window
                 return;
             }
 
+            if (tag == "heldTickets")
+            {
+                _navigation.Navigate(typeof(Views.HeldTicketsPage));
+                return;
+            }
+
             if (tag == "customerRecords")
             {
                 _navigation.Navigate(typeof(Views.CustomerListPage));

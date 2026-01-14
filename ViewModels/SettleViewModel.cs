@@ -115,6 +115,7 @@ public sealed class SettleViewModel : ViewModelBase
                 OnPropertyChanged(nameof(TaxAmount));
                 OnPropertyChanged(nameof(TicketNumber));
                 OnPropertyChanged(nameof(TableName));
+                OnPropertyChanged(nameof(CanHoldTicket));
                 
                 // Explicitly update observable property
                 CanAddGratuity = value != null;
