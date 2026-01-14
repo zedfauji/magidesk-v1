@@ -10,6 +10,8 @@
     <Platforms>x86;x64</Platforms>
     <PlatformTarget>x86</PlatformTarget>
     <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
+    <!-- Fix for "Windows App SDK requires Microsoft.Windows.SDK.NET.Ref" error -->
+    <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
