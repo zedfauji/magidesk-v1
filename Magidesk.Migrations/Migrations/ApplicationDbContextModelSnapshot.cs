@@ -2479,6 +2479,17 @@ namespace Magidesk.Migrations.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
+                    b.Property<DateTime?>("HeldAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("HeldBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("HeldBy");
+
+                    b.Property<string>("HoldReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
                     b.Property<bool>("IsBarTab")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
@@ -2560,6 +2571,9 @@ namespace Magidesk.Migrations.Migrations
                     b.HasIndex("GlobalId")
                         .IsUnique()
                         .HasFilter("\"GlobalId\" IS NOT NULL");
+
+                    b.HasIndex("HeldAt")
+                        .HasFilter("\"Status\" = 2");
 
                     b.HasIndex("SessionId");
 
