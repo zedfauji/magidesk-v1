@@ -27,6 +27,12 @@ public class GetHeldTicketsQueryHandler : IQueryHandler<GetHeldTicketsQuery, IEn
         var result = new List<HeldTicketDto>();
         foreach (var ticket in tickets)
         {
+            // Skip tickets without HeldAt timestamp (data integrity issue)
+            if (!ticket.HeldAt.HasValue)
+            {
+                continue;
+            }
+            
             // Get user who held the ticket
             var heldByUser = ticket.HeldBy != null 
                 ? await _userRepository.GetByIdAsync(ticket.HeldBy.Value, cancellationToken)
@@ -35,8 +41,8 @@ public class GetHeldTicketsQueryHandler : IQueryHandler<GetHeldTicketsQuery, IEn
             var dto = new HeldTicketDto(
                 ticket.Id,
                 ticket.TicketNumber,
-                ticket.HeldAt!.Value,
-                ticket.HoldReason!,
+                ticket.HeldAt.Value,
+                ticket.HoldReason ?? "No reason provided",
                 heldByUser != null ? $"{heldByUser.FirstName} {heldByUser.LastName}" : "Unknown",
                 ticket.TotalAmount.Amount,
                 null, // Customer name - would need to load customer if needed
