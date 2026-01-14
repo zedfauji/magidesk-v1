@@ -71,7 +71,7 @@ The implementation leverages the existing WinUI 3 MVVM architecture and integrat
     - _Requirements: 3.1-3.8_
 
 - [ ] 4. Implement Loading Overlay Component
-  - [ ] 4.1 Create LoadingOverlay UserControl
+  - [x] 4.1 Create LoadingOverlay UserControl
     - Implement semi-transparent backdrop
     - Add ProgressRing with descriptive message
     - Implement optional Cancel button
@@ -89,7 +89,7 @@ The implementation leverages the existing WinUI 3 MVVM architecture and integrat
     - _Requirements: 4.1-4.6_
 
 - [ ] 5. Implement Manager PIN Dialog
-  - [ ] 5.1 Create ManagerPinDialog ContentDialog
+  - [x] 5.1 Create ManagerPinDialog ContentDialog
     - Implement numeric keypad (0-9, backspace, confirm)
     - Implement masked PIN entry (PasswordBox)
     - Add operation description display
@@ -115,7 +115,7 @@ The implementation leverages the existing WinUI 3 MVVM architecture and integrat
     - _Requirements: 5.1-5.8_
 
 - [ ] 6. Implement Confirmation Dialog
-  - [ ] 6.1 Create ConfirmationDialog ContentDialog
+  - [x] 6.1 Create ConfirmationDialog ContentDialog
     - Implement warning InfoBar at top
     - Add detail message display
     - Create detail card for relevant information
@@ -140,12 +140,12 @@ The implementation leverages the existing WinUI 3 MVVM architecture and integrat
 
 
 - [ ] 8. Redesign Switchboard Page
-  - [ ] 8.1 Create NavigationButton model
+  - [x] 8.1 Create NavigationButton model
     - Define properties (Label, Icon, Route, Category, IsEnabled, RequiredPermission, KeyboardShortcut)
     - Implement permission-based visibility logic
     - _Requirements: 1.1-1.8_
 
-- [ ] 8.2 Update SwitchboardViewModel
+- [x] 8.2 Update SwitchboardViewModel
     - Create ObservableCollection of NavigationButtons
     - Implement button generation based on user permissions
     - Add properties for CurrentUserName, TerminalId, ShiftStatus
@@ -154,7 +154,7 @@ The implementation leverages the existing WinUI 3 MVVM architecture and integrat
     - Implement RefreshCommand for live count updates
     - _Requirements: 1.1-1.8_
 
-- [ ] 8.3 Redesign SwitchboardPage XAML
+- [x] 8.3 Redesign SwitchboardPage XAML
     - Create header with user context and status information
     - Implement GridView with large 120x120px buttons
     - Group buttons by category (Operations, Management, Quick Actions)

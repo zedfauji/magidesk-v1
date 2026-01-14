@@ -5,30 +5,37 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Magidesk.Presentation.Views.Dialogs"
     xmlns:vm="using:Magidesk.Presentation.ViewModels.Dialogs"
+    xmlns:converters="using:Magidesk.Presentation.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="Manager Authorization"
+    Title="Manager Authorization Required"
     PrimaryButtonText="Authorize"
     CloseButtonText="Cancel"
     DefaultButton="Primary"
     IsPrimaryButtonEnabled="{x:Bind ViewModel.CanSubmit, Mode=OneWay}"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
 
+    <ContentDialog.Resources>
+        <converters:StringToBoolConverter x:Key="StringToBoolConverter"/>
+    </ContentDialog.Resources>
+
     <StackPanel Spacing="16" MinWidth="350">
-        <!-- Operation Type Display -->
+        <!-- Operation Description Display -->
         <TextBlock 
             Text="{x:Bind ViewModel.OperationType, Mode=OneWay}" 
             Style="{StaticResource SubtitleTextBlockStyle}"
             TextWrapping="Wrap"
-            HorizontalAlignment="Center"/>
+            HorizontalAlignment="Center"
+            FontWeight="SemiBold"/>
 
         <TextBlock 
             Text="Manager authorization required"
             Opacity="0.7"
-            HorizontalAlignment="Center"/>
+            HorizontalAlignment="Center"
+            FontSize="14"/>
 
-        <!-- PIN Display -->
+        <!-- Masked PIN Entry Display -->
         <Border 
             Background="{ThemeResource SystemControlBackgroundAltHighBrush}" 
             Padding="12" 
@@ -40,23 +47,26 @@
                 Style="{StaticResource TitleTextBlockStyle}" 
                 HorizontalAlignment="Center" 
                 MinHeight="40"
-                VerticalAlignment="Center"/>
+                VerticalAlignment="Center"
+                FontFamily="Consolas"/>
         </Border>
 
-        <!-- Error Message -->
+        <!-- Error Message Display -->
         <InfoBar 
             IsOpen="{x:Bind ViewModel.ErrorMessage, Converter={StaticResource StringToBoolConverter}, Mode=OneWay}"
             Severity="Error"
-            Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"/>
+            Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+            IsClosable="False"/>
 
-        <!-- Lockout Message -->
+        <!-- Lockout Message Display -->
         <InfoBar 
             IsOpen="{x:Bind ViewModel.IsLocked, Mode=OneWay}"
             Severity="Warning"
             Title="Account Temporarily Locked"
-            Message="{x:Bind ViewModel.LockoutMessage, Mode=OneWay}"/>
+            Message="{x:Bind ViewModel.LockoutMessage, Mode=OneWay}"
+            IsClosable="False"/>
 
-        <!-- Numeric Keypad -->
+        <!-- Numeric Keypad (0-9, backspace, confirm) -->
         <Grid RowSpacing="8" ColumnSpacing="8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
@@ -70,28 +80,129 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Row 1 -->
-            <Button Grid.Row="0" Grid.Column="0" Content="1" Command="{x:Bind ViewModel.AppendDigitCommand}" CommandParameter="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
-            <Button Grid.Row="0" Grid.Column="1" Content="2" Command="{x:Bind ViewModel.AppendDigitCommand}" CommandParameter="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
-            <Button Grid.Row="0" Grid.Column="2" Content="3" Command="{x:Bind ViewModel.AppendDigitCommand}" CommandParameter="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
+            <!-- Row 1: 1, 2, 3 -->
+            <Button Grid.Row="0" Grid.Column="0" 
+                    Content="1" 
+                    Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                    CommandParameter="1" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    FontSize="24"
+                    MinWidth="44"
+                    MinHeight="44"/>
+            <Button Grid.Row="0" Grid.Column="1" 
+                    Content="2" 
+                    Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                    CommandParameter="2" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    FontSize="24"
+                    MinWidth="44"
+                    MinHeight="44"/>
+            <Button Grid.Row="0" Grid.Column="2" 
+                    Content="3" 
+                    Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                    CommandParameter="3" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    FontSize="24"
+                    MinWidth="44"
+                    MinHeight="44"/>
 
-            <!-- Row 2 -->
-            <Button Grid.Row="1" Grid.Column="0" Content="4" Command="{x:Bind ViewModel.AppendDigitCommand}" CommandParameter="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
-            <Button Grid.Row="1" Grid.Column="1" Content="5" Command="{x:Bind ViewModel.AppendDigitCommand}" CommandParameter="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
-            <Button Grid.Row="1" Grid.Column="2" Content="6" Command="{x:Bind ViewModel.AppendDigitCommand}" CommandParameter="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
+            <!-- Row 2: 4, 5, 6 -->
+            <Button Grid.Row="1" Grid.Column="0" 
+                    Content="4" 
+                    Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                    CommandParameter="4" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    FontSize="24"
+                    MinWidth="44"
+                    MinHeight="44"/>
+            <Button Grid.Row="1" Grid.Column="1" 
+                    Content="5" 
+                    Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                    CommandParameter="5" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    FontSize="24"
+                    MinWidth="44"
+                    MinHeight="44"/>
+            <Button Grid.Row="1" Grid.Column="2" 
+                    Content="6" 
+                    Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                    CommandParameter="6" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    FontSize="24"
+                    MinWidth="44"
+                    MinHeight="44"/>
 
-            <!-- Row 3 -->
-            <Button Grid.Row="2" Grid.Column="0" Content="7" Command="{x:Bind ViewModel.AppendDigitCommand}" CommandParameter="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
-            <Button Grid.Row="2" Grid.Column="1" Content="8" Command="{x:Bind ViewModel.AppendDigitCommand}" CommandParameter="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
-            <Button Grid.Row="2" Grid.Column="2" Content="9" Command="{x:Bind ViewModel.AppendDigitCommand}" CommandParameter="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
+            <!-- Row 3: 7, 8, 9 -->
+            <Button Grid.Row="2" Grid.Column="0" 
+                    Content="7" 
+                    Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                    CommandParameter="7" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    FontSize="24"
+                    MinWidth="44"
+                    MinHeight="44"/>
+            <Button Grid.Row="2" Grid.Column="1" 
+                    Content="8" 
+                    Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                    CommandParameter="8" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    FontSize="24"
+                    MinWidth="44"
+                    MinHeight="44"/>
+            <Button Grid.Row="2" Grid.Column="2" 
+                    Content="9" 
+                    Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                    CommandParameter="9" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    FontSize="24"
+                    MinWidth="44"
+                    MinHeight="44"/>
 
-            <!-- Row 4 -->
-            <Button Grid.Row="3" Grid.Column="0" Content="Clear" Command="{x:Bind ViewModel.ClearCommand}" Background="DarkOrange" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
-            <Button Grid.Row="3" Grid.Column="1" Content="0" Command="{x:Bind ViewModel.AppendDigitCommand}" CommandParameter="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
-            <Button Grid.Row="3" Grid.Column="2" Content="⌫" Command="{x:Bind ViewModel.RemoveLastDigitCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
+            <!-- Row 4: Clear, 0, Backspace -->
+            <Button Grid.Row="3" Grid.Column="0" 
+                    Content="Clear" 
+                    Command="{x:Bind ViewModel.ClearCommand}" 
+                    Background="DarkOrange" 
+                    Foreground="White" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    FontSize="18"
+                    MinWidth="44"
+                    MinHeight="44"/>
+            <Button Grid.Row="3" Grid.Column="1" 
+                    Content="0" 
+                    Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                    CommandParameter="0" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    FontSize="24"
+                    MinWidth="44"
+                    MinHeight="44"/>
+            <Button Grid.Row="3" Grid.Column="2" 
+                    Content="⌫" 
+                    Command="{x:Bind ViewModel.RemoveLastDigitCommand}" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    FontSize="24"
+                    MinWidth="44"
+                    MinHeight="44"
+                    ToolTipService.ToolTip="Backspace"/>
         </Grid>
 
         <!-- Loading Indicator -->
-        <ProgressRing IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}" HorizontalAlignment="Center"/>
+        <ProgressRing IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}" 
+                      HorizontalAlignment="Center"
+                      Width="32"
+                      Height="32"/>
     </StackPanel>
 </ContentDialog>
+

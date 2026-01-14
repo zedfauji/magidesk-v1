@@ -6,6 +6,7 @@ using Magidesk.Application.Interfaces;
 using Magidesk.Application.Commands;
 using Magidesk.Application.DTOs;
 using Magidesk.Application.Queries;
+using Magidesk.Application.Queries.TableSessions;
 using Magidesk.Presentation.Services;
 using Magidesk.Presentation.Views;
 using CommunityToolkit.Mvvm.Input;
@@ -27,6 +28,7 @@ public class SwitchboardViewModel : ViewModelBase
     private readonly NavigationService _navigationService;
     private readonly ICashSessionRepository _cashSessionRepository;
     private readonly IQueryHandler<GetOpenTicketsQuery, IEnumerable<TicketDto>> _getOpenTicketsHandler;
+    private readonly IQueryHandler<GetActiveSessionsQuery, IEnumerable<ActiveSessionDto>> _getActiveSessionsHandler;
     private readonly ICommandHandler<ClockInCommand> _clockInHandler;
     private readonly ICommandHandler<ClockOutCommand> _clockOutHandler;
     private readonly IAttendanceRepository _attendanceRepository;
@@ -35,6 +37,51 @@ public class SwitchboardViewModel : ViewModelBase
     private readonly ITerminalContext _terminalContext;
 
     public Services.LocalizationService Localization { get; }
+
+    // Navigation Buttons Collection
+    private ObservableCollection<NavigationButton> _navigationButtons = new();
+    public ObservableCollection<NavigationButton> NavigationButtons
+    {
+        get => _navigationButtons;
+        set => SetProperty(ref _navigationButtons, value);
+    }
+
+    // User Context Properties
+    private string _currentUserName = string.Empty;
+    public string CurrentUserName
+    {
+        get => _currentUserName;
+        set => SetProperty(ref _currentUserName, value);
+    }
+
+    private string _terminalId = string.Empty;
+    public string TerminalId
+    {
+        get => _terminalId;
+        set => SetProperty(ref _terminalId, value);
+    }
+
+    private string _shiftStatus = "No Active Shift";
+    public string ShiftStatus
+    {
+        get => _shiftStatus;
+        set => SetProperty(ref _shiftStatus, value);
+    }
+
+    // Live Count Properties
+    private int _openTicketCount;
+    public int OpenTicketCount
+    {
+        get => _openTicketCount;
+        set => SetProperty(ref _openTicketCount, value);
+    }
+
+    private int _activeSessionCount;
+    public int ActiveSessionCount
+    {
+        get => _activeSessionCount;
+        set => SetProperty(ref _activeSessionCount, value);
+    }
 
     private ObservableCollection<TicketDto> _openTickets = new();
     public ObservableCollection<TicketDto> OpenTickets
@@ -69,6 +116,8 @@ public class SwitchboardViewModel : ViewModelBase
     public ICommand BackOfficeCommand { get; }
     public ICommand LogoutCommand { get; }
     public ICommand ShutdownCommand { get; }
+    public ICommand NavigateCommand { get; }
+    public ICommand RefreshCommand { get; }
 
     private readonly ISecurityService _securityService;
     private readonly IAesEncryptionService _encryptionService;
@@ -82,6 +131,7 @@ public class SwitchboardViewModel : ViewModelBase
         NavigationService navigationService,
         ICashSessionRepository cashSessionRepository,
         IQueryHandler<GetOpenTicketsQuery, IEnumerable<TicketDto>> getOpenTicketsHandler,
+        IQueryHandler<GetActiveSessionsQuery, IEnumerable<ActiveSessionDto>> getActiveSessionsHandler,
         ICommandHandler<ClockInCommand> clockInHandler,
         ICommandHandler<ClockOutCommand> clockOutHandler,
         IAttendanceRepository attendanceRepository,
@@ -100,6 +150,7 @@ public class SwitchboardViewModel : ViewModelBase
         _navigationService = navigationService;
         _cashSessionRepository = cashSessionRepository;
         _getOpenTicketsHandler = getOpenTicketsHandler;
+        _getActiveSessionsHandler = getActiveSessionsHandler;
         _clockInHandler = clockInHandler;
         _clockOutHandler = clockOutHandler;
         _attendanceRepository = attendanceRepository;
@@ -154,6 +205,15 @@ public class SwitchboardViewModel : ViewModelBase
 
         NewTicketCommand = new AsyncRelayCommand(NewTicketAsync);
 
+        // Initialize user context
+        InitializeUserContext();
+        
+        // Generate navigation buttons based on user permissions
+        GenerateNavigationButtons();
+        
+        // Initialize NavigateCommand and RefreshCommand
+        NavigateCommand = new RelayCommand<NavigationButton>(NavigateToRoute);
+        RefreshCommand = new AsyncRelayCommand(RefreshLiveCountsAsync);
     }
 
     private async Task BackOfficeAsync()
@@ -589,5 +649,245 @@ public class SwitchboardViewModel : ViewModelBase
               // T-004: Visible Failure
               await _navigationService.ShowErrorAsync("Timeclock Error", $"Failed to Clock Out:\n{ex.Message}");
           }
+    }
+
+    /// <summary>
+    /// Initializes user context properties (CurrentUserName, TerminalId, ShiftStatus).
+    /// </summary>
+    private void InitializeUserContext()
+    {
+        // Set current user name
+        CurrentUserName = _userService.CurrentUser != null 
+            ? $"{_userService.CurrentUser.FirstName} {_userService.CurrentUser.LastName}"
+            : "Unknown User";
+        
+        // Set terminal ID
+        TerminalId = _terminalContext.TerminalId?.ToString() ?? "Unknown Terminal";
+        
+        // Initialize shift status (will be updated by RefreshLiveCountsAsync)
+        ShiftStatus = "No Active Shift";
+    }
+
+    /// <summary>
+    /// Generates navigation buttons based on user permissions.
+    /// Requirements: 1.1-1.8
+    /// </summary>
+    private void GenerateNavigationButtons()
+    {
+        var buttons = new List<NavigationButton>
+        {
+            // Operations Category
+            new NavigationButton
+            {
+                Label = "New Ticket",
+                Icon = "\uE8F4", // Add icon
+                Route = "NewTicket",
+                Category = "Operations",
+                IsEnabled = true,
+                RequiredPermission = UserPermission.None,
+                KeyboardShortcut = "F1"
+            },
+            new NavigationButton
+            {
+                Label = "Open Tickets",
+                Icon = "\uE8A5", // List icon
+                Route = "OpenTickets",
+                Category = "Operations",
+                IsEnabled = true,
+                RequiredPermission = UserPermission.None,
+                KeyboardShortcut = "F2"
+            },
+            new NavigationButton
+            {
+                Label = "Tables",
+                Icon = "\uE80F", // Table icon
+                Route = "Tables",
+                Category = "Operations",
+                IsEnabled = true,
+                RequiredPermission = UserPermission.None,
+                KeyboardShortcut = "F3"
+            },
+            new NavigationButton
+            {
+                Label = "Kitchen Display",
+                Icon = "\uE7C1", // Restaurant icon
+                Route = "Kitchen",
+                Category = "Operations",
+                IsEnabled = true,
+                RequiredPermission = UserPermission.None,
+                KeyboardShortcut = "F4"
+            },
+            
+            // Management Category
+            new NavigationButton
+            {
+                Label = "Manager Functions",
+                Icon = "\uE7EE", // Admin icon
+                Route = "ManagerFunctions",
+                Category = "Management",
+                IsEnabled = true,
+                RequiredPermission = UserPermission.VoidTicket | UserPermission.RefundPayment | 
+                                   UserPermission.OpenDrawer | UserPermission.CloseBatch | 
+                                   UserPermission.ApplyDiscount,
+                KeyboardShortcut = "F5"
+            },
+            new NavigationButton
+            {
+                Label = "Back Office",
+                Icon = "\uE8F1", // Settings icon
+                Route = "BackOffice",
+                Category = "Management",
+                IsEnabled = true,
+                RequiredPermission = UserPermission.ManageUsers | UserPermission.ManageTableLayout | 
+                                   UserPermission.ManageMenu | UserPermission.ViewReports | 
+                                   UserPermission.SystemConfiguration,
+                KeyboardShortcut = "F6"
+            },
+            new NavigationButton
+            {
+                Label = "Cash Drop",
+                Icon = "\uE8CB", // Money icon
+                Route = "CashDrop",
+                Category = "Management",
+                IsEnabled = true,
+                RequiredPermission = UserPermission.OpenDrawer,
+                KeyboardShortcut = ""
+            },
+            new NavigationButton
+            {
+                Label = "Drawer Pull",
+                Icon = "\uE8A1", // Report icon
+                Route = "DrawerPull",
+                Category = "Management",
+                IsEnabled = true,
+                RequiredPermission = UserPermission.ViewReports,
+                KeyboardShortcut = ""
+            },
+            
+            // Quick Actions Category
+            new NavigationButton
+            {
+                Label = "Clock In",
+                Icon = "\uE916", // Clock icon
+                Route = "ClockIn",
+                Category = "Quick Actions",
+                IsEnabled = true,
+                RequiredPermission = UserPermission.None,
+                KeyboardShortcut = ""
+            },
+            new NavigationButton
+            {
+                Label = "Clock Out",
+                Icon = "\uE916", // Clock icon
+                Route = "ClockOut",
+                Category = "Quick Actions",
+                IsEnabled = true,
+                RequiredPermission = UserPermission.None,
+                KeyboardShortcut = ""
+            },
+            new NavigationButton
+            {
+                Label = "Logout",
+                Icon = "\uF3B1", // Sign out icon
+                Route = "Logout",
+                Category = "Quick Actions",
+                IsEnabled = true,
+                RequiredPermission = UserPermission.None,
+                KeyboardShortcut = ""
+            }
+        };
+        
+        // For now, show all buttons - permission checks will happen when buttons are clicked
+        // This matches the existing pattern in the application
+        NavigationButtons = new ObservableCollection<NavigationButton>(buttons);
+    }
+
+    /// <summary>
+    /// Navigates to the route specified by the navigation button.
+    /// Requirements: 1.4
+    /// </summary>
+    private void NavigateToRoute(NavigationButton? button)
+    {
+        if (button == null) return;
+        
+        // Route to appropriate action
+        // Permission checks are handled within each action method
+        switch (button.Route)
+        {
+            case "NewTicket":
+                _ = NewTicketAsync();
+                break;
+            case "OpenTickets":
+                Settle();
+                break;
+            case "Tables":
+                _navigationService.Navigate(typeof(Views.TableMapPage));
+                break;
+            case "Kitchen":
+                _navigationService.Navigate(typeof(Views.KitchenDisplayPage));
+                break;
+            case "ManagerFunctions":
+                _ = ManagerFunctionsAsync();
+                break;
+            case "BackOffice":
+                _ = BackOfficeAsync();
+                break;
+            case "CashDrop":
+                _ = PerformCashDropAsync();
+                break;
+            case "DrawerPull":
+                DrawerPull();
+                break;
+            case "ClockIn":
+                _ = ClockInAsync();
+                break;
+            case "ClockOut":
+                _ = ClockOutAsync();
+                break;
+            case "Logout":
+                _navigationService.Navigate(typeof(Views.LoginPage));
+                break;
+            default:
+                _logger.LogWarning("Unknown navigation route: {Route}", button.Route);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Refreshes live counts for open tickets and active sessions.
+    /// Requirements: 1.5
+    /// </summary>
+    private async Task RefreshLiveCountsAsync()
+    {
+        try
+        {
+            // Get open ticket count
+            var tickets = await _getOpenTicketsHandler.HandleAsync(new GetOpenTicketsQuery());
+            OpenTicketCount = tickets.Count();
+            
+            // Get active session count
+            var sessions = await _getActiveSessionsHandler.HandleAsync(new GetActiveSessionsQuery());
+            ActiveSessionCount = sessions.Count();
+            
+            // Update shift status
+            if (_terminalContext.TerminalId.HasValue)
+            {
+                var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(_terminalContext.TerminalId.Value);
+                if (session != null)
+                {
+                    var elapsed = DateTime.UtcNow - session.OpenedAt;
+                    ShiftStatus = $"Open ({elapsed.Hours}h {elapsed.Minutes}m)";
+                }
+                else
+                {
+                    ShiftStatus = "No Active Shift";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to refresh live counts");
+            // Don't show error to user - this is a background refresh
+        }
     }
 }

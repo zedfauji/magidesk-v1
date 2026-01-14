@@ -14,34 +14,51 @@
     DefaultButton="Secondary">
 
     <StackPanel Spacing="16" MinWidth="400" MaxWidth="500">
-        <!-- Icon and Message -->
-        <StackPanel Orientation="Horizontal" Spacing="16">
-            <TextBlock 
-                Text="{x:Bind ViewModel.Icon, Mode=OneWay}" 
-                FontSize="32"
-                VerticalAlignment="Top"/>
-            
-            <StackPanel Spacing="8" VerticalAlignment="Center">
-                <TextBlock 
-                    Text="{x:Bind ViewModel.Message, Mode=OneWay}" 
-                    Style="{StaticResource BodyTextBlockStyle}"
-                    TextWrapping="Wrap"/>
-                
-                <!-- Details (if available) -->
-                <TextBlock 
-                    Text="{x:Bind ViewModel.Details, Mode=OneWay}"
-                    Style="{StaticResource CaptionTextBlockStyle}"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    TextWrapping="Wrap"
-                    Visibility="{x:Bind ViewModel.DetailsVisibility, Mode=OneWay}"/>
-            </StackPanel>
-        </StackPanel>
-
-        <!-- Severity-based InfoBar -->
+        <!-- Warning InfoBar at top -->
         <InfoBar 
             IsOpen="True"
             IsClosable="False"
             Severity="{x:Bind ViewModel.InfoBarSeverity, Mode=OneWay}"
-            Message="This action cannot be undone. Please confirm you want to proceed."/>
+            Message="{x:Bind ViewModel.WarningMessage, Mode=OneWay}"/>
+        
+        <!-- Detail Message -->
+        <TextBlock 
+            Text="{x:Bind ViewModel.Message, Mode=OneWay}" 
+            Style="{StaticResource BodyTextBlockStyle}"
+            TextWrapping="Wrap"/>
+        
+        <!-- Detail Card for relevant information -->
+        <Border 
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="4"
+            Padding="12"
+            Visibility="{x:Bind ViewModel.DetailCardVisibility, Mode=OneWay}">
+            <ItemsControl ItemsSource="{x:Bind ViewModel.DetailItems, Mode=OneWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:DetailItem">
+                        <StackPanel Spacing="4" Margin="0,0,0,8">
+                            <TextBlock 
+                                Text="{x:Bind Label}" 
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                            <TextBlock 
+                                Text="{x:Bind Value}" 
+                                FontWeight="SemiBold"
+                                Style="{StaticResource BodyTextBlockStyle}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
+        
+        <!-- Additional Details (if available) -->
+        <TextBlock 
+            Text="{x:Bind ViewModel.Details, Mode=OneWay}"
+            Style="{StaticResource CaptionTextBlockStyle}"
+            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+            TextWrapping="Wrap"
+            Visibility="{x:Bind ViewModel.DetailsVisibility, Mode=OneWay}"/>
     </StackPanel>
 </ContentDialog>

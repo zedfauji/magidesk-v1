@@ -139,6 +139,7 @@ public partial class App : Microsoft.UI.Xaml.Application
                     
                     // Dialog ViewModels
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.ConfirmationDialogViewModel>();
+                    services.AddTransient<Magidesk.Presentation.Views.Dialogs.ConfirmationDialog>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.NotesDialogViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.ManagerPinDialogViewModel>();
