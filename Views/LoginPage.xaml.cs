@@ -25,6 +25,15 @@ public sealed partial class LoginPage : Page
         this.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
     }
 
+    private void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        // Load users when page loads
+        if (ViewModel.LoadUsersCommand.CanExecute(null))
+        {
+            ViewModel.LoadUsersCommand.Execute(null);
+        }
+    }
+
     private void Page_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
     {
         // Prevent bubbling if we handle it? Maybe.

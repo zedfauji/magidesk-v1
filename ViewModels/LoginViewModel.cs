@@ -1,8 +1,11 @@
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Magidesk.Application.Interfaces;
 using Magidesk.Application.Commands;
+using Magidesk.Application.DTOs;
 using Magidesk.Presentation.Services;
 using Microsoft.UI.Xaml.Controls;
 using CommunityToolkit.Mvvm.Input;
@@ -15,6 +18,7 @@ public class LoginViewModel : ViewModelBase
     private readonly IAesEncryptionService _encryptionService;
     private readonly NavigationService _navigationService;
     private readonly IUserService _userService;
+    private readonly IUserRepository _userRepository;
     private readonly ICommandHandler<ClockInCommand> _clockInHandler;
     private readonly ICommandHandler<ClockOutCommand> _clockOutHandler;
     private readonly IAttendanceRepository _attendanceRepository;
@@ -23,6 +27,7 @@ public class LoginViewModel : ViewModelBase
 
     private string _pin = string.Empty;
     private string _errorMessage = string.Empty;
+    private UserDto? _selectedUser;
 
     private readonly IServiceProvider _serviceProvider;
 
@@ -31,6 +36,7 @@ public class LoginViewModel : ViewModelBase
         IAesEncryptionService encryptionService,
         NavigationService navigationService,
         IUserService userService,
+        IUserRepository userRepository,
         ICommandHandler<ClockInCommand> clockInHandler,
         ICommandHandler<ClockOutCommand> clockOutHandler,
         IAttendanceRepository attendanceRepository,
@@ -43,6 +49,7 @@ public class LoginViewModel : ViewModelBase
         _encryptionService = encryptionService;
         _navigationService = navigationService;
         _userService = userService;
+        _userRepository = userRepository;
         _clockInHandler = clockInHandler;
         _clockOutHandler = clockOutHandler;
         _attendanceRepository = attendanceRepository;
@@ -51,6 +58,8 @@ public class LoginViewModel : ViewModelBase
         _serviceProvider = serviceProvider;
         Localization = localizationService;
 
+        Users = new ObservableCollection<UserDto>();
+
         AppendDigitCommand = new RelayCommand<string>(AppendDigit);
         ClearCommand = new RelayCommand(Clear);
         RemoveLastDigitCommand = new RelayCommand(RemoveLastDigit);
@@ -58,9 +67,38 @@ public class LoginViewModel : ViewModelBase
         ShutdownCommand = new RelayCommand(Shutdown);
         ClockInOutCommand = new AsyncRelayCommand(ClockInOutAsync);
         ChangeLanguageCommand = new AsyncRelayCommand(ChangeLanguageAsync);
+        SelectUserCommand = new RelayCommand<UserDto>(SelectUser);
+        LoadUsersCommand = new AsyncRelayCommand(LoadUsersAsync);
     }
 
     public Services.LocalizationService Localization { get; }
+
+    /// <summary>
+    /// Terminal ID for display
+    /// </summary>
+    public string TerminalId => $"Terminal: {_terminalContext.TerminalIdentity ?? "POS-01"}";
+
+    /// <summary>
+    /// Collection of all active users available for login
+    /// </summary>
+    public ObservableCollection<UserDto> Users { get; }
+
+    /// <summary>
+    /// Currently selected user for login
+    /// </summary>
+    public UserDto? SelectedUser
+    {
+        get => _selectedUser;
+        set
+        {
+            if (SetProperty(ref _selectedUser, value))
+            {
+                // Clear PIN when user selection changes
+                Pin = string.Empty;
+                ErrorMessage = string.Empty;
+            }
+        }
+    }
 
     public string Pin
     {
@@ -90,6 +128,58 @@ public class LoginViewModel : ViewModelBase
     public ICommand ShutdownCommand { get; }
     public ICommand ClockInOutCommand { get; }
     public ICommand ChangeLanguageCommand { get; }
+    public ICommand SelectUserCommand { get; }
+    public ICommand LoadUsersCommand { get; }
+
+    /// <summary>
+    /// Loads all active users from the repository
+    /// </summary>
+    private async Task LoadUsersAsync()
+    {
+        try
+        {
+            IsBusy = true;
+            ErrorMessage = string.Empty;
+
+            var users = await _userRepository.GetAllAsync();
+            
+            Users.Clear();
+            foreach (var user in users.Where(u => u.IsActive).OrderBy(u => u.FirstName))
+            {
+                Users.Add(new UserDto
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Username = user.Username,
+                    IsActive = user.IsActive,
+                    PreferredLanguage = user.PreferredLanguage,
+                    RoleName = user.Role?.Name ?? "Unknown"
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Failed to load users: {ex.Message}";
+            System.Diagnostics.Debug.WriteLine($"Error loading users: {ex}");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    /// <summary>
+    /// Selects a user for login
+    /// </summary>
+    private void SelectUser(UserDto? user)
+    {
+        if (user != null)
+        {
+            SelectedUser = user;
+            // Focus should move to PIN entry in the UI
+        }
+    }
 
     private void AppendDigit(string? digit)
     {
@@ -200,6 +290,14 @@ public class LoginViewModel : ViewModelBase
 
             if (user != null)
             {
+                // If a user was selected, verify the PIN matches the selected user
+                if (SelectedUser != null && user.Id != SelectedUser.Id)
+                {
+                    ErrorMessage = "Invalid PIN for selected user.";
+                    Pin = string.Empty;
+                    return;
+                }
+
                 // Set Current User
                 _userService.CurrentUser = new Magidesk.Application.DTOs.UserDto 
                 { 
@@ -207,7 +305,9 @@ public class LoginViewModel : ViewModelBase
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Username = user.Username,
-                    TerminalId = _terminalContext.TerminalId ?? Guid.Empty
+                    TerminalId = _terminalContext.TerminalId ?? Guid.Empty,
+                    PreferredLanguage = user.PreferredLanguage,
+                    RoleName = user.Role?.Name ?? "Unknown"
                 };
 
                 // Login Success
@@ -232,6 +332,7 @@ public class LoginViewModel : ViewModelBase
                     await _navigationService.ShowMessageAsync("Navigation Alert", $"Could not load default view ({routingEx.Message}). Sending to Switchboard.");
                 }
                 Pin = string.Empty; // Reset for next time (logout)
+                SelectedUser = null; // Clear selection
             }
             else
             {

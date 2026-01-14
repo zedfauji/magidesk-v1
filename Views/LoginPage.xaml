@@ -9,41 +9,147 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     IsTabStop="True"
-    KeyDown="Page_KeyDown">
+    KeyDown="Page_KeyDown"
+    Loaded="Page_Loaded">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <!-- Branding / Info Side -->
-        <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="20">
-            <TextBlock Text="MagiDesk POS" Style="{StaticResource DisplayTextBlockStyle}" FontWeight="Bold" Foreground="{ThemeResource SystemControlForegroundAccentBrush}"/>
-            <TextBlock Text="Next Gen Point of Sale" Style="{StaticResource SubtitleTextBlockStyle}" Opacity="0.6" HorizontalAlignment="Center"/>
-            
-            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" Margin="0,50,0,0">
-               <Button Content="{Binding Localization[Button_ClockIn], Mode=OneWay}" Command="{Binding ClockInOutCommand}" Background="#00695C" Foreground="White" Width="150" Height="40" FontSize="16"/>
-               <Button Content="{Binding Localization[Button_Language], Mode=OneWay}" Command="{Binding ChangeLanguageCommand}" Background="#1565C0" Foreground="White" Width="150" Height="40" FontSize="16"/>
-               <Button Content="{Binding Localization[Button_Shutdown], Mode=OneWay}" Command="{Binding ShutdownCommand}" Background="DarkRed" Foreground="White" Width="150" Height="40" FontSize="16"/>
-            </StackPanel>
+        <!-- Header with Branding -->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,40,0,20" Spacing="8">
+            <TextBlock Text="🏪 MAGIDESK POS" 
+                       Style="{StaticResource DisplayTextBlockStyle}" 
+                       FontWeight="Bold" 
+                       Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
+                       HorizontalAlignment="Center"/>
+            <TextBlock Text="{x:Bind ViewModel.TerminalId, Mode=OneWay, FallbackValue='Terminal: POS-01'}" 
+                       Style="{StaticResource SubtitleTextBlockStyle}" 
+                       Opacity="0.6" 
+                       HorizontalAlignment="Center"/>
         </StackPanel>
 
-        <!-- Login Logic Side -->
-        <Grid Grid.Column="1" Width="400" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" Padding="40">
-            <StackPanel VerticalAlignment="Center" Spacing="20">
-                <TextBlock Text="{Binding Localization[Login_Title], Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center"/>
-                
+        <!-- Main Content Area - Side by Side Layout -->
+        <Grid Grid.Row="1" 
+              HorizontalAlignment="Center" 
+              VerticalAlignment="Center"
+              MaxWidth="1200">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Side: User Selection Grid -->
+            <StackPanel Grid.Column="0" 
+                        Spacing="16" 
+                        VerticalAlignment="Center"
+                        MaxWidth="700">
+                <TextBlock Text="Select User:" 
+                           Style="{StaticResource SubtitleTextBlockStyle}" 
+                           FontWeight="SemiBold"
+                           HorizontalAlignment="Center"/>
+
+                <GridView ItemsSource="{x:Bind ViewModel.Users, Mode=OneWay}"
+                          SelectedItem="{x:Bind ViewModel.SelectedUser, Mode=TwoWay}"
+                          SelectionMode="Single"
+                          IsItemClickEnabled="True"
+                          HorizontalAlignment="Center"
+                          MaxWidth="700">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid Orientation="Horizontal" 
+                                           MaximumRowsOrColumns="3"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Width="200" 
+                                    Height="180" 
+                                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Padding="16"
+                                    Margin="8">
+                                <StackPanel HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center" 
+                                            Spacing="12">
+                                    <!-- User Avatar/Photo Placeholder -->
+                                    <Viewbox Width="80" Height="80">
+                                        <FontIcon Glyph="&#xE77B;" 
+                                                  FontFamily="Segoe Fluent Icons"
+                                                  Foreground="{ThemeResource SystemControlForegroundAccentBrush}"/>
+                                    </Viewbox>
+
+                                    <!-- User Name -->
+                                    <TextBlock Text="{Binding FirstName}" 
+                                               Style="{StaticResource BodyStrongTextBlockStyle}"
+                                               HorizontalAlignment="Center"
+                                               TextWrapping="NoWrap"
+                                               TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Text="{Binding LastName}" 
+                                               Style="{StaticResource BodyStrongTextBlockStyle}"
+                                               HorizontalAlignment="Center"
+                                               TextWrapping="NoWrap"
+                                               TextTrimming="CharacterEllipsis"/>
+
+                                    <!-- User Role -->
+                                    <TextBlock Text="{Binding RoleName}" 
+                                               Style="{StaticResource CaptionTextBlockStyle}"
+                                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                               HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                    <GridView.ItemContainerStyle>
+                        <Style TargetType="GridViewItem">
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </GridView.ItemContainerStyle>
+                </GridView>
+            </StackPanel>
+
+            <!-- Right Side: PIN Entry Section -->
+            <StackPanel Grid.Column="2" 
+                        Spacing="16" 
+                        MaxWidth="400"
+                        VerticalAlignment="Center">
+                <TextBlock Text="Enter PIN:" 
+                           Style="{StaticResource SubtitleTextBlockStyle}" 
+                           FontWeight="SemiBold"
+                           HorizontalAlignment="Center"/>
+
                 <!-- PIN Display -->
-                 <Border Background="{ThemeResource SystemControlBackgroundAltHighBrush}" Padding="10" CornerRadius="4">
-                    <TextBlock Text="{Binding MaskedPin}" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" MinHeight="40"/>
+                <Border Background="{ThemeResource SystemControlBackgroundAltHighBrush}" 
+                        Padding="16" 
+                        CornerRadius="8"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1">
+                    <TextBlock Text="{x:Bind ViewModel.MaskedPin, Mode=OneWay, FallbackValue='●●●●●●'}" 
+                               Style="{StaticResource TitleTextBlockStyle}" 
+                               HorizontalAlignment="Center" 
+                               MinHeight="40"
+                               VerticalAlignment="Center"
+                               FontFamily="Consolas"/>
                 </Border>
 
                 <!-- Error Message -->
-                <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" HorizontalAlignment="Center" TextWrapping="Wrap" MinHeight="20"/>
+                <TextBlock Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}" 
+                           Foreground="{ThemeResource SystemFillColorCriticalBrush}" 
+                           HorizontalAlignment="Center" 
+                           TextWrapping="Wrap" 
+                           MinHeight="20"/>
 
-                <!-- Keypad -->
-                <Grid RowSpacing="10" ColumnSpacing="10">
+                <!-- Numeric Keypad -->
+                <Grid RowSpacing="8" ColumnSpacing="8">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="60"/>
                         <RowDefinition Height="60"/>
@@ -56,25 +162,195 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Row="0" Grid.Column="0" Content="1" Command="{Binding AppendDigitCommand}" CommandParameter="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
-                    <Button Grid.Row="0" Grid.Column="1" Content="2" Command="{Binding AppendDigitCommand}" CommandParameter="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
-                    <Button Grid.Row="0" Grid.Column="2" Content="3" Command="{Binding AppendDigitCommand}" CommandParameter="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
+                    <!-- Row 1: 1, 2, 3 -->
+                    <Button Grid.Row="0" Grid.Column="0" 
+                            Content="1" 
+                            Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                            CommandParameter="1" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            FontSize="24"
+                            FontWeight="SemiBold"
+                            AutomationProperties.Name="Digit 1"/>
+                    <Button Grid.Row="0" Grid.Column="1" 
+                            Content="2" 
+                            Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                            CommandParameter="2" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            FontSize="24"
+                            FontWeight="SemiBold"
+                            AutomationProperties.Name="Digit 2"/>
+                    <Button Grid.Row="0" Grid.Column="2" 
+                            Content="3" 
+                            Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                            CommandParameter="3" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            FontSize="24"
+                            FontWeight="SemiBold"
+                            AutomationProperties.Name="Digit 3"/>
 
-                    <Button Grid.Row="1" Grid.Column="0" Content="4" Command="{Binding AppendDigitCommand}" CommandParameter="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
-                    <Button Grid.Row="1" Grid.Column="1" Content="5" Command="{Binding AppendDigitCommand}" CommandParameter="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
-                    <Button Grid.Row="1" Grid.Column="2" Content="6" Command="{Binding AppendDigitCommand}" CommandParameter="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
+                    <!-- Row 2: 4, 5, 6 -->
+                    <Button Grid.Row="1" Grid.Column="0" 
+                            Content="4" 
+                            Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                            CommandParameter="4" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            FontSize="24"
+                            FontWeight="SemiBold"
+                            AutomationProperties.Name="Digit 4"/>
+                    <Button Grid.Row="1" Grid.Column="1" 
+                            Content="5" 
+                            Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                            CommandParameter="5" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            FontSize="24"
+                            FontWeight="SemiBold"
+                            AutomationProperties.Name="Digit 5"/>
+                    <Button Grid.Row="1" Grid.Column="2" 
+                            Content="6" 
+                            Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                            CommandParameter="6" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            FontSize="24"
+                            FontWeight="SemiBold"
+                            AutomationProperties.Name="Digit 6"/>
 
-                    <Button Grid.Row="2" Grid.Column="0" Content="7" Command="{Binding AppendDigitCommand}" CommandParameter="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
-                    <Button Grid.Row="2" Grid.Column="1" Content="8" Command="{Binding AppendDigitCommand}" CommandParameter="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
-                    <Button Grid.Row="2" Grid.Column="2" Content="9" Command="{Binding AppendDigitCommand}" CommandParameter="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
+                    <!-- Row 3: 7, 8, 9 -->
+                    <Button Grid.Row="2" Grid.Column="0" 
+                            Content="7" 
+                            Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                            CommandParameter="7" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            FontSize="24"
+                            FontWeight="SemiBold"
+                            AutomationProperties.Name="Digit 7"/>
+                    <Button Grid.Row="2" Grid.Column="1" 
+                            Content="8" 
+                            Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                            CommandParameter="8" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            FontSize="24"
+                            FontWeight="SemiBold"
+                            AutomationProperties.Name="Digit 8"/>
+                    <Button Grid.Row="2" Grid.Column="2" 
+                            Content="9" 
+                            Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                            CommandParameter="9" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            FontSize="24"
+                            FontWeight="SemiBold"
+                            AutomationProperties.Name="Digit 9"/>
 
-                    <Button Grid.Row="3" Grid.Column="0" Content="Clear" Command="{Binding ClearCommand}" Background="DarkOrange" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
-                    <Button Grid.Row="3" Grid.Column="1" Content="0" Command="{Binding AppendDigitCommand}" CommandParameter="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
-                    <Button Grid.Row="3" Grid.Column="2" Content="Enter" Command="{Binding LoginCommand}" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
+                    <!-- Row 4: Backspace, 0, Enter -->
+                    <Button Grid.Row="3" Grid.Column="0" 
+                            Command="{x:Bind ViewModel.RemoveLastDigitCommand}" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch"
+                            AutomationProperties.Name="Backspace">
+                        <FontIcon Glyph="&#xE750;" 
+                                  FontFamily="Segoe Fluent Icons"
+                                  FontSize="20"/>
+                    </Button>
+                    <Button Grid.Row="3" Grid.Column="1" 
+                            Content="0" 
+                            Command="{x:Bind ViewModel.AppendDigitCommand}" 
+                            CommandParameter="0" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            FontSize="24"
+                            FontWeight="SemiBold"
+                            AutomationProperties.Name="Digit 0"/>
+                    <Button Grid.Row="3" Grid.Column="2" 
+                            Command="{x:Bind ViewModel.LoginCommand}" 
+                            Background="{ThemeResource SystemControlBackgroundAccentBrush}" 
+                            Foreground="White" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch"
+                            AutomationProperties.Name="Login">
+                        <FontIcon Glyph="&#xE73E;" 
+                                  FontFamily="Segoe Fluent Icons"
+                                  FontSize="20"/>
+                    </Button>
                 </Grid>
 
-                 <ProgressRing IsActive="{Binding IsBusy}" HorizontalAlignment="Center"/>
+                <!-- Loading Indicator -->
+                <ProgressRing IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}" 
+                              HorizontalAlignment="Center"
+                              Width="40"
+                              Height="40"/>
+
+                <!-- Quick Actions -->
+                <StackPanel Orientation="Horizontal" 
+                            Spacing="8" 
+                            HorizontalAlignment="Center" 
+                            Margin="0,16,0,0">
+                    <Button Content="{Binding Localization[Button_ClockIn], Mode=OneWay, FallbackValue='Clock In/Out'}" 
+                            Command="{x:Bind ViewModel.ClockInOutCommand}" 
+                            Background="#00695C" 
+                            Foreground="White" 
+                            MinWidth="120" 
+                            Height="44" 
+                            FontSize="13"
+                            AutomationProperties.Name="Clock In Out"/>
+                    <Button Content="{Binding Localization[Button_Language], Mode=OneWay, FallbackValue='Language'}" 
+                            Command="{x:Bind ViewModel.ChangeLanguageCommand}" 
+                            Background="#1565C0" 
+                            Foreground="White" 
+                            MinWidth="120" 
+                            Height="44" 
+                            FontSize="13"
+                            AutomationProperties.Name="Change Language"/>
+                    <Button Content="{Binding Localization[Button_Shutdown], Mode=OneWay, FallbackValue='Shutdown'}" 
+                            Command="{x:Bind ViewModel.ShutdownCommand}" 
+                            Background="DarkRed" 
+                            Foreground="White" 
+                            MinWidth="120" 
+                            Height="44" 
+                            FontSize="13"
+                            AutomationProperties.Name="Shutdown"/>
+                </StackPanel>
             </StackPanel>
+        </Grid>
+
+        <!-- Footer with Version and Settings -->
+        <Grid Grid.Row="2" 
+              Padding="24,16"
+              Background="{ThemeResource LayerFillColorDefaultBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Version Number -->
+            <TextBlock Grid.Column="0" 
+                       Text="v2.1.0" 
+                       Style="{StaticResource CaptionTextBlockStyle}"
+                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                       VerticalAlignment="Center"/>
+
+            <!-- Settings Button -->
+            <Button Grid.Column="1" 
+                    Command="{x:Bind ViewModel.ChangeLanguageCommand}"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Padding="12"
+                    AutomationProperties.Name="Settings">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <FontIcon Glyph="&#xE713;" 
+                              FontFamily="Segoe Fluent Icons"
+                              FontSize="16"/>
+                    <TextBlock Text="Settings" 
+                               Style="{StaticResource CaptionTextBlockStyle}"/>
+                </StackPanel>
+            </Button>
         </Grid>
     </Grid>
 </Page>

@@ -163,7 +163,7 @@ The implementation leverages the existing WinUI 3 MVVM architecture and integrat
     - Apply touch-optimized styling
     - _Requirements: 1.1-1.8_
 
-- [ ] 8.4 Write property test for permission-based button visibility
+- [x] 8.4 Write property test for permission-based button visibility
   - **Property 12: Permission-Based Button Visibility**
   - **Validates: Requirements 1.6**
 
@@ -174,7 +174,7 @@ The implementation leverages the existing WinUI 3 MVVM architecture and integrat
     - _Requirements: 1.1-1.8_
 
 - [ ] 9. Implement Login Page
-  - [ ] 9.1 Create LoginViewModel
+  - [x] 9.1 Create LoginViewModel
     - Implement user list loading
     - Implement user selection logic
     - Implement PIN validation
@@ -182,7 +182,7 @@ The implementation leverages the existing WinUI 3 MVVM architecture and integrat
     - Implement login command
     - _Requirements: 8.1_
 
-- [ ] 9.2 Create LoginPage XAML
+- [x] 9.2 Create LoginPage XAML
     - Design user selection grid with large tiles
     - Add user photos/avatars
     - Display user roles

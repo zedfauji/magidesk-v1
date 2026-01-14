@@ -138,6 +138,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IQueryHandler<Queries.GetTableQuery, Queries.GetTableResult>, GetTableQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetAvailableTablesQuery, Queries.GetAvailableTablesResult>, GetAvailableTablesQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetTableMapQuery, Queries.GetTableMapResult>, GetTableMapQueryHandler>();
+        
+        // Table session query handlers
+        services.AddScoped<IQueryHandler<Queries.TableSessions.GetActiveSessionsQuery, IEnumerable<DTOs.ActiveSessionDto>>, Queries.TableSessions.GetActiveSessionsQueryHandler>();
 
         services.AddScoped<IQueryHandler<Queries.GetSalesBalanceQuery, DTOs.Reports.SalesBalanceReportDto>, Services.Reports.GetSalesBalanceQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetSalesSummaryQuery, DTOs.Reports.SalesSummaryReportDto>, Services.Reports.GetSalesSummaryQueryHandler>();
