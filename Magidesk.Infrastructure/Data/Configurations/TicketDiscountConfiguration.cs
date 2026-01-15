@@ -63,6 +63,19 @@ public class TicketDiscountConfiguration : IEntityTypeConfiguration<TicketDiscou
         builder.Property(td => td.AppliedAt)
             .IsRequired();
 
+        builder.OwnsOne(td => td.AppliedBy, ab =>
+        {
+            ab.Property(u => u.Value)
+                .HasColumnName("AppliedBy")
+                .IsRequired();
+        });
+
+        builder.OwnsOne(td => td.AuthorizedBy, az =>
+        {
+            az.Property(u => u.Value)
+                .HasColumnName("AuthorizedBy");
+        });
+
         // Indexes
         builder.HasIndex(td => td.TicketId);
     }

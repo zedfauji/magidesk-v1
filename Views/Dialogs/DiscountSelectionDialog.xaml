@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.Dialogs.DiscountSelectionDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Apply Discount"
+    PrimaryButtonText="Apply Discount"
+    CloseButtonText="Cancel"
+    PrimaryButtonCommand="{Binding ApplyDiscountCommand}"
+    IsPrimaryButtonEnabled="{Binding CanApplyDiscount}"
+    x:Name="DialogRoot"
+    MinWidth="600"
+    Loaded="OnLoaded">
+
+    <Grid RowSpacing="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Text="Select a discount to apply to this ticket."
+                   TextWrapping="Wrap"/>
+
+        <ScrollViewer Grid.Row="1" MaxHeight="400">
+            <ListView ItemsSource="{Binding AvailableDiscounts}"
+                      SelectedItem="{Binding SelectedDiscount, Mode=TwoWay}"
+                      SelectionMode="Single">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="12">
+                            <TextBlock Text="{Binding Name}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+
+        <TextBlock Grid.Row="2" Text="{Binding ErrorMessage}"/>
+
+    </Grid>
+</ContentDialog>

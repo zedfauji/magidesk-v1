@@ -65,6 +65,10 @@ public class DiscountConfiguration : IEntityTypeConfiguration<Discount>
 
         builder.Property(d => d.ExpirationDate);
 
+        builder.Property(d => d.RequiresAuthorization)
+            .IsRequired()
+            .HasDefaultValue(false);
+
         // Indexes
         builder.HasIndex(d => d.IsActive);
         

@@ -164,6 +164,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -194,16 +195,28 @@
                             </StackPanel>
                         </Button>
                         
-                        <!-- Row 2: Reprint Receipt (spans both columns) -->
+                        <!-- Row 2: Apply Discount (spans both columns) -->
                         <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                Command="{x:Bind ViewModel.ApplyDiscountCommand}" 
+                                HorizontalAlignment="Stretch" 
+                                Background="MediumPurple" 
+                                Foreground="White">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <FontIcon Glyph="&#xE7BA;" FontSize="16"/> <!-- Discount/Tag icon -->
+                                <TextBlock Text="Apply Discount"/>
+                            </StackPanel>
+                        </Button>
+                        
+                        <!-- Row 3: Reprint Receipt (spans both columns) -->
+                        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                                 Content="Reprint Receipt" 
                                 Command="{x:Bind ViewModel.ReprintReceiptCommand}" 
                                 HorizontalAlignment="Stretch" 
                                 Background="LightSlateGray" 
                                 Foreground="White"/>
                         
-                        <!-- Row 3: Void Ticket (spans both columns) -->
-                        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                        <!-- Row 4: Void Ticket (spans both columns) -->
+                        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
                                 Content="Void Ticket" 
                                 Command="{x:Bind ViewModel.VoidTicketCommand}" 
                                 HorizontalAlignment="Stretch" 

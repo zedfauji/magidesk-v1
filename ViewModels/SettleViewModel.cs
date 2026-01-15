@@ -100,6 +100,7 @@ public sealed class SettleViewModel : ViewModelBase
         ReprintReceiptCommand = new AsyncRelayCommand(OnReprintReceiptAsync);
         HoldTicketCommand = new AsyncRelayCommand(OnHoldTicketAsync);
         SplitPaymentCommand = new AsyncRelayCommand(OnSplitPaymentAsync);
+        ApplyDiscountCommand = new AsyncRelayCommand(OnApplyDiscountAsync);
     }
 
     public TicketDto? Ticket
@@ -219,6 +220,7 @@ public sealed class SettleViewModel : ViewModelBase
     public AsyncRelayCommand ReprintReceiptCommand { get; }
     public AsyncRelayCommand HoldTicketCommand { get; }
     public AsyncRelayCommand SplitPaymentCommand { get; }
+    public AsyncRelayCommand ApplyDiscountCommand { get; }
 
     private async Task OnLogoutAsync()
     {
@@ -949,6 +951,39 @@ public sealed class SettleViewModel : ViewModelBase
         catch (Exception ex)
         {
             Error = $"Failed to process split payment: {ex.Message}";
+        }
+    }
+
+    private async Task OnApplyDiscountAsync()
+    {
+        if (Ticket == null) return;
+        
+        try
+        {
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                // Create and show the Discount Selection dialog
+                var viewModel = scope.ServiceProvider.GetRequiredService<Magidesk.Presentation.ViewModels.Dialogs.DiscountSelectionViewModel>();
+                viewModel.TicketId = Ticket.Id;
+                viewModel.TicketTotal = new Domain.ValueObjects.Money(Ticket.TotalAmount);
+                
+                var dialog = new Magidesk.Presentation.Views.Dialogs.DiscountSelectionDialog(viewModel);
+                dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                
+                var result = await _navigationService.ShowDialogAsync(dialog);
+                
+                if (result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary && dialog.IsSuccess)
+                {
+                    StatusMessage = "Discount applied successfully.";
+                    
+                    // Reload ticket to show updated total with discount
+                    await LoadTicketAsync();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Error = $"Failed to apply discount: {ex.Message}";
         }
     }
 }
