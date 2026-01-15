@@ -434,10 +434,11 @@ This document breaks down the Category C: Billing, Payments & Pricing implementa
 - Display applied discounts in ticket summary ✅
 - Show original and discounted amounts ✅
 - Add "Remove Discount" button for each applied discount
-- **Status**: COMPLETE (with concurrency fix applied)
+- **Status**: COMPLETE (with concurrency fix and XAML resource fix applied)
 - **Note**: Fixed DbUpdateConcurrencyException by properly handling Version concurrency token in TicketRepository.UpdateAsync()
+- **Note**: Fixed runtime XAML error by uncommenting BooleanToVisibilityConverter resource in App.xaml (converter class already existed as alias)
 - **Requirements**: REQ-3.6, REQ-11.1
-- **Files**: `Magidesk.Presentation/Views/SettlePage.xaml`, `Magidesk.Presentation/ViewModels/SettleViewModel.cs`, `Magidesk.Infrastructure/Repositories/TicketRepository.cs`, `Magidesk.Application/Services/ApplyDiscountCommandHandler.cs`
+- **Files**: `Magidesk.Presentation/Views/SettlePage.xaml`, `Magidesk.Presentation/ViewModels/SettleViewModel.cs`, `Magidesk.Infrastructure/Repositories/TicketRepository.cs`, `Magidesk.Application/Services/ApplyDiscountCommandHandler.cs`, `App.xaml`
 - **Documentation**: See `TASK_2_1_15_CONCURRENCY_FIX.md` for details
 
 **Task 2.1.16**: Add member discount indicator

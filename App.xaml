@@ -64,7 +64,7 @@
             <converters:IntToDoubleConverter x:Key="IntToDoubleConverter"/>
             <converters:CollectionEmptyToVisibilityConverter x:Key="CollectionEmptyToVisibilityConverter"/>
             <converters:BoolToSuccessColorConverter x:Key="BoolToSuccessColorConverter"/>
-            <!-- <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/> REMOVED: Class does not exist -->
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <converters:BooleanToStringConverter x:Key="BooleanToStringConverter"/>
             <converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
             <converters:ActiveStatusBrushConverter x:Key="ActiveStatusBrushConverter"/>
