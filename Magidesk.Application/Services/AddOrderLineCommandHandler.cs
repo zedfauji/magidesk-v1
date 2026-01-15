@@ -17,6 +17,7 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
     private readonly IAuditEventRepository _auditEventRepository;
     private readonly IRepository<StockMovement> _stockMovementRepository;
     private readonly IKitchenRoutingService _kitchenRoutingService;
+    private readonly IUserService _userService;
     private readonly ILogger<AddOrderLineCommandHandler> _logger;
 
     public AddOrderLineCommandHandler(
@@ -25,6 +26,7 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
         IAuditEventRepository auditEventRepository,
         IRepository<StockMovement> stockMovementRepository,
         IKitchenRoutingService kitchenRoutingService,
+        IUserService userService,
         ILogger<AddOrderLineCommandHandler> logger)
     {
         _ticketRepository = ticketRepository;
@@ -32,6 +34,7 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
         _auditEventRepository = auditEventRepository;
         _stockMovementRepository = stockMovementRepository;
         _kitchenRoutingService = kitchenRoutingService;
+        _userService = userService;
         _logger = logger;
     }
 
@@ -121,7 +124,12 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
         await _ticketRepository.UpdateAsync(ticket, cancellationToken);
 
         // Create audit event
-        var userId = command.AddedBy?.Value ?? Guid.Empty;
+        // IMPORTANT: Never use Guid.Empty for UserId - always get from command or fallback to current user
+        var currentUser = _userService.CurrentUser;
+        var userId = command.AddedBy?.Value 
+                  ?? currentUser?.Id
+                  ?? throw new Domain.Exceptions.BusinessRuleViolationException("Cannot create audit event without a valid user context. Please ensure a user is logged in.");
+        
         var isMisc = (command.CategoryName?.Contains("Misc", StringComparison.OrdinalIgnoreCase) == true) || 
                      (command.MenuItemName.Contains("Misc", StringComparison.OrdinalIgnoreCase));
         
