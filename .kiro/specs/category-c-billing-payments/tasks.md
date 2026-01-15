@@ -428,14 +428,17 @@ This document breaks down the Category C: Billing, Payments & Pricing implementa
 - **Requirements**: REQ-3.1, REQ-3.5, REQ-11.1
 - **Files**: `Magidesk.Presentation/Views/Dialogs/DiscountSelectionDialog.xaml`
 
-**Task 2.1.15**: Integrate discount into SettlePage
-- Add "Apply Discount" button to settle page
-- Open DiscountSelectionDialog on click
-- Display applied discounts in ticket summary
-- Show original and discounted amounts
+**Task 2.1.15**: Integrate discount into SettlePage ✅
+- Add "Apply Discount" button to settle page ✅
+- Open DiscountSelectionDialog on click ✅
+- Display applied discounts in ticket summary ✅
+- Show original and discounted amounts ✅
 - Add "Remove Discount" button for each applied discount
+- **Status**: COMPLETE (with concurrency fix applied)
+- **Note**: Fixed DbUpdateConcurrencyException by properly handling Version concurrency token in TicketRepository.UpdateAsync()
 - **Requirements**: REQ-3.6, REQ-11.1
-- **Files**: `Magidesk.Presentation/Views/SettlePage.xaml`, `Magidesk.Presentation/ViewModels/SettlePageViewModel.cs`
+- **Files**: `Magidesk.Presentation/Views/SettlePage.xaml`, `Magidesk.Presentation/ViewModels/SettleViewModel.cs`, `Magidesk.Infrastructure/Repositories/TicketRepository.cs`, `Magidesk.Application/Services/ApplyDiscountCommandHandler.cs`
+- **Documentation**: See `TASK_2_1_15_CONCURRENCY_FIX.md` for details
 
 **Task 2.1.16**: Add member discount indicator
 - Show member discount badge on ticket if customer is member

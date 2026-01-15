@@ -138,6 +138,9 @@ public partial class DiscountSelectionViewModel : ViewModelBase
             }
 
             // Apply the discount
+            // Note: We use the injected handler which comes from the same scope as this ViewModel
+            // The scope was created fresh in SettleViewModel.OnApplyDiscountAsync, ensuring
+            // a fresh DbContext with no stale tracked entities
             var command = new ApplyDiscountCommand
             {
                 TicketId = TicketId,

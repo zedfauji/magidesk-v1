@@ -9,8 +9,8 @@
     Title="Apply Discount"
     PrimaryButtonText="Apply Discount"
     CloseButtonText="Cancel"
-    PrimaryButtonCommand="{Binding ApplyDiscountCommand}"
     IsPrimaryButtonEnabled="{Binding CanApplyDiscount}"
+    PrimaryButtonClick="OnPrimaryButtonClick"
     x:Name="DialogRoot"
     MinWidth="600"
     Loaded="OnLoaded">
@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0"
-                   Text="Select a discount to apply to this ticket."
+                   Text="Select a discount to apply to this ticket. Discounts over 50% require manager authorization."
                    TextWrapping="Wrap"/>
 
         <ScrollViewer Grid.Row="1" MaxHeight="400">
@@ -33,14 +33,26 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid Padding="12">
-                            <TextBlock Text="{Binding Name}"/>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding Name}" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="12,0,0,0">
+                                <Run Text="{Binding Value}"/>
+                                <Run Text="{Binding Type}"/>
+                            </TextBlock>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </ScrollViewer>
 
-        <TextBlock Grid.Row="2" Text="{Binding ErrorMessage}"/>
+        <InfoBar Grid.Row="2" 
+                 x:Name="ErrorInfoBar"
+                 Severity="Error"
+                 Message="{Binding ErrorMessage}"
+                 IsOpen="False"/>
 
     </Grid>
 </ContentDialog>

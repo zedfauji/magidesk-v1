@@ -16,6 +16,15 @@ public sealed partial class DiscountSelectionDialog : ContentDialog
         this.InitializeComponent();
         ViewModel = viewModel;
         DataContext = ViewModel;
+        
+        // Subscribe to property changes to show/hide error InfoBar
+        ViewModel.PropertyChanged += (s, e) =>
+        {
+            if (e.PropertyName == nameof(ViewModel.ErrorMessage))
+            {
+                ErrorInfoBar.IsOpen = !string.IsNullOrEmpty(ViewModel.ErrorMessage);
+            }
+        };
     }
 
     /// <summary>
@@ -24,6 +33,32 @@ public sealed partial class DiscountSelectionDialog : ContentDialog
     private async void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
         await ViewModel.LoadDiscountsAsync();
+    }
+
+    /// <summary>
+    /// Handles the Primary button click to apply the discount asynchronously.
+    /// </summary>
+    private async void OnPrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        // Get a deferral to keep the dialog open while we process the async operation
+        var deferral = args.GetDeferral();
+        
+        try
+        {
+            // Apply the discount and wait for completion
+            var success = await ViewModel.ApplyDiscountAsync();
+            
+            // If the operation failed, cancel the dialog close
+            if (!success)
+            {
+                args.Cancel = true;
+            }
+        }
+        finally
+        {
+            // Complete the deferral to allow the dialog to close
+            deferral.Complete();
+        }
     }
 
     /// <summary>

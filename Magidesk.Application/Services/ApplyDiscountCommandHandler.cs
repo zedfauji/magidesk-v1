@@ -31,15 +31,55 @@ public class ApplyDiscountCommandHandler : ICommandHandler<ApplyDiscountCommand>
 
     public async Task HandleAsync(ApplyDiscountCommand command, CancellationToken cancellationToken = default)
     {
-        // Task 2.1.5: New path for predefined discounts using enhanced Ticket.ApplyDiscount method
-        if (command.DiscountId != Guid.Empty && command.AppliedBy != null)
+        // Retry logic for handling concurrency exceptions
+        // In a multi-user POS system, tickets can be modified concurrently
+        // We retry up to 3 times with exponential backoff
+        const int maxRetries = 3;
+        int retryCount = 0;
+        Exception? lastException = null;
+        
+        while (retryCount < maxRetries)
         {
-            await HandlePredefinedDiscountAsync(command, cancellationToken);
-            return;
-        }
+            try
+            {
+                // Task 2.1.5: New path for predefined discounts using enhanced Ticket.ApplyDiscount method
+                if (command.DiscountId != Guid.Empty && command.AppliedBy != null)
+                {
+                    await HandlePredefinedDiscountAsync(command, cancellationToken);
+                    return;
+                }
 
-        // Legacy path for ad-hoc discounts (backward compatibility)
-        await HandleLegacyDiscountAsync(command, cancellationToken);
+                // Legacy path for ad-hoc discounts (backward compatibility)
+                await HandleLegacyDiscountAsync(command, cancellationToken);
+                return;
+            }
+            catch (Domain.Exceptions.ConcurrencyException ex)
+            {
+                lastException = ex;
+                retryCount++;
+                
+                if (retryCount >= maxRetries)
+                {
+                    // Max retries reached, throw the exception
+                    throw new Domain.Exceptions.BusinessRuleViolationException(
+                        $"Failed to apply discount after {maxRetries} attempts due to concurrent modifications. Please try again.",
+                        ex);
+                }
+                
+                // Log retry attempt for debugging
+                System.Diagnostics.Debug.WriteLine($"[ApplyDiscount] Concurrency conflict detected. Retry {retryCount}/{maxRetries}. Waiting before retry...");
+                
+                // Wait before retrying (exponential backoff: 100ms, 200ms, 400ms)
+                await Task.Delay(100 * (int)Math.Pow(2, retryCount - 1), cancellationToken);
+                
+                // Continue to next retry iteration - ticket will be reloaded fresh
+            }
+        }
+        
+        // This should never be reached due to the throw in the catch block, but added for completeness
+        throw new Domain.Exceptions.BusinessRuleViolationException(
+            $"Failed to apply discount after {maxRetries} attempts.",
+            lastException);
     }
 
     /// <summary>
@@ -47,12 +87,16 @@ public class ApplyDiscountCommandHandler : ICommandHandler<ApplyDiscountCommand>
     /// </summary>
     private async Task HandlePredefinedDiscountAsync(ApplyDiscountCommand command, CancellationToken cancellationToken)
     {
-        // 1. Load ticket
+        // 1. Load ticket - GetByIdAsync uses AsNoTracking() to get a fresh, untracked entity
+        // This prevents concurrency issues from stale tracked entities
         var ticket = await _ticketRepository.GetByIdAsync(command.TicketId, cancellationToken);
         if (ticket == null)
         {
             throw new Domain.Exceptions.BusinessRuleViolationException($"Ticket {command.TicketId} not found.");
         }
+        
+        // Log the ticket version for debugging concurrency issues
+        System.Diagnostics.Debug.WriteLine($"[ApplyDiscount] Loaded ticket {ticket.Id}, TicketNumber={ticket.TicketNumber}, Version={ticket.Version}, Status={ticket.Status}");
 
         // 2. Load discount
         var discount = await _discountRepository.GetByIdAsync(command.DiscountId, cancellationToken);
@@ -60,6 +104,8 @@ public class ApplyDiscountCommandHandler : ICommandHandler<ApplyDiscountCommand>
         {
             throw new Domain.Exceptions.BusinessRuleViolationException($"Discount {command.DiscountId} not found.");
         }
+
+        System.Diagnostics.Debug.WriteLine($"[ApplyDiscount] Loaded discount {discount.Id}, Name={discount.Name}, Type={discount.Type}, Value={discount.Value}");
 
         // 3. Check if discount is active
         if (!discount.IsActive)
@@ -72,6 +118,8 @@ public class ApplyDiscountCommandHandler : ICommandHandler<ApplyDiscountCommand>
         var discountPercentage = ticket.SubtotalAmount.Amount > 0
             ? (discountAmount.Amount / ticket.SubtotalAmount.Amount) * 100m
             : 0m;
+
+        System.Diagnostics.Debug.WriteLine($"[ApplyDiscount] Calculated discount amount={discountAmount.Amount}, percentage={discountPercentage:F2}%");
 
         // 5. Check if authorization is required (> 50% of subtotal)
         if (discountPercentage > 50m && command.AuthorizedBy == null)
@@ -86,9 +134,16 @@ public class ApplyDiscountCommandHandler : ICommandHandler<ApplyDiscountCommand>
         // - Create TicketDiscount snapshot
         // - Recalculate totals
         // - Raise DiscountAppliedEvent (when event raising is implemented)
+        System.Diagnostics.Debug.WriteLine($"[ApplyDiscount] Before ApplyDiscount: Version={ticket.Version}, SubtotalAmount={ticket.SubtotalAmount.Amount}, TotalAmount={ticket.TotalAmount.Amount}");
         ticket.ApplyDiscount(discount, command.AppliedBy, command.AuthorizedBy);
+        System.Diagnostics.Debug.WriteLine($"[ApplyDiscount] After ApplyDiscount: Version={ticket.Version}, SubtotalAmount={ticket.SubtotalAmount.Amount}, TotalAmount={ticket.TotalAmount.Amount}, DiscountAmount={ticket.DiscountAmount.Amount}");
 
-        // 7. Create audit event
+        // 7. Save ticket first (this will update the version)
+        System.Diagnostics.Debug.WriteLine($"[ApplyDiscount] Saving ticket with Version={ticket.Version}");
+        await _ticketRepository.UpdateAsync(ticket, cancellationToken);
+        System.Diagnostics.Debug.WriteLine($"[ApplyDiscount] Ticket saved successfully. New Version should be {ticket.Version}");
+
+        // 8. Create audit event after successful save
         var auditDetails = $"DiscountId={discount.Id}, Name={discount.Name}, Type={discount.Type}, Value={discount.Value}, Amount={discountAmount.Amount}, Percentage={discountPercentage:F2}%, AuthorizedBy={command.AuthorizedBy?.Value.ToString() ?? "N/A"}";
         
         var auditEvent = AuditEvent.Create(
@@ -103,9 +158,7 @@ public class ApplyDiscountCommandHandler : ICommandHandler<ApplyDiscountCommand>
         );
 
         await _auditEventRepository.AddAsync(auditEvent, cancellationToken);
-
-        // 8. Save ticket
-        await _ticketRepository.UpdateAsync(ticket, cancellationToken);
+        System.Diagnostics.Debug.WriteLine($"[ApplyDiscount] Audit event created successfully");
     }
 
     /// <summary>

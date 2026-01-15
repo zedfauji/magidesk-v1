@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Table Management Grid - Billiard Bar Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2bbdee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101d22",
+                        "card-dark": "#1a262b",
+                        "status-running": "#4CAF50",
+                        "status-paused": "#FFA000",
+                        "status-ended": "#A33F4F",
+                        "status-idle": "#546e7a"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glow-running { box-shadow: 0 0 15px rgba(76, 175, 80, 0.2); border: 1px solid rgba(76, 175, 80, 0.4); }
+        .glow-paused { box-shadow: 0 0 15px rgba(255, 160, 0, 0.2); border: 1px solid rgba(255, 160, 0, 0.4); }
+        .glow-ended { box-shadow: 0 0 15px rgba(163, 63, 79, 0.2); border: 1px solid rgba(163, 63, 79, 0.4); }
+        .glow-idle { border: 1px solid rgba(157, 178, 185, 0.2); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200 min-h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation Header -->
+<header class="flex items-center justify-between px-8 py-4 bg-white dark:bg-background-dark border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-primary rounded-lg text-background-dark">
+<span class="material-symbols-outlined block text-2xl">sports_golf</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">RackControl <span class="text-primary">Pro</span></h1>
+</div>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-800"></div>
+<div class="flex items-center gap-2 text-slate-500">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-sm font-medium">10:42 PM</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-end">
+<p class="text-sm font-bold">Alex G.</p>
+<p class="text-xs text-slate-500">Floor Manager</p>
+</div>
+<div class="size-10 rounded-full bg-cover bg-center border-2 border-primary/30" data-alt="User profile avatar of Alex" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBvMBRsiIzKAoxlcMS91whWzT4Knkmuu5yRZEowzqeLYjxhV-o1xn-9EC20qz01BUcmiRN4lm0bV8sXx74Ix4e5l9MVCH-PRG8ek5YoGXv22w3_Gsh8ri1X25X2kr9YOwIkXCpn52zofCYVySKWMY_5_oAkjLCHzlEKLYYhhSjTY6NkoVx1OhQdJW8qD061o7VYqffMqOw_3jlgb1xxRIxsQt54vPHQA1tMsCVeF58hHcKRENmcw9Eirc0YT6k-e6HYagTOWOieN4c')"></div>
+</div>
+</header>
+<!-- Main Content Area with Tabs -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- Tab Bar -->
+<div class="px-8 bg-white dark:bg-background-dark border-b border-slate-200 dark:border-slate-800">
+<div class="flex gap-8">
+<button class="py-4 border-b-2 border-primary text-primary font-bold text-sm tracking-wider flex items-center gap-2">
+                    ALL TABLES <span class="bg-primary/20 text-[10px] px-1.5 py-0.5 rounded">12</span>
+</button>
+<button class="py-4 border-b-2 border-transparent text-slate-500 font-bold text-sm tracking-wider hover:text-slate-300">
+                    MY SESSIONS
+                </button>
+<button class="py-4 border-b-2 border-transparent text-slate-500 font-bold text-sm tracking-wider hover:text-slate-300">
+                    AVAILABLE
+                </button>
+</div>
+</div>
+<!-- Table Grid Container -->
+<div class="flex-1 overflow-y-auto p-8 no-scrollbar">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Table Card: Running -->
+<div class="bg-white dark:bg-card-dark rounded-xl p-5 flex flex-col gap-4 glow-running">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-2xl font-bold tracking-tighter">TABLE 01</h3>
+<span class="text-xs font-bold text-status-running flex items-center gap-1 uppercase">
+<span class="size-1.5 bg-status-running rounded-full animate-pulse"></span> Running
+                            </span>
+</div>
+<button class="size-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center hover:bg-primary/20">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</div>
+<div class="py-4 flex flex-col items-center">
+<p class="text-4xl font-mono font-bold tracking-widest text-slate-900 dark:text-white">01:24:45</p>
+<p class="text-xs text-slate-500 mt-1 uppercase tracking-widest">Elapsed Time</p>
+</div>
+<div class="flex justify-between items-end border-t border-slate-100 dark:border-slate-800 pt-4">
+<div>
+<p class="text-[10px] text-slate-500 uppercase font-bold">Total Bill</p>
+<p class="text-lg font-bold text-primary">$18.50</p>
+</div>
+<div class="flex gap-2">
+<button class="size-11 rounded-lg bg-status-paused/20 text-status-paused flex items-center justify-center">
+<span class="material-symbols-outlined">pause</span>
+</button>
+<button class="h-11 px-4 rounded-lg bg-primary text-background-dark font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">payments</span> BILL
+                            </button>
+</div>
+</div>
+</div>
+<!-- Table Card: Paused -->
+<div class="bg-white dark:bg-card-dark rounded-xl p-5 flex flex-col gap-4 glow-paused">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-2xl font-bold tracking-tighter">TABLE 02</h3>
+<span class="text-xs font-bold text-status-paused flex items-center gap-1 uppercase">
+<span class="size-1.5 bg-status-paused rounded-full"></span> Paused
+                            </span>
+</div>
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded">MY SESSION</span>
+</div>
+<div class="py-4 flex flex-col items-center opacity-60">
+<p class="text-4xl font-mono font-bold tracking-widest text-slate-900 dark:text-white">00:45:12</p>
+<p class="text-xs text-slate-500 mt-1 uppercase tracking-widest">Paused At</p>
+</div>
+<div class="flex justify-between items-end border-t border-slate-100 dark:border-slate-800 pt-4">
+<div>
+<p class="text-[10px] text-slate-500 uppercase font-bold">Total Bill</p>
+<p class="text-lg font-bold text-primary">$9.00</p>
+</div>
+<div class="flex gap-2">
+<button class="h-11 px-6 rounded-lg bg-status-running text-white font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">play_arrow</span> RESUME
+                            </button>
+</div>
+</div>
+</div>
+<!-- Table Card: Idle -->
+<div class="bg-white dark:bg-card-dark rounded-xl p-5 flex flex-col gap-4 glow-idle border border-dashed border-slate-700">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-2xl font-bold tracking-tighter opacity-50">TABLE 03</h3>
+<span class="text-xs font-bold text-slate-500 flex items-center gap-1 uppercase">
+<span class="size-1.5 bg-slate-500 rounded-full"></span> Available
+                            </span>
+</div>
+</div>
+<div class="py-8 flex flex-col items-center">
+<span class="material-symbols-outlined text-5xl text-slate-800">add_circle</span>
+</div>
+<div class="flex flex-col gap-2 border-t border-slate-100 dark:border-slate-800 pt-4">
+<button class="w-full h-11 rounded-lg bg-primary/10 text-primary font-bold hover:bg-primary hover:text-background-dark">
+                            START NEW SESSION
+                        </button>
+</div>
+</div>
+<!-- Table Card: Ended -->
+<div class="bg-white dark:bg-card-dark rounded-xl p-5 flex flex-col gap-4 glow-ended">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-2xl font-bold tracking-tighter">TABLE 04</h3>
+<span class="text-xs font-bold text-status-ended flex items-center gap-1 uppercase">
+<span class="size-1.5 bg-status-ended rounded-full"></span> Ended - Pending Bill
+                            </span>
+</div>
+</div>
+<div class="py-4 flex flex-col items-center">
+<p class="text-4xl font-mono font-bold tracking-widest text-slate-900 dark:text-white">02:10:00</p>
+<p class="text-xs text-slate-500 mt-1 uppercase tracking-widest">Total Duration</p>
+</div>
+<div class="flex justify-between items-end border-t border-slate-100 dark:border-slate-800 pt-4">
+<div>
+<p class="text-[10px] text-slate-500 uppercase font-bold">Amount Due</p>
+<p class="text-2xl font-bold text-status-ended">$26.00</p>
+</div>
+<button class="h-12 px-6 rounded-lg bg-status-ended text-white font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">receipt_long</span> SETTLE
+                        </button>
+</div>
+</div>
+<!-- Additional Rows of tables -->
+<div class="bg-white dark:bg-card-dark rounded-xl p-5 flex flex-col gap-4 glow-running">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-2xl font-bold tracking-tighter">TABLE 05</h3>
+<span class="text-xs font-bold text-status-running flex items-center gap-1 uppercase">
+<span class="size-1.5 bg-status-running rounded-full animate-pulse"></span> Running
+                            </span>
+</div>
+<span class="px-2 py-1 bg-yellow-500/10 text-yellow-500 text-[10px] font-bold rounded">TOURNAMENT</span>
+</div>
+<div class="py-4 flex flex-col items-center">
+<p class="text-4xl font-mono font-bold tracking-widest text-slate-900 dark:text-white">00:15:30</p>
+<p class="text-xs text-slate-500 mt-1 uppercase tracking-widest">Elapsed Time</p>
+</div>
+<div class="flex justify-between items-end border-t border-slate-100 dark:border-slate-800 pt-4">
+<div>
+<p class="text-[10px] text-slate-500 uppercase font-bold">Total Bill</p>
+<p class="text-lg font-bold text-primary">$5.00</p>
+</div>
+<div class="flex gap-2">
+<button class="size-11 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center">
+<span class="material-symbols-outlined">pause</span>
+</button>
+<button class="h-11 px-4 rounded-lg bg-primary text-background-dark font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">payments</span> BILL
+                            </button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-xl p-5 flex flex-col gap-4 glow-idle border border-dashed border-slate-700">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-2xl font-bold tracking-tighter opacity-50">TABLE 06</h3>
+<span class="text-xs font-bold text-slate-500 flex items-center gap-1 uppercase">
+<span class="size-1.5 bg-slate-500 rounded-full"></span> Available
+                            </span>
+</div>
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded">RESERVED: 11PM</span>
+</div>
+<div class="py-8 flex flex-col items-center">
+<span class="material-symbols-outlined text-5xl text-slate-800">event_available</span>
+</div>
+<div class="flex flex-col gap-2 border-t border-slate-100 dark:border-slate-800 pt-4">
+<button class="w-full h-11 rounded-lg bg-primary/10 text-primary font-bold opacity-50 cursor-not-allowed">
+                            LOCKED FOR RESERVATION
+                        </button>
+</div>
+</div>
+<!-- Repeat cards to fill space -->
+<div class="bg-white dark:bg-card-dark rounded-xl p-5 flex flex-col gap-4 glow-running">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-2xl font-bold tracking-tighter">TABLE 07</h3>
+<span class="text-xs font-bold text-status-running flex items-center gap-1 uppercase">
+<span class="size-1.5 bg-status-running rounded-full animate-pulse"></span> Running
+                            </span>
+</div>
+</div>
+<div class="py-4 flex flex-col items-center">
+<p class="text-4xl font-mono font-bold tracking-widest text-slate-900 dark:text-white">03:05:12</p>
+<p class="text-xs text-slate-500 mt-1 uppercase tracking-widest">Elapsed Time</p>
+</div>
+<div class="flex justify-between items-end border-t border-slate-100 dark:border-slate-800 pt-4">
+<div>
+<p class="text-[10px] text-slate-500 uppercase font-bold">Total Bill</p>
+<p class="text-lg font-bold text-primary">$42.00</p>
+</div>
+<div class="flex gap-2">
+<button class="size-11 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center">
+<span class="material-symbols-outlined">pause</span>
+</button>
+<button class="h-11 px-4 rounded-lg bg-primary text-background-dark font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">payments</span> BILL
+                            </button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-xl p-5 flex flex-col gap-4 glow-paused">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-2xl font-bold tracking-tighter">TABLE 08</h3>
+<span class="text-xs font-bold text-status-paused flex items-center gap-1 uppercase">
+<span class="size-1.5 bg-status-paused rounded-full"></span> Paused
+                            </span>
+</div>
+</div>
+<div class="py-4 flex flex-col items-center opacity-60">
+<p class="text-4xl font-mono font-bold tracking-widest text-slate-900 dark:text-white">01:02:00</p>
+<p class="text-xs text-slate-500 mt-1 uppercase tracking-widest">Paused At</p>
+</div>
+<div class="flex justify-between items-end border-t border-slate-100 dark:border-slate-800 pt-4">
+<div>
+<p class="text-[10px] text-slate-500 uppercase font-bold">Total Bill</p>
+<p class="text-lg font-bold text-primary">$12.40</p>
+</div>
+<div class="flex gap-2">
+<button class="h-11 px-6 rounded-lg bg-status-running text-white font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">play_arrow</span> RESUME
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Quick Action -->
+<div class="fixed right-8 bottom-28 z-50">
+<button class="flex items-center gap-3 bg-primary text-background-dark font-bold px-6 py-4 rounded-xl shadow-2xl hover:scale-105 transition-transform">
+<span class="material-symbols-outlined font-bold">add</span>
+<span class="tracking-tight uppercase">Quick Order Entry</span>
+</button>
+</div>
+<!-- Fixed Bottom Navigation -->
+<nav class="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 px-8 py-3 flex items-center justify-around z-50">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">grid_view</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Tables</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 hover:text-slate-300" href="#">
+<span class="material-symbols-outlined">receipt</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Orders</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 hover:text-slate-300" href="#">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Kitchen</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 hover:text-slate-300" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Reports</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 hover:text-slate-300" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Settings</span>
+</a>
+</nav>
+</body></html>
