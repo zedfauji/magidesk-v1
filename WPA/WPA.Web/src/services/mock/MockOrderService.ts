@@ -40,4 +40,13 @@ export class MockOrderService implements IOrderService {
     async moveOrder(sourceTableId: string, targetTableId: string): Promise<void> {
         console.log(`[Mock] Moving order from ${sourceTableId} to ${targetTableId}`);
     }
+
+    async createTicket(tableId: string, guestCount: number): Promise<TicketResult> {
+        console.log(`[Mock] Creating ticket for Table ${tableId} with ${guestCount} guests`);
+        return {
+            success: true,
+            ticketId: `mock-ticket-${Date.now()}`,
+            updatedVersion: 1
+        };
+    }
 }

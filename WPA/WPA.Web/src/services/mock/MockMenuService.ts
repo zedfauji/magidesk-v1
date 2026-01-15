@@ -4,6 +4,7 @@ import type { IMenuService } from "../interfaces";
 
 export class MockMenuService implements IMenuService {
     async getCategories(): Promise<MenuCategory[]> {
+        console.log('[MockMenuService] Returning mock categories...');
         return [
             { id: 'cat-1', name: 'Beer' },
             { id: 'cat-2', name: 'Cocktails' },

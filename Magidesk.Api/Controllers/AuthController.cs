@@ -9,29 +9,32 @@ namespace Magidesk.Api.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly ISecurityService _securityService;
-    // Context services would be injected here
+    private readonly IAesEncryptionService _encryptionService;
     
-    public AuthController(ISecurityService securityService)
+    public AuthController(ISecurityService securityService, IAesEncryptionService encryptionService)
     {
         _securityService = securityService;
+        _encryptionService = encryptionService;
     }
 
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>> Login([FromBody] LoginRequest request)
     {
-        // 1. Authenticate via Service (Direct Map)
-        // Note: Real implementation would handle encryption/hashing here or in service
-        var user = await _securityService.GetUserByPinAsync(request.Pin);
+        // 1. Encrypt the incoming PIN using standard AES service to match DB storage
+        var encryptedPin = _encryptionService.Encrypt(request.Pin);
+
+        // 2. Authenticate
+        var user = await _securityService.GetUserByPinAsync(encryptedPin);
 
         if (user == null)
         {
             return Unauthorized();
         }
 
-        // 2. Map Domain User to DTO
+        // 3. Map Domain User to DTO
         return Ok(new UserDto
         {
-            Id = user.Id.Value.ToString(),
+            Id = user.Id.ToString(),
             Username = user.Username, // Assuming property exists based on DTO
             FirstName = user.FirstName,
             LastName = user.LastName,
@@ -59,7 +62,7 @@ public class AuthController : ControllerBase
         {
             Token = "current-token-placeholder",
             // User = ... map from context
-            TerminalId = "resolved-terminal-id",
+            TerminalId = Environment.MachineName,
             StartedAt = DateTime.UtcNow.ToString("O")
         });
     }

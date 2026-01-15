@@ -31,7 +31,9 @@ export interface TableSummary extends Versioned {
     sessionStatus?: SessionStatus;
     elapsedSeconds?: number;
     totalAmount?: number;
+
     currentUserId?: string;
+    activeTicketId?: string;
     isReservationLocked?: boolean;
 }
 

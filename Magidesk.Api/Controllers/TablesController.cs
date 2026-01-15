@@ -17,6 +17,7 @@ public class TablesController : ControllerBase
 {
     private readonly IQueryHandler<GetActiveSessionsQuery, IEnumerable<Application.DTOs.ActiveSessionDto>> _activeSessionsHandler;
     private readonly ITableRepository _tableRepository;
+    private readonly ITicketRepository _ticketRepository; // New dependency
     private readonly ICommandHandler<StartTableSessionCommand, StartTableSessionResult> _startSessionHandler;
     private readonly ICommandHandler<PauseTableSessionCommand, PauseTableSessionResult> _pauseSessionHandler;
     private readonly ICommandHandler<ResumeTableSessionCommand, ResumeTableSessionResult> _resumeSessionHandler;
@@ -26,6 +27,7 @@ public class TablesController : ControllerBase
     public TablesController(
         IQueryHandler<GetActiveSessionsQuery, IEnumerable<Application.DTOs.ActiveSessionDto>> activeSessionsHandler,
         ITableRepository tableRepository,
+        ITicketRepository ticketRepository, // Inject
         ICommandHandler<StartTableSessionCommand, StartTableSessionResult> startSessionHandler,
         ICommandHandler<PauseTableSessionCommand, PauseTableSessionResult> pauseSessionHandler,
         ICommandHandler<ResumeTableSessionCommand, ResumeTableSessionResult> resumeSessionHandler,
@@ -34,6 +36,7 @@ public class TablesController : ControllerBase
     {
         _activeSessionsHandler = activeSessionsHandler;
         _tableRepository = tableRepository;
+        _ticketRepository = ticketRepository;
         _startSessionHandler = startSessionHandler;
         _pauseSessionHandler = pauseSessionHandler;
         _resumeSessionHandler = resumeSessionHandler;
@@ -51,18 +54,38 @@ public class TablesController : ControllerBase
         // 2. Get All Tables (Repo Wrapper)
         var tables = await _tableRepository.GetAllAsync();
 
-        // 3. Merge & Map
+        // 3. Get All Open Tickets (Gap: Performance concern for large open ticket sets, but needed for sync)
+        var openTickets = await _ticketRepository.GetOpenTicketsAsync();
+
+        // 4. Merge & Map
         var result = tables.Select(t => {
             var hasSession = sessionDict.TryGetValue(t.Id.ToString(), out var session);
+            
+            // Resolve Active Ticket: Session Ticket OR Independent Open Ticket
+            string? activeTicketId = null;
+            if (hasSession && session?.TicketId != null) 
+            {
+                activeTicketId = session.TicketId.ToString();
+            }
+            else 
+            {
+                // Fallback: Find open ticket for this table number
+                var ticket = openTickets.FirstOrDefault(ti => ti.TableNumbers.Contains(t.TableNumber));
+                activeTicketId = ticket?.Id.ToString();
+            }
+
+            var sessionStatus = hasSession && session != null ? session.Status.ToString() : (activeTicketId != null ? "Occupied" : "NotStarted"); // Show Occupied if ticket exists but no session
+            
             return new TableSummaryDto
             {
                 Id = t.Id.ToString(),
                 Name = $"Table {t.TableNumber}", // or t.Name if exists
                 TableStatus = t.Status.ToString(),
-                SessionStatus = hasSession ? session.Status.ToString() : "NotStarted",
-                ElapsedSeconds = hasSession ? (DateTime.UtcNow - session.StartTime).TotalSeconds : 0,
+                SessionStatus = sessionStatus,
+                ElapsedSeconds = hasSession && session != null ? (DateTime.UtcNow - session.StartTime).TotalSeconds : 0,
                 TotalAmount = 0, // Calculated field, requires Ticket lookup (Gap)
-                CurrentUserId = hasSession ? session.CustomerId ?.ToString() : null, // Gap: Session DTO has CustomerId, not UserId
+                CurrentUserId = hasSession && session?.CustomerId != null ? session.CustomerId.ToString() : null,
+                ActiveTicketId = activeTicketId,
                 IsReservationLocked = false, // Gap
                 Version = 1 // Placeholder for t.Version/RowVersion mapping
             };
@@ -79,13 +102,29 @@ public class TablesController : ControllerBase
         var table = await _tableRepository.GetByIdAsync(id);
         if (table == null) return NotFound();
 
+        // Lookup active session to populate ActiveTicketId
+        // Ideally we would have a GetSessionByTableId query, but reusing existing handler for consistency
+        var allSessions = await _activeSessionsHandler.HandleAsync(new GetActiveSessionsQuery());
+        var session = allSessions.FirstOrDefault(s => s.TableId == id);
+
+        string? activeTicketId = session?.TicketId?.ToString();
+
+        // Fallback: If no session ticket, look for open ticket by Table Number
+        if (activeTicketId == null)
+        {
+            var openTickets = await _ticketRepository.GetOpenTicketsAsync();
+            var ticket = openTickets.FirstOrDefault(ti => ti.TableNumbers.Contains(table.TableNumber));
+            activeTicketId = ticket?.Id.ToString();
+        }
+
         return Ok(new TableExtensionDto
         {
             Id = table.Id.ToString(),
             Name = $"Table {table.TableNumber}",
             TableStatus = table.Status.ToString(),
             Capacity = table.Capacity,
-            ZoneName = "Main Floor" // Gap: Requires FloorRepository or Table.Zone property
+            ZoneName = "Main Floor",
+            ActiveTicketId = activeTicketId
         });
     }
 
@@ -97,15 +136,25 @@ public class TablesController : ControllerBase
         try
         {
             // Note: GuestCount, OrderType, etc would typically be in a request body, but WPA flow implies defaults or query params
-            await _startSessionHandler.HandleAsync(new StartTableSessionCommand
-            {
-                TableId = id,
-                GuestCount = guestCount,
-                // Missing: OrderTypeId. Backend requires it. 
-                // GAP: API needs a way to fetch default OrderType or accept it in body.
-                // Hardcoding or pulling default for now to satisfy "Mechanical" rule - passing empty/defaults will likely fail validation.
-                // Flagging this as run-time gap.
-            });
+            var table = await _tableRepository.GetByIdAsync(id);
+            if (table == null) return NotFound("Table not found");
+
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            Guid.TryParse(userId, out var uid);
+
+            // Usage: TableId, TableTypeId, GuestCount... (defaults for others)
+            await _startSessionHandler.HandleAsync(new StartTableSessionCommand(
+                id, 
+                table.TableTypeId ?? Guid.Empty, 
+                guestCount,
+                null, // CustomerId
+                null, // TicketId
+                true, // Ensure a ticket is created
+                uid == Guid.Empty ? null : uid, // UserId from Context
+                null, // TerminalId (Let Handler resolve or use default)
+                null, // ShiftId
+                null  // OrderTypeId
+            ));
             return Ok();
         }
         catch (InvalidOperationException) { return Conflict("Session already active or table invalid."); }

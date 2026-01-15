@@ -278,17 +278,62 @@ public class TableMapViewModel : ViewModelBase
         }
         else if (table.Status == TableStatus.Available)
         {
-             // Create new ticket using shared service
+             // Check for existing open tickets for this table
              try 
              {
                  IsBusy = true;
                  
                  if (_userService.CurrentUser?.Id == null) return;
                  
-                 var ticketId = await _ticketCreationService.CreateTicketForTableAsync(table.Id, _userService.CurrentUser.Id);
-
-                 // Navigate with new Ticket ID
-                 _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(ticketId, true));
+                 // Check if there's already an open ticket for this table
+                 using (var scope = _serviceScopeFactory.CreateScope())
+                 {
+                     var ticketRepository = scope.ServiceProvider.GetRequiredService<ITicketRepository>();
+                     var existingTicket = await ticketRepository.GetOpenTicketByTableNumberAsync(table.TableNumber);
+                     
+                     if (existingTicket != null)
+                     {
+                         // Show dialog informing user about existing ticket
+                         var dialog = new Views.Dialogs.OpenTicketConfirmationDialog();
+                         dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                         dialog.Initialize(table.TableNumber.ToString(), hasExistingTicket: true, existingTicketId: existingTicket.Id);
+                         
+                         var result = await dialog.ShowAsync();
+                         
+                         if (result == ContentDialogResult.Primary)
+                         {
+                             // Open existing ticket
+                             _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(existingTicket.Id, true));
+                         }
+                         // If Secondary or None, do nothing (cancel)
+                         
+                         return;
+                     }
+                 }
+                 
+                 // No existing ticket - show confirmation dialog
+                 var confirmDialog = new Views.Dialogs.OpenTicketConfirmationDialog();
+                 confirmDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                 confirmDialog.Initialize(table.TableNumber.ToString());
+                 
+                 var confirmResult = await confirmDialog.ShowAsync();
+                 
+                 if (confirmResult == ContentDialogResult.Primary)
+                 {
+                     // User confirmed - create new ticket
+                     var ticketId = await _ticketCreationService.CreateTicketForTableAsync(table.Id, _userService.CurrentUser.Id);
+                     
+                     // Navigate with new Ticket ID
+                     _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(ticketId, true));
+                 }
+                 else if (confirmResult == ContentDialogResult.Secondary)
+                 {
+                     // User chose "No, Just View Table" - navigate to table page without creating ticket
+                     // For now, we'll just stay on the table map
+                     // In the future, you could navigate to a table details page
+                     System.Diagnostics.Debug.WriteLine($"User chose to view table {table.TableNumber} without opening a ticket");
+                 }
+                 // If None (Cancel), do nothing
              }
              catch (Exception ex)
              {

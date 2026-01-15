@@ -33,6 +33,7 @@ interface ModifierGroupDto {
 
 export class HttpMenuService implements IMenuService {
     async getCategories(): Promise<MenuCategory[]> {
+        console.log('[HttpMenuService] Fetching categories from backend...');
         return api.get<MenuCategoryDto[]>('/menu/categories');
     }
 

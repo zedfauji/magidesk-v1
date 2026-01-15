@@ -1,6 +1,7 @@
 using Magidesk.Application.DTOs;
 using Magidesk.Application.Interfaces;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection; // Added for IServiceScopeFactory
 using System.Collections.Concurrent;
 
 namespace Magidesk.Infrastructure.Services;
@@ -11,7 +12,7 @@ namespace Magidesk.Infrastructure.Services;
 /// </summary>
 public class CashBalanceTrackingService : ICashBalanceTrackingService, IDisposable
 {
-    private readonly ICashSessionRepository _cashSessionRepository;
+    private readonly IServiceScopeFactory _scopeFactory;
     private readonly ILogger<CashBalanceTrackingService> _logger;
     private readonly ConcurrentDictionary<Guid, CashBalanceDto> _balanceCache = new();
     private readonly ConcurrentDictionary<Guid, Timer> _monitoringTimers = new();
@@ -22,10 +23,10 @@ public class CashBalanceTrackingService : ICashBalanceTrackingService, IDisposab
     public event EventHandler<CashBalanceAlertEventArgs>? CashBalanceAlert;
 
     public CashBalanceTrackingService(
-        ICashSessionRepository cashSessionRepository,
+        IServiceScopeFactory scopeFactory,
         ILogger<CashBalanceTrackingService> logger)
     {
-        _cashSessionRepository = cashSessionRepository;
+        _scopeFactory = scopeFactory;
         _logger = logger;
     }
 
@@ -44,7 +45,10 @@ public class CashBalanceTrackingService : ICashBalanceTrackingService, IDisposab
             }
 
             // Fetch from database
-            var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
+            using var scope = _scopeFactory.CreateScope();
+            var cashSessionRepository = scope.ServiceProvider.GetRequiredService<ICashSessionRepository>();
+            
+            var session = await cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);
             if (session == null)
             {
                 return null;

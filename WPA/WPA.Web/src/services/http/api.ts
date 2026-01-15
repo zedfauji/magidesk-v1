@@ -12,10 +12,9 @@ const getHeaders = (): Record<string, string> => {
         "X-Terminal-Id": "T-08",
     };
 
-    // Get token from storage (if we were using JWTs, mocked for now as 'mock-token' in auth service)
-    // In a real app, this would be:
-    // const token = localStorage.getItem('token');
-    // if (token) headers["Authorization"] = `Bearer ${token}`;
+    // Get token from storage
+    const token = localStorage.getItem('auth_token'); // Standardizing key as 'auth_token'
+    if (token) headers["Authorization"] = `Bearer ${token}`;
 
     return headers;
 };

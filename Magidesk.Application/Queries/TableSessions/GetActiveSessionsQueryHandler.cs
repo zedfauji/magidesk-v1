@@ -43,6 +43,7 @@ public class GetActiveSessionsQueryHandler : IQueryHandler<GetActiveSessionsQuer
             {
                 SessionId = session.Id,
                 TableId = session.TableId,
+                TicketId = session.TicketId,
                 TableNumber = table?.TableNumber ?? 0,
                 TableName = table != null ? $"Table {table.TableNumber}" : "Unknown",
                 CustomerId = session.CustomerId,

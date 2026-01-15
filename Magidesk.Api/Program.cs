@@ -15,6 +15,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor(); // Required for Http implementations
+builder.Services.AddMemoryCache(); // Required for EnhancedCachingService
+
+// Add CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
+});
 
 // 1. Wire Layers (assuming extensions exist, otherwise fallback to assembly scanning)
 builder.Services.AddInfrastructure();
@@ -44,6 +58,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Enable CORS
+app.UseCors("AllowFrontend");
 
 // Middleware Order Matters!
 app.UseAuthentication(); // If using JWT

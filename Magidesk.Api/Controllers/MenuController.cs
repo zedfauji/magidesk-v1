@@ -48,8 +48,8 @@ public class MenuController : ControllerBase
         // OR we need to lookup groups for the category.
         
         // Simulating the "Best Effort" plumbing:
-        var allItems = await _menuRepository.GetActiveItemsAsync(); // Available method in repo
-        var filtered = allItems.Where(i => i.CategoryId == id || i.GroupId == id).ToList();
+        var allItems = await _menuRepository.GetAllAsync(); 
+        var filtered = allItems.Where(i => i.IsActive && (i.CategoryId == id || i.GroupId == id)).ToList();
 
         return Ok(filtered.Select(i => new MenuItemDto
         {
@@ -81,15 +81,15 @@ public class MenuController : ControllerBase
         // Requires item.ModifierGroups to be eager loaded (Repo does this by default per audit)
         return Ok(item.ModifierGroups.Select(g => new ModifierGroupDto
         {
-            Id = g.Id.ToString(),
-            Name = g.Name,
-            MinSelection = g.MinSelection,
-            MaxSelection = g.MaxSelection,
-            Options = g.Options.Select(o => new ModifierOptionDto
+            Id = g.ModifierGroup.Id.ToString(),
+            Name = g.ModifierGroup.Name,
+            MinSelection = g.ModifierGroup.MinSelections,
+            MaxSelection = g.ModifierGroup.MaxSelections,
+            Options = g.ModifierGroup.Modifiers.Select(o => new ModifierOptionDto
             {
                 Id = o.Id.ToString(),
                 Name = o.Name,
-                PriceDelta = o.PriceDelta.Amount
+                PriceDelta = o.BasePrice.Amount
             }).ToList()
         }).ToList());
     }

@@ -13,6 +13,7 @@ export default {
                 "background-dark": "#101d22",
                 "emerald-green": "#4CAF50",
                 "charcoal-surface": "#1c2427",
+                "card-dark": "#1c2427",
             },
             fontFamily: {
                 "display": ["Space Grotesk", "sans-serif"],

@@ -21,7 +21,11 @@ public class TicketRepository : ITicketRepository
 
     public async Task<Ticket?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
+        // IMPORTANT: Use AsNoTracking() to prevent concurrency issues when the same ticket
+        // is loaded in multiple scopes. This ensures each query gets a fresh, untracked entity.
+        // The entity will be attached and tracked when UpdateAsync is called.
         var ticket = await _context.Tickets
+            .AsNoTracking()
             .Include(t => t.OrderLines)
             .Include(t => t.Payments)
             .Include(t => t.Discounts)
@@ -31,14 +35,34 @@ public class TicketRepository : ITicketRepository
         if (ticket != null)
         {
             // Load modifiers and discounts for all order lines
+            // Note: With AsNoTracking(), we need to query these separately
             foreach (var orderLine in ticket.OrderLines)
             {
-                await _context.Entry(orderLine)
-                    .Collection(ol => ol.Modifiers)
-                    .LoadAsync(cancellationToken);
-                await _context.Entry(orderLine)
-                    .Collection(ol => ol.Discounts)
-                    .LoadAsync(cancellationToken);
+                var modifiers = await _context.OrderLineModifiers
+                    .AsNoTracking()
+                    .Where(m => m.OrderLineId == orderLine.Id)
+                    .ToListAsync(cancellationToken);
+                
+                var discounts = await _context.OrderLineDiscounts
+                    .AsNoTracking()
+                    .Where(d => d.OrderLineId == orderLine.Id)
+                    .ToListAsync(cancellationToken);
+                
+                // Use reflection to set the private collections
+                var modifiersField = orderLine.GetType().GetField("_modifiers", 
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                var discountsField = orderLine.GetType().GetField("_discounts", 
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                
+                if (modifiersField != null)
+                {
+                    modifiersField.SetValue(orderLine, modifiers.ToList());
+                }
+                
+                if (discountsField != null)
+                {
+                    discountsField.SetValue(orderLine, discounts.ToList());
+                }
             }
         }
 
@@ -100,6 +124,61 @@ public class TicketRepository : ITicketRepository
         }
 
         return tickets;
+    }
+
+    public async Task<Ticket?> GetOpenTicketByTableNumberAsync(int tableNumber, CancellationToken cancellationToken = default)
+    {
+        // Get tickets that are not Paid, Voided, Refunded, or Held
+        // and contain the specified table number
+        var ticket = await _context.Tickets
+            .AsNoTracking()
+            .Where(t => t.Status != Domain.Enumerations.TicketStatus.Paid 
+                     && t.Status != Domain.Enumerations.TicketStatus.Voided 
+                     && t.Status != Domain.Enumerations.TicketStatus.Refunded
+                     && t.Status != Domain.Enumerations.TicketStatus.Held)
+            .Include(t => t.OrderLines)
+            .Include(t => t.Payments)
+            .Include(t => t.Discounts)
+            .Include(t => t.Gratuity)
+            .ToListAsync(cancellationToken);
+
+        // Filter by table number (TableNumbers is a collection)
+        var matchingTicket = ticket.FirstOrDefault(t => t.TableNumbers.Contains(tableNumber));
+
+        if (matchingTicket != null)
+        {
+            // Load modifiers and discounts for all order lines
+            foreach (var orderLine in matchingTicket.OrderLines)
+            {
+                var modifiers = await _context.OrderLineModifiers
+                    .AsNoTracking()
+                    .Where(m => m.OrderLineId == orderLine.Id)
+                    .ToListAsync(cancellationToken);
+                
+                var discounts = await _context.OrderLineDiscounts
+                    .AsNoTracking()
+                    .Where(d => d.OrderLineId == orderLine.Id)
+                    .ToListAsync(cancellationToken);
+                
+                // Use reflection to set the private collections
+                var modifiersField = orderLine.GetType().GetField("_modifiers", 
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                var discountsField = orderLine.GetType().GetField("_discounts", 
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                
+                if (modifiersField != null)
+                {
+                    modifiersField.SetValue(orderLine, modifiers.ToList());
+                }
+                
+                if (discountsField != null)
+                {
+                    discountsField.SetValue(orderLine, discounts.ToList());
+                }
+            }
+        }
+
+        return matchingTicket;
     }
 
     public async Task<IEnumerable<Ticket>> GetHeldTicketsAsync(CancellationToken cancellationToken = default)
@@ -179,10 +258,36 @@ public class TicketRepository : ITicketRepository
             // child entities (OrderLines/Payments) as Modified and cause "0 rows affected" concurrency errors.
             // In our unit-of-work pattern, aggregates are typically loaded/tracked before mutation, so
             // SaveChanges will correctly insert new children and update existing rows.
-            if (_context.Entry(ticket).State == EntityState.Detached)
+            
+            // For concurrency control with AsNoTracking(), we need to:
+            // 1. Attach the entity (which sets OriginalValues to CurrentValues)
+            // 2. Mark it as Modified
+            // 3. Set the OriginalValues for the Version property to enable concurrency check
+            
+            var entry = _context.Entry(ticket);
+            
+            if (entry.State == EntityState.Detached)
             {
+                // Attach the ticket - this will set State to Unchanged
                 _context.Tickets.Attach(ticket);
-                _context.Entry(ticket).State = EntityState.Modified;
+                entry = _context.Entry(ticket);
+                
+                // Mark as Modified - this will generate UPDATE statement
+                entry.State = EntityState.Modified;
+                
+                // CRITICAL: For concurrency check to work with AsNoTracking(), we need to set
+                // the OriginalValues for the Version property to the current value.
+                // EF Core will use this in the WHERE clause: WHERE Version = @originalVersion
+                // The ticket.Version was already incremented by the domain method (e.g., ApplyDiscount)
+                // So we need to set OriginalValues to Version - 1
+                var currentVersion = ticket.Version;
+                var originalVersion = currentVersion - 1;
+                
+                System.Diagnostics.Debug.WriteLine($"[TicketRepository.UpdateAsync] Ticket {ticket.Id}: CurrentVersion={currentVersion}, OriginalVersion={originalVersion}");
+                
+                // Set the original version for concurrency check
+                entry.Property(nameof(Ticket.Version)).OriginalValue = originalVersion;
+                entry.Property(nameof(Ticket.Version)).CurrentValue = currentVersion;
             }
 
             // Ensure newly-added children are inserted (not updated).
@@ -199,10 +304,10 @@ public class TicketRepository : ITicketRepository
                 var existing = existingIds.ToHashSet();
                 foreach (var orderLine in orderLines)
                 {
-                    var entry = _context.Entry(orderLine);
+                    var orderLineEntry = _context.Entry(orderLine);
                     if (!existing.Contains(orderLine.Id))
                     {
-                        entry.State = EntityState.Added;
+                        orderLineEntry.State = EntityState.Added;
                         
                         // IMPORTANT: Explicitly mark new Modifiers and Discounts as Added too
                         // If parent is newly added, EF usually handles this, but recursive logic here ensures safety
@@ -231,7 +336,7 @@ public class TicketRepository : ITicketRepository
                     else 
                     {
                         // Existing OrderLine
-                        if (entry.State == EntityState.Detached)
+                        if (orderLineEntry.State == EntityState.Detached)
                         {
                              _context.OrderLines.Attach(orderLine);
                         }
@@ -268,12 +373,12 @@ public class TicketRepository : ITicketRepository
                 var existing = existingIds.ToHashSet();
                 foreach (var payment in payments)
                 {
-                    var entry = _context.Entry(payment);
+                    var paymentEntry = _context.Entry(payment);
                     if (!existing.Contains(payment.Id))
                     {
-                        entry.State = EntityState.Added;
+                        paymentEntry.State = EntityState.Added;
                     }
-                    else if (entry.State == EntityState.Detached)
+                    else if (paymentEntry.State == EntityState.Detached)
                     {
                         _context.Payments.Attach(payment);
                     }

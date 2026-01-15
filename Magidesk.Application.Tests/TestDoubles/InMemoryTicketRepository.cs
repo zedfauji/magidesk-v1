@@ -47,6 +47,17 @@ internal sealed class InMemoryTicketRepository : ITicketRepository
         return Task.FromResult<IEnumerable<Ticket>>(open);
     }
 
+    public Task<Ticket?> GetOpenTicketByTableNumberAsync(int tableNumber, CancellationToken cancellationToken = default)
+    {
+        var ticket = _tickets.Values.FirstOrDefault(t => 
+            t.TableNumbers.Contains(tableNumber) &&
+            t.Status != Magidesk.Domain.Enumerations.TicketStatus.Paid &&
+            t.Status != Magidesk.Domain.Enumerations.TicketStatus.Voided &&
+            t.Status != Magidesk.Domain.Enumerations.TicketStatus.Refunded &&
+            t.Status != Magidesk.Domain.Enumerations.TicketStatus.Held);
+        return Task.FromResult(ticket);
+    }
+
     public Task<IEnumerable<Ticket>> GetScheduledTicketsDueAsync(DateTime dueBy, CancellationToken cancellationToken = default)
     {
         // Simplistic implementation for in-memory stub

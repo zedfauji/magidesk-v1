@@ -10,7 +10,8 @@ import { HttpTableService } from "./http/HttpTableService";
 
 import type { IAuthService, IMenuService, IOrderService, ITableService } from "./interfaces";
 
-const useMocks = import.meta.env.VITE_USE_MOCKS === 'true';
+// Default to mocks if VITE_USE_MOCKS is not explicitly 'false'
+const useMocks = import.meta.env.VITE_USE_MOCKS !== 'false';
 
 console.log(`[WPA] Service Mode: ${useMocks ? 'MOCK' : 'HTTP (Real Backend)'}`);
 

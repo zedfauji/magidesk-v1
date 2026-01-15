@@ -33,9 +33,9 @@ public class HttpUserService : IUserService
             {
                 _currentUser = new UserDto
                 {
-                    Id = idStr,
+                    Id = userId,
                     Username = name ?? "Unknown",
-                    Role = role ?? "Server"
+                    RoleName = role ?? "Server"
                 };
             }
 

@@ -38,4 +38,5 @@ export interface IOrderService {
     sendOrderToKitchen(ticketId: string, items: DraftOrderLine[]): Promise<TicketResult>;
     getTicket(ticketId: string): Promise<ActiveSession>;
     moveOrder(sourceTableId: string, targetTableId: string): Promise<void>;
+    createTicket(tableId: string, guestCount: number): Promise<TicketResult>;
 }

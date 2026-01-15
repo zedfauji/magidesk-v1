@@ -28,6 +28,11 @@ public interface ITicketRepository
     Task<IEnumerable<Ticket>> GetOpenTicketsAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Gets an open ticket for a specific table number (not Paid, Voided, Refunded, or Held).
+    /// </summary>
+    Task<Ticket?> GetOpenTicketByTableNumberAsync(int tableNumber, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Gets all held tickets (tickets with Held status).
     /// </summary>
     Task<IEnumerable<Ticket>> GetHeldTicketsAsync(CancellationToken cancellationToken = default);

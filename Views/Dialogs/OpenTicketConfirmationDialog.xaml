@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="Magidesk.Presentation.Views.Dialogs.OpenTicketConfirmationDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Open New Ticket"
+    PrimaryButtonText="Yes, Open Ticket"
+    SecondaryButtonText="No, Just View Table"
+    CloseButtonText="Cancel"
+    DefaultButton="Primary">
+
+    <StackPanel Spacing="16">
+        <TextBlock 
+            Text="Would you like to open a new ticket for this table?"
+            Style="{StaticResource BodyStrongTextBlockStyle}"
+            TextWrapping="Wrap"/>
+        
+        <StackPanel Spacing="8">
+            <TextBlock 
+                x:Name="TableInfoText"
+                TextWrapping="Wrap"
+                Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+            
+            <InfoBar
+                x:Name="ExistingTicketWarning"
+                Severity="Warning"
+                IsOpen="False"
+                IsClosable="False"
+                Message="This table already has an open ticket. You will be redirected to the existing ticket."/>
+        </StackPanel>
+    </StackPanel>
+</ContentDialog>

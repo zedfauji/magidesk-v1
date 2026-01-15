@@ -1,4 +1,4 @@
-```typescript
+
 import { api } from "./api";
 import type { ITableService } from "../interfaces";
 import type {
@@ -28,6 +28,7 @@ interface TableExtensionDto {
     tableStatus: string;
     capacity: number;
     zoneName: string;
+    activeTicketId?: string;
 }
 
 interface ActiveSessionDto {
@@ -55,7 +56,7 @@ export class HttpTableService implements ITableService {
     }
 
     async getTableDetails(tableId: string): Promise<TableExtension> {
-        const dto = await api.get<TableExtensionDto>(`/ tables / ${ tableId } `);
+        const dto = await api.get<TableExtensionDto>(`/tables/${tableId}`);
         return {
             id: dto.id,
             name: dto.name,
@@ -67,24 +68,25 @@ export class HttpTableService implements ITableService {
             elapsedSeconds: 0,
 
             capacity: dto.capacity,
-            zoneName: dto.zoneName
+            zoneName: dto.zoneName,
+            activeTicketId: dto.activeTicketId
         };
     }
 
     async startSession(tableId: string): Promise<void> {
-        await api.post(`/ tables / ${ tableId } /session/start`, {});
+        await api.post(`/tables/${tableId}/session/start`, {});
     }
 
     async pauseSession(tableId: string): Promise<void> {
-        await api.post(`/ tables / ${ tableId } /session/pause`, {});
+        await api.post(`/tables/${tableId}/session/pause`, {});
     }
 
     async resumeSession(tableId: string): Promise<void> {
-        await api.post(`/ tables / ${ tableId } /session/resume`, {});
+        await api.post(`/tables/${tableId}/session/resume`, {});
     }
 
     async endSession(tableId: string): Promise<ActiveSession> {
-        const result = await api.post<ActiveSessionDto>(`/ tables / ${ tableId } /session/end`, {});
+        const result = await api.post<ActiveSessionDto>(`/tables/${tableId}/session/end`, {});
 
         // Return a minimal ActiveSession based on result
         return {

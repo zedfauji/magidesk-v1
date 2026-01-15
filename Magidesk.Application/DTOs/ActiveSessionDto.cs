@@ -10,6 +10,7 @@ public class ActiveSessionDto : INotifyPropertyChanged
 {
     public Guid SessionId { get; set; }
     public Guid TableId { get; set; }
+    public Guid? TicketId { get; set; } // Added for frontend navigation
     public int TableNumber { get; set; }
     public string TableName { get; set; } = string.Empty;
     public Guid? CustomerId { get; set; }

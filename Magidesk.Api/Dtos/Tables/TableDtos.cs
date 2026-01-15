@@ -9,6 +9,7 @@ public class TableSummaryDto
     public double? ElapsedSeconds { get; set; }
     public decimal? TotalAmount { get; set; }
     public string? CurrentUserId { get; set; }
+    public string? ActiveTicketId { get; set; }
     public bool? IsReservationLocked { get; set; }
     public int Version { get; set; }
 }

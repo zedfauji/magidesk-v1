@@ -16,12 +16,18 @@ namespace Magidesk.Infrastructure.Services.Bootstrap
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<SystemInitializationService> _logger;
         private readonly ITerminalRepository _terminalRepository;
+        private readonly IAesEncryptionService _encryptionService;
 
-        public SystemInitializationService(ApplicationDbContext dbContext, ILogger<SystemInitializationService> logger, ITerminalRepository terminalRepository)
+        public SystemInitializationService(
+            ApplicationDbContext dbContext, 
+            ILogger<SystemInitializationService> logger, 
+            ITerminalRepository terminalRepository,
+            IAesEncryptionService encryptionService)
         {
             _dbContext = dbContext;
             _logger = logger;
             _terminalRepository = terminalRepository;
+            _encryptionService = encryptionService;
         }
 
         public async Task<InitializationResult> InitializeSystemAsync()
@@ -164,10 +170,19 @@ namespace Magidesk.Infrastructure.Services.Bootstrap
                 {
                     _logger.LogInformation("Seeding Default Admin...");
                     var adminRole = await _dbContext.Roles.FirstAsync(r => r.Name == "Manager");
-                    // Note: Pin needs to be encrypted correctly. Assuming "1234" -> "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4" (from existing seed)
-                    // Or we rely on the manual migration seed. 
-                    // Let's NOT risk double seeding Users if Migration handles it.
-                    // But Roles were needed for the UI.
+                    // Encrypt "1234" using the configured AES service
+                    var encryptedPin = _encryptionService.Encrypt("1234");
+                    
+                    var adminUser = User.Create(
+                        "admin",
+                        "System",
+                        "Admin",
+                        adminRole.Id,
+                        encryptedPin: encryptedPin
+                    );
+
+                    _dbContext.Users.Add(adminUser);
+                    await _dbContext.SaveChangesAsync();
                 }
 
                 // Seed Menu Categories & Items

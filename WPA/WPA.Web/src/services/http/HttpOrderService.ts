@@ -48,4 +48,14 @@ export class HttpOrderService implements IOrderService {
         // Mapped to TablesController logic
         await api.post('/tables/move', { sourceTableId, targetTableId });
     }
+
+    async createTicket(tableId: string, guestCount: number): Promise<TicketResult> {
+        const payload = { tableId, guestCount };
+        const result = await api.post<TicketResultDto>('/orders/tickets', payload);
+        return {
+            success: result.success,
+            ticketId: result.ticketId,
+            updatedVersion: result.updatedVersion
+        };
+    }
 }

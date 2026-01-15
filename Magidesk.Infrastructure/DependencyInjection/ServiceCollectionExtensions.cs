@@ -91,6 +91,12 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IServerAssignmentRepository, ServerAssignmentRepository>();
         services.AddScoped<IAuditRepository<Magidesk.Domain.ValueObjects.SessionAuditEntry>, SessionAuditRepository>();
         services.AddScoped<Magidesk.Application.Interfaces.IRepository<Magidesk.Domain.Entities.StockMovement>, StockMovementRepository>();
+        
+        // Register Generic Repository
+        services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+
+        // Register CashDrawerService (needed by Printing)
+        services.AddScoped<ICashDrawerService, CashDrawerService>();
 
         // Application Services
         // Legacy PricingService for backward compatibility (EndTableSessionCommandHandler)

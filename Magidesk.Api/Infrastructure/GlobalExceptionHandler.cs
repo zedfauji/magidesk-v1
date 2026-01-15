@@ -45,7 +45,7 @@ public class GlobalExceptionHandler : IExceptionHandler
             KeyNotFoundException knf => (StatusCodes.Status404NotFound, "Resource Not Found", knf.Message),
             UnauthorizedAccessException ua => (StatusCodes.Status403Forbidden, "Unauthorized", ua.Message),
             DbUpdateConcurrencyException => (StatusCodes.Status409Conflict, "Concurrency Conflict", "The resource was modified by another user. Please reload and try again."),
-            InvalidOperationException ioe => (StatusCodes.Status409Conflict, "Invalid Operation", ioe.Message), // Often used for state conflicts
+            System.InvalidOperationException ioe => (StatusCodes.Status409Conflict, "Invalid Operation", ioe.Message), // Often used for state conflicts
             _ => (StatusCodes.Status500InternalServerError, "Server Error", "An internal error occurred.")
         };
     }
