@@ -46,12 +46,12 @@ public class GratuityConfiguration : IEntityTypeConfiguration<Gratuity>
         builder.Property(g => g.TerminalId)
             .IsRequired();
 
-        builder.OwnsOne(g => g.OwnerId, o =>
-        {
-            o.Property(ow => ow.Value)
-                .HasColumnName("OwnerId")
-                .IsRequired();
-        });
+        builder.Property(g => g.OwnerId)
+            .HasConversion(
+                v => v.Value,
+                v => new UserId(v))
+            .HasColumnName("OwnerId")
+            .IsRequired();
 
         builder.Property(g => g.CreatedAt)
             .IsRequired();

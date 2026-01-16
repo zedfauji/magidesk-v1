@@ -31,6 +31,12 @@ public class CashSessionRepository : ICashSessionRepository
 
     public async Task<CashSession?> GetOpenSessionByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
     {
+        // Defensive check: Prevent empty GUID from causing UserId constructor exception
+        if (userId == Guid.Empty)
+        {
+            throw new ArgumentException("Cannot query for cash session with empty GUID. UserId must be a valid non-empty GUID.", nameof(userId));
+        }
+        
         return await _context.CashSessions
             .Include(cs => cs.Payments)
             .Include(cs => cs.Payouts)

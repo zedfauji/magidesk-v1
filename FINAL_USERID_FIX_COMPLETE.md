@@ -8,7 +8,7 @@
 ## Summary
 
 Successfully resolved the `UserId cannot be empty Guid` exception by:
-1. ✅ Cleaning up 114 invalid database records
+1. ✅ Cleaning up 134 invalid database records (114 empty GUIDs + 20 invalid user references)
 2. ✅ Fixing the code to never create invalid data
 3. ✅ Adding 8 database constraints as guardrails
 4. ✅ Testing all changes
@@ -26,6 +26,7 @@ UserId cannot be empty Guid. (Parameter 'value')
 **Root Cause:**
 - `AddOrderLineCommandHandler` was creating audit events with `Guid.Empty` when no user context
 - 94 AuditEvents and 20 Tickets had invalid empty GUIDs in the database
+- **Additional issue:** 20 AuditEvents had invalid user reference (`00000000-0000-0000-0000-000000000001`) that doesn't exist in Users table
 
 ---
 
@@ -35,15 +36,21 @@ UserId cannot be empty Guid. (Parameter 'value')
 
 **Executed:**
 ```sql
+-- First cleanup: Empty GUIDs
 DELETE FROM public."AuditEvents" WHERE "UserId" = '00000000-0000-0000-0000-000000000000';
 DELETE FROM public."Tickets" WHERE "TerminalId" = '00000000-0000-0000-0000-000000000000' 
    OR "ShiftId" = '00000000-0000-0000-0000-000000000000'
    OR "OrderTypeId" = '00000000-0000-0000-0000-000000000000';
+
+-- Second cleanup: Invalid user references
+DELETE FROM public."AuditEvents" WHERE "UserId" = '00000000-0000-0000-0000-000000000001';
 ```
 
 **Result:**
-- Deleted 94 AuditEvents
-- Deleted 20 Tickets
+- Deleted 94 AuditEvents (empty GUID)
+- Deleted 20 Tickets (empty GUIDs)
+- Deleted 20 AuditEvents (invalid user reference)
+- **Total: 134 invalid records removed**
 - 0 invalid records remaining
 
 ### 2. Code Fix ✅
@@ -156,7 +163,7 @@ CHECK ("UserId" != '00000000-0000-0000-0000-000000000000')
 ## Impact
 
 ### Before Fix:
-- ❌ 114 invalid records in database
+- ❌ 134 invalid records in database (114 empty GUIDs + 20 invalid user references)
 - ❌ Application crashes when loading audit events
 - ❌ New invalid records created continuously
 - ❌ No database-level protection
@@ -260,7 +267,7 @@ var userId = explicitUserId
 
 ## Success Metrics
 
-- ✅ **114 invalid records** cleaned up
+- ✅ **134 invalid records** cleaned up (114 empty GUIDs + 20 invalid user references)
 - ✅ **8 database constraints** added
 - ✅ **0 compilation errors**
 - ✅ **0 invalid records** in database

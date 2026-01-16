@@ -80,13 +80,16 @@ public class StartTableSessionCommandHandler : ICommandHandler<StartTableSession
         if (command.CreateTicket && !ticketId.HasValue)
         {
             // Create a new ticket for this session
+            // Determine the user ID - use command.UserId if provided, otherwise use fallback
+            var userIdValue = command.UserId ?? Guid.Parse("00000000-0000-0000-0000-000000000001");
+            
             var createTicketCommand = new CreateTicketCommand
             {
                 TableId = command.TableId,
                 TableNumbers = new List<int> { table.TableNumber },
                 CustomerId = command.CustomerId,
                 NumberOfGuests = command.GuestCount,
-                CreatedBy = new UserId((command.UserId ?? Guid.Empty) == Guid.Empty ? Guid.Parse("00000000-0000-0000-0000-000000000001") : command.UserId.Value),
+                CreatedBy = new UserId(userIdValue),
                 TerminalId = command.TerminalId ?? Guid.Empty,
                 ShiftId = command.ShiftId ?? Guid.Empty,
                 OrderTypeId = command.OrderTypeId ?? Guid.Empty,
