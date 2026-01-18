@@ -24,7 +24,11 @@ public class TableSessionRepository : ITableSessionRepository
 
     public async Task<TableSession?> GetByIdAsync(Guid id)
     {
+        // CRITICAL FIX: Use AsNoTracking() to prevent stale cached data
+        // Root cause: EF Core change tracker was returning cached entities with old Status values
+        // Evidence: Database showed Status='Active' but code saw Status='Ended'
         return await _context.TableSessions
+            .AsNoTracking()
             .FirstOrDefaultAsync(s => s.Id == id);
     }
 
