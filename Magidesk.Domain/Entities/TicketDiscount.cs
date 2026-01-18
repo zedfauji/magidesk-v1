@@ -18,13 +18,12 @@ public class TicketDiscount
     public Money? MinimumAmount { get; private set; }
     public Money Amount { get; private set; }
     public DateTime AppliedAt { get; private set; }
-    public UserId AppliedBy { get; private set; }
+    public UserId? AppliedBy { get; private set; }
     public UserId? AuthorizedBy { get; private set; }
 
     private TicketDiscount()
     {
         Amount = Money.Zero();
-        AppliedBy = null!; // Will be set by EF Core
     }
 
     public static TicketDiscount Create(
@@ -34,7 +33,7 @@ public class TicketDiscount
         DiscountType type,
         decimal value,
         Money amount,
-        UserId appliedBy,
+        UserId? appliedBy,
         UserId? authorizedBy = null,
         Money? minimumAmount = null)
     {

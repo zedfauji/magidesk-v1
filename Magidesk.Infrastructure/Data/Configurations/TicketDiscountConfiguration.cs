@@ -63,18 +63,19 @@ public class TicketDiscountConfiguration : IEntityTypeConfiguration<TicketDiscou
         builder.Property(td => td.AppliedAt)
             .IsRequired();
 
-        builder.OwnsOne(td => td.AppliedBy, ab =>
-        {
-            ab.Property(u => u.Value)
-                .HasColumnName("AppliedBy")
-                .IsRequired();
-        });
+        // AppliedBy: Nullable UserId with HasConversion pattern (matches DB nullable column)
+        builder.Property(td => td.AppliedBy)
+            .HasConversion(
+                v => v != null ? v.Value : (Guid?)null,
+                v => v.HasValue ? new UserId(v.Value) : null)
+            .HasColumnName("AppliedBy");
 
-        builder.OwnsOne(td => td.AuthorizedBy, az =>
-        {
-            az.Property(u => u.Value)
-                .HasColumnName("AuthorizedBy");
-        });
+        // AuthorizedBy: Nullable UserId with HasConversion pattern (matches DB nullable column)
+        builder.Property(td => td.AuthorizedBy)
+            .HasConversion(
+                v => v != null ? v.Value : (Guid?)null,
+                v => v.HasValue ? new UserId(v.Value) : null)
+            .HasColumnName("AuthorizedBy");
 
         // Indexes
         builder.HasIndex(td => td.TicketId);
