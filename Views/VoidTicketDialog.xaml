@@ -29,7 +29,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Ticket Info -->
@@ -58,14 +57,8 @@
                        Visibility="{Binding HasError, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </StackPanel>
 
-        <!-- Waste Option -->
-        <CheckBox Grid.Row="2" 
-                  Content="Waste Items (Return to Inventory)" 
-                  IsChecked="{Binding IsWasted, Mode=TwoWay}"
-                  ToolTipService.ToolTip="If unchecked, items may be retained for future use or tracking."/>
-
         <!-- Warning -->
-        <InfoBar Grid.Row="3"
+        <InfoBar Grid.Row="2"
                  Severity="Warning"
                  Title="Warning"
                  Message="This action cannot be undone. All items and payments will be voided."

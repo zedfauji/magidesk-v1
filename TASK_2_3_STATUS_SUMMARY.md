@@ -97,11 +97,13 @@ This document summarizes the completion status of all tasks in Feature 2.3: Void
 **Status**: COMPLETE  
 **Files**: `Views/VoidTicketDialog.xaml`  
 **Details**:
-- Displays ticket summary
-- Has reason dropdown with predefined options
-- Has "Void Ticket" button
-- Triggers manager PIN dialog
-- Shows warning message
+- Displays ticket summary (ticket number and total amount)
+- Has reason dropdown with predefined options (Mistake, Customer Changed Mind, Server Error, Testing, Other)
+- Has "Void Ticket" button (PrimaryButton)
+- Triggers manager PIN dialog (via VoidCommand in ViewModel)
+- Shows warning message about irreversible action
+- Shows error messages when validation fails
+- Removed obsolete IsWasted checkbox (no longer used by backend)
 - **Enhancement Opportunity**: Could add text input for custom reason when "Other" is selected
 
 ### ✅ Task 2.3.10: Create RefundWizardViewModel
