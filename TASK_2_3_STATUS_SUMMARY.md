@@ -117,19 +117,22 @@ This document summarizes the completion status of all tasks in Feature 2.3: Void
 - Prompts for manager PIN authorization
 - Includes SelectablePaymentDto helper class
 
-### ❌ Task 2.3.11: Create RefundWizard view (4-step wizard)
-**Status**: INCOMPLETE - NEXT TASK  
-**Files**: `Magidesk.Presentation/Views/Dialogs/RefundWizard.xaml` (TO BE CREATED)  
-**Requirements**:
-- Step 1: Select refund mode (Full/Partial/Specific)
-- Step 2: Enter refund amount or select payments
-- Step 3: Enter reason and preview
-- Step 4: Confirm and process
-- Show refund calculation preview
-- Trigger manager PIN dialog on final step
+### ✅ Task 2.3.11: Create RefundWizard view (4-step wizard)
+**Status**: COMPLETE  
+**Files**: `Views/Dialogs/RefundWizard.xaml`, `Views/Dialogs/RefundWizard.xaml.cs`  
+**Details**:
+- Complete 4-step wizard UI implementation
+- Step 1: Radio buttons for refund mode (Full/Partial/Specific) with descriptions
+- Step 2: Conditional UI - NumberBox for partial amount OR ListView with checkboxes for specific payments
+- Step 3: Preview section showing refund/original/remaining amounts, TextBox for reason
+- Step 4: Manager PIN authorization with PasswordBox and "Process Refund" button
+- Includes error InfoBar, loading ProgressRing, proper bindings to ViewModel
+- Uses visibility converters to show/hide steps based on IsStep1Visible, IsStep2Visible, etc.
+- Build succeeded with 0 errors
+- Requirements REQ-5.4, REQ-5.5, REQ-5.6 fully implemented in UI
 
-### ❓ Task 2.3.12: Add void/refund buttons to SettlePage
-**Status**: UNKNOWN  
+### ❌ Task 2.3.12: Add void/refund buttons to SettlePage
+**Status**: INCOMPLETE - NEXT TASK  
 **Files**: `Magidesk.Presentation/Views/SettlePage.xaml`, `Magidesk.Presentation/ViewModels/SettlePageViewModel.cs`  
 **Requirements**:
 - Add "Void Ticket" button (visible for Open tickets)
@@ -168,22 +171,26 @@ This document summarizes the completion status of all tasks in Feature 2.3: Void
 - Domain.Tests: 3 warnings (pre-existing - obsolete ProcessRefund usage)
 
 ## Next Steps
-1. **Complete Task 2.3.11**: Create RefundWizard.xaml view
-2. **Complete Task 2.3.12**: Add void/refund buttons to SettlePage
-3. **Complete Task 2.3.13**: Add reprint receipt functionality
-4. **Checkpoint 2.3**: Verify all void/refund features working end-to-end
+1. **Complete Task 2.3.12**: Add void/refund buttons to SettlePage
+2. **Complete Task 2.3.13**: Add reprint receipt functionality
+3. **Checkpoint 2.3**: Verify all void/refund features working end-to-end
 
 ## Documentation Created
 - `TASK_2_3_3_VOID_TICKET_COMMAND_HANDLER_UPDATE.md`
 - `TASK_2_3_4_REFUND_TICKET_COMMAND_IMPLEMENTATION.md`
 - `TASK_2_3_5_REFUND_RECEIPT_IMPLEMENTATION.md`
 - `TASK_2_3_6_7_TESTS_IMPLEMENTATION.md` (unit and property-based tests)
+- `TASK_2_3_8_VOID_TICKET_VIEWMODEL_VERIFICATION.md`
+- `TASK_2_3_9_VOID_TICKET_DIALOG_VIEW_VERIFICATION.md`
+- `TASK_2_3_10_REFUND_WIZARD_VIEWMODEL_VERIFICATION.md`
+- `TASK_2_3_11_REFUND_WIZARD_VIEW_IMPLEMENTATION.md`
 - `TASK_2_3_STATUS_SUMMARY.md` (this file)
 
 ## Notes
 - Backend implementation is complete and robust
 - ViewModels are comprehensive and well-structured
-- UI views need completion (Tasks 2.3.11, 2.3.12, 2.3.13)
+- Void and Refund dialogs fully implemented (Tasks 2.3.8-2.3.11)
+- UI integration to SettlePage pending (Tasks 2.3.12, 2.3.13)
 - All validation and authorization logic is in place
 - Audit trail is comprehensive
 - Error handling is robust
