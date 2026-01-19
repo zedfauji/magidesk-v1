@@ -8,22 +8,25 @@ namespace Magidesk.Application.Services;
 
 /// <summary>
 /// Handler for RefundTicketCommand.
-/// REQ-5.4, REQ-5.5, REQ-5.6, REQ-5.9: Validates authorization and processes refunds.
+/// REQ-5.4, REQ-5.5, REQ-5.6, REQ-5.7, REQ-5.9: Validates authorization, processes refunds, and generates receipts.
 /// </summary>
 public class RefundTicketCommandHandler : ICommandHandler<RefundTicketCommand>
 {
     private readonly ITicketRepository _ticketRepository;
     private readonly IAuditEventRepository _auditEventRepository;
     private readonly ISecurityService _securityService;
+    private readonly IReceiptPrintService _receiptPrintService;
 
     public RefundTicketCommandHandler(
         ITicketRepository ticketRepository,
         IAuditEventRepository auditEventRepository,
-        ISecurityService securityService)
+        ISecurityService securityService,
+        IReceiptPrintService receiptPrintService)
     {
         _ticketRepository = ticketRepository;
         _auditEventRepository = auditEventRepository;
         _securityService = securityService;
+        _receiptPrintService = receiptPrintService;
     }
 
     public async Task HandleAsync(RefundTicketCommand command, CancellationToken cancellationToken = default)
@@ -100,7 +103,38 @@ public class RefundTicketCommandHandler : ICommandHandler<RefundTicketCommand>
 
         await _auditEventRepository.AddAsync(auditEvent, cancellationToken);
 
-        // TODO: REQ-5.7: Generate refund receipt (Task 2.3.5)
-        // This will be implemented in the next task
+        // REQ-5.7: Generate refund receipt
+        // Find the most recent refund payment (debit transaction) for this refund
+        var refundPayment = ticket.Payments
+            .Where(p => p.TransactionType == TransactionType.Debit)
+            .OrderByDescending(p => p.TransactionTime)
+            .FirstOrDefault();
+
+        if (refundPayment != null)
+        {
+            try
+            {
+                await _receiptPrintService.PrintRefundReceiptAsync(
+                    refundPayment, 
+                    ticket, 
+                    command.RefundedBy.Value, 
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                // Log the error but don't fail the refund operation
+                // The refund has already been processed successfully
+                var printErrorEvent = AuditEvent.Create(
+                    AuditEventType.Modified,
+                    nameof(Ticket),
+                    ticket.Id,
+                    command.RefundedBy.Value,
+                    System.Text.Json.JsonSerializer.Serialize(new { Error = ex.Message }),
+                    $"Failed to print refund receipt for ticket #{ticket.TicketNumber}: {ex.Message}",
+                    correlationId: correlationId);
+
+                await _auditEventRepository.AddAsync(printErrorEvent, cancellationToken);
+            }
+        }
     }
 }
