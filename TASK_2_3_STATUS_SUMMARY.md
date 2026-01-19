@@ -84,12 +84,14 @@ This document summarizes the completion status of all tasks in Feature 2.3: Void
 **Status**: COMPLETE  
 **Files**: `ViewModels/VoidTicketViewModel.cs`  
 **Details**:
-- ViewModel exists with all required properties
-- Implements VoidTicketCommand
-- Prompts for manager PIN authorization
-- Calls VoidTicketCommand handler
-- Shows confirmation dialogs
-- **Note**: File is in `ViewModels/` instead of `ViewModels/Dialogs/` but is functional
+- ViewModel has all required properties: SelectedReason (equivalent to SelectedReasonCode), VoidReasons collection
+- Implements VoidCommand (AsyncRelayCommand) that handles void logic
+- Prompts for manager PIN authorization via ManagerPinDialog
+- Calls VoidTicketCommand handler with proper authorization (AuthorizedBy field)
+- Shows user-friendly error messages via ErrorMessage property
+- Shows confirmation dialogs before and after void operation
+- Removed obsolete IsWasted property (no longer used by backend after Task 2.3.3)
+- **Note**: File is in `ViewModels/` instead of `ViewModels/Dialogs/` but is fully functional
 
 ### ✅ Task 2.3.9: Create VoidTicketDialog view
 **Status**: COMPLETE  

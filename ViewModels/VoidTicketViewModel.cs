@@ -43,13 +43,6 @@ public class VoidTicketViewModel : ViewModelBase
         }
     }
 
-    private bool _isWasted;
-    public bool IsWasted
-    {
-        get => _isWasted;
-        set => SetProperty(ref _isWasted, value);
-    }
-
     private string _errorMessage;
     public string ErrorMessage
     {
@@ -76,7 +69,7 @@ public class VoidTicketViewModel : ViewModelBase
         // Manual Command Initialization
         VoidCommand = new AsyncRelayCommand<object?>(VoidAsync, CanVoid);
 
-        // Mock Reasons until Backend table exists (Per Implementation Plan)
+        // Predefined void reasons
         VoidReasons = new ObservableCollection<string>
         {
             "Mistake",
@@ -85,7 +78,6 @@ public class VoidTicketViewModel : ViewModelBase
             "Testing",
             "Other"
         };
-        IsWasted = true; // Default to waste per Audit implication suitable for food
     }
 
     public void Initialize(TicketDto ticket)
@@ -112,7 +104,6 @@ public class VoidTicketViewModel : ViewModelBase
         confirmationDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
         
         var totalAmount = Ticket.TotalAmount;
-        var wasteText = IsWasted ? "Items will be returned to inventory." : "Items will not be returned to inventory.";
         
         var confirmed = await confirmationDialog.ShowConfirmationAsync(
             "Confirm Void",
@@ -121,7 +112,7 @@ public class VoidTicketViewModel : ViewModelBase
             "Cancel",
             "🗑️",
             "Error",
-            $"Ticket #{Ticket.TicketNumber} - Total: {totalAmount:C}\nReason: {SelectedReason}\n{wasteText}");
+            $"Ticket #{Ticket.TicketNumber} - Total: {totalAmount:C}\nReason: {SelectedReason}");
 
         if (!confirmed)
         {
@@ -170,7 +161,7 @@ public class VoidTicketViewModel : ViewModelBase
                 "",
                 "✅",
                 "Success",
-                $"Total voided: {totalAmount:C}\nAuthorized by: {authResult.AuthorizingUserName}\n{wasteText}");
+                $"Total voided: {totalAmount:C}\nAuthorized by: {authResult.AuthorizingUserName}");
 
             if (dialog is ContentDialog cd)
             {
