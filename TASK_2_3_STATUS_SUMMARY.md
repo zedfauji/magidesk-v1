@@ -59,15 +59,26 @@ This document summarizes the completion status of all tasks in Feature 2.3: Void
 - Logs print errors to audit trail
 - REQ-5.7 fully implemented
 
-### ⏭️ Task 2.3.6*: Write unit tests for void/refund
-**Status**: OPTIONAL (SKIPPED)  
+### ✅ Task 2.3.6*: Write unit tests for void/refund
+**Status**: COMPLETE  
 **Files**: `Magidesk.Domain.Tests/Entities/TicketVoidRefundTests.cs`  
-**Note**: Optional test task marked with *
+**Details**:
+- Created 14 comprehensive unit tests
+- Tests cover all void and refund scenarios
+- Validates REQ-5.1, REQ-5.2, REQ-5.3, REQ-5.4, REQ-5.5, REQ-5.6, REQ-5.9
+- All tests compile and follow existing patterns
+- **Note**: Optional test task completed at user request
 
-### ⏭️ Task 2.3.7*: Write property-based tests for void/refund
-**Status**: OPTIONAL (SKIPPED)  
+### ✅ Task 2.3.7*: Write property-based tests for void/refund
+**Status**: COMPLETE  
 **Files**: `Magidesk.Domain.Tests/Properties/VoidRefundPropertiesTests.cs`  
-**Note**: Optional test task marked with *
+**Details**:
+- Created 7 property-based tests using FsCheck
+- Implements Properties 22-27 from requirements
+- Custom generators for UserId, Money amounts, and reasons
+- Tests validate domain logic with randomized inputs
+- All tests compile successfully
+- **Note**: Optional test task completed at user request
 
 ### ✅ Task 2.3.8: Create VoidTicketDialogViewModel
 **Status**: COMPLETE  
@@ -150,6 +161,7 @@ This document summarizes the completion status of all tasks in Feature 2.3: Void
 - Domain: 4 warnings (pre-existing)
 - Application: 14 warnings (pre-existing)
 - Infrastructure: 7 warnings (pre-existing)
+- Domain.Tests: 3 warnings (pre-existing - obsolete ProcessRefund usage)
 
 ## Next Steps
 1. **Complete Task 2.3.11**: Create RefundWizard.xaml view
@@ -161,6 +173,7 @@ This document summarizes the completion status of all tasks in Feature 2.3: Void
 - `TASK_2_3_3_VOID_TICKET_COMMAND_HANDLER_UPDATE.md`
 - `TASK_2_3_4_REFUND_TICKET_COMMAND_IMPLEMENTATION.md`
 - `TASK_2_3_5_REFUND_RECEIPT_IMPLEMENTATION.md`
+- `TASK_2_3_6_7_TESTS_IMPLEMENTATION.md` (unit and property-based tests)
 - `TASK_2_3_STATUS_SUMMARY.md` (this file)
 
 ## Notes
