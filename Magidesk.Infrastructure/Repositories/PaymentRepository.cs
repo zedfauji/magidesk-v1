@@ -45,7 +45,16 @@ public class PaymentRepository : IPaymentRepository
 
     public async Task UpdateAsync(Payment payment, CancellationToken cancellationToken = default)
     {
-        _context.Payments.Update(payment);
+        var entry = _context.Entry(payment);
+        if (entry.State == EntityState.Detached)
+        {
+            _context.Payments.Update(payment);
+        }
+        else if (entry.State == EntityState.Unchanged)
+        {
+            entry.State = EntityState.Modified;
+        }
+
         await _context.SaveChangesAsync(cancellationToken);
     }
 

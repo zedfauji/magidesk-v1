@@ -183,6 +183,35 @@ public abstract class Payment
     }
 
     /// <summary>
+    /// Adds a refund amount to this payment.
+    /// REQ-5.5: Track refunded amounts on individual payments.
+    /// </summary>
+    /// <param name="refundAmount">Amount being refunded from this payment</param>
+    /// <exception cref="Exceptions.BusinessRuleViolationException">Thrown if refund exceeds available amount</exception>
+    public void AddRefund(Money refundAmount)
+    {
+        if (refundAmount <= Money.Zero())
+        {
+            throw new Exceptions.BusinessRuleViolationException("Refund amount must be greater than zero.");
+        }
+
+        var availableToRefund = Amount - RefundedAmount;
+        if (refundAmount > availableToRefund)
+        {
+            throw new Exceptions.BusinessRuleViolationException(
+                $"Refund amount ({refundAmount}) exceeds available amount ({availableToRefund}).");
+        }
+
+        RefundedAmount = RefundedAmount + refundAmount;
+        
+        // Mark as fully refunded if entire amount has been refunded
+        if (RefundedAmount >= Amount)
+        {
+            IsRefunded = true;
+        }
+    }
+
+    /// <summary>
     /// Creates a refund payment for this payment.
     /// Refunds are represented as Payment entities with TransactionType.Debit.
     /// </summary>

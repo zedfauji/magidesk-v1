@@ -88,9 +88,10 @@ public class EndTableSessionCommandHandler : ICommandHandler<EndTableSessionComm
         }
 
         // 8. Save session (persists End state and Ticket Link)
+        // Note: UpdateAsync now relies on standard EF Core change tracking.
         await _sessionRepository.UpdateAsync(session);
 
-        // 9. Update table status - CRITICAL FIX: Don't mark available if ticket still has charges
+        // 9. Update table status
         // The table should remain occupied until the ticket is settled
         if (ticketId.HasValue)
         {
@@ -104,13 +105,13 @@ public class EndTableSessionCommandHandler : ICommandHandler<EndTableSessionComm
                 {
                     table.AssignTicket(ticketId.Value);
                 }
-                // If already assigned, the status should already be Seat
+                
                 _logger.LogInformation("Table {TableNumber} remains as Seat - has ticket {TicketId} with charges {Amount}", 
                     table.TableNumber, ticketId, ticket.TotalAmount.Amount);
             }
             else
             {
-                // No charges, safe to mark available
+                // No charges, safe to mark available (customer paid or empty)
                 if (table.CurrentTicketId.HasValue)
                 {
                     table.ReleaseTicket();
@@ -160,6 +161,10 @@ public class EndTableSessionCommandHandler : ICommandHandler<EndTableSessionComm
             return;
         }
 
+        // CRITICAL FIX: Log values before creating OrderLine
+        _logger.LogInformation("Creating time charge: Duration={Duration}, HourlyRate={HourlyRate}, TotalCharge={TotalCharge}", 
+            duration, session.HourlyRate, totalCharge);
+
         var timeChargeLine = OrderLine.CreateTimeCharge(
             ticket.Id,
             duration,
@@ -167,7 +172,16 @@ public class EndTableSessionCommandHandler : ICommandHandler<EndTableSessionComm
             totalCharge
         );
 
+        // CRITICAL FIX: Log OrderLine state after creation
+        _logger.LogInformation("TimeChargeLine created: Id={Id}, UnitPrice={UnitPrice}, Quantity={Quantity}", 
+            timeChargeLine.Id, timeChargeLine.UnitPrice, timeChargeLine.Quantity);
+
         ticket.AddOrderLine(timeChargeLine);
+        
+        // CRITICAL FIX: Log ticket state before save
+        _logger.LogInformation("Ticket {TicketId} has {OrderLineCount} order lines before save", 
+            ticket.Id, ticket.OrderLines.Count());
+            
         await _ticketRepository.UpdateAsync(ticket, cancellationToken);
     }
 

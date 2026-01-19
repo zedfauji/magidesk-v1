@@ -89,7 +89,7 @@ public class MergeTicketsCommandHandler : ICommandHandler<MergeTicketsCommand>
         }
 
         // Void the source ticket (not waste)
-        sourceTicket.Void(command.ProcessedBy, $"Merged into Ticket #{targetTicket.TicketNumber}", false);
+        sourceTicket.Void($"Merged into Ticket #{targetTicket.TicketNumber}", command.ProcessedBy);
 
         await _ticketRepository.UpdateAsync(sourceTicket, cancellationToken);
         await _ticketRepository.UpdateAsync(targetTicket, cancellationToken);

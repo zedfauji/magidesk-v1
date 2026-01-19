@@ -75,7 +75,15 @@ public class CashSessionRepository : ICashSessionRepository
 
     public async Task UpdateAsync(CashSession cashSession, CancellationToken cancellationToken = default)
     {
-        _context.CashSessions.Update(cashSession);
+        var entry = _context.Entry(cashSession);
+        if (entry.State == EntityState.Detached)
+        {
+            _context.CashSessions.Update(cashSession);
+        }
+        else if (entry.State == EntityState.Unchanged)
+        {
+            entry.State = EntityState.Modified;
+        }
         
         try
         {

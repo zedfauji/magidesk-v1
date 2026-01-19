@@ -271,10 +271,28 @@ public class TableMapViewModel : ViewModelBase
         }
 
         // F-0082: Normal Navigation Logic
-        if (table.Status == TableStatus.Seat && table.CurrentTicketId.HasValue)
+        if (table.Status == TableStatus.Seat)
         {
-             // Resume existing ticket
-             _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(table.CurrentTicketId.Value, true));
+             if (table.CurrentTicketId.HasValue)
+             {
+                 // Resume existing ticket
+                 _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(table.CurrentTicketId.Value, true));
+             }
+             else if (table.SessionId.HasValue)
+             {
+                 // No ticket, but has active session - Open Session Control Dialog
+                 // This handles the "Session Only" case (e.g., pool table time tracking without F&B orders)
+                 await OpenSessionControlDialogAsync(table);
+             }
+             else
+             {
+                 // Seat state but no ticket and no session? 
+                 // This is an inconsistent state, but we should at least let the user inspect it or reset it.
+                 // For now, treat it as Details request if possible, or log warning.
+                 System.Diagnostics.Debug.WriteLine($"Table {table.TableNumber} is SEAT but has no Ticket or Session.");
+                 // Fallback to table operations
+                 await OpenTableOperationsDialogAsync(table);
+             }
         }
         else if (table.Status == TableStatus.Available)
         {

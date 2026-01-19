@@ -58,7 +58,7 @@ public interface ITicketRepository
     Task UpdateAsync(Ticket ticket, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Gets the next ticket number.
+    /// gets the next ticket number.
     /// </summary>
     Task<int> GetNextTicketNumberAsync(CancellationToken cancellationToken = default);
 

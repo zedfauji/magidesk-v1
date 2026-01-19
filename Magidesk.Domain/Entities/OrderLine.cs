@@ -137,8 +137,15 @@ public class OrderLine
         if (hourlyRate < 0)
             throw new BusinessRuleViolationException("Hourly rate cannot be negative.");
 
+        if (totalCharge == null)
+            throw new ArgumentNullException(nameof(totalCharge), "Total charge cannot be null.");
+
         if (totalCharge < Money.Zero())
              throw new BusinessRuleViolationException("Total charge cannot be negative.");
+
+        // CRITICAL: Ensure we create a NEW Money instance, not reuse the parameter
+        // This ensures EF Core properly tracks the owned entity
+        var unitPrice = new Money(totalCharge.Amount, totalCharge.Currency);
 
         var orderLine = new OrderLine
         {
@@ -150,7 +157,7 @@ public class OrderLine
             GroupName = "System",
             Quantity = 1,
             ItemCount = 1,
-            UnitPrice = totalCharge,
+            UnitPrice = unitPrice,
             TaxRate = 0, // Configurable in future, default 0 for now
             Duration = duration,
             HourlyRate = hourlyRate,
@@ -160,6 +167,15 @@ public class OrderLine
         };
 
         orderLine.CalculatePrice();
+        
+        // Validation: Ensure all Money properties are initialized
+        if (orderLine.UnitPrice == null)
+            throw new System.InvalidOperationException("UnitPrice is null after initialization");
+        if (orderLine.SubtotalAmount == null)
+            throw new System.InvalidOperationException("SubtotalAmount is null after CalculatePrice");
+        if (orderLine.TotalAmount == null)
+            throw new System.InvalidOperationException("TotalAmount is null after CalculatePrice");
+            
         return orderLine;
     }
 

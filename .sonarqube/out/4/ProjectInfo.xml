@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
-  <ProjectName>Magidesk.Application.Tests</ProjectName>
+  <ProjectName>Magidesk.Infrastructure</ProjectName>
   <ProjectLanguage>C#</ProjectLanguage>
-  <ProjectType>Test</ProjectType>
-  <ProjectGuid>a2b75a39-9a7d-45be-9a31-f5f684a84b2a</ProjectGuid>
-  <FullPath>C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Application.Tests\Magidesk.Application.Tests.csproj</FullPath>
+  <ProjectType>Product</ProjectType>
+  <ProjectGuid>5c287554-e01a-4f8c-9215-044e8ca6bb89</ProjectGuid>
+  <FullPath>C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure\Magidesk.Infrastructure.csproj</FullPath>
   <IsExcluded>false</IsExcluded>
   <AnalysisResultFiles>
     <AnalysisResultFile Id="FilesToAnalyze" Location="C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\conf\4\FilesToAnalyze.txt" />

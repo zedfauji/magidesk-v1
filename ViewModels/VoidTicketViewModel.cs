@@ -153,8 +153,8 @@ public class VoidTicketViewModel : ViewModelBase
             {
                 TicketId = Ticket.Id,
                 VoidedBy = new Magidesk.Domain.ValueObjects.UserId(currentUser.Id),
-                Reason = SelectedReason,
-                IsWasted = IsWasted
+                AuthorizedBy = new Magidesk.Domain.ValueObjects.UserId(authResult.AuthorizingUserId!.Value),
+                Reason = SelectedReason
             };
 
             await _voidTicketHandler.HandleAsync(command);

@@ -75,27 +75,6 @@
           }
         },
         {
-          "ruleId": "CsWinRT1030",
-          "level": "note",
-          "message": "Type 'Microsoft.Extensions.DependencyInjection.ServiceProvider' implements generic WinRT interfaces which requires generated code using unsafe for trimming and AOT compatibility if passed across the WinRT ABI. Project needs to be updated with '<AllowUnsafeBlocks>true</AllowUnsafeBlocks>'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/giris/Documents/Code/Redesign-POS/Windows%20Based%20POS/Magidesk/Magidesk.Tests.Workflows/Infrastructure/WorkflowTestBase.cs",
-                "region": {
-                  "startLine": 121,
-                  "startColumn": 13,
-                  "endLine": 121,
-                  "endColumn": 62
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
           "ruleId": "CA1822",
           "level": "note",
           "message": "Member 'ExtractTaskFromCommand' does not access instance data and can be marked as static",
@@ -202,16 +181,6 @@
               "Compiler",
               "Telemetry"
             ]
-          }
-        },
-        "CsWinRT1030": {
-          "id": "CsWinRT1030",
-          "shortDescription": "Project does not enable unsafe blocks",
-          "defaultLevel": "note",
-          "helpUri": "https://github.com/microsoft/CsWinRT/tree/master/src/Authoring/WinRT.SourceGenerator/AnalyzerReleases.Shipped.md",
-          "properties": {
-            "category": "Usage",
-            "isEnabledByDefault": true
           }
         },
         "S2699": {

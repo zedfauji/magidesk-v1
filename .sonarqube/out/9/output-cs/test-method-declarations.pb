@@ -1,9 +1,7 @@
 «
 ëC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\Switchboard\SwitchboardViewModelTests.csMagidesk.Tests.Workflowsí
 HMagidesk.Tests.Workflows.Workflows.Switchboard.SwitchboardViewModelTestsFNewTicket_ShouldPromptForGuestCount_AndCreateTicket_WhenDineInSelectedÅ
-HMagidesk.Tests.Workflows.Workflows.Switchboard.SwitchboardViewModelTests5NewTicket_ShouldPromptForShiftStart_WhenNoActiveShiftô
-èC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\Settlement\ZeroDollarSettlementTest.csMagidesk.Tests.Workflowsk
-<Magidesk.Tests.Workflows.Settlement.ZeroDollarSettlementTest+Settle_ZeroDollar_DraftTicket_Should_BePaidò
+HMagidesk.Tests.Workflows.Workflows.Switchboard.SwitchboardViewModelTests5NewTicket_ShouldPromptForShiftStart_WhenNoActiveShiftò
 äC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\OrderEntry\TicketCreationTests.csMagidesk.Tests.Workflowsv
 AMagidesk.Tests.Workflows.Workflows.OrderEntry.TicketCreationTests1Initialize_ShouldCreateNewTicket_WhenNoIdProvidedw
 AMagidesk.Tests.Workflows.Workflows.OrderEntry.TicketCreationTests2Initialize_ShouldLoadExistingTicket_WhenIdProvidedã
@@ -15,7 +13,9 @@ AMagidesk.Tests.Workflows.Workflows.OrderEntry.TicketCreationTests2Initialize_S
 CMagidesk.Tests.Workflows.Workflows.OrderEntry.ItemManipulationTests0IncrementQuantity_ShouldInvokeCommand_WhenCalledp
 CMagidesk.Tests.Workflows.Workflows.OrderEntry.ItemManipulationTests)RemoveItem_ShouldInvokeCommand_WhenCalledñ
 ÅC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\OrderEntry\ComboTests.csMagidesk.Tests.Workflowsv
-8Magidesk.Tests.Workflows.Workflows.OrderEntry.ComboTests:ComboSelection_ShouldAddItemsAndRemoveParent_WhenConfirmedñ
+8Magidesk.Tests.Workflows.Workflows.OrderEntry.ComboTests:ComboSelection_ShouldAddItemsAndRemoveParent_WhenConfirmedå
+ÅC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\OrderEntry\AddOnTests.csMagidesk.Tests.Workflowsl
+8Magidesk.Tests.Workflows.Workflows.OrderEntry.AddOnTests0AddOnSelection_ShouldAddOrderLines_WhenConfirmedñ
 ÉC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\OrderEntry\AddItemTests.csMagidesk.Tests.Workflowsx
 :Magidesk.Tests.Workflows.Workflows.OrderEntry.AddItemTests:AddManualPriceItem_ShouldPromptForPrice_AndUseEnteredPricez
 :Magidesk.Tests.Workflows.Workflows.OrderEntry.AddItemTests<AddItemWithModifiers_ShouldPromptForModifiers_AndIncludeThem‰
@@ -23,11 +23,11 @@ CMagidesk.Tests.Workflows.Workflows.OrderEntry.ItemManipulationTests)RemoveItem
 8Magidesk.Tests.Workflows.Workflows.Foundation.ShiftTests1CreateShift_ShouldInvokeCommand_WhenAddIsExecutedi
 8Magidesk.Tests.Workflows.Workflows.Foundation.ShiftTests-OpenCashSession_ShouldFail_WhenInputIsInvalidp
 8Magidesk.Tests.Workflows.Workflows.Foundation.ShiftTests4OpenCashSession_ShouldInvokeCommand_WhenInputIsValidx
-8Magidesk.Tests.Workflows.Workflows.Foundation.ShiftTests<CloseCashSession_ShouldInvokeCommand_WhenActiveSessionExistsÑ
+8Magidesk.Tests.Workflows.Workflows.Foundation.ShiftTests<CloseCashSession_ShouldInvokeCommand_WhenActiveSessionExists¥
+kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\UnitTest1.csMagidesk.Tests.Workflows+
+"Magidesk.Tests.Workflows.UnitTest1Test1Ñ
 ÉC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\Foundation\SessionTests.csMagidesk.Tests.Workflowsu
 :Magidesk.Tests.Workflows.Workflows.Foundation.SessionTests7LoginSuccess_ShouldNavigateToDefaultView_WhenPinIsValidk
-:Magidesk.Tests.Workflows.Workflows.Foundation.SessionTests-LoginFailure_ShouldShowError_WhenPinIsInvalid¥
-kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\UnitTest1.csMagidesk.Tests.Workflows+
-"Magidesk.Tests.Workflows.UnitTest1Test1å
-ÅC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\OrderEntry\AddOnTests.csMagidesk.Tests.Workflowsl
-8Magidesk.Tests.Workflows.Workflows.OrderEntry.AddOnTests0AddOnSelection_ShouldAddOrderLines_WhenConfirmed
+:Magidesk.Tests.Workflows.Workflows.Foundation.SessionTests-LoginFailure_ShouldShowError_WhenPinIsInvalidô
+èC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\Settlement\ZeroDollarSettlementTest.csMagidesk.Tests.Workflowsk
+<Magidesk.Tests.Workflows.Settlement.ZeroDollarSettlementTest+Settle_ZeroDollar_DraftTicket_Should_BePaid

@@ -2,24 +2,31 @@
 dC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\VoidTicketDialog.xaml.cs
 
  ,
-		 (  Œ
-^C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\SettlePage.xaml.cs
+		 (  Ø
+_C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\VendorsPage.xaml.cs
 
- &
+ '
 
 
- $  
+% .  
 
-" /
-D E  
-  (, 4 
+" /
+a b  
 fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\UserManagementPage.xaml.cs
 
  .2
 		# ,    
 
  )
-[ \ ¬
+[ \ ÿ
+^C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\TicketPage.xaml.cs
+
+ &(
+		 $   
+
+ )
+[ \  
+> G( 1¬
 hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\TicketManagementPage.xaml.cs
 
  0(
@@ -51,26 +58,52 @@ fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Tem
 LL *22" ;HH" ;
 LL3 9QQ 
 LLj kNN 
-QQ2 4WW8 :Ú
+QQ2 4WW8 :‡
+dC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\TableSessionPage.xaml.cs
+
+ ,(
+! *  $$ 
+
+" /
+D E 
+
+ +
+@ A!! §
 `C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\TableMapPage.xaml.cs
 
- (F
 
 
- &      "" (( 
+ (d
+ &      ## %% ++ 99 GG 
 
-" /
-D E  
-  (! )
+" /
+D E  
+  (! )
 
-%% +
-%%@ A'' 
-++ 2""' B((' B
+(( +
+((@ A** 
+.. 2%%' B++' B
 
-++; A
+..; A
 
-++M N
--- .. // µ
+..M N
+00 11 22 
+
+55 %
+
+55- 3
+55J K77 99< =
+
+== $
+
+==, 2
+
+==I J
+
+CC '
+
+CC/ 5
+CCQ REE GG= >µ
 eC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\TableExplorerPage.xaml.cs
 
  -
@@ -131,80 +164,360 @@ iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Tab
 pp LL SS XX ^^ 
 pp& -rr #
 ss tt 
-ww !cc mm 
+ww !cc mm æ
 eC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\TableDesignerPage.xaml.cs
 
- -Ç
- #@@ MM' 4TT UU XX jj rr )uu uu, 9vv vv, 9|| 
- $AA kk <
- BB YY ll rr {{ d
-" + ! *"" 33 77 << MM `` ff 
+ -v
+ #
+ÏÏ 
+ˆˆ 
+¸¸ )
+ìì 
+ììV c
+îî 
+îîW d
+ùù 
+¶¶ .
+ )
+ÌÌ '
+àà .
+ââ .
+ *
+ÓÓ (:
+ 
+ÔÔ 
+ıı 
+¸¸ 
+•• :
+ "
+ôô !
+¶¶ 
+∑∑ 
+øø F
+ "
+öö  
+´´ )
+¨¨ )
+≠≠* :
+ÆÆ+ ;R
+ 
+õõ 
+∞∞ 
+∫∫ 
+∫∫) 3
+ºº- 7
+¿¿ Ú
+" + ! *&& >> @@ QQ SS cc tt }} 
+ÉÉ 
+êê 
+ºº 
+““ 
+‡‡ 
+ÈÈ 
+¸¸6 ?
+ÅÅ 
+ÉÉ 
+åå 
+éé) 2
+éé? H
+èè) 2
+èè? H
+ìì> G
+îî> G
+óó 
+±± 
+ºº !
+øø !
+¬¬ !
+≈≈ !
+»» !
+ÀÀ !
+‘‘ 
+ŸŸ 
+⁄⁄ 
+ÊÊ 
+ËË  
+ÈÈ" +
+ÌÌ 
+˜˜ 
+˘˘ 
+˙˙ '
+˛˛ 
+ÉÉ 
+ÖÖ 
+èè 
+ûû 
+†† #
+¶¶ 
+´´ 
+∞∞ 
 
-" /
-D E 
-** "++ $
+!!" /
+!!D E## 
+,, !-- #
 
-11 
+77 0
+778 >;; 
 
-11& ,
-11D E55 
-55 66# +664 <
-66 77* /
+77Z [
+;;# +;;/ 7
+;;W e>>4 B@@/ =
 
-:: #
-::. 4>> 
-::L PDD 
->>' .>>2 9
->>R W@@ !DD' ,
+JJ /
+JJ7 =NN 
 
-KK 
+JJY Z
+NN# +NN/ 7
+NNQ ^QQ3 @SS. ;
 
-KK# )
-KK9 :OO 
-OO PP !QQ !
-PP TT 
-QQ UU 
+]] )
+]]1 7aa 
 
-\\ 
-\\% +^^ 
+]]I J
+aa' -cc) /
 
-\\C D
-^^' .^^2 9
-^^R W``1 6
+pp 
+pp& ,
+ÅÅ) /
+ppD E
+ÅÅ 
+ww zz $
 
-dd *
-dd2 8hh 
-dd] ^kk! "
-hh' .hh2 9
-hhR Wjj !
+ÅÅ 
+ÇÇ' /
+ÇÇ8 @
 
-pp (
+ÇÇ 
+ÉÉ. 3
 
-pp0 6
-ppY Ztt 
-tt uu> Cvv> C
+åå &
 
-yy ,
+åå. 4
+íí- 3$
 
-yy4 :
+ååM N
+íí 
+ïï! "$
 
-yya bæ
+íí 
+öö# +
+õõ& .
+
+ïï 
+ññ 
+
+§§ $
+
+§§, 2
+®®) /
+
+§§K L
+®® <
+
+®® 
+´´- 5
+¨¨- 5
+≠≠ %
+ÆÆ &
+
+´´ 
+∞∞ 
+
+¨¨ 
+∞∞! "
+
+≠≠ 
+∞∞$ )
+
+ÆÆ 
+∞∞+ 1
+
+µµ '
+
+µµ/ 5
+
+µµN O
+
+»» 
+
+»»% +
+ÃÃ 
+
+»»C D
+”” 
+
+ÃÃ+ 2
+ÃÃ6 =
+
+ÃÃV [
+““& +
+
+œœ !
+““- :
+
+‹‹ *
+
+‹‹2 8
+‚‚ 
+
+‹‹] ^
+ÓÓ+ ,
+
+‚‚+ 2
+‚‚6 =H
+
+‚‚V [
+ÂÂ 
+ÈÈ* /
+ÏÏ  %
+ÌÌ4 9
+ÌÌ= B
+
+ÁÁ %
+ÈÈ1 >
+
+˙˙ (
+
+˙˙0 6
+
+˙˙Y Z
+˛˛ <
+
+˛˛ 
+ÉÉ) .
+ÉÉ2 7
+àà3 8
+ââ3 80
+
+àà 
+éé 
+éé" &
+ìì8 <0
+
+ââ 
+èè 
+èè" &
+îî8 <
+
+õõ ,
+
+õõ4 :
+
+õõa b
+
+≠≠ &$
+
+≠≠. 4
+¥¥ 
+œœ 
+
+≠≠= >$
+
+¥¥$ -
+∂∂! *
+∑∑ #T
+
+∂∂ 
+ºº> C
+øø; @
+¬¬4 9
+≈≈4 9
+»»8 =
+ÀÀ9 >
+
+∑∑ 
+ππ $
+
+œœ( 0
+œœ4 <
+——" *
+
+—— 
+““2 =
+
+““G L
+‘‘4 9
+
+‚‚  
+
+‚‚( .
+
+‚‚@ A
+
+ËË 
+ÎÎ 
+
+ËË4 5
+ËË9 :
+
+ıı 
+
+ıı' -
+
+ıı? @
+
+˘˘ 
+¸¸ 
+
+˘˘0 1
+˘˘5 6
+
+ÅÅ -
+
+ÅÅ5 ;
+
+ÅÅM NH
+
+ÖÖ 
+ÜÜ 
+áá 
+ââ$ *
+ãã "
+çç 
+
+ÖÖ6 7
+ÖÖ; <$
+
+ÜÜ 
+àà" '
+çç 
+
+áá 
+àà 
+
+àà 
+ââ  
+
+ââ 
+çç* 1<
+
+ãã 
+ãã 
+ãã. /
+çç 
+çç4 5
+
+ññ #
+
+ññ+ 1H
+
+ññF G
+õõ 
+°° 
+ßß 
+¨¨ 
+±± $
+
+òò 
+••# 0
+ØØ# 0æ
 dC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\SystemConfigPage.xaml.cs
 
  ,(
 		! *   
 
 " /
-a b Ω
-cC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\SwitchboardPage.xaml.cs
-
- +(
-
-
-  )   
-
- )
-> ? •
+a b •
 cC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\SwipeCardDialog.xaml.cs
 
 		  /2
@@ -237,24 +550,17 @@ eC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Shi
 " +    
 
  )
-> ? Ø
-_C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\VendorsPage.xaml.cs
+> ? ÿ
+^C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\SettlePage.xaml.cs
 
- '
+ &(
 
 
-% .  
+ $   
 
-" /
-a b ÿ
-^C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\TicketPage.xaml.cs
-
- &(
-		 $   
-
- )
-[ \  
-> G( 1é
+" /
+D E  
+  (, 4é
 `C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\SettingsPage.xaml.cs
 
  (
@@ -269,24 +575,102 @@ fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Rol
 		# ,    
 
  )
-[ \ —
-]C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\LoginPage.xaml.cs
+[ \ Ä
+fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\RefundWizardDialog.xaml.cs
 
- %Z
-		 #  -- // 55 77 == ?? 
+  2
 
- 
+ &
+. 4; A
 
- 
+X Y
+5 7 
+Q S  "
 
- )
-[ \ 
+ /
 
- 
+> D
+h l  
+ %% 
+9 ;   
 
-% +x
-X Y"" "": ;$$ && &&B C(( 00 33 88 ;; @@ <
-   $$ (( ++ --8 =//5 :ã
+)) +
+
+)): @
+
+))d h
+++5 7-- // î
+fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\RefundTicketDialog.xaml.cs
+
+ .
+		! *  Î
+qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\RealTimeSessionMonitoringPage.xaml.cs
+
+ 9P
+. 7  $    && '' EE 
+
+" /
+D E 
+
+## +
+##@ A)) 
+,, (% 6&&% 6
+
+,,1 7F
+,,R S55 66 77 99 :: ;; (
+11 '44 #>>: QBB #
+>> ?? HH 
+
+BBF G
+
+BBI M∂
+fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\PurchaseOrdersPage.xaml.cs
+
+ .
+
+
+" +  
+
+" /
+a b ä
+cC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\SwitchboardPage.xaml.cs
+
+ +¥
+  )  && )) 11 &22 &33 &44 &55 &66 &77 &88 &99 &:: ';; '<< 'BB 2
+ !    
+
+ 
+
+ 
+
+!!" /
+!!D E## 
+,,  $
+
+,,% +
+,,@ A// CC (
+// @@ @@ $BB. 4
+11H I11M N
+22H I22M N
+33H I33M N
+44H I44M N
+55H I55M N
+66H I66M N
+77H I77M N
+88H I88M N
+99H I99M N
+::I J::N O
+;;I J;;N O
+<<I J<<N O¿
+fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\PrintTemplatesPage.xaml.cs
+
+ .(
+
+
+# ,   
+
+" /
+D E ã
 ]C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\PrintPage.xaml.cs
 
  %
@@ -378,22 +762,22 @@ bC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Ord
 iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\OpenTicketsListDialog.xaml.cs
 
  1
-		$ -  $…
+		$ -  $”
 kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\ModifierSelectionDialog.xaml.cs
 
 		 3
- '   )(
-& /  !! 
+ '   )2
+& /   "" 
 , 4 
- / 5
+ / 5
 
-7 =
+7 =
 
-a b
- 0 7
+a b
+ 0 7
 
-? E
-e i ## ¿
+? E
+e i   $$ ¿
 fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\ModifierEditorPage.xaml.cs
 
  .(
@@ -411,7 +795,17 @@ bC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Men
  (   
 
  )
-> ? ¢
+> ? È
+eC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\MemberProfilePage.xaml.cs
+
+ -(
+
+
+" +   
+
+ )
+> ?  
+  *7 A4 >¢
 jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\ManagerFunctionsDialog.xaml.cs
 
   6(
@@ -425,37 +819,54 @@ jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Man
 
 , 2
 
-D E∂
-fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\PurchaseOrdersPage.xaml.cs
+D Eâ
+]C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\LoginPage.xaml.cs
 
- .
+ %n
+		 #   !! 66 88 >> @@ FF HH 
+
+ 
+
+ 
+
+ )
+[ \ 
+
+ 
+
+$ *
+
+N O
+
+%% 
+
+%%% +x
+%%X Y++ ++: ;-- // //B C11 99 << AA DD II <
+)) -- 11 44 668 =885 :á
+kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\LanguageSelectionDialog.xaml.cs
+
+ 3(
+& /   
 
 
-" +  
+> G 
+ A# M
 
-" /
-a b ¿
-fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\PrintTemplatesPage.xaml.cs
-
- .(
-
-
-# ,   
-
-" /
-D E ‚
+P V
+z ~ 
+  Ï
 fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\KitchenDisplayPage.xaml.cs
 
- .(
+ .2
 
 
-# ,   
+# ,    
 
- )
-> ? 
+ )
+> ? 
 
- +
-@ A ª
+ +
+@ A ª
 aC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\InventoryPage.xaml.cs
 
  )(
@@ -476,23 +887,104 @@ kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Gro
 gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\FloorManagementPage.xaml.cs
 
  /
-		$ - ë
+		$ - ï
+gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\ErrorManagementPage.xaml.cs
+
+
+
+ /
+$ -  $–
+jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\DrawerPullReportDialog.xaml.cs
+
+ 2(
+		% .  $ 
+ 4 4
+
+< B
+
+f gë
 cC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\DiscountTaxPage.xaml.cs
 
  +
-		  )  ª
+		  )  ∫
+jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\DiscountManagementPage.xaml.cs
+
+ 2
+
+
+' 0  
+
+" /
+D E ª
 kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\TicketFeeDialog.xaml.cs
 
  +
  '  
 
 		 
-. 7 ä
+. 7 ú
+ÅC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\TableSessions\AdjustSessionTimeDialog.xaml.cs
+
+ 3
+
+, 5ä
 pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\TableSelectionDialog.xaml.cs
 
  0
 
-# ,â
+# ,á
+qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\TableOperationsDialog.xaml.cs
+
+		 1Z
+* 3   ""E N$$ ,, 88 99 
+@ I  $
+ " 088" 0
+
+( .
+
+A B
+
+ #
+
++ 1
+M N   (( 
+""; @""g l$$- 2
+**; @,,0 5
+11 %( <99( <
+
+11. 4
+
+11N O
+66  %
+
+66. 4
+
+66S WΩ
+cC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\HeldTicketsPage.xaml.cs
+
+ +(
+  )   
+
+" /
+D E ‘
+nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\StartSessionDialog.xaml.cs
+
+		 .(
+' 0   
+: C 
+
+# $
+
+& 'ﬁ
+nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\SplitPaymentDialog.xaml.cs
+
+		 .2
+! *   &5 >
+4 = 
+
+ 
+
+% 1â
 oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\SizeSelectionDialog.xaml.cs
 
  /
@@ -519,7 +1011,27 @@ jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dia
  &  $ 
 
 
-, 5 ù
+, 5 ˙
+pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\SessionControlDialog.xaml.cs
+
+		 0<
+) 2   && '' 
+> G  $
+ " 0&&" 0
+
+( .
+
+A B
+ *- F''- F
+
+3 9
+
+S T
+##  %
+
+##. 4
+
+##S Wù
 oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\SeatSelectionDialog.xaml.cs
 
   3
@@ -527,12 +1039,11 @@ oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dia
 jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\QuantityDialog.xaml.cs
 
  *
- &  $Ü
-lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\PriceEntryDialog.xaml.cs
+ &  $ó
+sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\PromotionScheduleDialog.xaml.cs
 
- ,
-
- (ª
+ 3
+		, 5 ª
 oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\PizzaModifierDialog.xaml.cs
 
  /2
@@ -551,7 +1062,18 @@ oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dia
 
 ##D J
 
-##n r„
+##n r™
+xC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\OpenTicketConfirmationDialog.xaml.cs
+
+ 8
+  
+ ! 
+		 ! 
+
+ 
+" - !' 2
+4 E - 
+U e +„
 gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\NotesDialog.xaml.cs
 
  '
@@ -579,22 +1101,66 @@ jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dia
 
  *
  &  
-, 5 –
-jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\DrawerPullReportDialog.xaml.cs
-
- 2(
-		% .  $ 
- 4 4
-
-< B
-
-f gà
+, 5 à
 nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\MergeTicketsDialog.xaml.cs
 
   2
 
-% .Ü
+% .ﬂ
+oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\MemberCheckInDialog.xaml.cs
+
+ /(
+
+
+" +   
+
+ #
+
++ 1
+F G  ¸
+lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\ManagerPinDialog.xaml.cs
+
+ ,<
+% .  && '' 55 ((
+! 5(( ,, #99 $
+
+$$, A
+$$I V&&" /
+
+// 7
+
+//F L
+//p t11 == 
+11 BB (
+55 77 77" (99' -Ü
 lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\ItemSearchDialog.xaml.cs
+
+ ,
+
+ (Ô
+nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\ConfirmationDialog.xaml.cs
+ .EE5 G(
+' 0  // 
+$$ 1MM 1
+%% // "NN 
+&& //$ +OO 
+''  //- >
+(( "//@ S
+)) //U Y
+** //[ cRR 
+++ //e l
+,, //n |PP 
+--$ /	//~ âQQ 
+11 22 
+
+>># ,
+?? NN 
+@@ PP #
+AA OO 
+BB$ +QQ  
+CC RR 
+EE JJ MM Ü
+lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\PriceEntryDialog.xaml.cs
 
  ,
 
@@ -605,7 +1171,50 @@ lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dia
  ( 
 
 
-0 9 ç
+0 9 ∑
+sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\GratuitySelectionDialog.xaml.cs
+
+
+
+ 3
+& / 
+> G H Q“
+lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\EndSessionDialog.xaml.cs
+
+ ,
+% .  
+
+
+6 ? H Q
+
+# $
+
+& '©
+sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\DiscountSelectionDialog.xaml.cs
+
+
+
+ 3Z
+& /   ) 2< E## 11  )CC &
+> G 
+
+& '
+) * 
+
+!! 
+
+!!' -
+
+!!Q R
+
+)) +
+
+)): @
+))d h,, 66 
+,, << 
+11 44 
+
+CC ç
 sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\CustomerSelectionDialog.xaml.cs
 
  3
@@ -619,7 +1228,38 @@ tC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dia
  
 
  
-& *, 0÷
+& *, 0ì
+qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\ManagerOverrideDialog.xaml.cs
+
+		 1<
+* 3   )) ** 
+@ I  $
+
+ 
+
+ 
+ " 0))" 0
+
+( .
+
+A B
+!! $' :**' :
+
+!!- 3
+
+!!N O
+&&  %
+
+&&. 4
+
+&&S W∆
+lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\HoldTicketDialog.xaml.cs
+
+		 ,(
+% .   &
+6 ? 
+
+ ÷
 pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\ComboSelectionDialog.xaml.cs
 
  0(
@@ -630,17 +1270,31 @@ pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dia
 
  
 
- ”
+ È
 kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\CashEntryDialog.xaml.cs
 
- +
+ +n
+$ -  00 44 !44/ 8GG HH LL !LL/ 8RR <
+ -    ! 2
 
- 
-9 <F I
+**S e
+++ 00 "
+,, 00$ +
+-- &00- F
+.. 00H U
+22 44 
 
- 
-" ' 
-0 7  '÷
+@@S e
+AA GG "
+BB GG$ +
+CC HH )
+DD &GG- F
+EE GGH U
+JJ LL 
+OO % 2
+
+OO4 :
+OO^ bTT ÷
 pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dialogs\AddOnSelectionDialog.xaml.cs
 
  0(
@@ -651,7 +1305,20 @@ pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Dia
 
  
 
- Â
+ ì
+eC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\DatabaseSetupPage.xaml.cs
+
+ -
+" +  $æ
+dC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\CustomerListPage.xaml.cs
+
+ ,(
+
+
+! *   
+
+ )
+> ? Â
 uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Components\VirtualizedTableCanvas.xaml.cs
 
  2x
@@ -730,12 +1397,34 @@ uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Com
 
 ÇÇ# )
 
-ÇÇ; <ä
+ÇÇ; <é
 pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Components\TableShapePalette.xaml.cs
 
- -
+		 -
+# , ! !
 
-# ,Ω
+ )
+1 7 
+
+I J
+& 15 @
+O Z2 =
+G L2 7¸
+tC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Components\CustomerSearchControl.xaml.cs
+		 1f {
+. F2 J 0
+$ 4+ ;!! 2
+# ,  !! ()) 
+ *% >
+
+3 9
+j k 
+
+%% #
+
+%%3 9
+%%c g'' 
+''? E))% +Ω
 cC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\CashSessionPage.xaml.cs
 
  +(
@@ -756,43 +1445,30 @@ cC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Cas
 lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\CashDropManagementDialog.xaml.cs
 
  4
-		' 0  $å
+		' 0  $ñ
 bC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\BackOfficePage.xaml.cs
 
- *(
+ *2
 
 
- ( ## %11 
-  
-3 5 
+ (  $$ %22 
+  
+3 5 
 
- )
-> ?  
-  *##X b
-   !! && 
-## $$ &&, 0
-##E F##J K
--- $# 6
+ )
+> ?  
+  *$$X b
+!! "" '' 
+$$ %% '', 0
+$$E F$$J K
+.. $# 6
 
---4 :
---d h// 2
-//0 411. 233 55, 099" &
-== .55 +
-==6 ;AA 
-?? GG ˝
-kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\AuthorizationCodeDialog.xaml.cs
-
-  7(
-
-
-* 3  ( 
-
- %
-- 3 
-
-W X
-& (, .
-= E- 5ë
+..4 :
+..d h00 2
+000 422. 244 66, 0::" &
+>> .66 +
+>>6 ;BB 
+@@ HH ë
 sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\AuthorizationCaptureBatchDialog.xaml.cs
 
   ?2
@@ -808,28 +1484,85 @@ sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\Aut
  *
 
 9 ?
-_ c   ô
+_ c   ˝
+kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\AuthorizationCodeDialog.xaml.cs
+
+  7(
+
+
+* 3  ( 
+
+ %
+- 3 
+
+W X
+& (, .
+= E- 5Ù
+`C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\AuditLogPage.xaml.cs
+
+ ((
+ &  %% 
+  
+
+' -
+
+? @
+
+"" 2
+
+""G M
+""s w$$ ¬
+tC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\AdvancedPricingConfigurationPage.xaml.cs
+
+
+
+ <(
+1 :  $ 
+ & Ô
+gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Views\ActiveSessionsPanel.xaml.cs
+
+ /(
+( 1 - 6# ,
+
+
+< E H Q
+
+ 
+
+! "
+
+ 
+
+ Â	
 gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\VoidTicketViewModel.cs
 
    
 8 JII 
-ÄÄ $
-" .JJ pp *
-   &
- ]] zz !
+†† $ 
+" .JJ 
+êê *
+   &L
+ ]] rr  || 
+ááP V
+öö !
+®® !
 ) 5  +
 ( 3PP 
-!! "$$ ''  /4
-""  ^^ gg! /|| '
-êê% 3
-.. 11 22 (
-// XX }} #
-55  88 99 ,4
-66 __ ii ss 
-ââ 
-<< ?? @@ (4
-== `` jj tt 
-ää 
+!! "$$ ''  /@
+""  ^^ gg! /||O ]
+úú '
+ΩΩ% 3
+.. 11 22 (*
+// XX ss  
+ùù #
+55  88 99 ,6
+66 __ ii 
+ìì 
+∂∂ 
+<< ?? @@ (6
+== `` jj 
+îî 
+∑∑ 
 CC ))- 8MM 
 FF+ <II .
 GG  JJ "
@@ -839,17 +1572,40 @@ gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 cc  MM5 >
 cc) 2ee 
 ee+ 1
-ÇÇ 
-pp qq {{C N
-xx 
-ÄÄ1 8
+ØØ 
+oo pp uu 0 
+rr ||6 A
+≠≠! , 
+ss ||a j
+≠≠c l
+uu ~~ $
 
-ÇÇ( *
-ÑÑ 
+ÑÑ 
+ÖÖ 
+áá )0
 
-éé MM@ G
+áá 
+àà 
+àà# -
+≠≠A K$
 
-éé! *Û
+êê 
+ëë 
+õõC N
+
+òò 
+††1 8$
+
+££ 
+§§ 
+¶¶ 
+
+ØØ( *
+±± 
+
+ªª MM@ G
+
+ªª! *Û
 aC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\ViewModelBase.cs
 
  #
@@ -1208,168 +1964,158 @@ cC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 ÷÷% +
 
 ŒŒ 
-–– Ω
+–– Û
 mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\TicketManagementViewModel.cs
 
-
-
- - 
-P _(( 
-ûû  / 
-8 C)) 
-ªª  
-N [** 
-⁄⁄ , 
-L X++ 
-áá +
- (77 88' 3
- &== @@  /
-  OO PP ,
- )UU %VV 5
- ([[ $\\ 4
- !aa bb ,
- gg hh +
- 'mm #nn 3
- $ss  tt 0
- (yy $zz 4 
-  
-ÇÇ  &"
-   
-çç 
-éé' 2
-##C Q(( (
-$$+ 5))  
-%%A M** $
-&&? J++ ""
-55$ /
-üü 
-££! ,Í
-;; $GG) 7II #II4 BJJ "JJ8 FJJZ hKK "KKA O
-°° 
-££ 
-££I W
-∏∏ 
-ΩΩ )
-¡¡+ 9
-÷÷ 
-‹‹ )
-ËË- ;
+ - 
+P _-- 
+´´  /
+8 C..  
+N [// 
+ˇˇ 
+L X00  
+N [11 
+ôô , 
+S _22 
+ÄÄ  
+R e33 
+˛˛ #
+ (?? BB  ,
+ &`` cc  /
+!! {{ ~~  &"
+"" 
+ââ 
+ää' 2
+%%C Q-- (
+&&+ 5..  
+''A M// $
+((? J00 "
+))A M11 $
+**F Q22 "
+++E W33 0N
+==$ /NN5 @SS8 C
+≠≠ 
+ÆÆL W
+≥≥! ,
+ﬁﬁ" -
+NN$ 1DD) 6[[$ 1
+OO OO PP 
+SS$ 4EE) 9YY' 7(
+TT TT UU VV 
+YY #HH) <ZZ* =
+ZZ %II) >
+[[  FF) 9\\' 7
+\\ "GG) ;≤
+^^ $pp) 7rr #rr4 Bss "ss8 FssZ htt "ttA O
+îî! /
+ïï# 1
+ññ$ 2
+óó( 6
+∞∞ 
+≤≤L Z
+≥≥ 
+≥≥I W
+–– 
+÷÷( 6
+ﬁﬁJ X
+··/ =
+ÒÒ 
 ˝˝ 
-ÑÑ +
-ââ# 1
-GG %BB) <
-MM 
-ππ +
-SS '
-◊◊ 4
-YY &
-ÿÿ 3
-__ 
-ﬂﬂ %
-ee 
-˛˛ *
-kk %
-ˇˇ 2
-qq "
-ÄÄ /
-ww &
-ÅÅ 3í
-}} 
-ââ7 <
-òò 
-®® 
-≤≤ 
-∏∏* /
-ππB G
-∆∆ 
-–– 
-÷÷* /
-◊◊N S
-ÿÿL Q
-‰‰ 
-ÌÌ 
-˜˜ 
-˝˝* /
-˛˛@ E
-ˇˇK P
-ÄÄE J
-ÅÅM R
-ÖÖ& +
-ìì 
-úú 
+ÅÅ 
+óó 
+õõ )
+°°> L
+pp %ee) <¶
+yy 
+ÖÖ7 <
+üü 
+¿¿ 
+ÀÀ 
+––* /
+ÊÊ 
+ÏÏ 
+ÒÒ* /
+åå 
+íí 
+óó* /
+•• 
+™™ 
 
-ââ 
-ÑÑ) 1`
+ÖÖ 
+ÄÄ) 1`
 
-ãã 
-ôô 
-≥≥ 
-¡¡ 
-—— 
-ËË 
-¯¯ 
-óó 
+áá 
+†† 
+ÃÃ 
+·· 
+ÌÌ 
+àà 
+ìì 
+°° 
 
-ëë +// 
+çç +77  
 
-íí 000 
+éé 088 ii # 
 
-ìì 211 
+èè 299 jj % 
 
-îî 122 :
+ëë 2:: kk %"
 
-ññ "/// ;
-¬¬ 
-ÈÈ 
-òò 
+îî ff) 6
+ôô& 3"
 
-ûû 
-üü !
+ïï gg) 8
+öö( 7"
 
-££< =
-££A B
+ññ  hh) 9
+õõ) 9
 
-∞∞ (004 E
+ôô  88G V
 
-ππ5 =
-ææ& .
+öö "99K \
 
-ŒŒ *116 I
+õõ #::L ^.
 
-◊◊> I
-››) 4
+ùù "77/ ;
+€€ 
+áá 
 
-ÿÿ= G
-ﬁﬁ '0
+§§ '
+°° $
 
-⁄⁄ 
-‚‚ 
-‰‰ 
-ËË] c
+´´ 
+¨¨= D
+≠≠ !
 
-ıı )225 G
+≥≥< =
+≥≥A B
 
-˛˛4 ;
-ää% ,
+…… (884 E0
 
-ˇˇ< F
-ãã '
+““ 
+”” 
+÷÷ 
+ÿÿ $
 
-ÄÄ9 @
-åå !
+ﬁﬁ 
+ﬂﬂ 
+ﬂﬂ+ :
 
-ÅÅ= H
-çç )$
+ﬁﬁ= >
+ﬁﬁB C
 
-ÑÑ 
-ÖÖ 
-éé7 A<
+ÍÍ *996 I<
 
-áá 
-ëë 
-ìì 
-óó2 8
-óóY _∆
+ÛÛ 
+ÙÙ 
+¸¸ 
+ÇÇ 
+ÖÖ 
+
+êê +::6 J
+
+ôô 
+üü ∆
 fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\TicketFeeViewModel.csF
    ,,  -,,V c..6 C88 '
 
@@ -1487,161 +2233,980 @@ kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 ÓÓ" (
 
 ˘˘ 
-˚˚Q T∆
+˚˚Q T·
+iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\TableSessionViewModel.cs
+ * 2RR % 
+Z sTT !
+ÜÜ! : 
+^ rUU 
+∏∏ 3 
+` uVV 
+ÈÈ 4 
+T kWW 
+†† 6 
+T kXX 
+’’ 6 
+V nYY  
+àà 7§
+4 ;ZZ 
+îî 
+òò 
+∫∫ 
+∆∆ 
+ÎÎ 
+˜˜ 
+¢¢ 
+∞∞ 
+◊◊ 
+‰‰ 
+ää 
+óó ¯
+  % 5[[ 
+àà 
+ôô 
+°° 
+øø 
+«« 
+œœ 
+ 
+¯¯ 
+ÄÄ 
+®® 
+±± 
+ππ 
+›› 
+ÂÂ 
+ÌÌ 
+êê 
+òò 
+†† 
+ÊÊ j
+!!! .
+”” 
+‘‘ 
+€€ 
+˘˘ 
+˙˙ 
+˚˚ 
+††! .
+¢¢ R
+""! /
+„„ 
+‰‰ 
+ÒÒ 
+ÉÉ 
+ÑÑ 
+ÖÖ 
+
+%% 
+
+(( !
+
+++ 
+
+.. .
+
+11 #
+
+44 '
+
+77 !
+
+:: $
+
+== 
+
+@@ !R
+BB2 @
+ää 
+çç "
+∂∂ ,
+∑∑ '
+∏∏ %
+ÈÈ( 6
+DD "
+¿¿! 3 
+EE ^^M \
+¡¡! 0 
+FF  __O _
+¬¬! 1 
+GG ``I V
+√√! . 
+HH "aaf x
+ƒƒ! 3 
+II #bbb u
+≈≈! 4
+LLM eTT$ <TTg 
+MMQ dUU 2UU] p
+NNS gVV  4VV_ s
+OOG ]WW" 8WWc y
+PPG ]XX" 8XXc y
+QQI `YY# :YYe |
+RR' -ZZ ZZC I
+
+aaT a
+
+bbU ]
+gg 0]]  
+hh 0^^ 
+««  
+ii 1__ 
+»»  
+jj .`` 
+…… 
+kk# 9aa 
+ll" 9bb 
+mm* >cc 
+nn -dd 
+
+ss %f
+}} -]]4 Kuu %
+ΩΩ )
+ÓÓ )
+¶¶ )
+€€ )
+éé )
+ÿÿ -
+
+ÖÖ 
+ÜÜG L$
+
+ÜÜ 
+ãã( 0
+îîE M
+
+®® '^^4 E
+
+≤≤ 
+∏∏@ G$
+
+∏∏ 
+∫∫N T
+¡¡C I
+
+⁄⁄ (__5 G
+
+‰‰ 
+ÈÈA H$
+
+ÈÈ 
+ÎÎO U
+ÚÚD J
+
+ãã %``2 A
+
+ññ 
+úú 
+
+óó 
+ùù 
+
+ôô 
+††C J<
+
+†† 
+££ 
+££" (
+™™@ F
+™™b h
+
+ƒƒ *aa= Q
+
+ƒƒ0 =
+–– 
+
+ŒŒ 
+’’C J<
+
+’’ 
+ÿÿ 
+ÿÿ* 0
+ÿÿ= C
+ﬂﬂW ]
+
+¯¯ +bb= R
+
+¯¯0 =
+ÑÑ 
+
+ÇÇ 
+ààD KH
+
+àà 
+ãã 
+ãã" (
+ãã= C
+íí< B
+íí[ a
+
+´´ ccB O
+
+´´1 8
+≠≠ !$
+
+¥¥ !
+êê  
+ÓÓ  
+
+∑∑. /
+∑∑3 4
+
+∏∏* +
+∏∏/ 0`
+
+ææ $
+““ #
+ÉÉ #
+ºº #
+ #
+££ #
+ÆÆ 
+õõ "
+
+œœ %vv 
+ëë  
+
+‘‘( )
+
+‘‘+ ,
+
+·· ww 
+
+‰‰# $
+
+‰‰& '
+
+ÈÈ= >
+ÈÈB C$
+
+˜˜ $
+ïï 
+®® 
+
+ÅÅ 
+©© 
+
+ãã dd1 ?
+
+ôô )
+
+ôô< A
+
+ûû 0
+
+ûû5 :
+¢¢% *
+
+¶¶ Œ:
 eC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\TableMapViewModel.cs
 
-  
-H TUU 
-ÉÉ + 
-L XVV 
-±±# /8
-' 9WW 
-ªª '
-—— 
-ﬂﬂ #"
-  
-ÚÚ 
-˘˘ "
-- E
-ππ  
-ªª  .
-* 0
-ÑÑ 
-ãã 
-êê, 2
- $   !! -
- "
-££ 
-$$ #'' !(( 1F
-%% !
-ÔÔ 
-˛˛ 
-´´ 
-´´ .
-≠≠ 
-++  .. // /#
-,, 
-ÛÛE TÛÛq Ä
-22 !55 66 +"
-33 
-öö. 9
-¶¶ 
-:: !== >> .B
-;; AA  .ll 
-•• 
-≥≥ -
-ªªi w
-AA mm! +
-CC .]] 
-DD 1^^ 
-EE 2__ 
-FF' 9`` ,
-HH" .XX 
-⁄⁄ !
-‹‹a m 
-II, BYY 
-‹‹& < 
-JJ* >ZZ 
-ÇÇ 3,
-KK> N[[ 
-ãã  
-öö 
-NN; FUU "
-OO? JVV "
-PP +WW .
-QQ  XX "
-RR 4YY! 6
-SS 0ZZ 2
+  
+H T{{ 
+∆∆ + 
+L X|| 
+ıı# /D
+' 9}} 
+ˇˇ '
+óó #
+ƒƒ /
+ŸŸ '"
+  
+ıı 
+¡¡ R
+/ >
+˝˝ 
+˛˛ 
+ˇˇ 
+∂∂ 
+ªª 
+ºº "
+- E
+∆∆  
+……  ^
+* 0
+«« 
+ŒŒ 
+ÉÉ% +
+ãã& ,
+ÆÆ  &
+±± 
+ÿÿ, 2
+!! $$$ %% -
+"" "
+ÁÁ 
+(( #++ !,, 1F
+)) !
+ÚÚ 
+∆∆ 
+ÇÇ 
+ÇÇ .
+ÑÑ 
+//  22 33 /#
+00 
+ˆˆE Tˆˆq Ä
+66 !99 :: +"
+77 
+ÒÒ. 9
+˝˝ 
+>> !AA BB .D
+?? LL  .
+ØØ 
+ÈÈ 
+˜˜ -
+ˇˇi w
+EE HH II -.
+FF 
+ÂÂ 
+ÌÌ 
+ÛÛ 
+LL 
+∞∞! +
+NN .
+ÜÜ 
+OO 1
+áá 
+PP 2
+àà 
+QQ' 9
+ââ 
+TT' D
+åå %
+UU' B
+çç #"
+VV' :
+éé 
+ÓÓ '"
+WW' ;
+èè 
+˜˜ (
+XX' C
+êê $
+[[' F
+ìì '
+\\' G
+îî (
+]]' G
+ïï ("
+``' :
+òò 
+◊◊ #"
+aa' 9
+ôô 
+‚‚ ""
+bb' 8
+öö 
+ÅÅ !
+ee8 K
+ùù \
+gg" .~~ 
+∞∞ !
+÷÷e q
+…… $
+˜˜ $
+„„ 
+ÏÏ( 4 
+hh, B 
+÷÷* @:
+ii* >
+ÄÄ 
+≥≥$ 8
+   3
+ÈÈ 3.
+jj& 6
+ÅÅ 
+   ,
+¯¯ ,.
+kk> N
+ÑÑ 
+””  
+ÒÒ ≤
+ll& 6
+ÉÉ 
+††" 2
+££& 6
+ΩΩ) 9
+ÍÍ" 2
+ïï /
+££  0
+ÆÆ  0
+ºº  0
+……  
+⁄⁄  0
+ÇÇ" 2
+——" 2
+°°" 2
+nn( 4
+ÇÇ 
+qq; F{{ "
+rr? J|| "
+ss +}} .
+tt  ~~ "
+uu 4! 6
+vv 0
+ÄÄ 2
+ww (
+ÅÅ *
+xx% 8
+ÇÇ *
+yy (
+ÉÉ *
 
-hh 0
-jj 
-ææ 
-jj! /ll '
-pp ss tt +
-qq 
-ññ 
-ww  zz {{ ,
-xx 
-óó  
-~~ &]]2 A
-•• 
+´´ 0
 
-ÉÉ 
-ââ" (0
+≠≠ 
+ÇÇ 
 
-ÜÜ 
-ëë! %
-ëë' +
-ññ 0
+≠≠! /
+ØØ '$
 
-áá 
-íí" &
-íí( ,
-óó $
+≥≥ 
+∂∂ 
+∑∑ +
 
-éé !
-ëë 
-ëë. 8$
+¥¥ 
+ŸŸ $
 
-èè "
-íí 
-íí/ :
+∫∫  
+ΩΩ 
+ææ ,
 
-üü '``= Mx
+ªª 
+⁄⁄ $
 
-üü2 7
-°° 
-££ 
-®® 
-¥¥! &
-ŒŒ 
-ŒŒ0 5
-——a f
-”” 
-‹‹W \
+¡¡ &
+ÜÜ2 A
+¸¸ 
 
-±± 
-∏∏ 
+∆∆ 
+ÃÃ" (0
 
-‹‹ 
-ﬂﬂe m"
+…… 
+‘‘! %
+‘‘' +
+ŸŸ 0
 
-ÌÌ %ee 
-ØØ  
+   
+’’" &
+’’( ,
+⁄⁄ $
 
-ÚÚ, -$
+—— !
+‘‘ 
+‘‘. 8$
 
-˜˜ $
-≥≥ 
-∫∫ 
+““ "
+’’ 
+’’/ :
 
-¸¸ .
-ÚÚ7 N
+‚‚ '
+ââ= Mÿ
 
-ÇÇ 
-ÑÑ" '
+‚‚2 7
+‰‰ 
+ÁÁ 
+ÏÏ 
+¯¯! &
+íí 
+îî 
+óóe j
+ôô 
+ùù5 :
+§§= B
+¶¶6 ;
+©© 
+∂∂a f
+ΩΩ+ 0
+œœ* /
+÷÷[ `
+‡‡T Y
 
-ÑÑ 
-ÖÖ# .
+ıı 
+¸¸ 
 
-ÖÖ 
-éé1 7H
+≥≥ !
+µµ, 1
 
-êê )
-ëë )
-ëë6 C
-ëëe r
-ìì )
-îî )
+µµ )
+∂∂0 @1
 
-êêB C
-êêG H
+∂∂ '
+∏∏ 'ΩΩt Ç
+ƒƒq 0
 
-££ )^^5 G
+ªª #
+ºº 
+ΩΩ 
+øø, 2
 
-©© *__6 I
+øø #
+¡¡ #0
 
-∑∑ ∞
+ÕÕ "
+ŒŒ 
+œœ 
+——+ 8$
+
+—— "
+”” "
+€€ '
+
+÷÷ !
+ŸŸi q$
+
+ %
+•• 
+ÜÜ  
+
+ıı, -
+
+˙˙ $
+®® 
+
+ˇˇ! "
+
+ˇˇ$ %
+
+ÉÉ "
+ÖÖ "$
+
+ÉÉ2 3
+ÉÉ7 8
+ÉÉO P$
+
+ââ !
+ßß %
+¨¨- :
+
+êê (
+ßß* 6$
+
+ÆÆ 
+ØØ 
+±± $
+
+ÆÆ: ;
+ÆÆ? @
+
+ππ #
+»» $
+
+øø $
+ää 
+«« 
+
+ƒƒ .
+ıı7 N
+
+   
+ÃÃ" '
+
+ÃÃ 
+ÕÕ# .
+
+ÕÕ 
+÷÷1 7Ñ
+
+ÿÿ )
+ŸŸ )
+‹‹  -
+ﬁﬁ  -
+··  -
+„„  -
+ÁÁ )
+ËË )
+ÈÈ )
+ÍÍ )
+ÎÎ )
+
+ÿÿB C
+ÿÿG HÑ
+
+˙˙ )
+áá5 G
+ππ $
+◊◊ (
+ÉÉ (
+õõ $
+¥¥ $
+’’ $
+óó (
+‰‰ (
+∂∂ (
+
+ÄÄ *
+àà6 I
+
+êê (
+òò> O$
+
+êê3 8
+íí 
+ìì* /
+
+ññ '
+ôô= M0
+
+ññ2 7
+òò 
+òò #
+õõ, 1
+
+ûû &
+öö< K0
+
+ûû1 6
+†† 
+†† #
+°°( -
+
+®® (
+ùùO `H
+
+®®D H
+™™ 
+™™  
+±±C G
+±±Z ^
+±±t x
+
+ÀÀ4 Gê
+
+ÀÀQ V
+œœ 
+““ 
+ÿÿ 
+›› 
+››0 5
+„„ 
+ÈÈ 
+ÔÔ 
+ÚÚ 
+¯¯ 
+ÇÇ x
+
+ÕÕ 
+œœ" '
+‘‘ 
+ﬂﬂ 
+ÊÊ 
+ÎÎ 
+ÙÙ 
+¸¸ 
+˛˛ 
+ÜÜ H
+
+ââ /
+‘‘ *
+ﬂﬂ *
+ÎÎ .
+ÙÙ .
+˛˛ *
+
+ââ7 ;
+çç 
+
+ââD H
+éé" &
+
+ââS Z
+èè 
+
+ââe j
+êê $
+
+ãã 
+íí $
+
+ôô 2
+ååH c
+ìì )0
+
+ôô= B
+õõ 
+√√ 
+≈≈ 0
+
+†† 
+¬¬ 
+––> M
+‘‘ 
+
+££ #
+ßß* =
+
+ßß !
+®® -<
+
+®® 
+ÆÆ 
+∞∞ '
+±±  )
+≤≤ &0
+
+™™ 
+∞∞ 
+∑∑ 
+ƒƒ 0
+
+´´  
+±± 
+∏∏ 
+∆∆ 0
+
+¨¨ 
+≤≤ 
+ππ 
+«« 
+
+ΩΩ &
+ææ+ A
+
+ææ "
+øø! 3
+
+øø 
+ÀÀ '$
+
+–– 
+—— 
+⁄⁄ 
+
+‘‘5 6
+
+‘‘8 >$
+
+„„ 0
+ççF _
+°° 'T
+
+„„; @
+ÂÂ 
+ÂÂ #
+ÌÌ  
+ÓÓ "
+ÔÔ #
+ÛÛ 0
+
+ÍÍ 
+ÚÚ 
+¸¸< K
+ÄÄ 
+
+ÌÌ 
+ÙÙ 
+
+ÓÓ 
+ıı 
+
+ÔÔ 
+ˆˆ $
+
+¸¸ 
+˝˝ 
+ÜÜ 
+
+ÄÄ3 4
+
+ÄÄ6 <
+
+èè (
+éé> O<
+
+èè3 8
+ëë 
+ëë #
+ññ7 <
+ùùK P
+
+ïï 
+òò +
+
+ññ 
+òò8 ?
+
+òò 
+ùùb h
+
+££ 
+§§ 
+
+®® )
+èè? Q<
+
+®®4 9
+™™ 
+™™ #
+ØØ8 =
+∂∂L Q
+
+ÆÆ 
+±± ,
+
+ØØ 
+±±9 @&
+
+±± 
+∂∂c i∂∂é î
+
+ºº 
+ΩΩ 
+
+¡¡ 1
+êêG a0
+
+¡¡< A
+√√ 
+√√ #
+   
+
+»» 
+œœ! 00
+
+ŒŒ 
+œœ 
+–– 
+““ 
+
+⁄⁄ 
+€€ 
+
+ﬂﬂ ,
+†† !
+
+ÈÈ 
+ÎÎ& +
+
+ÎÎ #
+ÌÌ& 5
+
+ÏÏ 
+ÌÌI O0
+
+˚˚ 4
+ììJ g
+ùù 4
+õõ +l
+
+˚˚? D
+˝˝ 
+˝˝ #
+ÜÜ 
+áá 
+àà 
+ää 
+ãã 
+åå 0
+
+ÇÇ 
+ÖÖ 
+êê@ O
+îî $
+
+êê 
+ëë 
+öö 
+
+îî> ?
+
+îîA G
+
+££ 5
+îîK iT
+
+££@ E
+•• 
+•• #
+’’ 
+÷÷ 
+ÿÿ 
+ŸŸ $
+
+™™ "
+¡¡ 
+√√# 5T
+
+≤≤ %
+ππ !
+∫∫ !
+ªª !
+øø$ 9
+ƒƒ= R
+»» 40
+
+ΩΩ 
+ææ 
+øø 
+¡¡) 3
+
+√√ 
+ƒƒ 
+
+»» 
+◊◊ 0
+
+—— 
+‘‘ 
+››A P
+·· $
+
+›› 
+ﬁﬁ 
+ÁÁ 
+
+··8 9
+
+··; A$
+
+ 5
+ïïK i
+¶¶ 5`
+
+@ E
+ÚÚ 
+àà 
+¶¶ 
+ßß 
+®® 
+©© 
+™™ $
+
+˜˜ #
+ëë 
+ìì# 6T
+
+ˇˇ &
+ÜÜ "
+áá "
+ää &
+èè$ :
+îî= S
+òò  60
+
+çç 
+éé 
+èè 
+ëë* 4
+
+ìì 
+îî 
+
+òò 
+•• 0
+
+°° 
+§§ !
+ØØA P
+≥≥ $
+
+ØØ 
+∞∞ 
+ππ 
+
+≥≥9 :
+
+≥≥< B
+
+ƒƒ ∞
 jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\TableExplorerViewModel.cs
 
  #
@@ -1667,28 +3232,258 @@ jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 WW, -WW1 2
 ]] '66= MF
 ]]2 7__ bb bbD Iee` egg ppV [
-pp rrd lñ&
+pp rrd l±
+uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\TableDesignerViewModel_Validation.cs
+
+
+
+ +
+
+) :
+
+ %
+
+ 
+
+ #
+
+ "
+"" !yy 
+-- .. 
+--& '--+ ,--G H
+DD EE GG7 ?
+GG "HH9 K
+GGG HGGL M 
+\\ )DD %
+õõ )<
+\\3 8__! &__* /__3 8__@ Eaa8 =
+^^ gg kk 
+__ ee (
+aa+ ,aa0 1
+cc ee* 3
+
+qq $
+
+ÖÖ !H
+
+áá 
+èè 
+óó 
+üü 
+££ 
+••J S
+
+åå 
+çç $
+
+åå* +
+åå/ 0
+ååC D$
+
+õõ 
+úú 
+ûû; C
+
+ûû &
+üüJ \
+
+ûûK L
+ûûP Q
+
+•• 
+¶¶ +Œ
+tC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\TableDesignerViewModel_Selection.cs
+
+
+
+ +
+
++ :
+
+ 
+
+ d
+% *    $!! !&& )) **& +00 11# (22  %
+1 > 4
+==  NN ^^ 
+≥≥ 
+
+LL 
+
+\\ "
+\\( 5ee ,
+bb ee. 7
+tt ee 2
+tt% *vv ww xx yy 2
+tt1 6vv $ww #xx  %yy "
+
+ "
+* 0
+ÖÖ& ,
+9 ?
+ÜÜ& ,0
+
+ÖÖ 
+ãã 
+ãã( ,
+êê+ /0
+
+ÜÜ 
+åå 
+åå( ,
+ëë+ /
+
+öö /$
+
+§§ 
+ßß3 8
+∂∂. 3
+
+•• 
+´´ 
+
+√√ 
+
+∆∆ 
+
+…… 
+
+ŒŒ 
+
+÷÷ â
+sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\TableDesignerViewModel_SaveLoad.cs
+
+ +
+
+ (
+  
+== ' "
+==/ 4??. 3
+=== D??5 <
+
+EE 
+
+PP 
+
+\\ #®
+zC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\TableDesignerViewModel_LayoutLifecycle.cs
+
+
+
+ +
+ %
+ÜÜ  
+  -- 
+
+33 '2
+AA XX  YY %]] *cc !P
+HH2 3KK LL MM NN OO PP QQ 
+
+ii (
+ww {{ 
+
+ää )$
+
+öö 
+õõ 
+üüG S$
+
+öö2 3
+öö7 8
+ööE F
+
+ùù 
+°° 
+
+≥≥1 2
+≥≥6 78
+
+–– 1 &;; &
+ˆˆ &
+ññ &
+
+‘‘ 
+⁄⁄ 
+
+‰‰ '
+
+‰‰2 :$
+
+‰‰F N
+ÊÊ 
+ËË) 1
+
+ÏÏ (
+
+ÏÏ9 A$
+
+ÏÏS [
+ÓÓ 
+& .
+
+ÙÙ /
+ËË (
+
+ÙÙ5 <
+ÄÄN U
+
+˘˘2 3
+˘˘7 8
+
+ÄÄ 
+ÇÇ# *
+
+ÇÇ= >
+ÇÇB C
+
+ÇÇU V
+ÇÇZ [
+
+àà4 5
+àà9 :
+
+îî ,
+ %
+
+îî< B
+°°S Y
+
+ôô4 5
+ôô9 :H
+
+°° 
+¢¢ 
+••& 0
+™™ '
+´´# -
+ÆÆ á*
 jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\TableDesignerViewModel.cs
 
- +D
- (ll 
-ÌÌ! *
-÷÷ 
-îî 
-¢¢* 3
-' 9mm  
-& 6nn 
-……! 1,
-, Boo 
-ÑÑ! 7
-¡¡$ :8
-$ 2pp 
-≥≥ #
-∏∏ 
-ΩΩ ,
-& 6qq 
-ññ /
-¢¢ &
+ +F
+ (
+ÄÄ 
+óó! *
+ÄÄ 
+ƒƒ 
+““* 3
+' 9
+ÅÅ "
+& 6
+ÇÇ 
+ÂÂ! 1.
+, B
+ÉÉ 
+¥¥! 7
+ÉÉ$ ::
+$ 2
+ÑÑ 
+ıı #
+ÜÜ  
+êê .
+& 6
+ÖÖ 
+≤≤ /
+ææ &
 
 + 2
 
@@ -1696,445 +3491,511 @@ jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 
 ## $
 
-&& )
+&&1 9
 
-)) 
+)) +
 
-,, j
-// "
-∑∑ 
-„„ 
-ÑÑ\ l
-ãã  
-èè $
-££  
-»» $
-÷÷ $
+,, %
 
-22 
-55 
-……  
+// $
 
-88 $
+22 )
 
-;; 
+55 
 
->> 
+88 ö
+;; "
+”” 
+ˇˇ  
+ˇˇ, <
+ÖÖ $
+ÖÖ0 @
+èè  
+¥¥\ l
+ªª  
+øø $
+””  
+ää $
+òò $
 
-AA 
+>> 
+AA 
+ãã  
 
-DD $
+DD $
 
-GG "
+GG 
 
-JJ 
+JJ 
 
-MM 
+MM 
 
-PP #
+PP $
 
-SS+ 9.
-UU 
-ÃÃ 
-ÑÑ 
-ÜÜ$ -
-VV '
-   ^
-WW )
-√√ %
-ÛÛ $
-˜˜ $
-ˇˇ  
-ˇˇ$ <
-ÅÅ $
-¶¶& >
-YY  /ss 
-ZZ# 5tt 
-[[ *uu 
-\\ *vv 
-]]# 3ww 
-^^# 5xx 
-__ 0yy 
-``# =zz "
-aa .{{ 
-dd ll 
-ee +mm .
-ff (nn *
-hh 4oo! 6
-ii $pp &
-jj (qq *
+SS "
 
-ÄÄ #$
+VV 
 
-êê &
-ÜÜ !
-ªª !0
+YY 
 
-ññ 
-òò 
-££ 
-¶¶" ($
+\\ #
 
-õõ  
-¢¢0 <
-££! -T
+__+ 9.
+aa 
+üü 
+◊◊ 
+ŸŸ$ -
+bb '
+ùù ^
+cc )
+ññ %
+∆∆ $
+   $
+““  
+““$ <
+‘‘ $
+˘˘& >
+ee  /
+áá 
+ff# 5
+àà 
+gg *
+ââ 
+hh *
+ää 
+ii# 3
+ãã 
+jj# 5
+åå 
+kk 0
+çç 
+ll# =
+éé "
+mm .
+èè 
+pp .
+íí 
+qq 0
+ìì 
+rr 1
+îî 
+ss 2
+ïï 
+tt 9
+ññ #
+uu 2
+óó 
+xx 
+ÄÄ 
+yy +
+ÅÅ .
+zz (
+ÇÇ *
+|| 4
+ÉÉ! 6
+}} $
+ÑÑ &
+~~ (
+ÖÖ *
 
-√√ &
-áá !
-ùù !
-ÁÁ %
-ºº !
-°° 
-®® 
+úú #$
 
-…… 
-ÃÃ *F
+¨¨ &
+¢¢ !
+˝˝ !0
 
-‹‹ $ss7 D
-ÏÏ 
-ÌÌ 
-ÓÓ 
-ÔÔ #$
+≤≤ 
+¥¥ 
+øø 
+¬¬" ($
 
-‹‹+ 3
-ÊÊ 
-ÁÁ 
+∑∑  
+ææ0 <
+øø! -T
 
-‡‡ 
-‰‰ 
+ﬂﬂ &
+££ !
+«« !
+ëë %
+˛˛ !
+„„ 
+ÍÍ 
 
-‡‡< =
-‡‡A B
+ÂÂ 
+ËË *H
 
-‚‚ 
-ÌÌ0 7
+¯¯ $
+áá7 D
+ÆÆ 
+ØØ 
+∞∞ 
+±± #$
 
-ÌÌ 
-ÓÓ "
+¯¯+ 3
+íí 
+ìì 
 
-˜˜ 'tt= M
-ÅÅ &T
+åå 
+êê 
 
-˜˜2 7
-˘˘ 
-˛˛ 
-ÄÄ< A
-ÄÄh m
-ÖÖH M
-ää 
+åå@ A
+ååE F
 
-ÖÖ 
-àà "
+éé 
+óó0 7
 
-ïï 5zzE ]
-ÕÕ% =ƒ
+óó 
+òò $
 
-ïï@ E
-óó 
-öö 
-úú6 ;
-úúb g
-ßß 
-ßß $
-ßß. 3
-ßßF K
-™™ 
-™™; @
-´´ 
-´´; @
-±± 
-≤≤ $
-≥≥ $
-∑∑. 3
-ºº 
-ΩΩ 
-ÃÃ 
-ÕÕ 
-ŒŒ 
-œœ 
-–– 
-––" '
+°° '
+àà= M
+√√ &T
+
+°°2 7
+££ 
+®® 
+™™< A
+™™h m
+ØØH M
+¥¥ 
+
+ØØ 
+≤≤ $
+
+øø 5
+ééE ]
+èè% =ƒ
+
+øø@ E
+¡¡ 
+ƒƒ 
+∆∆6 ;
+∆∆b g
 —— 
-——# ($
+—— $
+——. 3
+——F K
+‘‘ 
+‘‘; @
+’’ 
+’’; @
+€€ 
+‹‹ $
+›› $
+··. 3
+ÊÊ 
+ÁÁ 
+ˆˆ 
+˜˜ 
+¯¯ 
+˘˘ 
+˙˙ 
+˙˙" '
+˚˚ 
+˚˚# ($
 
-§§ 
-ßß8 <
-™™/ 3$
+ŒŒ 
+——8 <
+‘‘/ 3$
 
-•• 
-ßßP T
-´´/ 3$
+œœ 
+——P T
+’’/ 3$
 
-∞∞  
-µµ  
-∑∑V f0
+⁄⁄  
+ﬂﬂ  
+··V f0
 
-∞∞9 :
-±± 
-≤≤ 
-≥≥ 
+⁄⁄9 :
+€€ 
+‹‹ 
+›› 
 
-ºº 
+ÊÊ 
 
-ΩΩ 
+ÁÁ 
 
-ÀÀ 
-÷÷% ,"
+ıı 
+ÄÄ% ,0
 
-ÚÚ &uu2 A
-ÒÒ !
+úú %
+ââ2 A
+ÇÇ %
+≥≥ !
 
-ÑÑ 
-ÖÖ 
+¥¥ 
+µµ 
 
-éé 
-îî% ,
+ææ 
+ƒƒ% ,
 
-öö 
+   
 
-õõ 
-¢¢9 @
+ÀÀ 
+““9 @
 
-¢¢ !
-££# 0"
+““ !
+””# 0H
 
-∂∂ &vv2 A
-ÙÙ !$
+ﬂﬂ 
+·· 
+··B N
+ÂÂ !
+ÂÂ5 A
+ÎÎL X$
 
-¡¡ 
-√√# *
-√√N UH
+¯¯ &
+ää2 A
+∂∂ !$
 
-√√  
-≈≈  
-««! -
-»»' 3
-……# /
-ŒŒ- 9
+ÉÉ 
+ÖÖ# *
+ÖÖN UH
 
-√√: ;
-√√? @
+ÖÖ  
+áá  
+ââ! -
+ää' 3
+ãã# /
+êê- 9
 
-ÊÊ 5$
+ÖÖ: ;
+ÖÖ? @
 
-˛˛ 
-ˇˇ 
-ÅÅ' 4
+®® 5$
 
-ïï 8x
+¿¿ 
+¡¡ 
+√√' 4
 
-öö 
-§§  
-´´ 
-¨¨ 
-ØØ 
-ØØ' 0
-∂∂ 
-∑∑ 
-ππ 
-ππ$ -$
+◊◊ 8x
 
-ßß 
-´´ 
-ØØ #$
+‹‹ 
+ÊÊ  
+ÌÌ 
+ÓÓ 
+ÒÒ 
+ÒÒ' 0
+¯¯ 
+˘˘ 
+˚˚ 
+˚˚$ -$
 
-®® 
-¨¨ 
-ØØ6 :$
+ÈÈ 
+ÌÌ 
+ÒÒ #$
 
-¿¿  
-   '
-ÕÕ> N
+ÍÍ 
+ÓÓ 
+ÒÒ6 :$
 
-ÕÕ 
-ŒŒ 
+ÇÇ  
+åå '
+èè> N
 
-›› .
+èè 
+êê 
 
-‚‚ 
-ÍÍ" (0
+üü .
 
-ÚÚ  
-ÛÛ  
-ÛÛ, 8
-˙˙ *
+§§ 
+¨¨" (0
 
-áá ww6 ?$
+¥¥  
+µµ  
+µµ, 8
+ºº *
 
-áá% *
-ââ 
-ää 
+…… 
+ãã6 ?$
 
-çç xx8 C$
+……% *
+ÀÀ 
+ÃÃ 
 
-çç' ,
-èè 
-êê 
+œœ 
+åå8 C$
 
-ìì !yy3 C
+œœ' ,
+—— 
+““ 
 
-òò *{{6 I
+’’ !
+çç3 C
 
-úú 
-ûû 
+⁄⁄ *
+èè6 I
 
-§§ '
+ﬁﬁ 
+‡‡ 
 
-§§2 7
-¶¶ 
+ÊÊ '
 
-¨¨ "
+ÊÊ2 7
+ËË 
 
-ÆÆ- .
-ÆÆ2 3$
+ÓÓ "
 
-±± 2
-ÖÖ" 7
-úú" 7
+- .
+2 3$
 
-±±: ?
-≥≥: ?
+ÛÛ 2
+ØØ" 7
+ﬁﬁ" 7
 
-±±H O
-≥≥A Hà
+ÛÛ: ?
+ıı: ?
 
-∂∂ %
-ªª  
-ÛÛ !
-ÄÄ $
-ëë  
-úú  
-∑∑ $
-ÊÊ $
-ÌÌ  
-ˆˆ  
-¸¸  
-áá $
-ÆÆ  
-››  
-˘˘ $
-áá $
-êê  
-±± $
+ÛÛH O
+ııA H0
+
+¯¯ 
+˝˝ 
+ÖÖ 
+ää ∏
+
+˙˙ %
+◊◊  
+áá (
+ùù  
+™™ $
+ªª  
+∆∆  
+·· $
+êê $
+óó  
+††  
+¶¶  
+∑∑ $
+„„ $
+ÁÁ $
+ÎÎ $
+  
+üü  
 ªª $
-ÿÿ  
-ıı (
-ÇÇ  
+…… $
+““  
+ÛÛ $
+˝˝ $
+öö  
+∑∑ (
+ƒƒ  $
 
-∂∂- 4
-∏∏D KH
+˙˙- 4
+ˇˇU \
+ÜÜH OH
 
-ªª '
-ïï &
-§§ &
-ãã "
-”” "
-˝˝ "
+éé '
+≈≈ &
+‘‘ &
+ÕÕ "
+ïï "
+øø "
 
-ªª/ 6
-ΩΩ9 @
+éé/ 6
+êê9 @
 
-¡¡ #
-ÜÜ #H
+îî #
+ŸŸ #H
 
-¡¡) 1
-ÃÃ  
-—— 
-““ 
-”” 
-‘‘ <
+îî) 1
+üü  
+§§ 
+•• 
+¶¶ 
+ßß <
 
-œœ 
-—— $
-““ $
-””" )
-‘‘# *
+¢¢ 
+§§ $
+•• $
+¶¶" )
+ßß# *
 
-–– 
-ŸŸ& 30
+££ 
+¨¨& 30
 
-ÿÿ 
-‹‹ 
-ﬁﬁC P
-ﬂﬂ$ 1
+´´ 
+ØØ 
+±±C P
+≤≤$ 1
 
-ÿÿ- 2
-ŸŸ $
+´´- 2
+¨¨ $
 
-‰‰ 
-ŸŸ l
+∑∑ 
+¨¨ l
 
-‰‰) .
-ÊÊ 
-ÊÊ+ 0
-ÁÁ 
-ÁÁ- 2
-ÈÈ 
-ÍÍ 
-ÎÎ 
-ÏÏ T
+∑∑) .
+ππ 
+ππ+ 0
+∫∫ 
+∫∫- 2
+ºº 
+ΩΩ 
+ææ 
+øø T
 
-‰‰5 B
-ÈÈ &
-ÈÈ+ 8
-ÍÍ& 3
-ÎÎ &
-ÎÎ+ 8
-ÏÏ' 4
+∑∑5 B
+ºº &
+ºº+ 8
+ΩΩ& 3
+ææ &
+ææ+ 8
+øø' 4
 
-ÊÊ 
-ÍÍ #
+ππ 
+ΩΩ #
 
-ÁÁ 
-ÏÏ $
+∫∫ 
+øø $
 
-ÔÔ '
+¬¬ '
 
-˝˝ $
+–– $
 
-êê #$
+„„ #$
 
-êê( -
-íí 
-ôô" '$
+„„( -
+ÂÂ 
+ÏÏ" '$
 
-êê3 9
-ìì 
-öö# )$
+„„3 9
+ÊÊ 
+ÌÌ# )$
 
-êêB Q
-îî )
-õõ, ;
+„„B Q
+ÁÁ )
+ÓÓ, ;
 
-üü 3$
+ÚÚ 3$
 
-ØØ 
-üü 
-°° %
+ÇÇ 
+ÚÚ 
+ÙÙ %
 
-±± 
-££ 
+ÑÑ 
+ˆˆ 
 
-≤≤ 
-§§ 
+ÖÖ 
+˜˜ 
 
-≥≥ 
-•• 
+ÜÜ 
+¯¯ 
 
-¥¥ '
-¶¶ #
+áá '
+˘˘ #
 
-µµ 
-ßß 
+àà 
+˙˙ 
 
-∂∂ 
-®® 
+ââ 
+˚˚ 
 
-∑∑ "
-©© 
+ää "
+¸¸ 
 
-∏∏ 
-™™ ∞
+ãã 
+˝˝ ∞
 iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\SystemConfigViewModel.cs
 
  * 
@@ -2386,385 +4247,607 @@ iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 õõ 
 
 ≠≠ 
-¥¥ Ú#
-hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\SwitchboardViewModel.cs
-
- !ê
-' 9^^ {{0 B}}/ A
-ÅÅ 
-éé -
-úú (
-ßß (
-¨¨ 
-±± $
-∫∫ -
-»» (
-’’ )
-€€ $
-‡‡ $
-ÙÙ (
-¸¸ (
-ôô (
-üü (
-…… "
-ŒŒ (
-ﬁﬁ %
-ÁÁ 
-ÏÏ 
-ıı 
-˝˝  
-ÖÖ  
-≠≠ %
-√√ $
-»» %
-›› -
-ÜÜ (
-öö &
-ÆÆ &h
-, B__ 
-ßß  6
-∞∞  6
-ùù  6
-ßß -
-ªª  6
-ÓÓ$ :
-ÅÅ , 
-P f`` 
-◊◊  6 
-5 Daa 
-ïï " 
-6 Fbb 
-©© #
-+ @cc  
-  N bdd 
-∆∆# 7Ä
-!!" .ee 
-óó 
-££ %
-´´b n
-‰‰ 
-ÈÈ %
-åå 
-ëë "
-†† 
-•• "Å
-""& 6ff 
-ùù  
-§§ -´´p Ä
-ïï 
-öö )
-≥≥ 
-∏∏ )
-‰‰8 H
-ÍÍ -
-$$, 8'' (( +
-%%+ 6
-ÿÿ 
-++ &.. // ."
-,, $
-‰‰ 
-ÁÁG U
-22 &oo 
-33 $
-ÖÖ 
-44 "pp 
-55 #qq 
-66 %rr 
-77 !ss 
-88 %tt 
-99 *uu 
-:: (vv 
-;; -ww !
-<< ,xx  
-== ,yy  
->> "{{ 
-@@ !}} 
-AA +~~ 
-BB % 
-CC !
-ÄÄ 
-DD #
-ÉÉ ,
-FF& 6gg 
-òò -
-ƒƒ -,
-GG+ =hh 
-óó 1
-√√ 18
-HH/ Hii !
-ÈÈ '
-àà /
-≠≠ / 
-II* >jj 
-ËË: N 
-JJ& 6kk 
-´´; K 
-KKT gll 
-´´M `
-NN +^^ .
-OO 4__! 6
-PPC X``! 6
-QQ( 6aa (
-RR) 8bb *
-SS 2cc  4
-TTA Tdd 2
-UU  ee "
-VV (ff *
-WW (gg *
-XX /hh .
-YY" :ii$ <
-ZZ 0jj 2
-[[ (kk *
-\\G Yll 0
-
-ââ &2 A0
-
-åå 
-çç 
-éé> L
-íí  
-
-éé 
-êê $
-
-íí 
-ìì& )
-óó: =
-
-óó 
-òò@ L$
-
-òò 
-öö 
-•• 
-
-°°  
-••) 9
-
-µµ ,~~8 M0
-
-∏∏ 
-ππ 
-∫∫> L
-ææ  
-
-∫∫ 
-ºº $
-
-ææ 
-øø& )
-√√: =
-
-√√ 
-ƒƒ@ L$
-
-ƒƒ 
-∆∆ 
-”” 
-
-ÕÕ "
-””) ;
-
-⁄⁄ 
-€€5 ;
-
-‰‰ %
-ÖÖ1 ?0
-
-ËË 
-ÈÈD O
-ÎÎ 
-ÌÌ$ /T
-
-ÌÌ !
- !
-ÙÙZ k
-¯¯ !
-¸¸Z k
-ÇÇ !
-¿¿ /0
-
-ÄÄ 
-åå "
-íí "
-¡¡! /0
-
-ÜÜ  
-ààD P
-ää  
-åå% 1
-
-££ 
-ΩΩ "0
-
-§§ 
-ßßW a
-∞∞W a
-ææ '<
-
-ßß 
-®® 
-∞∞ 
-±± 
-∏∏ !
-
-´´  
-≠≠D P
-
-∏∏ 
-øø !
-
-ªª 
-∆∆D K
-
-∆∆ 
-……J P
-
-”” &oo3 C
-
-◊◊ 
-ÿÿ> E
-
-ÿÿN O
-ÿÿS T
-
-‚‚ rr- 7
-
- ss) /$
-
-ÛÛ 
-ÙÙ 
-ıı/ 5
-
-¯¯ !tt- 7$
-
-˚˚ 
-¸¸ 
-˝˝1 7
-
-ÄÄ +uu7 K$
-
-ÉÉ 
-ÑÑ 
-ÖÖ1 7
-
-àà )vv5 G
-
-çç .ww: Q
-
-íí -xx9 O
-
-öö 
-ùùW a<
-
-ùù 
-ûû 
-°° 
-¶¶ 
-ßß: A
-
-††  
-¶¶( 3
-
-±± -yy9 O
-
-∏∏ 
-ªªW a$
-
-ªª 
-ææ 
-¿¿: A$
-
-ΩΩ 
-¿¿ 
-√√H O$
-
-ÃÃ 2
-ää *
-èè *H
-
-ÃÃ8 @
-ää+ 3
-èè+ 3
-ÿÿ 
-ŸŸ 
-ˆˆ !0
-
-ÃÃG N
-èè; B
-—— 
-ÒÒ 0
-
-ŒŒ 
-”” 
-ÿÿ 
-‹‹E J0
-
-œœ 
-‘‘ 
-ŸŸ 
-‹‹L S0
-
-‹‹ 
-››> D
-··@ F
-‚‚ 
-
-›› 
-ﬂﬂ 0
-
-·· 
-ÛÛX ^
-¯¯T Z
-˝˝T Z0
-
-‚‚ 
-ÛÛh n
-¯¯d j
-˝˝d j0
-
-ÈÈ 
-ÛÛ` f
-¯¯\ b
-˝˝\ b
-
-ÍÍ 
-ÓÓ[ el
-
-ÓÓ 
-ÔÔ 
-ÛÛL S
-ÙÙ 
-¯¯H O
-˘˘ 
-˝˝H O
-˛˛ 
-ÅÅ9 @
-
-ÛÛ 
-ÙÙ+ 0
-
-¯¯ 
-˘˘& ,
-
-˝˝ 
-˛˛( ,
-
-ää #pp/ ;
-
-ëë 
-íí5 ;
-
-íí 
-ïï/ 6
-
-ûû $qq0 =
-
-•• 
-¶¶6 <
-
-¶¶ 
-©©0 7ÿ
+¥¥ ¶1
+hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\SwitchboardViewModel.cs"
+ !
+ññ 1
+©© $∫
+' 9
+¨¨ 
+ÃÃ0 B
+ŒŒ/ A
+““ 
+ˆˆ -
+ÑÑ (
+èè (
+îî 
+ôô $
+¢¢ -
+∞∞ (
+ΩΩ )
+√√ $
+»» $
+‹‹ (
+‰‰ (
+ÅÅ (
+áá (
+±± "
+∂∂ (
+∆∆ %
+œœ 
+‘‘ 
+›› 
+ÂÂ  
+ÌÌ  
+üü %
+µµ $
+∫∫ %
+œœ -
+¯¯ (
+åå &
+†† &
+÷÷ "
+ŸŸ "
+ÓÓ "v
+, B
+≠≠ 
+èè  6
+òò  6
+èè  6
+ôô -
+≠≠  6
+‡‡$ :
+ÛÛ ,
+ââ$ :.
+P f
+ÆÆ 
+øø  6
+ˇˇ  6"
+Z s
+ØØ !
+ÉÉ! :"
+  5 D
+∞∞ 
+áá ""
+!!6 F
+±± 
+õõ #
+""+ @
+≤≤ "
+##N b
+≥≥ 
+ÆÆ# 7¶
+$$" .
+¥¥ 
+ˇˇ 
+ãã %
+ììb n
+÷÷ 
+€€ %
+˛˛ 
+ÉÉ "
+íí 
+óó "
+™™ &
+´´ 
+´´6 Bß
+%%& 6
+µµ 
+ÖÖ  
+åå -ììp Ä
+áá 
+åå )
+•• 
+™™ )
+÷÷8 H
+‹‹ -
+ØØ %
+áá  
+ââ[ k
+''( 4
+ΩΩ 
+**3 E-- !.. 1
+++2 C
+∏∏ 
+223 E55 !66 1
+332 C
+ªª 
+993 E<< !== 1
+::2 C
+ΩΩ 
+@@3 FCC "DD 2
+AA2 D
+øø 
+HH #KK LL /
+II !
+™™ 
+OO RR SS *
+PP 
+ØØ 
+VV YY ZZ +.
+WW 
+≤≤ 
+çç 
+ëë 
+^^  aa bb /
+__ 
+ÄÄ 
+ee #hh "ii 2
+ff !
+ÑÑ 
+ll, 8oo pp +
+mm+ 6
+¿¿ 
+ss &vv ww ."
+tt $
+ÃÃ 
+œœG U
+zz &
+¿¿ 
+{{ $
+‰‰ 
+|| "
+¡¡ 
+}} #
+¬¬ 
+~~ %
+√√ 
+ !
+ƒƒ 
+
+ÄÄ %
+≈≈ 
+
+ÅÅ *
+∆∆ 
+
+ÇÇ (
+«« 
+
+ÉÉ -
+»» !
+
+ÑÑ ,
+……  
+
+ÖÖ ,
+    
+
+ÜÜ "
+ÃÃ 
+
+àà !
+ŒŒ 
+
+ââ +
+œœ 
+
+ää %
+–– 
+
+ãã !
+—— 
+
+åå #
+’’ 
+
+çç #
+ÌÌ 
+
+éé "
+ÓÓ 0
+
+êê& 6
+∂∂ 
+ÄÄ -
+¨¨ -0
+
+ëë+ =
+∑∑ 
+ˇˇ 1
+´´ 1<
+
+íí/ H
+∏∏ !
+—— '
+ /
+ïï /$
+
+ìì* >
+ππ 
+––: N$
+
+îî& 6
+∫∫ 
+ìì; K$
+
+ïïT g
+ªª 
+ììM `<
+
+ññ3 :
+ºº 
+ﬁﬁ 
+ÒÒ 
+óó 
+
+ôô +
+¨¨ .
+
+öö 4
+≠≠! 6
+
+õõC X
+ÆÆ! 6
+
+úúM e
+ØØ$ <
+
+ùù( 6
+∞∞ (
+
+ûû) 8
+±± *
+
+üü 2
+≤≤  4
+
+††A T
+≥≥ 2
+
+°°  
+¥¥ "
+
+¢¢ (
+µµ *
+
+££ (
+∂∂ *
+
+§§ /
+∑∑ .
+
+••" :
+∏∏$ <
+
+¶¶ 0
+ππ 2
+
+ßß (
+∫∫ *
+
+®®G Y
+ªª 0
+
+©©& ,
+ºº 
+
+™™% 8
+ΩΩ *$
+
+ÒÒ &
+––2 A
+ﬂﬂ #0
+
+ÙÙ 
+ıı 
+ˆˆ> L
+˙˙  
+
+ˆˆ 
+¯¯ $
+
+˙˙ 
+˚˚& )
+ˇˇ: =
+
+ˇˇ 
+ÄÄ@ L$
+
+ÄÄ 
+ÇÇ 
+çç 
+
+ââ  
+çç) 9$
+
+ùù ,
+œœ8 M
+‹‹ )0
+
+†† 
+°° 
+¢¢> L
+¶¶  
+
+¢¢ 
+§§ $
+
+¶¶ 
+ßß& )
+´´: =
+
+´´ 
+¨¨@ L$
+
+¨¨ 
+ÆÆ 
+ªª 
+
+µµ "
+ªª) ;
+
+¬¬ 
+√√5 ;$
+
+ÃÃ %
+‰‰1 ?
+–– "0
+
+–– 
+——D O
+”” 
+’’$ /T
+
+’’ !
+ÿÿ !
+‹‹Z k
+‡‡ !
+‰‰Z k
+ÍÍ !
+®® /0
+
+ËË 
+ÙÙ "
+˙˙ "
+©©! /0
+
+ÓÓ  
+D P
+ÚÚ  
+ÙÙ% 1
+
+ãã 
+•• "0
+
+åå 
+èèW a
+òòW a
+¶¶ '<
+
+èè 
+êê 
+òò 
+ôô 
+†† !
+
+ìì  
+ïïD P
+
+†† 
+ßß !
+
+££ 
+ÆÆD K
+
+ÆÆ 
+±±J P
+
+ªª &
+¿¿3 C
+
+øø 
+¿¿> E
+
+¿¿N O
+¿¿S T
+
+   
+√√- 7$
+
+ÿÿ 
+ƒƒ) /
+”” $
+
+€€ 
+‹‹ 
+››/ 5$
+
+‡‡ !
+≈≈- 7
+ÂÂ $
+
+„„ 
+‰‰ 
+ÂÂ1 7$
+
+ËË +
+∆∆7 K
+‚‚ ($
+
+ÎÎ 
+ÏÏ 
+ÌÌ1 7
+
+ )
+««5 G
+
+ıı .
+»»: Q
+
+˙˙ -
+……9 O$
+
+˝˝ 
+˛˛ 
+ÄÄ )$
+
+ÄÄ 
+ÅÅ 
+ÅÅ# -
+
+åå 
+èèW a<
+
+èè 
+êê 
+ìì 
+òò 
+ôô: A
+
+íí  
+òò( 3
+
+££ -
+  9 O
+
+™™ 
+≠≠W a$
+
+≠≠ 
+∞∞ 
+≤≤: A$
+
+ØØ 
+≤≤ 
+µµH O$
+
+ææ 2
+ÚÚ *
+˜˜ *H
+
+ææ8 @
+ÚÚ+ 3
+˜˜+ 3
+   
+ÀÀ 
+ËË !0
+
+ææG N
+˜˜; B
+√√ 
+„„ 0
+
+¿¿ 
+≈≈ 
+   
+ŒŒE J0
+
+¡¡ 
+∆∆ 
+ÀÀ 
+ŒŒL S0
+
+ŒŒ 
+œœ> D
+””@ F
+‘‘ 
+
+œœ 
+—— 0
+
+”” 
+ÂÂX ^
+ÍÍT Z
+ÔÔT Z0
+
+‘‘ 
+ÂÂh n
+ÍÍd j
+ÔÔd j0
+
+€€ 
+ÂÂ` f
+ÍÍ\ b
+ÔÔ\ b
+
+‹‹ 
+‡‡[ el
+
+‡‡ 
+·· 
+ÂÂL S
+ÊÊ 
+ÍÍH O
+ÎÎ 
+ÔÔH O
+ 
+ÛÛ9 @
+
+ÂÂ 
+ÊÊ+ 0
+
+ÍÍ 
+ÎÎ& ,
+
+ÔÔ 
+( ,$
+
+¸¸ #
+¡¡/ ;
+ËË  
+
+ÉÉ 
+ÑÑ5 ;
+
+ÑÑ 
+áá/ 6$
+
+êê $
+¬¬0 =
+ÎÎ !
+
+óó 
+òò6 <
+
+òò 
+õõ0 7
+
+ßß &
+ÁÁ 
+
+ππ *
+ÍÍ !<
+
+ªª 
+∏∏G N
+ºº 
+ææ 
+¿¿ 
+
+ºº 
+ºº  
+
+ææ 
+ææ  
+
+¿¿ 
+¿¿  
+
+««  
+ÌÌ= L0
+
+««3 9
+…… 
+ÕÕ 
+ÒÒH N
+
+˙˙ ,
+ÓÓ/ E
+
+ˇˇ 
+ÄÄ %
+
+ÉÉ 
+ÑÑ! )$
+
+ââ 
+ää 
+åå4 ;$
+
+åå 
+çç+ 2
+çç< Cÿ
 fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\SwipeCardViewModel.cs
 
  +
@@ -3248,411 +5331,658 @@ jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 √√2 3
 √√7 8
 
-–– &YY2 Aâ#
-cC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\SettleViewModel.cs
-
- # 
-? I,, 
-ÉÉ % 
-R a-- 
-™™ . 
-N [.. 
-∫∫ , 
-4 B// 
-≥≥  ∞
-0 B00 
-¥¥ 
-ƒƒ )
-’’ %
-‚‚ 
-ÊÊ 
-ˇˇ "
-ãã  
-ìì -
-ûû# 5
-±±# 5
-◊◊! 3
-›› 
-ÇÇ $\
-" .11 
-±± 
-≤≤ %
-ææ )
-ææK W
-¯¯ 
-˛˛ %,
-& 622 
-¯¯4 D
-ˇˇ - 
-, B33 
-êê% ; 
-< K44 
- !
- JJ MM  '
- !bb cc ,(
- XX) 5hh kk  ,"
- 
-àà 
-ãã  &"
- "
-îî 
-óó  ."
- 
-˘˘ 
-ÉÉR [
-""2 ;,, 
-##E S-- (
-$$A M.. $
-%%' 4// &
-&&# 400 .
-''  11 "
-(( (22 *
-)) 433! 6
-**/ =44 (Ê
-HH || %}}" (~~! '  &
-ÄÄ  &
-ÅÅ" (
-ÅÅ> D
-ÇÇ %
-ÉÉ 
-ÑÑ 
-¥¥ 
-ºº !
-ΩΩ %
-÷÷ 
+–– &YY2 Aï7
+cC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\SettleViewModel.cs
+ #$$ ,== 
+? IBB 
+R aCC  
+N [DD 
+ÅÅ , 
+4 BEE 
+ËË  Ñ
+0 BFF 
+ÈÈ 
+ôô -
+´´ %
+∏∏ 
+ºº 
+œœ "
+ŸŸ "
+€€ ,
+„„ 
+ÌÌ -
+¯¯# 5
+ãã# 5
+±±! 3
+∑∑ 
+‹‹ $
+òò# 5
+ÑÑ# 5
+ãã &
+§§# 5
+ÕÕ# 5t
+  " .GG 
+ÊÊ 
+ÁÁ %
+˚˚ 
+ÖÖ( 4
+œœ  
+’’ )
+ÏÏ 
+êê +,
+!!& 6HH 
+œœ8 H
+÷÷! 1
+"", BII  
+##< KJJ 
+ØØ !,
+$$. 5KK 
+◊◊ 
+§§ 
+%%2 FLL  
+&&6 FMM 
+ââ $h
+''* >NN 
+ƒƒ 3
+¥¥ 3
+¯¯ 3
+““ 3
+˚˚ 3
+õõ 3
+√√ 3
+))( 4OO 
+++ ll oo  '"
+,, !
+àà 
+ââ ,,
+-- ~~) 5
+êê 
+ìì  ,"
+.. 
+∑∑ 
+∫∫  &"
+// "
+√√ 
+∆∆  ."
+11 
+∏∏ 
+««\ e
+442 ;BB 
+55E SCC (
+66A MDD $
+77' 4EE &
+88# 4FF .
+99  GG "
+:: (HH *
+;; 4II! 6
+<</ =JJ (
+==! 'KK 
+>>% 8LL 2OO *
+??) 8MM *MMU d
+@@ 0NN 2NN] pÍ
+jj 
+§§ %
+••" (
+¶¶! '
+ßß  &
+®®  &
+©©" (
+©©> D
+™™ %
+«« 
+…… 
+˙˙ 
 ÉÉ !
-ﬂﬂ 
-ﬂﬂ %
-ﬂﬂE K
-êê ƒ
-`` ZZ rr  vv  
-ÀÀ 
-◊◊ 
-„„" .
-‰‰ 
-ßß 
-ÂÂ *
-ÂÂ2 >
-ÊÊ 
-ÈÈ 
-ÈÈ$ 0
-ÔÔ 
-ÚÚ 
-çç2 >Ç
-ff 
-   
-ÿÿ 
-ÂÂ 
-ôô 
-õõ 
-†† 
-¶¶ 
-¨¨ 
-ÆÆ 
-ÆÆ %
-mm4 :rr# )
-|| RR) 4
-}} OO) 4
-~~ PP) 3∞
- QQ) 2
-ÑÑ  )
-ææ 
-¬¬# ,
-√√  
-—— 
-◊◊  
-ÿÿ 
-ÂÂA J
-ÁÁ 
-ÈÈ4 =
-ÎÎ '
-ÒÒ '
-ÚÚ (
+ÑÑ %
+ùù 
+⁄⁄ %
+µµ 
+µµ %
+µµE K
+ÍÍ 
+ÊÊ 
+çç 
+éé 
+èè $
+§§X ^
+ØØ 
+∂∂( .
+ΩΩ 
+ΩΩ" (
+ÕÕ 
+ÿÿ %
+ÛÛ! '
+ÛÛ3 9
+˜˜ 
+ˇˇ% +
+óó 
+üü% +
+üüN T
+øø 
+««% +
+»»F LÃ
 
-ÄÄ SS) 2
+ÜÜ 
+ÄÄ 
+öö  
+ûû  
+ÄÄ 
+åå 
+òò" .
+ôô 
+ÌÌ 
+ºº" .
+ºº6 B
+ΩΩ "
+¿¿  
+¿¿( 4
+∆∆  
+……  
+‰‰6 BÑ
 
-ÅÅ TT) 5
+éé 
+ˇˇ 
+çç 
+öö 
+ﬂﬂ 
+·· 
+ÊÊ 
+ÏÏ 
+ÚÚ 
+ÙÙ 
+ÙÙ %
 
-ÇÇ UU) 2
+ïï4 :
+öö# )
 
-ÑÑ 
+§§ tt) 4
 
-ÜÜ 
-ôô 
-∏∏ 
-ÛÛ $
-ÄÄ 
-ÜÜ 
-ãã 
-∑∑ 
-«« 
-ÃÃ 
-⁄⁄ 
-ﬂﬂ 
-˙˙ 
-ôô 
-∆∆ 
-ÀÀ 
-ŒŒ 
- 
-ÙÙ 
-˘˘ $
+•• qq) 4
 
-íí  
-çç 
-ÒÒ 
+¶¶ rr) 3≤
 
-††  -88 
+ßß ss) 2
+¨¨  )
+ÛÛ 
+˜˜# ,
+¯¯  
+ÜÜ 
+åå  
+çç 
+ººE N
+ææ 
+¿¿8 A
+¬¬" +
+»»" +
+……# ,
 
-°° *99 
+®® uu) 2
 
-¢¢ (:: 
+©© vv) 5
 
-££% :;; 
+™™ ww) 2
 
-§§ 3<< 
+¨¨ $
 
-•• $== 
+ÆÆ  
+±± 
+≤≤ .
 
-¶¶ )?? 
+ØØ {{ Ë
 
-ßß *@@ 
+µµ 
+»» 
+ÌÌ 
+≤≤ $
+øø 
+ÀÀ 
+—— 
+˚˚0 5
+˛˛ 
+éé 
+ìì 
+°° 
+±± 
+—— 
+ÓÓ 
+õõ 
+°° 
+®® 
+   
+ŒŒ 
+”” 
+ËË 
+ÓÓ 
+•• 
+«« 
+‚‚ 
+ËË 
+ëë 
+ππ 
+⁄⁄ x
 
-®® ,AA 
+¡¡  
+ºº 
+∞∞ 
+ûû !
+¿¿ 
+ﬁﬁ !
+àà !
+´´ %
+ØØ %
+—— !
 
-©© *DD 
+œœ  -SS 
 
-™™  0EE 
+–– *TT 
 
-¨¨ $AA0 =
+—— (UU 
 
-≤≤ 
-≥≥J P
+““% :VV 
 
-ºº ??- 90
+”” 3WW 
 
-¬¬ 
-√√ 
-   
-ÀÀ 
+‘‘ $XX 
 
-ŒŒ DD. ;
+’’ )ZZ 
 
-€€ EE4 ?
+÷÷ *[[ 
 
-€€% .
-ﬁﬁ &$
+◊◊ ,\\ 
 
-ﬁﬁ0 6
-‡‡ 
-„„1 7$
+ÿÿ *__  
 
-„„ 
-‰‰ *
-ÂÂ )
+ŸŸ  0`` aa 
 
-ÈÈ $@@. ;
+⁄⁄ 6bb !
 
-˜˜ %
+€€ .cc 
 
-˜˜+ 3
-˘˘ 0
+‹‹ 2dd 
 
-˝˝ &
-˙˙ 
-√√ %
-¥¥ %
+›› .ee 
 
-ìì 881 >0
+ﬁﬁ 0ff 
 
-ìì' ,
-ïï 
-óó 
-††  "
+ﬂﬂ 1gg 
 
-§§ 99. ;
-∑∑ 
+·· $\\0 =
 
-™™ ::, 7
+ÁÁ 
+ËËJ P
 
-≤≤ +<<7 K$
+ÒÒ ZZ- 90
 
-∫∫ 
-¡¡ 
-«« "
+˜˜ 
+¯¯ 
+ˇˇ 
+ÄÄ 
 
-‘‘ *;;> Q
-ÌÌ )0
+ÉÉ __. ; 
 
-‘‘3 D
-÷÷3 D
-ÿÿE V
-⁄⁄- >H
+êê ``4 ?aa4 ?
 
-ÿÿ` k
-ÑÑ )
-ãã 
-ùù  
-§§  
-∫∫ 0
+êê% .
+ìì &$
 
-ÂÂ 
-ÎÎ 
-ÒÒ 
-ÖÖ# .$
+ìì0 6
+ïï 
+òò1 7$
 
-ˆˆ 
-ÖÖ0 8
-çç@ H
+òò 
+ôô *
+öö )
 
-˛˛ 
-ÜÜ) /$
+ûû $[[. ;$
 
-ˇˇ 
-áá '
-êê\ f`
+°° 
+¢¢ 
+§§ )$
 
-ÅÅ 
-çç 
-ìì 
-†† 
-°° 
-¢¢ 
-ßß 
-™™; B$
+§§ 
+•• 
+••# -
 
-êê 
-ëë 
-ìì- 4<
+∂∂ %
 
-™™ 
-¨¨ 
-∫∫3 9
-¿¿G M
-∆∆( .
+∂∂+ 3
+∏∏ `
 
-ΩΩ !
-ƒƒ: F
+ºº &
+ππ 
+ää %
+ââ )
+ùù )
+ªª !
+≥≥ )
+‘‘ )
 
-ŒŒ 
-’’6 <"
+ƒƒ 
+∆∆' ,
 
-›› ==( /
-ØØ 
+∆∆ $
+«« /
 
-ÍÍ ,BB 
+ŸŸ SS1 >0
 
-ÎÎ -CC 
+ŸŸ' ,
+€€ 
+›› 
+ÊÊ  "
 
-ÌÌ $BB0 =<
+ÍÍ TT. ;
+åå !
 
-ÔÔ 
- 
+ UU, 7
+
+¯¯ +WW7 K$
+
+ÅÅ 
+àà 
+éé "
+
+õõ *VV> Q
+«« )0
+
+õõ3 D
+ùù3 D
+üüE V
+°°- >H
+
+üü` k
+€€" -
+‚‚ 
+ÚÚ $
+˘˘ $
+èè $
+
+¶¶ 
+ßß 
+©© )$
+
+©© 
+™™ 
+™™# -$
+
+¥¥ 
+∂∂, 1
+∑∑, 1
+
+∂∂ )
+ˇˇ# 8
+
+∑∑ )
+ÁÁ) >0
+
+ºº 
+¬¬ 
+»» 
+‹‹' 2$
+
+ÕÕ 
+‹‹4 <
+‰‰D L
+
+’’ 
+››- 3$
+
+÷÷ 
+ﬁﬁ! +
+ÁÁ_ i`
+
+ÿÿ 
+‰‰ 
+ÍÍ  
+ıı 
+ˆˆ 
+˜˜ 
+¸¸ 
+ˇˇE L$
+
+ÁÁ  
+ËË  
+ÍÍ1 8<
+
+ˇˇ 
 ÅÅ 
-ÇÇ 
-ãã1 7
+èè7 =
+ïïK Q
+õõ, 2
 
-˘˘ 
+íí %
+ôô> J
 
-éé %CC1 ?$
+§§ 
+´´6 <.
 
-íí 
-ìì> D
-√√& ,$
+≥≥ XX( /
+ÑÑ 
+¬¬ 
 
-ìì 
-öö 
-≠≠ 0
+¿¿ ,]] 
 
-ùù 
-ûûF P
-££ )
-§§ )
+¡¡ -^^ 
 
-ûû 
-†† $
+√√ $]]0 =<
 
-££ 
-¶¶/ 7
-©©B J
+≈≈ 
+∆∆ 
+—— 
+““ 
+„„/ 5
 
-§§ 
-©©8 @0
+…… 
+‰‰ 
 
-∞∞ 
-±±F P
-∂∂ )
-∑∑ )
+ËË %^^1 ?$
 
-±± 
-≥≥ $
+ÏÏ 
+ÌÌ> D
+ùù& ,$
 
-∂∂ 
-ππ/ 7
-ººB J
+ÌÌ 
+ÙÙ 
+áá 0
 
-∑∑ 
-ºº8 @0
+˜˜ 
+¯¯F P
+˝˝ )
+˛˛ )
 
-ÀÀ 4
-©© 7
-ºº 7
-∆∆ 3$
+¯¯ 
+˙˙ $
 
-ÀÀ< D
-‘‘9 A
-2 :
+˝˝ 
+ÄÄ/ 7
+ÉÉB J
 
-ÀÀM U
+˛˛ 
+ÉÉ8 @0
 
-ÀÀ^ h
-> H<
+ää 
+ããF P
+êê )
+ëë )
 
-”” 
-‘‘ 
-◊◊D N
-ﬂﬂ 
-‡‡ 
+ãã 
+çç $
 
-◊◊ 
-‰‰  
+êê 
+ìì/ 7
+ññB J
 
-ÊÊ 
-ËË 
+ëë 
+ññ8 @0
 
-˚˚ 
-ÇÇ5 ;È
+•• 4
+ÉÉ 7
+ññ 7
+†† 3$
+
+••< D
+ÆÆ9 A
+  2 :
+
+••M U
+
+••^ h
+  > H<
+
+≠≠ 
+ÆÆ 
+±±D N
+ππ 
+∫∫ 
+
+±± 
+ææ  
+
+¿¿ 
+¬¬ 
+
+’’ 
+‹‹5 ;
+
+‰‰ .bb: Q$
+
+¯¯ 
+˙˙$ )
+˚˚+ 0
+
+˙˙ !
+˛˛" /
+
+˚˚ (
+ää (
+
+˛˛ 
+ÄÄ 
+
+ˇˇ 
+ëë <
+
+ÄÄ! "
+ÅÅ# $
+ÇÇ 
+ÇÇ) *
+ÉÉ 
+
+àà 
+ïï9 B$
+
+ïï 
+ññ 
+òòF L
+
+òò 
+öö 
+
+≠≠ (cc2 C0
+
+≥≥ 
+¥¥ 
+∂∂ 
+∏∏ 
+
+ÀÀ ,dd6 K
+
+““ 
+‘‘# (
+
+‘‘  
+÷÷# /
+
+÷÷ 
+‹‹ 
+
+ÛÛ xx) 6
+
+ıı (ee2 C
+
+˚˚ 
+˛˛  %$
+
+˛˛ 
+ˇˇ 
+ÅÅV _0
+
+ÅÅ 
+ÇÇ 
+ÑÑF L
+ÜÜX ^
+
+ÑÑ 
+ÜÜ 
+
+ïï *ff4 G
+
+õõ 
+ûû  %$
+
+ûû 
+üü 
+°°X aH
+
+°° 
+¢¢ 
+§§F L
+¶¶X ^
+©© 
+´´S Y
+
+§§ 
+¶¶ 
+
+ΩΩ +gg5 I
+
+√√ 
+∆∆  %0
+
+∆∆ 
+«« 
+»» 
+  ] f0
+
+   
+ÀÀ 
+ÕÕF L
+œœX ^
+
+ÕÕ 
+œœ ï
 eC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\SettingsViewModel.cs
 
  -
-X h ;; +
-b w   XX 0
- -- .. +
- "11* 911R a
- %22- ?22X j
- #33+ ;33T d
- #44+ ;44T d
- %55- ?55X j
- !66) 766P ^
- 77! '77@ F
-K Z *
-U i    4
-(( 1"" %% 
-)) 1## 
-++ FF UU %
-11  ?? NN !
-22 #@@ OO '
-33 !AA PP #
-44 !BB QQ #
-55 #CC RR '
-66 DD SS# 0
-77 EE TT 
-99 (""4 E
-;; << >> Z
->> ?? @@  !AA BB CC  !DD EE FF 
-JJ (##4 E
-LL XX_ b
-XX YY ˇ
+X h"" ?? +
+b w## \\ 0
+( 4$$ 
+ 11 22 +
+ "55* 955R a
+ %66- ?66X j
+ #77+ ;77T d
+ #88+ ;88T d
+ %99- ?99X j
+ !::) 7::P ^
+ ;;! ';;@ F
+K Z"" *
+U i##  4
+% 8$$ *
+,, 1&& )) 
+-- 1'' 
+// JJ YY %
+55  CC RR !
+66 #DD SS '
+77 !EE TT #
+88 !FF UU #
+99 #GG VV '
+:: HH WW# 0
+;; II XX 
+== (&&4 E
+?? @@ BB Z
+BB CC DD  !EE FF GG  !HH II JJ 
+NN (''4 E
+PP \\_ b
+\\ ]] ˇ
 tC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\ServerSectionManagementViewModel.cs
 
  5N
@@ -3829,458 +6159,464 @@ tC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 øø "
 
 ¯¯/ 6
-˚˚7 >·(
+˚˚7 >ñ)
 iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\SalesReportsViewModel.cs∏
- 44 
-úú 
-……  0
-……\ l
-ÀÀ? O
-ÃÃ> N
-ÕÕ? O
-ŒŒC S
-œœC S
-––@ P
-——B R
-““K [
-””D T
+ 66 
+†† 
+ÕÕ  0
+ÕÕ\ l
+œœ? O
+––> N
+——? O
+““C S
+””C S
 ‘‘@ P
-’’E U
-÷÷> N
-◊◊A Q
-ÿÿ< L
-ŸŸC S
-⁄⁄@ P
-ÔÔ %
-ÙÙ %
-˘˘ %
-˛˛ %
-ÉÉ %
-àà %
-çç %
-íí %
-óó %
-úú %
-°° %
-¶¶ %
-´´ %
-∞∞ %
-µµ %
-∫∫ %
+’’B R
+÷÷K [
+◊◊D T
+ÿÿ@ P
+ŸŸE U
+⁄⁄> N
+€€A Q
+‹‹< L
+››C S
+ﬁﬁ@ P
+ÛÛ %
+¯¯ %
+˝˝ %
+ÇÇ %
+áá %
+åå %
+ëë %
+ññ %
+õõ %
+†† %
+•• %
+™™ %
+ØØ %
+¥¥ %
+ππ %
+ææ %
 
  * 
-!!P `__ 
-, < 
-""N ]`` 
-ıı, ; 
-##P `aa 
-˙˙- = 
-$$R fbb 
-ˇˇ+ ? 
-%%R fcc 
-ÑÑ1 E 
-&&L ]dd 
-ââ. ? 
-''P cee 
-éé0 C 
-((b ~ff $
-ìì9 U 
-))T igg 
-òò2 G 
-**L ]hh 
-ùù( 9 
-++V lii 
-¢¢- C 
-,,H Wjj 
-ßß, ; 
---N `kk 
-¨¨/ A 
-..D Qll 
-±±+ 8 
-//R fmm 
-∂∂1 E 
-00L ]nn 
-ªª. ?"
-22 %
-íí 
-ìì )"
-33 #
-òò 
-ôô '"
-44 0
-ûû "
-°°  3"
-55 
-œœ 
-““  &
-88) <rr "
-<<# 0
-ﬁﬁ 
-ﬂﬂ' 4"
-==" .
-‰‰ 
-ÂÂ' 3"
+!!P `bb 
+ÙÙ, < 
+""N ]cc 
+˘˘, ; 
+##P `dd 
+˛˛- = 
+$$R fee 
+ÉÉ+ ? 
+%%R fff 
+àà1 E 
+&&L ]gg 
+çç. ? 
+''P chh 
+íí0 C 
+((b ~ii $
+óó9 U 
+))T ijj 
+úú2 G 
+**L ]kk 
+°°( 9 
+++V lll 
+¶¶- C 
+,,H Wmm 
+´´, ; 
+--N `nn 
+∞∞/ A 
+..D Qoo 
+µµ+ 8 
+//R fpp 
+∫∫1 E 
+00L ]qq 
+øø. ?
+22( 4rr "
+44 %
+ññ 
+óó )"
+55 #
+úú 
+ùù '"
+66 0
+¢¢ "
+••  3"
+77 
+”” 
+÷÷  &
+::) <vv "
 >># 0
-ÍÍ 
-ÎÎ' 4"
-??! 2
-  
-ÒÒ' 8"
-@@! 2
-ˆˆ  
-˜˜' 8"
-AA ,
-¸¸ 
-˝˝' 5"
-BB  0
-ÇÇ 
-ÉÉ' 7"
-CC) B
-àà (
-ââ' @"
-DD" 4
-éé !
-èè' 9"
-EE ,
-îî 
-ïï' 5"
-FF# 6
-öö "
-õõ' :"
-GG (
-†† 
-°°' 3"
-HH .
-¶¶ 
-ßß' 6"
-II $
-¨¨ 
-≠≠' 1"
-JJ! 2
-≤≤  
-≥≥' 8"
-KK ,
-∏∏ 
-ππ' 5
-NNC R__ *
-OOA O`` (
-PPC Raa *
-QQE Xbb 2
-RRE Xcc 2
-SS? Odd ,
-TTC Uee 0
-UUU pff' B
-VVG [gg  4
-WW? Ohh ,
-XXI ^ii! 6
-YY; Ijj (
-ZZA Rkk .
-[[7 Cll $
-\\E Xmm 2
-]]? Onn ,
-uu rr7 C
-uu% *xx |
-ww {{ ||  
+‚‚ 
+„„' 4"
+??" .
+ËË 
+ÈÈ' 3"
+@@# 0
+ÓÓ 
+ÔÔ' 4"
+AA! 2
+ÙÙ  
+ıı' 8"
+BB! 2
+˙˙  
+˚˚' 8"
+CC ,
+ÄÄ 
+ÅÅ' 5"
+DD  0
+ÜÜ 
+áá' 7"
+EE) B
+åå (
+çç' @"
+FF" 4
+íí !
+ìì' 9"
+GG ,
+òò 
+ôô' 5"
+HH# 6
+ûû "
+üü' :"
+II (
+§§ 
+••' 3"
+JJ .
+™™ 
+´´' 6"
+KK $
+∞∞ 
+±±' 1"
+LL! 2
+∂∂  
+∑∑' 8"
+MM ,
+ºº 
+ΩΩ' 5
+PPC Rbb *
+QQA Occ (
+RRC Rdd *
+SSE Xee 2
+TTE Xff 2
+UU? Ogg ,
+VVC Uhh 0
+WWU pii' B
+XXG [jj  4
+YY? Okk ,
+ZZI ^ll! 6
+[[; Imm (
+\\A Rnn .
+]]7 Coo $
+^^E Xpp 2
+__? Oqq ,
+``% 8rr *
+yy vv7 C
+yy% *|| Ä
+{{  
 ÄÄ 
-ÑÑ! $
-ÖÖ 
-ÜÜ 
-ââ* -
-ââ4 7
-ää 
+ÉÉ 
+ÑÑ 
+àà! $
+ââ 
+ää 
+çç* -
+çç4 7
+éé 
 
-ÑÑ 
-ÖÖ2 6D
+àà 
+ââ2 6F
 
-êê #{{  
-ÖÖ 
-ââ 
-‰‰ !F
+îî # 
+ÉÉ 
+ââ 
+çç 
+ËË !H
 
-ññ !|| 
+öö !
 ÄÄ 
-ÜÜ 
-ää 
-ÂÂ ÿ
+ÑÑ 
+ää 
+éé 
+ÈÈ ÿ
 
-úú .
-ÀÀ) ;
-ÃÃ( :
-ÕÕ) ;
-ŒŒ- ?
-œœ- ?
-––* <
-——, >
-““5 G
-””. @
+†† .
+œœ) ;
+––( :
+——) ;
+““- ?
+””- ?
 ‘‘* <
-’’/ A
-÷÷( :
-◊◊+ =
-ÿÿ& 8
-ŸŸ- ?
-⁄⁄* <
-ÌÌ &
+’’, >
+÷÷5 G
+◊◊. @
+ÿÿ* <
+ŸŸ/ A
+⁄⁄( :
+€€+ =
+‹‹& 8
+››- ?
+ﬁﬁ* <
+ÒÒ &
 
-……2 =
+ÕÕ2 =
 
-ÀÀ %
-••) >
+œœ %
+©©) >
 
-ÃÃ $
-¶¶) =
+–– $
+™™) =
 
-ÕÕ %
-ßß) >
+—— %
+´´) >
 
-ŒŒ )
-®®) B
+““ )
+¨¨) B
 
-œœ )
-©©) B
-
-–– &
-™™) ?
-
-—— (
-´´) A
-
-““ 1
-¨¨) J
-
-”” *
-≠≠) C
+”” )
+≠≠) B
 
 ‘‘ &
 ÆÆ) ?
 
-’’ +
-ØØ) D
+’’ (
+ØØ) A
 
-÷÷ $
-∞∞) =
+÷÷ 1
+∞∞) J
 
-◊◊ '
-±±) @
+◊◊ *
+±±) C
 
-ÿÿ "
-≤≤) ;
+ÿÿ &
+≤≤) ?
 
-ŸŸ )
+ŸŸ +
+≥≥) D
 
-⁄⁄ &
-ƒƒ) ?$
+⁄⁄ $
+¥¥) =
 
-‹‹" .
-ºº# /
-ÒÒ  $
+€€ '
+µµ) @
 
-‚‚! ,
-ΩΩ" -
-ˆˆ $
+‹‹ "
+∂∂) ;
 
-ËË" .
-ææ# /
-˚˚  $
+›› )
 
-ÓÓ  0
-øø' 7
-ÄÄ $$
+ﬁﬁ &
+»») ?$
 
-ÙÙ  0
-¿¿' 7
-ÖÖ $$
+‡‡" .
+¿¿# /
+ıı  $
 
-˙˙ *
-¡¡$ 1
-ää !$
+ÊÊ! ,
+¡¡" -
+˙˙ $
 
-ÄÄ .
-¬¬& 5
-èè #$
+ÏÏ" .
+¬¬# /
+ˇˇ  $
 
-ÜÜ( @
-√√/ G
-îî ,$
+ÚÚ  0
+√√' 7
+ÑÑ $$
 
-åå! 2
-ƒƒ( 9
-ôô %$
+¯¯  0
+ƒƒ' 7
+ââ $$
 
-íí *
+˛˛ *
 ≈≈$ 1
-ûû !$
+éé !$
 
-òò" 4
-∆∆) ;
-££ &$
+ÑÑ .
+∆∆& 5
+ìì #$
 
-ûû &
-««" -
-®® $
+ää( @
+««/ G
+òò ,$
 
-§§ ,
-»»% 3
-≠≠ "$
+êê! 2
+»»( 9
+ùù %$
 
-™™ "
-……  )
-≤≤ $
+ññ *
+……$ 1
+¢¢ !$
 
-∞∞  0
-  ' 7
-∑∑ $$
+úú" 4
+  ) ;
+ßß &$
 
-∂∂ *
-ÀÀ$ 1
-ºº !
+¢¢ &
+ÀÀ" -
+¨¨ $
 
-ºº 
-¥¥) 8
+®® ,
+ÃÃ% 3
+±± "$
 
-ΩΩ 
-µµ) 7
+ÆÆ "
+ÕÕ  )
+∂∂ $
 
-ææ 
-∂∂) 8
+¥¥  0
+ŒŒ' 7
+ªª $$
 
-øø #
-∑∑) <
+∫∫ *
+œœ$ 1
+¿¿ !
 
-¿¿ #
-∏∏) <
+¿¿ 
+∏∏) 8
 
-¡¡  
-ππ) 9
+¡¡ 
+ππ) 7
 
-¬¬ "
-∫∫) ;
+¬¬ 
+∫∫) 8
 
-√√ +
-ªª) D
+√√ #
+ªª) <
 
-ƒƒ $
-ºº) =
+ƒƒ #
+ºº) <
 
 ≈≈  
 ΩΩ) 9
 
-∆∆ %
-ææ) >
+∆∆ "
+ææ) ;
 
-«« 
-øø) 7
+«« +
+øø) D
 
-»» !
-¿¿) :
+»» $
+¿¿) =
 
-…… 
-¡¡) 5
+……  
+¡¡) 9
 
-   #
-¬¬) <
+   %
+¬¬) >
 
-ÀÀ  
-√√) 90
+ÀÀ 
+√√) 7
 
-ÕÕ 
-ŸŸ2 7
-‡‡ 
-¬¬ 
+ÃÃ !
+ƒƒ) :
 
-ŸŸ 
-‘‘) 1
+ÕÕ 
+≈≈) 5
 
-€€ .qq 
+ŒŒ #
+∆∆) <
 
-›› &qq2 A⁄
+œœ  
+««) 90
 
-‰‰ 
-ËË9 >
-b g
-ıı` e
-˙˙c h
-ˇˇi n
-ÑÑo t
-ââf k
-éél qììá å
-òòr w
-ùù` e
-¢¢o t
-ßß` e
-¨¨i n
-±±[ `
-∂∂o t
-ªªf k˛
+—— 
+››2 7
+‰‰ 
+∆∆ 
 
-ÂÂ 
-ËË 
-ËË2 5
-ÍÍ 
-ÍÍ 
-i l
-ııg j
-˙˙j m
-ˇˇp s
-ÑÑv y
-ââm p
-éés vììé ë
-òòy |
-ùùg j
-¢¢v y
-ßßg j
-¨¨p s
-±±b e
-∂∂v y
-ªªm p
+›› 
+ÿÿ) 1
 
- #
-ÒÒ# .
+ﬂﬂ .uu 
 
-ıı #
-ˆˆ" -
+·· &uu2 A⁄
 
-˙˙ $
-˚˚# /
+ËË 
+ÏÏ9 >
+ÙÙb g
+˘˘` e
+˛˛c h
+ÉÉi n
+àào t
+ççf k
+ííl qóóá å
+úúr w
+°°` e
+¶¶o t
+´´` e
+∞∞i n
+µµ[ `
+∫∫o t
+øøf k˛
 
-ˇˇ "
-ÄÄ' 1
+ÈÈ 
+ÏÏ 
+ÏÏ2 5
+ÓÓ 
+ÓÓ 
+ÙÙi l
+˘˘g j
+˛˛j m
+ÉÉp s
+ààv y
+ççm p
+íís vóóé ë
+úúy |
+°°g j
+¶¶v y
+´´g j
+∞∞p s
+µµb e
+∫∫v y
+øøm p
 
-ÑÑ (
-ÖÖ' 7
+ÙÙ #
+ıı# .
 
-ââ %
-ää$ 1
+˘˘ #
+˙˙" -
 
-éé '
-èè& 5
+˛˛ $
+ˇˇ# /
 
-ìì 0
-îî/ G
+ÉÉ "
+ÑÑ' 1
 
-òò )
-ôô( 9
+àà (
+ââ' 7
 
-ùù 
-ûû$ +
+çç %
+éé$ 1
 
-¢¢ $
-££) 5
+íí '
+ìì& 5
 
-ßß #
-®®" -
+óó 0
+òò/ G
 
-¨¨ &
-≠≠% 3
+úú )
+ùù( 9
 
-±± "
-≤≤  *
+°° 
+¢¢$ +
 
-∂∂ (
-∑∑' 7
+¶¶ $
+ßß) 5
 
-ªª %
-ºº$ 1Ÿ
+´´ #
+¨¨" -
+
+∞∞ &
+±±% 3
+
+µµ "
+∂∂  *
+
+∫∫ (
+ªª' 7
+
+øø %
+¿¿$ 1Ÿ
 kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\RoleManagementViewModel.cs
  #++  .,
   
@@ -4383,19 +6719,554 @@ kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 
 ﬁﬁ 
 ﬂﬂ 
-ÁÁ2 8≠
-gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\RecipeLineViewModel.cs
+ÁÁ2 8ô
+iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\RefundWizardViewModel.cs
 
-  
-   (
-
-
-  
-  
-  
-  (
-- 1   
-; C Ç
+ ."
+V c
+ÜÜ 
+˚˚  -"
+R `
+áá 
+∏∏$ 2"
+W c
+àà 
+úú, 8.
+# *
+ÖÖ 
+ıı &
+ØØ  '"
+  ,
+ââ 
+ªª !
+
+ %
+
+   .
+
+  3 8
+
+// !
+
+22 )
+
+55 (
+77 KK% /
+== !LL% 2
+CC "MM% 3
+
+II *
+
+II6 ;
+
+QQ *
+
+TT; L
+
+WW" *
+
+ZZ $
+
+]] "
+
+`` %
+bb ff% -
+
+dd *
+
+dd3 8
+
+jj 
+ll pp% .
+
+nn $
+
+nn* / 
+tt """% 3
+ËË% 3,
+uu "##% 3
+««) 7
+ÈÈ% 38
+vv "$$% 3
+»») 7
+——) 7
+ÍÍ% 3,
+ww "%%% 3
+““) 7
+ÎÎ% 3
+yy! ,
+êê 
+zz '
+ëë 
+{{! 5
+íí  
+~~ 
+ÖÖ 
+I U
+ÜÜ (
+
+ÄÄE R
+áá *
+
+ÅÅJ U
+àà &
+
+ÇÇ %
+ãã &
+
+ÉÉ 
+ââ &$
+
+ãã- .
+ãã2 3
+ããb c
+
+óó &
+êê0 ;
+
+∑∑Y Z
+∑∑^ _
+
+‹‹ 
+ëë+ 1$
+
+ÓÓ +
+¢¢ .
+ΩΩ &
+
+ÛÛ 
+˚˚: ?
+
+¯¯@ A
+¯¯E F
+
+¯¯Z [
+¯¯_ `
+
+áá )
+íí9 GT
+
+óó  3
+úú #
+•• #
+••0 C
+••R e
+ßß 2
+∞∞. A
+
+õõ 
+úúE P
+
+≠≠ 
+∏∏? F
+
+µµA B
+µµF G
+
+µµ[ \
+µµ` a$
+
+∏∏ 
+ππ 
+øø$ *F
+
+ÃÃ  && 
+îî 
+∆∆ 
+–– 
+ÁÁ 
+
+‹‹ -TT% 90
+
+ﬁﬁ 
+¯¯a c
+µµb d
+ÁÁ 
+
+ﬂﬂ !
+ÈÈ 
+
+‡‡ 
+ËË 
+
+„„  <
+
+ÂÂ/ 0
+ÁÁ 
+ËË 
+ÈÈ 
+ÈÈ/ 0â
+
+iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\RefundTicketViewModel.cs
+
+ " 
+N bDD 
+ûû 3 
+" .EE 
+áá *,
+& 6FF 
+èè  
+öö -
+   &J
+ WW ll !tt R X
+òò !
+®® %
+) 7  -
+( 5LL 
+"" "%% ((  /@
+##  XX aa! /ttQ _
+õõ '
+√√% 3
+//  22 33 ,N
+00 YY cc 
+ää 
+ëë 
+∂∂ 
+ºº 
+66 99 :: (N
+77 ZZ dd 
+ãã 
+íí 
+∑∑ 
+ΩΩ 
+== !**- :II 
+@@A TDD 2
+AA  EE "
+BB (FF *
+
+UU 
+UU% +WW 
+]] "II7 B
+]]+ 4__ 
+__+ 1
+ØØ 
+ii jj mm 0 
+ll tt7 C
+≠≠( 4
+mm vv 
+|| }}  ).
+ 
+ÄÄ 
+ÄÄ# -
+≠≠I S$
+
+áá 
+àà 
+ôôF Q
+
+ññ 
+ûû@ G$
+
+ûû 
+†† 
+∂∂ %$
+
+££ !
+§§ 
+¶¶ #
+
+ØØ, .
+±± 
+
+¡¡ IID M
+
+¡¡# ,»
+vC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\RealTimeSessionMonitoringViewModel.cs
+ 7 ?}} 2 
+Z s !
+££! :"
+X p
+ÄÄ  
+ßß 7:
+A H
+ÅÅ 
+ΩΩ 
+¬¬ 
+⁄⁄ F
+% 5
+ÇÇ 
+™™ 
+√√ 
+ÀÀ 
+úú j
+! .
+ãã 
+åå 
+ìì 
+≠≠ 
+ÆÆ 
+ØØ 
+ÓÓ! .
+ R
+! /
+ôô 
+öö 
+®® 
+¥¥ 
+µµ 
+∂∂ 
+
+ #
+
+!! '
+
+$$ !
+
+'' 
+
+** !
+
+-- 
+
+00 $
+
+33 
+
+66 $
+
+99 
+
+<< !
+
+?? ,
+
+BB$ 2
+
+EE 'é
+GG2 @
+¨¨ 
+ØØ "
+—— ,
+““ '
+”” ,
+’’ %
+◊◊ 
+ŸŸ  .
+⁄⁄N \
+ÁÁ %
+üü( 6:
+HH1 >
+≤≤ 
+µµ !
+‘‘ "
+‘‘ "
+II2 B
+ÄÄ 
+ÉÉ 
+
+KK9 I
+
+TT2 E
+__ 
+„„! .
+ii "
+ÈÈ! 1
+uu !
+··! 2"
+vv 
+‚‚! *
+÷÷% .
+xx9 H
+ÀÀ 
+{{M e$ <g "
+||K b
+ÄÄ# :
+ÄÄe |"
+}}4 :
+ÅÅ 
+ÅÅC I
+
+ää +
+ÑÑ 
+
+ãã -
+ÖÖ 
+
+åå* >
+ÜÜ 
+
+çç /
+áá 
+
+íí %0
+
+ôô &
+ÑÑ/ ?
+îî 
+êê &
+
+¢¢ 
+££G T$
+
+££ 
+≠≠( 0
+ææ 
+
+¶¶ 
+ßßD O$
+
+ßß 
+≥≥& ,
+ææ" ($
+
+œœ !
+∏∏  
+••  
+
+““. /
+““3 4
+
+””3 4
+””8 9
+
+’’* +
+’’/ 0
+
+ŸŸ 
+⁄⁄8 E
+
+ŸŸI L
+ŸŸT W
+
+ŸŸN O
+ŸŸZ [0
+
+ÂÂ #
+ππ "
+‚‚ 
+ËË Ã
+
+ÁÁ 
+ÍÍ 
+ÏÏ. 6
+ÌÌ. 6
+ÓÓ3 ;
+ÔÔ1 9
+ 
+ÙÙ 
+ˆˆ4 <
+˜˜3 ;
+¯¯3 ;
+˘˘2 :
+˙˙1 9
+˚˚0 8
+¸¸, 4
+˝˝ 
+ÅÅ  (
+
+ÏÏ= >
+ÏÏB C
+
+ÌÌ= >
+ÌÌB C
+
+ÓÓB C
+ÓÓG H
+
+ÔÔ@ A
+ÔÔE F
+
+ˆˆO P
+ˆˆT U
+
+˜˜D E
+˜˜I J
+
+¯¯N O
+¯¯S T
+
+˘˘C D
+˘˘H I
+
+˙˙L M
+˙˙Q R
+
+˚˚A B
+˚˚F G
+
+¸¸= >
+¸¸B C
+
+˝˝, -
+˝˝1 2$
+
+áá %
+ïï 
+øø  
+
+åå( )
+
+åå+ ,
+
+ññ 
+ññ 
+
+öö# $
+
+öö& '
+
+üü= >
+üüB C$
+
+´´ $
+√√ 
+ˆˆ 
+
+≤≤ 
+˜˜ 
+
+ππ 
+ÖÖ1 ?
+
+«« 
+ÜÜB O$
+
+««1 8
+…… 
+ÀÀG N
+
+œœ '
+áá3 C
+
+‡‡ '
+
+‡‡@ E
+
+ÊÊ #
+
+ÊÊ5 :
+
+ÏÏ 0
+
+ÏÏ5 :
+% *
+
+ÙÙ  
+
+˛˛ #BB #BB5 LKK  7MM NN OO PP QQ aa bb cc dd ee 
+ÏÏ #
+ÌÌ #
+ÓÓ #
+ÔÔ #
+‡‡( ?ñ
+
+ää EE EE* :TT  0VV WW XX YY ZZ [[ \\ kk ll mm nn oo pp qq 
+ˆˆ 
+˜˜ 
+¯¯ 
+˘˘ 
+˙˙ 
+˚˚ 
+¸¸ 
+ÊÊ$ 4
+
+òò %xx 6
+
+öö #
+ûû 
+
+úú5 <
+ûû Ç
 eC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\QuantityViewModel.cs
 
  -(
@@ -4675,7 +7546,19 @@ oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 < O 2
 
  )
-!! ##! &ü
+!! ##! &≠
+gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\RecipeLineViewModel.cs
+
+  
+   (
+
+
+  
+  
+  
+  (
+- 1   
+; C ü
 nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\OrderTypeExplorerViewModel.cs
 
 
@@ -4761,1184 +7644,1580 @@ nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 ∆∆: ;
 ∆∆? @
 
-”” &ff2 A∞W
+”” &ff2 AÒq
 gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\OrderEntryViewModel.cs
 
- ("
-- @
-‘‘ 
-øø# 6.
-* :
-’’ 
-ƒƒ +
-€€ /é
-% 4
-÷÷ 
-ÿÿL [
-ÒÒI X
-ïïI X
-∫∫ (
-——U d
-ÈÈ .
-·· ,
-µ	µ	T c
-¿	¿	1 @
-à
-à
+ ("
+- @
+ââ 
+ìì# 6.
+* :
+ää 
+éé +
+ØØ /é
+% 4
+ãã 
+¢¢L [
+ªªI X
+ﬂﬂI X
+ÑÑ (
+õõU d
+ΩΩ .
+ª	ª	 ,
+è
+è
+T c
+ö
+ö
+1 @
+‚
+‚
 V e"
-? P
-◊◊ 
-–– ("
-N b
-ÿÿ 
-∫∫ 3F
+? P
+åå 
+©	©	 ("
 N b
-ŸŸ 
-¸¸ .
-üü *
-≈≈ &
-–	–	 ""
-R h
-⁄⁄ 
-ﬂﬂ 5F
-= T
-€€ 
-øø )
-ﬁﬁ )
-◊◊ *
-…
-…
- ).
+çç 
+ì	ì	 3F
+N b
+éé 
+∆∆ .
+ÈÈ *
+èè &
+™
+™
+ ""
+R h
+èè 
+≥≥ 5F
 = T
-‹‹ 
-ÆÆ )
-˜
-˜
- *.
-  B P
-›› 
-èè -
-ïï -"
-!!V n
-ﬁﬁ  
-¯¯ 2"
-""X q
-ﬂﬂ !
-ÄÄ 3"
-##P e
-‡‡ 
-àà /¬
-$$' 9
-·· 
-—— #
-›› %
-ØØ )
-µµ (
-ÌÌ %
-©© $
-¨¨ "
-ÆÆ "
-≥≥ #
-àà 
-°° )
-´´ "
-∏∏ %
-∆∆  2
-ÓÓ (
-˘˘ (
-èè %
-úú 
-«« %
-ää 
-•• (
-´´ 
-∏∏ %
-ÀÀ 
-œœ ≤
-%%" .
-„„ 
-«« !
-ÕÕ# /
-ÔÔ 
-ˆˆ *
-ôô 
-üü %
-ÓÓ 
-ÛÛ *
-˘˘ 
-îî *
-§§ 
-≥≥ (
-òò *F
-&&& 6
-‰‰ 
-˘˘4 D
-ïï -
-™™ -
-ôô -"
-''8 J
-ÂÂ 
-££ )"
-((: N
-ÊÊ 
-…… +"
-))L _
-ÁÁ 
-õõ 2"
+êê 
+ââ )
+®® )
+°° *
+µµ ).
+  = T
+ëë 
+¯¯ )
+˛˛ ).
+!!B P
+íí 
+„„ -
+¯¯ -"
+""V n
+ìì  
+¬¬ 2"
+##X q
+îî !
+   3"
+$$P e
+ïï 
+““ /ñ
+%%' 9
+ññ 
+õõ #
+ßß %
+˘˘ )
+ˇˇ (
+∑∑ %
+˝˝ $
+ÄÄ "
+ÇÇ "
+áá #
+‹‹ 
+ıı )
+ˇˇ "
+åå %
+öö  2
+¬¬ (
+““ (
+ËË %
+ıı 
+†	†	 %
+ÌÌ 
+àà (
+éé 
+õõ %
+ÆÆ 
+≤≤ 
+»» (
+€€ (
+ÏÏ (
+¸¸ (
+•• $
+∏∏ (
+ÁÁ $‚
+&&" .
+òò 
+ëë !
+óó# /
+ππ 
+¿¿ *
+„„ 
+ÈÈ %
+∏∏ 
+ΩΩ *
+»»8 D
+ÃÃ  
+ÕÕ 
+ËË *
+˝˝ 
+å	å	 (
+˚˚ *
+àà 
+   Ç
+''& 6
+ôô 
+»»  
+ÀÀ $
+ŒŒe u
+ÕÕ4 D
+ÈÈ -
+É	É	 -
+¸¸ -
+ââ  
+ÀÀ  "
+((8 J
+öö 
+ÌÌ )"
+)): N
+õõ 
+ìì +"
 **L _
-ËË 
-˘˘! 4:
-++& 6
-ÈÈ 
-éé !
-ªª  0
-çç !
-,,, B
-ÍÍ *
-.. ]] ``! (
-¸¸& -"
-// +
-éé  
-ëë  1"
-11 %
-ûû 
-°°  .
-22 66 99  +.
-44 
-å
-å
+úú 
+ÂÂ 2"
+++L _
+ùù 
+√√! 4ö
+,,& 6
+ûû 
+–– !
+ÖÖ  0
+◊◊ !
+‡‡" 2
+ΩΩ" 2
+¥¥( 8
+«« -
+ÍÍ( 8
+àà( 8
+©©( 8
+ªª( 8
+--, B
+°° "
+..& 6
+££ 
+–– ."
+//* >
+§§ 
+ÚÚ" 6"
+00/ H
+•• !
+   /
+22( 4
+ßß *
+44 cc ff! (
+’’& -"
+55 +
+∂∂  
+ππ  1"
+77 %
+∆∆ 
+……  .
+88 << ??  +.
+:: 
+Ê
+Ê
 + 5
-é
-é
+Ë
+Ë
   *
-ñ
-ñ
+
+
  
-@@ !
-ÉÉ 
-AA #
-ÑÑ ^
-CC. 8
-ΩΩ !
-˚˚E O
-ææ 
-≈≈ 
-»»W a
-í	í	 !
-		 &.
-DD+ 1
-¿¿ 
-‘‘ 
-‹‹' -.
-FF* /
-’’ 
-„„ 
-ÍÍ& +
-HH $KK NN  0Z
-II "VV6 EWW, ;
-   *
-““ 
-’	’	 &
-‹	‹	 
-Â
-Â
- 
-VV %PP) <
-WW (QQ) A
-YY &
-¯¯ ö
-
-[[ qq #ss& ,ss8 >uu5 ;ww" (yy& ,{{ {{, 2}}$ *}}E K" (@ F
-ÄÄ #
-ÄÄ; A
-ÅÅ" (
-ÅÅA G
-ÇÇ  &
-ÑÑ  &
-ÜÜ 
-åå 
-íí& ,
-ññ# )
-ññ. 4
-üü $
-≤≤ 
-ººg m
-ÀÀ& ,
-‰‰ 
-ÛÛ "
-˝˝' -
-ââ 
-ùù !
-§§& ,
-∂∂ "
-¡¡ !
-∆∆" (
-ÕÕ "
-·· !
-ÁÁ" (
-ÓÓ "
-˛˛# )
-ãã" (
-íí "
-°° %
-∞∞ !
-¥¥" (
-œœ "
-ŸŸ !
-ﬂﬂ" (
-ÂÂ 
-˙˙# )
-ÇÇ# )
-ää# )
-íí" (
-òò "
-••  &
-™™' -
-ºº 
-«« !
-‘‘" (
-⁄⁄ 
-‡‡5 ;
-ÅÅ` f
-ÉÉ 
-ÜÜR X
-áá& ,
-ãã 
-ãã' -
-åå' -
-ééA G
-ééZ `
-èè 
-˜˜ 
-ˇˇ 
-ÑÑ 
-ÜÜ" (
-áá 
-ëë !
-¶¶" (
-®® 
-™™ 
-øø 
-≈≈) /
-ÀÀ' -
-◊◊ 
-ﬁﬁA G
-õõ 
-úúT Z
-–– 
-““ 
-ÿÿN T
-ÿÿi o
-ﬁﬁ "
-“	“	 
-ﬁ	ﬁ	 $
-‰	‰	 %
-ˆ	ˆ	! '
-É
-É
+FF !
+øø 
+GG #
+¿¿ ^
+II. 8
+áá !
+≈≈E O
+íí 
+ôô 
+úúW a
+Ï	Ï	 !
+ 
+ 
+ &.
+JJ+ 1
+ää 
+®® 
+∞∞' -.
+LL3 8
+©© 
+∑∑ 
+ææ& +
+NN $QQ TT  0Z
+OO "\\6 E]], ;
+îî *
+úú 
+Ø
+Ø
+ &
+∂
+∂
+ 
+—— 
+\\ %VV) <
+]] (WW) A
+__ &
+¥¥ ™
+aa 
+àà #
+ää& ,
+ää8 >
+åå5 ;
+éé" (
+êê& ,
+íí 
+íí, 2
+îî$ *
+îîE K
+ññ" (
+ññ@ F
+óó #
+óó; A
+òò" (
+òòA G
+ôô  &
+õõ  &
+ùù 
+††$ *
+°°# )
+¢¢! '
+¶¶& ,
+ßß 
+©©. 4
+™™ 
+¨¨* 0
+≠≠ 
+ŒŒ 
+‘‘& ,
+ÿÿ# )
+ÿÿ. 4
+·· $
+ıı7 =
+ˆˆ8 >
+¸¸ 
+ÜÜg m
+ïï& ,
+ÆÆ 
+ΩΩ "
+««' -
+”” 
+ÁÁ !
+ÓÓ& ,
+ÄÄ "
+ãã !
+êê" (
+óó "
+´´ !
+±±" (
+∏∏ "
+»»# )
+’’" (
+‹‹ "
+ÎÎ %
+˙˙ !
+˛˛" (
+ôô "
+££ !
+©©" (
+ØØ 
+ƒƒ# )
+ÃÃ# )
+‘‘# )
+‹‹" (
+‚‚ "
+ÔÔ  &
+ÙÙ' -
+ÜÜ 
+ëë !
+ûû" (
+§§ 
+™™5 ;
+’’` f
+◊◊ 
+⁄⁄R X
+€€& ,
+ﬂﬂ 
+ﬂﬂ' -
+‡‡' -
+‚‚A G
+‚‚Z `
+„„ 
+ÀÀ 
+”” 
+ÿÿ 
+⁄⁄" (
+€€ 
+ÂÂ !
+˙˙" (
+¸¸ 
+˛˛ 
+ìì 
+ôô) /
+üü' -
+´´ 
+≤≤A G
+ÙÙ 
+ııT Z
+©	©	 
+´	´	 
+±	±	N T
+±	±	i o
+∑	∑	 $
+¨
+¨
+ 
+∏
+∏
+ $
+æ
+æ
+ %
+–
+–
+! '
+›
+›
  
-¢
-¢
- "
-∞
-∞
- "
-À
-À
- !
-œ
-œ
-" (
-Î
-Î
- "
-˘
-˘
- "
 ¸
 ¸
-# )
-áá 
-ääT Z
-èè 
-êê 
-óó ! 
-qq bb* 3
-ööj s"
-ss "ll* <ööã ù
-uu' 1cc* 4
-ww kk* 8
-ww9 ;ww? Aww[ ]
-yy "dd* :
-}}  ee* 8
- gg* 6
+ "
+éé "
+∑∑ !
+ªª" (
+◊◊ "
+ÍÍ 
+ÌÌT Z
+ÚÚ 
+ÛÛ 
+˙˙ !
+∫∫ 
+øø 
+øø0 6
+ÕÕ $
+áá 
+ää 
+ãã 
+ññ& ,
+´´ 
+ØØ 
+¿¿ !
+¡¡ #
+¬¬ $
+∆∆ 
+ÃÃ 
+ÕÕ 
+ÿÿ& ,
+ÓÓ 
+ÔÔ 
+ 
+ıı" (
+ıı5 ;
+˙˙7 =
+˛˛" (
+ãã 
+åå 
+çç 
+íí# )
+íí6 <
+óó8 >
+õõ" (
+ÄÄ !
+ÉÉ" ("
 
-ÄÄ hh* 1
+àà hh* 3
+ÓÓj s$
 
-ÅÅ ii* 6
+ää "rr* <ÓÓã ù
 
-ÇÇ jj* 5
+åå' 1ii* 4
 
-ÑÑ ff* 4
+éé qq* 8$
 
-àà )
-ìì) B$
+éé9 ;
+éé? A
+éé[ ]
 
-ââ %
-îî) >
-££) >$
+êê "jj* :
 
-ää $
-ïï) =
-§§) =<
+îî  kk* 8
 
-åå )
-àà- =
-ââ) 9
-ÔÔD T
-ÚÚ9 I<
+ññ mm* 6
 
-úú #
-ââE R
-ää( 5
-óó 
-> K
+óó nn* 1
 
-™™ )
-ÔÔ 
+òò oo* 6
 
-´´ &
- 
+ôô pp* 5
 
-¨¨ "
-ÒÒ 
+õõ ll* 4R
 
-≠≠ +
-ÚÚ 
+††  tt* :
+°°6 F
+¢¢3 C
+••' 7
+ıı# 3
+ˆˆ$ 4
 
-ÆÆ %
-ÛÛ 
+°° uu* 9
 
-ØØ ,
-ıı  
+¢¢ vv* 7
 
-∞∞ ,
-ˆˆ  
+•• #xx* ;
 
-±± %
-˜˜ $
+¶¶ "yy* :
 
-≥≥& 6
-‚‚ 
-‡‡ #®
+©© *zz* B
 
-¥¥7 O
-ÎÎ  
-ªª &
-⁄⁄ &
-ÛÛ &
-óó &
-”” &
-ËË &
+¨¨ &{{* >
+
+∞∞ )
+ªª) B$
+
+±± %
+ºº) >
+ÀÀ) >$
+
+≤≤ $
+ΩΩ) =
+ÃÃ) =<
+
+¥¥ )
+∞∞- =
+±±) 9
+´´D T
+ÆÆ9 I<
+
+ƒƒ #
+±±E R
+≤≤( 5
+øø 
+¨¨> K
+
+““ )
+´´ 
+
+”” &
+¨¨ 
+
+‘‘ "
+≠≠ 
+
+’’ +
+ÆÆ 
+
+÷÷ %
+ØØ 
+
+◊◊ ,
+±±  
+
+ÿÿ ,
+≤≤  
+
+ŸŸ %
+≥≥ $
+
+€€& 6
+óó 
+™™ #¿
+
+‹‹7 O
+¢¢  
+ÖÖ &
+§§ &
+ΩΩ &
+·· &
 ùù &
-øø &
-ÌÌ *
-Ç	Ç	 *
-∑	∑	 .
+≤≤ &
+ÁÁ &
+ââ &
+«	«	 *
+‹	‹	 *
 ë
 ë
- *
+ .
+Î
+Î
+ *
+ÉÉ *
+†† *
 
-∏∏ &
-˙˙ 
+‡‡ &
+∂∂ $
 
-ªª  2
-‘‘ 0
+„„X l
+üü 
+˚˚ 3$
 
-ºº ,
-’’ *
+‰‰Z o
+†† 
+òò 4"
 
-ΩΩ &
-÷÷ (
+ÊÊ '~~ %
+∆∆ "
 
-ææ2 B
-◊◊ ,
+ÁÁ ( &
+«« 
 
-øøA T
-ÿÿ 2
+ÍÍ  2
+ââ 0
 
-¿¿A T
-ŸŸ 2
+ÎÎ ,
+ää *
 
-¡¡E Z
-⁄⁄! 6
+ÏÏ &
+ãã (
 
-¬¬0 F
-€€" 8
+ÌÌ2 B
+åå ,
 
-√√0 F
-‹‹" 8
+ÓÓA T
+çç 2
 
-ƒƒ5 B
-›› &
+ÔÔA T
+éé 2
 
-≈≈I `
-ﬁﬁ# :
+E Z
+èè! 6
 
-∆∆K c
-ﬂﬂ$ <
+ÒÒ0 F
+êê" 8
 
-««C W
-‡‡  4
+ÚÚ0 F
+ëë" 8
 
-»» +
-·· .
+ÛÛ5 B
+íí &
 
-…… (
-‚‚ *
+ÙÙI `
+ìì# :
 
-    
-„„ "
+ııK c
+îî$ <
 
-ÀÀ (
-‰‰ *
+ˆˆC W
+ïï  4
 
-ÃÃ+ <
-ÂÂ .
+˜˜ +
+ññ .
 
-ÕÕ- @
-ÊÊ 2
+¯¯ (
+óó *
 
-ŒŒ? Q
-ÁÁ 0
+˘˘  
+òò "
 
-œœ? Q
-ËË 0
+˙˙ (
+ôô *
 
-–– (
-ÈÈ *
+˚˚+ <
+öö .
 
-—— 4
-ÍÍ! 6
+¸¸- @
+õõ 2
 
-““* A
-ÎÎ# :
+˝˝? Q
+úú 0
 
-ÔÔ? @
-ÔÔW X
+˛˛? Q
+ùù 0
 
-9 :
-N O
+ˇˇ (
+ûû *$
 
-àà #
-ÖÖ 
+ÄÄK ^
+üü 2
+üü] p$
 
-ää $
-ÖÖ> K0
+ÅÅM a
+††  4
+††_ s
 
-ää3 7
-êê 
-íí1 5
-íí: >0
+ÇÇ 4
+°°! 6
 
-éé 
-íí 
-ññ 
-ôôI K$
+ÉÉ* A
+¢¢# :
 
-ôô 
-öö 
-úú 
+ÑÑ% 8
+ßß *
 
-§§ &
-˚˚ 
+ÖÖ (
+££ *
 
-•• !
-¸¸ 
+ÜÜ 0
+§§ 2
 
-®® 0
-˝˝ $
+áá" :
+••$ <
 
-©© %
-ˇˇ 
+´´? @
+´´W X
 
-™™ '
-ÄÄ 
+¨¨9 :
+¨¨N O
 
-´´ &
-ÅÅ 
+   #
+¡¡ 
 
-¨¨ )
-ÇÇ 
+ÃÃ $
+¡¡> K0
 
-∞∞ (
-ÄÄ4 E
+ÃÃ3 7
+““ 
+‘‘1 5
+‘‘: >0
 
-ªª 
-ººY eH
+–– 
+‘‘ 
+ÿÿ 
+€€I K$
 
-ºº 
-ææV X
-¡¡ 
-≈≈ 
-≈≈# %
-ÃÃ& (0
+€€ 
+‹‹ 
+ﬁﬁ 
 
-ææ 
-øø 
-¡¡$ *
-√√ 
+ÊÊ &
+∑∑ 
 
-÷÷ 
-››6 A
+ÁÁ !
+∏∏ 
 
-‚‚ *
-ÇÇ6 IH
+ÍÍ 0
+ππ $
 
-ÁÁ 
-ËË 
-ÎÎ !
-ÌÌ5 ;
-ÙÙ #
-ıı %
+ÎÎ %
+ªª 
 
-ÎÎ 
-ÌÌ 
+ÏÏ '
+ºº 
 
-ÒÒ 
-˘˘A D$
+ÌÌ &
+ΩΩ 
 
-˘˘ 
-˚˚ 
-ÇÇQ X
+ÓÓ )
+ææ 
 
-áá '
-ÅÅ3 CT
+ÒÒ '
+ƒƒ 
 
-çç 
-éé 
-êêS U
-ìì 
+ÚÚ %
+≈≈ 
+
+ıı 
+ÇÇ* 9
+
+ˆˆ  
+ÉÉ* :
+
+˙˙ (
+ºº4 E
+
+ÖÖ 
+ÜÜY eH
+
+ÜÜ 
+ààV X
+ãã 
+èè 
+èè# %
+ññ& (0
+
+àà 
+ââ 
+ãã$ *
+çç 
+
+†† 
+ßß6 A
+
+¨¨ *
+ææ6 IH
+
+±± 
+≤≤ 
+µµ !
+∑∑5 ;
+ææ #
+øø %
+
+µµ 
+∑∑ 
+
+ªª 
+√√A D$
+
+√√ 
+≈≈ 
+ÃÃQ X
+
+—— '
+ΩΩ3 CT
+
+◊◊ 
+ÿÿ 
+⁄⁄S U
+›› 
 
-óó 
-óó  
-ûû 0
+·· 
+··  
+ËË 0
 
-êê 
-ëë 
-ìì %
-ïï $
+⁄⁄ 
+€€ 
+›› %
+ﬂﬂ $
 
-õõ 
-¢¢ 
-´´ %
+ÂÂ 
+ÏÏ 
+ıı %
 
-®®  
-ØØ: E
+ÚÚ  
+˘˘: E
 
-¥¥ 1
-˝˝K e<
+˛˛ 1
+ππK e<
 
-¥¥@ D
-∂∂ 
-ππZ ^
-¬¬ "
-√√ 0
+˛˛@ D
+ÄÄ 
+ÉÉZ ^
+åå "
+çç 0
 
-ππ 
-ªªC E
-ΩΩ 
-ƒƒ !
+ÉÉ 
+ÖÖC E
+áá 
+éé !
 
-ÀÀ )`
+ïï )`
 
-ÀÀ8 <
-ÕÕ 
-––$ (
-””) -
-ÿÿ] a
-‡‡ "
-„„ 
-‰‰ #
+ïï8 <
+óó 
+öö$ (
+ùù) -
+¢¢] a
+™™ "
+≠≠ 
+ÆÆ #
 
-–– 
-—— 0
+öö 
+õõ 0
 
-ÿÿ 
-⁄⁄B D
-‹‹ 
-‚‚ 
+¢¢ 
+§§B D
+¶¶ 
+¨¨ 
 
-ÏÏ *
-¸	¸	 )$
+∂∂ *
+÷
+÷
+ )$
 
-ÏÏ9 =
-ÓÓ 
-ÒÒZ ^<
+∂∂9 =
+∏∏ 
+ªªZ ^<
 
-ÒÒ 
-ÛÛ? A
-ıı 
-ıı  
-¯¯" $
+ªª 
+ΩΩ? A
+øø 
+øø  
+¬¬" $
 
-êê *
-Í	Í	 )0
+⁄⁄ *
+ƒ
+ƒ
+ )0
 
-êê9 =
-íí 
-ïïZ ^
-±± "<
+⁄⁄9 =
+‹‹ 
+ﬂﬂZ ^
+˚˚ "<
 
-ïï 
-óó? A
-ôô 
-ôô  
-ùù& (
+ﬂﬂ 
+··? A
+„„ 
+„„  
+ÁÁ& (
 
-∏∏ $
-–– #
+ÇÇ $
+öö #
 
-∏∏2 6
-∫∫6 :H
+ÇÇ2 6
+ÑÑ6 :H
 
-∫∫ 
-ªª 
-ΩΩ> B
-¿¿7 ;
-¬¬ !
-ƒƒ9 =
+ÑÑ 
+ÖÖ 
+áá> B
+ää7 ;
+åå !
+éé9 =
 
-ΩΩ 
-ææ 
+áá 
+àà 
 
-ΩΩ1 2
-ΩΩ6 70
+áá1 2
+áá6 70
 
-¿¿ 
-¬¬ 
-ƒƒ 
-«« 
+ää 
+åå 
+éé 
+ëë 
 
-¿¿* +
-¿¿/ 0
+ää* +
+ää/ 0
 
-ÀÀ ,
-˛˛  $
+ïï ,
+∫∫  $
 
-ÕÕ -
-˛˛G ]
-”” (H
+óó -
+∫∫G ]
+ùù (H
 
-ÕÕ< @
-œœ 
-——f j
-⁄⁄ "
-€€ 
-‹‹ #0
-
-—— 
-””> @
-’’ 
-›› 
-
-„„ "
-¸¸. 9l
-
-ÁÁ 
-ËË: <
-ÍÍ 
-ÏÏ 
-ıı 
-˚˚H J
-ÉÉH J
-ããH J
-çç! #0
-
-ÛÛ 
-¸¸& 1
-ÑÑ& 1
-åå& 1
-
-ññ &
-ˇˇ@ O$
-
-ññ5 9
-òò 
-¶¶# '<
+óó< @
+ôô 
+õõf j
+§§ "
+•• 
+¶¶ #0
 
 õõ 
 ùù> @
 üü 
-üü  
-ßß" $
+ßß 
 
-ÆÆ 
-µµ9 D
+≠≠ "
+∏∏. 9l
 
-∫∫ '
-˚˚3 CT
+±± 
+≤≤: <
+¥¥ 
+∂∂ 
+øø 
+≈≈H J
+ÕÕH J
+’’H J
+◊◊! #0
 
-ææ 
-øø9 ;
-¡¡ 
-√√* ,
-√√= ?
-…… !
-ÀÀC E
+ΩΩ 
+∆∆& 1
+ŒŒ& 1
+÷÷& 1
 
-ÿÿ '
-˙˙3 C
+‡‡ &
+ªª@ O$
 
-ÊÊ 
-ÌÌ6 <
+‡‡5 9
+‚‚ 
+# '<
 
-ÙÙ %<
+ÂÂ 
+ÁÁ> @
+ÈÈ 
+ÈÈ  
+ÒÒ" $
 
-ÙÙ, 4
-¯¯l t
-˝˝ 
-ˇˇO W
-ÄÄ& .
+¯¯ 
+ˇˇ9 D
 
-¢¢ 
-©©5 ;
+ÑÑ '
+∑∑3 CT
 
-∏∏ *
-˙˙ %$
+àà 
+ââ9 ;
+ãã 
+çç* ,
+çç= ?
+ìì !
+ïïC E
 
-øø 
-¡¡< F
-√√% /
+¢¢ '
+∂∂3 C
 
-““ &
-ññ #$
+∞∞ 
+∑∑6 <
 
-““5 =
-÷÷ 
-€€E M
+ææ %<
 
-€€ 
-‹‹ %
+ææ, 4
+¬¬l t
+—— 
+””O W
+‘‘& .
 
-·· %
-•• "$
+ˆˆ 
+˝˝5 ;
 
-··1 6
-‰‰ 
-ÈÈ? D
+åå *
+ƒƒ %$
 
-ÈÈ 
-ÍÍ $
+ìì 
+ïï< F
+óó% /
 
-ÔÔ (
+¶¶ &
+ææ #$
 
- (
+¶¶5 =
+™™ 
+ØØE M
 
-ÒÒ #
+ØØ 
+∞∞ %
 
-ıı "
-ÒÒ= H$
-
-èè 
-òò 
-ùùK Q
-
-öö 
-°°: @
+µµ %
+ÕÕ "$
 
-±± 
-∏∏6 <
-
-ΩΩ '
-ÔÔB R$
-
-ƒƒ 
-≈≈ 
-∆∆C I
-
-∆∆ 
-»» 
-
-’’ )
-B T
-
-ﬁﬁ 
-ﬂﬂB IT
-
-ﬂﬂ 
-·· 
-„„ #
-„„6 <
-‰‰( .
-ÂÂ 
-ÍÍU [
-
-„„ 
-ÍÍq w
-
-ÁÁ 
-ÓÓ9 ?
-
-ÚÚ 
-˘˘9 ?
-
-àà 
-èè6 <
-
-óó #
-
-ôô 
-óó8 >$
-
-üü +
-êê .
-óó +$
-
-™™ 
-´´ 
-¥¥ '
-
-±± 
-∫∫@ G
-
-∫∫ 
-ºº" (
-
-¿¿ 
-««6 <à
-
-ÃÃ &
-üü 
-˝˝ &
-§§ %
-∆∆ !
-ÁÁ !
-ãã !
-¥¥ !
-ﬂﬂ !
-íí !
-™™ &
-‘‘ !
-ÄÄ %
-áá %
-ÜÜ !
-¶¶ !
-ÀÀ &
-¸¸ %
-ºº !
-ﬁ	ﬁ	 
-œ
-œ
- !
-¸
-¸
- "0
-
-ÃÃ, 4
-œœ> F
-––U ]
-‘‘* 2$
-
-‹‹ #
-ÒÒ9 E
-ï
-ï
- "$
-
-‹‹. 2
-ﬁﬁ 
-··: >
-
-·· 
-‚‚ 
-ÊÊ) 1
-ÊÊ@ H
-ÈÈ 
-ÎÎV ^
-ÎÎe m
-ÙÙ1 9
-˙˙  
-í	í	> F
-õ	õ	" *
-¶	¶	! )
-ß	ß	# +
-”	”	 !
-‘	‘	 #
-◊	◊	 
-·	·	 
-Ê	Ê	7 ?
-		C K
-¯	¯	7 ?<
-
-‰‰ ,
-Ü	Ü	 !
-®	®	  1
-√	√	  1
-ÿ	ÿ	 )$
-
-ÊÊ 
-ÙÙ 
-÷	÷	 &0
-
-ÎÎ 
-ÌÌ? A
-ÔÔ 
-ÙÙ' )H
-
-˙˙ 
-˛˛ 
-Ä	Ä	Y b
-à	à	 
-à	à	- 6
-û	û	3 <
-
-˚˚ 
-˚˚ $
-
-¸¸ 
-¸¸! "
-¸¸/ 00
-
-Ä	Ä	 
-Ç	Ç	B D
-Ñ	Ñ	 
-Ü	Ü	& (
-
-í	í	 
-ì	ì	 "
-
-í	í	1 2
-í	í	6 7
-
-ì	ì	 
-ò	ò	 $
-
-õ	õ	 
-°	°	 
-»	»	 (0
-
-ú	ú	 
-ú	ú	 
-ù	ù	 
-û	û	 
-
-§	§	 
-µ	µ	e m0
-
-®	®	9 :
-™	™	% &
-´	´	  
-Æ	Æ	$ %0
-
-µ	µ	 
-∑	∑	J L
-π	π	 
-º	º	0 2$
-
-¿	¿	  (
-¡	¡	  (
-√	√	6 >$
-
-»	»	- /
-»	»	3 5
-»	»	R T$
-
-‰	‰	 
-Ë	Ë	 
-Í	Í	* 6
-
-Â	Â	# %
-Â	Â	) +
-
-Ê	Ê	  "
-Ê	Ê	& (
-
-		 
-Ò	Ò	 ,
-
-		6 7
-		; <
-
-Ò	Ò	 
-Û	Û	 $
-
-ˆ	ˆ	 
-˙	˙	 
-¸	¸	* 8
-
-˜	˜	# %
-˜	˜	) +
-
-¯	¯	  "
-¯	¯	& (
-
-Å
-Å
- &
-ÛÛ2 A<
-
-à
-à
- 
-é
-é
- 
-ë
-ë
-? A
-ì
-ì
- 
-ï
-ï
-# %
-
-†
-†
- -
-ııG ]<
-
-†
-†
-< @
-¢
-¢
- 
-•
-•
- 
-´
-´
-" &
-´
-´
-( ,
-
-Æ
-Æ
- -
-ˆˆG ]H
-
-Æ
-Æ
-< @
-∞
-∞
- 
-≥
-≥
- 
+µµ1 6
+∏∏ 
+ΩΩ? D
+
+ΩΩ 
+ææ $
+
+√√ (
+
+ƒƒ (
+
+≈≈ #
+
+…… "
+≈≈= H$
+
+„„ 
+ÏÏ 
+ÒÒK Q
+
+ÓÓ 
+ıı: @
+
+ÖÖ 
+åå6 <
+
+ëë '
+√√B R$
+
+òò 
+ôô 
+ööC I
+
+öö 
+úú 
+
+©© )
+ƒƒB T
+
+≤≤ 
+≥≥B Il
+
+≥≥ 
+µµ 
+∑∑ #
+∑∑6 <
+∏∏( .
+ππ 
+ææU [
+«« $
+»»+ 1
+
+∑∑ 
+ææq w
+
+ªª 
+¬¬9 ?
+
+«« 
+ŒŒ %
+
+ÀÀ 
+““9 ?
+
+·· 
+ËË6 <
+
+ #
+
+ÚÚ 
+8 >$
+
+¯¯ +
+‰‰ .
+ÎÎ +$
+
+É	É	 
+Ñ	Ñ	 
+ç	ç	 '
+
+ä	ä	 
+ì	ì	@ G
+
+ì	ì	 
+ï	ï	" (
+
+ô	ô	 
+†	†	6 <∏
+
+•	•	 &
+·· 
+«« &
+ÓÓ %
+êê !
+±± !
+’’ !
+˛˛ !
+©© !
+‹‹ !
+ÙÙ &
+ûû !
+‘‘ %
+€€ %
+⁄⁄ !
+˙˙ !
+üü &
+’’ %
+ï	ï	 !
 ∏
 ∏
- 
-∫
-∫
-& *
-∫
-∫
-, 0$
+ 
+ªª !
+ññ %
+ÿÿ %
+˛˛ !
+õõ !
+ÉÉ !0
 
+•	•	, 4
+®	®	> F
+©	©	U ]
+≠	≠	* 2$
+
+µ	µ	 #
+≠≠B N
+Ô
+Ô
+ "$
+
+µ	µ	7 =
+∑	∑	 
+∏	∏	 
+
+∏	∏	 
+ª	ª	: >
+
+ª	ª	 
+º	º	 
+¿	¿	) 1
+¿	¿	@ H
+√	√	 
+≈	≈	V ^
+≈	≈	e m
+Œ	Œ	1 9
+‘	‘	  
+Ï	Ï	> F
+ı	ı	" *
+Ä
+Ä
+! )
+Å
+Å
+# +
+≠
+≠
+ !
+Æ
+Æ
+ #
+±
+±
+ 
+ª
+ª
+ 
+¿
+¿
+7 ?
+ 
+ 
+C K
+“
+“
+7 ?<
+
+æ	æ	 ,
+‡	‡	 !
+Ç
+Ç
+  1
+ù
+ù
+  1
+≤
+≤
+ )$
+
+¿	¿	 
+Œ	Œ	 
+∞
+∞
+ &0
+
+≈	≈	 
+«	«	? A
+…	…	 
+Œ	Œ	' )H
+
+‘	‘	 
+ÿ	ÿ	 
+⁄	⁄	Y b
+‚	‚	 
+‚	‚	- 6
+¯	¯	3 <
+
+’	’	 
+’	’	 $
+
+÷	÷	 
+÷	÷	! "
+÷	÷	/ 00
+
+⁄	⁄	 
+‹	‹	B D
+ﬁ	ﬁ	 
+‡	‡	& (
+
+Ï	Ï	 
+Ì	Ì	 "
+
+Ï	Ï	1 2
+Ï	Ï	6 7
+
+Ì	Ì	 
+Ú	Ú	 $
+
+ı	ı	 
+˚	˚	 
+¢
+¢
+ (0
+
+ˆ	ˆ	 
+ˆ	ˆ	 
+˜	˜	 
+¯	¯	 
+
+˛	˛	 
+è
+è
+e m0
+
+Ç
+Ç
+9 :
+Ñ
+Ñ
+% &
+Ö
+Ö
+  
+à
+à
+$ %0
+
+è
+è
+ 
+ë
+ë
+J L
+ì
+ì
+ 
+ñ
+ñ
+0 2$
+
+ö
+ö
+  (
+õ
+õ
+  (
+ù
+ù
+6 >$
+
+¢
+¢
+- /
+¢
+¢
+3 5
+¢
+¢
+R T$
+
+æ
+æ
+ 
+¬
+¬
+ 
 ƒ
 ƒ
- *
-´
-´
- !
-∫
-∫
- %
+* 6
 
-ƒ
-ƒ
-8 <
-Ã
-Ã
- "
+ø
+ø
+# %
+ø
+ø
+) +
 
-ƒ
-ƒ
-F Q
+¿
+¿
+  "
+¿
+¿
+& (
+
+ 
+ 
+ 
+À
+À
+ ,
+
+ 
+ 
+6 7
+ 
+ 
+; <
+
+À
+À
+ 
 Õ
 Õ
- &
+ $
 
-ÿ
-ÿ
- '
-¯¯3 C0
+–
+–
+ 
+‘
+‘
+ 
+÷
+÷
+* 8
 
-⁄
-⁄
- 
-‡
-‡
- 
-·
-·
- !
-Â
-Â
- $
+—
+—
+# %
+—
+—
+) +
 
-·
-·
- 
-„
-„
- 
+“
+“
+  "
+“
+“
+& (
 
-È
-È
+€
+€
  &
-˜˜@ O0
+ØØ2 A<
 
-È
-È
-5 9
+‚
+‚
+ 
+Ë
+Ë
+ 
 Î
 Î
- 
-Ó
-Ó
- 
+? A
+Ì
+Ì
+ 
+Ô
+Ô
+9 ;
+
 ˙
 ˙
- #
+ -
+±±G ]T
 
-ÖÖ "
-ÉÉ. 9
+˙
+˙
+< @
+¸
+¸
+ 
+ˇ
+ˇ
+ 
+ÑÑ* .
+ÑÑ0 4
+ââ" &
+ââ( ,
 
-çç $
-ÑÑ0 =$
+åå -
+≤≤G ]l
 
-ïï 
-úú 
-°°J P
+åå< @
+éé 
+ëë 
+ññ 
+òò. 2
+òò4 8
+§§ 
+¶¶& *
+¶¶, 0<
 
-ûû 
-••9 ?
+∞∞ *
+ÑÑ )
+ââ !
+òò -
+¶¶ %
 
-±± 
-∏∏6 <$
+∞∞8 <
+∏∏ "
 
-øø 
-√√ 
-…… 
+∞∞F Q
+ππ &
 
-¡¡ $
+ƒƒ '
+¥¥3 C0
 
-¡¡A H
-√√ 
+∆∆ 
+ÃÃ 
+ÕÕ !
+—— $
 
-«« 
+ÕÕ 
+œœ 
 
-‘‘ )
-¡¡% @
+’’ &
+≥≥@ O<
 
-‘‘0 8
+’’5 9
+◊◊ 
+⁄⁄ 
+‡‡- 1
+ÂÂ% )
 
-‘‘? Kì
+ËË "
+øø. 9
+
+ $
+¿¿0 =$
+
+¯¯ 
+ˇˇ 
+ÑÑJ P
+
+ÅÅ 
+àà9 ?
+
+îî 
+õõ6 <$
+
+¢¢ 
+¶¶ 
+¨¨ 
+
+§§ $
+
+§§A H
+¶¶ 
+
+™™ 
+
+∏∏ (
+ƒƒ4 E
+
+¡¡ 
+»»9 D0
+
+ÕÕ 
+––E P
+◊◊6 A
+ÑÑ $H
+
+–– 
+““ 
+„„ 
+ÚÚD I
+¯¯, 1
+ÇÇ 
+
+‘‘ 
+€€9 D0
+
+‡‡ 
+ÅÅ 
+èè> M
+ìì $
+
+ÂÂ 
+ÎÎ 
+ÏÏ9 D<
+
+ÚÚ 
+ÛÛ 
+ÉÉ 
+ÖÖ 
+ÜÜ $
+
+ıı 
+˚˚ 
+¸¸9 D$
+
+èè 
+êê 
+ôô 
+
+ìì5 6
+
+ìì8 >
+
+ûû 
+••5 @
+
+©© &
+≈≈2 A
+
+±± 
+∏∏9 D0
+
+ΩΩ 
+≈≈ 
+——< K
+’’ 
+
+¿¿ 
+«« 
+
+¡¡ 
+»» 
+
+¬¬ 
+…… $
+
+—— 
+““ 
+€€ 
+
+’’3 4
+
+’’6 <
+
+‡‡ 
+ÁÁ5 @$
+
+ÏÏ  
+∆∆G V
+ıı 
+
+ÛÛ (
+∆∆4 E
+
+˙˙ 
+˚˚@ G
+
+˚˚ $
+
+ââ !
+««I Y
+íí 
+
+êê )
+««5 G
+
+óó 
+òòA H
+
+òò 0
+
+ØØ I
+ÇÇ B
+îî B
+›› B0
+
+ØØQ Z
+∑∑! *
+……F O
+’’\ e0
+
+¥¥ %
+ªª' <
+€€ %
+›› +
+
+∑∑ 
+ΩΩ 
+
+ªª 
+¡¡ <
+
+«« 
+»» 
+…… 
+ÀÀ# -
+––0 :
+
+ÀÀ 
+ÕÕ %
+
+–– '
+““ '’’| è$
+
+ÍÍ %
+ÎÎ %
+ÌÌ +$
+
+˘˘ -
+‡‡ ,
+ÂÂ $$
+
+˘˘; ?
+ÅÅ "
+çç& *$
+
+àà %
+ââ %
+ãã +$
+
+©© %
+™™ %
+¨¨ +$
+
+ªª %
+ºº %
+ææ +
+
+ŒŒ )
+§§% @
+
+ŒŒ0 8
+
+ŒŒ? Kì
 lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\OpenTicketsListViewModel.cs
 
  %
@@ -6019,61 +9298,110 @@ lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 ∑∑ 
 ∏∏1 7
 
-ææ VV( -ƒ	
+ææ VV( -„
 nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\ModifierSelectionViewModel.cs
 
- '
-% 4 
- $$ 
- $  .2
-8 F%% 00 88  .NN 2
- "< K77 >> EE  
- "Q c
-6 D (
+ '
+% 4"" 
+ (( 
+ $  .
+( 4## 44E Q2
+8 F)) 44 <<  .RR 2
+ "< K;; BB II  
+ "Q c
+  6 D"" (
+  c v## *
 
-"" 
-""' /$$ (( 
-(( ,, $
-)) )) 
-** ** 
+&& 
+&&' /(( ,, 
+,, 00 $
+-- -- 
+.. .. 
 
-55 "
-:: <<, 9BB 
-::8 9::= >
+99 "
+>> @@, 9FF 
+>>8 9>>= >
 
-LL 2
-OO OO 
-PP PP 
-QQ QQ *
-VV #  6ww +
-ââ4 Jd
-XX << <<D I>>- 2>>T YBB( -EE. 3EEN S]] gg 2
-YY3 <::( 1OO (`` ii  )
-[[0 5]] ^^! &
-^^7 8^^< =
-^^P Q^^U V
-dd *
-ÇÇ 7
-dd= Lgg( 7kk *
-tt YY  1dd+ < 
-vv }} 
-ÄÄ  +"
-ww, 8
-ÇÇ 
-åå 8
-yy  QQ #
-áá$ ,
-áá6 >
-ãã <
-{{ ::? IPP $gg8 Bkk2 <mm "
+PP 2
+SS SS 
+TT TT 
+UU UU ,
+ZZ #  6
+££ +
+µµ4 J∫
+\\ @@ @@D IBB- 2BBT YFF( -II. 3IIN Sbb kk$ )nn qq, 1rr zz4 9{{8 =
+ÅÅ- 2
+åå 
+ìì J
+]]3 <>>( 1SS (ff yy  )
+ãã  )
+ïï  )
+^^( 4cc 
+``0 5bb dd! &
+``T `cc #
+dd7 8dd< =
+ddP QddU V
+kk  mm' 7}} !
 
-áá 
+mm #
 
-ââ* 2
-ãã 
+qq (
 
-ââK V
-åå "
+uu $@
+yy zz% 2{{( 5~~ '
+ÅÅ '
+ÉÉ: G
+yy0 1yy5 6
+zz 
+ÉÉ "
+{{ 
+ÄÄ 
+ÉÉ( 1
+
+áá !
+
+ãã 
+åå/ <
+
+ãã0 1
+ãã5 6
+
+êê *
+ÆÆ 7$
+
+êê= L
+ìì( 7
+óó *"
+
+†† ]]  1
+êê+ <$
+
+¢¢ 
+©© 
+¨¨  +$
+
+££, 8
+ÆÆ 
+∏∏ :
+
+••  UU #
+≥≥$ ,
+≥≥6 >
+∑∑ Z
+
+ßß >>? ITT $yy7 A
+ãã7 A
+ìì8 B
+óó2 <
+ôô "
+
+≥≥ 
+
+µµ* 2
+∑∑ 
+
+µµK V
+∏∏ "
 kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\ModifierEditorViewModel.cs
 
  $F
@@ -6257,404 +9585,530 @@ eC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 
 44 
 
-;; Ö"
+;; ≠
+eC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\MenuItemViewModel.cs
+
+ &n
+
+
+ $  #    " % $  &$ *++ %
+& + 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 2
+  (  *$$ ... 8<
+ , 9R _. ;&&+ 8..< I
+  = N
+ && 
+ %% 
+
+   !
+++ .. (
+.. 00 &
+
+00 ﬂ$
 gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\MenuEditorViewModel.cs
 
 		  F
 - @
-ﬂﬂ 
-òò )
-÷÷ )
-ÚÚ %
-´´ 0^
+ÇÇ 
+«« )
+ÖÖ )
+°° %
+⁄⁄ 0^
 * :
-‡‡ 
-çç '
-ºº &
-  $ 4
-”” *
-ùù "
-∆∆ /v
+ÉÉ 
+ºº '
+ÎÎ &
+˘˘$ 4
+ÇÇ *
+ÃÃ "
+ıı /v
 % 4
-·· 
-ÇÇ &
-´´ %
-∂∂# 2
-ππ )
-ÕÕ' 6
-–– -
-ââ !
-““ -.
+ÑÑ 
+±± &
+⁄⁄ %
+ÂÂ# 2
+ËË )
+¸¸' 6
+ˇˇ -
+∏∏ !
+ÅÅ -.
 . B
-‚‚ 
-∞∞! 5
-‰‰" 6"
+ÖÖ 
+ﬂﬂ! 5
+ìì" 6"
 - D
-„„ 
-µµ& =
- +ee  hh  1"
+ÜÜ 
+‰‰& ="
+ +
+ÇÇ  
+ÖÖ  1"
  
-‘‘ 
-’’ )
+˜˜ 
+¯¯ )
    +
- !""  ## 0h
- uu 
-òò 
-¶¶ 
-ππ 
-   
-˘˘) 4
-áá* 5
-íí, 7P
-   vv $
-ôô $
-ßß $
-ÀÀ $
-àà/ ?
-ìì1 A
+ !""  ## 0j
+ 
+íí 
+µµ 
+√√ 
+÷÷ 
+ÌÌ 
+úú) 4
+∂∂* 5
+¡¡, 7R
+   
+ìì $
+∂∂ $
+ƒƒ $
+ÓÓ $
+∑∑/ ?
+¬¬1 A
 &&  )) ** ,"
 '' 
-∫∫  
-˙˙& 2
--- !00 11 -¥
-.. ww !
-ÉÉ !
-öö !
-®® !
-ªª !
-ÃÃ !
-ÉÉ 
-éé 
-ôô 
-ûû 
-ÆÆ 
-¬¬ 
-ﬁﬁ 
-„„ 
-ıı 
-˛˛ 
-åå 
-ïï 
-†† 
-∏∏ 
-ºº 
-ÿÿ 
-ˇˇ 
-ÉÉ 
-ëë :
-44. 8
-ÿÿ 
-ÛÛ 
-™™ 
-¨¨& 0P
-55+ 1ll 
-ææ 
-ŸŸ 
-ûû 
-«« 
-»»& ,h
-66* /pp 
-ìì 
-¨¨ 
-øø 
-⁄⁄ 
-ää 
-”” 
-‘‘% *D
-77. ;zz/ <
-ùù/ <
-øø/ <
-¥¥ 
-∂∂. ;
-99 /<< $== 4r
-:: -zz ,|| ,
-ùù ,
-üü ,
-øø ,
-√√ ,
-ÄÄ. B
-ãã/ C
-ññ1 EF
-AA/ ?
-ØØ 
-±±* :
-‚‚ 
-ÂÂ+ ;
-ÍÍ *:
-BB5 @
-ﬂﬂ 
-ÌÌ 
-¸¸ 
-èè 
-DD 3GG 'HH 7.
-EE 1
-ÙÙ$ ;
-˘˘' >
-¸¸4 K
-KK %NN !OO 1
-LL #
-ˆˆ .
-RR! 4UU "VV 2:
-SS  2
-ââ$ 6
-åå& 8
-èè -
-êê 
-YY #
-ÊÊ 
-ZZ &
-ÁÁ 
-[[ #
-ËË 
-\\ "
-ÈÈ 
-]] (
-ÎÎ 
-^^ +
-ÏÏ 
-__ 
-ÓÓ 
-`` !
-ÔÔ ÷
-cc )
-££ )
-¶¶" 2
-ßß' 7
-®®9 I
-êê %
-íí  
-ìì  
-ññ  
-òò6 F
-∆∆  
-»» /
-››  
-ÙÙ 
-¸¸% 5
-ÜÜ  0
-ìì 
-úú9 I
-zzL NzzR T$
+◊◊  
+ùù& 2
+-- #00 !33! 3,
+.. !HH* ;
+⁄⁄ %
+¶¶ &
+:: (== $>> 4"
+;; &
+€€ (
+®®" 6
+AA #DD EE /"
+BB !
+‹‹ #
+©©" 1
+HH &55* @
+JJ !MM NN -∂
+KK 
+îî !
+†† !
+∑∑ !
+≈≈ !
+ﬁﬁ !
+ÔÔ !
+≤≤ 
+ΩΩ 
+»» 
+ÕÕ 
+›› 
+ÒÒ 
+çç 
+íí 
+§§ 
+≠≠ 
+ªª 
+ƒƒ 
+œœ 
+ÁÁ 
+ÎÎ 
+áá 
+ÆÆ 
+≤≤ 
+¿¿ :
+QQ. 8
+áá 
+¢¢ 
+ŸŸ 
+€€& 0R
+RR+ 1
+ââ 
+ÌÌ 
+àà 
+ÕÕ 
+ˆˆ 
+˜˜& ,j
+SS* /
+çç 
+∞∞ 
+€€ 
+ÓÓ 
+ââ 
+ππ 
+ÇÇ 
+ÉÉ% *F
+TT. ;
+óó/ <
+∫∫/ <
+‚‚/ <
+„„ 
+ÂÂ. ;
+VV /YY $ZZ 4v
+WW -
+óó ,
+ôô ,
+∫∫ ,
+ºº ,
+‚‚ ,
+ÊÊ ,
+££. B
+∫∫/ C
+≈≈1 EF
+^^/ ?
+ﬁﬁ 
+‡‡* :
+ëë 
+îî+ ;
+ôô *:
+__5 @
+éé 
+úú 
+´´ 
+ææ 
+aa 3dd 'ee 7.
+bb 1
+££$ ;
+®®' >
+´´4 K
+hh %kk !ll 1
+ii #
+•• .
+oo! 4rr "ss 2:
+pp  2
+∏∏$ 6
+ªª& 8
+ææ -
+øø 
+vv #
+ââ 
+ww &
+ää 
+xx #
+ãã 
+yy "
+åå 
+zz (
+éé 
+{{ +
+èè 
+|| 
+ëë 
+}} !
+íí ÿ
 
-ââ %
-åå 
-èè  .÷
+ÄÄ )
+¿¿ )
+√√" 2
+ƒƒ' 7
+≈≈9 I
+øø %
+¡¡  
+¬¬  
+≈≈  
+««6 F
+ıı  
+˜˜ /
+åå  
+££ 
+´´% 5
+µµ  0
+¬¬ 
+ÀÀ9 I
 
-ää #kk 
-»» &
-  " /
-ÀÀ' 4
-ÃÃ6 C
-ÖÖ "
-áá 
-àà 
-ãã 
-çç4 A
-≤≤ 
-¥¥ )
-¡¡ 
-‹‹ 
-¸¸ 
-áá *
-üü 
+óóL N
+óóR T$
 
-ùùL N
-ùùR T$
+¶¶ %
+©© 
+¨¨  .ÿ
 
-ÆÆ #
-±± 
-¥¥  -÷
+ßß #
+àà 
+ÎÎ &
+ÌÌ" /
+ÓÓ' 4
+ÔÔ6 C
+¥¥ "
+∂∂ 
+∑∑ 
+∫∫ 
+ºº4 A
+·· 
+„„ )
+ 
+ãã 
+´´ 
+∂∂ *
+ŒŒ 
 
-ØØ !oo 
-íí 
-˜˜ 
-˘˘ 
-¸¸ !
-ÄÄ 
-ÇÇ3 ?
-®® 
-™™ '
-≠≠ 
-¿¿ 
-€€ 
-ãã 
-ÙÙ 
-˘˘ 
-ââ 
-åå 
+∫∫L N
+∫∫R T$
 
-øøL N
-øøR T:
+ÀÀ #
+ŒŒ 
+——  -
 
-““ tt 
-ÇÇ 
-óó 
-∏∏ 
+ÃÃ !
+åå 
+ØØ 
+öö 
+úú 
+üü !
+££ 
+™™ !
+ÆÆ !
+±±3 ?
+◊◊ 
+ŸŸ '
+‹‹ 
+ÔÔ 
+ää 
+∫∫ 
+££ 
+®® 
+∏∏ 
+ªª 
 
-ŸŸ  2
-ﬂﬂ 0
+‚‚L N
+‚‚R T<
 
-⁄⁄ ,
-‡‡ *
+ıı 
+ëë 
+üü 
+¥¥ 
+’’ 
 
-€€ &
-·· (
+¸¸  2
+ÇÇ 0
 
-‹‹! 4
-‚‚ 2
+˝˝ ,
+ÉÉ *
 
-››  6
-„„" 8
+˛˛ &
+ÑÑ (
 
-ÚÚ  
-ÓÓ, 5
+ˇˇ! 4
+ÖÖ 2
 
-˙˙< D
-¸¸U ]
+ÄÄ  6
+ÜÜ" 8
 
-££ "
-ÔÔ. 9$
+ïï  
+ëë, 5
 
-™™ 
-´´2 6
-¨¨ !0
+ùù< D
+üüU ]
 
-¥¥ 
-∂∂Z _
-ºº3 8
-ææ #
+®®@ C
+™™6 9
 
-∂∂ 
-∑∑% *
+©©; >
+™™; >
 
-∂∂H I
-∂∂M N0
+““ "
+íí. 9$
 
-»» 
-  _ g
-÷÷6 >
-ÿÿ" *
+ŸŸ 
+⁄⁄2 6
+€€ !0
 
-   
-ÀÀ& ,
+„„ 
+ÂÂZ _
+ÎÎ3 8
+ÌÌ #
 
-  J K
-  O P
+ÂÂ 
+ÊÊ% *
 
-ÕÕ 
-ŒŒ) .
+ÂÂH I
+ÂÂM N0
 
-ÕÕL M
-ÕÕQ R
+˜˜ 
+˘˘_ g
+ÖÖ6 >
+áá" *
 
-ÎÎ '
-ÁÁ3 C0
+˘˘ 
+˙˙& ,
 
-ÌÌ 
-ÚÚ/ 5
-ÛÛ !
-ÙÙ %
+˘˘J K
+˘˘O P
 
-˙˙ #
-ÈÈ/ ;H
+¸¸ 
+˝˝) .
 
-ÖÖ 
-ÜÜ 
-áá 
-ââ+ 2
-ää 
-ãã "
+¸¸L M
+¸¸Q R
 
-ëë $
-ËË0 =0
+öö '
+ää3 C0
 
-úú 
-ùù, 4
-ûû 
-üü $
+úú 
+°°/ 5
+¢¢ !
+££ %
 
-•• $
-ÊÊ0 =
+©© #
+åå/ ;H
 
-´´ 
-¨¨  $
+¥¥ 
+µµ 
+∂∂ 
+∏∏+ 2
+ππ 
+∫∫ "
 
-∞∞ 
-±±  (
+¿¿ $
+ãã0 =0
 
-µµ 
-∂∂ ,
+ÀÀ 
+ÃÃ, 4
+ÕÕ 
+ŒŒ $
 
-¡¡ &~~ '
+‘‘ $
+ââ0 =
 
-¡¡, 6
-∆∆E O
+⁄⁄ 
+€€  $
 
-∆∆ 
-»» $
+ﬂﬂ 
+‡‡  (
 
-ÕÕ %
-°° &
+‰‰ 
+ÂÂ ,
 
-ÕÕ+ 5
+ &
+õõ '
 
-ÕÕ< C
-““> E
+, 6
+ııE O
 
-““ 
-‘‘ #
+ıı 
+˜˜ $
 
-›› +
-∆∆ ,
+¸¸ %
+ææ &
 
-››5 9
-ËË !
+¸¸+ 5
 
-‰‰ 
-ÂÂ! )$
+¸¸< C
+ÅÅ> E
 
-ÍÍ 
-ÎÎ 
-ÌÌ8 ?
+ÅÅ 
+ÉÉ #
 
-ÍÍ: ;
-ÍÍ? @
+åå +
+ÈÈ ,
 
-ÚÚ )
-ÎÎ5 G$
+åå5 9
+óó !
 
-ˆˆ8 ;
-˘˘C F
-¸¸M P
+ìì 
+îî! )$
 
-áá ,
-ÏÏ8 MÇ
+ôô 
+öö 
+úú8 ?
+
+ôô: ;
+ôô? @
+
+°° )
+éé5 G$
+
+••8 ;
+®®C F
+´´M P
+
+∂∂ ,
+èè8 MÌ
+jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\MemberProfileViewModel.cs
+
+ 2(
+' 899 II 0}} #
+/ >:: T
+$ 2;; NN $UU  cc ll 
+ÇÇ  
+ÜÜ  
+    'å
+ %% #&& $''" ((( $))# )**$ *++ "QQ __ hh vv || }}0 6
+%% ) 2
+&& ) 1cc= E
+'' ) 5
+(( ) 1
+)) ) 6% 2
+**  ) 7 
+++   ) 1
+ÄÄ% -
+-- %== 
+.. ">> 
+// $?? 
+00 @@ 
+11  AA 
+44 *99 ,
+55" 0:: (
+66 $;; &
+DD &==8 G
+DD, 6IIF P
+II JJ QQ 
+]] #>>/ ;
+ff %??1 ?
+oo @@' +
+tt !AA- 7 
+{{ || &
+ÇÇm zÿ
+jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\MemberCheckInViewModel.cs
+
+ 2
+' 800 @@ 0
+ (11 [[ (F
+$ 222 DD $KK  __ $dd $ii  
+ #   /F
+ !""% 3## ,##8 FGG UU ZZ@ N
+"" !) :
+## ) 355C M
+%% !44 
+&& "55 
+(( ))& 1))J U
+)) ::& 0@@H R
+,, *00 ,
+-- 11 
+.. $22 &
+88 "44. 9
+@@ AA GG #
+SS #55/ ;
+ZZ [[. 5(
+[[ ]] __A GddG MÍ
 mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\ManagerFunctionsViewModel.cs
 
- 2∞
-+ =   66 $BB $NN $XX nn 1~~ ,
-åå ,
-òò (
-§§ 
-¿¿ (
-…… $
-‘‘ 
-‡‡( :
-ÔÔ , 
+ 2Ç
++ =   66 $BB $NN $XX || 1
+ªª 
+ÉÉ (
+ùù 
+©©( :
+∏∏ , 
 0 F!! "
-µµ  6L
-& 2"" aa uuT `
-ÉÉV b
-ØØ 
-≈≈< H,
+⁄⁄$ :~
+& 2"" aa 
+ÉÉT `
+èè9 E
+èè^ j
+îîV b
+††9 E
+††^ j
+∆∆ 
+ˇˇ@ L,
 * :## 
-ØØ8 H
-¥¥ -
-9 H%% uu ) 
+∆∆8 H
+÷÷ - 
+9 H%% 
+ÉÉ ) 
 : J&& 
-ÉÉ * 
+îî * 
 Z n$$  
-≈≈Y m
+ˇˇ] q
  /  ! 2
 # 8!!% :
  $"" &
@@ -6663,10 +10117,10 @@ mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 , :%% ,
 - <&& .l
 ++ "00 << HH TT ^^ 
-üü 
-´´ 
-œœ 
-⁄⁄ 
+∂∂ 
+¬¬ 
+òò 
+££ 
 
 .. *
 44 55 665 ;
@@ -6679,168 +10133,298 @@ mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 
 RR '
 
-\\ *
-dd nnB H 
-nn rr 
-ÄÄ 
-ww ~~= D
+\\ *
+cc dd ff !
+rr ||B H"
+|| 
+ÄÄ 
+ëë $
 
-ÖÖ 
-åå= D
+ÖÖ %
+ÜÜ !
+àà '$
 
-ëë 
-òò9 >
+ññ %
+óó !
+ôô '$
 
-ùù (
+•• 
+¶¶ 
+®® !
 
-©© (
+¥¥ (
 
-¥¥ 
-µµW a$
+¿¿ ($
 
-µµ 
-∑∑ 
-≈≈3 :
+»» 
+…… 
+ÀÀ !
 
-ππ #
-¿¿9 H
+÷÷ 
+⁄⁄[ e$
 
-≈≈ 
-∆∆: <$
+⁄⁄ 
+‹‹ 
+ˇˇ7 >$
 
-∆∆ 
-«« 
-……5 ;
+ﬁﬁ '
+ﬂﬂ #
+·· )$
 
-ÕÕ ,
+ÌÌ &
+ÓÓ "
+& 8
 
-ÿÿ +0
+ 
+˘˘ 
 
-ﬁﬁ 
-ﬂﬂ 
-‡‡K Z
-‰‰& 5
+ˇˇ 
+ÄÄ> @$
 
-‡‡ 
-‚‚ &
+ÄÄ 
+ÅÅ 
+ÉÉ9 ?$
 
-‰‰ #
-ËË #ÏÏÇ ë
+áá 
+àà 
+ää !
 
-ÂÂ 
-ÂÂ  !0
+ññ ,
 
-ÍÍ )
-ÎÎ %
-ÌÌ %
-ÔÔ= N
+°° +0
 
-ÏÏ 1
-ÌÌC \ó
+ßß 
+®® 
+©©K Z
+≠≠& 5
+
+©© 
+´´ &
+
+≠≠ #
+±± #µµÇ ë
+
+ÆÆ 
+ÆÆ  !0
+
+≥≥ )
+¥¥ %
+∂∂ %
+∏∏= N
+
+µµ 1
+∂∂C \´
 bC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\LoginViewModel.cs
 
- *
-& 6&& zz -
-ΩΩ -*
-+ ='' yy 1
-ºº 1\
-' 9(( 
-ìì (
-ßß %
-÷÷ &
-‹‹ &
-ﬁﬁ ,
-ÚÚ %,
-" .)) 
-¬¬ 
-’’c o 
-5 D** 
-àà ) 
-6 F++ 
-ÉÉ *
-+ @,, ~~+ @ 
-0 J-- "
-’’0 J 
-& 6.. 
-»»! 1
- :: ==  $
-  HH II ,
- (&& *
- /'' .
- +(( .
-  )) "
-  ( 6** (
-!!) 8++ *
-"" 2,,  4
-### <--% >
-$$ (.. *∂
-88 DD/ 2VV  XX __ ee" %gg gg gg# &nn! $yy: =
-ïï 
-öö 
-±±! $
-ºº: =
-‡‡ 
-ÂÂ 
-DD ??) 2l
-FF YY `` hh pp uu 
-ôô 
+ ,
+& 600 
+ﬁﬁ -
+°° -,
++ =11 
+›› 1
+†† 1\
+' 922 
+˜˜ (
+ãã %
+ƒƒ &
+   &
+ÃÃ ,
+·· %,
+" .33 
+ÆÆ 
+√√c o 
+% 444 
+êê - 
+5 D55 
+ÏÏ ) 
+6 F66 
+ÁÁ * 
++ @77 
+‚‚+ @ 
+0 J88 "
+√√0 J*
+& 699 OO- =
+¥¥! 1
+ ii ll  $
+  ww xx ,
+ "[[ ^^  -"
+  & 6:: ÌÌï •
+## (00 *
+$$ /11 .
+%% +22 .
+&&  33 "
+'' &44 (
+((( 655 (
+))) 866 *
+** 277  4
+++# <88% >
+,, (99 *
+-- (:: *
+..% 8;; *
+JJ( 4;; 
+
+OO ,
+TT) .== 
+íí 
+ïï :
+YY  
 ≥≥ 
-∏∏ 
-‰‰ 
-MM &00 
-NN  11 
-OO *22 
-PP  33 
-QQ #44 
-RR %55 
-TT 006 A
-TT% *VV XX 
-]] 11( -
-cc  222 A
-ll &552 A
-yy zz@ LN
-zz || ~~V Z
-ÉÉV Z
-ÑÑ* .
-ààT X
-ââ* .
-~~ "
-ÅÅ ".
- 
-ÑÑ 
-ââ 
-èè %
+¶¶  
+¶¶7 C
+œœ ﬁ
+gg aa ss/ 2
+∫∫  
+ºº 
+√√ 
+……" %
+ÀÀ 
+ÀÀ 
+ÀÀ# &
+““! $
+››: =
+˘˘ 
+˛˛ 
+ïï! $
+††: =
+©© 
+ŒŒ 
+‘‘ 
+ss nn) 2§
+uu bb 
+éé 
+££ 
+ΩΩ 
+ƒƒ 
+ÃÃ 
+‘‘ 
+ŸŸ 
+˝˝ 
+óó 
+úú 
+®®  
+”” 
+|| &?? 
+}}  @@ 
+~~ *AA 
+  BB 
 
-åå 
-ìì9 ?
+ÄÄ #CC 
 
-†† 
-ßß6 A
+ÅÅ %DD 
 
-ØØ !33- 7
+ÇÇ )EE 
 
-ºº 
-ΩΩ@ L`
+ÉÉ %FF 
 
-ΩΩ 
-øø 
-ƒƒ 
-≈≈  $
-∆∆ #
-«« #
-œœ* .
-œœ; ?
+ÑÑ $GG 
 
-ÕÕ9 C
-œœ 
+ââ %GG1 ?
 
-’’ '
-÷÷0 ?
+êê 
+ìì! &
 
-ÎÎ 
-ÚÚ6 A
+ìì- .
+ìì2 3
 
-˙˙ 44+ 3Ω
+ììF G
+ììK L
+
+ØØ FF6 @$
+
+ØØ% )
+±± 
+≥≥ 
+
+∏∏ ??6 A$
+
+∏∏% *
+∫∫ 
+ºº 
+
+¡¡ @@( -
+
+««  AA2 A
+
+–– &DD2 A
+
+›› 
+ﬁﬁ@ LT
+
+ﬁﬁ 
+‡‡ 
+‚‚V Z
+ÁÁV Z
+ËË* .
+ÏÏT X
+ÌÌ* .
+
+‚‚ "
+ÂÂ "0
+
+„„ 
+ËË 
+ÌÌ 
+ÛÛ %
+
+ 
+˜˜9 ?
+
+ÑÑ 
+ãã6 A
+
+ìì !BB- 7
+
+†† 
+°°@ LÑ
+
+°° 
+££ 
+¶¶, 0
+∞∞ 
+±±  $
+≤≤ #
+≥≥ #
+µµ( ,
+∂∂ #
+ΩΩ* .
+ΩΩ; ?
+
+ªª9 C
+ΩΩ 
+
+√√ '
+ƒƒ0 ?
+
+⁄⁄ 
+··6 A
+
+ÈÈ *EE6 I$
+
+ÌÌ 
+ÓÓ 
+ÔÔ 
+
+¯¯ CC+ 3å
+nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\LanguageSelectionViewModel.cs
+
+		 /(
+2 F  .)) &
+
+ ,<
+0 B - 0    !! 
+C V 2
+ L W
+= >B C
+  
+
+%%  
+..    .
+00 66 (
+11 D H))I M77 
+22 88 
+44! %66 
+44. 277 
+44; ?88 Ω
 iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\KitchenOrderViewModel.cs
 
 
@@ -6871,40 +10455,49 @@ iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 
 33 
 44 :: 
-666 :88 õ
+666 :88 á
 kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\KitchenDisplayViewModel.cs
 
- (<
-1 <11 JJ& 1NN& 1xx ) !(
-) 988 99 ;; %n
-. 4;; << == >> ee ee %ee1 7kk kk $kk0 6*
-; ASS VV 
-ÑÑ 
- # # /
- !YY ^^ 
- 33 
- "44 
- (55 
- "" %%  .<
-   -- ,556 C55G THH tt 
--- '') 2
-//; E11  
+ ((
+1 <99 WW& 1[[& 1 
+/ =:: 
+ÜÜ  
+3 G;; (
+) 9EE FF HH %n
+. 4HH II JJ KK rr rr %rr1 7xx xx $xx0 6
+; A`` cc (
+ # # /BB 
+ !ff kk 
+ >> 
+ "?? 
+ (@@ 
+!! $$ ''  .>
+"" 11 ,@@6 C@@G TUU 
+ÅÅ 
+//( 4<< BB #
+11 ))) 2
+44  *99  
+55 +:: &
+66" 5;; 2
+77% 8<< *
 
-== 
+JJ 
 
-==  >
-BB %(( #44/ >==) 8ff 
-ää ((
-FFZ gJJ NN TT" /
+JJ  >
+OO %** #??/ >JJ) 8ss 
+ââ !(
+SSZ gWW [[ aa" /
 
-cc 
+pp 
 
-ii 
-nn %33C Q*
-nn= ?pp xx7 9
-ÑÑ" $4
-xx yy }} . 3
-ÇÇ œ
+vv 
+{{ %>>C Q 
+{{= ?}} 
+ÜÜ0 2$
+
+êê 
+öö 
+ùù œ
 fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\InventoryViewModel.cs
 
 		 @
@@ -6972,7 +10565,62 @@ fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 çç 
 çç. 3
 
-õõ "JJ. 9„
+õõ "JJ. 9§
+hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\HeldTicketsViewModel.cs
+ ) 100 $
+T c22 UU  / 
+? T33 
+àà '4
+" .44 pp! -xx *
+ÖÖ ' 
+0 B55 
+®® L
+3 :66 ^^ cc 
+ãã 
+ìì 
+∞∞ 
+
+0 <
+
+   *
+
+## 
+
+&& !
+
+)) "
+,,G U22 (
+--2 F33  4
+..  44 "
+//# 455 .
+00& ,66 
+;;V \;;` f
+>>, @:: 
+??' ?;;  
+
+DD % 
+MM #FF 
+éé 
+UU XX# *
+XX= >XXB C
+nn !::X h
+nn1 7pp 
+vv )::D VD
+vv9 ?xx 
+ÑÑ 
+ää' -
+ããF L
+ììF L
+
+ÉÉ 
+àà4 ;
+
+ûû ";;C T0
+
+ûû2 8
+†† 
+™™ 
+∞∞V \„
 gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\GuestCountViewModel.cs
 
  (
@@ -7093,7 +10741,168 @@ wC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 
 àà !22 ;; DD 4
 
-éé "33 << EE WW '¶
+éé "33 << EE WW 'ú
+nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\GratuitySelectionViewModel.cs
+ / 7FF *
+& 6MM cc . 
+P eNN 
+÷÷ 4
+$ 2OO 6
+9 @PP ss 
+ﬁﬁ 
+ËË 6
+ #QQ ss] f
+–– $
+ËËQ ZB
+ $RR cc> G
+úú+ 4
+†† !
+••' 0 
+ *SS 
+”” ,
+
+  
+
+"" #
+
+%%9 E
+
+(($ 7
+
+++  
+
+.. $
+
+11 ,
+
+44 
+
+77 !
+
+:: 
+
+==- >
+
+@@ '
+CC (MM *MMU d
+DDC WNN  4NN_ s
+EE $OO &OOQ ^
+FF, 2PP PPC I
+GG QQ 
+HH UU #(
+II RR RRG OVV "(
+JJ SS &SSQ ^ZZJ W
+KK) 9WW +
+ZZ9 :ZZ> ?
+__  \\ 2
+cc gg2 =hh2 =ii2 =jj2 =
+nn< =nnA B
+
+xx ,
+xxE Jzz 
+
+ÇÇ &
+
+ÇÇ. 3
+ÑÑ' ,,
+
+åå #oo ~~ 
+àà 0
+
+êê  
+îî 
+òò 
+††$ 2
+
+ííM X
+îî+ 6
+
+†† 
+°°' ,
+
+™™ )<
+
+≤≤  
+∫∫ 
+ææ 
+—— '
+‡‡ $
+
+µµ< G
+µµL W
+∫∫+ 6
+
+ŒŒ 
+÷÷A H$
+
+÷÷ 
+ÿÿ 
+⁄⁄  
+
+ÚÚ 
+
+¯¯ #R
+
+ˇˇ tt 
+∑∑ 
+¬¬ 
+…… 
+⁄⁄ 
+ÈÈ 
+
+ˇˇ" )
+ÅÅ 
+
+ÖÖ 
+ØØ 4
+
+èè #%%! 7(( "ee3 Ixx- C$
+
+ëë 
+îî$ )
+òò <
+
+íí 
+òò4 :
+ææ4 :
+îî- 3
+ôô "
+
+ìì nnC M
+öö 
+
+îî 
+
+ññ) .
+òò 
+
+ññ6 <
+ôô 
+
+ññF P
+öö 4
+
+°° ==! +@@ KK 'WWH R.
+
+££ ZZ@ F
+““* 0
+©© $
+
+§§ 
+‚‚ *
+™™ 
+
+•• 
+´´ 
+
+ßß #
+©© 
+
+ßß, 7
+™™ !
+
+ßßA E
+´´ ¶
 lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\FloorManagementViewModel.cs
 
  -
@@ -7377,30 +11186,288 @@ sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 
 ßß/ 6
 ©© 
-´´7 >£
+´´7 >˛
+lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\ErrorManagementViewModel.cs
+ - 5== (`
+, B?? VV 5ZZ 5vv ( 5
+êê 5
+®®" 8
+¡¡ 5
+" .@@ uu *Z
+7 >AA `` 
+ÉÉ 
+óó 
+∞∞ 
+–– 
+’’ 
+
+1 >
+
+ *
+
+ *
+
+"" 
+
+%% !
+
+(( +
+
+++ +
+
+.. %
+
+11 #
+33 %CC 
+44 "DD  
+55 'EE 
+‡‡ /
+66 +FF 
+77 +GG 
+88 'HH 
+;; 4??! 6
+<<  @@ "
+==* 0AA (
+NN &CC2 AKK kk 
+VV WWD J
+ii #DD/ ;
+nn 0EE4 M
+uu vvM Xzz' 2
+
+àà ,FFG \H
+
+àà; C
+çç '
+éé, 4
+êêO W
+ìì: B
+óóT \
+
+êê 
+ëëD J
+
+†† ,GGG \H
+
+††; C
+•• '
+¶¶, 4
+©©D L
+¨¨: B
+∞∞T \
+
+®® 
+©©! *
+
+©© 
+™™D R
+
+©©1 2
+©©6 7
+
+ππ (HH4 E
+
+¡¡ 
+¬¬ #$
+
+¬¬ 
+––H R
+——( 2x
+
+¬¬+ ,
+ƒƒ 
+≈≈ 
+∆∆ 
+«« 
+»» 
+…… 
+   
+ÀÀ 
+ÃÃ 
+
+ﬁﬁ '
+
+ﬁﬁ8 =
+
+ÊÊ* C
+
+ÈÈ 
+ÈÈ 
+
+ÍÍ 
+ÍÍ  
+
+ÍÍ& '
+ÍÍ+ ,
+
+ÍÍ1 2
+ÍÍ6 7
+
+* C
+
+ÛÛ 
+ÛÛ 
+
+ÙÙ 
+ÙÙ  
+
+ÙÙ& '
+ÙÙ+ ,
+
+ÙÙ1 2
+ÙÙ6 7
+
+˙˙' <
+
+˙˙A F
+˛˛ 
+
+˝˝  
+˝˝$ %”
 mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\DrawerPullReportViewModel.cs
 
 
 
  &
-X k'' == 2
-\ r(( 44& <
-' 9)) 
-! (  &
-   )
-  &>> 
- 11 GG 
-  ++ 
-    ,, 
-##K ]'' 0
-$$O d((! 6
-%% +)) .
+X kNN jj 2
+\ rOO bb& <,
+) <PP 
+èè  3
+ØØ  3,
+" .QQ 
+éé %
+ÆÆ %
+' 9RR 
+! (  &
+    !! )
+ && '' *
+  ,, -- ,
+ 22 33 (f
+  &77* 0kk 
+ÄÄ %
+ÇÇ- 3
+ÜÜ 
+èèO U
+¶¶ 
+∞∞ 
+ \\ || R
+$$ 
+ÄÄ2 <
+ÇÇ@ J
+àà 
+ûû 
+®® 
+√√ p
+** ^^ ee vv 
+ää 
+ìì 
+ôô 
+™™ 
+∏∏ 
+ææ p
+00 ]] ff ww 
+ââ 
+îî 
+öö 
+©© 
+ππ 
+øø 6
+77 &997 Jnn  3
+±± #
+ÏÏ! 4d
+88 $99# 4nn oo% 6
+≤≤ !
+ÁÁ4 E
+ÏÏB S
+ÅÅ 
+ÇÇ! 2L
+99 ::( 4;;$ 0pp% 1
+≥≥ 
+ﬂﬂI U
+ÉÉ! -D
+:: qq% 0
+ﬁﬁ& 1
+‚‚ &
+„„ *
+ÑÑ! ,,
+;;  rr% 3
+ﬂﬂ, :
+ÖÖ! /,
+BB  TT 
+üü  ,
+ƒƒ  ,,
+CC .UU "
+††  :
+≈≈  :
+DD $VV 
+EE  WW 
+HHK ]NN 0
+IIO dOO! 6
+JJ .PP 0
+KK  QQ "
+LL +RR .
 
-// %
-44 55 ==n {
-== >> 
-KK !++- 7
-RR ,,( -≥
+ZZ %
+bb cc jjn {
+jj kk 
+
+ÄÄ TT9 A
+
+ÇÇ 'UUU k
+
+ÑÑ !TT- 7
+
+éé 
+èèW ]
+
+èè 
+ëë 
+
+§§ /UU; S
+
+ÆÆ 
+¥¥ 
+
+ØØ 
+∂∂ 
+
+…… %VV1 ?$
+
+ÕÕ 
+ŒŒ 
+––1 7
+
+–– 
+÷÷ 
+
+–– 
+ÿÿ( .
+
+––! '$
+
+€€  
+‹‹ 
+ÂÂ "
+
+ﬁﬁ #
+ÏÏY h
+
+‚‚ 
+ÍÍ 
+
+„„ 
+ÎÎ $
+
+ÒÒ 
+ÚÚ 
+ÙÙ 
+
+ˇˇ '
+ÿÿ '
+
+ˇˇ0 <
+ÅÅ (
+
+àà WW( -ã
 hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\DiscountTaxViewModel.cs
 
 
@@ -7413,9 +11480,9 @@ hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 X j'' 
 ∂∂ 1 
 P ^(( 
-ƒƒ - 
+ŒŒ - 
 X c)) 
-”” *
+›› *
  66 99  '
   FF GG ,
  #LL MM /
@@ -7434,13 +11501,13 @@ hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 WWÇ àXX XX0 6XXJ P
 îî 
 ïï 
-ÛÛ 
-ÙÙ 
+˝˝ 
+˛˛ 
 BB ;;) 2
 DD 
 íí +
 JJ !
-˘˘ *
+ÉÉ *
 PP <<) 3
 TT ==) 3
 ZZ #
@@ -7448,20 +11515,20 @@ hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 `` $
 ¥¥ .
 ff  
-¬¬ *
+ÃÃ *
 ll 
-—— '
+€€ '
 rr #
-…… )j
+”” )j
 xx 
 ÑÑ7 <
 éé 
 ííB G
 óó 
 úú 
-ﬂﬂ 
-„„A F
-ÈÈ 
+ÈÈ 
+ÌÌA F
+ÛÛ 
 
 ÑÑ ) 1
 
@@ -7476,7 +11543,7 @@ hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 ää 011 "
 
 åå &--2 A
-ÂÂ !
+ÔÔ !
 
 íí5 =
 îîR Z
@@ -7499,53 +11566,107 @@ hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 ºº 
 ºº5 ;
 
-¿¿ )007 I
+¿¿ )007 I$
 
-¬¬2 7
-«« $
+√√ 
+ƒƒ 
+∆∆ )$
 
-ƒƒ 
-ÀÀ 
-ÀÀ5 ;
+∆∆ 
+«« 
+««# -
 
-œœ &114 C
+ÃÃ2 7
+—— $
 
-——/ 4
-÷÷ $
+ŒŒ 
+’’ 
+’’5 ;
 
-”” 
-ŸŸ 
-ŸŸ5 ;<
+ŸŸ &114 C
 
-›› $
+€€/ 4
+‡‡ $
+
+›› 
+„„ 
+„„5 ;<
+
+ÁÁ $
 ¶¶ 
 ¥¥ 
-¬¬ 
-—— 
+ÃÃ 
+€€ 
 
-››, 6
-„„" ,
+ÁÁ, 6
+ÌÌ" ,
 
-››J P
-‰‰ 
+ÁÁJ P
+ÓÓ 
 
-„„6 <
-‰‰# )<
+ÌÌ6 <
+ÓÓ# )<
 
-ÒÒ  
+˚˚  
 ™™ *
 ∏∏ *
-∆∆ *
-’’ *<
+–– *
+ﬂﬂ *<
 
-˜˜ #
+ÅÅ #
 ¨¨) ;
 ∫∫) ;
-»») ;
-◊◊) ;
+““) ;
+··) ;$
 
-˘˘4 :
-˙˙ Û
+ÉÉ4 :
+ÉÉ? E
+ÑÑ £
+oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\DiscountManagementViewModel.cs
+
+
+
+ (
+P ] ;;" /
+. 8  )
+ *""  %%  1
+b n $
+- 6<< 
+   (,,% 5KK) 9
+,, !'') :
+.. 1 
+//* ? 
+
+11 %
+66 )5 G33  
+;; <<> G
+II *C V
+II8 @KK %
+KK LL SS$ 2(
+NN PP SS UU ≥
+äC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\TableSessions\AdjustSessionTimeDialogViewModel.cs
+
+ -
+X f>> SS  
+ $?? NN 
+ " !  2
+  OO% 6__  
+    ##  '
+ PP __D J
+**  -- .. ,
+++ II YY 
+11 44 55 (
+22 HH XX 
+88 "AA dd+ 9
+;;K X>> &
+<< ?? 
+DD #AA> J
+DD3 9FF TT 
+MM SS- 4
+]] AAL V
+
+]]+ 1
+bb ( '%% 'Û
 sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\TableSelectionViewModel.cs
 
 
@@ -7566,7 +11687,637 @@ sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 ++ ,,1 =
 ,,F G,,K L
 // %%* 1
-88 &&) /§
+88 &&) /ø!
+zC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\TableOperationsDialogViewModel.cs 
+ 3 ;
+ÄÄ ."
+L _
+ÇÇ 
+ää ."
+L _
+ÉÉ 
+úú ."
+T k
+ÑÑ 
+≠≠ 2"
+S m
+ÖÖ "
+ŸŸ 9"
+- D
+ÜÜ 
+úú 2j
+= D
+áá 
+·· 
+ÊÊ 
+áá 
+˚˚ 
+åå 
+ûû 
+ØØ 
+
+ -
+
+!!  
+
+$$ $
+
+'' #
+
+** )
+
+-- ,
+
+00 "
+
+33 #
+
+66 !
+
+99 
+
+<< 
+
+?? %F
+AA* 9
+€€ 
+ﬁﬁ 
+‚‚ 
+«« 
+…… ,ö
+BB* 8
+ëë 
+ºº 
+ìì 
+õõ )
+ææ 
+≈≈ 
+ÃÃ (
+ââ= K
+çç *
+©© (
+ÊÊ( 6
+ËË+ 9å
+CC6 Ftt+ ;
+íí 
+ΩΩ 
+™™ 
+óó *
+¬¬ 
+……B R
+ÕÕ> N
+◊◊ 
+ﬁﬁ 
+ÁÁ( 8
+EE( 4jj$ 0
+NN( 4kk$ 0
+WW( 7ll' 6
+`` &
+¿¿! 5
+hh( 6
+¡¡! /
+pp  
+¬¬! 1"
+qq  
+√√! 1
+   
+rr #
+ƒƒ! 4,
+tt 'uu3 G
+ïï% 9
+ÃÃ5 I
+tt@ AttE F.
+uu &
+ññ% ;
+±± #
+ÁÁB X:
+ww +
+íí 
+§§ 
+µµ 
+ÒÒ .
+xx8 J
+èè 
+°° 
+≤≤ "
+{{? Q
+ÇÇ 0
+ÇÇ[ m"
+||? Q
+ÉÉ 0
+ÉÉ[ m"
+}}G ]
+ÑÑ" 8
+ÑÑc y#
+~~F _
+ÖÖ% >ÖÖi Ç"
+  6
+ÜÜ" 8
+ÜÜc y$
+
+ÄÄ0 6
+áá 
+ááC I
+
+ëë- .
+
+ëë0 1
+
+íí/ 0
+
+íí2 3
+
+öö 7
+ââ "0
+
+õõ 4
+ää 
+ÇÇ #
+ÏÏ 
+
+úú 5
+ãã  
+
+ùù 1
+åå !
+
+ûû. J
+çç $
+
+üü %
+éé 
+
+§§ %
+
+•• (
+≠≠ %
+
+¶¶ 
+ÆÆ '
+
+ßß 
+ØØ +
+
+®® 
+∞∞ +
+
+©© $
+±± 3
+
+™™ '
+≤≤! 7
+
+´´ 
+≥≥ -$
+
+–– /
+ââ; S
+«« &
+
+ÿÿ 
+ŸŸF K
+
+ŸŸ 
+‹‹" (
+
+‹‹/ 0
+‹‹4 5
+
+ -
+ãã9 O
+
+ëë 2
+˚˚ 5
+
+öö 
+úúK T
+
+õõ 
+úúV b
+
+õõ1 2
+õõ6 7$
+
+úú 
+ûû 
+†† !
+
+®® 2
+˛˛ 5
+
+ºº 5
+ÅÅ 8
+
+ÃÃ $
+
+––# )
+”” 
+’’ !
+
+›› ,
+ää8 M
+
+ÜÜ 1
+ÔÔ 4
+
+àà âây Ä
+
+ââ 
+ää; B
+
+ââS T
+ââX Y
+
+ää 
+çç2 8
+
+ïï 1
+ÚÚ 4
+
+óó 
+õõ= H0
+
+óó2 3
+òò 
+òò 
+òò0 1
+
+ôô 
+õõ[ b
+
+õõ 
+úú; B$
+
+úú 
+üü. 4
+¢¢5 ;
+
+ßß 4
+ıı 70
+
+©© 
+¨¨J U
+∞∞0 ;
+≥≥A L
+
+™™ 
+¨¨k r
+
+¨¨ 
+≠≠? F
+
+≠≠ 
+
+∏∏ +
+ÃÃ &
+
+ªª 
+¬¬ .
+
+≈≈ #
+åå5 G0
+
+…… 
+   
+—— *
+““' 5
+
+……< =
+……o p
+
+……W X
+……\ ]
+
+ÃÃ 
+””* 9
+
+ÕÕ 
+‘‘ (
+
+ÕÕS T
+ÕÕX Y
+
+œœ 
+◊◊ '
+
+⁄⁄ &
+ççN c0
+
+⁄⁄= G
+‹‹ 
+‹‹" ,
+ﬁﬁ$ .$
+
+‚‚ *
+ëë6 O
+îî %
+
+ÔÔ 
+éé) /
+
+ÙÙ )
+
+ÙÙ1 6
+ˆˆ3 8Ä
+
+ÅÅ  bb cc dd jj kk ll pp5 Gqq5 Grr8 J
+•• 
+˙˙ '
+˝˝ '
+ÄÄ '
+ÓÓ '
+ÒÒ '
+ÙÙ '
+ÊÊ 
+ÁÁ 
+ËË 
+∞∞ 
+¥¥# 5R
+
+ãã !CC  4
+çç8 L
+ûû ,
+ªª$ 8
+œœ 1
+⁄⁄' ;$
+
+çç 
+îî 
+ïï -$
+
+éé #
+öö 
+õõ /$
+
+èè $
+†† 
+°° /$
+
+êê 
+¶¶ 
+ßß *H
+
+íí 
+òò 
+ΩΩ 
+……^ k
+—— 
+‹‹- :$
+
+òò !
+ææ 
+““ :
+
+ûû "ttG V
+òò .
+øø 
+”” <
+
+§§ 
+òò2 <
+¿¿ 
+ÕÕZ d
+‘‘ 
+
+ÆÆ $xx 5
+
+∞∞ +
+∂∂ 
+
+±± 
+∑∑ 
+
+≤≤ 
+∏∏ 
+
+¥¥6 C
+∂∂ %
+
+¥¥J Q
+∑∑ 
+
+¥¥Z a
+∏∏ „
+wC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\StartSessionDialogViewModel.cs
+ ( 8YY + 
+X l[[ 
+´´ 38
+: A\\ 
+≠≠ 
+∏∏ 
+ææ D
+ rr 
+ûû 
+ØØ" *
+∏∏] e
+ææZ b 
+ ss 
+üü 
+ (( )) )
+ !.. // -
+ 22+ 6vv  
+ ww 
+¢¢  
+ xx 
+§§  
+ yy 
+••  
+ zz 
+¶¶  
+ {{ 
+ßß  
+ || 
+££ 
+!! 66 ;;  +.
+"" 
+ÄÄ 
+ää 
+°° 
+## !GG HH ,
+$$ MM NN %
+&& tt 
+,, uu 
+
+22 #8
+44  
+ññ 
+†† 
+ØØ, 6"
+EE 
+ÅÅ 
+ãã Z
+KK << @@ 
+ÇÇ 
+ìì 
+òò 
+ππ 
+øø 
+QQ )^^ 
+RR %__ "
+TT +
+≥≥ 
+…… 
+UU8 F
+≤≤ 
+XXK ^[[ 2[[] p
+YY- 3\\ \\C I
+
+ee 
+ff rr 
+gg ss "
+hh tt 
+ii uu %
+jj vv  
+kk ww 
+ll xx 
+mm yy  
+nn zz 
+oo {{ "
+pp || $
+
+àà 
+
+àà" ,
+ää  
+
+àà6 B
+ãã #
+
+éé (^^- >
+
+ùù 
+´´@ G$
+
+´´ 
+ØØ 
+≤≤) /
+
+«« __) /Ê
+qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\SplitPaymentViewModel.cs
+
+ * 
+\ wAA #
+¬¬ : 
+" .BB 
+¨¨ &
+
+ 
+
+ 
+
+ "
+
+!! 
+
+$$  
+
+'' .
+,, 
+ΩΩ 
+ÈÈ 
+˘˘ Ñ
+117 ?HHH P^^ hh %jj {{ 
+öö 
+¶¶ 
+∏∏! )
+ﬁﬁ 
+ÏÏ 
+˚˚ 
+
+66 0
+>>O iAA& @
+??  BB "
+HH !
+··! 2
+
+NN 
+PP VV ^^ 
+
+VV" #
+VV% &XX 
+
+ff (
+ff4 9hh hh/ 4jj !
+
+ss @
+ss -uu ~~9 G5 C
+ÇÇ *
+áá # 
+~~ ' 2
+ÑÑ $"
+ 
+áá+ 4
+ââ" +0
+
+ÇÇ 
+ÇÇ 
+ÇÇ, -
+áá 0
+
+ÑÑ 
+ââ 
+ââ 
+èè $
+
+åå 
+íí 
+öö 
+
+íí& '
+
+íí) *
+îî 
+
+§§ 4$
+
+¨¨ 
+≠≠ 
+øø &
+
+∏∏ 
+ææ $
+
+ππ 
+ππ3 4
+ππ= >
+
+ºº 
+¬¬G N0
+
+¬¬ 
+ƒƒ 
+∆∆D J
+   !Z
+
+‹‹ "ZZ !__ kk 
+ññ %
+ùù 
+ÒÒ 
+ÄÄ 
+
+ﬁﬁ9 <
+ﬁﬁD G
+
+ﬁﬁ> ?
+ﬁﬁJ K
+
+ÁÁ 
+
+ÁÁ  (
+ÈÈ 
+
+ÁÁ0 ;
+ÍÍ !
+
+˜˜ L
+
+áá *11  5PP -XX) >ff 3
+åå 1
+îî- B
+
+ää 
+
+çç §
 rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\SizeSelectionViewModel.cs
 
 
@@ -7645,7 +12396,156 @@ mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 77 #
 << CC3 :
 
-SS Ü
+SS õ
+yC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\SessionControlDialogViewModel.cs
+ 2 :PP - 
+X eRR 
+ïï , 
+Z hSS 
+∫∫ - 
+V nTT  
+ËË 7\
+< CUU 
+óó 
+•• 
+ºº 
+ÃÃ 
+ÍÍ 
+¯¯ 
+
+ 
+
+ 
+
+ -
+
+"" "
+
+%% 
+
+(( 
+
+++ !
+
+.. $
+
+11 "
+
+44 
+
+77 !
+
+:: 
+
+== 
+
+??( 4:
+II +
+°° 
+»» 
+ÙÙ 
+ÖÖ .
+JJ8 O
+ûû #
+≈≈ #
+ÒÒ #
+MMK WRR $RRO [
+NNM ZSS &SSQ ^
+OOI `TT# :TTe |
+PP/ 5UU UUC I6
+]] 0WW ~~ 
+¨¨ 
+”” 6
+^^ 1XX  
+≠≠  
+‘‘  8
+__ 4YY 
+ÄÄ 
+ˇˇ #
+ää 
+`` %ZZ 
+
+ee 
+ff nn 
+gg oo 
+hh (pp %vv  
+ii qq -rr )
+jj ss !
+kk tt '
+ll uu %
+
+ÉÉ (WW4 E
+
+íí 
+ïï9 @0
+
+ïï 
+óóO U
+óóa g
+üüU [
+
+±± )XX5 G
+
+ππ 
+∫∫: AH
+
+∫∫ 
+ΩΩ 
+ΩΩ" (
+ΩΩ4 :
+¬¬ #
+∆∆W ]
+
+ÿÿ ,YY8 M
+
+ÁÁ 
+ËËD K
+
+ËË 
+
+ÉÉ ZZ) /
+
+àà '
+
+àà, 1
+
+çç %
+
+çç- 2
+èè3 8
+
+öö $JJ 5
+
+úú 
+££ 
+
+ùù# ,
+§§ 
+
+ûû 
+•• 
+
+üü 
+¶¶ 
+
+°°( 1
+££ 
+
+°°K T
+§§ 
+
+°°[ b
+•• 
+
+°°k r
+¶¶ H
+
+≠≠ #
+üü 2
+∆∆ 2
+ÚÚ 2
+ùù "
+°°3 JÜ
 rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\SeatSelectionViewModel.cs
 
  +
@@ -7664,7 +12564,60 @@ rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 
 $$ 
 
-.. ç
+.. ¿
+|C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\PromotionScheduleDialogViewModel.cs
+
+
+
+ -
+b o \\" /
+^ j uu + 
+d s   
+óó .F
+ !)) .. $..Q ZWW \\j sww &
+7 A22 33 )
+ "99 :: +
+ ?? @@ )
+ EE FF '
+ !KK LL ,
+U a $
+Q \ "
+W e   (
+
+'' 
+''' /)) 
+
+.. 
+006 ?]] 
+77  xx '
+== ll  yy %
+CC ll zz !X
+II aa kk nn 
+ÉÉ 
+àà 
+ûû 
+££ 
+OO 1"" ++ 
+PP /## 
+QQ3 H$$ 
+
+SS$ .*
+UU )""5 G (
+öö (
+\\ ]]G P
+ii '##3 C 
+uu }} 
+ÉÉ %
+
+êê *$$L _$
+
+êêA I
+íí 
+óóm u$
+
+óó 
+òò 
+ûû %ç
 oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\PriceEntryViewModel.cs
 
   
@@ -7769,34 +12722,39 @@ rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 
 üü jj* 1
 
-ºº kk) /⁄
-pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\NotesDialogViewModel.cs
+ºº kk) /Ç
+pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\NotesDialogViewModel.cs
+
+
+ ! 1** $
+> V,,  WW .
+H a-- !RR /
+3 :.. `` 
+   $2
+ 88 AA QQi mVVK O
+   %2
+ :: CC MM aa F
+ 66 ?? HH QQD MVV: C``N W2
+   77 @@ OO QQU a
+"" #00 
+## %11 
+%% +[[ ll 
+((1 H,,# :
+)); S--$ <
+**& ,.. 
 
-		 !
-> V""  II .
-H a## !DD /
-   $2
- -- 55 CCi mHHK O<
- ++ 33 ;; CCD MHH: C2
- ,, 44 AA CCU a
- #%% 
- %&& 
- +LL [[ 
-1 H""# :
-  ; S##$ <
+44 #
+44) 166 
+44; F88 
 
-)) #
-))) 1++ 
-)); F-- 
-
-11 &
-11, 433 
-11; F44 "
-11P b55 !
-99 %%' +
-CC DD< C
-HH II; B
-YY &&) /‚
+== &
+==, 4?? 
+==; F@@ "
+==P bAA !
+FF 00' +
+QQ RR< C
+VV WW; B
+jj 11) /‚
 vC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\ModifierSelectionViewModel.cs
 
  /
@@ -7886,7 +12844,275 @@ qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 
 >> 
 
-HH ¡
+HH ﬁ
+uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\ManagerPinDialogViewModel.cs
+
+ .!
+	v á** 
+ÇÇ 0
+
+ 
+
+  
+
+ !
+
+ 
+
+   
+
+## %R
+%%  
+ƒƒ 
+““ 
+”” 
+ÊÊ 
+ÁÁ 
+ÛÛ 
+((i y** ,L
+00 MM% .YY% .ee% .
+óó) 2
+∞∞% .
+ÈÈ! *d
+55 NN% .ZZ% .ff% .
+òò) 2
+±±% .
+¬¬! *
+◊◊% .
+ÍÍ! *\
+::  xx )
+çç# 1
+®® -
+¡¡! /
+ÕÕ! /
+ÿÿ% 3
+ÎÎ! /.
+?? '
+ää& 7
+ëë, =
+••" 3
+DD ,
+¿¿ 5
+
+GG 
+GG% *II KK 
+
+SS 
+
+__  
+
+nnO ]
+
+ÅÅ 
+ÇÇ= D0
+
+ÇÇ 
+ÑÑ 
+íí& ,
+ûû $
+
+ëë )
+ííO `
+íík |$
+
+ΩΩ 
+åå  
+ßß 
+
+   
+ƒƒ" /
+
+  ' ,
+
+ﬂﬂ 
+
+ÒÒ ’
+zC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\ManagerOverrideDialogViewModel.cs
+ 3 ;zz .D
+- D|| 
+ºº 6
+ÇÇ# :
+çç# :
+íí# :D
+= D}} 
+…… 
+ŒŒ 
+££ 
+ÆÆ 
+
+ 
+
+ 
+
+  -
+
+   
+
+## &
+
+&& *
+
+)) 
+
+,, &
+
+// (
+
+22 "
+
+55 !
+
+88 
+
+;; 
+
+>> 
+
+AA &
+CC( =oo. C
+MM( >pp/ E
+WW( 7qq( 7"
+aa %
+¶¶! 4
+®®2 E
+ii '
+ÿÿ! 6
+mm( :
+ßß! 3"
+uu +
+™™ 
+»» 
+vv9 J
+ßß 
+yy  6||" 8||c y
+zz0 6}} }}C I:
+
+ÑÑ - 
+§§ 
+÷÷ 
+ÕÕ l
+
+ÖÖ 1
+ÄÄ 
+•• 
+◊◊  
+µµ  
+◊◊ 
+›› 
+‚‚ 
+ÏÏ 
+
+ÜÜ %
+ÅÅ 
+
+ãã 
+
+åå 
+íí 
+
+çç 
+ìì 
+
+éé (
+îî #
+
+èè #
+ïï /$
+
+êê 
+ññ %
+õõ  -
+
+™™ %1 ?$
+
+∫∫ 
+ººe k
+««" ($
+
+ºº 
+ææ 
+¿¿ %
+
+€€ )
+ÄÄ5 G0
+
+ÒÒ 
+ÉÉP Z
+ééE O
+ìì# -H
+
+˜˜ !
+ÇÇ 
+çç 
+íí 
+úú 
+ûû %
+
+ππ !
+ÄÄ_ o
+
+∆∆ 
+ÅÅ) /
+
+ÀÀ $
+
+ÀÀ, 1
+ŒŒ3 8
+
+’’ /
+
+’’4 9
+
+€€ /
+
+€€8 =
+
+‡‡  
+
+‡‡( -
+„„4 9
+
+ÍÍ ,
+
+ÍÍ4 9
+ÌÌ4 9æ
+
+¯¯  cc dd ee oo pp qq 
+éé 
+˚˚ (
+ÜÜ (
+ëë (
+øø 
+¿¿ 
+¡¡ 
+ÖÖ 
+ââ4 G
+
+ÇÇ %vv 6
+
+ÑÑ 
+ãã 
+
+ÖÖ +
+åå 
+
+ÜÜ 
+çç 
+
+áá 
+éé 
+
+ââ) 2
+ãã 
+
+ââH T
+åå #
+
+ââ[ b
+çç 
+
+ââk r
+éé ¡
 oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\ItemSearchViewModel.cs
 
   
@@ -7905,7 +13131,457 @@ oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 RR UU "
 TT VV" 'WW% *
 UU ZZ9 @
-UU) *VV WW ®
+UU) *VV WW √
+uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\HoldTicketDialogViewModel.cs
+
+ .
+8 J77 ll $
+" .88 ZZ &
+
+ 
+
+ &
+
+  
+
+    
+%% gg 
+ÖÖ 
+
+** #
+44+ <77 .
+55  88 ".
+>> 
+áá! *
+åå! *
+ëë! *
+CC !>>8 FRR (
+
+PP +
+RR TT& 1hh 
+ZZ [[ ii &
+ff ll1 8
+
+ 
+
+ää ,
+
+ää4 9
+
+èè $
+
+èè, 1Ï
+~C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\EquipmentManagementDialogViewModel.cs
+ 7 ?PP 2 
+T kRR 
+ŒŒ 6 
+X qSS !
+˝˝ 8 
+` tTT 
+¨¨ 3 
+\ wUU #
+·· : 
+Z wVV %
+öö+ H 
+V oWW !
+§§* Cå
+A HXX 
+¨¨ 
+±± 
+–– 
+ﬂﬂ 
+ˇˇ 
+éé 
+ÆÆ 
+ΩΩ 
+„„ 
+ÙÙ 
+
+ 
+
+!! 
+
+$$$ )
+
+'' !
+
+** 
+
+-- 
+
+00 %
+
+33 $.
+55. @
+úú 
+üü "
+≠≠ +.
+66. ?
+¶¶ 
+©© !
+≠≠3 DN
+77. H[[Q kbb "
+ÑÑ "
+√√ +
+   9
+◊◊ &†
+88. G\\U n^^[ tcc !
+ÖÖ !
+ÚÚ *
+˘˘ 8
+ÜÜ %
+°° *
+®® 8
+µµ %
+œœ *
+›› 8
+ÍÍ %
+:: 
+áá! ,
+BB  
+àà! 1
+CC 
+ââ! -
+DD !
+ää! 2
+FF +
+ÅÅ :
+GG= Y
+⁄⁄ (
+ââ (
+∏∏ (
+ÔÔ (
+JJG ]RR" 8RRc y
+KKK cSS$ <SSg 
+LLS fTT 2TT] p
+MMO iUU& @	UUk Ö
+NNM iVV( D	VVo ã
+OOI aWW$ <WWg 
+PP4 :XX XXC I
+
+]]X Y
+
+bb9 :
+
+bb< =
+
+cc8 9
+
+cc; <
+jj 1ZZ *
+kk 2[[ bbB W
+ÊÊ !*
+ll 4\\ ee #
+ïï #
+mm. A]] 6
+nn 7^^ "ff &
+˚˚ &
+ÜÜ "
+oo %__ 
+
+tt %
+uu yy 
+vv zz 
+ww  ${{ R
+
+êê )ZZ5 G
+çç  
+‘‘ $
+ÉÉ $
+≤≤ $
+ÁÁ $
+
+ôô 
+ööU c
+
+öö "
+ùù& 8
+
+££ 
+§§P ]
+
+§§ !
+ßß& 7
+
+ªª *[[6 I
+
+   
+ÕÕ> J
+
+  A B
+  F G
+
+ÀÀ 
+ÕÕL S
+
+ÕÕ 
+ŒŒC J$
+
+ŒŒ 
+—— 
+€€P V
+
+ÍÍ ,\\8 M0
+
+˘˘ 
+¸¸@ L
+ÄÄ 
+ääT `
+
+˘˘@ A
+˘˘E F
+
+˙˙ 
+¸¸N U
+
+¸¸ 
+˝˝E L
+
+˝˝ 
+
+ôô (]]E V$
+
+ôô9 B
+´´I R
+ØØ$ -0
+
+®® 
+´´; G
+ØØ 
+ππ` l
+
+®®@ A
+®®E F
+
+©© 
+´´T [
+
+´´ 
+¨¨@ G
+
+¨¨ 
+
+«« /^^; S0
+
+›› 
+‡‡9 E
+‰‰ 
+n z
+
+››@ A
+››E F
+
+ﬁﬁ ‡‡Å à
+
+‡‡ 
+··G N
+
+·· 
+
+ˇˇ __) /
+
+ÑÑ )
+
+ÑÑ3 8\
+
+çç #$$ #<< == >> BB, CCC( ?DD- Dww T
+
+óó (
+€€ 5
+ää 5
+ππ 5
+ 5
+•• '
+©©6 R
+
+¢¢ )GG :
+
+§§ 
+´´ 
+
+••( 1
+¨¨ 
+
+¶¶ 
+≠≠ 
+
+ßß 
+ÆÆ 
+
+©©- 4
+´´ 
+
+©©S \
+¨¨ 
+
+©©c j
+≠≠ 
+
+©©s z
+ÆÆ ˚
+uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\EndSessionDialogViewModel.cs
+ . 6AA ) 
+T fCC 
+ÖÖ 1,
+8 ?DD 
+áá 
+ìì 
+
+ 
+
+ 
+
+ 
+
+  
+
+ !
+
+"" %
+
+%% 
+
+(( 
+
+++ 
+
+.. 
+
+11 
+
+44 !
+
+77 
+
+:: #"
+<< +
+èè 
+üü 
+==6 B
+åå 
+@@G XCC .CCY j
+AA+ 1DD DDC I
+JJ .FF 
+KK %GG 
+
+PP 
+QQ [[ (
+RR \\ #\\4 <\\J R
+SS ]] 
+TT ^^ !
+UU __ 
+VV `` 
+WW aa 
+XX bb !
+YY cc -hh 
+tt &FF2 A
+|| 
+ÖÖ> E<
+
+ÖÖ 
+ââ 
+ââ" (
+ââ3 9
+åå' -
+
+ùù GG) /
+
+¢¢ )
+
+¢¢/ 4
+§§ 
+
+™™ -
+
+™™3 8
+¨¨ »
+vC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\DiscountSelectionViewModel.cs
+
+ /
+) <88 NN" 5 
+; P99 
+òò '
+" .:: hh &2
+/ @;; zz !{{ !}}' 8
+
++ >
+
+ '
+
+    
+
+## 
+
+&& $"
+++ 
+íí #
+   F
+00 
+∑∑ 
+∑∑# .
+ππ< G
+∫∫> I
+ÀÀ 
+33 .88 0
+44. B99  4
+55  :: "
+66" 2;; ,"
+AA  
+ŒŒ! 1
+ˆˆ! 1
+
+GG (
+NN OOD M
+
+`` . 
+hh ii 
+îî' 2"
+uu  
+àà  
+ïï +6
+}}  + 5
+ÜÜ 
+àà. 8
+
+êê 
+òò4 ;
+
+ÆÆ &ww %$
+
+ÆÆ0 8
+±± 
+ππ! )
+
+ππ 
+∫∫& 4
+
+∫∫ "
+ºº %
+
+≈≈ 
+
+◊◊ $
+
+◊◊, 6
+⁄⁄ #$
+
+⁄⁄- 0
+ﬁﬁ 
+ÊÊ% ($
+
+‹‹  
+‡‡  
+‚‚# 3$
+
+‹‹E F
+›› 
+ﬁﬁ 
+
+ÔÔ %
+
+ÙÙ *
+
+ÙÙ5 :®
 vC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\CustomerSelectionViewModel.cs
 
  /
@@ -7939,7 +13615,49 @@ wC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
  ..2 =//1 <
 . A 2
 44 119 G(
-44' 288# .==/ :??. 9ß
+44' 288# .==/ :??. 9Û
+wC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\ConfirmationDialogViewModel.cs
+ 00! +UU$ .
+ UU1 6
+ UUC H
+
+ 0
+
+ 
+
+ 
+
+ %
+
+!! '
+
+$$ 
+'' 55. 7
+
+** 
+
+-- "
+
+00- 9
+
+55 *
+
+@@ 
+@@" 'FF 
+@@0 7GG 
+@@@ QHH -
+AA! 4II 1
+AAH LJJ 
+BB! )KK 
+BB> ELL 
+CC! /MM '
+DD6 AQQ SS! ,
+]] bb+ 5
+
+bb '
+gg ll. <
+
+ll *ß
 sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\ComboSelectionViewModel.cs
 
  ,(
@@ -8102,7 +13820,75 @@ sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 §§ 
 
 ÏÏ 
-•• ≠
+•• €
+tC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\CashEntryDialogViewModel.cs
+
+ -
+
+ 
+
+ 
+
+ 
+
+  
+
+ +
+
+ 
+
+!!  
+
+$$ >
+&&; H-- <<% 2]] #bb% 2
+çç% 2
+(( )GG 
+)) #HH 
+
+>>- .
+>>0 1@@ 
+
+KK 
+KK" 'MM 
+KK0 7NN 
+KK> WOO$ =
+KKe rPP %(
+[[ BB "GG1 ?ff 
+]]( )]]- .]]7 8*
+`` HH+ 3XX 
+ää 
+
+ii 
+
+ "
+" (
+ÅÅ 
+åå $H
+
+åå 
+èè 
+ëë+ :
+íí 
+ìì 
+ìì- <
+
+ççE F
+ççJ Ké
+
+úú .&&  9--1 J// )00 )11 )22 )33 )44 )55 )66 )77 )88 )@@- F
+
+üü 
+
+¢¢ 
+
+•• 
+
+ßß 
+´´! &
+
+©© 
+
+©©$ )≠
 sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\Dialogs\AddOnSelectionViewModel.cs
 
  ,(
@@ -8143,7 +13929,371 @@ sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 6 :
 ÇÇ 
 D I
-ÉÉ ⁄
+ÉÉ å	
+jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\DatabaseSetupViewModel.cs
+
+
+ + 3 &*
+3 A qq -
+°°  *
+- <  
+ΩΩ .|
+5 < ww  
+àà 
+££ 
+©© 
+√√ 
+   
+““ 
+„„ :
+% 9
+ºº  
+ΩΩA U
+◊◊  
+ÿÿ  
+& 3 &
+  . (
+( . 
+
+%% 
+
+(( 
+
+++  
+
+.. 
+
+11 
+
+44 %
+
+77 #
+
+:: !
+
+== *
+
+@@ '
+
+CC &
+
+FF "
+
+II 
+
+LL  
+NN !__& 7
+UU $
+ìì& :
+WW 
+≠≠& 1
+YY  
+ﬂﬂ& 6
+
+`` *
+hh qqB H(
+qq ss }} %Q W
+
+îî -
+ππ (
+
+òò 
+°°8 >
+
+ÆÆ ,0
+
+ΩΩ 
+øø 
+»» %
+  G M
+
+‡‡ 
+
+ÍÍ )+ C
+
+ÍÍ2 8$
+
+ÍÍS T
+ÏÏ! "
+ÌÌ! "
+
+ 
+
+& +
+
+ÒÒ 
+
+ÒÒ# (
+
+ÚÚ &
+
+ÚÚ. 3
+
+ÛÛ "
+
+ÛÛ* /
+
+ÙÙ "
+
+ÙÙ* /ß
+kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\CustomerSearchViewModel.cs
+
+ ,
+_ m,, DD  .(
+% )77 88 99& *
+
+ 
+
+@ N
+
++ <
+
+$$% 1
+&& #!!% 8
+'' &""% 9
+(( '##% :
+**m z,, &
+
+// $
+//, 111 99 $
+<< )99 
+<<1 5CC1 5(
+<<I KAA" $DDB DFF 
+CC DD; @
+DD II' .
+
+WW 
+
+^^ 
+^^= C`` Û
+qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\CustomerSearchResultViewModel.cs
+
+		 2
+$ ( 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+A D í
+iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\CustomerListViewModel.cs
+
+ 16
+) <:: 0rr 
+ÖÖ" 5
+úú  3 
+R `ss 
+ËË# 1 
+R `tt 
+ÑÑ# 1D
+$ 2uu 
+‘‘  
+ÚÚ (
+åå (
+íí  R
+* 3
+ÜÜ 
+áá) 2
+àà& /
+ùù 
+ûû' 0
+üü% .
+ '    1“
+ %&&  0== 
+™™ 
+¨¨ (
+≠≠ '
+ÆÆ $
+ØØ $
+∞∞ &
+±± #
+≤≤ )
+≥≥ '
+¥¥' 7
+ÀÀ 
+€€  
+˘˘! 1
+ôô 
+úú= M
+&& !!) 5wwM Y
+((% 9++ #..  4
+
+))$ 7
+88 &22 '
+88, .::> @
+:: ;; == '
+BB KK% /KKH R
+CC LL$ -LLF O
+DD MM! 'MM@ F
+EE NN" (NNA G
+FF OO$ ,OOE M
+GG PP! &PP? D
+HH QQ' 2QQK V
+II RR" +RRD MF
+KK 
+¨¨ 
+øø 
+““& /
+ﬂﬂ  )
+˙˙  )F
+LL 
+≠≠ 
+¿¿ 
+““N V
+‡‡ '
+˚˚ 'F
+MM 
+ÆÆ 
+¡¡ 
+““u z
+·· !
+¸¸ !:
+NN 
+ØØ 
+¬¬ 
+‚‚ !
+˝˝ !:
+OO 
+∞∞ 
+√√ 
+„„ %
+˛˛ %:
+PP 
+±± 
+ƒƒ 
+‰‰ 
+ˇˇ :
+QQ 
+≤≤ 
+≈≈ 
+ÂÂ! +
+ÄÄ! +.
+RR 
+≥≥ 
+∆∆ 
+ÅÅ '
+TT WW ZZ  +8
+UU }}4 >
+ìì& 0
+úú@ J
+üüK U
+aa !bb) 7bbP ^v
+bb 
+àà 
+åå 
+üü 
+££ 
+¥¥ 
+ππ 
+ÕÕ 
+ÎÎ !
+áá !
+dd yy 
+ee !zz 
+ff {{ 
+gg || 
+hh &}} 
+ii ,ww  
+ll .rr 0
+mmE Rss &
+nnE Rtt &
+oo $uu &"
+
+ÄÄ  yy, 5
+ïï 
+
+ÖÖ 
+áá '8
+
+ëë "\\ zz. 9
+ÏÏ %
+àà %
+
+úú 
+ûû %
+
+®®    $
+
+ΩΩ 
+∏∏ 
+ÃÃ 
+
+…… {{& )
+
+––  ||, 5
+
+›› 
+ËË> A$
+
+ËË 
+ÈÈ 
+ÚÚI O
+
+˜˜ 
+ÑÑ> A$
+
+ÑÑ 
+ÖÖ 
+ååI O
+
+óó "ww4 E
+
+õõ 
+úú À
+iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\CategoryTreeViewModel.cs
+
+ *(
+ (   ++ (EE (p
+$ 2!! 55  MM $RR  ZZ ff $mm $tt" 0||  
+ÅÅ  
+
+2 A
+
+ .
+
+ 
++ 3   
+D Q!! &
+%% *II )}} %
+** ++. 3
+++ ..% +
+
+>> (
+>>< F@@( 2
+@@ DD7 A
+@@ $DDC N
+DD EE. 5
+EE GG MML R
+
+WW *
+
+WW0 8
+
+^^ *
+^^0 :cc, 6<
+cc dd kk oo! )oo6 >uu #
+tt xx "
+
+ÖÖ -cc +
+åå ($
+
+ÖÖ3 5
+ââ !
+åå) +
+
+ÖÖT ^
+áá! +$
+
+åå 
+çç 
+éé ⁄
 hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\CashSessionViewModel.cs
 
  ( 
@@ -8248,126 +14398,257 @@ hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 ’’& ,
 
 ––: D
-÷÷' 1À
+÷÷' 1√
 oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\CashDropManagementViewModel.cs
 
  (6
-, B88 OO 2
-ãã  6
-ôô ,*
-' 999 }} -
-±±  
-& 6:: ,
-" .;; 
-ÅÅ7 C
-áá %@
-& 6<< II NN )
-ÅÅ  
-ÜÜ -
-7 D  ,
-6 Bhh 
-" 6"" #%%  4 
-  ! 4@@L _
-ßß 
-,, &>> 
--- )?? 
-.. !''$ 1@@ 
-//  AA 
-22 488! 6
-33 +99 .
-44 (:: *
-55  ;; "
-66 (<< * 
-GG ,DD !
-öö +
-NN OOS ](
-OO QQ SS ]]  
-SS gg <
-SS1 2UU VV WW XX ZZ 
-]] gg# )<
-]]5 6__ `` aa bb dd 
-gg hhJ M
-gg= >ggB C
-ll '>>3 C
-qq *??6 I
-vv 2nn )ss )>
-vv8 ?nn* 1ss* 1xx yy  
-éé 
-xx {{E J
-yy {{L S6
-{{ || }}> D
-àà@ F
-ââ 
-}}  
+, B:: RR 2
+¶¶$ :
+¬¬ ,
+' 9;; 
+& 6<< ,
+" .== 
+ÖÖ7 C
+££ )@
+& 6>> LL QQ )
+ÖÖ  
+¢¢! 1 
+1 D?? 
+»» )
+7 D  ,
+6 Bkk 
+  " 6## #&&  4\
+!!! 4CCL _
+ÓÓ 
+ˆˆ4 G
+˚˚ *
+˚˚? R
+˚˚h {
+ÜÜJ ]
+-- &AA 
+.. )BB 
+// !(($ 1CC 
+00  DD 
+33 4::! 6
+44 +;; .
+55 (<< *
+66  == "
+77 (>> *
+88$ 6?? 0 
+JJ ,GG !
+   +
+QQ RRS ](
+RR TT VV ``  
+VV jj <
+VV1 2XX YY ZZ [[ ]] 
+`` jj# )<
+``5 6bb cc dd ee gg 
+jj kkJ M
+jj= >jjB C
+oo 'AA3 C
+tt *BB6 I
+yy 2qq )vv )n
+yy8 ?qq* 1vv* 1{{ ||  
+ôô  '
+∑∑ 
+≈≈& -
+––$ +
+ﬂﬂ$ +
+{{ 
+ÅÅG L
+|| 
+ÅÅN U 
+~~  
+ÅÅ- 3
 
-ÜÜ 
-ããW a$
+ÅÅ 
+ÉÉ <
 
-áá 
-êêG M
-ïïC I$
+ÅÅ 
+ôô; A
+ôôW ]
+§§I O
+»»M S0
 
-àà 
-êê? E
-ïï; A$
+ÅÅ #
+ππT Z
+ææP V
+ÿÿ? E$
 
-ââ 
-êêO U
-ïïK QT
+áá 
+àà 
+ää !$
 
-ãã 
-åå 
-êê3 :
-ëë 
-ïï/ 6
-ññ 
-ôô9 @
+ññ 
+óó 
+öö# -
 
-êê 
-ëë+ 0
+ôô 
+ööD Q0
 
-ïï 
-ññ( ,
+öö 
+õõ 
+õõ' 1
+ÿÿX b$
 
-üü -@@. D
+¢¢ 
+¶¶[ e
+»»A K$
 
-™™ 
-±±1 7
+££ 
+ππL R
+ææH N0
 
-¥¥ AA( - 
+§§ 
+ππ? J
+ææ; F
+ÿÿ *T
+
+¶¶ 
+ßß 
+ππ3 :
+∫∫ 
+ææ/ 6
+øø 
+¬¬9 @$
+
+©© #
+™™ 
+¨¨ %
+
+ππ 
+∫∫+ 0
+
+ææ 
+øø( ,
+
+≈≈ #
+»»U d$
+
+ÕÕ !
+ŒŒ 
+—— #
+
+–– !
+”” $$
+
+‹‹ 
+›› 
+‡‡ !
+
+ﬂﬂ !
+‚‚) 6
+
+ÏÏ -CC. D$
+
+ÒÒ 
+ÚÚ 
+ÙÙ 0
+
+ÙÙ 
+˝˝ $
+
+ÉÉ 
+ÑÑ 
+ÜÜ )$
+
+ÜÜ 
+áá 
+áá# -$
+
+ìì 
+îî 
+ññ $
+
+¢¢ 
+££ 
+•• 
+
+∞∞ DD( -Ù
 gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\BackOfficeViewModel.cs
 
  ((
-' 9(( YY  kk (
-" .)) ?? BB '
-& 6** AA. >
-   *
- !  /
- bb 
- ee 
- #-- 
-   !.. 
-!! '// 
-$$ +(( .
-%%  )) "
-&& (** *
-44 /11 $
-AA %EE %
-VV (//4 E
-XX YY1 7æ
-\\0 ?66 77 88 99 :: ;; << == GG KK LL MM NN OO PP QQ RR SS 
-^^ --; C2
-^^* .`` bb cc ee "
-ii ..) /(
-oo --+ 9\\  .^^ (
-qq bb xx 
-rr yy 
-ss zz (
-tt cc ee# +{{ 
-vv! &xx 
-vv/ :yy !
-vvC Kzz 
-vvR Z{{ ‘
+' 9++ ``  rr (
+" .,, EE HH '
+& 6-- GG. >
+   *
+ !  /Â
+( 4.. 
+==Ä å
+>>Ç é	??} â	@@w É
+AAå ò	BBz Ü
+CCâ ï
+MM≠ π
+QQñ ¢
+RRñ ¢
+SSü ´
+TT™ ∂
+UUá ì	VV{ á	WW| à	XXz Ü	YYz Ü
+ZZ® ¥
+ ii 
+ ll 
+!! #22 
+"" !33 
+## '44 
+&& +++ .
+''  ,, "
+(( (-- *
+))% 8.. *
+99 /66 $
+GG %KK %
+]] (444 E
+__ ``1 7»
+cc0 ?;; == >> ?? @@ AA BB CC MM QQ RR SS TT UU VV WW XX YY ZZ 
+ee 22; C2
+ee* .gg ii jj ll "
+pp 33) /(
+vv #22+ 9cc  .ee (F
+xx3 G
+ÇÇ$ 8
+ÉÉ* >
+ãã 
+çç  
+èè  :
+zz 
+ÄÄ #
+ÇÇ: B
+ÇÇG O
+áá .
+{{  
+ÉÉ@ N
+ÉÉS a
+àà 
+|| 
+ââ *
+}} jj ll# +
+ää 
+
+ÄÄ ii 
+
+ÇÇ  
+ìì- ;
+
+ÉÉ &
+îî- A
+
+ÖÖ! )
+áá 
+
+ÖÖ2 @
+àà '
+
+ÖÖI Q
+ââ 
+
+ÖÖX `
+ää 
+ÖÖÄ ì
+ãã 2
+
+èè5 6
+
+èè8 9
+ëë ‘
 nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\AuthorizationCodeViewModel.cs
 
  3
@@ -8404,7 +14685,478 @@ vC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModel
 
 kk 2
 mm FF RR WW \\ 
-mm &oo; Bı
+mm &oo; BÚ
+eC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\AuditLogViewModel.cs
+
+ &,
+J ^.. 
+ÇÇ 3
+ƒƒ 3 
+% 4// 
+ﬁﬁ -
+ %BB CC )
+ #HH II '
+ !NN OO .
+ .TT !UU 1
+ 'ZZ "[[ 2
+ `` aa *
+ ff ii  ,
+ uu vv (
+ {{ || *"
+   
+ÅÅ 
+ÑÑ  +"
+##. 8
+êê 
+ëë )"
+$$ *
+ññ  
+óó 0"
+%% 
+úú 
+üü  &"
+((1 7
+™™ 
+´´ %
+++= P.. 2..] p
+,, &// (//S a.
+@@ #
+¯¯ $
+•• 
+∫∫ $.
+FF !
+˘˘  
+¶¶ 
+ªª  .
+LL 
+˙˙ &
+ßß 
+ºº &.
+RR ,
+˚˚ ,
+®® 
+ΩΩ ,.
+XX %
+¸¸ .
+©© 
+ææ .F
+^^ 
+˝˝6 @
+˝˝K U
+™™ 
+øø6 @
+øøK U∂
+dd 88E P99M X::G R;;E P
+˛˛ '
+úú 
+´´ 
+ÊÊ 
+ËË 
+ÚÚ 
+ÙÙ 
+˛˛ 
+ÄÄ 
+ää 
+åå 
+ss 
+ˇˇ "
+yy 
+ää N
+ 88S ];;S ]
+ãã 
+ÊÊ $
+ää $
+åå $$
+
+éé- 6
+ÑÑ 
+áá 
+
+îî (T
+
+öö 
+¶¶2 7
+ÈÈ 
+ÛÛ 
+èè 
+¥¥ 
+ŸŸ 
+
+¶¶ 
+°°) 10
+
+®®0 5
+ﬂﬂ 
+‡‡ 
+‰‰ 
+
+ÆÆ0 :
+
+∞∞( 3
+
+¡¡ 144 
+
+¬¬ *55 
+
+√√ +66 
+
+ƒƒ *77 ,
+
+≈≈ ,88 kk 
+ÜÜ ,
+
+∆∆ 099 ll #
+áá #,
+
+«« -:: mm  
+àà  ,
+
+»» ,;; nn 
+ââ 
+
+—— %
+
+⁄⁄ %
+”” 
+
+ﬁﬁ 
+‚‚! &
+
+‚‚/ 0
+‚‚4 5^
+
+ )445 G
+‘‘  
+ùù  
+ÈÈ $
+ıı $
+ÅÅ $
+çç $
+
+˜˜ 
+ÇÇ@ E0
+
+ÇÇ 
+ÖÖ  &
+ää 
+ãã 
+
+öö "55. 9
+
+££ 66/ ;
+
+±± "77. 9
+
+ππ 
+ƒƒ@ E
+
+ƒƒ 
+    &0
+
+«« 
+»» 
+ÃÃ 
+””= @
+
+–– 
+——t |$
+
+—— 
+””3 ;
+’’6 >
+
+‰‰ $880 =
+
+ (994 E
+
+¸¸ %::1 ?
+
+àà $;;0 =
+
+îî #ÃÃõ §$
+
+îî+ 0
+ññ! &
+ôô :
+
+¢¢ ((! /
+®®  .
+‡‡ (
+‰‰ ,$
+
+§§ 
+‡‡+ -
+‰‰/ 1$
+
+•• 
+‡‡6 >
+‰‰= Eπ
+yC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\AdvancedPricingConfigurationViewModel.cs
+ : Bii 5 
+T kkk 
+⁄⁄ 6 
+R gll 
+éé# 8 
+- <mm 
+™™ .\
+D Knn 
+ññ 
+†† 
+‹‹ 
+˚˚ 
+≠≠ 
+≤≤ 
+
+ ,
+
+ 
+
+"" #
+
+%% "
+
+(( .
+
+++ %
+
+.. !
+
+11 
+
+44 !
+
+77 
+
+:: 
+
+== #
+
+AA (
+
+DD %
+
+GG )
+
+JJ% 6j
+LL. 8
+êê 
+ìì 
+ññ[ e
+ôô 
+õõ$ .
+ÏÏ "
+ÔÔ 
+‘‘ 
+
+NN2 ?
+UU %
+íí! 48
+]] qqW ^
+˜˜! (
+˛˛! (
+ãã! (,
+`` rrS ^
+¥¥! ,
+ªª! ,
+cc> P
+ˆˆ 
+ffG ]kk" 8kkc y
+ggE Yll  4ll_ s
+hh  .mm (mmS a
+ii7 =nn nnC I
+ww 2pp Ä
+xx 5qq  
+ÇÇ $
+ÔÔ  
+ˆˆ  
+˝˝  
+ÑÑ  
+ää  
+ëë  
+úú  
+¢¢  8
+yy 3rr 
+ 
+≥≥ 
+∫∫ 
+zz +ss 
+{{ 1tt !
+
+ÄÄ %"
+
+ÖÖ *pp6 I
+ÇÇ !
+
+çç 
+ééE J
+
+éé 
+ëë& 0
+
+™™ -qq9 O
+
+–– 
+⁄⁄C J
+
+⁄⁄ $
+
+ﬂﬂ  
+ÔÔ$ 4
+$ 4$
+
+ÏÏ 
+ÌÌ 
+ÔÔ  
+
+ÏÏ6 7
+ÏÏ; <
+
+ÜÜ +rr7 K<
+
+óó 
+ùù 
+ûû 
+üü 
+§§ 
+
+¢¢ 
+™™D L
+
+™™ 
+´´ %
+
+ºº ss/ ;
+
+≈≈ #tt5 G$
+
+»» 
+‘‘ #
+’’ ($
+
+ŸŸ +
+¿¿ &
+ÎÎ &`
+
+ŸŸ9 B
+€€ !
+‹‹ 
+›› 
+ﬁﬁ !
+ﬂﬂ '
+‡‡ !
+··2 ;
+
+ÁÁ +$
+
+ÁÁ: ?
+ÈÈ 
+ÎÎ' ,
+
+ÛÛ '
+
+ÛÛ/ 4
+
+˙˙ $
+
+˙˙- 2
+
+ÅÅ '
+
+ÅÅ1 6
+
+áá '
+
+áá0 5
+
+éé *
+
+éé< A
+
+ïï -
+
+ïï3 8
+óó 
+
+üü %
+
+üü- 2
+
+•• )
+µµ! 8
+
+±± ,
+
+±±6 ;
+
+∏∏ .
+
+∏∏3 8ä
+
+¬¬ (( ((1 ANN  0PP QQ RR WW XX YY 
+––P `
+·· ,
+éé+ ;
+
+ÃÃ *cc ;
+
+ŒŒ 
+‘‘ 
+
+œœ 
+’’ 
+
+–– 
+÷÷ 
+
+““. 9
+‘‘ !
+
+““@ G
+’’ 
+
+““P W
+÷÷ ‹
+pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\ViewModels\ActiveSessionsPanelViewModel.cs
+ 1 9%% ,
+Z s'' !DD! :
+T f(( dd 1<
+; B)) MM QQ ff mm L
+ *yy zz {{ 
+ÇÇ 
+áá 
+àà 
+
+ 
+
+ !
+
+ (
+  2 @GG JJ MME S
+##M e''$ <''g 
+$$G X(( .((Y j
+%%. 4)) ))C I
+// +++ 
+00# 4,, 
+
+55 %2
+;; .++/ F77 %ii ) -
+CC DDG L
+DD HH$ ,
+[[ &,,8 G(
+[[, 5cc5 >ffM VmmF O
+cc dd> E
+
+dd 
+ww !88 
+
+{{% &
+
+{{( )
+
+ÖÖ  
+çç 
+
+ãã ı
 fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\WindowsDialogService.cs
 
  !<
@@ -8446,16 +15198,101 @@ fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\
 hh ii 
 uu 
 ww 
-kk uu  ¡
+kk uu  ø
 ]C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\UserService.cs
 
- 2
- !   * 6
+ d
+
+
+ !   * 6$$ ++3 ?55 77 88& 2
+
+ 
+) 4 88 
+S ` && (
+U a $
+
+"" 2
+"": F..* 677- 9
+&& ((  
+(( ++ %// (
+++ ,, .. //+ /†
+jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\ToastNotificationService.cs
+
+
+ % 5, D>
+= JC Pss uu xx 
+èè <
+8 ? ** @@ UU jj \
+& 6 
+ÅÅ 
+ÅÅ) 9
+ÉÉ 
+íí 
+íí) 9
+îî 
+ &ss' 7
+G M 
+g v *
+
+3 ?
+
+ 
+# *!! !
+3 8   
+ && 
+
+.. 
+..! (223 :22J Q
+..1 666 
+..J Q22 %22> E
+22 77 %
+33 << 
+
+DD 
+DD  'LL !
+DD0 5KK 
+HH QQ 
+
+YY 
+YY# *aa !
+YY3 8`` 
+]] ff 2
+nn && << QQ ff (
+nn, 1xx #}} !~~ "
+pp 
+ÉÉ( :
+áá 
+
+{{ 
+
+{{3 4
+
+ãã }} 
+
+ãã/ 4
+èè! &$
+
+çç "
+îî( =
+òò !˜
+cC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\ToastNotification.cs
 
 
 
- 
-) 4 Á
+ &
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  <
+++     !! "" ## Á
 aC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\TerminalContext.cs
 
  #
@@ -8485,7 +15322,8 @@ jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\
 
 '' -
 ''B K)). 7
-)) ,, --9 ?ø	
+)) ,, --9 ?õ
+
 iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\OrderEntryDialogService.cs
 
  (
@@ -8546,7 +15384,18 @@ iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\
 ää# )
 
 ää 
-ãã( .¶
+ãã( .
+
+èè (
+
+èè0 5
+ïï !
+
+èè> E
+ññ %
+
+ìì 
+öö ∞
 cC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\NavigationService.cs
 
 		 ò
@@ -8563,8 +15412,8 @@ cC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\
 
  
 
-%%  <
-%%& ... 00$ ,99` hDD\ dHH '
+%%  F
+%%& ... ..3 ;00$ ,99` hDD\ dHH '
 %%8 A00. 7HH) 2,
 KK3 BZZ' 6
 áá 
@@ -8594,7 +15443,172 @@ cC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\
 åå 
 íí $
 
-ïï5 D¡
+ïï5 Dí
+bC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\NavigationButton.cs
+
+		 %
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ .
+
+ $
+%%  99 ,
+%%0 ?.. 
+
+66  
+660 ?99- <ô
+eC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\LocalizationService.cs
+
+ ((
+
+
+" . pp rr (
+R b  + '2
+R b    GG; KXX 
+N Z GG  ,
+
+ '
+, 7 "
+,, ' 
+00 11& *336 :
+33 44/ 366* .
+
+@@ !
+GG HH  HH+ 4
+
+QQ &F
+QQ. :SS *XX< Hhh. :rr< H{{< H||: F
+bb cc6 :hh( ,(
+cc dd dd; >ff4 7 
+
+ÅÅ "00 &bb &
+
+ÉÉ 
+ÑÑ& -Ã
+hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\ILoadingOverlayService.cs
+
+ '
+
+	 
+
+ 
+
+	 
+
+	 
+
+ 
+
+# 0
+
+	 
+
+$$	 !
+
+$$- 6
+
+$$? F
+
+$$M Z
+
+))6 I
+
+.. '
+44 ))) 3
+
+66 
+
+77 
+
+88 Ÿ
+iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\KeyboardShortcutService.cs
+
+
+ $ 4+ BF
+: D ! +// ;; EE XX F
+7 >  00 == II OO 
+E K 
+  55 
+, /) ,)) 
+E N. 7** !(
+W a ++ #00a k
+l s,, F
+ # ., 7 ##% 0// 00T _
+  ##M [
+'' //" *
+
+33  
+33, /55 
+338 B558 B
+33M T55D K
+
+88 "
+88. 1::) ,
+88G P::. 7
+:: ;; )==M X
+
+AA 
+AA* -CC) ,
+AAC LCC. 7(
+CC EE# .IIU `OOY d(
+EE8 @GG IIb jJJ 
+
+VV9 H(
+[[ ( (:: (CC (
+[[4 7]] !
+[[M V]] ¶
+bC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\KeyboardShortcut.cs
+
+		 
+ "" 2
+ (    
+
+ 
+
+ 
+
+ F
+       "" $$$ )°
+kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\IToastNotificationService.cs
+
+ *
+
+	 
+
+ #
+
+, 1
+
+	 
+
+ !
+
+* /
+
+C J
+
+	 
+
+  
+
+) .
+
+	 
+
+ #
+
+, 1
+
+K W¡
 kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\ISwitchboardDialogService.cs
 
  .
@@ -8609,7 +15623,7 @@ kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\
 
 		  
 
-		V _Ä
+		V _§
 jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\IOrderEntryDialogService.cs
 
  -
@@ -8660,7 +15674,336 @@ jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\
 
  
 
-1 :œ
+1 :
+
+ 
+
+# (
+
+1 8π
+gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\LoadingOverlayService.cs
+ "
+
+ 2) >F
+
+
+5 < "" 22 SS XX ee 
+ 1>>. ASSa t(
+  ' .. (
+ "$ 3 // 2
+ ! /   00 cc 
+A G 
+
+ 
+
+  
+
+ 
+= P$$ 44 (
+ .JJ #LL ff 
+ BB (
+ # !""> E'' 
+* 7   &(( )
+,, ]] 
+
+<< .
+<<: COO 
+<<L SBB XXO V
+<<Z gBB 'DD 
+>> II (
+FF +GG JJ' 4LL# 0
+
+GG! "
+
+GG$ %
+
+aa ∏
+jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\IKeyboardShortcutService.cs
+
+		 )
+
+	 
+
+% (
+
+> G
+
+P Z
+
+e l
+
+	 
+
+% (
+
+1 ;
+
+F M
+
+	 
+
+' *
+
+@ I
+
+	 
+
+# &
+
+< E
+
+""2 Aï
+gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\EnhancedDialogService.cs
+ " 2!! %F
+$ 6$$ // 22 55 88 PP $ 
+, B%% 
+èè ( 
+" .&& 
+ää * 
+& 6'' 
+ãã -B
+4 ;(( MM 
+ÎÎ 
+ÚÚ 
+ìì D
+' 9)) 
+ΩΩ 
+ΩΩ; M
+¿¿ 
+‡‡ 1
+ ($$ .
+ 4%%! 6
+  && "
+   ('' *
+!!' -(( 
+"" +)) .
+
+.. 
+..& +//- 2
+..4 ;//4 ;
+..E U//= M
+
+11  
+11( -22/ 4
+116 =226 =
+
+44  
+44( -55/ 4
+446 =556 =
+
+77 +
+773 8884 9
+77A H88; B
+77Q X88D K
+77i o88M S
+>> ,jj $P
+>>H OCC EE3 :II7 >MMV ]QQ RR SS# *8
+WW /vv '
+ÉÉ '
+õõ '
+≠≠ '
+XX aa 
+YY bb 
+ZZ cc ffW _
+[[ dd gg! )
+\\  ee /
+]]. Aff" 5
+__ jj% ,
+
+mm +
+mm3 <xx# ,
+mmI R{{ 
+oo || 
+
+ ,"
+4 >
+ÅÅ9 C
+ÑÑ 
+G L
+ÖÖ( -
+Y b
+àà 
+
+ÅÅ 
+ââ 
+
+åå .
+
+åå6 ;
+ùù 
+
+ååD I
+ùù  %$
+
+ååS ]
+êê" ,
+ïï ($
+
+éé 
+íí 
+°° 
+
+§§ *
+ÏÏ .
+
+§§2 ;
+ØØ4 =
+
+§§G P
+≤≤ 
+
+§§W i
+
+¶¶ 
+≥≥ "
+
+∫∫ ;II 6
+ƒƒ >l
+
+∫∫W ^
+ƒƒ? F
+‘‘* 1
+’’6 =
+€€ 
+€€+ 2
+„„; B
+ÁÁ !
+ÎÎX _0
+
+øø 
+≈≈ 
+…… 
+ÃÃ $
+
+““ 
+›› 
+‡‡B H
+
+‡‡ 
+„„ 
+
+˜˜ $
+‘‘ )H
+
+˜˜@ G
+˛˛$ +
+ˇˇ> E
+áá 
+èè> E
+ïï <
+
+˘˘ 
+ÇÇ 
+ää 
+õõ 
+ùù 
+
+¸¸ 
+ÇÇ  $
+
+ÖÖ 
+ää  )
+
+çç 
+õõ  -
+
+†† .
+’’ 5H
+
+††J Q
+ßß 
+ÆÆ 
+∏∏' .
+¿¿" )
+   &H
+
+¢¢ 
+´´ 
+∂∂ 
+ªª 
+”” 
+÷÷ 
+
+•• 
+´´ *
+
+∞∞ !
+∂∂# 4
+
+∫∫ #
+ªª' 6
+
+¬¬ 
+””# +
+
+ŸŸ :
+∫∫& C0
+
+ŸŸS ]
+ÁÁ 
+ÌÌ" ,
+ÒÒ !$
+
+€€ 
+˘˘ 
+˙˙ 0
+
+„„ 
+ÎÎ 
+ˆˆ 
+˘˘ 
+
+ÂÂ 
+ÎÎ &
+
+ÔÔ 
+ˆˆ! )
+
+˝˝ 3EE 2T
+
+˝˝O V
+ÖÖ "
+ÜÜ "
+áá 
+àà !
+ââ# *
+åå3 :
+
+ÅÅ 
+èè: E
+
+ååV W
+åå[ \"
+
+óó1 Nff9 V
+«« .
+
+óó] e
+ôô 
+
+∑∑1 O
+ÅÅ 8
+
+∑∑W a
+ππ 
+
+ÀÀ "
+˛˛ #
+
+ÀÀ1 9
+ÕÕ 
+
+◊◊ -
+ˇˇ- =
+
+◊◊< D
+ŸŸ 
+
+„„ -
+èè- =
+
+„„< D
+ÂÂ œ
 kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\DefaultViewRoutingService.cs
  +0 J
 
@@ -8688,79 +16031,243 @@ kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Services\
 ee# ;AA- E
 eeQ [kk# -(
 kk nn nn' 1ss 
-ss- /ss3 5¥
+ss- /ss3 5¨
+
 XC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\MainWindow.xaml.cs
 
-		 &R
-' 2  ff hh yy  
-ÖÖ 2
-C N%% && '' (( 
+
+
+ &r
+' 2    
+«« 
+…… 
+⁄⁄ 
+‡‡ 
+ÊÊ 
+ÏÏ 
+ÚÚ 2
+C N-- .. // 77 2
+C T== >> ?? @@  
+1 D(( 
+õõ  3,
+& 6)) 
+íí  
+õõO _
 
-'' 
+// 
 
-''  !
-// 11 88 )
+//  !
 
-11( )
-11+ ,55, -
-BB "55 +88 P
-BBF JFF/ 3GG3 7OO1 5QQ; ?VV "VV0 4VVA E
+??) *
 
-ZZ 
-ZZ% /\\> H
+??, -
+HH JJ KK ) 
+UU "KK 
+ŒŒ !8
+UUF J``" &
+ÄÄ "
+ÄÄ0 4
+ÄÄA E
 
-__ 
-__ 'aa2 :
+`` 
 
-dd  
+ÑÑ 
 
-dd0 6
+ÑÑ% /
+ÜÜ> H
 
-dd] a
+ââ 
 
-ll $
+ââ '
+ãã2 : 
 
-ll4 :
-ll_ cqq 
-qqD Hvv *
-vv ww }} 
-ÉÉ 
+éé -??8 NCC "<
 
-èè !
-êê #
+õõ 
+°° 
+££1 8
+¶¶ #
+™™! (
 
-öö 
+≈≈  
 
-öö# *
-úú8 ?
+≈≈0 6
 
-†† <
+≈≈] a
 
-¶¶ %
-±± !
-ΩΩ !
-ƒƒ" 3
-ÕÕ 0
+ÕÕ $
 
-®® 
+ÕÕ4 :
 
-®®' .
-ØØ& -
+ÕÕ_ c
+““ 
 
-®®8 ?
-±±$ +
+““D H
+◊◊ H
 
-∂∂ 
+◊◊ 
+ÿÿ 
+ﬁﬁ 
+‰‰ 
+ÍÍ 
+ 
 
-¬¬ /
+¸¸ !
+˝˝ #
 
-¬¬7 =
+áá 
 
-¬¬O P
+áá# *
+ââ8 ?
 
-∆∆ 
-÷÷ R
-PC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Imports.cs•
+çç <
+
+ìì %
+ûû !
+™™ !
+±±" 3
+∫∫ 0
+
+ïï 
+’’ 
+
+ïï' .
+úú& -
+
+ïï8 ?
+ûû$ +
+
+££ 
+
+ØØ /
+
+ØØ7 =
+
+ØØO P
+
+≥≥ 
+√√ 
+
+»» .JJ' >
+
+»»7 =
+
+»»b f
+ŒŒ" &R
+PC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Imports.csó
+qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\TimeSpanToVisibilityConverter.cs
+
+		 *
+
+ 
+! & 
+
+- 7
+
+@ I
+
+R Z
+ & 
+
+ 
+
+% *
+
+1 ;
+
+D M
+
+V ^è
+mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\TimeSpanToStringConverter.cs
+
+ &
+
+
+
+ 
+
+
+! & 
+
+
+
+- 7
+
+
+
+@ I
+
+
+
+R ZZ
+ &  '5 =I Q_ g '8 @N V
+
+ 
+% * 
+
+1 ;
+
+D M
+
+V ^
+ 5 8
+B H ≤
+lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\TimeSpanToHoursConverter.cs
+
+ %
+
+
+
+ 
+
+
+! & 
+
+
+
+- 7
+
+
+
+@ I
+
+
+
+R Z
+ & 
+
+ 
+% * 
+
+1 ;
+
+D M
+
+V ^
+ !& +ñ
+pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\TicketStatusToColorConverter.cs
+
+ )
+
+ 
+! & 
+
+- 7
+
+@ I
+
+R Z
+" ( 
+
+"" 
+
+""% *
+
+""1 ;
+
+""D M
+
+""V ^•
 wC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\TableToSelectionVisibilityConverter.cs
 
  0
@@ -8781,10 +16288,86 @@ wC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converter
 
 D M
 
-V ^ï
+V ^·
+qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\TableStatusToTooltipConverter.cs
+
+ *
+
+ 
+! & 
+
+- 7
+
+@ I
+
+R Zx
+" '$ )( -; @ F K!! ##4 9&& ((6 ;++ --4 9n
+       ## (( -- 11 
+
+44 
+
+44% *
+
+441 ;
+
+44D M
+
+44V ^
+99 .& :
+99; A;; BB 
+FF 5* E(
+FFJ PHH KK PP µ
 oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\TableStatusToBrushConverter.cs
 
-		 (
+ (
+
+ 
+! & 
+
+- 7
+@ I, 5
+
+R Z
+% +!! 
+ ) 
+
+,, 
+
+,,% *
+
+,,1 ;
+
+,,D M
+
+,,V ^õ
+uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\TableSessionStatusToIconConverter.cs
+
+
+
+ .
+
+ 
+! & 
+
+- 7
+
+@ I
+
+R Z
+, 9 
+
+ 
+
+% *
+
+1 ;
+
+D M
+
+V ^∆
+ÅC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Presentation\Converters\MenuItemToLowStockBrushConverter.cs
+
+		 -
 
  
 ! & 
@@ -8793,18 +16376,65 @@ oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converter
 
 @ I
 
-R Z
-! ' 
+R Z2
+ "   * .
 
- 
+## 
 
-% *
+##% *
 
-1 ;
+##1 ;
 
-D M
+##D M
 
-V ^˘
+##V ^¢
+rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\TableDtoToStatusBrushConverter.cs
+
+ +
+
+ 
+! & 
+
+- 7
+
+@ I
+
+R Z
+" '  
+
+)) 
+
+))% *
+
+))1 ;
+
+))D M
+
+))V ^Á
+mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\StringVisibilityConverter.cs
+
+ &
+
+		 
+		! & 
+
+		- 7
+		@ I 
+
+		R Z
+ / 4(
+   " 
+  %* /i n
+
+ 
+
+% *
+
+1 ;
+
+D M
+
+V ^˘
 iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\StringToBoolConverter.cs
 
  "
@@ -8826,28 +16456,28 @@ iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converter
 
 D M
 
-V ^ó
+V ^µ
 iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\StringFormatConverter.cs
 
  "
 
-		 
-		! & 3 8
+		 2
+		! & 7 <y ~ 
 
-		- 7
-		@ I  &
+		- 7(
+		@ I ! *a j
 
 		R Z
 
- 
+ 
 
-% *
+% *
 
-1 ;
+1 ;
 
-D M
+D M
 
-V ^Ê
+V ^Ê
 oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\StringColorToBrushConverter.cs
 
 		 (
@@ -8910,21 +16540,66 @@ pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converter
 
 %%D M
 
-%%V ^Á
-mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\StringVisibilityConverter.cs
+%%V ^í
+lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\SeverityToBrushConverter.cs
 
- &
+ %
 
-		 
-		! & 
+ 
+! & 
 
-		- 7
-		@ I 
+- 7
 
-		R Z
- / 4(
-   " 
-  %* /i n
+@ I
+
+R Z
+# + 
+
+ 
+
+% *
+
+1 ;
+
+D M
+
+V ^ó
+qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\SessionStatusToBrushConverter.cs
+
+ *
+
+ 
+! & 
+
+- 7
+
+@ I
+
+R Z
+( . 
+
+ 
+
+% *
+
+1 ;
+
+D M
+
+V ^ô
+sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\SelectionToBorderColorConverter.cs
+
+ ,
+
+ 
+! & 
+
+- 7
+
+@ I
+
+R Z
+ $ 
 
  
 
@@ -8934,33 +16609,82 @@ mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converter
 
 D M
 
-V ^«
+V ^˝
 mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\NullToVisibilityConverter.cs
 
- &
+		 &
 
-		 
-		! & 
+ 
+! & 
 
-		- 7
-		@ I 
+- 7
 
-		R Z(
-   " 
-  (, 4
+@ I
 
- 
+R Z
 
-% *
+ 
 
-1 ;
+% *
 
-D M
+1 ;
 
-V ^±
+D M
+
+V ^∫
+tC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\InverseBoolToVisibilityConverter.cs
+
+		 -
+
+ 
+! & 
+
+- 7
+
+@ I
+
+R Z
+ # 
+
+ 
+% * 
+
+1 ;
+
+D M
+
+V ^
+  * ±
 kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\InverseBooleanConverter.cs
 
  $
+
+ 
+! &
+
+ 
+
+- 7
+
+@ I
+
+R Z
+
+
+ # 
+
+ 
+% * 
+
+1 ;
+
+D M
+
+V ^
+ # Æ
+hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\InverseBoolConverter.cs
+
+ !
 
  
 ! &
@@ -9056,7 +16780,66 @@ hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converter
 D M
 
 V ^
- ' #ì
+ ' #«
+mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\EnumToVisibilityConverter.cs
+
+
+
+ &
+
+ 
+! &  
+
+- 7
+@ I & #
+
+R Z
+  &
+ ( 3
+
+ 
+
+% *
+
+1 ;
+
+D M
+
+V ^√
+iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\EnumToStringConverter.cs
+
+ "
+
+
+
+ (
+
+
+! &   
+
+
+
+- 7
+
+
+
+@ I
+
+
+
+R Z
+  < F
+1 = 
+
+"" 
+
+""% *
+
+""1 ;
+
+""D M
+
+""V ^ì
 gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\EnumToBoolConverter.cs
 
   
@@ -9084,31 +16867,27 @@ gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converter
  #' 0≤
 lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\DecimalToDoubleConverter.cs
 
- %
+ %
 
- 
-! &
-
- 
+   
+  ! &"" 
 
-- 7
+  - 7
 
-@ I
+  @ I
 
-R Z
-
-
- ) '
+  R Z
+"" )$$ '
 
- 
-% * 
+)) 
+))% *++ 
 
-1 ;
+))1 ;
 
-D M
+))D M
 
-V ^
- ' '˘
+))V ^
+++ '-- '˘
 kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\DateTimeToTimeConverter.cs
 
  $
@@ -9137,13 +16916,80 @@ kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converter
 
 ))D M
 
-))V ^µ
+))V ^È
+mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\DateTimeToStringConverter.cs
+
+ &
+
+
+
+ 
+
+
+! & 
+
+
+
+- 7
+
+
+@ I "
+
+
+
+R Z
+ & 
+ % +
+
+ 
+% * 
+
+1 ;
+
+D M
+
+V ^
+ 5 8
+B J ª
+uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\DateTimeToDateTimeOffsetConverter.cs
+
+ .
+
+
+
+ 
+
+
+! & 
+
+
+
+- 7
+
+
+
+@ I
+
+
+
+R Z
+ && .
+
+ 
+% * 
+
+1 ;
+
+D M
+
+V ^
+$ 2 !’
 eC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\CurrencyConverter.cs
 
 		 
 
- (
-! &   
+ 2
+! &    
 
 - 7
 
@@ -9151,17 +16997,18 @@ eC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converter
 
 R Z
  ) 
- ' 
+ ' 
+8 B 
 
- 
+ 
 
-% *
+% *
 
-1 ;
+1 ;
 
-D M
+D M
 
-V ^Ù
+V ^Ù
 xC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\CollectionEmptyToVisibilityConverter.cs
 
  1
@@ -9196,32 +17043,84 @@ xC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converter
 
 D M
 
-V ^ì
+V ^Á
 mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\BoolToVisibilityConverter.cs
- &'', E
+ &==, E
 
-		 
-		! & 
+		 <
+		! &     
 
 		- 7
 		@ I #
 
 		R Z
-  
-. /4 5o p
- # ! 
+ (( *
+. /4 5o p
+© ™P
+     !! ** ,, 
+  
+ &  
+ ( !
+! , #
+! ,!!. 9
 
- 
-% * 
+// 
+//% *11 
+
+//1 ;
+
+//D M
+
+//V ^
+11  *33 
+
+== )ï
+oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\BoolToSuccessColorConverter.cs
+
+ (
+
+ 
+! & 
+
+- 7
+
+@ I
+
+R Z
+ # 
+
+ 
+
+% *
 
 1 ;
 
 D M
 
-V ^
-  * 
+V ^ò
+rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\BoolToInfoBarSeverityConverter.cs
 
-'' )ó
+ +
+
+		 
+		! & 
+
+		- 7
+
+		@ I
+
+		R Z
+ " 
+
+ 
+
+% *
+
+1 ;
+
+D M
+
+V ^ó
 qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\BoolToDesignModeTextConverter.cs
 
  *
@@ -9275,43 +17174,612 @@ lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converter
 
 D M
 
-V ^‚
+V ^ë
+kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\BooleanToBrushConverter.cs
+
+
+
+ $
+
+ 
+! & 
+
+- 7
+
+@ I
+
+R Z
+ $ 
+
+ 
+
+% *
+
+1 ;
+
+D M
+
+V ^≤
+lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\BooleanNegationConverter.cs
+
+ %
+
+
+
+ 
+
+
+! & 
+
+
+
+- 7
+
+
+
+@ I
+
+
+
+R Z
+ # 
+
+ 
+% * 
+
+1 ;
+
+D M
+
+V ^
+ # ì
+mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\AlertTypeToGlyphConverter.cs
+
+		 &
+
+ 
+! & 
+
+- 7
+
+@ I
+
+R Z
+& / 
+
+ 
+
+% *
+
+1 ;
+
+D M
+
+V ^î
+nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\ActiveStatusBrushConverter.cs
+
+ '
+
+
+
+ 
+
+
+! & 
+
+
+
+- 7
+
+
+
+@ I
+
+
+
+R Z
+ " 
+
+ 
+
+% *
+
+1 ;
+
+D M
+
+V ^û
+lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Controls\ToastNotificationHost.xaml.cs
+ 1 (
+. B3 G ,
+% 1 // 
+
+++ $
+++, 2-- 
+
+++D E
+-- #--' -
+--G L//. 3¯
+jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Controls\SessionTimerControl.xaml.cs4
+ / & &tt $
+ÖÖ $^
+ #ZZ ^^ hh oo zz ~~ 
+ââ 
+éé 
+ !// 22 (
+ !:: == ?? 2
+ "GG JJ  LL  WW 
+. F### ;$$ 0
+. >)) .** (L
+!! % #ff xx (
+åå -
+úú 
+¢¢% 5L
+''  ff* 2xx> F
+áá  
+ññ 
+ßß :
+-- 
+ûû 
+¢¢ 
+≠≠ !
+¡¡ &F
+88 
+ää %
+òò 
+©© 
+∂∂ 
+ªª .
+EE  
+   
+œœ 
+‘‘ 
+dd +`` 1
+
+dd3 9
+
+ddK L
+mm -aa 5
+
+mm5 ;
+
+mmM N
+rr 1' @
+rrC Dtt 
+
+rri j<
+tt% ,vv xx xx6 =zz ~~ 
+
+ÉÉ )( 9
+
+ÉÉ; <
+ÖÖ 
+
+ÉÉa bT
+
+ÖÖ% ,
+áá 
+ââ 
+ää 
+åå 
+éé 
+èè 6
+
+îî ^^ !ii vv 
+èè "
+
+îî$ *
+
+îî4 5
+
+•• $33 l
+
+≠≠ 
+∞∞ 
+≤≤ #
+≥≥ 
+¥¥ !
+µµ !
+ªª &
+ªª2 9
+ªªG N
+
+≤≤ 
+∂∂ #
+
+≥≥ 
+∂∂' ,
+
+¥¥ 
+∂∂2 9
+
+µµ 
+∂∂? F
+
+øø &44 !$
+
+¡¡ 
+«« 
+ÃÃ Î
+eC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Controls\LoadingOverlay.xaml.cs<
+ * ! !   !'' !UU 
+. ?// /00 )
+. D88  699 .
+. CAA 3BB -
+##. CJJ# 8KK -
+--  
+66   !
+??   
+HH "%%  
+SS *( :
+SS< =UU 
+SSb cYY" #
+UU  'ZZ 
+YY ZZ' 0ô
+kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Controls\EnhancedTableControl.xaml.cs
+ 0 '22 %
+. ;" / %»
+  [[J OaaK P
+éé !
+ßß# (
+ØØ: ?
+ææ 
+¡¡ 
+»»w |
+ÕÕ 
+ÕÕ0 5
+‘‘u z
+⁄⁄ 
+··t y
+‰‰ 
+ÎÎv {
+ˆˆs x
+èè 
+ëë# (
+íí$ )
+ìì0 5
+ïï 
+òò. 3
+ôô0 5
+öö= B
+úú 
+ûû2 7
+  5 A[[ 
+!!5 Faa 
+""5 J
+»»0 E
+##5 H
+ˆˆ. A
+$$5 J
+··- B
+%%5 K
+ÎÎ. D
+&&5 I
+‘‘/ C
+'': H
+åå 
+)) >> LL 
+00 &' 5
+008 922 
+
+00^ _(
+22& -44 55 66 
+
+<< !
+
+<<) /
+
+<<H I
+
+JJ  
+
+JJ( .
+
+JJG H
+
+UU !
+
+UU) /
+UUH IWW 
+WW YY 
+
+__ 
+
+__& ,
+
+__I J
+
+ii 
+
+ii# )2
+ii9 :ll nn oo yy 
+
+}} 
+
+}}% +.
+}}; <
+ÖÖ 
+áá% &
+ää' (
+
+áá 
+àà *
+
+àà4 <
+èè '
+
+ää 
+êê! +
+
+öö  bb $
+
+ûû 
+üü 
+°° "
+
+•• "44 %
+úú 
+
+¨¨ 
+≠≠ 
+
+≠≠> G
+ØØ %
+
+ØØ 
+∞∞! *
+
+ºº )
+∏∏ $$
+
+√√  
+»» 
+……" 2
+
+»»' (
+
+»»* +$
+
+œœ 
+‘‘ 
+’’" 1
+
+‘‘& '
+
+‘‘) *$
+
+‹‹ 
+·· 
+‚‚& /
+
+··$ %
+
+··' ($
+
+ÊÊ 
+ÎÎ 
+ÏÏ& 0
+
+ÎÎ% &
+
+ÎÎ( )$
+
+ÒÒ 
+ˆˆ 
+˜˜" 0
+
+ˆˆ% &
+
+ˆˆ( )
+
+˚˚  
+¨¨ !<
+
+˝˝  
+˛˛ 
+ÄÄ 
+ÄÄ0 6
+ÅÅ 
+
+ÅÅ #
+ÉÉ  
+
+çç 55 !GG l
+
+ëë 
+íí 
+ìì 
+óó 
+òò 
+ôô 
+öö 
+ûû 
+¢¢( 3
+
+©© (
+
+©©8 =
+´´ 
+
+¥¥ &$
+
+¥¥1 6
+∂∂ 
+∏∏ 
+
+¬¬ *$
+
+¬¬5 :
+ƒƒ 
+«« 
+
+—— "
+
+——' /
+””  
+
+÷÷ 00
+
+÷÷; @
+ÿÿ 
+⁄⁄ 
+⁄⁄+ 0
+
+ﬂﬂ  $
+
+ﬂﬂ+ 0
+·· 
+‚‚ 
+
+ÂÂ  
+˛˛  <
+
+ÂÂ+ 0
+ÁÁ 
+ÈÈ 
+ÎÎ 
+ÛÛ 
+
+˙˙ .$
+
+˙˙9 >
+¸¸ 
+˛˛! &
+
+˛˛ 
+ˇˇ$ (
+
+ÇÇ  
+ìì" /
+
+ÇÇ- 3
+ÑÑ 
+
+éé '
+öö( <$
+
+éé< B
+êê 
+íí ¢
+
+üü !   2!! 2"" 2## 2$$ 2%% 2&& 2[[+ ?aa, @
+»»X l
+‘‘V j
+··U i
+ÎÎW k
+ˆˆT h\
+
+°° [[B GaaC H
+»»o t
+‘‘m r
+··l q
+ÎÎn s
+ˆˆk p"
+
+§§ &'' 7
+åå1 J
+
+¶¶ 
+éé 
+
+ßß 
+èè 
+
+®® 
+êê Ò
+gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Controls\CategoryTreeView.xaml.cs
+
+ ,2
+
+
+! *  $ && 
+ . .
+
+6 <
+
+` a
+
+ 2
+
+< B(
+h l $ (""  $
+E T%%4 C
+"" %%H S
+""F L""O U
+%% &&= Gí
+lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Converters\BooleanToStatusConverter.cs
+
+ %
+
+
+
+ 
+
+
+! & 
+
+
+
+- 7
+
+
+
+@ I
+
+
+
+R Z
+ $ 
+
+ 
+
+% *
+
+1 ;
+
+D M
+
+V ^¿
 QC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\App.xaml.cs
 
- ^
- 
-ÎÎ 
-ÌÌ) 0
-ÔÔ 
-∫∫ 
-ºº 
-ΩΩ 
-ƒƒ .
- ,
-ÓÓ 
-«« /
-õõ &N
- !!/ 3:: 
-ÆÆ" &
-ˆˆ "
-ÅÅ* .
-ÜÜ! %
+ ^
+ 
+•• 
+ßß) 0
+©© 
+®® 
+™™ 
+´´ 
+≤≤ .
+ ,
+®® 
+µµ /
+ââ &~
+!! ##/ 3<< 
+ËË" &
+±±& *
+∏∏% )
+»») -
+ÿÿ! %
+‰‰ "
+ÔÔ* .
+ÙÙ! %
 
-!!# +:
-$$ '
-’’ 
-òò 
-≥≥ 
-éé 
+### +:
+&& '
+èè 
+ÜÜ 
+°° 
+¸¸ 
 
-$$/ 3
+&&/ 3
 
-$$< @
+&&< @
 
-$$I P
+&&I P
 
-$$W [˛
-<<# +@@ BB FF GG HH II JJ KK LL NN OO PP QQ RR SS WW XX YY ZZ [[ \\ ]] ^^ __ `` aa bb cc dd ee ff gg hh ii jj kk ll mm nn oo pp qq rr ss tt uu vv ww xx yy zz {{ || }} ~~  
+&&W [¢
+>># +BB DD HH II JJ KK LL MM NN OO PP RR SS TT UU VV WW ZZ ^^ __ `` aa bb cc dd ee ff gg hh ii jj kk ll mm nn oo pp qq rr ss tt uu vv ww xx yy zz {{ || }} ~~  
 ÄÄ 
 ÅÅ 
 ÇÇ 
@@ -9321,9 +17789,11 @@ QC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\App.xaml.
 ÜÜ 
 áá 
 àà 
+ââ 
+ää 
 ãã 
-åå 
-çç 
+éé 
+èè 
 êê 
 ëë 
 íí 
@@ -9331,164 +17801,239 @@ QC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\App.xaml.
 îî 
 ïï 
 ññ 
+óó 
+òò 
 ôô 
 öö 
 õõ 
+úú 
 ùù 
 ûû 
 üü 
+†† 
+°° 
 ¢¢ 
-££ 
-
-ÆÆ 
-ØØ $H
-
+££ 
+§§ 
+•• 
+¶¶ 
+ßß 
+®® 
+´´ 
+¨¨ 
 ØØ 
-≤≤ '
-µµ$ ,
-∏∏( 0
-ªª" *
-ææ& .
+∞∞ 
+≥≥ 
+¥¥ 
+µµ 
+∂∂ 
+∑∑ 
+∏∏ 
+ªª 
+ºº 
+ΩΩ 
+ææ 
+øø 
+¿¿ 
+¡¡ 
+¬¬ 
+√√ 
+∆∆ 
+«« 
+»» 
+…… 
+   
+ÃÃ 
+ÕÕ 
+ŒŒ 
+œœ 
+““ 
+”” 
+‘‘ 
+’’ 
+◊◊ 
+ÿÿ 
+ŸŸ 
+‹‹ 
+›› 
 
-≤≤ 
+ËË 
+ÈÈ $H
 
-µµ !
+ÈÈ 
+ÏÏ '
+ÔÔ$ ,
+ÚÚ( 0
+ıı" *
+¯¯& .
 
-∏∏ %
+ÏÏ 
 
-ªª 
+ÔÔ !
 
-ææ #.
+ÚÚ %
 
-œœ (44 #
-≈≈ '
-…… #
+ıı 
 
-œœ0 5
-——6 ;$
+¯¯ #.
 
-œœA C
-——F H
-——^ `0
+ââ (66 #
+ˇˇ '
+ÉÉ #
 
-—— 
-““ 
-’’$ '
-ﬂﬂ3 6
+ââ0 5
+ãã6 ;$
 
-›› 
-ﬁﬁ3 :
+ââA C
+ããF H
+ãã^ `0
 
-ﬁﬁ 
-ﬂﬂ- 1
+ãã 
+åå 
+èè$ '
+ôô3 6
 
-ÂÂ" ,
+óó 
+òò3 :
 
-ÂÂF JH
+òò 
+ôô- 1
 
-ÌÌ 
-ÓÓ! +
-ÛÛ 
-ˇˇ 
-ÖÖ 
-ùù 
+üü" ,
 
-ˆˆ 
-¯¯ *l
+üüF Jl
 
-¯¯ 
-˙˙ 
-˝˝* 0
-ˇˇ- 3
-ÇÇ8 >
-ÇÇK Q
-èèI O
-ìì( .
-ùù5 ;
+ßß 
+®®! +
+∑∑ 
+«« "
+◊◊ 
+·· 
+ÌÌ 
+ÛÛ 
+ãã 0
 
-ÅÅ '
-ÇÇ #
+±± #
+≤≤& 5
+¿¿# 2
+√√+ :
 
-ÜÜ 
-ââ 
+≤≤ 
+¥¥ 
 
-íí 
-òò, 4
+∏∏ "
+∫∫ $
 
-´´ 
-≥≥( 0
+¿¿ 
+¡¡ 
+√√O U$
 
-««> @
-…… 
+√√ "
+ƒƒ #
+∆∆V `
 
-ÿÿ '--# 9
+»» &
+…… "
 
-ÿÿ/ 5
+ÿÿ 
+ŸŸ 
 
-ÿÿe f
-€€  !
+‰‰ 
+ÊÊ *l
 
-‡‡ 1++6 V
+ÊÊ 
+ËË 
+ÎÎ* 0
+ÌÌ- 3
+8 >
+K Q
+˝˝I O
+ÅÅ( .
+ãã5 ;
 
-‡‡9 ?
+ÔÔ '
+ #
 
-‡‡d e
-‚‚ 
+ÙÙ 
+˜˜ 
 
-‚‚ 
-„„  "
+ÄÄ 
+ÜÜ, 4
 
-ÁÁ 6,,1 V
+ôô 
+°°( 0
 
-ÁÁ> D$
+µµ> @
+∑∑ 
 
-ÁÁg h
-ÈÈ  !
-ÍÍ 	0
+∆∆ '//# 9
 
- (
-€€ 
-„„ 
-ÈÈ z
+∆∆/ 5
 
-4 6
-ÚÚ 
-¸¸_ a
-¸¸t v¸¸å é
-ÉÉK M
-ãã$ &
-üü+ -
-††2 4
-°°5 7H
+∆∆e f
+……  !
 
-? E
-¸¸T Z
-ää9 ?
-óó 
-óó7 =
-ûû- 3
+ŒŒ 1--6 V
 
-˜˜ 
-¯¯0 7$
+ŒŒ9 ?
 
-¯¯ 
-˘˘0 6
-˙˙1 7
+ŒŒd e
+–– 
 
-˙˙ 
-˝˝) 0
+–– 
+——  "
 
-¸¸ 
-˝˝2 9
+’’ 6..1 V
 
-ää 
-éé$ ,
+’’> D$
 
-õõ5 7
-££ 
+’’g h
+◊◊  !
+ÿÿ 	0
 
-ùù !
-££' 0
+ﬁﬁ (
+…… 
+—— 
+◊◊ z
 
-ûû 
-££2 9
+ﬁﬁ4 6
+‡‡ 
+ÍÍ_ a
+ÍÍt vÍÍå é
+ÒÒK M
+˘˘$ &
+çç+ -
+éé2 4
+èè5 7H
+
+ﬁﬁ? E
+ÍÍT Z
+¯¯9 ?
+ÖÖ 
+ÖÖ7 =
+åå- 3
+
+ÂÂ 
+ÊÊ0 7$
+
+ÊÊ 
+ÁÁ0 6
+ËË1 7
+
+ËË 
+ÎÎ) 0
+
+ÍÍ 
+ÎÎ2 9
+
+¯¯ 
+¸¸$ ,
+
+ââ5 7
+ëë 
+
+ãã !
+ëë' 0
+
+åå 
+ëë2 9

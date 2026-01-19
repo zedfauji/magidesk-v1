@@ -37,29 +37,7 @@
 ee ee 
 ff/ 1hh 
 ll ooC L
-rr0 1rr5 6¨
-èC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\Settlement\ZeroDollarSettlementTest.cs
-
- %
-
- A
-  ,, 
-  
- ! !33 
-    
-      
- CC "(
-## ))& ,00+ 1<<  (
-$$ )). 8003 === #
-%% )): A00? F
-&& ))C NF
-)) ,,3 9--  88 GG HH II 
-,,  ,,$ %
-00 11 #44 %
-11 338 A>> %
-33$ %33) *
-66 CC/ 6
-CC FF ”
+rr0 1rr5 6”
 äC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\OrderEntry\TicketCreationTests.cs
 
  $
@@ -250,7 +228,28 @@
 __, 4aac kdd !
 __I Sgg! +
 aa' (aa, -
-aaP QaaU Vï
+aaP QaaU V˛
+ÅC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\OrderEntry\AddOnTests.cs
+
+ 
+
+ J2
+    #&& &@@% -GG &
+   
+ &&A JCC] f
+(( 33% ,HH  '
+)) 44 (II" +
+** 55$ .JJ& 0
+-- -- 
+..3 511 ;;" $
+?? @@ CC6 8
+FF+ ,FF0 12
+FFY ZGG HH II JJ 
+NN &&& 
+NN, 4PPc kSS !
+NNI SVV! +
+PP' (PP, -
+PPP QPPU Vï
 
 ÉC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\OrderEntry\AddItemTests.cs
 
@@ -356,31 +355,7 @@
 ää 
 
 ÑÑJ R
-ÜÜ ˙
-ÉC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\Foundation\SessionTests.cs
-
- 
-
- Q
- H P 
-  "%%W [
-& '+ ,
-& '+ ,
-, -1 2(
-  !!) +$$ 
-%%& '%%+ ,
-%%J K%%O P
-&&) *&&. /
-
-** G
--- ..H R22 
-..& '..+ ,(
-11 22 55) +88 
-99& '99+ ,
-::) *::. /
->> 1!! (55 (
->>P W@@ FF 
-@@J RBB Ö
+ÜÜ Ö
 kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\UnitTest1.cs
 
  
@@ -449,28 +424,53 @@ kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 çç! "
 çç 
 çç, -
-èè6 7˛
-ÅC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\OrderEntry\AddOnTests.cs
+èè6 7˙
+ÉC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\Foundation\SessionTests.cs
 
- 
+ 
 
- J2
-    #&& &@@% -GG &
-   
- &&A JCC] f
-(( 33% ,HH  '
-)) 44 (II" +
-** 55$ .JJ& 0
--- -- 
-..3 511 ;;" $
-?? @@ CC6 8
-FF+ ,FF0 12
-FFY ZGG HH II JJ 
-NN &&& 
-NN, 4PPc kSS !
-NNI SVV! +
-PP' (PP, -
-PPP QPPU VØ
+ Q
+ H P 
+  "%%W [
+& '+ ,
+& '+ ,
+, -1 2(
+  !!) +$$ 
+%%& '%%+ ,
+%%J K%%O P
+&&) *&&. /
+
+** G
+-- ..H R22 
+..& '..+ ,(
+11 22 55) +88 
+99& '99+ ,
+::) *::. /
+>> 1!! (55 (
+>>P W@@ FF 
+@@J RBB ¨
+èC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Workflows\Settlement\ZeroDollarSettlementTest.cs
+
+ %
+
+ A
+  ,, 
+  
+ ! !33 
+    
+      
+ CC "(
+## ))& ,00+ 1<<  (
+$$ )). 8003 === #
+%% )): A00? F
+&& ))C NF
+)) ,,3 9--  88 GG HH II 
+,,  ,,$ %
+00 11 #44 %
+11 338 A>> %
+33$ %33) *
+66 CC/ 6
+CC FF Ø
 àC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Tests.Workflows\Infrastructure\Seeding\TestDataFactory.cs
 
  '

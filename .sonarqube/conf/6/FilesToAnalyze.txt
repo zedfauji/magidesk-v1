@@ -1,11 +1,32 @@
-﻿C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\Repositories\DatabaseCollection.cs
-C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\Repositories\SalesReportRepositoryTests.cs
-C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\Repositories\TicketRepositoryTests.cs
-C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\Services\PrintingServiceTests.cs
-C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\UnitTest1.cs
-C:\Users\giris\.nuget\packages\microsoft.net.test.sdk\17.8.0\build\netcoreapp3.1\Microsoft.NET.Test.Sdk.Program.cs
-C:\Users\giris\.nuget\packages\microsoft.testplatform.testhost\17.8.0\build\netcoreapp3.1\x64\testhost.exe
-C:\Users\giris\.nuget\packages\microsoft.testplatform.testhost\17.8.0\build\netcoreapp3.1\x64\testhost.dll
-C:\Users\giris\.nuget\packages\xunit.runner.visualstudio\2.5.3\build\net6.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll
-C:\Users\giris\.nuget\packages\xunit.runner.visualstudio\2.5.3\build\net6.0\xunit.runner.reporters.netcoreapp10.dll
-C:\Users\giris\.nuget\packages\xunit.runner.visualstudio\2.5.3\build\net6.0\xunit.runner.utility.netcoreapp10.dll
+﻿C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\MigrationsContextFactory.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260104154305_AddPrinterSupportColumns.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260104154305_AddPrinterSupportColumns.Designer.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260104171112_AddPrinterDetailedConfiguration.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260104171112_AddPrinterDetailedConfiguration.Designer.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260106150426_AddIsDraftCol.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260106150426_AddIsDraftCol.Designer.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260109232333_AddSessionManualAdjustment.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260109232333_AddSessionManualAdjustment.Designer.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260109235836_AddTicketSessionLink.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260109235836_AddTicketSessionLink.Designer.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260110000507_AddTimeChargesToOrderLine.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260110000507_AddTimeChargesToOrderLine.Designer.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260110004722_AddCustomersTable.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260110004722_AddCustomersTable.Designer.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260110014436_AddMemberAndTier.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260110014436_AddMemberAndTier.Designer.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260111012900_AddStockTracking.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260111012900_AddStockTracking.Designer.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260111164112_AddCategoryHierarchy.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260111164112_AddCategoryHierarchy.Designer.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260111171228_AddModifierGroupPricing.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\20260111171228_AddModifierGroupPricing.Designer.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Migrations\ApplicationDbContextModelSnapshot.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\DbResetter.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\FullPosSeeder.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\ReflectionUtil.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\SeedGuards.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\SeedOptions.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\SeedProfileWriter.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Seeding\SeedResult.cs
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\appsettings.json

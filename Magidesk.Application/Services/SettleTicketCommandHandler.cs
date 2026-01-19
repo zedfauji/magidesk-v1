@@ -35,7 +35,14 @@ public class SettleTicketCommandHandler : ICommandHandler<SettleTicketCommand>
              throw new Domain.Exceptions.BusinessRuleViolationException("Cannot settle ticket with remaining balance.");
         }
 
-        // 2. Settle/Close
+        // 2. Auto-release if ticket is Held
+        // Business logic: If customer is paying in full, the hold is no longer needed
+        if (ticket.Status == TicketStatus.Held)
+        {
+            ticket.Release();  // Held → Open
+        }
+
+        // 3. Settle/Close
         // Ticket.Close() implies settlement if balance is zero.
         ticket.Close(new UserId(command.UserId));
 

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Magidesk.Domain.Entities;
 using Magidesk.Infrastructure.Data.Configurations;
+using Magidesk.Infrastructure.Data.Interceptors;
 
 namespace Magidesk.Infrastructure.Data;
 
@@ -78,6 +79,14 @@ public class ApplicationDbContext : DbContext
     public DbSet<Services.AlertEntity> Alerts { get; set; } = null!;
     public DbSet<Services.PerformanceMetricEntity> PerformanceMetrics { get; set; } = null!;
     // FractionalModifier is part of Set<MenuModifier> via Inheritance
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+        
+        // Register interceptor to auto-increment Version field for concurrency
+        optionsBuilder.AddInterceptors(new VersionIncrementInterceptor());
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

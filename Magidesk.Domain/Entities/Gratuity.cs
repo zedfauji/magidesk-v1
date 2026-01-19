@@ -46,6 +46,20 @@ public class Gratuity
         };
     }
 
+    /// <summary>
+    /// Adds to the existing gratuity amount.
+    /// Used when accumulating multiple tips for the same ticket.
+    /// </summary>
+    public void AddToAmount(Money additionalAmount)
+    {
+        if (additionalAmount < Money.Zero())
+        {
+            throw new Exceptions.BusinessRuleViolationException("Additional gratuity amount cannot be negative.");
+        }
+
+        Amount = Amount + additionalAmount;
+    }
+
     public void MarkAsPaid()
     {
         Paid = true;

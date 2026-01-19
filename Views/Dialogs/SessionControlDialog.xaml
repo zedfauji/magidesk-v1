@@ -5,11 +5,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:Magidesk.Presentation.Converters"
     mc:Ignorable="d"
     Title="Session Control"
     SecondaryButtonText="Cancel"
     DefaultButton="Primary"
     SecondaryButtonCommand="{x:Bind ViewModel.CancelCommand}">
+
+    <ContentDialog.Resources>
+        <converters:TimeSpanToVisibilityConverter x:Key="TimeSpanToVisibilityConverter"/>
+        <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
+        <converters:CurrencyConverter x:Key="CurrencyConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
+    </ContentDialog.Resources>
 
     <ScrollViewer MaxHeight="500" VerticalScrollBarVisibility="Auto">
         <StackPanel Spacing="16" Margin="24">

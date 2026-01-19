@@ -29,7 +29,541 @@ mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 ..$ .22 44 
 ..6 C22! .
 
-77 ˛
+77 Ã
+~C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\ServerPerformanceMetrics.cs
+
+ &
+
+			 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+
+ 
+
+ "
+
+ %
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ '
+
+$$ "†
+zC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\TableSplitAllocation.cs
+
+
+ " &
+
+4 D
+
+' -P
+V a $ /] h )## )) ..( 3
+  $_ n
+5 6: ;
+### $##( )
+))! #))' )
+..A D..H K
+..Q T..X [
+
+44 
+99 (BB -
+99H I99M N
+
+?? 
+CC+ ,CC0 1
+DD) +DD/ 1(
+KK " 2@ T]] &
+
+LL	 
+
+MM 
+
+NN 
+
+OO %
+
+PP "
+
+]]' -(
+^^ dd ffL Stt 2
+__  ii ii% 5kk_ ouu (
+`` nn ppY cvv 
+aa 'ww 
+bb $xx ∂
+zC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\TableOperationResult.cs<
+		 " & & & & &
+
+
+
+	 
+
+ 
+
+ 
+
+' .
+C G 
+
+' /
+7 A  
+
+' 7
+? F 
+
+' 6
+> E 
+
+' 3
+; B 
+""   / A
+
+##	 
+
+$$ $
+
+%%  
+
+&&
+ 
+
+'' ,
+
+((
+ 
+
+))
+ 
+
+** 
+
+++	 
+
+,, 
+22 $$ Ê
+
+~C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\TableOperationAuditEntry.cs
+		 &## *
+
+
+
+	 
+
+	 
+
+ $
+
+ 
+
+	 
+
+ 
+
+ 
+
+ '
+
+ &
+
+( 6
+
+##+ 1(
+$$ -- //L SMM 
+%% (NN (
+&& 22 44L SPP (
+'' 77& /99N WQQ (
+(( <<& ,>>J PRR (
+))  +AA CC3 >SS (
+**  *FF HH3 =TT 
+++% 3UU 
+UU) ,UU0 3
+UU9 <UU@ C
+
+\\ "
+
+aa 
+
+ff !J
+ll %  )) ** 
+ÅÅ )
+†† )
+
+mm  
+
+nn "
+
+oo
+ 
+
+pp 
+
+qq $
+
+rr !
+
+ss( 1
+
+ÅÅ* 5
+
+ÇÇ 
+ãã $
+
+ÉÉ 
+åå 
+åå) 2
+
+ÑÑ 
+çç 
+
+ÖÖ 
+éé 
+
+ÜÜ '
+èè 
+
+áá $
+êê 
+
+àà% .
+ëë 
+
+ëë$ '
+ëë+ .
+
+ëë4 7
+ëë; >
+
+††* 8
+
+°° "
+™™ 
+
+¢¢ $
+´´ 
+
+££ 
+¨¨ 
+
+§§ 
+≠≠ 
+
+•• '
+ÆÆ 
+
+¶¶ $
+ØØ 
+
+ßß% .
+∞∞ 
+
+∞∞$ '
+∞∞+ .
+
+∞∞4 7
+∞∞; >
+
+∑∑ 
+
+ºº 
+
+¡¡ 
+
+∆∆ !ë
+ÄC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\TableMergeValidationResult.cs(
+
+
+ ( ,$$ ,99 ,
+
+	 
+
+ *
+
+ #
+
+- 2
+H P 
+
+$$- 42
+%% "(( (( %**e k// 
+&& %00 
+
+99- 8(
+99@ E;;& +==Q V@@= B
+
+FF 
+KK [[ 
+
+QQ $P
+SS WW XX ]] ]] $^^ __ bb0 6
+XX4 5XX@ A
+__, -__8 9,
+ii (tt ,
+ÉÉ ,
+òò ,
+
+jj	 
+
+kk *
+
+ll #
+
+tt- 2
+ttH Pyy 
+
+ÉÉ- 4<
+
+ÑÑ "
+áá 
+áá %
+ââe k
+éé 
+
+ÖÖ %
+èè 
+
+òò- 80
+
+òò@ E
+öö& +
+úúQ V
+üü= B
+
+•• 
+
+™™ 
+∫∫ 
+
+∞∞ $`
+
+≤≤ 
+∂∂ 
+∑∑ 
+ºº 
+ºº $
+ΩΩ 
+ææ 
+¡¡0 6
+
+∑∑4 5
+∑∑@ A
+
+ææ, -
+ææ8 9‹
+vC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\TableMergeStatus.cs
+		  ".. "
+
+
+
+	 
+
+	 
+
+
+ 
+
+
+ 
+
+ '
+
+ 
+
+ 
+
+
+ 
+
+# ,(
+2 9 L S  $ +
+
+..# )(
+// 77 99L SQQ (
+00 << >>U dSS (
+11 AA CCT bTT 
+22 (UU 
+33 VV (
+44 KK& 1MMP [WW (
+55 FF HHL [XX 
+
+__ 
+
+dd  
+
+ii Ò
+wC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\SplitPaymentEntry.cs
+
+ 
+
+
+  
+  
+) / (
+7 = S Y Œ
+zC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\SessionControlResult.cs<
+
+
+ " & & &%% &++ &
+
+	 
+
+ 
+
+ 
+
+' .
+C G 
+
+' /
+
+' 3
+; B   
+
+%%' 3
+%%; B&& 
+
+++' 6
+++> E,, 
+22   / A
+
+33	 
+
+44 
+
+55 
+
+66  
+
+77
+ ‘
+wC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\SessionAuditEntry.csP
+  #%% #11 #<< #II #VV #dd #
+
+			 
+
+
+
+ 
+
+ 
+
+	 
+
+ F
+$ *'' 33 >> KK XX ff 
+0 9% .
+B H0 6
+Q X8 ?
+_ eA G
+
+%%$ 2
+%%8 A'' 
+%%H N''^ d
+%%U \''= D
+%%b l''P Z
+
+11$ 1
+117 @33 
+11G M33G M
+11V \33= C
+
+<<$ 2
+<<8 A>> 
+<<H N>>F L
+
+II$ 0
+II6 ?KK 
+IIF LKKc i
+IIV aKKR ]
+IIl tKK> F
+
+VV$ 5
+VV; DXX 
+VVK QXX[ a
+VVW _XX? G
+VVe mXXO W
+
+dd$ 6
+dd< Eff 
+ddL Rffr x
+ddY dff@ K
+ddk tffS \
+	dd} Éffh nŸ
+yC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\TipAllocationResult.cs
+		 ! % %
+
+
+
+	 
+
+
+ 
+
+' 2
+
+	 
+
+ 
+
+& -
+  
+  %
++ 6' 2
+
+& 5
+  
+  %
+  R c(
+!! ! % )3 F
+
+""	 
+
+## 
+
+$$  
+
+%%
+ 
+
+&&	 ˛
+rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\SessionAlert.cs
+
+ 
+
+			 
+
+
+
+	 
+
+ 
+
+ 
+
+ 
+
+ !
+  
+33   $ 8˛
 nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\TaxGroup.cs
 		 EE 
  $$ (
@@ -47,17 +581,232 @@ nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 CC 
 CC0 1CC5 6
 
-EE  ≈
-uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Exceptions\NotFoundException.cs
+EE  ∆
+|C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\ServerAssignmentResult.cs2
+ $ ( ( ( (
 
- 
+			 
+
 
 
-$ +
+ 
+
+ 
+
+) 0
+G K 
+
+) 1
+9 C  
+
+) 9
+A H 
+
+) 8
+@ G 
+ " 1 E
+
+	 
+
+  	 
+
+!!	 
+
+""	 
+
+##  
+
+$$ Ò
+uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\ServerAnalytics.cs
+
+		 
+
+
 
-4 ;
-$ +N U
-7 EW e‹
+	 
+
+ 
+
+ 
+
+ 
+
+ /
+
+& 4
+
+ (
+
+ 
+   $
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+
+ 
+
+ 
+## # 
+
+$$
+ 
+
+%%
+ 
+
+&& 
+
+''
+ 
+
+((
+ 
+..  
+
+// 
+
+00 
+
+11 
+
+22  
+
+33 
+
+44 Í
+pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\RecipeLine.cs
+
+ 
+  
+		  
+ *  )
+4 <  ≠
+}C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\PricingSimulationResult.cs
+
+
+ , )22 )
+
+  << 
+
+  == 
+
+   >>  
+
+     ??  
+
+ !! @@ 
+ "" AA 
+ &## BB 
+
+* 6
+= H #!! $
+S c"" -
+
+22* 8
+33 << "
+44 == ,
+55 ">>" 6
+66 "??" 6
+77 @@ $
+88  AA ,
+99 *BB &
+
+JJ '
+
+SS *
+
+\\ '
+cc dd )
+
+kk #ﬂ
+uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\PricingScenario.cs
+
+
+ $ !++ !
+  22 
+  33 
+  44 
+  55 
+	 66 
+
+" -
+7 ? 
+K T  
+Z d "
+
+++" :
+,, 22 
+-- 33  
+.. 44 "
+// 55  ˛
+tC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\OverrideResult.cs<
+
+
+ #    ##  ++  33  
+
+	 
+
+ 
+
+ 
+
+! (
+7 ; 
+
+! -
+
+##! )
+
+++! 1
+++9 @,, 
+
+33! 0
+338 ?44( /(
+:: ! ) 5LL 
+;;	 TT 
+<< UU 
+== VV 
+>> WW 
+??	 XX 
+@@ YY 
+
+LL %
+MM TT  
+NN !UU &
+OO VV (
+PP WW 
+QQ XX  §
+xC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\OverrideAuditEntry.cs
+
+
+ ' $
+	 77 
+	 88 
+ 99 
+ :: 
+ ;; 
+ << 
+	 == 
+ >> 
+
+% +(
+   '' ))N W88  
+!! !99 &
+"" :: (
+## ;; (
+$$ 11& ,33J P<< (
+%% ,, ..N W==  
+
+FF  
+
+WW #‹
 kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\Money.csû
 		 		) .77 @@ @@# (@@/ 4QQ QQ# (QQ/ 4hh hh# (xx xx3 8
 ÅÅ 
@@ -175,7 +924,905 @@ kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 ¿¿ 
 
 ¿¿ 
-¿¿1 6Õ
+¿¿1 6À
+}C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\EquipmentTransferResult.cs2
+		 % ) ) ) )
+
+
+
+	 
+
+ 
+
+ 
+
+* 1
+I M 
+
+* 2
+: D  
+
+* :
+B I 
+
+* 9
+A H 
+ # 2 G
+
+  	 
+
+!!	 
+
+"" /
+
+## *
+
+$$ (
+** .00 233 266 2
+
+++	 
+
+,, 
+
+--$ (
+
+003 :
+00[ _11 
+
+333 C
+33K R44 
+
+663 B
+66J Q77 
+== ,-- "00; Y
+
+>> $
+
+??  
+
+@@3 K
+
+AA 
+
+GG $ÿ
+xC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Services\TableOperationsService.cs
+
+ #
+4 =QQ SS* 3
+
+- 48
+8 F^^ 
+»» 
+¯¯ 
+©© ,
+4 Ass 
+’’ 
+ää 
+
+, <P
+ ## 88& 4CCA OJJ& 4aa "kk qq4 B
+ +22 02
+ --* 0dd oo  <
+ (( ee mm nn  ~~ <
+22 33 88 == CCQ ]JJ> J
+==! #==' )
+CC  DD !FFN ^<
+JJ OO$ /\\$ /bb pp7 Bxx 2
+KK "SS &YY  2ppV h{{ "(
+LL !YY qqU f|| !(
+XX `` #qqD Syy 
+jj ss (vv 
+uu 
+ÇÇ0 =
+
+çç, <0
+
+éé 
+ññ 
+∞∞A P
+““F UH
+
+èè ,
+•• 
+™™  
+∞∞R a
+ªª' 6
+≈≈ *0
+
+êê 
+††* 0
+—— 
+·· <
+
+ëë 
+õõ 
+œœ 
+––  
+‡‡ $
+
+∞∞  
+±± !
+≥≥N ^0
+
+∑∑ "
+¿¿0 B
+““W i
+›› "0
+
+∏∏ !
+¡¡ !
+””V g
+ﬁﬁ !0
+
+∫∫ #
+ææ #
+””A T
+‹‹ #
+
+ΩΩ 
+ææ( 1
+
+¿¿ #
+¡¡% 4H
+
+≈≈ 
+∆∆$ ,
+ÕÕ 
+““4 <
+””7 ?
+⁄⁄ $
+
+ÃÃ 
+’’ (
+ÿÿ 
+
+◊◊ 
+‰‰0 =
+
+ÔÔ( @<
+
+ÔÔF M
+ÛÛ 
+ııL S
+¯¯* 1
+˙˙) 0
+
+¯¯; A
+˘˘ 
+
+ÄÄ2 ICC) @0
+
+ÅÅ 
+ää 
+ïï" 0
+¶¶" 0
+
+ÇÇ +
+èè ,l
+
+ÜÜ 
+åå 
+íí 
+óó 
+úú 
+¢¢ 
+´´ 
+µµ 
+∂∂1 70
+
+áá 
+≤≤ 
+∂∂9 A
+∑∑/ 7`
+
+èè 
+êê 
+ïï 
+öö 
+†† 
+††" .
+¶¶: F
+∞∞ 
+
+öö 
+öö# %
+
+¶¶ 
+ßß  +
+
+©©< B
+©©G M
+
+ΩΩ2 I
+∞∞) @
+
+ææ 
+«« H
+
+øø ,
+ÃÃ 
+““ 
+ÿÿ# 2
+ÊÊ 
+ÏÏ x
+
+√√ 
+…… 
+ŒŒ 
+œœ6 <
+‘‘ 
+‹‹ 
+·· 
+ËË 
+ÒÒ 
+ÚÚ1 70
+
+ƒƒ 
+ÓÓ 
+ÚÚ9 A
+ÛÛ/ 7
+
+˘˘= ]H
+
+˙˙ 
+ÄÄ 
+ÇÇL S
+ãã- 4
+åå? F
+çç> E0
+
+˚˚ 
+ÖÖ 
+ááU ]
+éé/ 7$
+
+¸¸ 
+ÖÖ 
+ééN T0
+
+ãã 
+ãã !
+åå  
+çç  $
+
+éé 
+éé !
+éé; @
+
+èè $
+èè( -
+
+ññ/ E0
+
+óó 
+üü 
+©© 
+ªª 0
+
+òò 
+§§ 
+©© (
+ºº 
+
+ôô &
+ÆÆ  ,0
+
+ÆÆ 
+ØØ 
+¥¥ 
+ΩΩ 
+
+¥¥" $
+¥¥( *
+
+∫∫ 
+¬¬3 ?
+
+ÕÕ8 c
+
+ŒŒ (
+ÙÙ 
+
+œœ "
+÷÷ &
+
+––! 9
+ÁÁ  8H
+
+÷÷ 
+ÿÿ 
+›› 
+ÂÂ$ /
+ÎÎL W
+ıı 
+
+››  "
+››& ($
+
+„„ !
+ !
+ˆˆ !
+
+ÁÁ 
+- 6
+
+ÛÛ 
+˙˙< JÔ
+yC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Services\ServerAssignmentService.cs
+
+ $
+
+. H
+  ##5 >
+  ##@ H
+ ##J S(
+ $ $- A##U iF
+## && '' (( )) ** ++ 
+%% ..2 6
+
+::. A
+;; BB RR5 >
+<< EE RR@ K
+== HH* 0F
+RR UU VV WW XX YY ZZ 
+TT ]]2 6
+
+ii. E
+jj qq {{5 >
+kk tt {{@ H(
+ll $ww $ww- A{{Q eN
+{{ ~~  
+ÄÄ 
+ÅÅ 
+ÇÇ 
+ÉÉ 
+}} 
+ÜÜ2 6
+
+íí. I
+
+ìì 
+ôô 
+
+îî 
+úú 
+
+¨¨+ FH
+
+≠≠ 
+≥≥ 
+¥¥; D
+∑∑; D
+ÀÀ/ 8
+œœ7 @T
+
+ÆÆ 
+¥¥F T
+∂∂ 
+∑∑F T
+∆∆ "
+ÀÀ: H
+œœB P
+
+¿¿ 
+ÀÀJ U
+
+””0 P
+úú' G0
+
+‘‘ 
+ŸŸ 
+⁄⁄L T
+„„ 0
+
+’’ 
+‹‹ 
+››T \
+ÂÂ $
+
+÷÷ 
+‹‹ 
+ÊÊ 
+
+ÙÙ5 T$
+
+ÙÙZ c
+˜˜ 
+¯¯M V
+
+ÄÄ >
+
+ÄÄD M
+ÉÉ 
+
+éé' ><
+
+èè 
+îî 
+ïïL T
+úúH P
+üü <
+
+êê 
+óó 
+òòT \
+úúR Z
+°° 0
+
+ëë 
+óó 
+úú\ b
+¢¢ 
+
+úú 
+££  2ú
+pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Services\PricingService.cs
+
+ 
+
+ $2
+  !!T `%% ++' 3F
+  3 <++5 >.. &00 &44A J(
+++ .. 00 441 ?
+44 88 $
+AA ++ &
+AA# 'CC- 1(
+AA- <FF MMA PNN *
+CC HH MM2 >
+MM NN 
+WW *44 0
+WW/ ;ZZ +]]0 <(
+WWG P]] `` $ii, 5(
+YY `` ii ll (
+ZZ aa ee hh! 1
+hh ii )π
+qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Services\PriceCalculator.cs
+
+ 
+
+ +(
+D M " +" +
+] e"" <
+   ''$ 711 (33# 666$ 7
+2 37 8
+))  **( 0(
+33  44  44* 688# /
+33; <33@ A
+88  99( 0
+
+BB (
+
+BB/ @
+BBH PHH Ô
+yC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Services\ITableOperationsService.cs
+
+ (
+
+ /
+
+ 
+
+ +
+
+ 
+
+ 
+
+&& /
+
+'' 
+
+(( ,
+
+)) 
+
+** 
+
+11 3
+
+119 @
+
+99% <
+
+:: 
+
+;; +
+
+CC% <
+
+DD 
+
+EE ,
+
+NN0 P
+
+OO 
+
+PP 
+
+QQ 
+
+ZZ" 8
+
+[[ 
+
+\\ 
+
+]] &
+
+ff+ V
+
+gg (
+
+hh "
+
+ii! 9Æ
+xC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Services\ISessionControlService.cs
+
+ '
+
+ 0
+
+6 ?
+
+H N
+
+ 1
+
+7 @
+
+## 4
+
+##: C
+
+##I V
+
+##] d
+
+,, 3
+
+,,9 B
+
+,,I V
+
+,,_ e
+
+22$ 9Û
+pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Events\GroupSettleEvent.cs
+
+ $
+ # 
+   
+ & 
+ ! 
+ $ 
+' 0 !
+8 C %
+Q \ %
+e p %
+	} á #
+
+è ú  £
+qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Services\IPricingService.cs
+
+		  
+
+
+ 
+
+ 
+
+ ø
+yC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Services\IManagerOverrideService.cs
+
+ (
+
+ :
+
+B L
+
+S Y
+
+ 1
+
+7 @
+
+K U
+
+^ d
+
+k t
+
+'' 2
+
+''8 A
+
+''I W
+
+''` f
+
+''m v
+
+00 -
+
+003 <
+
+00E K
+
+00R [
+
+88* D
+
+88N V
+
+88a g
+
+??* K
+
+??Q Z
+
+HH* K
+
+HHQ Z
+
+HHe m
+
+HHx ~é
+rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Services\IGratuityService.cs
+
+		 !
+
+ &
+
+- 5
+
+	 
+
+ $
+
+, 2
+
+< D
+"" ! 
+
+##
+ 
+
+$$
+ 
+
+%%
+ 
+
+&&
+ £
+yC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Services\IAdvancedPricingService.cs
+
+ (
+
+ .
+
+8 D
+
+P Y
+
+"" )
+
+""3 ;
+
+""N R
+
+,, '
+
+,,. >
+
+,,J S
+
+55" 6
+
+55G O
+
+>> (
+
+>>3 <ˇ
+qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Services\GratuityService.cs
+
+ 
+
+ -P
+4 < 3 ;         !!  
+ $$  
+ %%  
+   &&  
+!! ''  
+
+// F
+//% +11 333 9AA" (EE GG LL 2
+//3 966 883 9;; FF 
+//C KAA 
+AA HH 
+DD LL #∆
+xC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Services\AdvancedPricingService.cs
+
+ #
+
+ ;P
+E Q"" $$T `(( 00' 366 99$ 0@@  ,Z
+] f 3 <.. 005 >::$ -??$ -AAP YFF: C
+33 66 )@@/ <2
+44 :: ?? BB FF- 8
+99 ::D L
+@@ AAA N
+AA BB *
+QQ  6
+ùù$ :2
+QQ@ HSS UUO WXX ]]- 5
+QQ[ ___ !<
+]] aa% 1bbB NccA Mdd@ Lee 
+__ hh$ 2 
+ss 4FF ,
+≈≈  76
+ss; Kuu ww3 C
+ÇÇ 
+ÑÑ #N
+ssW `zz ||3 <
+ÄÄ 
+ÅÅ 
+ÇÇ  )
+àà 
+
+íí/ CÚ
+
+ííT \
+îî 
+ññ3 ;
+öö '
+ùù; C
+ùùN V††É ã
+§§I Q
+™™ 
+±±, 4
+≤≤Z b
+∑∑, 4
+ππU ]
+∫∫> F
+ªªe m
+¿¿ '
+≈≈J R
+»»9 A
+ÃÃ 
+’’C K`
+
+ôô 
+†† 
+≤≤ 
+∫∫ 
+ªª 
+»» 
+ŒŒ 
+ÿÿ &$
+
+öö 
+ûû /
+††2 Bx
+
+ùù 
+ûû 
+††X g
+§§8 G
+™™9 H
+≠≠ 
+∞∞( 7
+∏∏$ 3
+¿¿L [
+◊◊ ,$
+
+§§ 
+¬¬ 
+““ "<
+
+ßß 
+±± 
+∑∑ 
+¡¡ 
+”” ,0
+
+®® "
+ππ $
+¡¡  4
+‘‘" 6$
+
+¨¨ 
+≠≠# 0
+∏∏6 C$
+
+∞∞ 
+±±U ]
+≤≤H P$
+
+∏∏ !
+ππF S
+ªª. ;0
+
+¿¿ 
+≈≈8 H
+∆∆ *
+’’0 @0
+
+≈≈ 
+∆∆ 
+’’" -
+÷÷ $
+
+„„ 5Ã
+
+„„@ I
+ÂÂ 
+ÁÁ3 <
+ÎÎ 
+ÛÛ 
+ˆˆ 
+ˆˆ0 9
+¸¸ 
+¸¸0 9
+ÉÉ 
+ÉÉ/ 8
+ÜÜ! *
+áá 
+éé 
+éé, 5
+ëë 
+ëë+ 4
+
+ÜÜ 
+áá1 ?.
+
+¢¢ 0AA" @
+§§ 7
+ππ' E$
+
+¢¢: B
+§§ 
+©© %
+
+¢¢L V
+™™! +
+
+©© 
+™™ *
+
+≥≥ "bb/ Acc. @dd- ?$
+
+≥≥' .
+∂∂ 
+∏∏2 90
+
+≥≥4 =
+µµ 
+∏∏< E
+ππ $
+
+∏∏ 
+ππ ±
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Interfaces\Printing\IPrintLayoutEngine.cs
+
+ '
+
+ .
+
+6 @
+
+P V≈
+uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Exceptions\NotFoundException.cs
+
+ 
+
+
+$ +
+
+4 ;
+$ +N U
+7 EW eÕ
 }C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Exceptions\InvalidOperationException.cs
 
  -
@@ -185,29 +1832,7 @@ kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 
 < C
 , 3V ]
-? M_ mÍ
-pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\ValueObjects\RecipeLine.cs
-
- 
-  
-		  
- *  )
-4 <  ˜
-uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Events\PaymentProcessedEvent.cs
-
- (
-  
-  
-  
- & 
- ! 
-% . !
-5 = 
-E K 
-Y d %
-m x %
-
-Ä ç  √
+? M_ m√
 sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Exceptions\DomainException.cs
 
  %
@@ -217,7 +1842,93 @@ sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 
 5 <
 % ,O V
-8 FX f»
+8 FX f”
+ÇC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Exceptions\BusinessRuleViolationException.cs
+
+ 2
+1 8A H
+1 8[ b
+D Rd ró
+oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Events\TicketHeldEvent.cs
+
+
+
+ "
+  
+  
+  
+ ' 
+0 6 
+? E 
+M Z  ¸
+zC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Services\IServerAssignmentService.cs
+
+ )
+
+! ;
+
+ 
+
+ 
+
+ 
+
+ $
+
+$$! 4
+
+%% 
+
+&& 
+
+'' 
+
+00! 8
+
+11 
+
+22 
+
+33 $
+
+;;! <
+
+<< 
+
+== 
+
+EE 9
+
+FF 
+
+GG 
+
+PP# C
+
+QQ 
+
+RR 
+
+SS 
+
+ZZ( G
+
+ZZM V
+
+aa 1
+
+aa7 @
+
+jj 1
+
+kk 
+
+ll 
+
+mm Ä
+rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\TicketStatus.cs
+
+ »
 xC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Exceptions\ConcurrencyException.cs
 
  (
@@ -237,82 +1948,93 @@ vC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
   #
 ! - '
     %
-   Û
-pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Events\GroupSettleEvent.cs
-
- $
- # 
-   
- & 
- ! 
- $ 
-' 0 !
-8 C %
-Q \ %
-e p %
-	} á #
-
-è ú  π
-qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Services\PriceCalculator.cs
-
- 
-
- +(
-D M " +" +
-] e"" <
-   ''$ 711 (33# 666$ 7
-2 37 8
-))  **( 0(
-33  44  44* 688# /
-33; <33@ A
-88  99( 0
-
-BB (
-
-BB/ @
-BBH PHH ±
-C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Interfaces\Printing\IPrintLayoutEngine.cs
-
- '
-
- .
-
-6 @
-
-P V”
-ÇC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Exceptions\BusinessRuleViolationException.cs
-
- 2
-1 8A H
-1 8[ b
-D Rd r{
-mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enums\TableShapeType.cs
-
- Ç
-tC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\UserPermission.cs
-
- É
-uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\TransactionType.cs
-
- Ä
-rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\TicketStatus.cs
-
- ã
+   ã
 }C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\TerminalTransactionType.cs
 
- #Ä
+ #˜
+uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Events\PaymentProcessedEvent.cs
+
+ (
+  
+  
+  
+ & 
+ ! 
+% . !
+5 = 
+E K 
+Y d %
+m x %
+
+Ä ç  †
+tC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Events\DiscountAppliedEvent.cs
+
+
+
+ '
+  
+  
+  
+    
+ #!! 
+ !"" 
+  
+  #
+  
+    !
+  !! '
+ "" !
+   {
+mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enums\TableShapeType.cs
+
+ Ä
 rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\TemplateType.cs
 
- 
+ É
+uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\TransactionType.cs
+
+ »
+tC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Events\DiscountRemovedEvent.cs
+
+
+
+ '
+  
+  
+  
+ ! 
+  
+  #
+  !
+  !
+   √
+sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Events\TicketReleasedEvent.cs
+
+		 &
+  
+# + 
+3 @  Ç
+tC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\UserPermission.cs
+
+ 
 qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\TableStatus.cs
 
- Ö
-wC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\QualificationType.cs
+ Ñ
+vC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\TimeRoundingRule.cs
 
- á
+ Ö
+wC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\StockMovementType.cs
+
+ Ü
+xC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\TableSessionStatus.cs
+
+ á
 yC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\PurchaseOrderStatus.cs
 
- 
+ Ö
+wC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\QualificationType.cs
+
+ 
 qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\PrinterType.cs
 
  Å
@@ -321,16 +2043,34 @@ sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
  Å
 sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\PriceStrategy.cs
 
- Ü
+ 
+qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\PaymentType.cs
+
+ Ü
 xC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\PaymentBatchStatus.cs
 
- É
+ Ä
+rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\OverrideType.cs
+
+ Ä
+rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\ModifierType.cs
+
+ É
 uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\ModifierPortion.cs
 
  Å
 sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\KitchenStatus.cs
 
- Ä
+ |
+nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\GameType.cs
+
+ Å
+sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\EquipmentType.cs
+
+ É
+uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\EquipmentStatus.cs
+
+ Ä
 rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\DiscountType.cs
 
  
@@ -339,7 +2079,10 @@ qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
  Ö
 wC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\CashSessionStatus.cs
 
- É
+ Ç
+tC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\AuditEventType.cs
+
+ É
 uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\ApplicationType.cs
 
  ¿
@@ -369,22 +2112,22 @@ hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 
 )) 
 
-** ¯
+** ƒ
 fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\User.cs
   
 		 (( 
 
 
  )) 
- ** FF 
- ++ GG 
- -- NN 
+ ** OO 
+ ++ PP 
+ -- WW 
  $.. 
- ,, 66 
+ ,, ?? 
 
  
   // (
- 00 ;; @@ 
+ 11 DD II 
 
  (
  ##& .$$L T)) 
@@ -393,668 +2136,837 @@ fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
  ,, 
  -- '
    !..  1
-!! // #//9 C
+!! // #//9 C
+55 #00 :: 
 
-44 
-44 #66 
+77 $
+77, 899& 2:: (
 
-99 
+== 
+== #?? 
 
->> 
+BB 
 
-CC 
-CC% .EE& /FF 
-CC7 ?GG 
+GG 
 
-LL 
-LL *NN #˛
+LL 
+LL% .NN& /OO 
+LL7 ?PP 
+
+UU 
+UU *WW #÷
 pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\TicketDiscount.cs
 
 
-   
- && 
- '' 
- (( 
- )) 
- ** 
- ++ 
- -- 
-  ,, 
- .. 
+   
+ ** 
+ ++ 
+ ,, 
+ -- 
+ .. 
+ // 
+ 11 
+  00 
+ 22 
+ 33 
+ 44 
 
-! '
- '' 
- (( #
- )) 
- ** 
-   ++ 
-!! ,, 
-"" -- )Ç
-tC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\AuditEventType.cs
-
- ï6
+! '
+ ++ 
+ ,, #
+   -- 
+!! .. 
+"" // 
+## 00 
+$$ 33 !
+%% 44 '
+&& 11 )˜A
 hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\Ticket.cs
- nn \
-% 0LL8 C
-™™ 
-¡¡ #
-«« 
-◊◊ 
-∏∏ $
- $D
-# ,MM4 =
-·· 
-—— 
-˝˝ 
-§§ 8
-* 4NN< F
-≈≈ 
-√√ #
-¯¯ #h
- ,//. ;
-∂∂ 
-∏∏ 
-¬¬ 
-““ 
-““( 5
-◊◊ 
-ÿÿ ,
-0 ;VV= H
-¿¿ 
-¡¡ \
- xx 
-••" $
-‹‹  "
-ââ  "
-ÚÚ& (
-¿¿! #
-ÊÊ! #
- yy 
- zz 
+  \
+% 0MM8 C
+ªª 
+““ #
+ÿÿ 
+   
+´´ $
+ÏÏ $D
+# ,NN4 =
+ÚÚ 
+‚‚ 
+éé 
+†† %\
+* 4OO< F
+÷÷ 
+õõ 
+∞∞ !
+∂∂ 
+∂∂ #
+ÙÙ #h
+ ,00. ;
+¡¡ 
+√√ 
+ÕÕ 
+›› 
+››( 5
+‚‚ 
+„„ ,
+0 ;WW= H
+—— 
+““ j
+ 
+ââ 
+∂∂" $
+ÌÌ  "
+öö  "
+ÉÉ& (
+——! #
+êê 
+ÒÒ! #
+ 
+ää 
+ 
+ãã 
  
-ÄÄ 
+ëë 
  
-ëë "
+¢¢ "
  
-úú 
-´´ ∂
+≠≠ 
+ºº Ú
  
-ÅÅ 
-íí 
-´´ 
-»» 
-‚‚ 
-ûû 
-¬¬ 
-˛˛ 
-≠≠ 
-∆∆ 
-‹‹ 
-ÚÚ 
-ÅÅ 
-ôô 
-•• 
-úú 
-∞∞ 
-¿¿ 
-œœ 
-‰‰ 
-¸¸ 
-êê 
-üü 
-¥¥ 
-»» 
+íí 
+££ 
+ºº 
+ŸŸ 
+ÛÛ 
+ØØ 
+”” 
+èè 
+ææ 
+◊◊ 
+úú 
+∑∑ 
+œœ 
+ÂÂ 
+ÙÙ 
+åå 
+òò 
+ßß 
+ºº 
+–– 
+‡‡ 
+ÔÔ 
+ÑÑ 
+úú 
+∞∞ 
+øø 
+‘‘ 
+ËË 
+ò	ò	 
+®	®	 
  !
- ®
-    
-ãã 
-ççO U
-êê 
-†† 
-††- 3
-††N T
-¢¢W ]
-ØØ 
-ºº 
-ºº- 3
-ººN T
-ææ\ b
-◊◊ 
-◊◊- 3
-◊◊N T
-ŸŸY _
-ÊÊ 
-ÙÙ) /
-ˆˆ 
-ÑÑ 
-ÑÑ- 3
-ÑÑN T
-òòP V
-õõ 
-ßß 
-ªªO U
-ææ 
-ÀÀ 
-ÀÀ- 3
-ﬂﬂ 
-ÔÔQ W
-ää 
-îî 
-§§ 
-¶¶Q W
-©© 
-ªª 
-ªª- 3
-ªªN T
-ΩΩ\ b
-““ 
-““- 3
-““N T
-‘‘\ b
-ÎÎ 
-ÎÎ, 2
-ÌÌT Z
-ÒÒ 
-˚˚ 
-˝˝p v
-ÄÄ 
-ññ 
-ññ- 3
-ññN T
-òòc i
-™™ 
-™™- 3
-™™N T
-¨¨d j
-∫∫ 
-∫∫- 3
-∫∫N T
-ººf l
-…… 
-……- 3
-……N T
-ÀÀZ `
-ˆˆ 
-ˆˆ- 3
-ˆˆN T
-¯¯_ e
-ää 
-ää- 3
-ääN T
-ååd j
-ôô 
-ôô- 3
-ôôN T
-õõX ^
-®® 
-®®- 3
-®®N T
-™™] c
-ΩΩ 
-ΩΩ- 3
-ΩΩN T
-øøS Y 
-## {{ 
-«« "
+„„ é
+
+   
+êê 
+úú 
+ûûO U
+°° 
+±± 
+±±- 3
+±±N T
+≥≥W ]
+¿¿ 
+ÕÕ 
+ÕÕ- 3
+ÕÕN T
+œœ\ b
+ËË 
+ËË- 3
+ËËN T
+ÍÍY _
+˜˜ 
+ÖÖ) /
+áá 
+ïï 
+ïï- 3
+ïïN T
+©©P V
+¨¨ 
+∏∏ 
+ÃÃO U
+œœ 
+‹‹ 
+‹‹- 3
+ 
+ÄÄQ W
+õõ 
+•• 
+µµ 
+∑∑Q W
+∫∫ 
+ÃÃ 
+ÃÃ- 3
+ÃÃN T
+ŒŒ\ b
+ 
+- 3
+N T
+ÚÚ\ b
+´´ 
+´´- 3
+´´N T
+≠≠_ e
+≈≈ 
+≈≈- 3
+≈≈N T
+««\ b
+ﬁﬁ 
+ﬁﬁ, 2
+‡‡T Z
+‰‰ 
+ÓÓ 
+p v
+ÛÛ 
+°° 
+°°- 3
+°°N T
+££Z `
+∂∂ 
+∂∂- 3
+∂∂N T
+∏∏c i
+   
+  - 3
+  N T
+ÃÃd j
+⁄⁄ 
+⁄⁄- 3
+⁄⁄N T
+‹‹f l
+ÈÈ 
+ÈÈ- 3
+ÈÈN T
+ÎÎZ `
+ññ 
+ññ- 3
+ññN T
+òò_ e
+™™ 
+™™- 3
+™™N T
+¨¨d j
+ππ 
+ππ- 3
+ππN T
+ªªX ^
+»» 
+»»- 3
+»»N T
+  ] c
+›› 
+››- 3
+››N T
+ﬂﬂS Y
+ˆˆ 
+˚˚ 
+Ä	Ä	 
+Ö	Ö	 
+î	î	 
+¢	¢	 
+ß	ß	 "
+## 
+åå 
+ÁÁ "
 $$ 
-ùù 
-¨¨ 
+ÆÆ 
+ΩΩ 
 %% 
-øø 
-(( || 
-)) }} ,
-** ~~ 
-åå '
-óó .
+–– 
+(( 
+çç 
+)) 
+éé .
+** 
+èè 
+ˇˇ '
+ää .
 ++ 
-ëë 
-¢¢ 
-©© 
-,, !
-≥≥ 
-
-// * 
-00 hh 
-„„ h
-33 ^^ 
-∏∏ 
-¿¿ 
-ÕÕ (
-÷÷ (
- 
-ÇÇ (
-ãã (\
-44 __ 
-√√ 
-——  
-€€  
-¯¯ 
-ÜÜ  
-êê  D
-55 `` 
-ææ 
-◊◊ 
-ıı 
-åå P
-66 $aa 
-ŒŒ %
-ÿÿ %
-ÉÉ %
-çç %
-õõ P
-77 %bb 
-œœ &
-ŸŸ &
-ÑÑ &
-éé &
-ØØ P
-88 !cc 
-–– "
-⁄⁄ "
-ÖÖ "
-èè "
-˚˚ Ï
-99 dd 
-ÔÔ" -
- $
-ÒÒ 
-ÙÙ %
-ÉÉ" -
-ÑÑ $
-ÖÖ 
-úú 
-ÕÕ 
-÷÷ 
-·· 
-·· %
-ÊÊ 
-ÇÇ 
-ãã 
-ññ 
-ññ %
-õõ å
-:: ee 
-ÔÔ 
-ÒÒ &
-ÙÙ 
-ÉÉ 
-ÖÖ &
-àà 
-úú '
-ÊÊ" ,
-õõ" ,
-§§ P
-;; ff 
-ÔÔ 
-¨¨ 
-ÉÉ 
-ÊÊ 
-õõ  
-<< gg 
-èè "
-?? 
-ææ 
-øø "
-@@  
-   
-ˇˇ 
-AA 
-òò 
-BB 
-™™ "
-EE "
-ìì+ :
-££ 
-FF $
-§§ 
-GG "
-≠≠ 
-HH #
-≤≤ 
-II 
-ûû 
-
-LL* 4
+ÑÑ 
+ïï 
+úú 
+,, 
+¶¶ 
+-- !
+”” 
+
+00 * 
+11 yy 
+ÉÉ å
+44 oo 
+˚˚8 F
+ÖÖ! /
+ÜÜ' 5
+´´ 
+≥≥ 
+¿¿ (
+…… (
+ÏÏ 
+˛˛ (
+áá (\
+55 pp 
+∂∂ 
+ƒƒ  
+ŒŒ  
+ÙÙ 
+ÇÇ  
+åå  D
+66 qq 
+±± 
+   
+ÒÒ 
+àà P
+77 $rr 
+¡¡ %
+ÀÀ %
+ˇˇ %
+ââ %
+ªª P
+88 %ss 
+¬¬ &
+ÃÃ &
+ÄÄ &
+ää &
+œœ P
+99 !tt 
+√√ "
+ÕÕ "
+ÅÅ "
+ãã "
+õõ ê
+:: uu 
+ÄÄ" -
+ÅÅ $
+ÇÇ 
+ÖÖ %
+îî" -
+ïï $
+ññ 
+≠≠ 
+˛˛ "
+¿¿ 
+…… 
+‘‘ 
+‘‘ %
+€€ %
+››$ /
+·· $
+˛˛ 
+áá 
+íí 
+íí %
+óó §
+;; vv 
+ÄÄ 
+ÇÇ &
+ÖÖ 
+îî 
+ññ &
+ôô 
+≠≠ '
+€€ 
+··' 1
+óó" ,
+ØØ 
+≥≥ \
+<< ww 
+ÄÄ 
+ΩΩ 
+îî 
+›› 
+·· 
+óó  
+== xx 
+ØØ "
+@@ 
+±± 
+ﬂﬂ "
+AA  
+ΩΩ 
+˚˚ 
+BB 
+ãã 
+CC 
+ªª "
+FF "
+ÜÜ+ :
+ññ 
+GG $
+óó 
+HH "
+ÕÕ 
+II #
+““ 
+JJ 
+ææ 
+
+MM* 4
+
+NN( 0
+
+OO/ 8v
+PP 
+““ 
+‘‘( 0
+êê 
+íí( 0
+ˆˆ 
+ÄÄ 
+ÖÖ 
+éé 
+ìì "
+SS 
+ìì 
+¥	¥	 
+
+WW/ 9
+ZZ 
+ÓÓ 
+`` 
+ï	ï	 
+ee 
+ñ	ñ	 
+jj 
+ó	ó	 
+
+ 
 
-MM( 0
+ÄÄ 
+ää '
 
-NN/ 8é
-OO 
-ﬂﬂ 
-ﬂﬂ  (
-··( 0
-îî 
-îî  (
-ññ( 0
-ÎÎ 
-ÙÙ 
-˘˘ 
-ÇÇ 
-áá "
-RR 
-ÇÇ 
-‘‘ 
+ÅÅ 
+åå !
 
-VV/ 9
-YY 
-ŒŒ 
+ÇÇ 
+çç #
+
+ÉÉ 
+éé 
 
-nn 
-oo yy '
-pp {{ !
-qq || #
-rr }} 
-ss ~~ %
-tt zz $
+ÑÑ 
+èè %
 
-ââ 
-±± 
-ËË 
+ÖÖ 
+ãã $
+
+öö 
+¬¬ 
+˘˘ 
+
+™™ <
+
+™™' 0
+¨¨ 
+ÆÆ3 <
+∂∂ 
+ªª !
+
+ÀÀ $
+
+ÀÀ% 0
+““B M
+’’B M$
+
+““ 
+”” 
+ÿÿ $
+
+““3 5
+““9 ;
+
+·· <
+
+··# *
+„„ 
+ÂÂ3 :
+ÌÌ 
+ÚÚ 
+
+éé 0
+
+éé& -
+êê 
+íí3 :
+öö 
+
+•• 
 
-ôô <
+•• %
+ÆÆ 
 
-ôô' 0
-õõ 
-ùù3 <
-•• 
-™™ !
+∂∂ 
+ßß 
 
-∫∫ $
+»» 
 
-∫∫% 0
-¡¡B M
-ƒƒB M$
+»» $
+–– 
 
-¡¡ 
-¬¬ 
-«« $
+»»- 3
+——$ *
 
-¡¡3 5
-¡¡9 ;
+»»: ?
+““" '
 
-–– <
+⁄⁄ 
+   
 
-––# *
-““ 
-‘‘3 :
-‹‹ 
-·· 
+‚‚ 
+‚‚  !
 
-˝˝ 0
+ÌÌ 
+˛˛ 
 
-˝˝& -
-ˇˇ 
-ÅÅ3 :
-ââ 
+˜˜ H
 
-îî 
+˜˜& 3
+˘˘ 
+˚˚3 @
+ÉÉ 
+àà 
+éé #
 
-îî %
-ùù 
+¢¢ 
 
-•• 
-ññ 
+´´  
 
-∑∑ 
+≥≥ 
 
-∑∑ $
-øø 
+≈≈ <
 
-∑∑- 3
-¿¿$ *
+≈≈- 5
+«« 
+……3 ;
+—— 
+÷÷ 
 
-∑∑: ?
-¡¡" '
+‰‰ x
 
-…… 
-ππ 
+‰‰' /
+ÊÊ 
+ËË3 ;
+ıı 
+˚˚ %
+ëë  
+íí 
+ìì 
+îî 
+òò #0
+
+‰‰8 A
+ÎÎ 
+ÌÌ3 <
+ññ  $
+
+‰‰K W
+ââ( 4
+óó &0
+
+˚˚ 
+˛˛% 3
+ÜÜ 
+ïï "
 
-—— 
-——  !
+˛˛ 
+ˇˇ 
 
-‹‹ 
-ÌÌ 
+ÖÖ 
+ââ 
 
-ÊÊ H
+èè 
+õõ %
 
-ÊÊ& 3
-ËË 
-ÍÍ3 @
-ÚÚ 
-˜˜ 
-˝˝ #
+©© $
 
-ëë 
+©©$ .
+∞∞> H
+≥≥A K$
 
-öö  
+∞∞ 
+±± 
+∂∂ "
 
-¢¢ 
+∞∞1 2
+∞∞6 7
 
-¥¥ <
+¡¡ !$
 
-¥¥- 5
-∂∂ 
-∏∏3 ;
-¿¿ 
-≈≈ 
+¡¡' 2
+  ; F
+ÃÃB M0
 
-ŒŒ !$
+¡¡F N
+√√ 
+√√E M
+ŒŒ #$
 
-ŒŒ' 2
-◊◊; F
-ŸŸB M0
+   
+ÀÀ 
+ŒŒ 
 
-ŒŒF N
-–– 
-––E M
-€€ #$
+  . /
+  3 4
 
-◊◊ 
-ÿÿ 
-€€ 
+◊◊ $
 
-◊◊. /
-◊◊3 4
+◊◊" .
+ŸŸ 
+„„ #
 
-‰‰ $
+ÏÏ 
 
-‰‰" .
-ÊÊ 
- #
+¸¸ T
 
-˘˘ 
+¸¸* 3
+˛˛ 
+˛˛F O
+ˇˇ 
+ÇÇ 
+ää 
+ãã 
 
-ââ T
+ìì 
 
-ââ* 3
-ãã 
-ããF O
-åå 
-èè 
-óó 
-òò 
+ìì" ,
+ïï $
 
-†† 
+ìì6 =
+ññ !
+úú= D
 
-††" ,
-¢¢ $
+ììN W
+óó %¥
 
-††6 =
-££ !
-©©= D
+®® 
+≈≈ 
+€€ 
+ŸŸ 
+ûû 
+ππ 
+—— 
+¯¯ 
+ÜÜ 
+îî 
+ΩΩ 
+—— 
+·· 
+ùù 
+±± 
 
-††N W
-§§ %ú
+≠≠ 
+≠≠ 
 
-µµ 
-¥¥ 
-   
-»» 
-ﬁﬁ 
-ÏÏ 
-˙˙ 
-àà 
-ùù 
-±± 
-¡¡ 
-˝˝ 
-ëë 
+≠≠ 
+≠≠! %
 
-∫∫ 
-∫∫ 
+∏∏ 
+∏∏ 
 
-∫∫ 
-∫∫! %
+∏∏ 
+∏∏ 
 
-≈≈ 
-≈≈ 
+ÈÈ (
 
-≈≈ 
-≈≈ 
+ÈÈ/ 8
+ÒÒ 
 
-ÌÌ (
+ÓÓ 
+ÓÓ 
 
-ÌÌ/ 8
-ıı 
+ÓÓ 
+ÓÓ! %
 
-ÚÚ 
-ÚÚ 
+ˆˆ 
+ˆˆ 
 
-ÚÚ 
-ÚÚ! %
+ˆˆ 
+ˆˆ <
 
-˙˙ 
-˙˙ 
+ûû &
+¸¸ 
+ëë 
+ÿÿ 
+ññ $
 
-˙˙ 
-˙˙ <
+†† 
+¢¢ (
+¶¶ '
 
-¢¢ &
-ÎÎ 
-ÄÄ 
-ÂÂ 
-öö 
+††, -
+††2 30
 
-•• 
-•• $
+¢¢ 
+´´ &
+ØØ% 1
+≥≥ &
 
-¶¶& )
-®® 
-©© 0
+££ 
+££ 
 
-¶¶+ ,
-ßß 
-®® 
-©© 
+§§& )
+§§1 4
 
-ØØ 0
+§§+ ,
+§§7 8$
 
-ØØ# .
-±± 
-∂∂$ /
-∏∏ )
+¶¶ 
+´´ 
+≥≥) 4
 
-¿¿ !
+ßß 
+ßß 
 
-¿¿& 1
-¬¬! ,
+®®& )
+®®1 4
 
-ÀÀ 0
+®®+ ,
+®®7 8
 
-ÀÀ  +
-ÕÕ 
-““< G
-ÿÿ %
+∫∫ 0
 
-ﬂﬂ <
+∫∫# .
+ºº 
+¡¡$ /
+√√ )
 
-ﬂﬂ% -
-·· 
-„„3 ;
-ÊÊ 
-ÎÎ 
+ÀÀ !
 
-ÚÚ "
+ÀÀ& 1
+ÕÕ! ,
 
-ÄÄ &
+÷÷ 0
 
-èè  $
+÷÷  +
+ÿÿ 
+››< G
+„„ %
 
-èè' -
-ëë 
-õõ $
+ÍÍ <
 
-££ !$
+ÍÍ% -
+ÏÏ 
+ÓÓ3 ;
+ÒÒ 
+ˆˆ 
 
-££( .
-•• 
-ØØ %
+˛˛ "
 
-∏∏ 
+åå &
 
-∏∏" -
-øø !
+öö 0
 
-«« 
+öö  )
+úú 
+ûûO X
+¶¶ 
 
-««  $
-ŒŒ 
+ØØ  $
 
-ÿÿ !$
+ØØ' -
+±± 
+ªª $
 
-ÿÿ& 4
-⁄⁄ 
-„„ '
+√√ !$
 
-ÔÔ $
+√√( .
+≈≈ 
+œœ %
 
-ÔÔ$ *
-ÒÒ 
-˚˚ !
+ÿÿ 
 
-ÉÉ !$
+ÿÿ" -
+ﬂﬂ !
 
-ÉÉ( .
-ÖÖ 
-èè 
+ÁÁ 
 
-óó 
+ÁÁ  $
+ÓÓ 
 
-¶¶  
+¯¯ !$
 
-¶¶' /
-≥≥ #
+¯¯& 4
+˙˙ 
+ÉÉ '
 
-ªª 0
+èè $
 
-ªª  (
-¬¬ 
-ƒƒ3 ;
-«« î
+èè$ *
+ëë 
+õõ !
 
-““ !
-ìì 
-¨¨ 
-…… 
-„„ 
-üü 
-√√ 
-ˇˇ 
-ÆÆ 
-«« 
-›› 
-ÛÛ 
-ÉÉ 
-öö 
-¶¶ 
-ππ 
-ƒƒ 
-ŸŸ 
-–– 
-ÂÂ 
-†† 
-µµ 
-…… È
+££ !$
+
+££( .
+•• 
+ØØ 
+
+∑∑ 
+
+∆∆  
+
+∆∆' /
+”” #
+
+€€ 0
+
+€€  (
+‚‚ 
+‰‰3 ;
+ÁÁ 
+
+ÙÙ 0
+
+ÙÙ "
+ä	ä	& ,
+å	å	K Q
+ñ	ñ	 0
+
+ÙÙ+ 1
+è	è	 
+ë	ë	3 9
+ó	ó	 
+
+†	†	 ‹
+
+≤	≤	 !
+§§ 
+ΩΩ 
+⁄⁄ 
+ÙÙ 
+∞∞ 
+‘‘ 
+êê 
+øø 
+ÿÿ 
+ùù 
+∏∏ 
+–– 
+ÊÊ 
+ˆˆ 
+çç 
+ôô 
+ƒƒ 
+œœ 
+‰‰ 
+˜˜ 
+®® 
+ 
+ÖÖ 
+¿¿ 
+’’ 
+ÈÈ 
+ô	ô	 
+©	©	 È
 uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\TerminalTransaction.cs
 
   
@@ -1094,10 +3006,81 @@ jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 
 '' !
 '') -11 (
-''6 A))& 111 &22 %
-qC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\PaymentType.cs
+''6 A))& 111 &22 %Û	
+kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\TableType.cs
+ (( 
+ ;;  
+ << 
+ÖÖ  
+ == 
+ÜÜ *
+ >> \\ 
+ÕÕ 6
+ !?? ]] 
+√√ 
+≈≈+ 8
+ @@ ss *
+ AA tt 
+∞∞ 8
+ BB 
+££ 
+√√& 3
+∆∆! . 
+ (CC 
+≠≠ ,
+ DD 
+èè 
+òò 
+ EE d
+ FF ^^ uu 
+áá 
+êê 
+ôô 
+§§ 
+ππ 
 
- Ä
+(( "(
+)) --& *//S W<< (
+** 22 44Y c>> #
+++ == %
+77 EE FF 
+
+PP (
+PP$ .RR TTY c\\ 2
+PP9 FWW WW& 3YYj w]] %
+
+gg (
+gg  .ii kkV dss '(
+gg4 Cnn ppW ftt )
+
+~~ .
+~~% )
+ÄÄ& *
+ÇÇS W
+ÖÖ 
+~~2 =
+ÜÜ !
+
+çç 
+
+ññ 
+
+°°  $
+
+°°' 4
+££ %
+££P ]
+
+´´ $
+
+´´1 =
+≠≠ #
+∞∞ &
+
+¿¿ ,
+
+≈≈ 
+∆∆ Ä
 lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\TableShape.cs
 
 
@@ -1189,10 +3172,110 @@ lC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 §§ 
 
 ∏∏ 
-•• Ä
-rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Enumerations\ModifierType.cs
+•• ˚
+nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\TableSession.cs
+ -- 
+ MM 
+ NN 
+ RR  
+ SS 
+⁄⁄  
+ TT 
+¿¿" +"
+ 
+¢¢ 
+øø N
+ mm }} 
+ÉÉ. 6
+ÜÜ 
+ƒƒ3 ;
+∆∆5 =,
+ 'VV 
+ÑÑ 
+……' :ê
+ $UU cc hh nn xx 
+áá 
+òò 
+ùù 
+§§ 
+∞∞ 
+ƒƒ 
+ÈÈ 
+ OO 
+ PP  
+ WW 
+££  
+ QQ 
+ÓÓ 
+ XX Z
+ YY oo 
+àà 
+•• 
+∂∂ 
+€€ 
+ÔÔ 
 
- ˘
+-- $(
+.. 55 77L SNN (
+// :: <<Q \OO %(
+00 ?? AAY cPP #(
+11 DD FFY cQQ #
+22 RR #
+33 SS (
+II TT XX YY 
+
+aa 
+
+vv 
+
+ÉÉ 
+ÑÑ ,
+
+ëë 0
+
+ëë *
+ìì 
+ïï3 C
+££ &$
+
+®® $
+µµ 
+……T d
+
+ÆÆ 
+
+ÆÆ$ .
+µµ &
+
+ΩΩ #
+
+øø 
+¿¿ 
+
+¿¿ 
+…… $$
+
+√√  
+∆∆  
+……= Q$
+
+…… 
+ÃÃ 
+ÃÃ> J
+
+”” 0
+
+””" *
+’’ 
+◊◊M U
+⁄⁄ 
+
+‚‚  0
+
+‚‚% /
+‰‰ 
+ÊÊY c
+ÓÓ ˘
 
 mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\TableLayout.cs
  !! 
@@ -1276,122 +3359,175 @@ mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 ∂∂$ +
 ∏∏ 
 
-¿¿ û
+¿¿ ‹
 gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\Table.cs
 
 
- && 
- >> 
- ?? YY 
- AA ff (
- BB nn 	ww 	(
- CC oo 	xx 	
- DD zz 
- EE {{ 
- FF yy  
- @@ 
-ÉÉ 
- II 
+ (( 
+ AA 
+ BB ]] 
+ DD jj (
+ EE rr 	{{ 	(
+ FF ss 	|| 	
+ GG ~~ 
+ HH  
+ II }}  
+ CC 
+áá 
+ MM 
 
- ê
- GG 
-ëë 
-ëë/ 5
-ììh n
-úú 
-™™ 
-≤≤ 
-¥¥\ b
-∑∑ 
-øø 
-¡¡e k
-ƒƒ 
-ÃÃ 
-ŒŒe k
-—— 
-ŸŸ 
-ﬁﬁ 
-ÊÊ 
-ËË^ d
-ÎÎ 
-˚˚ 
-àà !h
-  HH 
-åå 
-åå( 7
-ññ 
-ññ( 7
-õõ 
-§§ 
-©© 8
- JJ 
-ÛÛ 
-ÄÄ 
-àà 
+ ÿ
+ JJ 
+ÆÆ 
+ÆÆ/ 5
+∞∞h n
+ππ 
+«« 
+œœ 
+——\ b
+‘‘ 
+‹‹ 
+‚‚ 
+‚‚/ 5
+‰‰c i
+ÁÁ 
+ıı 
+˛˛ 
+ÄÄe k
+ÉÉ 
+ãã 
+ççe k
+êê 
+òò 
+ùù 
+•• 
+ßß^ d
+™™ 
+∫∫ 
+«« !t
+  KK 
+©© 
+©©( 7
+≥≥ 
+≥≥( 7
+∏∏ 
+¡¡ 
+∆∆ 
+ ,
+ LL 
+ññ 
+üü 
 
- 
+ 8
+ NN 
+≤≤ 
+øø 
+«« 
 
- 
- KK 
+ :
+ 
+óó 
+†† 
+ËË 
+ˆˆ 
+ OO 
 
-&& 
-'' 22 ?? %
-(( 77 AA 
-)) BB 
-** CC 
-++ @@ 
-,, II 
--- JJ 
-.. FF 
-// DD 
-00 EE 
+(( 
+)) 55 BB %
+** :: DD 
+++ EE 
+,, FF 
+-- CC 
+.. MM 
+// LL %
+00 NN 
+11 II 
+22 GG 
+33 HH 
 
-RR !
-RR& 1TT YY !
+VV !
+VV& 1XX ]] !
 
-__ 
-__# +aa ff 
+cc 
+cc# +ee jj 
 
-ll 
-ll& 'nn 
-ll0 1oo 
+pp 
+pp& 'rr 
+pp0 1ss 
 
-uu 
-uu& 'ww 
-uu0 1xx 
-uuB Gyy 
-uuP Uzz 
-uu^ d{{ 
+yy 
+yy& '{{ 
+yy0 1|| 
+yyB G}} 
+yyP U~~ 
+yy^ d 
 
-ÅÅ 
+ÖÖ 
 
-ÅÅ" )
-ÉÉ 
+ÖÖ" )
+áá 
 
-ââ 0
+èè 0
 
-ââ" *
-ååA I
-ññA I
-õõ "
+èè" -
+ëë 
+ììQ \
+ññ !
 
-¢¢ 
+ùù 
 
-∞∞ 
+¶¶ 0
 
-ΩΩ 
+¶¶" *
+©©A I
+≥≥A I
+∏∏ "
 
-   
+øø 
 
-◊◊ 
+ÕÕ 
 
-‰‰ 
+⁄⁄ 
 
-ÒÒ 
+ÓÓ 
 
-˘˘ 
+¸¸ 
 
-ÜÜ Õ
+ââ 
+
+ññ 
+
+££ 
+
+∞∞ 
+
+∏∏ 
+
+≈≈ ª
+oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\StockMovement.cs
+
+
+ )) 
+    
+
+ !! 
+ "" 
+ !## 
+ $$ 
+ %% 
+ && 
+ !! 
+ "" '
+ ## 
+ $$ $$H Q
+ && 
+
+))  &(
+** 00 11N X66! +
+++ 66- ;
+,, 66= A(
+-- 33& /44P Y66C L
+.. 66N TÕ
 gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\Shift.cs(
 		  vv vv5 :
  -- (
@@ -1521,7 +3657,45 @@ oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 
 ›› 
 
-ÁÁ ¯
+ÁÁ ®
+rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\ServerAssignment.cs
+
+
+ %% "
+ >> 
+ ?? 
+ @@  
+ AA 
+éé #J
+ !OO TT `` uu 
+ÑÑ 
+çç "
+ BB zz 
+ 'CC  jj 
+ DD 2
+ EE UU kk {{ 
+
+%%# )(
+&& ++ --N W?? !(
+'' 00 22M U@@ 
+(( BB !(
+)) $55  55) =CC# 7(
+:: AA DD EE 
+
+MM 
+
+^^ *(
+^^3 Gee  ee) =jj 3
+
+ss 
+ss  )zz 
+
+ÇÇ #
+
+ãã )
+
+çç 
+éé ¯
 fC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\Role.cs
   
   
@@ -1622,32 +3796,31 @@ oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 ee/ 5ii  
 ee? Gjj #
 eeQ Ukk 
-nn  FF Ø
-oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\PrintTemplate.cs
-  
-  
-		  00 
-
-
-  
-  (( 2
-  %% -- 55 
-  
+nn  FF «
+sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\PromotionSchedule.cs
+		  #
+ -- 
+ .. 
+ // GG" +
+ 00 JJ %
+ 11 JJ6 =2
+ 22 88 == EE 
 
-  &
-. 2& * 
-A E 
-N U& - 
-\ d 
+ $
 
-## 
-##% ,&&& -(( 
+$ *(
+ !! ##O Y.. #
+ // !
+ &&  00 !
+ && 11 
 
-++ 
-++" &..& *00 
+66 
 
-33 
-33$ ,55 ®
+;; 
+
+CC 
+CC& .GG II  
+II JJ JJ) 2®
 pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\PrinterMapping.cs
 		     
  -- 
@@ -1682,46 +3855,72 @@ pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 II TT 
 JJ UU /
 KK VV '
-LL WW ¢
-nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\PrinterGroup.cs
-
-
- ## 
- ** 
- ++ ;; 
- ,, << 
- ".. GG 
- // HH 
- 00 II 
- 11 JJ 
- 22 KK 
- 'LL 
- "PP 
+LL WW ¢
+nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\MenuCategory.cs2
+   +\ h"" 
+ ,, llC E(
+  -- :: 
+ .. ?? 
+ // DD 
+ 00 II 
+ NN (
+ 11 SS XX 
+ ]] *
+ !pp xx 
+îî +"
+! '
+ÉÉ 
+àà $
+- :
+ôô$ 1
 
-" 1
- "QQ 
+"" %
+## ''& *-- 
+$$ .. !
+%% 00 #
 
-" 1
+55 
+55" &77& *:: 
 
-## %
-##- 1%%& *++ 
-##? C,, 
+== 
+==$ -?? 
 
-66 
-66 "88& *;; 
-660 4<< 
+BB 
+BB# ,DD 
 
-?? 
-@@ GG !
-AA HH 
-BB II 
-CC JJ #
-DD KK #
-EE $LL! 7
+GG 
+GG% /II 
 
-NN 
-NN# 4PP -
-NN< MQQ -¸
+LL 
+LL' ,NN 
+
+QQ 
+
+VV 
+
+[[ 
+[[& 4]] '
+
+ii (
+ii  0ll ll) 9pp +
+
+vv 
+
+ÄÄ 0
+
+ÇÇ 
+áá 
+ãã 
+éé 0
+
+ÉÉ 
+ÖÖ 
+àà 
+àà 
+
+îî 
+
+ôô  ¸
 hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\Payout.cs
 		  
  $$ 
@@ -1751,36 +3950,36 @@ nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
  ' 
 
  
- ,"" 'ã
+ ,"" '∑
 iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\Payment.csP
- nn 
-ØØ 
-∞∞ 
-ŒŒ 
-˛˛- 4
-ÉÉ" ) 
- XX 
+ || 
+ΩΩ 
+ææ 
+‹‹ 
+åå- 4
+ëë" ) 
+ bb 
 
-ÖÖS U
- YY P
- ZZ 
-——  (
-◊◊  (
-››  (
-ÂÂ( 0
-ÒÒ( 0
- *\\ -
- "[[ 
-ŒŒ0 ;˙˙y Ñ6
- II ]] 
-¡¡+ 1
-ƒƒi o(
-  JJ ^^ 
- !KK __ (
- ## LL `` (
- ++ MM aa 
+ììS U
+ cc P
+ dd 
+ﬂﬂ  (
+ÂÂ  (
+ÎÎ  (
+ÛÛ( 0
+ˇˇ( 0
+ *ff -
+ "ee 
+‹‹0 ;àày Ñ6
+ OO gg 
+œœ+ 1
+““i o(
+  PP hh 
+ !QQ ii (
+ ## RR jj (
+ ++ SS kk 
   
-®® 
+∂∂ 
 ' 1 
 
 !! "
@@ -1791,123 +3990,139 @@ iC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 
 11 #
 11) 633 %
-55 #bb 
-66 cc 
-77 dd ,
-88 ee 
-ëë 
-ññ D
-99 ff 
-ÇÇ 
-áá 
-££ 
-«« $ 
-:: gg 
-åå 
+55 #mm 
+66 nn 
+77 oo ,
+88 pp 
+üü 
+§§ D
+99 qq 
+êê 
+ïï 
+±± 
+’’ $ 
+:: rr 
+öö 
 ;; 33 
-<< DD 
+<< JJ 
 
-== 
+== 
+@@ tt 
+AA uu 
+BB TT ll 
+CC UU ss 
 
-BB 
-BB  'DD 
-QQ ZZ 
-RR [[ !
-SS ]] 
-TT cc !
-UU dd 
-VV YY 
+HH 
+HH  'JJ 
+YY dd 
+ZZ ee !
+[[ gg 
+\\ nn !
+]] oo 
+^^ cc 
+__ tt #
+`` uu %
 
-nn  
-oo }}" *
-pp vv yy@ K
-qq }}, 2
-rr }}4 ?
-ss }}A K
-tt }}M U
+||  
+}} 
+ãã" *"
+~~ 
+ÑÑ 
+áá@ K
+ 
+ãã, 2
 
-ÄÄ 
+ÄÄ 
+ãã4 ?
 
-ää 
+ÅÅ 
+ããA K
 
-úú $
+ÇÇ 
+ããM U
 
-úú& 0
-ûû 
-®®  
+éé 
 
-ØØ &¿
+òò 
 
-∞∞ 
-∑∑ 
-ππ3 B
-¡¡ *
-ƒƒY h
-«« 
-ŒŒ  /
-—— 
-◊◊ 
-›› 
-„„ 
-ÂÂ '
-ÔÔ 
-ÒÒ '
-˙˙i x
-ÖÖC Rx
+™™ $
 
-±± 
-ºº 
-¡¡ 
-ƒƒ" .
-““ 
-ÿÿ 
-ﬁﬁ 
-ÊÊ $
-ÎÎ5 A
-ÚÚ $H
+™™& 0
+¨¨ 
+∂∂  
 
-≤≤ 
-”” 
-ŸŸ 
-ﬂﬂ 
-ÁÁ #
-ÛÛ #H
+ΩΩ &¿
 
-≥≥ 
-‘‘ 
-⁄⁄ 
-‡‡ 
-ËË "
-ÙÙ "
+ææ 
+≈≈ 
+««3 B
+œœ *
+““Y h
+’’ 
+‹‹  /
+ﬂﬂ 
+ÂÂ 
+ÎÎ 
+ÒÒ 
+ÛÛ '
+˝˝ 
+ˇˇ '
+àài x
+ììC Rx
 
-¥¥ 
-ÖÖa gH
+øø 
+   
+œœ 
+““" .
+‡‡ 
+ÊÊ 
+ÏÏ 
+ÙÙ $
+˘˘5 A
+ÄÄ $H
 
-µµ 
-’’ 
-€€ "
-·· "
-ÏÏ  
-¯¯  0
+¿¿ 
+·· 
+ÁÁ 
+ÌÌ 
+ıı #
+ÅÅ #H
 
-ŒŒ 
-ÄÄ* 7
-ÖÖ ,
-áá 0
+¡¡ 
+‚‚ 
+ËË 
+ÓÓ 
+ˆˆ "
+ÇÇ "
 
-„„: C
-ÈÈ !
-ÍÍ !
-ÎÎ !
+¬¬ 
+ììa gH
 
-ÔÔ1 >
-ıı %
+√√ 
+„„ 
+ÈÈ "
+ÔÔ "
+˙˙  
+ÜÜ  0
 
-˛˛ #
-ÄÄ 
+‹‹ 
+éé* 7
+ìì ,
+ïï 0
 
-ÉÉ 
-ÖÖ ì
+ÒÒ: C
+˜˜ !
+¯¯ !
+˘˘ !
+
+˝˝1 >
+ÉÉ %
+
+åå #
+éé 
+
+ëë 
+ìì ì
 kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\OrderType.cs
 
 
@@ -2120,90 +4335,108 @@ sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 !! -- 
 "" .. 
 ## // -
-$$ 00 !Õ
-kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\OrderLine.cs,
- QQ 
-¥¥ "
-«« ~
+$$ 00 !£
+kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\OrderLine.cs8
+ VV 
+ÄÄ 
+ÚÚ "
+ÖÖ ~
 - 777? I88< F
-ÅÅ &
-ää $
-∫∫ 
-∫∫& 0
-⁄⁄ 
-ÂÂ 
-ÑÑ! +
-†† ,
+øø &
+»» $
+¯¯ 
+¯¯& 0
+òò 
+££ 
+¬¬! +
+ﬁﬁ ,
 - 7::? I
-êê #
-ÛÛ  
- gg 
-$ &
- hh ,
- ii 
-∑∑ 
-∑∑  *
- jj 
- kk 
- ll B
- mm ~~5 =
-¨¨ 
-ŒŒ 
-ŒŒ "8
- nn 
-≠≠ 
-œœ 
-œœ $
+ŒŒ #
+±± ,
+ ll 
+òò 
+ÆÆ$ & 
+ mm 
+ôô 8
+ nn 
+öö 
+ıı 
+ıı  * 
+ oo 
+õõ  
+ pp 
+úú  
+ qq 
+ùù P
+ rr 
+ûû 
+ºº5 =
+ÍÍ 
+åå 
+åå "D
+ ss 
+üü 
+ÎÎ 
+çç 
+çç $
 
  
 
-  @
- DD oo ~~) 2
-∏∏ 
-∏∏ (D
-   EE 
-ÜÜ 
-íí +
-îî +
-ôô $B
-!! /FF &~~ &
-ÜÜ 7
-ââ$ B
-òò& DP
-"" GG 
-êê 
-íí 
-îî 
-òòc q
-ôô3 A8
-## pp 
-ââE L
-ππ 
-ππ $,
-$$ HH 
-çç 
-ôô' 08
-%% *II !
-ââ !
-çç -
-òòG `8
-&& JJ 
-ôô 
-úú 
-ûû  
-'' ,KK #
-òò #
+  Z
+ II tt 
+†† 
+¨¨ 
+ºº) 2
+ˆˆ 
+ˆˆ (P
+   JJ 
+ÆÆ $
+ƒƒ 
+–– +
+““ +
+◊◊ $D
+!! /KK &
+ºº &
+ƒƒ 7
+««$ B
+÷÷& DP
+"" LL 
+ŒŒ 
+–– 
+““ 
+÷÷c q
+◊◊3 AD
+## uu 
+°° 
+««E L
+˜˜ 
+˜˜ $,
+$$ MM 
+ÀÀ 
+◊◊' 08
+%% *NN !
+«« !
+ÀÀ -
+÷÷G `D
+&& OO 
+∞∞ !
+◊◊ 
+⁄⁄ 
+‹‹  
+'' ,PP #
+÷÷ #
 
 ** "
 ++ $
-¸¸ !
-êê 
+∫∫ !
+ŒŒ 
 ,,  
-ÅÅ 
+øø "
 // 
-òò 
+¶¶ 
+÷÷ 
 22 
-≤≤ 
+ 
 
 33 
 
@@ -2215,202 +4448,279 @@ kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 
 ::2 ;"
 ;; *
-ÑÑ  ,
-ãã *
+¬¬  ,
+…… *
 >> 
-èè 
-?? qq 
+ÕÕ  
+?? vv 
+•• 
+BB 
+¢¢ 
+CC 
+££ 
+DD 
+§§ 
 
-QQ "
-RR hh 
-SS ii #
-TT jj '(
-UU [[ mm nn* 2
-VV `` oo !
-WW pp 
-XX kk '
-YY ll !
-ee tt uu \
-{{ tt  
-ÆÆ 
-–– 
-€€ 
-ÊÊ 
-ÙÙ 
-ßß 
+VV "
+WW mm 
+XX nn #
+YY oo '(
+ZZ `` rr ss* 2
+[[ ee tt !
+\\ uu 
+]] pp '
+^^ qq !
+jj yy zz 
 
-ÅÅ 
-ÜÜ: G
+ÄÄ ,
 
-ÅÅ@ C
-ÅÅK N
+ÅÅ 
+ôô 0
 
-ÅÅE F
-ÅÅQ R
+ÇÇ 
+ÜÜ 
+¢¢ 
+¶¶ &0
 
-ÑÑ 
-ÜÜJ [
+ÉÉ 
+ââ 
+££ #
+¶¶= GH
 
-ää 
-çç0 ;
+ÑÑ 
+åå 
+çç3 >
+èè 
+îî" -
+îî6 A
 
-ää> A
-ääI L
+îî 
+†† !H
 
-ääC D
-ääO P
+ññ 
+©© 
+¨¨ 
+ÆÆ 
+∞∞ 
+≥≥ j
 
-ãã 
-çç> M
+ππ yy  
+©©  
+ÏÏ 
+éé 
+ôô 
+§§ 
+≤≤ 
+ÂÂ 
 
-êê= @
-êêH K
+øø 
+ƒƒ: G
 
-êêB C
-êêN O
+øø@ C
+øøK N
 
-•• 0
+øøE F
+øøQ R
 
-••' /
-ßß 
-¨¨ 
-≠≠& .
+¬¬ 
+ƒƒJ [
 
-¥¥ 
-…… H
+»» 
+ÀÀ0 ;
 
-¥¥# (
-∂∂ 
-∑∑ 
-∏∏ 
-ππ 
-∫∫  %
+»»> A
+»»I L
 
-«« 0
+»»C D
+»»O P
 
-««  %
-…… 
-ŒŒ 
-œœ 
+…… 
+ÀÀ> M
 
-÷÷ 
-§§ 0
+ŒŒ= @
+ŒŒH K
 
-÷÷. 6
-ÿÿ 
-ÿÿE M
-⁄⁄ 
+ŒŒB C
+ŒŒN O
 
-·· 0
+„„ 0
 
-··1 9
-„„ 
-„„F N
-ÂÂ "
+„„' /
+ÂÂ 
+ÍÍ 
+ÎÎ& .
 
-ÏÏ <
+ÚÚ 
+áá H
 
-ÏÏ0 8
-ÓÓ 
-ÓÓE M
- 
-ÛÛ 
+ÚÚ# (
+ÙÙ 
+ıı 
+ˆˆ 
+˜˜ 
+¯¯  %
 
-˙˙ $
+ÖÖ 0
 
-ÑÑ2 3
-ÑÑ7 8
+ÖÖ  %
+áá 
+åå 
+çç 
 
-çç $
+îî 
+‚‚ 0
 
-çç& 4
-èè '
-êê -
+îî. 6
+ññ 
+ññE M
+òò 
 
-ññ 
+üü 0
 
-ññ( 4
-òò #
+üü1 9
+°° 
+°°F N
+££ "
 
-ûû 
+™™ <
 
-ûû? K
-¢¢! -
+™™0 8
+¨¨ 
+¨¨E M
+ÆÆ 
+±± 
 
-¨¨ 0
+∏∏ $
 
-¨¨# -
-ÆÆ 
-ÆÆ# -
-≤≤ ó	
+¬¬2 3
+¬¬7 8
+
+ÀÀ $
+
+ÀÀ& 4
+ÕÕ '
+ŒŒ -
+
+‘‘ 
+
+‘‘( 4
+÷÷ #
+
+‹‹ 
+
+‹‹? K
+‡‡! -
+
+ÍÍ 0
+
+ÍÍ# -
+ÏÏ 
+ÏÏ# -
+ ˘
 oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\ModifierGroup.cs
-		 ## 
- CC (
-  DD ZZ 
- EE bb *
- FF jj 
-££ 8
- GG 
-ÅÅ 
-££+ 8
-®® *,
- HH 
-ÇÇ 
-®®? L 
- 'II #
-ÉÉ  
- JJ 
-ãã ,
- KK 
-ìì 
-õõ 
- LL 
-( 2: D
+		 '' 
+ SS (
+ !! TT ll 
+ UU tt *
+ VV || 
+ÿÿ 8
+ WW 
+ìì 
+ÿÿ+ 8
+›› *,
+ XX 
+îî 
+››? L 
+ 'YY #
+ïï  
+ ZZ 
+ùù ,
+ [[ 
+•• 
+≠≠ 
+ ^^ 8
+ \\ 
+øø 
+   *
+œœ. ;,
+ %]] 
+¿¿ 
+––! 3
+( 2: D
 
-- 6
+- 6
 
-##  &
-$$ --& *DD 
-%% FF #(
-&& 22 77 )GG )(
-'' 77 << HH )
-(( $<<" 9II& =
-)) EE %
-** JJ '
-++ KK 
+''  &
+(( 33& *TT 
+)) VV #(
+** 88 == )WW )(
+++ == BB XX )
+,, $BB" 9YY& =
+-- UU %
+.. ZZ '
+// [[ 
+00 GG \\ )
+11 "LL ]]! 3
 
-SS 
-SS" &UU& *ZZ 
+ee 
+ee" &gg& *ll 
 
-`` !
-``* 5bb !
+rr !
+rr* 5tt !
 
-hh 
-hh# -jj 
+zz 
+zz# -|| 
 
-pp **
-pp/ <rr ww )
-ÅÅ %*
-ppB Oww || 
-ÇÇ % 
-ppV m||" 9
-ÉÉ" 9
+ÇÇ *0
 
-ââ "
+ÇÇ/ <
+ÑÑ 
+ââ )
+ìì %0
 
-ââ' 3
-ãã #
+ÇÇB O
+ââ 
+éé 
+îî %$
 
-ëë 
+ÇÇV m
+éé" 9
+ïï" 9
 
-ôô 
+õõ "
 
-°° %0
+õõ' 3
+ùù #
 
-°°* 8
-££ (
-®® 
-®®. <ä
+££ 
+
+´´ 
+
+≥≥ !$
+
+≥≥& 3
+µµ 
+øø %$
+
+≥≥= O
+∫∫ 
+¿¿ /
+
+»» ($
+
+»»- :
+   
+œœ +
+
+œœ 
+–– 
+
+÷÷ %0
+
+÷÷* 8
+ÿÿ (
+›› 
+››. <ä
 ~C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\MerchantGatewayConfiguration.cs
 
 
@@ -2560,30 +4870,32 @@ wC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 ( .
     #
  !! -
- "" 'é
-
+ "" 'œ
 jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\MenuItem.cs
 
 
  @@ 
 1 @,,H W
 0 ;--= H
- JJ (
+ JJ 4
  << KK oo 
+òòa e
 
  
 
  (
  == LL ZZ 
- MM 
- uu 
- {{ 
+ MM 
+ 
+©© 
+ 
+ØØ 
 
 ! )
 
  #
  "
-ÖÖ 
+ππ 
 
  
 "" NN 
@@ -2594,7 +4906,7 @@ jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 %% 
 (( $PP  
 )) 
-ÄÄ 
+¥¥ 
 
 ,,6 D
 --/ 944  *77# -
@@ -2630,28 +4942,95 @@ jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 hh  hh$ %
 
 kk 
-kk" &mm& *oo 
+kk" &mm& *oo Q
+ss zz 
+áá 
+ññ òòu Ç
+õõ 
+££	 
+tt  {{ D
+uu yy 
+ÄÄ 
+ÖÖ 
+ìì 
+†† 
 
-rr 
-rr! +tt uu 
+ww #
+ww( 7zz '
+ww= I{{ (
 
-xx 
-xx %zz {{ 
+~~ $
 
-~~ 
-~~& 4
-ÄÄ '
+ÉÉ 
 
-ÉÉ "
+ÉÉ  .
+áá '
 
-ÉÉ) :
-ÖÖ -
+ëë >
 
-àà  
+ëë  (
+îî 
+ññ $òòë ô
+õõ !
 
-àà/ 4
+ûû $
 
-àà: Fﬂ
+ûû  (
+°° 
+££ "
+
+¶¶ $
+
+¶¶! +
+®® 
+©© 
+
+¨¨ $
+
+¨¨ %
+ÆÆ 
+ØØ 
+
+≤≤ 
+
+≤≤& 4
+¥¥ '
+
+∑∑ "
+
+∑∑) :
+ππ -
+
+ºº  
+
+ºº/ 4
+
+ºº: FØ
+oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\PrintTemplate.cs
+  
+  
+		  00 
+
+
+  
+  (( 2
+  %% -- 55 
+  
+
+  &
+. 2& * 
+A E 
+N U& - 
+\ d 
+
+## 
+##% ,&&& -(( 
+
+++ 
+++" &..& *00 
+
+33 
+33$ ,55 ﬂ
 kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\MenuGroup.cs
 		  
  ++ (
@@ -2690,38 +5069,130 @@ kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 XX 
 
 ]] 
-]]& 4__ '·
-oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\CustomPayment.cs
-		 ,, 
- ## 
- "$$ (
-& 0%% KK SS 
-  
- 4 :
- < G
- I S(
- & 1  X c## !
- $$ )
-$ .%% 
- U ]
+]]& 4__ '¢
+nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\PrinterGroup.cs
+
+
+ ## 
+ ** 
+ ++ ;; 
+ ,, << 
+ ".. GG 
+ // HH 
+ 00 II 
+ 11 JJ 
+ 22 KK 
+ 'LL 
+ "PP 
 
-,,  &
--- 77 
-.. 88 
-// 99 
-00 :: 
-11 ;; 
-22 << 
-33$ .== 
-44 >> 
+" 1
+ "QQ 
 
-DD (
-DD# &FF& )HHX [KK 
-DD/ 4KK 
+" 1
 
-QQ 
-QQ& )SS& )
-SS3 8SS< A†
+## %
+##- 1%%& *++ 
+##? C,, 
+
+66 
+66 "88& *;; 
+660 4<< 
+
+?? 
+@@ GG !
+AA HH 
+BB II 
+CC JJ #
+DD KK #
+EE $LL! 7
+
+NN 
+NN# 4PP -
+NN< MQQ -Ë
+pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\MembershipTier.cs
+
+
+   
+ 11 
+ 22 
+ 33 2
+ "44 >> ??- <OO 2
+ &55 EE FF 0PP 
+
+ "
+
+ !
+  66 
+  77 
+
+ (
+ 88 SS  (TT  (
+
+! '
+   &&& *22 (
+!! )) ))# 244 -(
+"" ,, 66 #77 "
+## 33 %
+$$ #55! 3
+
+<< %(
+<<, 8>>) 5?? )@@ 
+?? @@ ,
+
+CC )
+CC2 :EE1 9FF 
+FF GG GG 
+
+JJ (
+JJ' 6LL LL# 2OO )
+JJA SPP /
+
+SS 
+
+TT Ä
+rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\MembershipStatus.cs
+
+ Ç
+hC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\Member.cs
+
+
+  
+ && 
+ '' 
+ (( NN 
+ )) 
+ ** (
+ #11 *116 D88 F
+ "++ 00 "99 ;; DD II <
+  ,, VV ^^ aa 
+
+ 
+
+ 
+
+ 
+% /'' #
+6 <(( 
+E Q!!& 2)) '
+
+00 
+
+33 
+33 055 88 *
+
+?? 
+?? %AA& ,
+
+GG 
+
+LL 
+LL! *NN 
+
+QQ  
+QQ' -SS VV  
+
+YY (
+YY& ,[[ ^^ #aa  †
 rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\KitchenOrderItem.cs
 
  
@@ -2852,33 +5323,89 @@ jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 
 11 
 
-66 ƒ
+66 ú
 xC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\GiftCertificatePayment.cs
-		 #.. (
- '%% 
-  && (
- ! '' SS 
-  
- 6 <
- > I
- K U(
- $  & ;""c x%%  5
- && '
- '' +
- W _
+		 #00 (
+ ''' 
+  (( (
+ ! )) YY 
+    
+   6 <
+   > I
+   K U(
+ $""& ;$$c x''  5
+ (( '
+ )) +
+   W _
+   a m
+   o |
 
-..) /
-// ?? (
-00 88 ;;# )@@ 
-11 AA 
-22 BB 
-33 $CC !
-44 DD (
-55 88 %;;H XEE 
-66 FF 
+00) /
+11 CC (
+22 << ??# )DD 
+33 EE 
+44 FF 
+55 $GG !
+66 HH (
+77 << %??H XII 
+88 JJ 
+99 KK 
+:: LL 
 
-LL &
-LL- 7NN SS %ú
+RR &
+RR- 7TT YY %˘
+mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\GameHistory.cs
+ ** 
+ GG 
+ HH 
+ II 
+ JJ 
+ KK gg &(
+ aa ff gg ,
+ gg 
+ëë 
+ññ$ ,,
+ LL 
+†† 
+•• (6
+ MM hh 
+óó 
+•• 
+ ii *
+& .NN yy 
+àà 
+ OO 
+
+** $(
+++ 11 33N WHH !(
+,, 66 88L SII 
+-- JJ (
+.. @@ BBV _KK !(
+// ;; ==Z eLL %
+
+ZZ (
+ZZ )\\ ^^3 >hh !
+ZZ3 9ii 
+
+rr (
+rr# &tt& )vvQ Tyy 
+rr/ 4yy $
+
+ÅÅ $
+
+ÅÅ& )
+ÉÉ& )
+àà$ '
+
+àà8 =
+ààA F
+
+èè "
+
+ññ 
+óó )
+
+ûû $ú
 tC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\FractionalModifier.cs
 
  
@@ -2985,7 +5512,91 @@ gC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 
 ææ) *
 ¿¿ 
-¿¿0 1Å
+¿¿0 1í
+
+kC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\Equipment.cs
+ && 
+ 11  
+ 22 
+ıı  
+ 44 
+ˆˆ 
+ 33 ®
+ !55 HH SS cc xx 
+çç 
+èè 
+õõ 
+´´ 
+≠≠ 
+∑∑ 
+«« 
+…… 
+ŸŸ Ñ
+  RR ]] bb {{ }} 
+ûû 
+†† 
+∫∫ 
+ºº 
+÷÷ 
+ÿÿ 
+ (
+ââ  
+ (ss 
+ää 6
+ 66 MM 
+”” 
+‰‰ 
+ 77 î
+ 88 TT dd 
+ÅÅ 
+íí 
+££ 
+ÆÆ 
+øø 
+   
+‹‹ 
+ÂÂ 
+˜˜ 
+
+&& "(
+&&* .((& ***R V22 
+&&> B33 
+&&K V44 %
+-- 77 88 
+
+AA (
+AA# *CC EEL SRR !
+
+[[ !
+
+ll #2
+ll- <nn ppZ iss -vv 
+
+áá #
+
+ôô  
+
+ôô( .
+
+©© 
+
+µµ 
+
+≈≈ 
+
+—— 
+
+‚‚ 
+
+ÓÓ 0
+
+ÓÓ% )
+& *
+ÚÚR V
+ıı 
+
+ÓÓ2 =
+ˆˆ !Å
 mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\DrawerBleed.cs
 		  
  $$ 
@@ -2999,171 +5610,227 @@ mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
  %% )
   && 
  (( %
- '' º
+ '' ñ
 jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\Discount.cs
-		    
- 88 
- 99 
- :: 
- ;; 
- << 
- == 
- .>> 
- *?? 
- @@ (
- CC II NN 
- AA 
- #BB 
+		 %% 
+ DD 
+ EE 
+ FF jj 2
+ GG llB Gmm; @nn6 ;
+ HH 
+ II 
+ .JJ 
+ *KK 
+ LL (
+ OO VV [[ 
+ MM 
+ #NN 
+ %PP !
 
-   !(
-!! ,,& *..Y ]99 
-"" :: 
-## 11 ;; 
-$$ +>>  1
-%% '?? -
-&& << #
-'' == -
-(( @@ !
-)) AA #
-**  BB +
+%% !(
+&& 22& *44Y ]EE 
+'' == FF 2
+(( 77 ==0 5=== BGG 
+)) +JJ  1
+** 'KK -
+++ HH #
+,, II -
+-- LL !
+.. MM #
+//  NN +
+00 "PP$ 9
 
-GG 
+TT 
 
-LL å
+YY 
+
+cc "Z
+cc) /ee ee $ll1 7llQ WmmB HmmR Xnn= CnnM S‰
 rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\DebitCardPayment.cs
-		 22 "
- && 
- !'' (
- $(( \\ qq! 2
- ")) ]] 
- ** 
- &^^ 
-  ww 
- ++ 
- $$ 
- $$0 6
- $$8 C
- $$E O
- && 
- '' '
- !(( -
-   )) )
-!! ** 
-"" ++ 
-## $$Q Y
+		 44 "
+ (( 
+ !)) (
+ $** bb ww! 2
+ "++ cc 
+ ,, 
+ &dd 
+  }} 
+ -- 
+ && 
+ &&0 6
+ &&8 C
+ &&E O
+ (( 
+ )) '
+ !** -
+   ++ )
+!! ,, 
+"" -- 
+## &&Q Y
+$$ &&[ g
+%% &&i v
 
-22# )
-33 @@ 
-44 AA 
-55 BB 
-66 CC 
-77 DD 
-88 EE 
-99 !FF 
-:: GG 
-;; HH 
-<< II 
-== JJ 
+44# )
+55 DD 
+66 EE 
+77 FF 
+88 GG 
+99 HH 
+:: II 
+;; !JJ 
+<< KK 
+== LL 
+>> MM 
+?? NN 
+@@ OO 
+AA PP 
 
-PP 
-PP! 2\\ -
-PP< K]] )
+VV 
+VV! 2bb -
+VV< Kcc )
 
-ee ¬
-nC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\MenuCategory.cs
-		  
- %% (
-  && 33 
- '' 88 
- (( == 
- )) BB 
- GG (
- ** LL QQ 
- VV 
+kk π
+oC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\CustomPayment.cs
+		 .. 
+ %% 
+ "&& (
+& 0'' QQ YY 
+  
+ 4 :
+ < G
+ I S(
+   & 1""X c%% !
+ && )
+$ .'' 
+ U ]
+ _ k
+ m z
 
- %
-   & *&& 
- '' !
- )) #
-
-.. 
-.." &00& *33 
-
-66 
-66$ -88 
-
-;; 
-;;# ,== 
-
-@@ 
-@@% /BB 
-
-EE 
-EE' ,GG 
-
-JJ 
-
-OO 
-
-TT 
-TT& 4VV 'Õ
-sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\CreditCardPayment.cs
-		 00 #
- %% 
- !&& (
- $'' XX ||! 2(
- "(( [[ jj 
- )) __ 
- &aa 
-  
-ÇÇ 
- "" 
- ""1 7
- ""9 D
- ""F P
- %%$ .
- && '
- !'' -
- (( )
-   )) 
-!! ""R Z
-
-00$ *
-11 == 
-22 >> 
+..  &
+// ;; 
+00 << 
+11 == 
+22 >> 
 33 ?? 
-44 @@ 
-55 AA 
-66 BB 
-77 !CC 
-88 DD 
-99 EE 
-:: FF 
+44 @@ 
+55$ .AA 
+66 BB 
+77 CC 
+88 DD 
 
-LL 
-LL! 2XX -
-LL< KYY [[ -
-LL\ d]] __ 
+JJ (
+JJ# &LL& )NNX [QQ 
+JJ/ 4QQ 
 
-hh '
-hh/ >jj )
+WW 
+WW& )YY& )
+YY3 8YY< AÆ
+jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\Customer.cs
+ && 
+ :: (
+ ! *;; ff (
+ - 5<< gg 
 
-pp 
+ 
+ >> UU 
+ == TT 
+  hh 
+ VV 
+ WW 
+ XX 
+ ?? 
+  uu 
+ @@ ss (
+    AA tt (
+ BB zz  
 
-ãã )%% #l
+&& !
+&&) 2((& /;; !
+&&; C++& .<< (
+&&L Q..& +22: ?== (
+&&[ `55' ,552 7>> 
 
-ãã2 <
-çç& 0
-ëë 
-íí 
-îî 
-ïï 
-óó 
-óó) 3
-òò )
+II !(
+II* /QQ' ,QQ2 7UU (
+II8 =KK& +NN: ?TT 
+IIG NVV 
+IIX \WW 
+IIm wXX 
 
-óó 
-òò8 =¢
+^^ 
+^^% .``& /ff 
+^^7 ?cc& .gg 
+^^K Nhh 
+
+nn 
+nn% .uu 
+nn6 ;pp tt 
+
+xx 
+
+}} ß	
+sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\CreditCardPayment.cs
+		 22 #
+ '' 
+ !(( *
+ $)) ^^ 
+ÇÇ! 2(
+ "** aa pp 
+ ++ ee 
+ &gg 
+  
+àà 
+ $$ 
+ $$1 7
+ $$9 D
+ $$F P
+ ''$ .
+ (( '
+ !)) -
+ ** )
+   ++ 
+!! $$R Z
+"" $$\ h
+## $$j w
+
+22$ *
+33 AA 
+44 BB 
+55 CC 
+66 DD 
+77 EE 
+88 FF 
+99 !GG 
+:: HH 
+;; II 
+<< JJ 
+== KK 
+>> LL 
+
+RR 
+RR! 2^^ -
+RR< K__ aa -
+RR\ dcc ee 
+
+nn '
+nn/ >pp )
+
+vv 
+
+ëë )'' #l
+
+ëë2 <
+ìì& 0
+óó 
+òò 
+öö 
+õõ 
+ùù 
+ùù) 3
+ûû )
+
+ùù 
+ûû8 =¢
 pC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\ComboGroupItem.cs
 
  
@@ -3335,21 +6002,25 @@ mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 ÌÌ 
 ÌÌH S
 ÔÔ 
-ÒÒ" -Ì
+ÒÒ" -≈
 mC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\CashPayment.cs
-		  
-  
- + 1
- 3 >
- @ J
- L T
+		  
+  
+ + 1
+ 3 >
+ @ J
+ L T
+ V b
+ d q
 
- $
- $$ '
- $$) /
-   $$1 <
-!! $$> H
-"" $$J R˛
+ $
+   (( '
+!! (() /
+"" ((1 <
+## ((> H
+$$ ((J R
+%% ((T `
+&& ((b o˛
 jC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\Entities\CashDrop.cs
 		  
  $$ 
@@ -3534,54 +6205,7 @@ sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 ññ %
 
 ññ 
-óó+ 5¶
-xC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\DomainServices\TaxDomainService.cs
-
-		 
- [[  
-$ ,* 2
-8 @  
-G R 
-   dd  
-  $ ,,,$ ,
-  7 >'' ,, 
-  E P"" 
-
-33 6(
-33= H77 AA DD ((
-33T \55 55! )>> '
->> ?? DD7 C
-DD EE #
-
-KK 6
-KK= HOO RR ((
-KKS ZMM MM &RR7 >
-RR SS #
-
-YY ,
-YY3 =[[! +\\ 
-YYI Q[[- 5
-YYX c[[7 B
-[[ \\ 
-
-bb ,
-bb3 =dd! +ee 
-bbH Odd- 4
-bbV add6 A
-dd ee 
-
-ll% : 
-llA Ivv $
-ÄÄ &
-llU ]pp #xx %
-lld opp *
-nn rr {{ 
-ÑÑ *
-uu zz= E|| 
-ÄÄ) 1 
-vv zz0 ;
-ÄÄ 
-zz {{# ,|| !—
+óó+ 5—
 ÇC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\DomainServices\ServiceChargeDomainService.cs
 
 
@@ -3675,18 +6299,7 @@ xC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 òò8 A
 üü 
 °°3 <
-™™1 :˚
-ÄC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\DomainServices\CashSessionDomainService.cs
-
-
-
- %
-
- %(
-2 = 3 > 
-
- (
-, 7 !!3 >$$ ö
+™™1 :ö
 rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\DomainEvents\TicketEvents.cs
 
 		 !
@@ -3784,7 +6397,18 @@ rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 §§ 
 
 °°/ <
-¢¢ á
+¢¢ ˚
+ÄC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\DomainServices\CashSessionDomainService.cs
+
+
+
+ %
+
+ %(
+2 = 3 > 
+
+ (
+, 7 !!3 >$$ á
 sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\DomainEvents\PaymentEvents.cs
 
 		 $
@@ -3828,7 +6452,60 @@ sC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
 UU  )XX 
 UU0 8YY 
 UU@ LZZ #
-UUT aVV ò
+UUT aVV ¶
+xC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\DomainServices\TaxDomainService.cs
+
+		 
+ [[  
+$ ,* 2
+8 @  
+G R 
+   dd  
+  $ ,,,$ ,
+  7 >'' ,, 
+  E P"" 
+
+33 6(
+33= H77 AA DD ((
+33T \55 55! )>> '
+>> ?? DD7 C
+DD EE #
+
+KK 6
+KK= HOO RR ((
+KKS ZMM MM &RR7 >
+RR SS #
+
+YY ,
+YY3 =[[! +\\ 
+YYI Q[[- 5
+YYX c[[7 B
+[[ \\ 
+
+bb ,
+bb3 =dd! +ee 
+bbH Odd- 4
+bbV add6 A
+dd ee 
+
+ll% : 
+llA Ivv $
+ÄÄ &
+llU ]pp #xx %
+lld opp *
+nn rr {{ 
+ÑÑ *
+uu zz= E|| 
+ÄÄ) 1 
+vv zz0 ;
+ÄÄ 
+zz {{# ,|| !≈
+uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\DomainEvents\DomainEventBase.cs
+
+ %
+  
+		  
+$ 1 %ò
 rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\DomainEvents\IDomainEvent.cs
 
  
@@ -3836,13 +6513,7 @@ rC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.
  
 
 
- ≈
-uC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\DomainEvents\DomainEventBase.cs
-
- %
-  
-		  
-$ 1 %ù
+ ù
 wC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Domain\DomainEvents\CashSessionEvents.cs
 
 		 %

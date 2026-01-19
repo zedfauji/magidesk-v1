@@ -21,11 +21,7 @@ public class TicketRepository : ITicketRepository
 
     public async Task<Ticket?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        // IMPORTANT: Use AsNoTracking() to prevent concurrency issues when the same ticket
-        // is loaded in multiple scopes. This ensures each query gets a fresh, untracked entity.
-        // The entity will be attached and tracked when UpdateAsync is called.
         var ticket = await _context.Tickets
-            .AsNoTracking()
             .Include(t => t.OrderLines)
             .Include(t => t.Payments)
             .Include(t => t.Discounts)
@@ -39,12 +35,10 @@ public class TicketRepository : ITicketRepository
             foreach (var orderLine in ticket.OrderLines)
             {
                 var modifiers = await _context.OrderLineModifiers
-                    .AsNoTracking()
                     .Where(m => m.OrderLineId == orderLine.Id)
                     .ToListAsync(cancellationToken);
                 
                 var discounts = await _context.OrderLineDiscounts
-                    .AsNoTracking()
                     .Where(d => d.OrderLineId == orderLine.Id)
                     .ToListAsync(cancellationToken);
                 
@@ -128,11 +122,11 @@ public class TicketRepository : ITicketRepository
 
     public async Task<Ticket?> GetOpenTicketByTableNumberAsync(int tableNumber, CancellationToken cancellationToken = default)
     {
-        // Get tickets that are not Paid, Voided, Refunded, or Held
+        // Get tickets that are not Closed, Paid, Voided, Refunded, or Held
         // and contain the specified table number
         var ticket = await _context.Tickets
-            .AsNoTracking()
-            .Where(t => t.Status != Domain.Enumerations.TicketStatus.Paid 
+            .Where(t => t.Status != Domain.Enumerations.TicketStatus.Closed
+                     && t.Status != Domain.Enumerations.TicketStatus.Paid 
                      && t.Status != Domain.Enumerations.TicketStatus.Voided 
                      && t.Status != Domain.Enumerations.TicketStatus.Refunded
                      && t.Status != Domain.Enumerations.TicketStatus.Held)
@@ -151,12 +145,10 @@ public class TicketRepository : ITicketRepository
             foreach (var orderLine in matchingTicket.OrderLines)
             {
                 var modifiers = await _context.OrderLineModifiers
-                    .AsNoTracking()
                     .Where(m => m.OrderLineId == orderLine.Id)
                     .ToListAsync(cancellationToken);
                 
                 var discounts = await _context.OrderLineDiscounts
-                    .AsNoTracking()
                     .Where(d => d.OrderLineId == orderLine.Id)
                     .ToListAsync(cancellationToken);
                 
@@ -253,163 +245,53 @@ public class TicketRepository : ITicketRepository
     {
         try
         {
-            // IMPORTANT:
-            // DbSet.Update() marks the entire graph as Modified, which can incorrectly mark newly-added
-            // child entities (OrderLines/Payments) as Modified and cause "0 rows affected" concurrency errors.
-            // In our unit-of-work pattern, aggregates are typically loaded/tracked before mutation, so
-            // SaveChanges will correctly insert new children and update existing rows.
-            
-            // For concurrency control with AsNoTracking(), we need to:
-            // 1. Attach the entity (which sets OriginalValues to CurrentValues)
-            // 2. Mark it as Modified
-            // 3. Set the OriginalValues for the Version property to enable concurrency check
-            
+            // Simplified Safe Update Pattern for Tracked Entities
+            // Since we removed AsNoTracking, the entity and its graph are likely already tracked.
+            // EF Core Change Tracking will automatically detect additions to collections (Payments, OrderLines)
+            // without manual state management.
             var entry = _context.Entry(ticket);
+            
+            Console.WriteLine($"[DIAGNOSTIC-REPO] UpdateAsync called - TicketId: {ticket.Id}, Version: {ticket.Version}, EntryState: {entry.State}");
             
             if (entry.State == EntityState.Detached)
             {
-                // Attach the ticket - this will set State to Unchanged
-                _context.Tickets.Attach(ticket);
-                entry = _context.Entry(ticket);
-                
-                // Mark as Modified - this will generate UPDATE statement
+                Console.WriteLine($"[DIAGNOSTIC-REPO] Entity is Detached. Calling Update() to attach.");
+                // If it IS detached (e.g. from a different scope or created manually), attach it.
+                _context.Tickets.Update(ticket);
+            }
+            else if (entry.State == EntityState.Unchanged)
+            {
+                Console.WriteLine($"[DIAGNOSTIC-REPO] Entity is Unchanged. Marking as Modified.");
+                // Ensure the root is marked as Modified to trigger checking
+                // (though typically manipulating children triggers it anyway)
                 entry.State = EntityState.Modified;
-                
-                // CRITICAL: For concurrency check to work with AsNoTracking(), we need to set
-                // the OriginalValues for the Version property to the current value.
-                // EF Core will use this in the WHERE clause: WHERE Version = @originalVersion
-                // The ticket.Version was already incremented by the domain method (e.g., ApplyDiscount)
-                // So we need to set OriginalValues to Version - 1
-                var currentVersion = ticket.Version;
-                var originalVersion = currentVersion - 1;
-                
-                System.Diagnostics.Debug.WriteLine($"[TicketRepository.UpdateAsync] Ticket {ticket.Id}: CurrentVersion={currentVersion}, OriginalVersion={originalVersion}");
-                
-                // Set the original version for concurrency check
-                entry.Property(nameof(Ticket.Version)).OriginalValue = originalVersion;
-                entry.Property(nameof(Ticket.Version)).CurrentValue = currentVersion;
             }
-
-            // Ensure newly-added children are inserted (not updated).
-            // IDs are generated in the domain layer, so we must check DB existence to decide Added vs Modified.
-            var orderLines = ticket.OrderLines.ToList();
-            if (orderLines.Count > 0)
+            else
             {
-                var ids = orderLines.Select(ol => ol.Id).ToList();
-                var existingIds = await _context.OrderLines
-                    .Where(ol => ids.Contains(ol.Id))
-                    .Select(ol => ol.Id)
-                    .ToListAsync(cancellationToken);
-
-                var existing = existingIds.ToHashSet();
-                foreach (var orderLine in orderLines)
-                {
-                    var orderLineEntry = _context.Entry(orderLine);
-                    if (!existing.Contains(orderLine.Id))
-                    {
-                        orderLineEntry.State = EntityState.Added;
-                        
-                        // IMPORTANT: Explicitly mark new Modifiers and Discounts as Added too
-                        // If parent is newly added, EF usually handles this, but recursive logic here ensures safety
-                        foreach (var mod in orderLine.Modifiers)
-                        {
-                            _context.Entry(mod).State = EntityState.Added;
-                        }
-                        // Also AddOns! OrderLine.Modifiers now reads from _modifiers which contains AddOns too if we merged them?
-                        // Wait, my previous Edit merged them into _modifiers, so orderLine.Modifiers (public prop) does NOT contain AddOns (it filters).
-                        // I need to iterate ALL modifiers.
-                        // Since I made _modifiers private, I can't access it directly.
-                        // I should iterate Modifiers AND AddOns.
-                        // Or better, assume AddOns are also saved via _modifiers mapping if EF accesses the field.
-                        
-                        // Wait, if I iterate Modifiers AND AddOns, I cover everything.
-                        foreach (var addon in orderLine.AddOns)
-                        {
-                            _context.Entry(addon).State = EntityState.Added;
-                        }
-
-                        foreach (var discount in orderLine.Discounts)
-                        {
-                            _context.Entry(discount).State = EntityState.Added;
-                        }
-                    }
-                    else 
-                    {
-                        // Existing OrderLine
-                        if (orderLineEntry.State == EntityState.Detached)
-                        {
-                             _context.OrderLines.Attach(orderLine);
-                        }
-                        
-                         // Check for NEW modifiers on an EXISTING order line
-                        foreach (var mod in orderLine.Modifiers)
-                        {
-                            if (_context.Entry(mod).State == EntityState.Detached) 
-                            { 
-                                // Ideally check existence but GUIDs are new likely
-                                _context.Entry(mod).State = EntityState.Added; 
-                            }
-                        }
-                         foreach (var addon in orderLine.AddOns)
-                        {
-                            if (_context.Entry(addon).State == EntityState.Detached) 
-                            { 
-                                _context.Entry(addon).State = EntityState.Added; 
-                            }
-                        }
-                    }
-                }
+                Console.WriteLine($"[DIAGNOSTIC-REPO] Entity state is {entry.State}. Proceeding to SaveChanges.");
             }
 
-            var payments = ticket.Payments.ToList();
-            if (payments.Count > 0)
-            {
-                var ids = payments.Select(p => p.Id).ToList();
-                var existingIds = await _context.Payments
-                    .Where(p => ids.Contains(p.Id))
-                    .Select(p => p.Id)
-                    .ToListAsync(cancellationToken);
-
-                var existing = existingIds.ToHashSet();
-                foreach (var payment in payments)
-                {
-                    var paymentEntry = _context.Entry(payment);
-                    if (!existing.Contains(payment.Id))
-                    {
-                        paymentEntry.State = EntityState.Added;
-                    }
-                    else if (paymentEntry.State == EntityState.Detached)
-                    {
-                        _context.Payments.Attach(payment);
-                    }
-                }
-            }
-
-            // Handle Gratuity Persistence
-            if (ticket.Gratuity != null)
-            {
-                // Check if it exists in DB to decide between Add and Update
-                // We do this regardless of current state because pre-generated GUIDs can confuse EF
-                var exists = await _context.Gratuities.AnyAsync(g => g.Id == ticket.Gratuity.Id, cancellationToken);
-                
-                var gratuityEntry = _context.Entry(ticket.Gratuity);
-                if (!exists) 
-                {
-                    gratuityEntry.State = EntityState.Added;
-                }
-                else 
-                {
-                    if (gratuityEntry.State == EntityState.Detached)
-                    {
-                        _context.Gratuities.Attach(ticket.Gratuity);
-                    }
-                    gratuityEntry.State = EntityState.Modified;
-                }
-            }
+            Console.WriteLine($"[DIAGNOSTIC-REPO] Calling SaveChangesAsync...");
             await _context.SaveChangesAsync(cancellationToken);
+            Console.WriteLine($"[DIAGNOSTIC-REPO] SaveChangesAsync completed successfully!");
         }
         catch (DbUpdateConcurrencyException ex)
         {
+            Console.WriteLine($"[DIAGNOSTIC-REPO] DbUpdateConcurrencyException caught!");
+            Console.WriteLine($"[DIAGNOSTIC-REPO] Exception Message: {ex.Message}");
+            Console.WriteLine($"[DIAGNOSTIC-REPO] Affected Entities: {ex.Entries?.Count ?? 0}");
+            
+            if (ex.Entries != null && ex.Entries.Any())
+            {
+                foreach (var entry in ex.Entries)
+                {
+                    if (entry.Entity is Ticket t)
+                    {
+                        Console.WriteLine($"[DIAGNOSTIC-REPO] Failed Ticket - ID: {t.Id}, Version: {t.Version}");
+                    }
+                }
+            }
+            
             throw new Domain.Exceptions.ConcurrencyException(
                 $"Ticket {ticket.Id} was modified by another process. Please refresh and try again.",
                 ex);

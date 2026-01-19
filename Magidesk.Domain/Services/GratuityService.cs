@@ -42,7 +42,8 @@ public class GratuityService : IGratuityService
 
     /// <summary>
     /// Applies gratuity to a ticket.
-    /// Creates a new Gratuity entity and adds it to the ticket.
+    /// If the ticket already has a gratuity, accumulates the amount.
+    /// If not, creates a new Gratuity entity and adds it to the ticket.
     /// </summary>
     public void ApplyGratuity(Ticket ticket, Money amount, UserId? serverId = null)
     {
@@ -64,15 +65,29 @@ public class GratuityService : IGratuityService
         // If no server specified, use ticket creator as default
         var ownerId = serverId ?? ticket.CreatedBy;
 
-        // Create gratuity entity
-        var gratuity = Gratuity.Create(
-            ticketId: ticket.Id,
-            amount: amount,
-            terminalId: ticket.TerminalId,
-            ownerId: ownerId
-        );
+        // Check if ticket already has a gratuity
+        if (ticket.Gratuity != null)
+        {
+            // Accumulate the new amount to existing gratuity
+            // This prevents EF Core from attempting DELETE+INSERT which causes concurrency issues
+            // Example: Existing $3.40 + New $2.00 = $5.40
+            ticket.Gratuity.AddToAmount(amount);
+            
+            // Recalculate totals since gratuity amount changed
+            ticket.CalculateTotals();
+        }
+        else
+        {
+            // Create new gratuity entity
+            var gratuity = Gratuity.Create(
+                ticketId: ticket.Id,
+                amount: amount,
+                terminalId: ticket.TerminalId,
+                ownerId: ownerId
+            );
 
-        // Add to ticket (this will recalculate totals)
-        ticket.AddGratuity(gratuity);
+            // Add to ticket (this will recalculate totals)
+            ticket.AddGratuity(gratuity);
+        }
     }
 }

@@ -1,1 +1,0 @@
-ŠRtC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Magidesk.Migrations.csproj¢net8.0òCSharp12

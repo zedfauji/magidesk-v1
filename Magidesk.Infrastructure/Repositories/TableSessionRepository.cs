@@ -24,11 +24,9 @@ public class TableSessionRepository : ITableSessionRepository
 
     public async Task<TableSession?> GetByIdAsync(Guid id)
     {
-        // CRITICAL FIX: Use AsNoTracking() to prevent stale cached data
-        // Root cause: EF Core change tracker was returning cached entities with old Status values
-        // Evidence: Database showed Status='Active' but code saw Status='Ended'
+        // FIX: Return TRACKED entity so changes are detected automatically.
+        // This ensures we respect the Identity Map and don't get duplicate instances.
         return await _context.TableSessions
-            .AsNoTracking()
             .FirstOrDefaultAsync(s => s.Id == id);
     }
 
@@ -101,7 +99,20 @@ public class TableSessionRepository : ITableSessionRepository
             throw new ArgumentNullException(nameof(session));
         }
 
-        _context.TableSessions.Update(session);
+        // FIX: Rely on Change Tracking (Option A).
+        // The entity should already be tracked because we loaded it via GetByIdAsync (without AsNoTracking).
+        // If it is detached, we attach it, but we do NOT call Update() which forces all properties to Modified.
+        
+        var entry = _context.Entry(session);
+        if (entry.State == EntityState.Detached)
+        {
+            // If strictly following Option A, we could throw here to enforce "Load Tracked".
+            // But to be safe, we attach.
+            _context.TableSessions.Attach(session);
+            entry.State = EntityState.Modified;
+        }
+        
+        // If already tracked, EF Core detects changes automatically.
         
         try
         {

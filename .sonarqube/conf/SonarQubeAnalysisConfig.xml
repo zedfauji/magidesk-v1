@@ -13,7 +13,6 @@
   <SonarQubeHostUrl>http://localhost:9000</SonarQubeHostUrl>
   <SonarQubeVersion>25.12.0.117093</SonarQubeVersion>
   <SonarProjectKey>Magidesk-v1</SonarProjectKey>
-  <SonarProjectName>Magidesk-v1</SonarProjectName>
   <AdditionalConfig>
     <ConfigSetting Id="BuildUri" />
     <ConfigSetting Id="TfsUri" />
@@ -148,8 +147,9 @@
     <Property Name="sonaranalyzer-vbnet.pluginKey">vbnet</Property>
     <Property Name="sonar.java.jvmframeworkconfig.activate">true</Property>
     <Property Name="sonar.updatecenter.url">https://downloads.sonarsource.com/sonarqube/update/update-center.properties</Property>
-    <Property Name="sonar.core.startTime">1/6/2026 12:31:19 PM</Property>
     <Property Name="sonar.core.id">147B411E-AZuUk-pHdKb-Nmu54ba1</Property>
+    <Property Name="sonar.core.startTime">1/19/2026 10:38:47 AM</Property>
+    <Property Name="sonar.exclusions">site/*</Property>
   </ServerSettings>
   <LocalSettings>
     <Property Name="sonar.host.url">http://localhost:9000</Property>
@@ -163,10 +163,10 @@
       <AnalyzerPlugins>
         <AnalyzerPlugin Key="csharp" Version="10.16.2.130377" StaticResourceName="SonarAnalyzer-csharp-10.16.2.130377.zip">
           <AssemblyPaths>
-            <Path>C:\Users\giris\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.CSharp.dll</Path>
-            <Path>C:\Users\giris\AppData\Local\Temp\.sonarqube\resources\0\licenses\LICENSE.txt</Path>
-            <Path>C:\Users\giris\AppData\Local\Temp\.sonarqube\resources\0\licenses\THIRD_PARTY_LICENSES\Google.Protobuf-LICENSE.txt</Path>
-            <Path>C:\Users\giris\AppData\Local\Temp\.sonarqube\resources\0\licenses\THIRD_PARTY_LICENSES\StyleCop.Analyzers-LICENSE.txt</Path>
+            <Path>C:\Users\giris\AppData\Local\Temp\.sonarqube\resources\2\SonarAnalyzer.CSharp.dll</Path>
+            <Path>C:\Users\giris\AppData\Local\Temp\.sonarqube\resources\2\licenses\LICENSE.txt</Path>
+            <Path>C:\Users\giris\AppData\Local\Temp\.sonarqube\resources\2\licenses\THIRD_PARTY_LICENSES\Google.Protobuf-LICENSE.txt</Path>
+            <Path>C:\Users\giris\AppData\Local\Temp\.sonarqube\resources\2\licenses\THIRD_PARTY_LICENSES\StyleCop.Analyzers-LICENSE.txt</Path>
           </AssemblyPaths>
         </AnalyzerPlugin>
       </AnalyzerPlugins>
@@ -181,10 +181,10 @@
       <AnalyzerPlugins>
         <AnalyzerPlugin Key="vbnet" Version="10.16.2.130377" StaticResourceName="SonarAnalyzer-vbnet-10.16.2.130377.zip">
           <AssemblyPaths>
-            <Path>C:\Users\giris\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.VisualBasic.dll</Path>
-            <Path>C:\Users\giris\AppData\Local\Temp\.sonarqube\resources\1\licenses\LICENSE.txt</Path>
-            <Path>C:\Users\giris\AppData\Local\Temp\.sonarqube\resources\1\licenses\THIRD_PARTY_LICENSES\Google.Protobuf-LICENSE.txt</Path>
-            <Path>C:\Users\giris\AppData\Local\Temp\.sonarqube\resources\1\licenses\THIRD_PARTY_LICENSES\StyleCop.Analyzers-LICENSE.txt</Path>
+            <Path>C:\Users\giris\AppData\Local\Temp\.sonarqube\resources\3\SonarAnalyzer.VisualBasic.dll</Path>
+            <Path>C:\Users\giris\AppData\Local\Temp\.sonarqube\resources\3\licenses\LICENSE.txt</Path>
+            <Path>C:\Users\giris\AppData\Local\Temp\.sonarqube\resources\3\licenses\THIRD_PARTY_LICENSES\Google.Protobuf-LICENSE.txt</Path>
+            <Path>C:\Users\giris\AppData\Local\Temp\.sonarqube\resources\3\licenses\THIRD_PARTY_LICENSES\StyleCop.Analyzers-LICENSE.txt</Path>
           </AssemblyPaths>
         </AnalyzerPlugin>
       </AnalyzerPlugins>

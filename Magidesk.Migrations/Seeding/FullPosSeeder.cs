@@ -1145,7 +1145,7 @@ public static class FullPosSeeder
                 // Void some tickets (no payment)
                 if (i % 25 == 0)
                 {
-                    ticket.Void(manager.Id, "Customer changed mind", waste: false);
+                    ticket.Void("Customer changed mind", manager.Id);
                     batchAudits.Add(AuditEvent.Create(AuditEventType.Voided, nameof(Ticket), ticket.Id, manager.Id, "{\"Action\":\"Void\"}", "Seed voided ticket"));
                     BackdateTicketInMemory(ticket, createdAt);
                     batchTickets.Add(ticket);
@@ -1545,8 +1545,8 @@ public static class FullPosSeeder
                     {
                         TicketId = ticket.Id,
                         VoidedBy = manager.Id,
-                        Reason = "Customer changed mind",
-                        IsWasted = false
+                        AuthorizedBy = manager.Id,
+                        Reason = "Customer changed mind"
                     }, cancellationToken);
 
                     // Backdate ticket times

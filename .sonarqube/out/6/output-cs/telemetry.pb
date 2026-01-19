@@ -1,1 +1,1 @@
-ŸRˆC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Infrastructure.Tests\Magidesk.Infrastructure.Tests.csproj¢net8.0òCSharp12
+ŠRtC:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\Magidesk.Migrations\Magidesk.Migrations.csproj¢net8.0òCSharp12

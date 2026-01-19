@@ -167,6 +167,10 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<Magidesk.Presentation.ViewModels.CategoryTreeViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.ErrorManagementViewModel>();
                     
+                    // Missing Dialog ViewModels (Fix for Table Map Interaction)
+                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.SessionControlDialogViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.TableOperationsDialogViewModel>();
+                    
                     // Language Selection (F-0110)
                     services.AddTransient<Magidesk.Presentation.ViewModels.LanguageSelectionViewModel>();
                     services.AddTransient<Magidesk.Presentation.Views.LanguageSelectionDialog>();
@@ -189,6 +193,18 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<ICommandHandler<SetCustomerCommand, SetCustomerResult>, SetCustomerCommandHandler>();
                     services.AddTransient<ICommandHandler<AddPromotionScheduleCommand, AddPromotionScheduleResult>, AddPromotionScheduleCommandHandler>();
                     services.AddTransient<ICommandHandler<DeletePromotionScheduleCommand, DeletePromotionScheduleResult>, DeletePromotionScheduleCommandHandler>();
+
+                    // Table Session Commands (Missing Registrations)
+                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.UpdateGuestCountCommand, Magidesk.Application.Commands.TableSessions.UpdateGuestCountResult>, Magidesk.Application.Commands.TableSessions.UpdateGuestCountCommandHandler>();
+                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.EndTableSessionCommand, Magidesk.Application.Commands.TableSessions.EndTableSessionResult>, Magidesk.Application.Commands.TableSessions.EndTableSessionCommandHandler>();
+                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.PauseTableSessionCommand, Magidesk.Application.Commands.TableSessions.PauseTableSessionResult>, Magidesk.Application.Commands.TableSessions.PauseTableSessionCommandHandler>();
+                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.ResumeTableSessionCommand, Magidesk.Application.Commands.TableSessions.ResumeTableSessionResult>, Magidesk.Application.Commands.TableSessions.ResumeTableSessionCommandHandler>();
+                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.StartTableSessionCommand, Magidesk.Application.Commands.TableSessions.StartTableSessionResult>, Magidesk.Application.Commands.TableSessions.StartTableSessionCommandHandler>();
+                    
+                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.AdjustSessionTimeCommand, Magidesk.Application.Commands.TableSessions.AdjustSessionTimeResult>, Magidesk.Application.Commands.TableSessions.AdjustSessionTimeCommandHandler>();
+                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.TransferSessionCommand, Magidesk.Application.Commands.TableSessions.TransferSessionResult>, Magidesk.Application.Commands.TableSessions.TransferSessionCommandHandler>();
+                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.EnhancedPauseSessionCommand, Magidesk.Application.Commands.TableSessions.EnhancedPauseSessionResult>, Magidesk.Application.Commands.TableSessions.EnhancedPauseSessionCommandHandler>();
+                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.EnhancedResumeSessionCommand, Magidesk.Application.Commands.TableSessions.EnhancedResumeSessionResult>, Magidesk.Application.Commands.TableSessions.EnhancedResumeSessionCommandHandler>();
                     
                     // User Management (TECH-U003)
                     services.AddTransient<ICommandHandler<CreateUserCommand, CreateUserResult>, CreateUserCommandHandler>();
