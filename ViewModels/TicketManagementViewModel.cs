@@ -17,7 +17,7 @@ public sealed class TicketManagementViewModel : ViewModelBase
 {
     private readonly IQueryHandler<GetOpenTicketsQuery, IEnumerable<TicketDto>> _getOpenTickets;
     private readonly ICommandHandler<VoidTicketCommand> _voidTicket;
-    private readonly ICommandHandler<RefundTicketCommand, RefundTicketResult> _refundTicket;
+    private readonly ICommandHandler<RefundTicketCommand> _refundTicket;
     private readonly ICommandHandler<SplitTicketCommand, SplitTicketResult> _splitTicket;
     private readonly ICommandHandler<PrintReceiptCommand, PrintReceiptResult> _printReceipt;
     private readonly ICommandHandler<AuthorizeManagerCommand, AuthorizationResult> _authHandler;
@@ -36,7 +36,7 @@ public sealed class TicketManagementViewModel : ViewModelBase
     public TicketManagementViewModel(
         IQueryHandler<GetOpenTicketsQuery, IEnumerable<TicketDto>> getOpenTickets,
         ICommandHandler<VoidTicketCommand> voidTicket,
-        ICommandHandler<RefundTicketCommand, RefundTicketResult> refundTicket,
+        ICommandHandler<RefundTicketCommand> refundTicket,
         ICommandHandler<SplitTicketCommand, SplitTicketResult> splitTicket,
         ICommandHandler<PrintReceiptCommand, PrintReceiptResult> printReceipt,
         ICommandHandler<AuthorizeManagerCommand, AuthorizationResult> authHandler,

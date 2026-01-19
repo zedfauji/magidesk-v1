@@ -12,9 +12,10 @@ public enum AuditEventType
     PaymentProcessed = 4,
     RefundProcessed = 5,
     Voided = 6,
-    SystemShutdown = 7,
-    Printed = 8,
-    TicketTransferred = 9,
-    TicketMerged = 10
+    Refunded = 7,
+    SystemShutdown = 8,
+    Printed = 9,
+    TicketTransferred = 10,
+    TicketMerged = 11
 }
 

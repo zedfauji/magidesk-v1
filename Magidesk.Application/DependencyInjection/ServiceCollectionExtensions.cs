@@ -43,7 +43,7 @@ public static class ServiceCollectionExtensions
         
         // Refund command handlers
         services.AddScoped<ICommandHandler<Commands.RefundPaymentCommand, Commands.RefundPaymentResult>, RefundPaymentCommandHandler>();
-        services.AddScoped<ICommandHandler<Commands.RefundTicketCommand, Commands.RefundTicketResult>, RefundTicketCommandHandler>();
+        services.AddScoped<ICommandHandler<Commands.RefundTicketCommand>, RefundTicketCommandHandler>();
         services.AddScoped<ICommandHandler<Commands.SplitTicketCommand, Commands.SplitTicketResult>, SplitTicketCommandHandler>();
         
         // Service charges and adjustments command handlers

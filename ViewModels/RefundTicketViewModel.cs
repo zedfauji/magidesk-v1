@@ -13,7 +13,7 @@ namespace Magidesk.Presentation.ViewModels;
 
 public class RefundTicketViewModel : ViewModelBase
 {
-    private readonly ICommandHandler<RefundTicketCommand, RefundTicketResult> _refundTicketHandler;
+    private readonly ICommandHandler<RefundTicketCommand> _refundTicketHandler;
     private readonly IUserService _userService;
     private readonly ITerminalContext _terminalContext;
 
@@ -61,7 +61,7 @@ public class RefundTicketViewModel : ViewModelBase
     public ICommand RefundCommand { get; }
 
     public RefundTicketViewModel(
-        ICommandHandler<RefundTicketCommand, RefundTicketResult> refundTicketHandler,
+        ICommandHandler<RefundTicketCommand> refundTicketHandler,
         IUserService userService,
         ITerminalContext terminalContext)
     {
@@ -150,37 +150,30 @@ public class RefundTicketViewModel : ViewModelBase
             var command = new RefundTicketCommand
             {
                 TicketId = Ticket.Id,
-                ProcessedBy = new Magidesk.Domain.ValueObjects.UserId(currentUser.Id),
-                TerminalId = _terminalContext.TerminalId.Value,
-                Reason = SelectedReason
+                Amount = new Magidesk.Domain.ValueObjects.Money(refundAmount),
+                Reason = SelectedReason,
+                RefundedBy = new Magidesk.Domain.ValueObjects.UserId(currentUser.Id),
+                AuthorizedBy = new Magidesk.Domain.ValueObjects.UserId(authResult.AuthorizingUserId!.Value)
             };
 
-            var result = await _refundTicketHandler.HandleAsync(command);
+            await _refundTicketHandler.HandleAsync(command);
 
-            if (result.Success)
-            {
-                // Show success confirmation
-                var successDialog = new Views.Dialogs.ConfirmationDialog();
-                successDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
-                
-                await successDialog.ShowConfirmationAsync(
-                    "Refund Successful",
-                    $"Ticket #{Ticket.TicketNumber} has been refunded successfully.",
-                    "OK",
-                    "",
-                    "✅",
-                    "Success",
-                    $"Amount refunded: {refundAmount:C}\nAuthorized by: {authResult.AuthorizingUserName}");
+            // Show success confirmation
+            var successDialog = new Views.Dialogs.ConfirmationDialog();
+            successDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+            
+            await successDialog.ShowConfirmationAsync(
+                "Refund Successful",
+                $"Ticket #{Ticket.TicketNumber} has been refunded successfully.",
+                "OK",
+                "",
+                "✅",
+                "Success",
+                $"Amount refunded: {refundAmount:C}\nAuthorized by: {authResult.AuthorizingUserName}");
 
-                if (dialog is ContentDialog cd)
-                {
-                    cd.Hide();
-                }
-            }
-            else
+            if (dialog is ContentDialog cd)
             {
-                ErrorMessage = result.ErrorMessage ?? "Refund failed.";
-                HasError = true;
+                cd.Hide();
             }
         }
         catch (Exception ex)

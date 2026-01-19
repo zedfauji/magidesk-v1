@@ -21,7 +21,7 @@ namespace Magidesk.Presentation.ViewModels
     public partial class RefundWizardViewModel : ObservableObject
     {
         private readonly IQueryHandler<CalculateRefundPreviewQuery, RefundPreviewDto> _previewQuery;
-        private readonly ICommandHandler<RefundTicketCommand, RefundTicketResult> _refundCommand;
+        private readonly ICommandHandler<RefundTicketCommand> _refundCommand;
         private readonly ICommandHandler<AuthorizeManagerCommand, AuthorizationResult> _authHandler;
         private readonly TicketDto _ticket;
         private readonly Action _closeAction;
@@ -125,7 +125,7 @@ namespace Magidesk.Presentation.ViewModels
         public RefundWizardViewModel(
             TicketDto ticket,
             IQueryHandler<CalculateRefundPreviewQuery, RefundPreviewDto> previewQuery,
-            ICommandHandler<RefundTicketCommand, RefundTicketResult> refundCommand,
+            ICommandHandler<RefundTicketCommand> refundCommand,
             ICommandHandler<AuthorizeManagerCommand, AuthorizationResult> authHandler,
             List<PaymentDto> payments,
             Action closeAction)
@@ -301,23 +301,14 @@ namespace Magidesk.Presentation.ViewModels
                  var command = new RefundTicketCommand
                  {
                      TicketId = _ticket.Id,
-                     ProcessedBy = new UserId(authorizationResult.AuthorizingUserId.Value),
-                     TerminalId = Guid.NewGuid(), // TODO: Inject ITerminalContext
+                     Amount = SelectedMode == RefundMode.Partial ? new Money((decimal)PartialAmountInput) : new Money(_ticket.PaidAmount),
                      Reason = RefundReason,
-                     Mode = SelectedMode,
-                     PartialAmount = SelectedMode == RefundMode.Partial ? new Money((decimal)PartialAmountInput) : null,
-                     SpecificPaymentIds = SpecificPayments.Where(p => p.IsSelected).Select(p => p.Id).ToList()
+                     RefundedBy = new UserId(authorizationResult.AuthorizingUserId.Value),
+                     AuthorizedBy = new UserId(authorizationResult.AuthorizingUserId.Value)
                  };
 
-                 var result = await _refundCommand.HandleAsync(command);
-                 if (result.Success)
-                 {
-                     _closeAction.Invoke();
-                 }
-                 else
-                 {
-                     ErrorMessage = result.ErrorMessage;
-                 }
+                 await _refundCommand.HandleAsync(command);
+                 _closeAction.Invoke();
             }
             catch (Exception ex)
             {
