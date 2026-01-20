@@ -24,6 +24,7 @@
             <d:CurrencyConverter x:Key="CurrencyConverter" xmlns:d="using:Magidesk.Presentation.Converters"/>
             <d:CountToVisibilityConverter x:Key="CountToVisibilityConverter" xmlns:d="using:Magidesk.Presentation.Converters"/>
             <d:TimeSpanConverter x:Key="TimeSpanConverter" xmlns:d="using:Magidesk.Presentation.Converters"/>
+            <d:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" xmlns:d="using:Magidesk.Presentation.Converters"/>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -560,7 +561,7 @@
                                 <Button Command="{Binding DataContext.AddProductCommand, ElementName=Page}"
                                         CommandParameter="{x:Bind}"
                                         Background="{StaticResource SurfaceDarkBrush}"
-                                        BorderBrush="{StaticResource BorderBrush}"
+                                        BorderBrush="{StaticResource BorderDefaultBrush}"
                                         BorderThickness="1"
                                         CornerRadius="8"
                                         Padding="12"
@@ -689,7 +690,7 @@
             <!-- Vertical Divider -->
             <Border Grid.Column="5"
                     Width="1"
-                    Background="{StaticResource BorderBrush}"
+                    Background="{StaticResource BorderDefaultBrush}"
                     VerticalAlignment="Stretch"
                     Margin="0,4"/>
 
@@ -789,7 +790,7 @@
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="16">
                 <ProgressRing IsActive="True" Width="60" Height="60"/>
                 <TextBlock Text="Loading..." 
-                           Style="{StaticResource SubtitleTextBlockStyle}" 
+                           Style="{StaticResource BodyBoldTextStyle}" 
                            HorizontalAlignment="Center"
                            Foreground="White"/>
             </StackPanel>

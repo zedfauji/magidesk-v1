@@ -127,6 +127,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IQueryHandler<Queries.GetTicketByNumberQuery, DTOs.TicketDto?>, GetTicketByNumberQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetOpenTicketsQuery, IEnumerable<DTOs.TicketDto>>, GetOpenTicketsQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetHeldTicketsQuery, IEnumerable<DTOs.HeldTicketDto>>, Services.GetHeldTicketsQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.GetMenuItemsQuery, List<Queries.MenuItemDto>>, GetMenuItemsQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetCurrentCashSessionQuery, Queries.GetCurrentCashSessionResult>, GetCurrentCashSessionQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetCashSessionQuery, Queries.GetCashSessionResult>, GetCashSessionQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetDrawerPullReportQuery, Queries.GetDrawerPullReportResult>, GetDrawerPullReportQueryHandler>();
