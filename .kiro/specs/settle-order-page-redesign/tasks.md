@@ -190,7 +190,7 @@ The implementation will proceed in phases:
     - Update FilteredProducts collection
     - _Requirements: 11.2, 11.3_
 
-  - [ ] 5.5 Write property test for order item display completeness
+  - [x] 5.5 Write property test for order item display completeness
     - **Property 11: Order Item Display Completeness**
     - **Validates: Requirements 12.1, 12.2, 12.3**
 
@@ -198,7 +198,7 @@ The implementation will proceed in phases:
     - **Property 12: Order Item Removal and Recalculation**
     - **Validates: Requirements 13.2, 13.3, 14.8**
 
-  - [ ] 5.7 Implement remove order item command (RemoveOrderItemCommand)
+  - [x] 5.7 Implement remove order item command (RemoveOrderItemCommand)
     - Remove item from OrderItems collection
     - Execute RemoveOrderItemCommand
     - Recalculate Subtotal, TaxAmount, and Total
@@ -213,7 +213,7 @@ The implementation will proceed in phases:
     - **Property 16: Modifier Dialog for Products**
     - **Validates: Requirements 20.3**
 
-  - [ ] 5.10 Implement add product command (AddProductCommand)
+  - [x] 5.10 Implement add product command (AddProductCommand)
     - Check if product has modifiers
     - If has modifiers, show modifier selection dialog
     - Execute AddOrderItemCommand with product and modifiers
@@ -222,32 +222,32 @@ The implementation will proceed in phases:
     - Update TotalItemCount
     - _Requirements: 20.1, 20.2, 20.3_
 
-  - [ ] 5.11 Implement edit order item command (EditOrderItemCommand)
+  - [x] 5.11 Implement edit order item command (EditOrderItemCommand)
     - Show modifier selection dialog for item
     - Execute UpdateOrderItemCommand with new modifiers
     - Recalculate totals
     - _Requirements: 13.1_
 
-  - [ ] 5.12 Write property test for category filtering
+  - [x] 5.12 Write property test for category filtering
     - **Property 14: Category Filtering**
     - **Validates: Requirements 17.2**
 
-  - [ ] 5.13 Write property test for subcategory filtering
+  - [x] 5.13 Write property test for subcategory filtering
     - **Property 15: Subcategory Filtering**
     - **Validates: Requirements 18.1, 18.2, 18.3**
 
-  - [ ] 5.14 Implement category and subcategory selection commands
+  - [x] 5.14 Implement category and subcategory selection commands
     - Implement SelectCategoryCommand (filter products by category)
     - Implement SelectSubcategoryCommand (filter products by subcategory)
     - Update FilteredProducts collection
     - Update Subcategories collection when category changes
     - _Requirements: 17.2, 18.1, 18.2, 18.3_
 
-  - [ ] 5.15 Write property test for order item count
+  - [x] 5.15 Write property test for order item count
     - **Property 17: Order Item Count**
     - **Validates: Requirements 23.1**
 
-  - [ ] 5.16 Write property test for wait time calculation
+  - [x] 5.16 Write property test for wait time calculation
     - **Property 18: Wait Time Calculation**
     - **Validates: Requirements 23.2**
 

@@ -335,11 +335,17 @@ public partial class OrderPageViewModel : ViewModelBase
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var getMenuItemsHandler = scope.ServiceProvider.GetRequiredService<IQueryHandler<GetMenuItemsQuery, List<MenuItemDto>>>();
+                var menuRepository = scope.ServiceProvider.GetRequiredService<IMenuRepository>();
+                
                 var menuItems = await getMenuItemsHandler.HandleAsync(new GetMenuItemsQuery { IsActive = true });
 
                 _allProducts.Clear();
                 foreach (var item in menuItems)
                 {
+                    // Get the full menu item to check for modifiers
+                    var menuItem = await menuRepository.GetByIdAsync(item.Id);
+                    bool hasModifiers = menuItem?.ModifierGroups.Any() ?? false;
+                    
                     _allProducts.Add(new ProductViewModel
                     {
                         ProductId = item.Id,
@@ -348,7 +354,7 @@ public partial class OrderPageViewModel : ViewModelBase
                         Price = item.Price,
                         CategoryName = item.CategoryName ?? "Uncategorized",
                         SubcategoryName = string.Empty,
-                        HasModifiers = false, // TODO: Check if item has modifiers
+                        HasModifiers = hasModifiers,
                         IsAvailable = item.IsActive
                     });
                 }
@@ -449,13 +455,6 @@ public partial class OrderPageViewModel : ViewModelBase
 
         try
         {
-            // Check if product has modifiers
-            if (product.HasModifiers)
-            {
-                // TODO: Show modifier selection dialog
-                _logger.LogInformation("Product {ProductName} has modifiers, showing dialog", product.Name);
-            }
-
             // Create ticket if it doesn't exist
             if (!_ticketId.HasValue)
             {
@@ -465,19 +464,114 @@ public partial class OrderPageViewModel : ViewModelBase
             if (!_ticketId.HasValue)
             {
                 _logger.LogError("Failed to create ticket");
+                await _dialogService.ShowErrorAsync(
+                    "Error",
+                    "Failed to create ticket. Please try again.");
                 return;
             }
 
-            // Add order line
+            List<MenuModifier> selectedModifiers = new();
+
+            // Check if product has modifiers
+            if (product.HasModifiers)
+            {
+                _logger.LogInformation("Product {ProductName} has modifiers, showing dialog", product.Name);
+                
+                // Get the full menu item to check for modifiers
+                using (var scope = _serviceScopeFactory.CreateScope())
+                {
+                    var menuRepository = scope.ServiceProvider.GetRequiredService<IMenuRepository>();
+                    var menuItem = await menuRepository.GetByIdAsync(product.ProductId);
+                    
+                    if (menuItem != null && menuItem.ModifierGroups.Any())
+                    {
+                        // Create a temporary order line DTO for the modifier dialog
+                        var tempOrderLine = new OrderLineDto
+                        {
+                            Id = Guid.NewGuid(),
+                            MenuItemId = product.ProductId,
+                            MenuItemName = product.Name,
+                            Quantity = 1,
+                            UnitPrice = product.Price,
+                            TaxRate = TaxRate,
+                            Modifiers = new List<OrderLineModifierDto>()
+                        };
+
+                        // Show modifier selection dialog
+                        var modifierViewModel = new Magidesk.ViewModels.Dialogs.ModifierSelectionViewModel(
+                            menuRepository, 
+                            tempOrderLine);
+                        
+                        var dialog = new Magidesk.Views.Dialogs.ModifierSelectionDialog(modifierViewModel);
+                        
+                        // Set XamlRoot for the dialog
+                        if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
+                        {
+                            dialog.XamlRoot = element.XamlRoot;
+                        }
+                        
+                        await dialog.ShowAsync();
+
+                        // If user confirmed, get the selected modifiers
+                        if (modifierViewModel.IsConfirmed)
+                        {
+                            // Convert OrderLineModifierDto to MenuModifier entities
+                            foreach (var modDto in modifierViewModel.ResultModifiers)
+                            {
+                                if (modDto.ModifierId.HasValue)
+                                {
+                                    var modifier = await menuRepository.GetModifierByIdAsync(modDto.ModifierId.Value);
+                                    if (modifier != null)
+                                    {
+                                        selectedModifiers.Add(modifier);
+                                    }
+                                }
+                            }
+                            
+                            _logger.LogInformation("User selected {Count} modifiers for {ProductName}", 
+                                selectedModifiers.Count, product.Name);
+                        }
+                        else
+                        {
+                            // User cancelled the modifier selection
+                            _logger.LogInformation("User cancelled modifier selection for {ProductName}", product.Name);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            // Add order line with modifiers
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var addOrderLineHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<AddOrderLineCommand, AddOrderLineResult>>();
+                var menuRepository = scope.ServiceProvider.GetRequiredService<IMenuRepository>();
+                
+                // Get the menu item to get accurate pricing and details
+                var menuItem = await menuRepository.GetByIdAsync(product.ProductId);
+                if (menuItem == null)
+                {
+                    _logger.LogError("Menu item {ProductId} not found", product.ProductId);
+                    await _dialogService.ShowErrorAsync(
+                        "Error",
+                        "Product not found. Please try again.");
+                    return;
+                }
                 
                 var command = new AddOrderLineCommand
                 {
                     TicketId = _ticketId.Value,
                     MenuItemId = product.ProductId,
-                    Quantity = 1
+                    MenuItemName = product.Name,
+                    Quantity = 1,
+                    UnitPrice = menuItem.Price,
+                    TaxRate = menuItem.TaxRate,
+                    CategoryName = menuItem.Category?.Name,
+                    GroupName = menuItem.Group?.Name,
+                    AddedBy = _userService.CurrentUser != null 
+                        ? new UserId(_userService.CurrentUser.Id) 
+                        : null,
+                    Modifiers = selectedModifiers
                 };
 
                 var result = await addOrderLineHandler.HandleAsync(command);
@@ -485,13 +579,16 @@ public partial class OrderPageViewModel : ViewModelBase
                 // Reload ticket to get updated order lines
                 await LoadTicketAsync();
                 
-                _logger.LogInformation("Added product {ProductName} to ticket {TicketId}",
-                    product.Name, _ticketId);
+                _logger.LogInformation("Added product {ProductName} to ticket {TicketId} with {ModifierCount} modifiers",
+                    product.Name, _ticketId, selectedModifiers.Count);
             }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to add product {ProductName}", product.Name);
+            await _dialogService.ShowErrorAsync(
+                "Error",
+                $"Failed to add product: {ex.Message}");
         }
     }
 
@@ -536,20 +633,124 @@ public partial class OrderPageViewModel : ViewModelBase
 
     private async Task OnEditOrderItemAsync(OrderItemViewModel? item)
     {
-        if (item == null) return;
+        if (item == null || !_ticketId.HasValue) return;
 
         try
         {
-            // TODO: Show modifier selection dialog for editing
             _logger.LogInformation("Edit order item {ItemId} requested", item.OrderItemId);
-            
-            await _dialogService.ShowMessageAsync(
-                "Edit Item",
-                "Item editing feature is coming soon.\n\nThis will allow you to modify item modifiers and special instructions.");
+
+            // Get the current order line from the ticket
+            if (_ticket == null)
+            {
+                _logger.LogError("Cannot edit item: ticket not loaded");
+                return;
+            }
+
+            var orderLine = _ticket.OrderLines.FirstOrDefault(ol => ol.Id == item.OrderItemId);
+            if (orderLine == null)
+            {
+                _logger.LogError("Order line {OrderLineId} not found in ticket", item.OrderItemId);
+                return;
+            }
+
+            // Get the menu item to check for modifiers
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var menuRepository = scope.ServiceProvider.GetRequiredService<IMenuRepository>();
+                var menuItem = await menuRepository.GetByIdAsync(orderLine.MenuItemId);
+                
+                if (menuItem == null)
+                {
+                    _logger.LogError("Menu item {MenuItemId} not found", orderLine.MenuItemId);
+                    await _dialogService.ShowErrorAsync(
+                        "Error",
+                        "Product not found. Please try again.");
+                    return;
+                }
+
+                // Check if the menu item has modifiers
+                if (!menuItem.ModifierGroups.Any())
+                {
+                    _logger.LogInformation("Menu item {MenuItemName} has no modifiers to edit", menuItem.Name);
+                    await _dialogService.ShowMessageAsync(
+                        "Edit Item",
+                        "This item has no modifiers to edit.");
+                    return;
+                }
+
+                // Create order line DTO for the modifier dialog
+                var orderLineDto = new OrderLineDto
+                {
+                    Id = orderLine.Id,
+                    MenuItemId = orderLine.MenuItemId,
+                    MenuItemName = orderLine.MenuItemName,
+                    Quantity = orderLine.Quantity,
+                    UnitPrice = orderLine.UnitPrice,
+                    TaxRate = orderLine.TaxRate,
+                    Modifiers = orderLine.Modifiers.Select(m => new OrderLineModifierDto
+                    {
+                        ModifierId = m.ModifierId,
+                        Name = m.Name,
+                        ModifierType = m.ModifierType,
+                        ItemCount = m.ItemCount,
+                        UnitPrice = m.UnitPrice,
+                        TaxRate = m.TaxRate,
+                        SectionName = m.SectionName,
+                        ShouldPrintToKitchen = m.ShouldPrintToKitchen
+                    }).ToList()
+                };
+
+                // Show modifier selection dialog
+                var modifierViewModel = new Magidesk.ViewModels.Dialogs.ModifierSelectionViewModel(
+                    menuRepository, 
+                    orderLineDto);
+                
+                var dialog = new Magidesk.Views.Dialogs.ModifierSelectionDialog(modifierViewModel);
+                
+                // Set XamlRoot for the dialog
+                if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
+                {
+                    dialog.XamlRoot = element.XamlRoot;
+                }
+                
+                await dialog.ShowAsync();
+
+                // If user confirmed, update the order line with new modifiers
+                if (modifierViewModel.IsConfirmed)
+                {
+                    _logger.LogInformation("User confirmed modifier changes for order item {ItemId}", item.OrderItemId);
+
+                    // Execute ModifyOrderLineCommand with new modifiers
+                    var modifyOrderLineHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<ModifyOrderLineCommand>>();
+                    
+                    var command = new ModifyOrderLineCommand
+                    {
+                        TicketId = _ticketId.Value,
+                        OrderLineId = item.OrderItemId,
+                        Quantity = orderLine.Quantity, // Keep the same quantity
+                        Modifiers = modifierViewModel.ResultModifiers
+                    };
+
+                    await modifyOrderLineHandler.HandleAsync(command);
+
+                    // Reload ticket to get updated order lines and recalculated totals
+                    await LoadTicketAsync();
+                    
+                    _logger.LogInformation("Updated modifiers for order item {ItemId} in ticket {TicketId}",
+                        item.OrderItemId, _ticketId);
+                }
+                else
+                {
+                    _logger.LogInformation("User cancelled modifier changes for order item {ItemId}", item.OrderItemId);
+                }
+            }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to edit order item {ItemId}", item.OrderItemId);
+            await _dialogService.ShowErrorAsync(
+                "Error",
+                $"Failed to edit item: {ex.Message}");
         }
     }
 
@@ -592,11 +793,27 @@ public partial class OrderPageViewModel : ViewModelBase
         
         // Update subcategories based on selected category
         Subcategories.Clear();
-        // TODO: Load actual subcategories from repository
+        
+        // Get unique subcategories from products in the selected category
+        var subcategories = _allProducts
+            .Where(p => p.CategoryName.Equals(category.Name, StringComparison.OrdinalIgnoreCase))
+            .Select(p => p.SubcategoryName)
+            .Where(s => !string.IsNullOrWhiteSpace(s))
+            .Distinct()
+            .OrderBy(s => s);
+        
+        foreach (var subcategory in subcategories)
+        {
+            Subcategories.Add(subcategory);
+        }
+        
+        // Clear subcategory selection when category changes
+        SelectedSubcategory = null;
         
         FilterProducts();
         
-        _logger.LogDebug("Selected category: {CategoryName}", category.Name);
+        _logger.LogDebug("Selected category: {CategoryName} with {SubcategoryCount} subcategories", 
+            category.Name, Subcategories.Count);
     }
 
     private void OnSelectSubcategory(string? subcategory)
