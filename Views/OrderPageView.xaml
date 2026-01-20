@@ -105,7 +105,7 @@
 
             <!-- Time -->
             <Border Grid.Column="6"
-                    Background="{StaticResource SurfaceBrush}"
+                    Background="{StaticResource SurfaceDarkBrush}"
                     CornerRadius="4"
                     Padding="8,4"
                     VerticalAlignment="Center">
@@ -184,7 +184,7 @@
                 <TextBox Grid.Row="1"
                          Text="{x:Bind ViewModel.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          PlaceholderText="Search product or SKU..."
-                         Background="{StaticResource SurfaceBrush}"
+                         Background="{StaticResource SurfaceDarkBrush}"
                          BorderThickness="0"
                          CornerRadius="4"
                          Padding="12,8"
@@ -229,7 +229,7 @@
                     <ItemsControl ItemsSource="{x:Bind ViewModel.OrderItems, Mode=OneWay}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="viewmodels:OrderItemViewModel">
-                                <Border Background="{StaticResource SurfaceBrush}"
+                                <Border Background="{StaticResource SurfaceDarkBrush}"
                                         CornerRadius="4"
                                         Padding="12"
                                         Margin="0,0,0,8">
@@ -354,7 +354,7 @@
                         </Grid>
 
                         <!-- Total -->
-                        <Grid Grid.Row="2" Margin="0,12,0,0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0" Padding="0,12,0,0">
+                        <Grid Grid.Row="2" Margin="0,12,0,0" BorderBrush="{StaticResource BorderDefaultBrush}" BorderThickness="0,1,0,0" Padding="0,12,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
@@ -387,7 +387,7 @@
                             Margin="0,0,4,0">
                         <StackPanel Spacing="4">
                             <FontIcon Glyph="&#xF0E7;" FontSize="16"/>
-                            <TextBlock Text="SPLIT" Style="{StaticResource TinyUppercaseTextStyle}"/>
+                            <TextBlock Text="SPLIT" Style="{StaticResource XSmallUppercaseTextStyle}"/>
                         </StackPanel>
                     </Button>
 
@@ -398,7 +398,7 @@
                             Margin="4,0,4,0">
                         <StackPanel Spacing="4">
                             <FontIcon Glyph="&#xE8A0;" FontSize="16"/>
-                            <TextBlock Text="MERGE" Style="{StaticResource TinyUppercaseTextStyle}"/>
+                            <TextBlock Text="MERGE" Style="{StaticResource XSmallUppercaseTextStyle}"/>
                         </StackPanel>
                     </Button>
 
@@ -409,7 +409,7 @@
                             Margin="4,0,4,0">
                         <StackPanel Spacing="4">
                             <FontIcon Glyph="&#xE70B;" FontSize="16"/>
-                            <TextBlock Text="NOTE" Style="{StaticResource TinyUppercaseTextStyle}"/>
+                            <TextBlock Text="NOTE" Style="{StaticResource XSmallUppercaseTextStyle}"/>
                         </StackPanel>
                     </Button>
 
@@ -420,7 +420,7 @@
                             Margin="4,0,0,0">
                         <StackPanel Spacing="4">
                             <FontIcon Glyph="&#xE749;" FontSize="16"/>
-                            <TextBlock Text="PRINT" Style="{StaticResource TinyUppercaseTextStyle}"/>
+                            <TextBlock Text="PRINT" Style="{StaticResource XSmallUppercaseTextStyle}"/>
                         </StackPanel>
                     </Button>
                 </Grid>
@@ -486,7 +486,7 @@
                             <DataTemplate x:DataType="viewmodels:ProductCategoryViewModel">
                                 <Button Command="{Binding DataContext.SelectCategoryCommand, ElementName=Page}"
                                         CommandParameter="{x:Bind}"
-                                        Background="{StaticResource SurfaceBrush}"
+                                        Background="{StaticResource SurfaceDarkBrush}"
                                         BorderThickness="0"
                                         CornerRadius="8"
                                         Padding="16,12"
@@ -524,7 +524,7 @@
                             <DataTemplate x:DataType="x:String">
                                 <Button Command="{Binding DataContext.SelectSubcategoryCommand, ElementName=Page}"
                                         CommandParameter="{x:Bind}"
-                                        Background="{StaticResource SurfaceBrush}"
+                                        Background="{StaticResource SurfaceDarkBrush}"
                                         BorderBrush="{StaticResource PrimaryBrush}"
                                         BorderThickness="1"
                                         CornerRadius="16"
@@ -670,7 +670,7 @@
                         Height="24">
                     <StackPanel Orientation="Horizontal" Spacing="6">
                         <FontIcon Glyph="&#xE768;" FontSize="12"/>
-                        <TextBlock Text="START SESSION" Style="{StaticResource TinyUppercaseTextStyle}"/>
+                        <TextBlock Text="START SESSION" Style="{StaticResource XSmallUppercaseTextStyle}"/>
                     </StackPanel>
                 </Button>
 
@@ -681,7 +681,7 @@
                         Height="24">
                     <StackPanel Orientation="Horizontal" Spacing="6">
                         <FontIcon Glyph="&#xE71A;" FontSize="12"/>
-                        <TextBlock Text="END SESSION" Style="{StaticResource TinyUppercaseTextStyle}"/>
+                        <TextBlock Text="END SESSION" Style="{StaticResource XSmallUppercaseTextStyle}"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -709,7 +709,7 @@
                         </Button.Resources>
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <FontIcon Glyph="&#xE8A1;" FontSize="12"/>
-                            <TextBlock Text="REPRINT" Style="{StaticResource TinyUppercaseTextStyle}"/>
+                            <TextBlock Text="REPRINT" Style="{StaticResource XSmallUppercaseTextStyle}"/>
                         </StackPanel>
                     </Button>
 
@@ -723,7 +723,7 @@
                         </Button.Resources>
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <FontIcon Glyph="&#xE711;" FontSize="12"/>
-                            <TextBlock Text="VOID" Style="{StaticResource TinyUppercaseTextStyle}"/>
+                            <TextBlock Text="VOID" Style="{StaticResource XSmallUppercaseTextStyle}"/>
                         </StackPanel>
                     </Button>
 
@@ -737,7 +737,7 @@
                         </Button.Resources>
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <FontIcon Glyph="&#xE8C8;" FontSize="12"/>
-                            <TextBlock Text="DISCOUNT" Style="{StaticResource TinyUppercaseTextStyle}"/>
+                            <TextBlock Text="DISCOUNT" Style="{StaticResource XSmallUppercaseTextStyle}"/>
                         </StackPanel>
                     </Button>
 
@@ -751,7 +751,7 @@
                         </Button.Resources>
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <FontIcon Glyph="&#xE8EA;" FontSize="12"/>
-                            <TextBlock Text="FIRE TICKET" Style="{StaticResource TinyUppercaseTextStyle}"/>
+                            <TextBlock Text="FIRE TICKET" Style="{StaticResource XSmallUppercaseTextStyle}"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
