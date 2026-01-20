@@ -403,24 +403,21 @@
 
                                 <!-- Row 1: $1, $5, $10 -->
                                 <Button Grid.Row="0" Grid.Column="0"
-                                        Command="{x:Bind ViewModel.QuickCashCommand}"
-                                        CommandParameter="1"
+                                        Click="QuickCash1_Click"
                                         Style="{StaticResource QuickCashButtonStyle}"
                                         Margin="0,0,4,4"
                                         AutomationProperties.Name="One Dollar">
                                     <TextBlock Text="$1"/>
                                 </Button>
                                 <Button Grid.Row="0" Grid.Column="1"
-                                        Command="{x:Bind ViewModel.QuickCashCommand}"
-                                        CommandParameter="5"
+                                        Click="QuickCash5_Click"
                                         Style="{StaticResource QuickCashButtonStyle}"
                                         Margin="4,0,4,4"
                                         AutomationProperties.Name="Five Dollars">
                                     <TextBlock Text="$5"/>
                                 </Button>
                                 <Button Grid.Row="0" Grid.Column="2"
-                                        Command="{x:Bind ViewModel.QuickCashCommand}"
-                                        CommandParameter="10"
+                                        Click="QuickCash10_Click"
                                         Style="{StaticResource QuickCashButtonStyle}"
                                         Margin="4,0,0,4"
                                         AutomationProperties.Name="Ten Dollars">
@@ -429,24 +426,21 @@
 
                                 <!-- Row 2: $20, $50, $100 -->
                                 <Button Grid.Row="1" Grid.Column="0"
-                                        Command="{x:Bind ViewModel.QuickCashCommand}"
-                                        CommandParameter="20"
+                                        Click="QuickCash20_Click"
                                         Style="{StaticResource QuickCashButtonStyle}"
                                         Margin="0,4,4,0"
                                         AutomationProperties.Name="Twenty Dollars">
                                     <TextBlock Text="$20"/>
                                 </Button>
                                 <Button Grid.Row="1" Grid.Column="1"
-                                        Command="{x:Bind ViewModel.QuickCashCommand}"
-                                        CommandParameter="50"
+                                        Click="QuickCash50_Click"
                                         Style="{StaticResource QuickCashButtonStyle}"
                                         Margin="4,4,4,0"
                                         AutomationProperties.Name="Fifty Dollars">
                                     <TextBlock Text="$50"/>
                                 </Button>
                                 <Button Grid.Row="1" Grid.Column="2"
-                                        Command="{x:Bind ViewModel.QuickCashCommand}"
-                                        CommandParameter="100"
+                                        Click="QuickCash100_Click"
                                         Style="{StaticResource QuickCashButtonStyle}"
                                         Margin="4,4,0,0"
                                         AutomationProperties.Name="One Hundred Dollars">
