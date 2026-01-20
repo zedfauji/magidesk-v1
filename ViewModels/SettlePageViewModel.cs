@@ -78,6 +78,8 @@ public partial class SettlePageViewModel : ViewModelBase
         ToggleTaxExemptCommand = new AsyncRelayCommand(OnToggleTaxExemptAsync);
         CancelSettlementCommand = new RelayCommand(OnCancelSettlement);
         NavigateBackCommand = new RelayCommand(OnNavigateBack);
+        
+        _logger.LogInformation("SettlePageViewModel constructor - All commands initialized");
     }
 
     #region Properties
@@ -193,8 +195,14 @@ public partial class SettlePageViewModel : ViewModelBase
 
     private void OnKeypadDigit(string? digit)
     {
+        System.Diagnostics.Debug.WriteLine($"OnKeypadDigit called with digit: {digit}");
+        _logger.LogInformation("OnKeypadDigit called with digit: {Digit}", digit);
+        
         if (string.IsNullOrEmpty(digit))
+        {
+            System.Diagnostics.Debug.WriteLine("OnKeypadDigit: digit is null or empty, returning");
             return;
+        }
 
         // Handle decimal point
         if (digit == ".")
@@ -263,8 +271,14 @@ public partial class SettlePageViewModel : ViewModelBase
 
     private void OnQuickCash(decimal amount)
     {
+        System.Diagnostics.Debug.WriteLine($"OnQuickCash called with amount: {amount}");
+        _logger.LogInformation("OnQuickCash called with amount: {Amount}", amount);
+        
         if (amount <= 0)
+        {
+            System.Diagnostics.Debug.WriteLine("OnQuickCash: amount is zero or negative, returning");
             return;
+        }
 
         _tenderAmount = amount;
         _tenderAmountDisplay = FormatCurrency(amount);
