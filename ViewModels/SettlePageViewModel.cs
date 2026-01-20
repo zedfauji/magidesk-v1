@@ -5,8 +5,13 @@ using Magidesk.Application.DTOs;
 using Magidesk.Application.Interfaces;
 using Magidesk.Application.Queries;
 using Magidesk.Domain.Enumerations;
+using Magidesk.Domain.Services;
 using Magidesk.Domain.ValueObjects;
 using Magidesk.Presentation.Services;
+using Magidesk.Presentation.ViewModels.Dialogs;
+using Magidesk.Presentation.Views.Dialogs;
+using Magidesk.ViewModels;
+using Magidesk.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
@@ -529,34 +534,49 @@ public partial class SettlePageViewModel : ViewModelBase
             
             using (var scope = _serviceScopeFactory.CreateScope())
             {
-                var ticketRepository = scope.ServiceProvider.GetRequiredService<ITicketRepository>();
+                var gratuityService = scope.ServiceProvider.GetRequiredService<IGratuityService>();
+                var applyGratuityHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<ApplyGratuityCommand, ApplyGratuityResult>>();
+                var dialogService = scope.ServiceProvider.GetRequiredService<IDialogService>();
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<GratuitySelectionViewModel>>();
                 var userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
                 
-                // Get servers for the ticket (users who added items)
-                var serverIds = _ticket.OrderLines
-                    .Where(ol => ol.AddedBy != null)
-                    .Select(ol => ol.AddedBy!.Value)
-                    .Distinct()
-                    .ToList();
+                // Get available servers (current user and ticket creator)
+                var availableServers = new ObservableCollection<ServerItem>();
                 
-                var servers = new List<Domain.Entities.User>();
-                foreach (var serverId in serverIds)
+                // Add current user
+                if (_userService.CurrentUser != null)
                 {
-                    var server = await userRepository.GetByIdAsync(serverId);
-                    if (server != null)
+                    availableServers.Add(new ServerItem(
+                        new UserId(_userService.CurrentUser.Id),
+                        _userService.CurrentUser.FullName));
+                }
+                
+                // Add ticket creator if different
+                if (_ticket.CreatedBy != _userService.CurrentUser?.Id)
+                {
+                    var creator = await userRepository.GetByIdAsync(_ticket.CreatedBy);
+                    if (creator != null)
                     {
-                        servers.Add(server);
+                        availableServers.Add(new ServerItem(
+                            new UserId(creator.Id),
+                            $"{creator.FirstName} {creator.LastName}"));
                     }
                 }
                 
                 // Create ViewModel for gratuity selection dialog
-                var viewModel = new Magidesk.ViewModels.Dialogs.GratuitySelectionViewModel(
-                    ticketRepository,
-                    _ticket,
-                    servers);
+                var viewModel = new GratuitySelectionViewModel(
+                    gratuityService,
+                    applyGratuityHandler,
+                    dialogService,
+                    logger,
+                    _ticket.Id,
+                    $"#{_ticket.TicketNumber}",
+                    new Money(_ticket.SubtotalAmount, "USD"),
+                    new UserId(_userService.CurrentUser!.Id),
+                    availableServers);
                 
                 // Create Dialog
-                var dialog = new Magidesk.Views.Dialogs.GratuitySelectionDialog(viewModel);
+                var dialog = new GratuitySelectionDialog(viewModel);
                 
                 // Set XamlRoot for the dialog
                 if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
@@ -566,35 +586,8 @@ public partial class SettlePageViewModel : ViewModelBase
                 
                 await dialog.ShowAsync();
 
-                // If user confirmed gratuity
-                if (viewModel.IsConfirmed)
-                {
-                    var applyGratuityHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<ApplyGratuityCommand, ApplyGratuityResult>>();
-                    
-                    var command = new ApplyGratuityCommand
-                    {
-                        TicketId = _ticketId,
-                        GratuityAmount = new Money(viewModel.GratuityAmount, "USD"),
-                        AppliedBy = new UserId(_userService.CurrentUser!.Id),
-                        ServerAllocations = viewModel.ServerAllocations
-                            .Select(sa => new ServerGratuityAllocation(
-                                new UserId(sa.ServerId),
-                                new Money(sa.Amount, "USD")))
-                            .ToList()
-                    };
-                    
-                    var result = await applyGratuityHandler.HandleAsync(command);
-                    
-                    _logger.LogInformation("Gratuity {Amount} applied to ticket {TicketId}", 
-                        viewModel.GratuityAmount, _ticketId);
-                    
-                    // Reload ticket to get updated totals
-                    await LoadTicketAsync();
-                    
-                    await _dialogService.ShowMessageAsync(
-                        "Tip Added",
-                        $"Gratuity of {viewModel.GratuityAmount:C2} has been added to the ticket.");
-                }
+                // Reload ticket to get updated totals (gratuity is applied within the dialog)
+                await LoadTicketAsync();
             }
         }
         catch (Exception ex)
@@ -650,12 +643,12 @@ public partial class SettlePageViewModel : ViewModelBase
                 var ticketRepository = scope.ServiceProvider.GetRequiredService<ITicketRepository>();
                 
                 // Create ViewModel for split payment dialog
-                var viewModel = new Magidesk.ViewModels.Dialogs.SplitPaymentViewModel(
+                var viewModel = new SplitPaymentViewModel(
                     ticketRepository,
                     _ticket);
                 
                 // Create Dialog
-                var dialog = new Magidesk.Views.Dialogs.SplitPaymentDialog(viewModel);
+                var dialog = new SplitPaymentDialog(viewModel);
                 
                 // Set XamlRoot for the dialog
                 if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
@@ -666,22 +659,21 @@ public partial class SettlePageViewModel : ViewModelBase
                 await dialog.ShowAsync();
 
                 // If user confirmed split payment
-                if (viewModel.IsConfirmed)
+                if (viewModel.IsConfirmed && viewModel.SplitPayments.Count > 0)
                 {
                     var processSplitPaymentHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<ProcessSplitPaymentCommand, ProcessSplitPaymentResult>>();
                     
-                    var command = new ProcessSplitPaymentCommand
-                    {
-                        TicketId = _ticketId,
-                        SplitPayments = viewModel.SplitPayments
-                            .Select(sp => new SplitPaymentInfo
-                            {
-                                Amount = new Money(sp.Amount, "USD"),
-                                PaymentType = sp.PaymentType
-                            })
-                            .ToList(),
-                        ProcessedBy = new UserId(_userService.CurrentUser!.Id)
-                    };
+                    // Convert to SplitPaymentEntry list
+                    var payments = viewModel.SplitPayments
+                        .Select(sp => new SplitPaymentEntry(
+                            sp.PaymentType,
+                            new Money(sp.Amount, "USD")))
+                        .ToList();
+                    
+                    var command = new ProcessSplitPaymentCommand(
+                        _ticketId,
+                        payments,
+                        new UserId(_userService.CurrentUser!.Id));
                     
                     var result = await processSplitPaymentHandler.HandleAsync(command);
                     
@@ -746,12 +738,12 @@ public partial class SettlePageViewModel : ViewModelBase
                 }
                 
                 // Create ViewModel for discount selection dialog
-                var viewModel = new Magidesk.ViewModels.Dialogs.DiscountSelectionViewModel(
+                var viewModel = new DiscountSelectionViewModel(
                     discountRepository,
                     ticket);
                 
                 // Create Dialog
-                var dialog = new Magidesk.Views.Dialogs.DiscountSelectionDialog(viewModel);
+                var dialog = new DiscountSelectionDialog(viewModel);
                 
                 // Set XamlRoot for the dialog
                 if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
@@ -830,10 +822,10 @@ public partial class SettlePageViewModel : ViewModelBase
                 }
                 else
                 {
-                    _logger.LogError("Failed to print receipt: {Error}", result.ErrorMessage);
+                    _logger.LogError("Failed to print receipt for ticket {TicketId}", _ticketId);
                     await _dialogService.ShowErrorAsync(
                         "Print Error",
-                        $"Failed to print receipt:\n\n{result.ErrorMessage}");
+                        "Failed to print receipt. Please check the printer and try again.");
                 }
             }
         }

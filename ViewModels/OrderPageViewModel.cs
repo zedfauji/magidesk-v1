@@ -562,10 +562,10 @@ public partial class OrderPageViewModel : ViewModelBase
                 var tableRepository = scope.ServiceProvider.GetRequiredService<ITableRepository>();
                 
                 // Create ViewModel for table selection dialog
-                var viewModel = new Magidesk.ViewModels.Dialogs.TableSelectionViewModel(tableRepository);
+                var viewModel = new Magidesk.ViewModels.Dialogs.TableSelectionViewModel();
                 
                 // Create Dialog
-                var dialog = new Magidesk.Views.Dialogs.TableSelectionDialog(viewModel);
+                var dialog = new Magidesk.Views.Dialogs.TableSelectionDialog();
                 
                 // Set XamlRoot for the dialog
                 if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
@@ -1167,9 +1167,12 @@ public partial class OrderPageViewModel : ViewModelBase
                     
                     var command = new SplitTicketCommand
                     {
-                        SourceTicketId = _ticketId.Value,
-                        OrderLineIds = orderLinesToMove,
-                        SplitBy = new UserId(_userService.CurrentUser!.Id)
+                        OriginalTicketId = _ticketId.Value,
+                        OrderLineIdsToSplit = orderLinesToMove,
+                        SplitBy = new UserId(_userService.CurrentUser!.Id),
+                        TerminalId = _terminalContext.TerminalId!.Value,
+                        ShiftId = Guid.Empty, // TODO: Get actual shift ID
+                        OrderTypeId = Guid.Empty // TODO: Get actual order type ID
                     };
                     
                     var result = await splitTicketHandler.HandleAsync(command);
@@ -1383,10 +1386,11 @@ public partial class OrderPageViewModel : ViewModelBase
                 }
                 else
                 {
-                    _logger.LogError("Failed to print order: {Error}", result.ErrorMessage);
+                    var errorMsg = result.Errors.Any() ? string.Join("\n", result.Errors) : result.Message;
+                    _logger.LogError("Failed to print order: {Error}", errorMsg);
                     await _dialogService.ShowErrorAsync(
                         "Print Error",
-                        $"Failed to print order:\n\n{result.ErrorMessage}");
+                        $"Failed to print order:\n\n{errorMsg}");
                 }
             }
         }
@@ -1511,7 +1515,8 @@ public partial class OrderPageViewModel : ViewModelBase
                 // Prompt for starting cash amount
                 var cashEntryDialog = new Magidesk.Views.CashEntryDialog
                 {
-                    Title = "Start Session - Opening Cash"
+                    Title = "Start Session - Opening Cash",
+                    CashAmount = 0m
                 };
                 
                 // Set XamlRoot for the dialog
@@ -1531,14 +1536,15 @@ public partial class OrderPageViewModel : ViewModelBase
                     var command = new OpenCashSessionCommand
                     {
                         TerminalId = _terminalContext.TerminalId.Value,
-                        OpenedBy = new UserId(_userService.CurrentUser.Id),
-                        StartingCash = new Money(openingCash, "USD")
+                        UserId = new UserId(_userService.CurrentUser.Id),
+                        OpeningBalance = new Money(openingCash, "USD"),
+                        ShiftId = Guid.Empty // TODO: Get actual shift ID
                     };
                     
                     var result = await openSessionHandler.HandleAsync(command);
                     
                     _logger.LogInformation("Session {SessionId} started with opening cash {OpeningCash}", 
-                        result.SessionId, openingCash);
+                        result.CashSessionId, openingCash);
                     
                     await _dialogService.ShowMessageAsync(
                         "Session Started",
@@ -1607,7 +1613,8 @@ public partial class OrderPageViewModel : ViewModelBase
                 // Prompt for ending cash amount
                 var cashEntryDialog = new Magidesk.Views.CashEntryDialog
                 {
-                    Title = "End Session - Closing Cash"
+                    Title = "End Session - Closing Cash",
+                    CashAmount = 0m
                 };
                 
                 // Set XamlRoot for the dialog
@@ -1626,9 +1633,9 @@ public partial class OrderPageViewModel : ViewModelBase
                     
                     var command = new CloseCashSessionCommand
                     {
-                        SessionId = activeSession.Id,
+                        CashSessionId = activeSession.Id,
                         ClosedBy = new UserId(_userService.CurrentUser.Id),
-                        EndingCash = new Money(closingCash, "USD")
+                        ActualCash = new Money(closingCash, "USD")
                     };
                     
                     var result = await closeSessionHandler.HandleAsync(command);
@@ -1690,10 +1697,10 @@ public partial class OrderPageViewModel : ViewModelBase
                 }
                 else
                 {
-                    _logger.LogError("Failed to reprint receipt: {Error}", result.ErrorMessage);
+                    _logger.LogError("Failed to reprint receipt");
                     await _dialogService.ShowErrorAsync(
                         "Print Error",
-                        $"Failed to reprint receipt:\n\n{result.ErrorMessage}");
+                        "Failed to reprint receipt. Please check the printer and try again.");
                 }
             }
         }
@@ -1736,13 +1743,13 @@ public partial class OrderPageViewModel : ViewModelBase
                 }
                 
                 // Create ViewModel for void ticket dialog
-                var viewModel = new Magidesk.ViewModels.VoidTicketViewModel(
-                    ticketRepository,
-                    scope.ServiceProvider.GetRequiredService<IUserRepository>(),
-                    ticket);
+                var viewModel = new Magidesk.ViewModels.VoidTicketViewModel(ticket);
                 
                 // Create Dialog
-                var dialog = new Magidesk.Views.VoidTicketDialog(viewModel);
+                var dialog = new Magidesk.Views.VoidTicketDialog()
+                {
+                    DataContext = viewModel
+                };
                 
                 // Set XamlRoot for the dialog
                 if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
@@ -1760,11 +1767,11 @@ public partial class OrderPageViewModel : ViewModelBase
                     var command = new VoidTicketCommand
                     {
                         TicketId = _ticketId.Value,
-                        VoidReason = viewModel.VoidReason,
+                        Reason = viewModel.VoidReason ?? "No reason provided",
                         VoidedBy = new UserId(_userService.CurrentUser!.Id),
                         AuthorizedBy = viewModel.ManagerId.HasValue 
                             ? new UserId(viewModel.ManagerId.Value) 
-                            : null
+                            : new UserId(_userService.CurrentUser!.Id)
                     };
                     
                     await voidTicketHandler.HandleAsync(command);
@@ -1826,12 +1833,13 @@ public partial class OrderPageViewModel : ViewModelBase
                 }
                 
                 // Create ViewModel for discount selection dialog
-                var viewModel = new Magidesk.ViewModels.Dialogs.DiscountSelectionViewModel(
-                    discountRepository,
-                    ticket);
+                var viewModel = new Magidesk.ViewModels.Dialogs.DiscountSelectionViewModel(ticket);
                 
                 // Create Dialog
-                var dialog = new Magidesk.Views.Dialogs.DiscountSelectionDialog(viewModel);
+                var dialog = new Magidesk.Views.Dialogs.DiscountSelectionDialog()
+                {
+                    DataContext = viewModel
+                };
                 
                 // Set XamlRoot for the dialog
                 if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
@@ -1922,10 +1930,11 @@ public partial class OrderPageViewModel : ViewModelBase
                 }
                 else
                 {
-                    _logger.LogError("Failed to fire ticket: {Error}", result.ErrorMessage);
+                    var errorMsg = result.Errors.Any() ? string.Join("\n", result.Errors) : result.Message;
+                    _logger.LogError("Failed to fire ticket: {Error}", errorMsg);
                     await _dialogService.ShowErrorAsync(
                         "Kitchen Print Error",
-                        $"Failed to send order to kitchen:\n\n{result.ErrorMessage}");
+                        $"Failed to send order to kitchen:\n\n{errorMsg}");
                 }
             }
         }
