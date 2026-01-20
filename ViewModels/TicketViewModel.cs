@@ -188,7 +188,7 @@ public sealed class TicketViewModel : ViewModelBase
             return;
         }
 
-        _navigationService.Navigate(typeof(Magidesk.Presentation.Views.SettlePage), Ticket.Id);
+        _navigationService.Navigate(typeof(Magidesk.Presentation.Views.SettlePageView), Ticket.Id);
     }
 
     private async Task SplitTicketAsync()

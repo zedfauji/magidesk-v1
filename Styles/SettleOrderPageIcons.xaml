@@ -1,0 +1,139 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Icon Resources for Settle and Order Page Redesign -->
+    <!-- Using Segoe MDL2 Assets (built-in Windows font icons) -->
+    
+    <!-- Icon Glyphs (Unicode values for Segoe MDL2 Assets) -->
+    
+    <!-- Navigation Icons -->
+    <x:String x:Key="IconBack">&#xE72B;</x:String>
+    <x:String x:Key="IconMenu">&#xE700;</x:String>
+    <x:String x:Key="IconSettings">&#xE713;</x:String>
+    <x:String x:Key="IconExpand">&#xE70D;</x:String>
+    <x:String x:Key="IconChevronRight">&#xE76C;</x:String>
+    
+    <!-- Payment Icons -->
+    <x:String x:Key="IconCash">&#xE8C7;</x:String>
+    <x:String x:Key="IconCreditCard">&#xE8C7;</x:String>
+    <x:String x:Key="IconGiftCard">&#xE8C7;</x:String>
+    <x:String x:Key="IconWallet">&#xE8C7;</x:String>
+    
+    <!-- Action Icons -->
+    <x:String x:Key="IconAdd">&#xE710;</x:String>
+    <x:String x:Key="IconAddCircle">&#xE710;</x:String>
+    <x:String x:Key="IconRemove">&#xE738;</x:String>
+    <x:String x:Key="IconEdit">&#xE70F;</x:String>
+    <x:String x:Key="IconDelete">&#xE74D;</x:String>
+    <x:String x:Key="IconCancel">&#xE711;</x:String>
+    <x:String x:Key="IconCheck">&#xE73E;</x:String>
+    
+    <!-- Order Icons -->
+    <x:String x:Key="IconPause">&#xE769;</x:String>
+    <x:String x:Key="IconSplit">&#xE8EF;</x:String>
+    <x:String x:Key="IconMerge">&#xE8EB;</x:String>
+    <x:String x:Key="IconNote">&#xE70B;</x:String>
+    <x:String x:Key="IconPrint">&#xE749;</x:String>
+    <x:String x:Key="IconReceipt">&#xE8CB;</x:String>
+    
+    <!-- Table Icons -->
+    <x:String x:Key="IconTable">&#xE7C4;</x:String>
+    <x:String x:Key="IconPerson">&#xE77B;</x:String>
+    <x:String x:Key="IconPersonAdd">&#xE8FA;</x:String>
+    <x:String x:Key="IconHistory">&#xE81C;</x:String>
+    
+    <!-- Search Icon -->
+    <x:String x:Key="IconSearch">&#xE721;</x:String>
+    
+    <!-- Discount/Tag Icon -->
+    <x:String x:Key="IconDiscount">&#xE7BA;</x:String>
+    <x:String x:Key="IconTag">&#xE8EC;</x:String>
+    
+    <!-- Tip/Smile Icon -->
+    <x:String x:Key="IconSmile">&#xE76E;</x:String>
+    <x:String x:Key="IconTip">&#xE1CB;</x:String>
+    
+    <!-- Time Icon -->
+    <x:String x:Key="IconClock">&#xE823;</x:String>
+    
+    <!-- Status Icons -->
+    <x:String x:Key="IconOnline">&#xE8C3;</x:String>
+    <x:String x:Key="IconOffline">&#xE8D3;</x:String>
+    
+    <!-- Category Icons (for product categories) -->
+    <x:String x:Key="IconFood">&#xE7C4;</x:String>
+    <x:String x:Key="IconDrinks">&#xE7C5;</x:String>
+    <x:String x:Key="IconDesserts">&#xE7C6;</x:String>
+    <x:String x:Key="IconSides">&#xE7C4;</x:String>
+    <x:String x:Key="IconPopular">&#xE734;</x:String>
+    <x:String x:Key="IconRetail">&#xE719;</x:String>
+    
+    <!-- Advanced Operations Icons -->
+    <x:String x:Key="IconReprint">&#xE8CB;</x:String>
+    <x:String x:Key="IconVoid">&#xE711;</x:String>
+    <x:String x:Key="IconFire">&#xE7C4;</x:String>
+    
+    <!-- Session Icons -->
+    <x:String x:Key="IconStart">&#xE768;</x:String>
+    <x:String x:Key="IconEnd">&#xE71A;</x:String>
+    
+    <!-- Icon Styles -->
+    
+    <!-- Small Icon Style -->
+    <Style x:Key="SmallIconStyle" TargetType="FontIcon">
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+    </Style>
+    
+    <!-- Medium Icon Style -->
+    <Style x:Key="MediumIconStyle" TargetType="FontIcon">
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+    </Style>
+    
+    <!-- Large Icon Style -->
+    <Style x:Key="LargeIconStyle" TargetType="FontIcon">
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+    </Style>
+    
+    <!-- Extra Large Icon Style -->
+    <Style x:Key="XLargeIconStyle" TargetType="FontIcon">
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="FontSize" Value="32"/>
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+    </Style>
+    
+    <!-- Secondary Icon Style (Gray) -->
+    <Style x:Key="SecondaryIconStyle" TargetType="FontIcon">
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
+    </Style>
+    
+    <!-- Primary Icon Style (Blue) -->
+    <Style x:Key="PrimaryIconStyle" TargetType="FontIcon">
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryBlueBrush}"/>
+    </Style>
+    
+    <!-- Success Icon Style (Green) -->
+    <Style x:Key="SuccessIconStyle" TargetType="FontIcon">
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Foreground" Value="{StaticResource AccentGreenBrush}"/>
+    </Style>
+    
+    <!-- Error Icon Style (Red) -->
+    <Style x:Key="ErrorIconStyle" TargetType="FontIcon">
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Foreground" Value="{StaticResource AccentRedBrush}"/>
+    </Style>
+    
+</ResourceDictionary>

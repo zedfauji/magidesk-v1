@@ -1138,7 +1138,7 @@ public partial class OrderEntryViewModel : ViewModelBase
     private void Settle()
     {
         if (Ticket == null) return;
-        _navigationService.Navigate(typeof(Magidesk.Presentation.Views.SettlePage), Ticket.Id);
+        _navigationService.Navigate(typeof(Magidesk.Presentation.Views.SettlePageView), Ticket.Id);
     }
 
     private async Task CreateNewTicketAsync()
@@ -1514,7 +1514,7 @@ public partial class OrderEntryViewModel : ViewModelBase
         if (Ticket == null) return;
         
         // Navigate to Settle View with TicketId
-        _navigationService.Navigate(typeof(Magidesk.Presentation.Views.SettlePage), Ticket.Id);
+        _navigationService.Navigate(typeof(Magidesk.Presentation.Views.SettlePageView), Ticket.Id);
     }
 
     private async Task QuickPayAsync()

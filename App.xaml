@@ -17,6 +17,12 @@
                 <ResourceDictionary Source="Styles/AccessibilityStyles.xaml"/>
                 <ResourceDictionary Source="Styles/ConsistentSpacing.xaml"/>
                 <ResourceDictionary Source="Styles/TicketStyles.xaml"/>
+                <!-- Settle and Order Page Redesign Styles -->
+                <ResourceDictionary Source="Styles/SettleOrderPageColors.xaml"/>
+                <ResourceDictionary Source="Styles/SettleOrderPageTypography.xaml"/>
+                <ResourceDictionary Source="Styles/SettleOrderPageButtons.xaml"/>
+                <ResourceDictionary Source="Styles/SettleOrderPageIcons.xaml"/>
+                <ResourceDictionary Source="Styles/SettleOrderPageAnimations.xaml"/>
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
             <!-- Other app resources here -->

@@ -120,6 +120,7 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<Magidesk.Presentation.ViewModels.VendorManagementViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.PurchaseOrderViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.SettleViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.SettlePageViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.SystemConfigViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.KitchenDisplayViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.LoginViewModel>();

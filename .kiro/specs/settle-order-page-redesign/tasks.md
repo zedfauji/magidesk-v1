@@ -12,7 +12,7 @@ The implementation will proceed in phases:
 
 ## Tasks
 
-- [ ] 1. Set up shared resources and styling infrastructure
+- [x] 1. Set up shared resources and styling infrastructure
   - Create color palette resource dictionary with WinUI-inspired colors
   - Create typography styles for Inter font family
   - Create button styles (primary, secondary, payment method, quick action)
@@ -20,8 +20,8 @@ The implementation will proceed in phases:
   - Set up animation resources (scale, fade, slide transitions)
   - _Requirements: 24.1, 24.2, 24.5, 27.1, 27.5_
 
-- [ ] 2. Implement SettlePageViewModel
-  - [ ] 2.1 Create SettlePageViewModel class with properties and commands
+- [x] 2. Implement SettlePageViewModel
+  - [x] 2.1 Create SettlePageViewModel class with properties and commands
     - Implement ticket information properties (TicketNumber, TableNumber)
     - Implement financial summary properties (TotalAmount, TaxAmount, PaidAmount, BalanceDue)
     - Implement tender entry properties (TenderAmountDisplay, _tenderAmount)
@@ -31,44 +31,44 @@ The implementation will proceed in phases:
     - Implement all ICommand properties
     - _Requirements: 1.1, 2.1, 2.2, 2.3, 2.4, 3.7, 3.8, 4.1, 5.1, 5.2, 5.3, 7.1_
 
-  - [ ] 2.2 Write property test for tender amount building
+  - [x] 2.2 Write property test for tender amount building
     - **Property 1: Tender Amount Building**
     - **Validates: Requirements 3.5**
 
-  - [ ] 2.3 Implement keypad digit command (KeypadDigitCommand)
+  - [x] 2.3 Implement keypad digit command (KeypadDigitCommand)
     - Handle digit button presses (0-9)
     - Handle decimal point button press
     - Append digit to tender amount string
     - Update TenderAmountDisplay property
     - _Requirements: 3.5_
 
-  - [ ] 2.4 Write property test for tender amount clearing
+  - [x] 2.4 Write property test for tender amount clearing
     - **Property 2: Tender Amount Clearing**
     - **Validates: Requirements 3.6**
 
-  - [ ] 2.5 Implement clear tender command (ClearTenderCommand)
+  - [x] 2.5 Implement clear tender command (ClearTenderCommand)
     - Reset tender amount to $0.00
     - Update TenderAmountDisplay property
     - _Requirements: 3.6, 3.10_
 
-  - [ ] 2.6 Write property test for quick cash selection
+  - [x] 2.6 Write property test for quick cash selection
     - **Property 3: Quick Cash Selection**
     - **Validates: Requirements 4.2**
 
-  - [ ] 2.7 Implement quick cash command (QuickCashCommand)
+  - [x] 2.7 Implement quick cash command (QuickCashCommand)
     - Set tender amount to selected denomination
     - Update TenderAmountDisplay property
     - _Requirements: 4.2_
 
-  - [ ] 2.8 Write property test for payment processing
+  - [x] 2.8 Write property test for payment processing
     - **Property 4: Payment Processing with Tender Amount**
     - **Validates: Requirements 5.4**
 
-  - [ ] 2.9 Write property test for payment balance calculation
+  - [x] 2.9 Write property test for payment balance calculation
     - **Property 5: Payment Balance Calculation**
     - **Validates: Requirements 2.7**
 
-  - [ ] 2.10 Implement process payment command (ProcessPaymentCommand)
+  - [x] 2.10 Implement process payment command (ProcessPaymentCommand)
     - Validate tender amount > 0
     - Execute ProcessPaymentCommand with amount and method
     - Update PaidAmount and BalanceDue
@@ -78,25 +78,25 @@ The implementation will proceed in phases:
     - Handle payment errors with user feedback
     - _Requirements: 5.4, 2.7_
 
-  - [ ] 2.11 Write property test for currency formatting
+  - [x] 2.11 Write property test for currency formatting
     - **Property 6: Currency Formatting**
     - **Validates: Requirements 2.8**
 
-  - [ ] 2.12 Write property test for tax exempt recalculation
+  - [x] 2.12 Write property test for tax exempt recalculation
     - **Property 7: Tax Exempt Recalculation**
     - **Validates: Requirements 7.3, 7.4**
 
-  - [ ] 2.13 Implement toggle tax exempt command (ToggleTaxExemptCommand)
+  - [x] 2.13 Implement toggle tax exempt command (ToggleTaxExemptCommand)
     - Toggle IsTaxExempt property
     - Recalculate TotalAmount (with or without tax)
     - Update BalanceDue
     - _Requirements: 7.2, 7.3, 7.4_
 
-  - [ ] 2.14 Write property test for cancel settlement preserves state
+  - [x] 2.14 Write property test for cancel settlement preserves state
     - **Property 8: Cancel Settlement Preserves State**
     - **Validates: Requirements 8.3**
 
-  - [ ] 2.15 Implement additional action commands
+  - [x] 2.15 Implement additional action commands
     - Implement AddTipCommand (show tip entry dialog)
     - Implement HoldTicketCommand (save ticket and return to order page)
     - Implement SplitPaymentCommand (show split payment dialog)
@@ -104,26 +104,26 @@ The implementation will proceed in phases:
     - Implement PrintReceiptCommand (print receipt)
     - _Requirements: 6.1, 6.3, 6.4, 6.5, 6.6, 6.7_
 
-  - [ ] 2.16 Implement navigation commands
+  - [x] 2.16 Implement navigation commands
     - Implement CancelSettlementCommand (navigate back without saving)
     - Implement NavigateBackCommand (navigate to order page)
     - _Requirements: 8.2, 8.3, 1.3_
 
-  - [ ] 2.17 Write unit tests for SettlePageViewModel
+  - [x] 2.17 Write unit tests for SettlePageViewModel
     - Test command execution and state changes
     - Test property change notifications
     - Test validation logic
     - Test error handling scenarios
 
-- [ ] 3. Create SettlePageView (XAML)
-  - [ ] 3.1 Create SettlePageView.xaml with main layout structure
+- [x] 3. Create SettlePageView (XAML)
+  - [x] 3.1 Create SettlePageView.xaml with main layout structure
     - Create header with back button, title, ticket info, tax exempt button, settings button
     - Create three-column main layout (ticket summary, tender entry, payment actions)
     - Create footer with terminal, user, cash balance, and time
     - Apply dark theme styling
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 1.10_
 
-  - [ ] 3.2 Implement ticket summary sidebar (left panel)
+  - [x] 3.2 Implement ticket summary sidebar (left panel)
     - Display Total Amount with label
     - Display Tax Amount with label
     - Display Paid Amount with label (green styling)
@@ -133,7 +133,7 @@ The implementation will proceed in phases:
     - Add Cancel Settlement button at bottom
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 8.1_
 
-  - [ ] 3.3 Implement tender entry panel (center)
+  - [x] 3.3 Implement tender entry panel (center)
     - Create tender amount display panel (rounded, 6xl font)
     - Create numeric keypad grid (3x4 layout)
     - Style digit buttons (7-8-9, 4-5-6, 1-2-3, C-0-.)
@@ -141,7 +141,7 @@ The implementation will proceed in phases:
     - Add button press animations (scale effect)
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.7, 3.8, 3.9, 3.11_
 
-  - [ ] 3.4 Implement payment actions sidebar (right panel)
+  - [x] 3.4 Implement payment actions sidebar (right panel)
     - Create ADD TIP button (primary blue, smiley icon)
     - Create action button grid (2x2: Hold Ticket, Split PMT, Discount, Receipt)
     - Add horizontal divider
@@ -151,7 +151,7 @@ The implementation will proceed in phases:
     - Style all buttons with icons and labels
     - _Requirements: 4.1, 4.3, 4.4, 4.5, 4.6, 4.7, 5.1, 5.2, 5.3, 5.5, 5.6, 5.7, 5.8, 5.9, 5.10, 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.8, 6.9, 6.10_
 
-  - [ ] 3.5 Write UI integration tests for SettlePageView
+  - [x] 3.5 Write UI integration tests for SettlePageView
     - Test data binding correctness
     - Test button command bindings
     - Test UI element visibility based on state
@@ -175,11 +175,11 @@ The implementation will proceed in phases:
     - Implement all ICommand properties
     - _Requirements: 9.2, 9.3, 9.4, 9.5, 10.1, 11.1, 12.7, 14.1, 14.2, 14.3, 23.1, 23.2_
 
-  - [ ]* 5.2 Write property test for table display format
+  - [ ] 5.2 Write property test for table display format
     - **Property 9: Table Display Format**
     - **Validates: Requirements 10.2**
 
-  - [ ]* 5.3 Write property test for product search filtering
+  - [ ] 5.3 Write property test for product search filtering
     - **Property 10: Product Search Filtering**
     - **Validates: Requirements 11.2, 11.3**
 
@@ -189,11 +189,11 @@ The implementation will proceed in phases:
     - Update FilteredProducts collection
     - _Requirements: 11.2, 11.3_
 
-  - [ ]* 5.5 Write property test for order item display completeness
+  - [ ] 5.5 Write property test for order item display completeness
     - **Property 11: Order Item Display Completeness**
     - **Validates: Requirements 12.1, 12.2, 12.3**
 
-  - [ ]* 5.6 Write property test for order item removal and recalculation
+  - [ ] 5.6 Write property test for order item removal and recalculation
     - **Property 12: Order Item Removal and Recalculation**
     - **Validates: Requirements 13.2, 13.3, 14.8**
 
@@ -204,11 +204,11 @@ The implementation will proceed in phases:
     - Update TotalItemCount
     - _Requirements: 13.2, 13.3_
 
-  - [ ]* 5.8 Write property test for product addition and recalculation
+  - [ ] 5.8 Write property test for product addition and recalculation
     - **Property 13: Product Addition and Recalculation**
     - **Validates: Requirements 20.1, 20.2**
 
-  - [ ]* 5.9 Write property test for modifier dialog for products
+  - [ ] 5.9 Write property test for modifier dialog for products
     - **Property 16: Modifier Dialog for Products**
     - **Validates: Requirements 20.3**
 
@@ -227,11 +227,11 @@ The implementation will proceed in phases:
     - Recalculate totals
     - _Requirements: 13.1_
 
-  - [ ]* 5.12 Write property test for category filtering
+  - [ ] 5.12 Write property test for category filtering
     - **Property 14: Category Filtering**
     - **Validates: Requirements 17.2**
 
-  - [ ]* 5.13 Write property test for subcategory filtering
+  - [ ] 5.13 Write property test for subcategory filtering
     - **Property 15: Subcategory Filtering**
     - **Validates: Requirements 18.1, 18.2, 18.3**
 
@@ -242,11 +242,11 @@ The implementation will proceed in phases:
     - Update Subcategories collection when category changes
     - _Requirements: 17.2, 18.1, 18.2, 18.3_
 
-  - [ ]* 5.15 Write property test for order item count
+  - [ ] 5.15 Write property test for order item count
     - **Property 17: Order Item Count**
     - **Validates: Requirements 23.1**
 
-  - [ ]* 5.16 Write property test for wait time calculation
+  - [ ] 5.16 Write property test for wait time calculation
     - **Property 18: Wait Time Calculation**
     - **Validates: Requirements 23.2**
 
@@ -279,7 +279,7 @@ The implementation will proceed in phases:
     - Update TableNumber and GuestCount
     - _Requirements: 10.6_
 
-  - [ ]* 5.22 Write unit tests for OrderPageViewModel
+  - [ ] 5.22 Write unit tests for OrderPageViewModel
     - Test command execution and state changes
     - Test property change notifications
     - Test filtering logic
@@ -323,7 +323,7 @@ The implementation will proceed in phases:
     - Display order statistics (Items: X, Wait: XX:XX)
     - _Requirements: 21.1, 21.2, 21.5, 22.1, 22.2, 22.3, 22.4, 22.5, 22.6, 22.7, 22.8, 22.9, 23.1, 23.2, 23.3, 23.4_
 
-  - [ ]* 6.5 Write UI integration tests for OrderPageView
+  - [ ] 6.5 Write UI integration tests for OrderPageView
     - Test data binding correctness
     - Test button command bindings
     - Test filtering and search UI updates
@@ -357,7 +357,7 @@ The implementation will proceed in phases:
     - Wire up dialog commands in ViewModels
     - _Requirements: 6.7, 13.1, 10.6, 6.5, 6.4_
 
-  - [ ]* 8.4 Write integration tests for navigation flows
+  - [ ] 8.4 Write integration tests for navigation flows
     - Test Order Page → Settle Page navigation
     - Test Settle Page → Order Page navigation
     - Test ticket state preservation
@@ -386,7 +386,7 @@ The implementation will proceed in phases:
     - Disable UI during processing
     - _Requirements: 26.4_
 
-  - [ ]* 9.4 Write unit tests for error handling
+  - [ ] 9.4 Write unit tests for error handling
     - Test error scenarios and recovery flows
     - Test user feedback mechanisms
     - Test loading indicator behavior
@@ -410,7 +410,7 @@ The implementation will proceed in phases:
     - Test on touch-enabled devices
     - _Requirements: 25.4_
 
-  - [ ]* 10.4 Write accessibility tests
+  - [ ] 10.4 Write accessibility tests
     - Test keyboard navigation
     - Test screen reader compatibility
     - Test touch target sizes
@@ -434,7 +434,7 @@ The implementation will proceed in phases:
     - Clean up large collections properly
     - _Requirements: All_
 
-  - [ ]* 11.4 Write performance tests
+  - [ ] 11.4 Write performance tests
     - Test with large orders (50+ items)
     - Test with large product catalogs (500+ products)
     - Measure memory usage
@@ -451,9 +451,10 @@ The implementation will proceed in phases:
 
 ## Notes
 
-- Tasks marked with `*` are optional and can be skipped for faster MVP
+- All tasks are required for comprehensive implementation
 - Each task references specific requirements for traceability
 - Checkpoints ensure incremental validation
-- Property tests validate universal correctness properties
+- Property tests validate universal correctness properties (19 properties total)
 - Unit tests validate specific examples and edge cases
 - Integration tests validate end-to-end workflows
+- All property tests configured to run 100 iterations minimum
