@@ -32,7 +32,9 @@ public partial class SettlePageViewModel : ViewModelBase
     private Guid _ticketId;
     private TicketDto? _ticket;
     private decimal _tenderAmount;
-    private string _tenderAmountDisplay = "$0.00";
+    private string _tenderAmountInput = ""; // Raw input string without formatting
+    private DateTime _lastKeypadPress = DateTime.MinValue;
+    private const int KEYPAD_DEBOUNCE_MS = 200; // Debounce time in milliseconds
 
     public SettlePageViewModel(
         IQueryHandler<GetTicketQuery, TicketDto?> getTicketHandler,
@@ -99,11 +101,8 @@ public partial class SettlePageViewModel : ViewModelBase
     private decimal _balanceDue;
 
     // Tender Entry
-    public string TenderAmountDisplay
-    {
-        get => _tenderAmountDisplay;
-        private set => SetProperty(ref _tenderAmountDisplay, value);
-    }
+    [ObservableProperty]
+    private string _tenderAmountDisplay = "$0.00";
 
     // Payment Methods
     public ObservableCollection<PaymentMethodViewModel> PaymentMethods { get; }
@@ -195,6 +194,15 @@ public partial class SettlePageViewModel : ViewModelBase
 
     private void OnKeypadDigit(string? digit)
     {
+        // Debounce to prevent double-triggering from WinUI button template
+        var now = DateTime.Now;
+        if ((now - _lastKeypadPress).TotalMilliseconds < KEYPAD_DEBOUNCE_MS)
+        {
+            System.Diagnostics.Debug.WriteLine($"OnKeypadDigit: Debounced duplicate call for digit {digit}");
+            return;
+        }
+        _lastKeypadPress = now;
+
         System.Diagnostics.Debug.WriteLine($"OnKeypadDigit called with digit: {digit}");
         _logger.LogInformation("OnKeypadDigit called with digit: {Digit}", digit);
         
@@ -208,20 +216,19 @@ public partial class SettlePageViewModel : ViewModelBase
         if (digit == ".")
         {
             // Only allow one decimal point
-            if (!_tenderAmountDisplay.Contains("."))
+            if (!_tenderAmountInput.Contains("."))
             {
-                // If display is "$0.00", start fresh with "0."
-                if (_tenderAmountDisplay == "$0.00")
+                // If input is empty, start with "0."
+                if (string.IsNullOrEmpty(_tenderAmountInput))
                 {
-                    _tenderAmountDisplay = "0.";
+                    _tenderAmountInput = "0.";
                 }
                 else
                 {
-                    // Remove currency formatting and append decimal
-                    var numericValue = _tenderAmountDisplay.Replace("$", "").Replace(",", "");
-                    _tenderAmountDisplay = numericValue + ".";
+                    _tenderAmountInput += ".";
                 }
-                TenderAmountDisplay = _tenderAmountDisplay;
+                TenderAmountDisplay = "$" + _tenderAmountInput;
+                System.Diagnostics.Debug.WriteLine($"OnKeypadDigit: Added decimal point. Input='{_tenderAmountInput}', Display='{TenderAmountDisplay}'");
             }
             return;
         }
@@ -229,29 +236,32 @@ public partial class SettlePageViewModel : ViewModelBase
         // Handle digits 0-9
         if (digit.Length == 1 && char.IsDigit(digit[0]))
         {
-            // If display is "$0.00", start fresh
-            if (_tenderAmountDisplay == "$0.00")
-            {
-                _tenderAmountDisplay = digit;
-            }
-            else
-            {
-                // Remove currency formatting and append digit
-                var numericValue = _tenderAmountDisplay.Replace("$", "").Replace(",", "");
-                _tenderAmountDisplay = numericValue + digit;
-            }
+            // Append digit to raw input
+            _tenderAmountInput += digit;
 
-            // Update display with currency formatting
-            if (decimal.TryParse(_tenderAmountDisplay, out var amount))
+            // Try to parse and format
+            if (decimal.TryParse(_tenderAmountInput, out var amount))
             {
                 _tenderAmount = amount;
-                TenderAmountDisplay = FormatCurrency(amount);
+                
+                // If there's a decimal point in the input, show it as-is with $ prefix
+                if (_tenderAmountInput.Contains("."))
+                {
+                    TenderAmountDisplay = "$" + _tenderAmountInput;
+                }
+                else
+                {
+                    // No decimal point yet, format as currency
+                    TenderAmountDisplay = FormatCurrency(amount);
+                }
             }
             else
             {
-                // Keep building the string (e.g., "0.5" before it becomes "0.50")
-                TenderAmountDisplay = _tenderAmountDisplay;
+                // Keep building the string
+                TenderAmountDisplay = "$" + _tenderAmountInput;
             }
+            
+            System.Diagnostics.Debug.WriteLine($"OnKeypadDigit: Input='{_tenderAmountInput}', Display='{TenderAmountDisplay}', Amount={_tenderAmount}");
         }
     }
 
@@ -263,7 +273,7 @@ public partial class SettlePageViewModel : ViewModelBase
     private void OnClearTender()
     {
         _tenderAmount = 0m;
-        _tenderAmountDisplay = "$0.00";
+        _tenderAmountInput = "";
         TenderAmountDisplay = "$0.00";
         
         _logger.LogDebug("Tender amount cleared");
@@ -281,8 +291,8 @@ public partial class SettlePageViewModel : ViewModelBase
         }
 
         _tenderAmount = amount;
-        _tenderAmountDisplay = FormatCurrency(amount);
-        TenderAmountDisplay = _tenderAmountDisplay;
+        _tenderAmountInput = amount.ToString("F2"); // Store as "20.00" format
+        TenderAmountDisplay = FormatCurrency(amount);
         
         _logger.LogDebug("Quick cash amount set to {Amount}", amount);
     }
