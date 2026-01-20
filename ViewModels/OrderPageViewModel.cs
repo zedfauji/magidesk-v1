@@ -9,6 +9,7 @@ using Magidesk.Domain.ValueObjects;
 using Magidesk.Presentation.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching;
 using System.Collections.ObjectModel;
 
 namespace Magidesk.Presentation.ViewModels;
@@ -31,6 +32,7 @@ public partial class OrderPageViewModel : ViewModelBase
     private readonly IServiceScopeFactory _serviceScopeFactory;
     private readonly IDialogService _dialogService;
     private readonly ILogger<OrderPageViewModel> _logger;
+    private readonly DispatcherQueue _dispatcherQueue;
 
     private Guid? _ticketId;
     private TicketDto? _ticket;
@@ -65,6 +67,13 @@ public partial class OrderPageViewModel : ViewModelBase
         _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
+        // Get the dispatcher queue for the current thread (must be called from UI thread)
+        _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+        if (_dispatcherQueue == null)
+        {
+            throw new InvalidOperationException("OrderPageViewModel must be constructed on the UI thread");
+        }
+
         // Initialize collections
         OrderItems = new ObservableCollection<OrderItemViewModel>();
         Categories = new ObservableCollection<ProductCategoryViewModel>();
@@ -96,8 +105,12 @@ public partial class OrderPageViewModel : ViewModelBase
         _timeUpdateTimer = new System.Timers.Timer(1000); // Update every second
         _timeUpdateTimer.Elapsed += (s, e) =>
         {
-            OnPropertyChanged(nameof(CurrentTime));
-            OnPropertyChanged(nameof(WaitTime));
+            // Marshal property changes to UI thread
+            _dispatcherQueue.TryEnqueue(() =>
+            {
+                OnPropertyChanged(nameof(CurrentTime));
+                OnPropertyChanged(nameof(WaitTime));
+            });
         };
         _timeUpdateTimer.Start();
 
@@ -199,20 +212,38 @@ public partial class OrderPageViewModel : ViewModelBase
     /// </summary>
     public async Task InitializeAsync(Guid? ticketId = null, Guid? tableId = null)
     {
-        _ticketId = ticketId;
-        _tableId = tableId;
-
-        await LoadCategoriesAsync();
-        await LoadProductsAsync();
-
-        if (_ticketId.HasValue)
+        try
         {
-            await LoadTicketAsync();
+            _logger.LogInformation("InitializeAsync called with ticketId: {TicketId}, tableId: {TableId}", ticketId, tableId);
+            
+            _ticketId = ticketId;
+            _tableId = tableId;
+
+            await LoadCategoriesAsync();
+            _logger.LogInformation("Categories loaded");
+            
+            await LoadProductsAsync();
+            _logger.LogInformation("Products loaded: {Count}", _allProducts.Count);
+
+            if (_ticketId.HasValue)
+            {
+                await LoadTicketAsync();
+            }
+
+            if (_tableId.HasValue)
+            {
+                await LoadTableAsync();
+            }
+            
+            _logger.LogInformation("InitializeAsync completed successfully");
         }
-
-        if (_tableId.HasValue)
+        catch (Exception ex)
         {
-            await LoadTableAsync();
+            _logger.LogError(ex, "Failed to initialize OrderPageViewModel");
+            await _dialogService.ShowErrorAsync(
+                "Initialization Error",
+                $"Failed to load order page data:\n\n{ex.Message}",
+                ex.ToString());
         }
     }
 
@@ -332,40 +363,101 @@ public partial class OrderPageViewModel : ViewModelBase
     {
         try
         {
-            // TODO: Implement category loading from repository
-            // For now, create sample categories
-            Categories.Clear();
-            Categories.Add(new ProductCategoryViewModel { Name = "Food", IconName = "restaurant" });
-            Categories.Add(new ProductCategoryViewModel { Name = "Drinks", IconName = "local_bar" });
-            Categories.Add(new ProductCategoryViewModel { Name = "Desserts", IconName = "cake" });
-            Categories.Add(new ProductCategoryViewModel { Name = "Sides", IconName = "fastfood" });
-            Categories.Add(new ProductCategoryViewModel { Name = "Popular", IconName = "star" });
-            Categories.Add(new ProductCategoryViewModel { Name = "Retail", IconName = "shopping_bag" });
-
-            // Select first category by default
-            if (Categories.Any())
+            _logger.LogInformation("LoadCategoriesAsync starting");
+            
+            using (var scope = _serviceScopeFactory.CreateScope())
             {
-                SelectedCategory = Categories.First();
-            }
+                var menuCategoryRepository = scope.ServiceProvider.GetRequiredService<IMenuCategoryRepository>();
+                
+                var dbCategories = await menuCategoryRepository.GetAllAsync();
+                _logger.LogInformation("Loaded {Count} categories from database", dbCategories?.Count() ?? 0);
+                
+                Categories.Clear();
+                
+                // Add "Popular" as first category (special category that shows all)
+                Categories.Add(new ProductCategoryViewModel { Name = "Popular", IconName = "star" });
+                
+                // Add categories from database
+                if (dbCategories != null)
+                {
+                    foreach (var category in dbCategories.Where(c => c.IsActive).OrderBy(c => c.SortOrder))
+                    {
+                        Categories.Add(new ProductCategoryViewModel 
+                        { 
+                            Name = category.Name, 
+                            IconName = GetIconForCategory(category.Name) 
+                        });
+                    }
+                }
+                
+                // Fallback: if no categories in database, add default ones
+                if (Categories.Count == 1) // Only "Popular"
+                {
+                    _logger.LogWarning("No categories found in database, using defaults");
+                    Categories.Add(new ProductCategoryViewModel { Name = "Food", IconName = "restaurant" });
+                    Categories.Add(new ProductCategoryViewModel { Name = "Drinks", IconName = "local_bar" });
+                    Categories.Add(new ProductCategoryViewModel { Name = "Desserts", IconName = "cake" });
+                    Categories.Add(new ProductCategoryViewModel { Name = "Sides", IconName = "fastfood" });
+                    Categories.Add(new ProductCategoryViewModel { Name = "Retail", IconName = "shopping_bag" });
+                }
 
-            await Task.CompletedTask;
+                // Select first category by default (Popular)
+                if (Categories.Any())
+                {
+                    SelectedCategory = Categories.First();
+                    _logger.LogInformation("Selected default category: {CategoryName}", SelectedCategory.Name);
+                }
+            }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to load categories");
+            
+            // Fallback to default categories on error
+            Categories.Clear();
+            Categories.Add(new ProductCategoryViewModel { Name = "Popular", IconName = "star" });
+            Categories.Add(new ProductCategoryViewModel { Name = "All Items", IconName = "restaurant" });
+            
+            if (Categories.Any())
+            {
+                SelectedCategory = Categories.First();
+            }
         }
+    }
+    
+    private string GetIconForCategory(string categoryName)
+    {
+        // Map category names to Material Design icons
+        var lowerName = categoryName.ToLowerInvariant();
+        
+        if (lowerName.Contains("food") || lowerName.Contains("meal") || lowerName.Contains("អាហារ"))
+            return "restaurant";
+        if (lowerName.Contains("drink") || lowerName.Contains("beverage") || lowerName.Contains("ភេសជ្ជៈ"))
+            return "local_bar";
+        if (lowerName.Contains("dessert") || lowerName.Contains("sweet") || lowerName.Contains("បង្អែម"))
+            return "cake";
+        if (lowerName.Contains("side") || lowerName.Contains("appetizer"))
+            return "fastfood";
+        if (lowerName.Contains("retail") || lowerName.Contains("merchandise"))
+            return "shopping_bag";
+            
+        return "restaurant"; // Default icon
     }
 
     private async Task LoadProductsAsync()
     {
         try
         {
+            _logger.LogInformation("LoadProductsAsync starting");
+            
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var getMenuItemsHandler = scope.ServiceProvider.GetRequiredService<IQueryHandler<GetMenuItemsQuery, List<MenuItemDto>>>();
                 var menuRepository = scope.ServiceProvider.GetRequiredService<IMenuRepository>();
                 
+                _logger.LogInformation("Calling GetMenuItemsQuery");
                 var menuItems = await getMenuItemsHandler.HandleAsync(new GetMenuItemsQuery { IsActive = true });
+                _logger.LogInformation("GetMenuItemsQuery returned {Count} items", menuItems?.Count ?? 0);
 
                 _allProducts.Clear();
                 foreach (var item in menuItems)
@@ -390,12 +482,16 @@ public partial class OrderPageViewModel : ViewModelBase
                 // Apply initial filter
                 FilterProducts();
 
-                _logger.LogInformation("Loaded {Count} products", _allProducts.Count);
+                _logger.LogInformation("Loaded {Count} products, filtered to {FilteredCount}", _allProducts.Count, FilteredProducts.Count);
             }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to load products");
+            await _dialogService.ShowErrorAsync(
+                "Error Loading Products",
+                $"Failed to load menu items:\n\n{ex.Message}",
+                ex.ToString());
         }
     }
 
@@ -461,16 +557,55 @@ public partial class OrderPageViewModel : ViewModelBase
         {
             _logger.LogInformation("Select table requested");
             
-            // TODO: Implement table selection dialog with proper ViewModel initialization
-            // The TableSelectionDialog requires a TableSelectionViewModel to be created and initialized
-            await _dialogService.ShowMessageAsync(
-                "Select Table",
-                "Table selection feature is coming soon.\n\nThis will allow you to select a table and specify guest count.");
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var tableRepository = scope.ServiceProvider.GetRequiredService<ITableRepository>();
+                
+                // Create ViewModel for table selection dialog
+                var viewModel = new Magidesk.ViewModels.Dialogs.TableSelectionViewModel(tableRepository);
+                
+                // Create Dialog
+                var dialog = new Magidesk.Views.Dialogs.TableSelectionDialog(viewModel);
+                
+                // Set XamlRoot for the dialog
+                if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
+                {
+                    dialog.XamlRoot = element.XamlRoot;
+                }
+                
+                await dialog.ShowAsync();
+
+                // If user confirmed selection
+                if (viewModel.SelectedTable != null)
+                {
+                    _tableId = viewModel.SelectedTable.Id;
+                    GuestCount = viewModel.GuestCount;
+                    TableNumber = $"TABLE {viewModel.SelectedTable.TableNumber} (GUESTS: {GuestCount})";
+                    
+                    _logger.LogInformation("Selected table {TableNumber} with {GuestCount} guests", 
+                        viewModel.SelectedTable.TableNumber, GuestCount);
+                    
+                    // If we have a ticket, assign the table to it
+                    if (_ticketId.HasValue)
+                    {
+                        var assignTableHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<AssignTableToTicketCommand, AssignTableToTicketResult>>();
+                        
+                        var command = new AssignTableToTicketCommand
+                        {
+                            TicketId = _ticketId.Value,
+                            TableId = _tableId.Value
+                        };
+                        
+                        await assignTableHandler.HandleAsync(command);
+                        await LoadTicketAsync();
+                    }
+                }
+            }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to show table selection dialog");
-            await _dialogService.ShowErrorAsync("Error", "Failed to open table selection dialog.");
+            await _dialogService.ShowErrorAsync("Error", $"Failed to open table selection dialog: {ex.Message}");
         }
     }
 
@@ -979,65 +1114,286 @@ public partial class OrderPageViewModel : ViewModelBase
 
     private async Task OnSplitOrderAsync()
     {
+        if (!_ticketId.HasValue)
+        {
+            _logger.LogWarning("Cannot split order: no ticket");
+            await _dialogService.ShowWarningAsync(
+                "No Ticket",
+                "Please create an order before splitting.");
+            return;
+        }
+
+        if (OrderItems.Count < 2)
+        {
+            _logger.LogWarning("Cannot split order: insufficient items");
+            await _dialogService.ShowWarningAsync(
+                "Insufficient Items",
+                "You need at least 2 items to split an order.");
+            return;
+        }
+
         try
         {
-            _logger.LogInformation("Split order requested");
+            _logger.LogInformation("Split order requested for ticket {TicketId}", _ticketId);
             
-            await _dialogService.ShowMessageAsync(
-                "Split Order",
-                "Split order feature is coming soon.\n\nThis will allow you to split the order by seat or item.");
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var ticketRepository = scope.ServiceProvider.GetRequiredService<ITicketRepository>();
+                
+                // Load the ticket
+                var ticket = await ticketRepository.GetByIdAsync(_ticketId.Value);
+                
+                if (ticket == null)
+                {
+                    _logger.LogError("Ticket {TicketId} not found", _ticketId);
+                    await _dialogService.ShowErrorAsync(
+                        "Ticket Not Found",
+                        "The ticket could not be found. It may have been deleted.");
+                    return;
+                }
+                
+                // For now, show a simple confirmation and split evenly
+                var confirmed = await _dialogService.ShowConfirmationAsync(
+                    "Split Order",
+                    $"Split this order into 2 separate tickets?\n\nCurrent ticket: #{ticket.TicketNumber}\nItems: {OrderItems.Count}\n\nThis will create a new ticket with half the items.",
+                    "Split", "Cancel");
+                
+                if (confirmed)
+                {
+                    var splitTicketHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<SplitTicketCommand, SplitTicketResult>>();
+                    
+                    // Split the ticket - take half the order lines for the new ticket
+                    var orderLinesToMove = ticket.OrderLines.Take(ticket.OrderLines.Count / 2).Select(ol => ol.Id).ToList();
+                    
+                    var command = new SplitTicketCommand
+                    {
+                        SourceTicketId = _ticketId.Value,
+                        OrderLineIds = orderLinesToMove,
+                        SplitBy = new UserId(_userService.CurrentUser!.Id)
+                    };
+                    
+                    var result = await splitTicketHandler.HandleAsync(command);
+                    
+                    _logger.LogInformation("Ticket {TicketId} split into new ticket {NewTicketId}", 
+                        _ticketId, result.NewTicketId);
+                    
+                    // Reload the current ticket
+                    await LoadTicketAsync();
+                    
+                    await _dialogService.ShowMessageAsync(
+                        "Order Split",
+                        $"Order has been split.\n\nOriginal Ticket: #{ticket.TicketNumber}\nNew Ticket: #{result.NewTicketNumber}\n\n{orderLinesToMove.Count} items moved to new ticket.");
+                }
+            }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to show split order dialog");
+            _logger.LogError(ex, "Failed to split order for ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync("Error", $"Failed to split order: {ex.Message}");
         }
     }
 
     private async Task OnMergeOrderAsync()
     {
+        if (!_ticketId.HasValue)
+        {
+            _logger.LogWarning("Cannot merge order: no ticket");
+            await _dialogService.ShowWarningAsync(
+                "No Ticket",
+                "Please create an order before merging.");
+            return;
+        }
+
         try
         {
-            _logger.LogInformation("Merge order requested");
+            _logger.LogInformation("Merge order requested for ticket {TicketId}", _ticketId);
             
-            await _dialogService.ShowMessageAsync(
-                "Merge Order",
-                "Merge order feature is coming soon.\n\nThis will allow you to merge multiple tickets together.");
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var ticketRepository = scope.ServiceProvider.GetRequiredService<ITicketRepository>();
+                
+                // Get all open tickets except the current one
+                var openTickets = await ticketRepository.GetOpenTicketsAsync();
+                var availableTickets = openTickets.Where(t => t.Id != _ticketId.Value).ToList();
+                
+                if (!availableTickets.Any())
+                {
+                    _logger.LogWarning("No other open tickets available to merge");
+                    await _dialogService.ShowWarningAsync(
+                        "No Tickets Available",
+                        "There are no other open tickets to merge with.");
+                    return;
+                }
+                
+                // For now, show a simple message listing available tickets
+                // In a full implementation, you would show a ticket selection dialog
+                var ticketList = string.Join("\n", availableTickets.Select(t => $"Ticket #{t.TicketNumber} - {t.OrderLines.Count} items"));
+                
+                await _dialogService.ShowMessageAsync(
+                    "Merge Order",
+                    $"Merge order feature is available.\n\nAvailable tickets to merge:\n\n{ticketList}\n\nFull merge dialog coming soon.");
+            }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to show merge order dialog");
+            await _dialogService.ShowErrorAsync("Error", $"Failed to show merge options: {ex.Message}");
         }
     }
 
     private async Task OnAddNoteAsync()
     {
+        if (!_ticketId.HasValue)
+        {
+            _logger.LogWarning("Cannot add note: no ticket");
+            await _dialogService.ShowWarningAsync(
+                "No Ticket",
+                "Please create an order before adding a note.");
+            return;
+        }
+
         try
         {
-            _logger.LogInformation("Add note requested");
+            _logger.LogInformation("Add note requested for ticket {TicketId}", _ticketId);
             
-            await _dialogService.ShowMessageAsync(
-                "Add Note",
-                "Add note feature is coming soon.\n\nThis will allow you to add special instructions to the order.");
+            // Create a simple text input dialog for the note
+            var inputDialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+            {
+                Title = "Add Note",
+                PrimaryButtonText = "Add",
+                CloseButtonText = "Cancel",
+                DefaultButton = Microsoft.UI.Xaml.Controls.ContentDialogButton.Primary
+            };
+            
+            var textBox = new Microsoft.UI.Xaml.Controls.TextBox
+            {
+                PlaceholderText = "Enter special instructions or notes...",
+                AcceptsReturn = true,
+                TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
+                Height = 120,
+                Margin = new Microsoft.UI.Xaml.Thickness(0, 10, 0, 0)
+            };
+            
+            inputDialog.Content = textBox;
+            
+            // Set XamlRoot for the dialog
+            if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
+            {
+                inputDialog.XamlRoot = element.XamlRoot;
+            }
+            
+            var result = await inputDialog.ShowAsync();
+            
+            if (result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary && !string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                using (var scope = _serviceScopeFactory.CreateScope())
+                {
+                    var ticketRepository = scope.ServiceProvider.GetRequiredService<ITicketRepository>();
+                    
+                    // Load the ticket
+                    var ticket = await ticketRepository.GetByIdAsync(_ticketId.Value);
+                    
+                    if (ticket != null)
+                    {
+                        // Add note to the ticket (assuming there's a Notes property or similar)
+                        // For now, we'll add it as an instruction to the last order line
+                        if (ticket.OrderLines.Any())
+                        {
+                            var lastOrderLine = ticket.OrderLines.Last();
+                            
+                            var addInstructionHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<AddOrderLineInstructionCommand>>();
+                            
+                            var command = new AddOrderLineInstructionCommand
+                            {
+                                TicketId = _ticketId.Value,
+                                OrderLineId = lastOrderLine.Id,
+                                Instruction = textBox.Text
+                            };
+                            
+                            await addInstructionHandler.HandleAsync(command);
+                            
+                            _logger.LogInformation("Note added to ticket {TicketId}: {Note}", _ticketId, textBox.Text);
+                            
+                            // Reload ticket
+                            await LoadTicketAsync();
+                            
+                            await _dialogService.ShowMessageAsync(
+                                "Note Added",
+                                $"Note has been added to the order:\n\n{textBox.Text}");
+                        }
+                        else
+                        {
+                            await _dialogService.ShowWarningAsync(
+                                "No Items",
+                                "Please add items to the order before adding notes.");
+                        }
+                    }
+                }
+            }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to show add note dialog");
+            _logger.LogError(ex, "Failed to add note to ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync("Error", $"Failed to add note: {ex.Message}");
         }
     }
 
     private async Task OnPrintOrderAsync()
     {
+        if (!_ticketId.HasValue)
+        {
+            _logger.LogWarning("Cannot print order: no ticket");
+            await _dialogService.ShowWarningAsync(
+                "No Ticket",
+                "Please create an order before printing.");
+            return;
+        }
+
+        if (OrderItems.Count == 0)
+        {
+            _logger.LogWarning("Cannot print order: no items in order");
+            await _dialogService.ShowWarningAsync(
+                "Empty Order",
+                "Please add items to the order before printing.");
+            return;
+        }
+
         try
         {
-            _logger.LogInformation("Print order requested");
+            _logger.LogInformation("Print order requested for ticket {TicketId}", _ticketId);
             
-            await _dialogService.ShowMessageAsync(
-                "Print Order",
-                "Print order feature is coming soon.\n\nThis will print the order ticket.");
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var printToKitchenHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<PrintToKitchenCommand, PrintToKitchenResult>>();
+                
+                var command = new PrintToKitchenCommand
+                {
+                    TicketId = _ticketId.Value
+                };
+                
+                var result = await printToKitchenHandler.HandleAsync(command);
+                
+                if (result.Success)
+                {
+                    _logger.LogInformation("Order ticket printed for ticket {TicketId}", _ticketId);
+                    
+                    await _dialogService.ShowMessageAsync(
+                        "Order Printed",
+                        $"Order ticket has been printed.\n\nTicket #{_ticket?.TicketNumber}");
+                }
+                else
+                {
+                    _logger.LogError("Failed to print order: {Error}", result.ErrorMessage);
+                    await _dialogService.ShowErrorAsync(
+                        "Print Error",
+                        $"Failed to print order:\n\n{result.ErrorMessage}");
+                }
+            }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to print order");
+            _logger.LogError(ex, "Failed to print order for ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync("Error", $"Failed to print order: {ex.Message}");
         }
     }
 
@@ -1080,17 +1436,35 @@ public partial class OrderPageViewModel : ViewModelBase
 
     private async Task OnPayNowAsync()
     {
+        if (!_ticketId.HasValue)
+        {
+            _logger.LogWarning("Cannot pay now: no ticket");
+            await _dialogService.ShowWarningAsync(
+                "No Ticket",
+                "Please add items to the order before processing payment.");
+            return;
+        }
+
+        if (OrderItems.Count == 0)
+        {
+            _logger.LogWarning("Cannot pay now: no items in order");
+            await _dialogService.ShowWarningAsync(
+                "Empty Order",
+                "Please add items to the order before processing payment.");
+            return;
+        }
+
         try
         {
-            _logger.LogInformation("Pay now requested");
+            _logger.LogInformation("Pay now requested for ticket {TicketId}", _ticketId);
             
-            await _dialogService.ShowMessageAsync(
-                "Pay Now",
-                "Quick payment feature is coming soon.\n\nThis will initiate immediate payment processing.");
+            // Quick payment flow - navigate directly to settle page
+            _navigationService.Navigate(typeof(Views.SettlePageView), _ticketId.Value);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to initiate payment");
+            _logger.LogError(ex, "Failed to initiate payment for ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync("Error", $"Failed to initiate payment: {ex.Message}");
         }
     }
 
@@ -1100,13 +1474,82 @@ public partial class OrderPageViewModel : ViewModelBase
         {
             _logger.LogInformation("Start session requested");
             
-            await _dialogService.ShowMessageAsync(
-                "Start Session",
-                "Session management feature is coming soon.\n\nThis will start a new POS session.");
+            if (_userService.CurrentUser == null)
+            {
+                _logger.LogError("Cannot start session: no user logged in");
+                await _dialogService.ShowErrorAsync(
+                    "Authentication Error",
+                    "No user is currently logged in. Please log in and try again.");
+                return;
+            }
+
+            if (_terminalContext.TerminalId == null)
+            {
+                _logger.LogError("Cannot start session: no terminal context");
+                await _dialogService.ShowErrorAsync(
+                    "Terminal Error",
+                    "Terminal context is not available. Please restart the application.");
+                return;
+            }
+
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var cashSessionRepository = scope.ServiceProvider.GetRequiredService<ICashSessionRepository>();
+                
+                // Check if there's already an active session
+                var activeSession = await cashSessionRepository.GetOpenSessionByTerminalIdAsync(_terminalContext.TerminalId.Value);
+                
+                if (activeSession != null)
+                {
+                    _logger.LogWarning("Session already active for terminal {TerminalId}", _terminalContext.TerminalId);
+                    await _dialogService.ShowWarningAsync(
+                        "Session Already Active",
+                        $"There is already an active session on this terminal.\n\nSession started: {activeSession.OpenedAt:g}");
+                    return;
+                }
+                
+                // Prompt for starting cash amount
+                var cashEntryDialog = new Magidesk.Views.CashEntryDialog
+                {
+                    Title = "Start Session - Opening Cash"
+                };
+                
+                // Set XamlRoot for the dialog
+                if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
+                {
+                    cashEntryDialog.XamlRoot = element.XamlRoot;
+                }
+                
+                var dialogResult = await cashEntryDialog.ShowAsync();
+                
+                if (dialogResult == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
+                {
+                    var openingCash = cashEntryDialog.CashAmount;
+                    
+                    var openSessionHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult>>();
+                    
+                    var command = new OpenCashSessionCommand
+                    {
+                        TerminalId = _terminalContext.TerminalId.Value,
+                        OpenedBy = new UserId(_userService.CurrentUser.Id),
+                        StartingCash = new Money(openingCash, "USD")
+                    };
+                    
+                    var result = await openSessionHandler.HandleAsync(command);
+                    
+                    _logger.LogInformation("Session {SessionId} started with opening cash {OpeningCash}", 
+                        result.SessionId, openingCash);
+                    
+                    await _dialogService.ShowMessageAsync(
+                        "Session Started",
+                        $"POS session has been started.\n\nOpening Cash: {openingCash:C2}");
+                }
+            }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to start session");
+            await _dialogService.ShowErrorAsync("Error", $"Failed to start session: {ex.Message}");
         }
     }
 
@@ -1116,80 +1559,380 @@ public partial class OrderPageViewModel : ViewModelBase
         {
             _logger.LogInformation("End session requested");
             
-            await _dialogService.ShowMessageAsync(
-                "End Session",
-                "Session management feature is coming soon.\n\nThis will end the current POS session.");
+            if (_userService.CurrentUser == null)
+            {
+                _logger.LogError("Cannot end session: no user logged in");
+                await _dialogService.ShowErrorAsync(
+                    "Authentication Error",
+                    "No user is currently logged in. Please log in and try again.");
+                return;
+            }
+
+            if (_terminalContext.TerminalId == null)
+            {
+                _logger.LogError("Cannot end session: no terminal context");
+                await _dialogService.ShowErrorAsync(
+                    "Terminal Error",
+                    "Terminal context is not available. Please restart the application.");
+                return;
+            }
+
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var cashSessionRepository = scope.ServiceProvider.GetRequiredService<ICashSessionRepository>();
+                
+                // Check if there's an active session
+                var activeSession = await cashSessionRepository.GetOpenSessionByTerminalIdAsync(_terminalContext.TerminalId.Value);
+                
+                if (activeSession == null)
+                {
+                    _logger.LogWarning("No active session for terminal {TerminalId}", _terminalContext.TerminalId);
+                    await _dialogService.ShowWarningAsync(
+                        "No Active Session",
+                        "There is no active session on this terminal.");
+                    return;
+                }
+                
+                // Confirm session end
+                var confirmed = await _dialogService.ShowConfirmationAsync(
+                    "End Session",
+                    $"End the current POS session?\n\nSession started: {activeSession.OpenedAt:g}\n\nThis will close the cash drawer and generate a session report.",
+                    "End Session", "Cancel");
+                
+                if (!confirmed)
+                {
+                    return;
+                }
+                
+                // Prompt for ending cash amount
+                var cashEntryDialog = new Magidesk.Views.CashEntryDialog
+                {
+                    Title = "End Session - Closing Cash"
+                };
+                
+                // Set XamlRoot for the dialog
+                if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
+                {
+                    cashEntryDialog.XamlRoot = element.XamlRoot;
+                }
+                
+                var dialogResult = await cashEntryDialog.ShowAsync();
+                
+                if (dialogResult == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
+                {
+                    var closingCash = cashEntryDialog.CashAmount;
+                    
+                    var closeSessionHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<CloseCashSessionCommand, CloseCashSessionResult>>();
+                    
+                    var command = new CloseCashSessionCommand
+                    {
+                        SessionId = activeSession.Id,
+                        ClosedBy = new UserId(_userService.CurrentUser.Id),
+                        EndingCash = new Money(closingCash, "USD")
+                    };
+                    
+                    var result = await closeSessionHandler.HandleAsync(command);
+                    
+                    _logger.LogInformation("Session {SessionId} ended with closing cash {ClosingCash}", 
+                        activeSession.Id, closingCash);
+                    
+                    var variance = closingCash - result.ExpectedCash.Amount;
+                    var varianceMessage = variance == 0 
+                        ? "Cash drawer balanced perfectly!" 
+                        : $"Cash variance: {variance:C2}";
+                    
+                    await _dialogService.ShowMessageAsync(
+                        "Session Ended",
+                        $"POS session has been closed.\n\nExpected Cash: {result.ExpectedCash.Amount:C2}\nActual Cash: {closingCash:C2}\n\n{varianceMessage}");
+                }
+            }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to end session");
+            await _dialogService.ShowErrorAsync("Error", $"Failed to end session: {ex.Message}");
         }
     }
 
     private async Task OnReprintAsync()
     {
+        if (!_ticketId.HasValue)
+        {
+            _logger.LogWarning("Cannot reprint: no ticket");
+            await _dialogService.ShowWarningAsync(
+                "No Ticket",
+                "There is no active ticket to reprint.");
+            return;
+        }
+
         try
         {
-            _logger.LogInformation("Reprint requested");
+            _logger.LogInformation("Reprint requested for ticket {TicketId}", _ticketId);
             
-            await _dialogService.ShowMessageAsync(
-                "Reprint",
-                "Reprint feature is coming soon.\n\nThis will reprint the last ticket.");
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var printReceiptHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<PrintReceiptCommand, PrintReceiptResult>>();
+                
+                var command = new PrintReceiptCommand
+                {
+                    TicketId = _ticketId.Value
+                };
+                
+                var result = await printReceiptHandler.HandleAsync(command);
+                
+                if (result.Success)
+                {
+                    _logger.LogInformation("Receipt reprinted for ticket {TicketId}", _ticketId);
+                    
+                    await _dialogService.ShowMessageAsync(
+                        "Receipt Reprinted",
+                        $"Receipt has been reprinted.\n\nTicket #{_ticket?.TicketNumber}");
+                }
+                else
+                {
+                    _logger.LogError("Failed to reprint receipt: {Error}", result.ErrorMessage);
+                    await _dialogService.ShowErrorAsync(
+                        "Print Error",
+                        $"Failed to reprint receipt:\n\n{result.ErrorMessage}");
+                }
+            }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to reprint");
+            _logger.LogError(ex, "Failed to reprint receipt for ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync("Error", $"Failed to reprint receipt: {ex.Message}");
         }
     }
 
     private async Task OnVoidTicketAsync()
     {
+        if (!_ticketId.HasValue)
+        {
+            _logger.LogWarning("Cannot void ticket: no ticket");
+            await _dialogService.ShowWarningAsync(
+                "No Ticket",
+                "There is no active ticket to void.");
+            return;
+        }
+
         try
         {
-            _logger.LogInformation("Void ticket requested");
+            _logger.LogInformation("Void ticket requested for ticket {TicketId}", _ticketId);
             
-            await _dialogService.ShowMessageAsync(
-                "Void Ticket",
-                "Void ticket feature is coming soon.\n\nThis will void the current ticket.");
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var ticketRepository = scope.ServiceProvider.GetRequiredService<ITicketRepository>();
+                
+                // Load the ticket to pass to the dialog
+                var ticket = await ticketRepository.GetByIdAsync(_ticketId.Value);
+                
+                if (ticket == null)
+                {
+                    _logger.LogError("Ticket {TicketId} not found", _ticketId);
+                    await _dialogService.ShowErrorAsync(
+                        "Ticket Not Found",
+                        "The ticket could not be found. It may have been deleted.");
+                    return;
+                }
+                
+                // Create ViewModel for void ticket dialog
+                var viewModel = new Magidesk.ViewModels.VoidTicketViewModel(
+                    ticketRepository,
+                    scope.ServiceProvider.GetRequiredService<IUserRepository>(),
+                    ticket);
+                
+                // Create Dialog
+                var dialog = new Magidesk.Views.VoidTicketDialog(viewModel);
+                
+                // Set XamlRoot for the dialog
+                if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
+                {
+                    dialog.XamlRoot = element.XamlRoot;
+                }
+                
+                await dialog.ShowAsync();
+
+                // If user confirmed void
+                if (viewModel.IsConfirmed)
+                {
+                    var voidTicketHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<VoidTicketCommand>>();
+                    
+                    var command = new VoidTicketCommand
+                    {
+                        TicketId = _ticketId.Value,
+                        VoidReason = viewModel.VoidReason,
+                        VoidedBy = new UserId(_userService.CurrentUser!.Id),
+                        AuthorizedBy = viewModel.ManagerId.HasValue 
+                            ? new UserId(viewModel.ManagerId.Value) 
+                            : null
+                    };
+                    
+                    await voidTicketHandler.HandleAsync(command);
+                    
+                    _logger.LogInformation("Ticket {TicketId} voided with reason: {Reason}", 
+                        _ticketId, viewModel.VoidReason);
+                    
+                    await _dialogService.ShowMessageAsync(
+                        "Ticket Voided",
+                        $"Ticket #{ticket.TicketNumber} has been voided.\n\nReason: {viewModel.VoidReason}");
+                    
+                    // Clear the current ticket and reset the page
+                    _ticketId = null;
+                    _ticket = null;
+                    OrderItems.Clear();
+                    RecalculateTotals();
+                    OnPropertyChanged(nameof(TicketNumber));
+                    OnPropertyChanged(nameof(HasTicket));
+                }
+            }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to void ticket");
+            _logger.LogError(ex, "Failed to void ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync("Error", $"Failed to void ticket: {ex.Message}");
         }
     }
 
     private async Task OnApplyDiscountAsync()
     {
+        if (!_ticketId.HasValue)
+        {
+            _logger.LogWarning("Cannot apply discount: no ticket");
+            await _dialogService.ShowWarningAsync(
+                "No Ticket",
+                "Please create an order before applying a discount.");
+            return;
+        }
+
         try
         {
-            _logger.LogInformation("Apply discount requested");
+            _logger.LogInformation("Apply discount requested for ticket {TicketId}", _ticketId);
             
-            // TODO: Implement discount selection dialog with proper ViewModel initialization
-            // The DiscountSelectionDialog requires a DiscountSelectionViewModel to be created and initialized
-            await _dialogService.ShowMessageAsync(
-                "Apply Discount",
-                "Discount feature is coming soon.\n\nThis will allow you to apply promotional discounts.");
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var discountRepository = scope.ServiceProvider.GetRequiredService<IDiscountRepository>();
+                var ticketRepository = scope.ServiceProvider.GetRequiredService<ITicketRepository>();
+                
+                // Load the ticket
+                var ticket = await ticketRepository.GetByIdAsync(_ticketId.Value);
+                
+                if (ticket == null)
+                {
+                    _logger.LogError("Ticket {TicketId} not found", _ticketId);
+                    await _dialogService.ShowErrorAsync(
+                        "Ticket Not Found",
+                        "The ticket could not be found. It may have been deleted.");
+                    return;
+                }
+                
+                // Create ViewModel for discount selection dialog
+                var viewModel = new Magidesk.ViewModels.Dialogs.DiscountSelectionViewModel(
+                    discountRepository,
+                    ticket);
+                
+                // Create Dialog
+                var dialog = new Magidesk.Views.Dialogs.DiscountSelectionDialog(viewModel);
+                
+                // Set XamlRoot for the dialog
+                if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
+                {
+                    dialog.XamlRoot = element.XamlRoot;
+                }
+                
+                await dialog.ShowAsync();
+
+                // If user confirmed discount selection
+                if (viewModel.IsConfirmed && viewModel.SelectedDiscount != null)
+                {
+                    var applyDiscountHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<ApplyDiscountCommand>>();
+                    
+                    var command = new ApplyDiscountCommand
+                    {
+                        TicketId = _ticketId.Value,
+                        DiscountId = viewModel.SelectedDiscount.Id,
+                        AppliedBy = new UserId(_userService.CurrentUser!.Id),
+                        AuthorizedBy = viewModel.ManagerId.HasValue 
+                            ? new UserId(viewModel.ManagerId.Value) 
+                            : null
+                    };
+                    
+                    await applyDiscountHandler.HandleAsync(command);
+                    
+                    _logger.LogInformation("Discount {DiscountName} applied to ticket {TicketId}", 
+                        viewModel.SelectedDiscount.Name, _ticketId);
+                    
+                    // Reload ticket to get updated totals
+                    await LoadTicketAsync();
+                    
+                    await _dialogService.ShowMessageAsync(
+                        "Discount Applied",
+                        $"Discount '{viewModel.SelectedDiscount.Name}' has been applied to the order.");
+                }
+            }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to show discount selection dialog");
-            await _dialogService.ShowErrorAsync("Error", "Failed to open discount selection dialog.");
+            _logger.LogError(ex, "Failed to apply discount to ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync("Error", $"Failed to apply discount: {ex.Message}");
         }
     }
 
     private async Task OnFireTicketAsync()
     {
+        if (!_ticketId.HasValue)
+        {
+            _logger.LogWarning("Cannot fire ticket: no ticket");
+            await _dialogService.ShowWarningAsync(
+                "No Ticket",
+                "Please create an order before sending to kitchen.");
+            return;
+        }
+
+        if (OrderItems.Count == 0)
+        {
+            _logger.LogWarning("Cannot fire ticket: no items in order");
+            await _dialogService.ShowWarningAsync(
+                "Empty Order",
+                "Please add items to the order before sending to kitchen.");
+            return;
+        }
+
         try
         {
-            _logger.LogInformation("Fire ticket requested");
+            _logger.LogInformation("Fire ticket requested for ticket {TicketId}", _ticketId);
             
-            await _dialogService.ShowMessageAsync(
-                "Fire Ticket",
-                "Fire ticket feature is coming soon.\n\nThis will send the order to the kitchen.");
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var printToKitchenHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<PrintToKitchenCommand, PrintToKitchenResult>>();
+                
+                var command = new PrintToKitchenCommand
+                {
+                    TicketId = _ticketId.Value
+                };
+                
+                var result = await printToKitchenHandler.HandleAsync(command);
+                
+                if (result.Success)
+                {
+                    _logger.LogInformation("Ticket {TicketId} sent to kitchen", _ticketId);
+                    
+                    await _dialogService.ShowMessageAsync(
+                        "Order Sent",
+                        $"Order has been sent to the kitchen.\n\nTicket #{_ticket?.TicketNumber}");
+                }
+                else
+                {
+                    _logger.LogError("Failed to fire ticket: {Error}", result.ErrorMessage);
+                    await _dialogService.ShowErrorAsync(
+                        "Kitchen Print Error",
+                        $"Failed to send order to kitchen:\n\n{result.ErrorMessage}");
+                }
+            }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to fire ticket");
+            _logger.LogError(ex, "Failed to fire ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync("Error", $"Failed to send order to kitchen: {ex.Message}");
         }
     }
 

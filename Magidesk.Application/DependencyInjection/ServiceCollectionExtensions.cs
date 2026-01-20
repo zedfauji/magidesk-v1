@@ -140,6 +140,7 @@ public static class ServiceCollectionExtensions
         
         // Table query handlers
         services.AddScoped<IQueryHandler<Queries.GetTableQuery, Queries.GetTableResult>, GetTableQueryHandler>();
+        services.AddScoped<IQueryHandler<Queries.GetTableQuery, DTOs.TableDto?>, GetTableDtoQueryHandler>(); // Adapter for OrderPageViewModel
         services.AddScoped<IQueryHandler<Queries.GetAvailableTablesQuery, Queries.GetAvailableTablesResult>, GetAvailableTablesQueryHandler>();
         services.AddScoped<IQueryHandler<Queries.GetTableMapQuery, Queries.GetTableMapResult>, GetTableMapQueryHandler>();
         

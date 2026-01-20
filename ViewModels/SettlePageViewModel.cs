@@ -527,17 +527,80 @@ public partial class SettlePageViewModel : ViewModelBase
         {
             _logger.LogInformation("Add tip requested for ticket {TicketId}", _ticketId);
             
-            // TODO: Implement tip entry dialog with proper ViewModel initialization
-            // The GratuitySelectionDialog requires a GratuitySelectionViewModel to be created and initialized
-            // This requires ticket data and server list to be passed to the ViewModel
-            await _dialogService.ShowMessageAsync(
-                "Add Tip",
-                "Tip entry feature is coming soon.\n\nThis will allow you to add gratuity to the ticket.");
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var ticketRepository = scope.ServiceProvider.GetRequiredService<ITicketRepository>();
+                var userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
+                
+                // Get servers for the ticket (users who added items)
+                var serverIds = _ticket.OrderLines
+                    .Where(ol => ol.AddedBy != null)
+                    .Select(ol => ol.AddedBy!.Value)
+                    .Distinct()
+                    .ToList();
+                
+                var servers = new List<Domain.Entities.User>();
+                foreach (var serverId in serverIds)
+                {
+                    var server = await userRepository.GetByIdAsync(serverId);
+                    if (server != null)
+                    {
+                        servers.Add(server);
+                    }
+                }
+                
+                // Create ViewModel for gratuity selection dialog
+                var viewModel = new Magidesk.ViewModels.Dialogs.GratuitySelectionViewModel(
+                    ticketRepository,
+                    _ticket,
+                    servers);
+                
+                // Create Dialog
+                var dialog = new Magidesk.Views.Dialogs.GratuitySelectionDialog(viewModel);
+                
+                // Set XamlRoot for the dialog
+                if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
+                {
+                    dialog.XamlRoot = element.XamlRoot;
+                }
+                
+                await dialog.ShowAsync();
+
+                // If user confirmed gratuity
+                if (viewModel.IsConfirmed)
+                {
+                    var applyGratuityHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<ApplyGratuityCommand, ApplyGratuityResult>>();
+                    
+                    var command = new ApplyGratuityCommand
+                    {
+                        TicketId = _ticketId,
+                        GratuityAmount = new Money(viewModel.GratuityAmount, "USD"),
+                        AppliedBy = new UserId(_userService.CurrentUser!.Id),
+                        ServerAllocations = viewModel.ServerAllocations
+                            .Select(sa => new ServerGratuityAllocation(
+                                new UserId(sa.ServerId),
+                                new Money(sa.Amount, "USD")))
+                            .ToList()
+                    };
+                    
+                    var result = await applyGratuityHandler.HandleAsync(command);
+                    
+                    _logger.LogInformation("Gratuity {Amount} applied to ticket {TicketId}", 
+                        viewModel.GratuityAmount, _ticketId);
+                    
+                    // Reload ticket to get updated totals
+                    await LoadTicketAsync();
+                    
+                    await _dialogService.ShowMessageAsync(
+                        "Tip Added",
+                        $"Gratuity of {viewModel.GratuityAmount:C2} has been added to the ticket.");
+                }
+            }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to show tip entry dialog");
-            await _dialogService.ShowErrorAsync("Error", "Failed to open tip entry dialog.");
+            _logger.LogError(ex, "Failed to add tip to ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync("Error", $"Failed to add tip: {ex.Message}");
         }
     }
 
@@ -582,16 +645,74 @@ public partial class SettlePageViewModel : ViewModelBase
         {
             _logger.LogInformation("Split payment requested for ticket {TicketId}", _ticketId);
             
-            // TODO: Implement split payment dialog with proper ViewModel initialization
-            // The SplitPaymentDialog requires a SplitPaymentViewModel to be created and initialized
-            await _dialogService.ShowMessageAsync(
-                "Split Payment",
-                "Split payment feature is coming soon.\n\nThis will allow you to divide the payment across multiple payment methods or people.");
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var ticketRepository = scope.ServiceProvider.GetRequiredService<ITicketRepository>();
+                
+                // Create ViewModel for split payment dialog
+                var viewModel = new Magidesk.ViewModels.Dialogs.SplitPaymentViewModel(
+                    ticketRepository,
+                    _ticket);
+                
+                // Create Dialog
+                var dialog = new Magidesk.Views.Dialogs.SplitPaymentDialog(viewModel);
+                
+                // Set XamlRoot for the dialog
+                if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
+                {
+                    dialog.XamlRoot = element.XamlRoot;
+                }
+                
+                await dialog.ShowAsync();
+
+                // If user confirmed split payment
+                if (viewModel.IsConfirmed)
+                {
+                    var processSplitPaymentHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<ProcessSplitPaymentCommand, ProcessSplitPaymentResult>>();
+                    
+                    var command = new ProcessSplitPaymentCommand
+                    {
+                        TicketId = _ticketId,
+                        SplitPayments = viewModel.SplitPayments
+                            .Select(sp => new SplitPaymentInfo
+                            {
+                                Amount = new Money(sp.Amount, "USD"),
+                                PaymentType = sp.PaymentType
+                            })
+                            .ToList(),
+                        ProcessedBy = new UserId(_userService.CurrentUser!.Id)
+                    };
+                    
+                    var result = await processSplitPaymentHandler.HandleAsync(command);
+                    
+                    _logger.LogInformation("Split payment processed for ticket {TicketId} with {Count} payments", 
+                        _ticketId, viewModel.SplitPayments.Count);
+                    
+                    // Reload ticket to get updated balances
+                    await LoadTicketAsync();
+                    
+                    if (result.TicketIsPaid)
+                    {
+                        await _dialogService.ShowMessageAsync(
+                            "Payment Complete",
+                            $"Ticket #{_ticket.TicketNumber} has been paid in full using split payment.");
+                        
+                        // Navigate back to main page
+                        _navigationService.GoBack();
+                    }
+                    else
+                    {
+                        await _dialogService.ShowMessageAsync(
+                            "Partial Payment",
+                            $"Split payment applied.\n\nRemaining balance: {BalanceDue:C2}");
+                    }
+                }
+            }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to show split payment dialog");
-            await _dialogService.ShowErrorAsync("Error", "Failed to open split payment dialog.");
+            _logger.LogError(ex, "Failed to process split payment for ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync("Error", $"Failed to process split payment: {ex.Message}");
         }
     }
 
@@ -607,16 +728,72 @@ public partial class SettlePageViewModel : ViewModelBase
         {
             _logger.LogInformation("Apply discount requested for ticket {TicketId}", _ticketId);
             
-            // TODO: Implement discount selection dialog with proper ViewModel initialization
-            // The DiscountSelectionDialog requires a DiscountSelectionViewModel to be created and initialized
-            await _dialogService.ShowMessageAsync(
-                "Apply Discount",
-                "Discount feature is coming soon.\n\nThis will allow you to apply promotional discounts to the ticket.");
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var discountRepository = scope.ServiceProvider.GetRequiredService<IDiscountRepository>();
+                var ticketRepository = scope.ServiceProvider.GetRequiredService<ITicketRepository>();
+                
+                // Load the full ticket
+                var ticket = await ticketRepository.GetByIdAsync(_ticketId);
+                
+                if (ticket == null)
+                {
+                    _logger.LogError("Ticket {TicketId} not found", _ticketId);
+                    await _dialogService.ShowErrorAsync(
+                        "Ticket Not Found",
+                        "The ticket could not be found. It may have been deleted.");
+                    return;
+                }
+                
+                // Create ViewModel for discount selection dialog
+                var viewModel = new Magidesk.ViewModels.Dialogs.DiscountSelectionViewModel(
+                    discountRepository,
+                    ticket);
+                
+                // Create Dialog
+                var dialog = new Magidesk.Views.Dialogs.DiscountSelectionDialog(viewModel);
+                
+                // Set XamlRoot for the dialog
+                if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
+                {
+                    dialog.XamlRoot = element.XamlRoot;
+                }
+                
+                await dialog.ShowAsync();
+
+                // If user confirmed discount selection
+                if (viewModel.IsConfirmed && viewModel.SelectedDiscount != null)
+                {
+                    var applyDiscountHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<ApplyDiscountCommand>>();
+                    
+                    var command = new ApplyDiscountCommand
+                    {
+                        TicketId = _ticketId,
+                        DiscountId = viewModel.SelectedDiscount.Id,
+                        AppliedBy = new UserId(_userService.CurrentUser!.Id),
+                        AuthorizedBy = viewModel.ManagerId.HasValue 
+                            ? new UserId(viewModel.ManagerId.Value) 
+                            : null
+                    };
+                    
+                    await applyDiscountHandler.HandleAsync(command);
+                    
+                    _logger.LogInformation("Discount {DiscountName} applied to ticket {TicketId}", 
+                        viewModel.SelectedDiscount.Name, _ticketId);
+                    
+                    // Reload ticket to get updated totals
+                    await LoadTicketAsync();
+                    
+                    await _dialogService.ShowMessageAsync(
+                        "Discount Applied",
+                        $"Discount '{viewModel.SelectedDiscount.Name}' has been applied to the ticket.");
+                }
+            }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to show discount selection dialog");
-            await _dialogService.ShowErrorAsync("Error", "Failed to open discount selection dialog.");
+            _logger.LogError(ex, "Failed to apply discount to ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync("Error", $"Failed to apply discount: {ex.Message}");
         }
     }
 
@@ -630,18 +807,40 @@ public partial class SettlePageViewModel : ViewModelBase
 
         try
         {
-            // TODO: Implement receipt printing
-            // For now, show a message that this feature is coming soon
             _logger.LogInformation("Print receipt requested for ticket {TicketId}", _ticketId);
             
-            await _dialogService.ShowMessageAsync(
-                "Print Receipt",
-                $"Receipt printing is coming soon.\n\nTicket #{_ticket.TicketNumber}\nTotal: {_ticket.TotalAmount:C2}");
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var printReceiptHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<PrintReceiptCommand, PrintReceiptResult>>();
+                
+                var command = new PrintReceiptCommand
+                {
+                    TicketId = _ticketId
+                };
+                
+                var result = await printReceiptHandler.HandleAsync(command);
+                
+                if (result.Success)
+                {
+                    _logger.LogInformation("Receipt printed for ticket {TicketId}", _ticketId);
+                    
+                    await _dialogService.ShowMessageAsync(
+                        "Receipt Printed",
+                        $"Receipt has been printed.\n\nTicket #{_ticket.TicketNumber}\nTotal: {_ticket.TotalAmount:C2}");
+                }
+                else
+                {
+                    _logger.LogError("Failed to print receipt: {Error}", result.ErrorMessage);
+                    await _dialogService.ShowErrorAsync(
+                        "Print Error",
+                        $"Failed to print receipt:\n\n{result.ErrorMessage}");
+                }
+            }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to print receipt for ticket {TicketId}", _ticketId);
-            await _dialogService.ShowErrorAsync("Error", "Failed to print receipt.", ex.Message);
+            await _dialogService.ShowErrorAsync("Error", $"Failed to print receipt: {ex.Message}");
         }
     }
 

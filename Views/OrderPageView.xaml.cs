@@ -25,27 +25,43 @@ public sealed partial class OrderPageView : Page
     {
         base.OnNavigatedTo(e);
 
-        // Initialize ViewModel with navigation parameters if provided
-        if (e.Parameter is (Guid ticketId, Guid tableId))
+        System.Diagnostics.Debug.WriteLine($"OrderPageView.OnNavigatedTo - Parameter: {e.Parameter?.GetType().Name ?? "null"}");
+
+        try
         {
-            await ViewModel.InitializeAsync(ticketId, tableId);
-        }
-        else if (e.Parameter is Guid id)
-        {
-            await ViewModel.InitializeAsync(id);
-        }
-        else
-        {
-            // If no parameter provided but ViewModel has a ticket, reload it
-            // This handles the case when navigating back from SettlePageView
-            if (ViewModel.HasTicket)
+            // Initialize ViewModel with navigation parameters if provided
+            if (e.Parameter is (Guid ticketId, Guid tableId))
             {
-                await ViewModel.RefreshTicketAsync();
+                System.Diagnostics.Debug.WriteLine($"OrderPageView.OnNavigatedTo - Initializing with ticketId: {ticketId}, tableId: {tableId}");
+                await ViewModel.InitializeAsync(ticketId, tableId);
+            }
+            else if (e.Parameter is Guid id)
+            {
+                System.Diagnostics.Debug.WriteLine($"OrderPageView.OnNavigatedTo - Initializing with id: {id}");
+                await ViewModel.InitializeAsync(id);
             }
             else
             {
-                await ViewModel.InitializeAsync();
+                // If no parameter provided but ViewModel has a ticket, reload it
+                // This handles the case when navigating back from SettlePageView
+                if (ViewModel.HasTicket)
+                {
+                    System.Diagnostics.Debug.WriteLine("OrderPageView.OnNavigatedTo - Refreshing existing ticket");
+                    await ViewModel.RefreshTicketAsync();
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("OrderPageView.OnNavigatedTo - Initializing without parameters");
+                    await ViewModel.InitializeAsync();
+                }
             }
+            
+            System.Diagnostics.Debug.WriteLine("OrderPageView.OnNavigatedTo - Initialization complete");
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"OrderPageView.OnNavigatedTo - ERROR: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"OrderPageView.OnNavigatedTo - Stack: {ex.StackTrace}");
         }
     }
 }
