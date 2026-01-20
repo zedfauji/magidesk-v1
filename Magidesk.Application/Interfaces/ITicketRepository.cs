@@ -66,6 +66,12 @@ public interface ITicketRepository
     /// Begins a database transaction for atomic operations.
     /// </summary>
     Task<ITransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Clears the Entity Framework change tracker. 
+    /// Useful for retry policies to ensure fresh entity fetching.
+    /// </summary>
+    void ClearChangeTracker();
 }
 
 /// <summary>

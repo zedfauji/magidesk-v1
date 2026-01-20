@@ -311,6 +311,11 @@ public class TicketRepository : ITicketRepository
         var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         return new EfTransaction(transaction);
     }
+
+    public void ClearChangeTracker()
+    {
+        _context.ChangeTracker.Clear();
+    }
 }
 
 /// <summary>

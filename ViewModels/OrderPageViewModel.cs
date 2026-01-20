@@ -7,6 +7,11 @@ using Magidesk.Application.Queries;
 using Magidesk.Domain.Entities;
 using Magidesk.Domain.ValueObjects;
 using Magidesk.Presentation.Services;
+using Magidesk.Presentation.ViewModels.Dialogs;
+using Magidesk.Presentation.Views.Dialogs;
+using Magidesk.ViewModels;
+using Magidesk.Views;
+using Magidesk.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
@@ -343,13 +348,13 @@ public partial class OrderPageViewModel : ViewModelBase
         {
             using (var scope = _serviceScopeFactory.CreateScope())
             {
-                var getTableHandler = scope.ServiceProvider.GetRequiredService<IQueryHandler<GetTableQuery, TableDto?>>();
-                var table = await getTableHandler.HandleAsync(new GetTableQuery { TableId = _tableId.Value });
+                var getTableHandler = scope.ServiceProvider.GetRequiredService<IQueryHandler<GetTableQuery, GetTableResult>>();
+                var result = await getTableHandler.HandleAsync(new GetTableQuery { TableId = _tableId.Value });
 
-                if (table != null)
+                if (result?.Table != null)
                 {
-                    TableNumber = $"TABLE {table.TableNumber} (GUESTS: {GuestCount})";
-                    _logger.LogInformation("Loaded table {TableNumber}", table.TableNumber);
+                    TableNumber = $"TABLE {result.Table.TableNumber} (GUESTS: {GuestCount})";
+                    _logger.LogInformation("Loaded table {TableNumber}", result.Table.TableNumber);
                 }
             }
         }
@@ -375,7 +380,7 @@ public partial class OrderPageViewModel : ViewModelBase
                 Categories.Clear();
                 
                 // Add "Popular" as first category (special category that shows all)
-                Categories.Add(new ProductCategoryViewModel { Name = "Popular", IconName = "star" });
+                Categories.Add(new ProductCategoryViewModel { Name = "Popular", IconName = "\uE734" }); // FavoriteStar
                 
                 // Add categories from database
                 if (dbCategories != null)
@@ -394,11 +399,11 @@ public partial class OrderPageViewModel : ViewModelBase
                 if (Categories.Count == 1) // Only "Popular"
                 {
                     _logger.LogWarning("No categories found in database, using defaults");
-                    Categories.Add(new ProductCategoryViewModel { Name = "Food", IconName = "restaurant" });
-                    Categories.Add(new ProductCategoryViewModel { Name = "Drinks", IconName = "local_bar" });
-                    Categories.Add(new ProductCategoryViewModel { Name = "Desserts", IconName = "cake" });
-                    Categories.Add(new ProductCategoryViewModel { Name = "Sides", IconName = "fastfood" });
-                    Categories.Add(new ProductCategoryViewModel { Name = "Retail", IconName = "shopping_bag" });
+                    Categories.Add(new ProductCategoryViewModel { Name = "Food", IconName = "\uE787" }); // Restaurant
+                    Categories.Add(new ProductCategoryViewModel { Name = "Drinks", IconName = "\uE8C4" }); // Coffee
+                    Categories.Add(new ProductCategoryViewModel { Name = "Desserts", IconName = "\uE7E3" }); // Cake
+                    Categories.Add(new ProductCategoryViewModel { Name = "Sides", IconName = "\uE7E8" }); // Food
+                    Categories.Add(new ProductCategoryViewModel { Name = "Retail", IconName = "\uE719" }); // ShoppingCart
                 }
 
                 // Select first category by default (Popular)
@@ -415,8 +420,8 @@ public partial class OrderPageViewModel : ViewModelBase
             
             // Fallback to default categories on error
             Categories.Clear();
-            Categories.Add(new ProductCategoryViewModel { Name = "Popular", IconName = "star" });
-            Categories.Add(new ProductCategoryViewModel { Name = "All Items", IconName = "restaurant" });
+            Categories.Add(new ProductCategoryViewModel { Name = "Popular", IconName = "\uE734" }); // FavoriteStar
+            Categories.Add(new ProductCategoryViewModel { Name = "All Items", IconName = "\uE787" }); // Restaurant
             
             if (Categories.Any())
             {
@@ -427,21 +432,47 @@ public partial class OrderPageViewModel : ViewModelBase
     
     private string GetIconForCategory(string categoryName)
     {
-        // Map category names to Material Design icons
+        // Map category names to Segoe MDL2 Assets icon glyphs (Unicode characters)
         var lowerName = categoryName.ToLowerInvariant();
         
-        if (lowerName.Contains("food") || lowerName.Contains("meal") || lowerName.Contains("អាហារ"))
-            return "restaurant";
+        // Popular/Star
+        if (lowerName.Contains("popular"))
+            return "\uE734"; // FavoriteStar
+        // Food/Meal
+        if (lowerName.Contains("food") || lowerName.Contains("meal") || lowerName.Contains("អាហារ") || lowerName.Contains("ម្ហូប"))
+            return "\uE787"; // Restaurant
+        // Drinks/Beverages
         if (lowerName.Contains("drink") || lowerName.Contains("beverage") || lowerName.Contains("ភេសជ្ជៈ"))
-            return "local_bar";
+            return "\uE8C4"; // Drink (Coffee)
+        // Desserts
         if (lowerName.Contains("dessert") || lowerName.Contains("sweet") || lowerName.Contains("បង្អែម"))
-            return "cake";
-        if (lowerName.Contains("side") || lowerName.Contains("appetizer"))
-            return "fastfood";
+            return "\uE7E3"; // Cake
+        // Appetizers/Starters
+        if (lowerName.Contains("appetizer") || lowerName.Contains("starter"))
+            return "\uE7E8"; // Food
+        // Sides
+        if (lowerName.Contains("side"))
+            return "\uE7E8"; // Food
+        // Burgers
+        if (lowerName.Contains("burger"))
+            return "\uE7E8"; // Food
+        // Pizza
+        if (lowerName.Contains("pizza"))
+            return "\uE7E8"; // Food
+        // Salads
+        if (lowerName.Contains("salad"))
+            return "\uE7E8"; // Food
+        // Combos
+        if (lowerName.Contains("combo"))
+            return "\uE7E8"; // Food
+        // Retail/Merchandise
         if (lowerName.Contains("retail") || lowerName.Contains("merchandise"))
-            return "shopping_bag";
+            return "\uE719"; // ShoppingCart
+        // Misc
+        if (lowerName.Contains("misc"))
+            return "\uE8FD"; // More
             
-        return "restaurant"; // Default icon
+        return "\uE787"; // Default: Restaurant icon
     }
 
     private async Task LoadProductsAsync()
@@ -462,9 +493,13 @@ public partial class OrderPageViewModel : ViewModelBase
                 _allProducts.Clear();
                 foreach (var item in menuItems)
                 {
-                    // Get the full menu item to check for modifiers
+                    // Get the full menu item to check for modifiers and get group/category info
                     var menuItem = await menuRepository.GetByIdAsync(item.Id);
                     bool hasModifiers = menuItem?.ModifierGroups.Any() ?? false;
+                    
+                    // Get category and group (subcategory) names
+                    string categoryName = menuItem?.Category?.Name ?? item.CategoryName ?? "Uncategorized";
+                    string groupName = menuItem?.Group?.Name ?? string.Empty;
                     
                     _allProducts.Add(new ProductViewModel
                     {
@@ -472,8 +507,8 @@ public partial class OrderPageViewModel : ViewModelBase
                         Name = item.Name,
                         SKU = item.Id.ToString().Substring(0, 8), // Use first 8 chars of GUID as SKU
                         Price = item.Price,
-                        CategoryName = item.CategoryName ?? "Uncategorized",
-                        SubcategoryName = string.Empty,
+                        CategoryName = categoryName,
+                        SubcategoryName = groupName, // Group is the subcategory
                         HasModifiers = hasModifiers,
                         IsAvailable = item.IsActive
                     });
@@ -511,6 +546,9 @@ public partial class OrderPageViewModel : ViewModelBase
     {
         try
         {
+            _logger.LogInformation("FilterProducts called - SelectedCategory: {Category}, SelectedSubcategory: {Subcategory}, SearchQuery: {Search}, TotalProducts: {Total}",
+                SelectedCategory?.Name ?? "null", SelectedSubcategory ?? "null", SearchQuery ?? "null", _allProducts.Count);
+            
             FilteredProducts.Clear();
 
             var query = _allProducts.AsEnumerable();
@@ -522,18 +560,33 @@ public partial class OrderPageViewModel : ViewModelBase
                     p.Name.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase) ||
                     p.SKU.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)
                 );
+                _logger.LogInformation("After search filter: {Count} products", query.Count());
             }
 
             // Filter by category
             if (SelectedCategory != null && SelectedCategory.Name != "Popular")
             {
+                var beforeCount = query.Count();
                 query = query.Where(p => p.CategoryName.Equals(SelectedCategory.Name, StringComparison.OrdinalIgnoreCase));
+                _logger.LogInformation("Category filter '{Category}': {Before} -> {After} products", 
+                    SelectedCategory.Name, beforeCount, query.Count());
+                
+                // Debug: Log first few products and their categories
+                var sampleProducts = query.Take(3).ToList();
+                foreach (var p in sampleProducts)
+                {
+                    _logger.LogInformation("  Sample product: {Name}, Category: {Category}, Subcategory: {Subcategory}", 
+                        p.Name, p.CategoryName, p.SubcategoryName);
+                }
             }
 
             // Filter by subcategory
             if (!string.IsNullOrWhiteSpace(SelectedSubcategory))
             {
+                var beforeCount = query.Count();
                 query = query.Where(p => p.SubcategoryName.Equals(SelectedSubcategory, StringComparison.OrdinalIgnoreCase));
+                _logger.LogInformation("Subcategory filter '{Subcategory}': {Before} -> {After} products", 
+                    SelectedSubcategory, beforeCount, query.Count());
             }
 
             // Apply filtered results
@@ -542,8 +595,7 @@ public partial class OrderPageViewModel : ViewModelBase
                 FilteredProducts.Add(product);
             }
 
-            _logger.LogDebug("Filtered products: Category={Category}, Subcategory={Subcategory}, Search={Search}, Results={Count}",
-                SelectedCategory?.Name, SelectedSubcategory, SearchQuery, FilteredProducts.Count);
+            _logger.LogInformation("FilterProducts completed: {Count} products in FilteredProducts", FilteredProducts.Count);
         }
         catch (Exception ex)
         {
@@ -561,11 +613,15 @@ public partial class OrderPageViewModel : ViewModelBase
             {
                 var tableRepository = scope.ServiceProvider.GetRequiredService<ITableRepository>();
                 
-                // Create ViewModel for table selection dialog
-                var viewModel = new Magidesk.ViewModels.Dialogs.TableSelectionViewModel();
+                // Create ViewModel for table selection dialog with required repository
+                var viewModel = new TableSelectionViewModel(tableRepository);
+                await viewModel.InitializeAsync();
                 
                 // Create Dialog
-                var dialog = new Magidesk.Views.Dialogs.TableSelectionDialog();
+                var dialog = new Magidesk.Views.Dialogs.TableSelectionDialog
+                {
+                    DataContext = viewModel
+                };
                 
                 // Set XamlRoot for the dialog
                 if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
@@ -573,17 +629,19 @@ public partial class OrderPageViewModel : ViewModelBase
                     dialog.XamlRoot = element.XamlRoot;
                 }
                 
+                // Set close action
+                viewModel.CloseAction = () => dialog.Hide();
+                
                 await dialog.ShowAsync();
 
                 // If user confirmed selection
-                if (viewModel.SelectedTable != null)
+                if (viewModel.IsConfirmed && viewModel.SelectedTable != null)
                 {
                     _tableId = viewModel.SelectedTable.Id;
-                    GuestCount = viewModel.GuestCount;
-                    TableNumber = $"TABLE {viewModel.SelectedTable.TableNumber} (GUESTS: {GuestCount})";
+                    TableNumber = $"TABLE {viewModel.SelectedTable.TableNumber}";
                     
-                    _logger.LogInformation("Selected table {TableNumber} with {GuestCount} guests", 
-                        viewModel.SelectedTable.TableNumber, GuestCount);
+                    _logger.LogInformation("Selected table {TableNumber}", 
+                        viewModel.SelectedTable.TableNumber);
                     
                     // If we have a ticket, assign the table to it
                     if (_ticketId.HasValue)
@@ -1075,8 +1133,14 @@ public partial class OrderPageViewModel : ViewModelBase
 
     private void OnSelectCategory(ProductCategoryViewModel? category)
     {
-        if (category == null) return;
+        if (category == null)
+        {
+            _logger.LogWarning("OnSelectCategory called with null category");
+            return;
+        }
 
+        _logger.LogInformation("OnSelectCategory called with category: {CategoryName}", category.Name);
+        
         SelectedCategory = category;
         
         // Update subcategories based on selected category
@@ -1095,13 +1159,15 @@ public partial class OrderPageViewModel : ViewModelBase
             Subcategories.Add(subcategory);
         }
         
+        _logger.LogInformation("Found {Count} subcategories for category {CategoryName}: {Subcategories}", 
+            Subcategories.Count, category.Name, string.Join(", ", Subcategories));
+        
         // Clear subcategory selection when category changes
         SelectedSubcategory = null;
         
         FilterProducts();
         
-        _logger.LogDebug("Selected category: {CategoryName} with {SubcategoryCount} subcategories", 
-            category.Name, Subcategories.Count);
+        _logger.LogInformation("OnSelectCategory completed for: {CategoryName}", category.Name);
     }
 
     private void OnSelectSubcategory(string? subcategory)
@@ -1512,12 +1578,8 @@ public partial class OrderPageViewModel : ViewModelBase
                     return;
                 }
                 
-                // Prompt for starting cash amount
-                var cashEntryDialog = new Magidesk.Views.CashEntryDialog
-                {
-                    Title = "Start Session - Opening Cash",
-                    CashAmount = 0m
-                };
+                // Prompt for starting cash amount - use fully qualified name to avoid ambiguity
+                var cashEntryDialog = new Magidesk.Presentation.Views.Dialogs.CashEntryDialog();
                 
                 // Set XamlRoot for the dialog
                 if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
@@ -1525,11 +1587,14 @@ public partial class OrderPageViewModel : ViewModelBase
                     cashEntryDialog.XamlRoot = element.XamlRoot;
                 }
                 
+                cashEntryDialog.ViewModel.Title = "Start Session - Opening Cash";
+                cashEntryDialog.ViewModel.Message = "Enter the opening cash amount for this session";
+                
                 var dialogResult = await cashEntryDialog.ShowAsync();
                 
                 if (dialogResult == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
                 {
-                    var openingCash = cashEntryDialog.CashAmount;
+                    var openingCash = cashEntryDialog.ViewModel.TotalAmount;
                     
                     var openSessionHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult>>();
                     
@@ -1610,12 +1675,8 @@ public partial class OrderPageViewModel : ViewModelBase
                     return;
                 }
                 
-                // Prompt for ending cash amount
-                var cashEntryDialog = new Magidesk.Views.CashEntryDialog
-                {
-                    Title = "End Session - Closing Cash",
-                    CashAmount = 0m
-                };
+                // Prompt for ending cash amount - use fully qualified name to avoid ambiguity
+                var cashEntryDialog = new Magidesk.Presentation.Views.Dialogs.CashEntryDialog();
                 
                 // Set XamlRoot for the dialog
                 if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
@@ -1623,11 +1684,14 @@ public partial class OrderPageViewModel : ViewModelBase
                     cashEntryDialog.XamlRoot = element.XamlRoot;
                 }
                 
+                cashEntryDialog.ViewModel.Title = "End Session - Closing Cash";
+                cashEntryDialog.ViewModel.Message = "Enter the closing cash amount for this session";
+                
                 var dialogResult = await cashEntryDialog.ShowAsync();
                 
                 if (dialogResult == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
                 {
-                    var closingCash = cashEntryDialog.CashAmount;
+                    var closingCash = cashEntryDialog.ViewModel.TotalAmount;
                     
                     var closeSessionHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<CloseCashSessionCommand, CloseCashSessionResult>>();
                     
@@ -1729,6 +1793,8 @@ public partial class OrderPageViewModel : ViewModelBase
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var ticketRepository = scope.ServiceProvider.GetRequiredService<ITicketRepository>();
+                var voidTicketHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<VoidTicketCommand>>();
+                var userService = scope.ServiceProvider.GetRequiredService<IUserService>();
                 
                 // Load the ticket to pass to the dialog
                 var ticket = await ticketRepository.GetByIdAsync(_ticketId.Value);
@@ -1742,11 +1808,21 @@ public partial class OrderPageViewModel : ViewModelBase
                     return;
                 }
                 
-                // Create ViewModel for void ticket dialog
-                var viewModel = new Magidesk.ViewModels.VoidTicketViewModel(ticket);
+                // Convert domain ticket to DTO
+                var ticketDto = new TicketDto
+                {
+                    Id = ticket.Id,
+                    TicketNumber = ticket.TicketNumber,
+                    TotalAmount = ticket.TotalAmount.Amount,
+                    Status = ticket.Status
+                };
+                
+                // Create ViewModel for void ticket dialog with required dependencies
+                var viewModel = new VoidTicketViewModel(voidTicketHandler, userService);
+                viewModel.Initialize(ticketDto);
                 
                 // Create Dialog
-                var dialog = new Magidesk.Views.VoidTicketDialog()
+                var dialog = new VoidTicketDialog
                 {
                     DataContext = viewModel
                 };
@@ -1757,31 +1833,12 @@ public partial class OrderPageViewModel : ViewModelBase
                     dialog.XamlRoot = element.XamlRoot;
                 }
                 
-                await dialog.ShowAsync();
+                var result = await dialog.ShowAsync();
 
-                // If user confirmed void
-                if (viewModel.IsConfirmed)
+                // If the void was successful (dialog handles the void operation internally)
+                if (result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary && !viewModel.HasError)
                 {
-                    var voidTicketHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<VoidTicketCommand>>();
-                    
-                    var command = new VoidTicketCommand
-                    {
-                        TicketId = _ticketId.Value,
-                        Reason = viewModel.VoidReason ?? "No reason provided",
-                        VoidedBy = new UserId(_userService.CurrentUser!.Id),
-                        AuthorizedBy = viewModel.ManagerId.HasValue 
-                            ? new UserId(viewModel.ManagerId.Value) 
-                            : new UserId(_userService.CurrentUser!.Id)
-                    };
-                    
-                    await voidTicketHandler.HandleAsync(command);
-                    
-                    _logger.LogInformation("Ticket {TicketId} voided with reason: {Reason}", 
-                        _ticketId, viewModel.VoidReason);
-                    
-                    await _dialogService.ShowMessageAsync(
-                        "Ticket Voided",
-                        $"Ticket #{ticket.TicketNumber} has been voided.\n\nReason: {viewModel.VoidReason}");
+                    _logger.LogInformation("Ticket {TicketId} voided successfully", _ticketId);
                     
                     // Clear the current ticket and reset the page
                     _ticketId = null;
@@ -1819,6 +1876,9 @@ public partial class OrderPageViewModel : ViewModelBase
             {
                 var discountRepository = scope.ServiceProvider.GetRequiredService<IDiscountRepository>();
                 var ticketRepository = scope.ServiceProvider.GetRequiredService<ITicketRepository>();
+                var applyDiscountHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<ApplyDiscountCommand>>();
+                var userService = scope.ServiceProvider.GetRequiredService<IUserService>();
+                var managerPinDialog = scope.ServiceProvider.GetRequiredService<ManagerPinDialogViewModel>();
                 
                 // Load the ticket
                 var ticket = await ticketRepository.GetByIdAsync(_ticketId.Value);
@@ -1832,14 +1892,22 @@ public partial class OrderPageViewModel : ViewModelBase
                     return;
                 }
                 
-                // Create ViewModel for discount selection dialog
-                var viewModel = new Magidesk.ViewModels.Dialogs.DiscountSelectionViewModel(ticket);
+                // Create ViewModel for discount selection dialog with all required dependencies
+                var viewModel = new DiscountSelectionViewModel(
+                    discountRepository,
+                    applyDiscountHandler,
+                    userService,
+                    managerPinDialog);
+                
+                // Set ticket information
+                viewModel.TicketId = _ticketId.Value;
+                viewModel.TicketTotal = ticket.TotalAmount;
+                
+                // Load available discounts
+                await viewModel.LoadDiscountsAsync();
                 
                 // Create Dialog
-                var dialog = new Magidesk.Views.Dialogs.DiscountSelectionDialog()
-                {
-                    DataContext = viewModel
-                };
+                var dialog = new DiscountSelectionDialog(viewModel);
                 
                 // Set XamlRoot for the dialog
                 if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
@@ -1849,32 +1917,17 @@ public partial class OrderPageViewModel : ViewModelBase
                 
                 await dialog.ShowAsync();
 
-                // If user confirmed discount selection
-                if (viewModel.IsConfirmed && viewModel.SelectedDiscount != null)
+                // If discount was applied successfully
+                if (viewModel.IsSuccess)
                 {
-                    var applyDiscountHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<ApplyDiscountCommand>>();
-                    
-                    var command = new ApplyDiscountCommand
-                    {
-                        TicketId = _ticketId.Value,
-                        DiscountId = viewModel.SelectedDiscount.Id,
-                        AppliedBy = new UserId(_userService.CurrentUser!.Id),
-                        AuthorizedBy = viewModel.ManagerId.HasValue 
-                            ? new UserId(viewModel.ManagerId.Value) 
-                            : null
-                    };
-                    
-                    await applyDiscountHandler.HandleAsync(command);
-                    
-                    _logger.LogInformation("Discount {DiscountName} applied to ticket {TicketId}", 
-                        viewModel.SelectedDiscount.Name, _ticketId);
+                    _logger.LogInformation("Discount applied to ticket {TicketId}", _ticketId);
                     
                     // Reload ticket to get updated totals
                     await LoadTicketAsync();
                     
                     await _dialogService.ShowMessageAsync(
                         "Discount Applied",
-                        $"Discount '{viewModel.SelectedDiscount.Name}' has been applied to the order.");
+                        $"Discount has been applied to the order.");
                 }
             }
         }
