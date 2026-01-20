@@ -97,6 +97,7 @@ public sealed class SettleViewModel : ViewModelBase
         QuickCashCommand = new RelayCommand<string>(OnQuickCash);
         ShowGratuityDialogCommand = new AsyncRelayCommand(ShowGratuityDialogAsync);
         VoidTicketCommand = new AsyncRelayCommand(OnVoidTicketAsync);
+        RefundTicketCommand = new AsyncRelayCommand(OnRefundTicketAsync);
         ReprintReceiptCommand = new AsyncRelayCommand(OnReprintReceiptAsync);
         HoldTicketCommand = new AsyncRelayCommand(OnHoldTicketAsync);
         SplitPaymentCommand = new AsyncRelayCommand(OnSplitPaymentAsync);
@@ -118,6 +119,8 @@ public sealed class SettleViewModel : ViewModelBase
                 OnPropertyChanged(nameof(TicketNumber));
                 OnPropertyChanged(nameof(TableName));
                 OnPropertyChanged(nameof(CanHoldTicket));
+                OnPropertyChanged(nameof(CanVoidTicket));
+                OnPropertyChanged(nameof(CanRefundTicket));
                 
                 // Explicitly update observable property
                 CanAddGratuity = value != null;
@@ -217,6 +220,7 @@ public sealed class SettleViewModel : ViewModelBase
     public RelayCommand<string> QuickCashCommand { get; }
     public AsyncRelayCommand ShowGratuityDialogCommand { get; }
     public AsyncRelayCommand VoidTicketCommand { get; }
+    public AsyncRelayCommand RefundTicketCommand { get; }
     public AsyncRelayCommand ReprintReceiptCommand { get; }
     public AsyncRelayCommand HoldTicketCommand { get; }
     public AsyncRelayCommand SplitPaymentCommand { get; }
@@ -840,6 +844,61 @@ public sealed class SettleViewModel : ViewModelBase
         }
     }
 
+    private async Task OnRefundTicketAsync()
+    {
+        if (Ticket == null) return;
+        
+        try
+        {
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                // Get required services from scope
+                var previewQuery = scope.ServiceProvider.GetRequiredService<IQueryHandler<CalculateRefundPreviewQuery, RefundPreviewDto>>();
+                var refundCommand = scope.ServiceProvider.GetRequiredService<ICommandHandler<RefundTicketCommand>>();
+                var authHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<Magidesk.Application.Commands.Security.AuthorizeManagerCommand, Magidesk.Application.DTOs.Security.AuthorizationResult>>();
+                
+                // Get payments from the ticket (already loaded)
+                var payments = Ticket.Payments?.ToList() ?? new List<PaymentDto>();
+                
+                // Create RefundWizardViewModel
+                var viewModel = new RefundWizardViewModel(
+                    Ticket,
+                    previewQuery,
+                    refundCommand,
+                    authHandler,
+                    payments,
+                    async () =>
+                    {
+                        // Close action - reload ticket and navigate if fully refunded
+                        await LoadTicketAsync();
+                        
+                        if (Ticket != null && Ticket.Status == Domain.Enumerations.TicketStatus.Refunded)
+                        {
+                            StatusMessage = "Ticket Refunded.";
+                            await Task.Delay(1000);
+                            OnClose();
+                        }
+                        else
+                        {
+                            StatusMessage = "Partial refund processed.";
+                        }
+                    }
+                );
+                
+                // Create and show dialog
+                var dialog = new Magidesk.Presentation.Views.Dialogs.RefundWizard();
+                dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+                dialog.DataContext = viewModel;
+                
+                await dialog.ShowAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            Error = $"Failed to process refund: {ex.Message}";
+        }
+    }
+
     private async Task OnReprintReceiptAsync()
     {
         if (Ticket == null) return;
@@ -881,6 +940,16 @@ public sealed class SettleViewModel : ViewModelBase
     /// Can hold ticket if ticket exists and status is Open.
     /// </summary>
     public bool CanHoldTicket => Ticket != null && Ticket.Status == TicketStatus.Open;
+    
+    /// <summary>
+    /// Can void ticket if ticket exists and status is Open.
+    /// </summary>
+    public bool CanVoidTicket => Ticket != null && Ticket.Status == TicketStatus.Open;
+    
+    /// <summary>
+    /// Can refund ticket if ticket exists and status is Paid.
+    /// </summary>
+    public bool CanRefundTicket => Ticket != null && Ticket.Status == TicketStatus.Paid;
 
     private async Task OnHoldTicketAsync()
     {
