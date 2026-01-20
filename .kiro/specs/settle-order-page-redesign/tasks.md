@@ -162,8 +162,8 @@ The implementation will proceed in phases:
   - Manually test Settle Page UI in isolation
   - Ask the user if questions arise
 
-- [ ] 5. Implement OrderPageViewModel
-  - [ ] 5.1 Create OrderPageViewModel class with properties and commands
+- [-] 5. Implement OrderPageViewModel
+  - [x] 5.1 Create OrderPageViewModel class with properties and commands
     - Implement table information properties (TableNumber, GuestCount)
     - Implement ticket information properties (TicketNumber, TicketStartTime, WaitTime)
     - Implement order items collection
@@ -175,15 +175,16 @@ The implementation will proceed in phases:
     - Implement all ICommand properties
     - _Requirements: 9.2, 9.3, 9.4, 9.5, 10.1, 11.1, 12.7, 14.1, 14.2, 14.3, 23.1, 23.2_
 
-  - [ ] 5.2 Write property test for table display format
+  - [x] 5.2 Write property test for table display format
     - **Property 9: Table Display Format**
     - **Validates: Requirements 10.2**
+    - **Note**: Test created but cannot run due to unrelated test project compilation errors
 
-  - [ ] 5.3 Write property test for product search filtering
+  - [x] 5.3 Write property test for product search filtering
     - **Property 10: Product Search Filtering**
     - **Validates: Requirements 11.2, 11.3**
 
-  - [ ] 5.4 Implement search product command (SearchProductCommand)
+  - [x] 5.4 Implement search product command (SearchProductCommand)
     - Filter products by name (case-insensitive)
     - Filter products by SKU (case-insensitive)
     - Update FilteredProducts collection

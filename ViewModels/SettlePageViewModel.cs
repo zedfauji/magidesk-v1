@@ -27,6 +27,7 @@ public partial class SettlePageViewModel : ViewModelBase
     private readonly ITerminalContext _terminalContext;
     private readonly ICashSessionRepository _cashSessionRepository;
     private readonly IServiceScopeFactory _serviceScopeFactory;
+    private readonly IDialogService _dialogService;
     private readonly ILogger<SettlePageViewModel> _logger;
 
     private Guid _ticketId;
@@ -45,6 +46,7 @@ public partial class SettlePageViewModel : ViewModelBase
         ITerminalContext terminalContext,
         ICashSessionRepository cashSessionRepository,
         IServiceScopeFactory serviceScopeFactory,
+        IDialogService dialogService,
         ILogger<SettlePageViewModel> logger)
     {
         _getTicketHandler = getTicketHandler ?? throw new ArgumentNullException(nameof(getTicketHandler));
@@ -55,6 +57,7 @@ public partial class SettlePageViewModel : ViewModelBase
         _terminalContext = terminalContext ?? throw new ArgumentNullException(nameof(terminalContext));
         _cashSessionRepository = cashSessionRepository ?? throw new ArgumentNullException(nameof(cashSessionRepository));
         _serviceScopeFactory = serviceScopeFactory ?? throw new ArgumentNullException(nameof(serviceScopeFactory));
+        _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         // Initialize collections
@@ -389,7 +392,11 @@ public partial class SettlePageViewModel : ViewModelBase
                 if (paymentType == PaymentType.Cash && result.ChangeAmount.Amount > 0)
                 {
                     _logger.LogInformation("Change due: {Change}", result.ChangeAmount);
-                    // Change will be displayed in UI
+                    
+                    // Show change dialog
+                    await _dialogService.ShowMessageAsync(
+                        "Change Due",
+                        $"Change: {result.ChangeAmount.Amount:C2}\n\nPlease give the customer their change.");
                 }
 
                 // Reload ticket to get updated balances
@@ -402,8 +409,15 @@ public partial class SettlePageViewModel : ViewModelBase
                 }
                 else
                 {
-                    // Ticket is fully paid - navigate back
+                    // Ticket is fully paid - show confirmation and navigate back
                     _logger.LogInformation("Ticket {TicketId} is fully paid", _ticketId);
+                    
+                    await _dialogService.ShowMessageAsync(
+                        "Payment Complete",
+                        $"Ticket #{_ticket.TicketNumber} has been paid in full.\n\nTotal: {_ticket.TotalAmount:C2}");
+                    
+                    // Navigate back to main page
+                    _navigationService.GoBack();
                 }
             }
         }
@@ -420,10 +434,19 @@ public partial class SettlePageViewModel : ViewModelBase
 
     private async Task OnAddTipAsync()
     {
-        // TODO: Show tip entry dialog
-        // This will be implemented when the tip dialog is created
+        if (_ticket == null)
+        {
+            _logger.LogWarning("Cannot add tip: no ticket loaded");
+            return;
+        }
+
+        // TODO: Implement tip entry dialog with amount input
+        // For now, show a message that this feature is coming soon
         _logger.LogInformation("Add tip requested for ticket {TicketId}", _ticketId);
-        await Task.CompletedTask;
+        
+        await _dialogService.ShowMessageAsync(
+            "Add Tip",
+            "Tip entry feature is coming soon.\n\nThis will allow you to add gratuity to the ticket.");
     }
 
     private async Task OnHoldTicketAsync()
@@ -436,32 +459,57 @@ public partial class SettlePageViewModel : ViewModelBase
 
         try
         {
-            // Save ticket state and navigate back to order page
-            _logger.LogInformation("Holding ticket {TicketId}", _ticketId);
-            _navigationService.GoBack();
+            // Confirm with user before holding
+            var confirmed = await _dialogService.ShowConfirmationAsync(
+                "Hold Ticket",
+                $"Hold ticket #{_ticket.TicketNumber}?\n\nYou can resume this ticket later from the held tickets list.",
+                "Hold", "Cancel");
+            
+            if (confirmed)
+            {
+                _logger.LogInformation("Holding ticket {TicketId}", _ticketId);
+                _navigationService.GoBack();
+            }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to hold ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync("Error", "Failed to hold ticket.", ex.Message);
         }
-
-        await Task.CompletedTask;
     }
 
     private async Task OnSplitPaymentAsync()
     {
-        // TODO: Show split payment dialog
-        // This will be implemented when the split payment dialog is created
+        if (_ticket == null)
+        {
+            _logger.LogWarning("Cannot split payment: no ticket loaded");
+            return;
+        }
+
+        // TODO: Implement split payment dialog
+        // For now, show a message that this feature is coming soon
         _logger.LogInformation("Split payment requested for ticket {TicketId}", _ticketId);
-        await Task.CompletedTask;
+        
+        await _dialogService.ShowMessageAsync(
+            "Split Payment",
+            "Split payment feature is coming soon.\n\nThis will allow you to divide the payment across multiple payment methods or people.");
     }
 
     private async Task OnApplyDiscountAsync()
     {
-        // TODO: Show discount dialog
-        // This will be implemented when the discount dialog is created
+        if (_ticket == null)
+        {
+            _logger.LogWarning("Cannot apply discount: no ticket loaded");
+            return;
+        }
+
+        // TODO: Implement discount selection dialog
+        // For now, show a message that this feature is coming soon
         _logger.LogInformation("Apply discount requested for ticket {TicketId}", _ticketId);
-        await Task.CompletedTask;
+        
+        await _dialogService.ShowMessageAsync(
+            "Apply Discount",
+            "Discount feature is coming soon.\n\nThis will allow you to apply promotional discounts to the ticket.");
     }
 
     private async Task OnPrintReceiptAsync()
@@ -475,15 +523,18 @@ public partial class SettlePageViewModel : ViewModelBase
         try
         {
             // TODO: Implement receipt printing
-            // This will be implemented when the receipt printing service is available
+            // For now, show a message that this feature is coming soon
             _logger.LogInformation("Print receipt requested for ticket {TicketId}", _ticketId);
+            
+            await _dialogService.ShowMessageAsync(
+                "Print Receipt",
+                $"Receipt printing is coming soon.\n\nTicket #{_ticket.TicketNumber}\nTotal: {_ticket.TotalAmount:C2}");
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to print receipt for ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync("Error", "Failed to print receipt.", ex.Message);
         }
-
-        await Task.CompletedTask;
     }
 
     private async Task OnToggleTaxExemptAsync()
