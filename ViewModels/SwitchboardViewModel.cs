@@ -35,6 +35,7 @@ public class SwitchboardViewModel : ViewModelBase
     private readonly ICommandHandler<CreateTicketCommand, CreateTicketResult> _createTicketHandler;
     private readonly IUserService _userService;
     private readonly ITerminalContext _terminalContext;
+    private readonly OrderPageNavigationHelper _orderPageNavigationHelper;
 
     public Services.LocalizationService Localization { get; }
 
@@ -167,7 +168,8 @@ public class SwitchboardViewModel : ViewModelBase
         IShiftRepository shiftRepository,
         ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult> openSessionHandler,
         ILogger<SwitchboardViewModel> logger,
-        Services.LocalizationService localizationService)
+        Services.LocalizationService localizationService,
+        OrderPageNavigationHelper orderPageNavigationHelper)
     {
         _navigationService = navigationService;
         _cashSessionRepository = cashSessionRepository;
@@ -186,6 +188,7 @@ public class SwitchboardViewModel : ViewModelBase
         _shiftRepository = shiftRepository;
         _openSessionHandler = openSessionHandler;
         _logger = logger;
+        _orderPageNavigationHelper = orderPageNavigationHelper;
         Localization = localizationService;
         Title = "Magidesk POS";
 
@@ -430,7 +433,7 @@ public class SwitchboardViewModel : ViewModelBase
                 var result = await _createTicketHandler.HandleAsync(command);
                 
                 // 4. Navigate to Order Entry with New Ticket ID
-                _navigationService.Navigate(typeof(Views.OrderEntryPage), result.TicketId);
+                _navigationService.Navigate(_orderPageNavigationHelper.GetOrderPageType(), result.TicketId);
             }
             catch (Exception ex)
             {
@@ -460,7 +463,7 @@ public class SwitchboardViewModel : ViewModelBase
         if (SelectedTicket != null)
         {
             // Navigate to Order Entry with Ticket ID
-             _navigationService.Navigate(typeof(Views.OrderEntryPage), SelectedTicket.Id);
+             _navigationService.Navigate(_orderPageNavigationHelper.GetOrderPageType(), SelectedTicket.Id);
         }
         else
         {

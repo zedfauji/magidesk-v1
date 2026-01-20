@@ -27,6 +27,7 @@ public sealed class DefaultViewRoutingService : IDefaultViewRoutingService
 {
     private readonly ITerminalContext _terminalContext;
     private readonly IServiceScopeFactory _scopeFactory;
+    private readonly IFeatureFlagService _featureFlagService;
 
     // In a full implementation, these would come from a TerminalConfig entity.
     // For now, we use simple conventions:
@@ -38,10 +39,12 @@ public sealed class DefaultViewRoutingService : IDefaultViewRoutingService
 
     public DefaultViewRoutingService(
         ITerminalContext terminalContext,
-        IServiceScopeFactory scopeFactory)
+        IServiceScopeFactory scopeFactory,
+        IFeatureFlagService featureFlagService)
     {
         _terminalContext = terminalContext;
         _scopeFactory = scopeFactory;
+        _featureFlagService = featureFlagService;
     }
 
     public async Task<Type> GetDefaultViewTypeAsync(Guid? terminalId)
@@ -72,11 +75,11 @@ public sealed class DefaultViewRoutingService : IDefaultViewRoutingService
                         return typeof(Magidesk.Presentation.Views.TableMapPage);
                     }
 
-                    // If default order type allows immediate ticket creation, default to OrderEntryPage
+                    // If default order type allows immediate ticket creation, use feature flag to determine view
                     // This mimics FloreantPOS behavior where some terminals go directly to OrderView
                     if (!defaultOrderType.RequiresTable && !defaultOrderType.RequiresCustomer)
                     {
-                        return typeof(Magidesk.Presentation.Views.OrderEntryPage);
+                        return GetOrderPageType();
                     }
                 }
             }
@@ -89,6 +92,14 @@ public sealed class DefaultViewRoutingService : IDefaultViewRoutingService
             // Fallback to SwitchboardPage if anything fails
             return typeof(Magidesk.Presentation.Views.SwitchboardPage);
         }
+    }
+
+    private Type GetOrderPageType()
+    {
+        // Use feature flag to determine which order page to use
+        return _featureFlagService.UseRedesignedOrderPages
+            ? typeof(Magidesk.Presentation.Views.OrderPageView)
+            : typeof(Magidesk.Presentation.Views.OrderEntryPage);
     }
 
     private bool IsKdsTerminal()

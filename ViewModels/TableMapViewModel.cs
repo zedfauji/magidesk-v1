@@ -27,6 +27,7 @@ public class TableMapViewModel : ViewModelBase
     private Timer? _refreshTimer;
     private Microsoft.UI.Xaml.DispatcherTimer? _uiRefreshTimer;
     private readonly CancellationTokenSource _cancellationTokenSource = new();
+    private readonly OrderPageNavigationHelper _orderPageNavigationHelper;
 
     public ObservableCollection<TableDto> Tables { get; } = new();
 
@@ -118,7 +119,8 @@ public class TableMapViewModel : ViewModelBase
         IServiceScopeFactory serviceScopeFactory,
         ITerminalContext terminalContext,
         Services.LocalizationService localizationService,
-        IServiceProvider serviceProvider)
+        IServiceProvider serviceProvider,
+        OrderPageNavigationHelper orderPageNavigationHelper)
     {
         _getTableMap = getTableMap;
         _changeTable = changeTable;
@@ -129,6 +131,7 @@ public class TableMapViewModel : ViewModelBase
         _terminalContext = terminalContext;
         Localization = localizationService;
         _serviceProvider = serviceProvider;
+        _orderPageNavigationHelper = orderPageNavigationHelper;
         _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
 
         LoadTablesCommand = new AsyncRelayCommand(LoadTablesAsync);
@@ -252,7 +255,7 @@ public class TableMapViewModel : ViewModelBase
                 if (result.Success)
                 {
                      // Return to Ticket Page
-                     _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(SourceTicketId.Value, true));
+                     _navigationService.Navigate(_orderPageNavigationHelper.GetOrderPageType(), new OrderEntryNavigationContext(SourceTicketId.Value, true));
                      
                      // Reset Context
                      SetContext(null);
@@ -276,7 +279,7 @@ public class TableMapViewModel : ViewModelBase
              if (table.CurrentTicketId.HasValue)
              {
                  // Resume existing ticket
-                 _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(table.CurrentTicketId.Value, true));
+                 _navigationService.Navigate(_orderPageNavigationHelper.GetOrderPageType(), new OrderEntryNavigationContext(table.CurrentTicketId.Value, true));
              }
              else if (table.SessionId.HasValue)
              {
@@ -321,7 +324,7 @@ public class TableMapViewModel : ViewModelBase
                          if (result == ContentDialogResult.Primary)
                          {
                              // Open existing ticket
-                             _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(existingTicket.Id, true));
+                             _navigationService.Navigate(_orderPageNavigationHelper.GetOrderPageType(), new OrderEntryNavigationContext(existingTicket.Id, true));
                          }
                          // If Secondary or None, do nothing (cancel)
                          
@@ -342,7 +345,7 @@ public class TableMapViewModel : ViewModelBase
                      var ticketId = await _ticketCreationService.CreateTicketForTableAsync(table.Id, _userService.CurrentUser.Id);
                      
                      // Navigate with new Ticket ID
-                     _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(ticketId, true));
+                     _navigationService.Navigate(_orderPageNavigationHelper.GetOrderPageType(), new OrderEntryNavigationContext(ticketId, true));
                  }
                  else if (confirmResult == ContentDialogResult.Secondary)
                  {

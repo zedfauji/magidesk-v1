@@ -9,6 +9,7 @@ using Magidesk.Application.Interfaces;
 using Magidesk.Application.Queries;
 using Magidesk.Presentation.Services;
 using Magidesk.Presentation.Views;
+using Magidesk.Views;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -18,6 +19,7 @@ public class TableExplorerViewModel : ViewModelBase
     private readonly NavigationService _navigationService;
     private readonly ITicketCreationService _ticketCreationService;
     private readonly IUserService _userService;
+    private readonly OrderPageNavigationHelper _orderPageNavigationHelper;
 
     public ObservableCollection<TableDto> AllTables { get; } = new();
     public ObservableCollection<TableDto> FilteredTables { get; } = new();
@@ -42,12 +44,14 @@ public class TableExplorerViewModel : ViewModelBase
         IQueryHandler<GetTableMapQuery, GetTableMapResult> getTableMap,
         NavigationService navigationService,
         ITicketCreationService ticketCreationService,
-        IUserService userService)
+        IUserService userService,
+        OrderPageNavigationHelper orderPageNavigationHelper)
     {
         _getTableMap = getTableMap;
         _navigationService = navigationService;
         _ticketCreationService = ticketCreationService;
         _userService = userService;
+        _orderPageNavigationHelper = orderPageNavigationHelper;
 
         Title = "Table Explorer";
         LoadTablesCommand = new AsyncRelayCommand(LoadTablesAsync);
@@ -98,7 +102,7 @@ public class TableExplorerViewModel : ViewModelBase
         if (table.Status == Domain.Enumerations.TableStatus.Seat && table.CurrentTicketId.HasValue)
         {
             // Resume existing ticket
-            _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(table.CurrentTicketId.Value, true));
+            _navigationService.Navigate(_orderPageNavigationHelper.GetOrderPageType(), new OrderEntryNavigationContext(table.CurrentTicketId.Value, true));
         }
         else if (table.Status == Domain.Enumerations.TableStatus.Available)
         {
@@ -111,7 +115,7 @@ public class TableExplorerViewModel : ViewModelBase
 
                 var ticketId = await _ticketCreationService.CreateTicketForTableAsync(table.Id, _userService.CurrentUser.Id);
                 
-                _navigationService.Navigate(typeof(OrderEntryPage), new OrderEntryNavigationContext(ticketId, true));
+                _navigationService.Navigate(_orderPageNavigationHelper.GetOrderPageType(), new OrderEntryNavigationContext(ticketId, true));
             }
             catch (Exception ex)
             {

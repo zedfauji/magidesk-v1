@@ -29,6 +29,7 @@ public class SettlePageViewModelTests
     private readonly Mock<ITerminalContext> _mockTerminalContext;
     private readonly Mock<ICashSessionRepository> _mockCashSessionRepository;
     private readonly Mock<IServiceScopeFactory> _mockServiceScopeFactory;
+    private readonly Mock<IDialogService> _mockDialogService;
     private readonly Mock<ILogger<SettlePageViewModel>> _mockLogger;
 
     public SettlePageViewModelTests()
@@ -41,6 +42,7 @@ public class SettlePageViewModelTests
         _mockTerminalContext = new Mock<ITerminalContext>();
         _mockCashSessionRepository = new Mock<ICashSessionRepository>();
         _mockServiceScopeFactory = new Mock<IServiceScopeFactory>();
+        _mockDialogService = new Mock<IDialogService>();
         _mockLogger = new Mock<ILogger<SettlePageViewModel>>();
     }
 
@@ -55,6 +57,7 @@ public class SettlePageViewModelTests
             _mockTerminalContext.Object,
             _mockCashSessionRepository.Object,
             _mockServiceScopeFactory.Object,
+            _mockDialogService.Object,
             _mockLogger.Object
         );
     }
@@ -354,6 +357,157 @@ public class SettlePageViewModelTests
 
         // Assert
         _mockNavigationService.Verify(n => n.GoBack(), Times.Once);
+    }
+
+    #endregion
+
+    #region Error Handling Tests
+
+    [Fact]
+    public void ProcessPaymentCommand_WithNoTicket_SetsErrorState()
+    {
+        // Arrange
+        var mockDialogService = new Mock<IDialogService>();
+        var viewModel = new SettlePageViewModel(
+            _mockGetTicketHandler.Object,
+            _mockProcessPaymentHandler.Object,
+            _mockSetTaxExemptHandler.Object,
+            _mockNavigationService.Object,
+            _mockUserService.Object,
+            _mockTerminalContext.Object,
+            _mockCashSessionRepository.Object,
+            _mockServiceScopeFactory.Object,
+            mockDialogService.Object,
+            _mockLogger.Object
+        );
+
+        // Act
+        viewModel.ProcessPaymentCommand.Execute(PaymentType.Cash);
+
+        // Assert - Should show error dialog
+        mockDialogService.Verify(d => d.ShowErrorAsync(
+            It.IsAny<string>(),
+            It.IsAny<string>(),
+            It.IsAny<string>()), Times.Once);
+    }
+
+    [Fact]
+    public void ProcessPaymentCommand_WithZeroTenderAmount_ShowsWarning()
+    {
+        // Arrange
+        var mockDialogService = new Mock<IDialogService>();
+        var viewModel = new SettlePageViewModel(
+            _mockGetTicketHandler.Object,
+            _mockProcessPaymentHandler.Object,
+            _mockSetTaxExemptHandler.Object,
+            _mockNavigationService.Object,
+            _mockUserService.Object,
+            _mockTerminalContext.Object,
+            _mockCashSessionRepository.Object,
+            _mockServiceScopeFactory.Object,
+            mockDialogService.Object,
+            _mockLogger.Object
+        );
+
+        // Initialize with a ticket
+        var ticket = new TicketDto
+        {
+            Id = Guid.NewGuid(),
+            TicketNumber = "123",
+            TotalAmount = 100m,
+            DueAmount = 100m
+        };
+        _mockGetTicketHandler.Setup(h => h.HandleAsync(It.IsAny<GetTicketQuery>()))
+            .ReturnsAsync(ticket);
+
+        // Act - Try to process payment with zero tender amount
+        viewModel.ProcessPaymentCommand.Execute(PaymentType.Cash);
+
+        // Assert - Should show warning dialog
+        mockDialogService.Verify(d => d.ShowWarningAsync(
+            It.IsAny<string>(),
+            It.IsAny<string>()), Times.Once);
+    }
+
+    [Fact]
+    public void LoadTicketAsync_WithNetworkError_ShowsErrorDialog()
+    {
+        // Arrange
+        var mockDialogService = new Mock<IDialogService>();
+        _mockGetTicketHandler.Setup(h => h.HandleAsync(It.IsAny<GetTicketQuery>()))
+            .ThrowsAsync(new System.Net.Http.HttpRequestException("Network error"));
+
+        var viewModel = new SettlePageViewModel(
+            _mockGetTicketHandler.Object,
+            _mockProcessPaymentHandler.Object,
+            _mockSetTaxExemptHandler.Object,
+            _mockNavigationService.Object,
+            _mockUserService.Object,
+            _mockTerminalContext.Object,
+            _mockCashSessionRepository.Object,
+            _mockServiceScopeFactory.Object,
+            mockDialogService.Object,
+            _mockLogger.Object
+        );
+
+        // Act
+        var task = viewModel.InitializeAsync(Guid.NewGuid());
+        task.Wait();
+
+        // Assert - Should show error dialog
+        mockDialogService.Verify(d => d.ShowErrorAsync(
+            It.Is<string>(s => s.Contains("Network")),
+            It.IsAny<string>(),
+            It.IsAny<string>()), Times.Once);
+    }
+
+    [Fact]
+    public void IsProcessingPayment_SetsDuringPaymentProcessing()
+    {
+        // Arrange
+        var viewModel = CreateViewModel();
+        var ticket = new TicketDto
+        {
+            Id = Guid.NewGuid(),
+            TicketNumber = "123",
+            TotalAmount = 100m,
+            DueAmount = 100m
+        };
+        _mockGetTicketHandler.Setup(h => h.HandleAsync(It.IsAny<GetTicketQuery>()))
+            .ReturnsAsync(ticket);
+
+        // Initialize the viewModel
+        viewModel.InitializeAsync(ticket.Id).Wait();
+
+        // Set tender amount
+        viewModel.KeypadDigitCommand.Execute("1");
+        viewModel.KeypadDigitCommand.Execute("0");
+
+        // Assert - IsProcessingPayment should be false initially
+        Assert.False(viewModel.IsProcessingPayment);
+    }
+
+    [Fact]
+    public void IsBusy_SetsDuringAsyncOperations()
+    {
+        // Arrange
+        var viewModel = CreateViewModel();
+        var ticket = new TicketDto
+        {
+            Id = Guid.NewGuid(),
+            TicketNumber = "123",
+            TotalAmount = 100m,
+            DueAmount = 100m
+        };
+        _mockGetTicketHandler.Setup(h => h.HandleAsync(It.IsAny<GetTicketQuery>()))
+            .ReturnsAsync(ticket);
+
+        // Act
+        var task = viewModel.InitializeAsync(ticket.Id);
+        task.Wait();
+
+        // Assert - IsBusy should be false after completion
+        Assert.False(viewModel.IsBusy);
     }
 
     #endregion

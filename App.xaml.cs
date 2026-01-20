@@ -34,6 +34,11 @@ public partial class App : Microsoft.UI.Xaml.Application
 
     public static IServiceProvider Services => Host.Services;
 
+    public static T GetService<T>() where T : class
+    {
+        return Services.GetRequiredService<T>();
+    }
+
     [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
     public static extern int MessageBox(IntPtr hWnd, String text, String caption, uint type);
 
@@ -78,6 +83,10 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddSingleton<IErrorReportingService, ErrorReportingService>();
                     services.AddSingleton<IUserService, UserService>();
                     services.AddSingleton<Magidesk.Application.Interfaces.ITerminalContext, TerminalContext>();
+                    
+                    // Feature flags and navigation helpers
+                    services.AddSingleton<IFeatureFlagService, FeatureFlagService>();
+                    services.AddSingleton<OrderPageNavigationHelper>();
             // Printing
             services.AddSingleton<Magidesk.Application.Interfaces.IPrintingService, Infrastructure.Services.PrintingService>();
             services.AddSingleton<Magidesk.Application.Interfaces.IRawPrintService, Infrastructure.Printing.WindowsPrintingService>();
@@ -121,6 +130,7 @@ public partial class App : Microsoft.UI.Xaml.Application
                     services.AddTransient<Magidesk.Presentation.ViewModels.PurchaseOrderViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.SettleViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.SettlePageViewModel>();
+                    services.AddTransient<Magidesk.Presentation.ViewModels.OrderPageViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.SystemConfigViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.KitchenDisplayViewModel>();
                     services.AddTransient<Magidesk.Presentation.ViewModels.LoginViewModel>();

@@ -182,12 +182,26 @@ public partial class SettlePageViewModel : ViewModelBase
                 else
                 {
                     _logger.LogWarning("Ticket {TicketId} not found", _ticketId);
+                    await _dialogService.ShowErrorAsync(
+                        "Ticket Not Found",
+                        $"Ticket {_ticketId} could not be found. It may have been deleted or moved.");
                 }
             }
+        }
+        catch (System.Net.Http.HttpRequestException ex)
+        {
+            _logger.LogError(ex, "Network error while loading ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync(
+                "Network Error",
+                "Unable to connect to the server. Please check your network connection and try again.");
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to load ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync(
+                "Error Loading Ticket",
+                $"An error occurred while loading the ticket:\n\n{ex.Message}",
+                ex.ToString());
         }
         finally
         {
@@ -305,24 +319,36 @@ public partial class SettlePageViewModel : ViewModelBase
         if (_ticket == null)
         {
             _logger.LogWarning("Cannot process payment: no ticket loaded");
+            await _dialogService.ShowErrorAsync(
+                "Payment Error",
+                "No ticket is currently loaded. Please return to the order page and try again.");
             return;
         }
 
         if (_tenderAmount <= 0)
         {
             _logger.LogWarning("Cannot process payment: tender amount is zero or negative");
+            await _dialogService.ShowWarningAsync(
+                "Invalid Amount",
+                "Please enter a tender amount greater than zero.");
             return;
         }
 
         if (_userService.CurrentUser == null)
         {
             _logger.LogError("Cannot process payment: no user logged in");
+            await _dialogService.ShowErrorAsync(
+                "Authentication Error",
+                "No user is currently logged in. Please log in and try again.");
             return;
         }
 
         if (_terminalContext.TerminalId == null)
         {
             _logger.LogError("Cannot process payment: no terminal context");
+            await _dialogService.ShowErrorAsync(
+                "Terminal Error",
+                "Terminal context is not available. Please restart the application.");
             return;
         }
 
@@ -367,6 +393,9 @@ public partial class SettlePageViewModel : ViewModelBase
                     else
                     {
                         _logger.LogError("No active cash session for terminal {TerminalId}", terminalId);
+                        await _dialogService.ShowErrorAsync(
+                            "Session Error",
+                            "No active cash session found for this terminal. Please start a cash session before processing cash payments.");
                         return;
                     }
                 }
@@ -421,9 +450,63 @@ public partial class SettlePageViewModel : ViewModelBase
                 }
             }
         }
+        catch (System.Net.Http.HttpRequestException ex)
+        {
+            // Network connectivity error
+            _logger.LogError(ex, "Network error while processing payment for ticket {TicketId}", _ticketId);
+            
+            var retry = await _dialogService.ShowConfirmationAsync(
+                "Network Error",
+                "Unable to connect to the payment server. The payment has not been processed.\n\nWould you like to retry?",
+                "Retry", "Cancel");
+            
+            if (retry)
+            {
+                // Retry the payment
+                await ProcessPaymentAsync(paymentType);
+            }
+        }
+        catch (TimeoutException ex)
+        {
+            // Timeout error
+            _logger.LogError(ex, "Timeout while processing payment for ticket {TicketId}", _ticketId);
+            
+            var retry = await _dialogService.ShowConfirmationAsync(
+                "Timeout Error",
+                "The payment request timed out. The payment may or may not have been processed.\n\nPlease verify the payment status before retrying.",
+                "Retry", "Cancel");
+            
+            if (retry)
+            {
+                // Retry the payment
+                await ProcessPaymentAsync(paymentType);
+            }
+        }
+        catch (InvalidOperationException ex)
+        {
+            // Business logic error (e.g., invalid state)
+            _logger.LogError(ex, "Invalid operation while processing payment for ticket {TicketId}", _ticketId);
+            
+            await _dialogService.ShowErrorAsync(
+                "Payment Error",
+                $"Unable to process payment: {ex.Message}\n\nPlease check the ticket status and try again.",
+                ex.ToString());
+        }
         catch (Exception ex)
         {
+            // General error
             _logger.LogError(ex, "Failed to process payment for ticket {TicketId}", _ticketId);
+            
+            var retry = await _dialogService.ShowConfirmationAsync(
+                "Payment Error",
+                $"An error occurred while processing the payment:\n\n{ex.Message}\n\nWould you like to retry?",
+                "Retry", "Cancel");
+            
+            if (retry)
+            {
+                // Retry the payment
+                await ProcessPaymentAsync(paymentType);
+            }
         }
         finally
         {
@@ -440,13 +523,22 @@ public partial class SettlePageViewModel : ViewModelBase
             return;
         }
 
-        // TODO: Implement tip entry dialog with amount input
-        // For now, show a message that this feature is coming soon
-        _logger.LogInformation("Add tip requested for ticket {TicketId}", _ticketId);
-        
-        await _dialogService.ShowMessageAsync(
-            "Add Tip",
-            "Tip entry feature is coming soon.\n\nThis will allow you to add gratuity to the ticket.");
+        try
+        {
+            _logger.LogInformation("Add tip requested for ticket {TicketId}", _ticketId);
+            
+            // TODO: Implement tip entry dialog with proper ViewModel initialization
+            // The GratuitySelectionDialog requires a GratuitySelectionViewModel to be created and initialized
+            // This requires ticket data and server list to be passed to the ViewModel
+            await _dialogService.ShowMessageAsync(
+                "Add Tip",
+                "Tip entry feature is coming soon.\n\nThis will allow you to add gratuity to the ticket.");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to show tip entry dialog");
+            await _dialogService.ShowErrorAsync("Error", "Failed to open tip entry dialog.");
+        }
     }
 
     private async Task OnHoldTicketAsync()
@@ -486,13 +578,21 @@ public partial class SettlePageViewModel : ViewModelBase
             return;
         }
 
-        // TODO: Implement split payment dialog
-        // For now, show a message that this feature is coming soon
-        _logger.LogInformation("Split payment requested for ticket {TicketId}", _ticketId);
-        
-        await _dialogService.ShowMessageAsync(
-            "Split Payment",
-            "Split payment feature is coming soon.\n\nThis will allow you to divide the payment across multiple payment methods or people.");
+        try
+        {
+            _logger.LogInformation("Split payment requested for ticket {TicketId}", _ticketId);
+            
+            // TODO: Implement split payment dialog with proper ViewModel initialization
+            // The SplitPaymentDialog requires a SplitPaymentViewModel to be created and initialized
+            await _dialogService.ShowMessageAsync(
+                "Split Payment",
+                "Split payment feature is coming soon.\n\nThis will allow you to divide the payment across multiple payment methods or people.");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to show split payment dialog");
+            await _dialogService.ShowErrorAsync("Error", "Failed to open split payment dialog.");
+        }
     }
 
     private async Task OnApplyDiscountAsync()
@@ -503,13 +603,21 @@ public partial class SettlePageViewModel : ViewModelBase
             return;
         }
 
-        // TODO: Implement discount selection dialog
-        // For now, show a message that this feature is coming soon
-        _logger.LogInformation("Apply discount requested for ticket {TicketId}", _ticketId);
-        
-        await _dialogService.ShowMessageAsync(
-            "Apply Discount",
-            "Discount feature is coming soon.\n\nThis will allow you to apply promotional discounts to the ticket.");
+        try
+        {
+            _logger.LogInformation("Apply discount requested for ticket {TicketId}", _ticketId);
+            
+            // TODO: Implement discount selection dialog with proper ViewModel initialization
+            // The DiscountSelectionDialog requires a DiscountSelectionViewModel to be created and initialized
+            await _dialogService.ShowMessageAsync(
+                "Apply Discount",
+                "Discount feature is coming soon.\n\nThis will allow you to apply promotional discounts to the ticket.");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to show discount selection dialog");
+            await _dialogService.ShowErrorAsync("Error", "Failed to open discount selection dialog.");
+        }
     }
 
     private async Task OnPrintReceiptAsync()
@@ -542,12 +650,18 @@ public partial class SettlePageViewModel : ViewModelBase
         if (_ticket == null)
         {
             _logger.LogWarning("Cannot toggle tax exempt: no ticket loaded");
+            await _dialogService.ShowWarningAsync(
+                "No Ticket",
+                "No ticket is currently loaded. Please return to the order page and try again.");
             return;
         }
 
         if (_userService.CurrentUser == null)
         {
             _logger.LogError("Cannot toggle tax exempt: no user logged in");
+            await _dialogService.ShowErrorAsync(
+                "Authentication Error",
+                "No user is currently logged in. Please log in and try again.");
             return;
         }
 
@@ -577,11 +691,25 @@ public partial class SettlePageViewModel : ViewModelBase
             else
             {
                 _logger.LogError("Failed to toggle tax exempt: {Error}", result.Error);
+                await _dialogService.ShowErrorAsync(
+                    "Tax Exempt Error",
+                    $"Unable to change tax exempt status:\n\n{result.Error}");
             }
+        }
+        catch (System.Net.Http.HttpRequestException ex)
+        {
+            _logger.LogError(ex, "Network error while toggling tax exempt for ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync(
+                "Network Error",
+                "Unable to connect to the server. Please check your network connection and try again.");
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to toggle tax exempt for ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync(
+                "Error",
+                $"An error occurred while changing tax exempt status:\n\n{ex.Message}",
+                ex.ToString());
         }
         finally
         {

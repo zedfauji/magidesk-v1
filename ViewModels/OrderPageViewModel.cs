@@ -120,6 +120,8 @@ public partial class OrderPageViewModel : ViewModelBase
     
     public TimeSpan WaitTime => DateTime.Now - TicketStartTime;
 
+    public bool HasTicket => _ticketId.HasValue && _ticket != null;
+
     // Order Items
     public ObservableCollection<OrderItemViewModel> OrderItems { get; }
 
@@ -214,6 +216,18 @@ public partial class OrderPageViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Refreshes the current ticket data from the repository.
+    /// Used when navigating back from SettlePageView to reload any changes.
+    /// </summary>
+    public async Task RefreshTicketAsync()
+    {
+        if (_ticketId.HasValue)
+        {
+            await LoadTicketAsync();
+        }
+    }
+
     #endregion
 
     #region Private Methods
@@ -263,12 +277,26 @@ public partial class OrderPageViewModel : ViewModelBase
                 else
                 {
                     _logger.LogWarning("Ticket {TicketId} not found", _ticketId);
+                    await _dialogService.ShowWarningAsync(
+                        "Ticket Not Found",
+                        $"Ticket {_ticketId} could not be found. It may have been deleted or moved.");
                 }
             }
+        }
+        catch (System.Net.Http.HttpRequestException ex)
+        {
+            _logger.LogError(ex, "Network error while loading ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync(
+                "Network Error",
+                "Unable to connect to the server. Please check your network connection and try again.");
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to load ticket {TicketId}", _ticketId);
+            await _dialogService.ShowErrorAsync(
+                "Error Loading Ticket",
+                $"An error occurred while loading the ticket:\n\n{ex.Message}",
+                ex.ToString());
         }
         finally
         {
@@ -431,9 +459,10 @@ public partial class OrderPageViewModel : ViewModelBase
     {
         try
         {
-            // TODO: Show table selection dialog
             _logger.LogInformation("Select table requested");
             
+            // TODO: Implement table selection dialog with proper ViewModel initialization
+            // The TableSelectionDialog requires a TableSelectionViewModel to be created and initialized
             await _dialogService.ShowMessageAsync(
                 "Select Table",
                 "Table selection feature is coming soon.\n\nThis will allow you to select a table and specify guest count.");
@@ -441,6 +470,7 @@ public partial class OrderPageViewModel : ViewModelBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to show table selection dialog");
+            await _dialogService.ShowErrorAsync("Error", "Failed to open table selection dialog.");
         }
     }
 
@@ -452,6 +482,16 @@ public partial class OrderPageViewModel : ViewModelBase
     private async Task OnAddProductAsync(ProductViewModel? product)
     {
         if (product == null) return;
+
+        // Check if product is available
+        if (!product.IsAvailable)
+        {
+            _logger.LogWarning("Cannot add product {ProductName}: product not available", product.Name);
+            await _dialogService.ShowWarningAsync(
+                "Product Unavailable",
+                $"{product.Name} is currently unavailable and cannot be added to the order.");
+            return;
+        }
 
         try
         {
@@ -482,6 +522,15 @@ public partial class OrderPageViewModel : ViewModelBase
                 {
                     var menuRepository = scope.ServiceProvider.GetRequiredService<IMenuRepository>();
                     var menuItem = await menuRepository.GetByIdAsync(product.ProductId);
+                    
+                    if (menuItem == null)
+                    {
+                        _logger.LogError("Menu item {ProductId} not found", product.ProductId);
+                        await _dialogService.ShowErrorAsync(
+                            "Product Not Found",
+                            $"{product.Name} could not be found in the menu. It may have been removed.");
+                        return;
+                    }
                     
                     if (menuItem != null && menuItem.ModifierGroups.Any())
                     {
@@ -553,8 +602,8 @@ public partial class OrderPageViewModel : ViewModelBase
                 {
                     _logger.LogError("Menu item {ProductId} not found", product.ProductId);
                     await _dialogService.ShowErrorAsync(
-                        "Error",
-                        "Product not found. Please try again.");
+                        "Product Not Found",
+                        $"{product.Name} could not be found in the menu. It may have been removed.");
                     return;
                 }
                 
@@ -583,6 +632,20 @@ public partial class OrderPageViewModel : ViewModelBase
                     product.Name, _ticketId, selectedModifiers.Count);
             }
         }
+        catch (InvalidOperationException ex)
+        {
+            _logger.LogError(ex, "Invalid operation while adding product {ProductName}", product.Name);
+            await _dialogService.ShowErrorAsync(
+                "Invalid Operation",
+                $"Unable to add {product.Name} to the order:\n\n{ex.Message}");
+        }
+        catch (System.Net.Http.HttpRequestException ex)
+        {
+            _logger.LogError(ex, "Network error while adding product {ProductName}", product.Name);
+            await _dialogService.ShowErrorAsync(
+                "Network Error",
+                "Unable to connect to the server. Please check your network connection and try again.");
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to add product {ProductName}", product.Name);
@@ -599,17 +662,53 @@ public partial class OrderPageViewModel : ViewModelBase
             if (_userService.CurrentUser == null)
             {
                 _logger.LogError("Cannot create ticket: no user logged in");
+                await _dialogService.ShowErrorAsync(
+                    "Authentication Error",
+                    "No user is currently logged in. Please log in and try again.");
                 return;
             }
 
             if (_terminalContext.TerminalId == null)
             {
                 _logger.LogError("Cannot create ticket: no terminal context");
+                await _dialogService.ShowErrorAsync(
+                    "Terminal Error",
+                    "Terminal context is not available. Please restart the application.");
                 return;
             }
 
             using (var scope = _serviceScopeFactory.CreateScope())
             {
+                // Check if there's an active session
+                var cashSessionRepository = scope.ServiceProvider.GetRequiredService<ICashSessionRepository>();
+                var activeSession = await cashSessionRepository.GetOpenSessionByTerminalIdAsync(_terminalContext.TerminalId.Value);
+                
+                if (activeSession == null)
+                {
+                    _logger.LogError("Cannot create ticket: no active session");
+                    
+                    var startSession = await _dialogService.ShowConfirmationAsync(
+                        "No Active Session",
+                        "There is no active POS session. You must start a session before creating orders.\n\nWould you like to start a session now?",
+                        "Start Session", "Cancel");
+                    
+                    if (startSession)
+                    {
+                        await OnStartSessionAsync();
+                        // After starting session, try again
+                        activeSession = await cashSessionRepository.GetOpenSessionByTerminalIdAsync(_terminalContext.TerminalId.Value);
+                        if (activeSession == null)
+                        {
+                            // Session start failed
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                
                 var createTicketHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<CreateTicketCommand, CreateTicketResult>>();
                 
                 var command = new CreateTicketCommand
@@ -625,9 +724,26 @@ public partial class OrderPageViewModel : ViewModelBase
                 _logger.LogInformation("Created new ticket {TicketId}", _ticketId);
             }
         }
+        catch (InvalidOperationException ex)
+        {
+            _logger.LogError(ex, "Invalid operation while creating ticket");
+            await _dialogService.ShowErrorAsync(
+                "Invalid Operation",
+                $"Unable to create ticket:\n\n{ex.Message}");
+        }
+        catch (System.Net.Http.HttpRequestException ex)
+        {
+            _logger.LogError(ex, "Network error while creating ticket");
+            await _dialogService.ShowErrorAsync(
+                "Network Error",
+                "Unable to connect to the server. Please check your network connection and try again.");
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to create ticket");
+            await _dialogService.ShowErrorAsync(
+                "Error",
+                $"Failed to create ticket: {ex.Message}");
         }
     }
 
@@ -643,6 +759,9 @@ public partial class OrderPageViewModel : ViewModelBase
             if (_ticket == null)
             {
                 _logger.LogError("Cannot edit item: ticket not loaded");
+                await _dialogService.ShowErrorAsync(
+                    "Error",
+                    "Ticket is not loaded. Please refresh and try again.");
                 return;
             }
 
@@ -650,6 +769,9 @@ public partial class OrderPageViewModel : ViewModelBase
             if (orderLine == null)
             {
                 _logger.LogError("Order line {OrderLineId} not found in ticket", item.OrderItemId);
+                await _dialogService.ShowErrorAsync(
+                    "Item Not Found",
+                    "The order item could not be found. It may have been removed.");
                 return;
             }
 
@@ -663,8 +785,8 @@ public partial class OrderPageViewModel : ViewModelBase
                 {
                     _logger.LogError("Menu item {MenuItemId} not found", orderLine.MenuItemId);
                     await _dialogService.ShowErrorAsync(
-                        "Error",
-                        "Product not found. Please try again.");
+                        "Product Not Found",
+                        "The product could not be found in the menu. It may have been removed.");
                     return;
                 }
 
@@ -745,6 +867,20 @@ public partial class OrderPageViewModel : ViewModelBase
                 }
             }
         }
+        catch (InvalidOperationException ex)
+        {
+            _logger.LogError(ex, "Invalid operation while editing order item {ItemId}", item.OrderItemId);
+            await _dialogService.ShowErrorAsync(
+                "Invalid Operation",
+                $"Unable to edit item:\n\n{ex.Message}");
+        }
+        catch (System.Net.Http.HttpRequestException ex)
+        {
+            _logger.LogError(ex, "Network error while editing order item {ItemId}", item.OrderItemId);
+            await _dialogService.ShowErrorAsync(
+                "Network Error",
+                "Unable to connect to the server. Please check your network connection and try again.");
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to edit order item {ItemId}", item.OrderItemId);
@@ -779,9 +915,26 @@ public partial class OrderPageViewModel : ViewModelBase
                     item.OrderItemId, _ticketId);
             }
         }
+        catch (InvalidOperationException ex)
+        {
+            _logger.LogError(ex, "Invalid operation while removing order item {ItemId}", item.OrderItemId);
+            await _dialogService.ShowErrorAsync(
+                "Invalid Operation",
+                $"Unable to remove item:\n\n{ex.Message}");
+        }
+        catch (System.Net.Http.HttpRequestException ex)
+        {
+            _logger.LogError(ex, "Network error while removing order item {ItemId}", item.OrderItemId);
+            await _dialogService.ShowErrorAsync(
+                "Network Error",
+                "Unable to connect to the server. Please check your network connection and try again.");
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to remove order item {ItemId}", item.OrderItemId);
+            await _dialogService.ShowErrorAsync(
+                "Error",
+                $"Failed to remove item: {ex.Message}");
         }
     }
 
@@ -893,6 +1046,19 @@ public partial class OrderPageViewModel : ViewModelBase
         if (!_ticketId.HasValue)
         {
             _logger.LogWarning("Cannot navigate to settle: no ticket");
+            await _dialogService.ShowWarningAsync(
+                "No Ticket",
+                "Please add items to the order before settling.");
+            return;
+        }
+
+        // Check if there are any items in the order
+        if (OrderItems.Count == 0)
+        {
+            _logger.LogWarning("Cannot navigate to settle: no items in order");
+            await _dialogService.ShowWarningAsync(
+                "Empty Order",
+                "Please add items to the order before settling.");
             return;
         }
 
@@ -906,6 +1072,9 @@ public partial class OrderPageViewModel : ViewModelBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to navigate to settle page");
+            await _dialogService.ShowErrorAsync(
+                "Navigation Error",
+                $"Failed to open settle page: {ex.Message}");
         }
     }
 
@@ -995,13 +1164,16 @@ public partial class OrderPageViewModel : ViewModelBase
         {
             _logger.LogInformation("Apply discount requested");
             
+            // TODO: Implement discount selection dialog with proper ViewModel initialization
+            // The DiscountSelectionDialog requires a DiscountSelectionViewModel to be created and initialized
             await _dialogService.ShowMessageAsync(
                 "Apply Discount",
                 "Discount feature is coming soon.\n\nThis will allow you to apply promotional discounts.");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to show discount dialog");
+            _logger.LogError(ex, "Failed to show discount selection dialog");
+            await _dialogService.ShowErrorAsync("Error", "Failed to open discount selection dialog.");
         }
     }
 

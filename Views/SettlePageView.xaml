@@ -551,5 +551,35 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
+
+        <!-- Loading Indicator Overlay -->
+        <Grid Grid.RowSpan="3" 
+              Background="#80000000" 
+              Visibility="{x:Bind ViewModel.IsBusy, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="16">
+                <ProgressRing IsActive="True" Width="60" Height="60"/>
+                <TextBlock Text="Processing..." 
+                           Style="{StaticResource SubtitleTextBlockStyle}" 
+                           HorizontalAlignment="Center"
+                           Foreground="White"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Payment Processing Indicator -->
+        <Grid Grid.RowSpan="3" 
+              Background="#80000000" 
+              Visibility="{x:Bind ViewModel.IsProcessingPayment, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="16">
+                <ProgressRing IsActive="True" Width="60" Height="60"/>
+                <TextBlock Text="Processing Payment..." 
+                           Style="{StaticResource SubtitleTextBlockStyle}" 
+                           HorizontalAlignment="Center"
+                           Foreground="White"/>
+                <TextBlock Text="Please wait..." 
+                           Style="{StaticResource CaptionTextBlockStyle}" 
+                           HorizontalAlignment="Center"
+                           Foreground="#CCFFFFFF"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

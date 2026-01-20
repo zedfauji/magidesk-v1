@@ -23,6 +23,7 @@ public class OpenTicketsListViewModel : ViewModelBase
     private readonly ICommandHandler<TransferTicketCommand> _transferTicketHandler;
     private readonly NavigationService _navigationService;
     private readonly IUserService _userService;
+    private readonly OrderPageNavigationHelper _orderPageNavigationHelper;
 
     private ObservableCollection<TicketDto> _tickets = new();
     public ObservableCollection<TicketDto> Tickets
@@ -71,13 +72,15 @@ public class OpenTicketsListViewModel : ViewModelBase
         IQueryHandler<GetUsersQuery, IEnumerable<UserDto>> getUsersHandler,
         ICommandHandler<TransferTicketCommand> transferTicketHandler,
         NavigationService navigationService,
-        IUserService userService)
+        IUserService userService,
+        OrderPageNavigationHelper orderPageNavigationHelper)
     {
         _getOpenTicketsHandler = getOpenTicketsHandler;
         _getUsersHandler = getUsersHandler;
         _transferTicketHandler = transferTicketHandler;
         _navigationService = navigationService;
         _userService = userService;
+        _orderPageNavigationHelper = orderPageNavigationHelper;
 
         ResumeCommand = new AsyncRelayCommand(ResumeAsync, () => SelectedTicket != null);
         TransferCommand = new AsyncRelayCommand(TransferAsync, () => SelectedTicket != null);
@@ -101,7 +104,7 @@ public class OpenTicketsListViewModel : ViewModelBase
     {
         if (SelectedTicket != null)
         {
-            _navigationService.Navigate(typeof(Views.OrderEntryPage), SelectedTicket.Id);
+            _navigationService.Navigate(_orderPageNavigationHelper.GetOrderPageType(), SelectedTicket.Id);
             // Close dialog logic would be here if controlled by VM, but currently handled by View/Dialog result
         }
     }
