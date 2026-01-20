@@ -41,6 +41,7 @@ public partial class SettlePageViewModel : ViewModelBase
     private string _tenderAmountInput = ""; // Raw input string without formatting
     private DateTime _lastKeypadPress = DateTime.MinValue;
     private const int KEYPAD_DEBOUNCE_MS = 200; // Debounce time in milliseconds
+    private Microsoft.UI.Xaml.XamlRoot? _xamlRoot; // Store XamlRoot for dialogs
 
     public SettlePageViewModel(
         IQueryHandler<GetTicketQuery, TicketDto?> getTicketHandler,
@@ -153,6 +154,14 @@ public partial class SettlePageViewModel : ViewModelBase
     {
         _ticketId = ticketId;
         await LoadTicketAsync();
+    }
+    
+    /// <summary>
+    /// Sets the XamlRoot for dialogs. Must be called from the View after it's loaded.
+    /// </summary>
+    public void SetXamlRoot(Microsoft.UI.Xaml.XamlRoot xamlRoot)
+    {
+        _xamlRoot = xamlRoot;
     }
 
     #endregion
@@ -578,13 +587,8 @@ public partial class SettlePageViewModel : ViewModelBase
                 // Create Dialog
                 var dialog = new GratuitySelectionDialog(viewModel);
                 
-                // Set XamlRoot for the dialog
-                if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
-                {
-                    dialog.XamlRoot = element.XamlRoot;
-                }
-                
-                await dialog.ShowAsync();
+                // Use NavigationService to show dialog (handles XamlRoot automatically)
+                await _navigationService.ShowDialogAsync(dialog);
 
                 // Reload ticket to get updated totals (gratuity is applied within the dialog)
                 await LoadTicketAsync();

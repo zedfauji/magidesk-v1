@@ -1288,13 +1288,27 @@ public class Ticket
     }
 
     /// <summary>
-    /// Increments the ticket version for optimistic concurrency control.
+    /// [OBSOLETE] Do NOT call this method.
     /// 
-    /// IMPORTANT: EF Core's .IsConcurrencyToken() only uses Version in the WHERE clause.
-    /// It does NOT auto-increment integer Version fields (that's only for byte[] RowVersion).
-    /// Therefore, manual increment calls ARE REQUIRED before SaveChanges.
+    /// Version is a concurrency token managed exclusively by VersionIncrementInterceptor.
+    /// Manual mutation of Version breaks EF Core's optimistic concurrency mechanism,
+    /// causing deterministic DbUpdateConcurrencyException (0 rows affected).
+    /// 
+    /// EF Core uses OriginalValues["Version"] in the WHERE clause of UPDATE statements.
+    /// When you manually increment Version before SaveChanges, you create a mismatch:
+    /// - OriginalValues["Version"] = N (from load)
+    /// - CurrentValues["Version"] = N+1 (manual increment)
+    /// - EF generates: UPDATE ... WHERE Version = N
+    /// - But expects to set Version = N+2 (interceptor increments again)
+    /// This causes the WHERE clause to match, but the concurrency check fails.
+    /// 
+    /// CORRECT APPROACH:
+    /// - Remove all calls to IncrementVersion()
+    /// - Let VersionIncrementInterceptor handle Version during SaveChanges
+    /// - Version will be automatically incremented when entity is Modified or has Added/Deleted children
     /// </summary>
-    private void IncrementVersion()
+    [Obsolete("Do NOT manually increment Version. Use VersionIncrementInterceptor instead. Manual mutation breaks optimistic concurrency.", error: true)]
+    public void IncrementVersion()
     {
         Version++;
     }

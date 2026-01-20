@@ -22,6 +22,8 @@ public class MenuRepository : IMenuRepository
     public async Task<MenuItem?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _context.MenuItems
+            .Include(m => m.Category) // Include Category navigation property
+            .Include(m => m.Group)    // Include Group navigation property
             .Include(m => m.ModifierGroups)
                 .ThenInclude(mmg => mmg.ModifierGroup)
                     .ThenInclude(mg => mg.Modifiers)

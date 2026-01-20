@@ -56,6 +56,9 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
                 {
                     throw new Domain.Exceptions.BusinessRuleViolationException($"Ticket {command.TicketId} not found.");
                 }
+                
+                _logger.LogInformation("[RETRY-DIAG] Retry {Retry}: Fetched Ticket {TicketId} Version {Version}", currentRetry, ticket.Id, ticket.Version);
+
 
                 // 1. Get MenuItem and Handle Stock (G.2)
                 var menuItem = await _menuRepository.GetByIdAsync(command.MenuItemId, cancellationToken);
@@ -132,6 +135,13 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
 
                 // Add to ticket
                 ticket.AddOrderLine(orderLine);
+
+                // FIX: Explicitly mark as Added to prevent DbUpdateConcurrencyException (EF Core incorrect Modified detection)
+                _ticketRepository.MarkOrderLineAsAdded(orderLine);
+
+                // NOTE: Version increment is now handled automatically by VersionIncrementInterceptor
+                // during SaveChanges. Do NOT manually increment Version here as it breaks EF Core's
+                // optimistic concurrency mechanism.
 
                 // Update ticket
                 await _ticketRepository.UpdateAsync(ticket, cancellationToken);

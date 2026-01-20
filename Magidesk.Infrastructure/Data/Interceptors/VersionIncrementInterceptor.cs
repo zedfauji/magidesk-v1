@@ -12,15 +12,39 @@ namespace Magidesk.Infrastructure.Data.Interceptors;
 /// EF Core's .IsConcurrencyToken() uses Version in the WHERE clause for optimistic concurrency,
 /// but does NOT auto-increment integer Version fields (only byte[] RowVersion).
 /// This interceptor provides the auto-increment behavior.
+/// 
+/// IMPORTANT: Uses thread-local tracking to prevent double-increment when EF's change detection
+/// triggers the interceptor multiple times during a single SaveChanges operation.
 /// </summary>
 public class VersionIncrementInterceptor : SaveChangesInterceptor
 {
+    // Thread-local flag to prevent re-entrance when EF's change detection triggers the interceptor recursively
+    [ThreadStatic]
+    private static bool _isExecuting;
+
+
+
+
     public override InterceptionResult<int> SavingChanges(
         DbContextEventData eventData,
         InterceptionResult<int> result)
     {
-        IncrementVersionForModifiedEntities(eventData);
-        return base.SavingChanges(eventData, result);
+        // Prevent re-entrance
+        if (_isExecuting)
+        {
+            return base.SavingChanges(eventData, result);
+        }
+
+        try
+        {
+            _isExecuting = true;
+            IncrementVersionForModifiedEntities(eventData);
+            return base.SavingChanges(eventData, result);
+        }
+        finally
+        {
+            _isExecuting = false;
+        }
     }
 
     public override ValueTask<InterceptionResult<int>> SavingChangesAsync(
@@ -28,8 +52,26 @@ public class VersionIncrementInterceptor : SaveChangesInterceptor
         InterceptionResult<int> result,
         CancellationToken cancellationToken = default)
     {
-        IncrementVersionForModifiedEntities(eventData);
-        return base.SavingChangesAsync(eventData, result, cancellationToken);
+
+
+        // Prevent re-entrance: If we're already executing, skip (EF's change detection triggered us recursively)
+        if (_isExecuting)
+        {
+            System.Diagnostics.Debug.WriteLine("[VERSION-INTERCEPTOR] Re-entrance detected - skipping");
+            return base.SavingChangesAsync(eventData, result, cancellationToken);
+        }
+
+        try
+        {
+            _isExecuting = true;
+            System.Diagnostics.Debug.WriteLine("[VERSION-INTERCEPTOR] SavingChangesAsync intercepted!");
+            IncrementVersionForModifiedEntities(eventData);
+            return base.SavingChangesAsync(eventData, result, cancellationToken);
+        }
+        finally
+        {
+            _isExecuting = false;
+        }
     }
 
     private static void IncrementVersionForModifiedEntities(DbContextEventData eventData)
@@ -45,11 +87,13 @@ public class VersionIncrementInterceptor : SaveChangesInterceptor
             var ticket = ticketEntry.Entity;
             var shouldIncrementVersion = false;
 
+            System.Diagnostics.Debug.WriteLine($"[VERSION-INTERCEPTOR] Examining Ticket {ticket.Id}, State: {ticketEntry.State}, Current Version: {ticket.Version}");
+
             // Case 1: Ticket itself is Modified
             if (ticketEntry.State == EntityState.Modified)
             {
                 shouldIncrementVersion = true;
-                Console.WriteLine($"[VERSION-INTERCEPTOR] Ticket {ticket.Id} is Modified");
+                System.Diagnostics.Debug.WriteLine($"[VERSION-INTERCEPTOR] Ticket {ticket.Id} is Modified");
             }
             // Case 2: Ticket is Unchanged but has Added/Deleted children (e.g., OrderLines, Payments)
             else if (ticketEntry.State == EntityState.Unchanged)
@@ -64,7 +108,7 @@ public class VersionIncrementInterceptor : SaveChangesInterceptor
                     shouldIncrementVersion = true;
                     // Mark the ticket as Modified so EF Core updates it
                     ticketEntry.State = EntityState.Modified;
-                    Console.WriteLine($"[VERSION-INTERCEPTOR] Ticket {ticket.Id} has Added/Deleted children, marking as Modified");
+                    System.Diagnostics.Debug.WriteLine($"[VERSION-INTERCEPTOR] Ticket {ticket.Id} has Added/Deleted children, marking as Modified");
                 }
             }
 
@@ -72,7 +116,12 @@ public class VersionIncrementInterceptor : SaveChangesInterceptor
             {
                 var oldVersion = ticket.Version;
                 ticket.Version++;
-                Console.WriteLine($"[VERSION-INTERCEPTOR] Incremented ticket {ticket.Id} version: {oldVersion} → {ticket.Version}");
+                System.Diagnostics.Debug.WriteLine($"[VERSION-INTERCEPTOR] Incremented ticket {ticket.Id} version: {oldVersion} → {ticket.Version}");
+                
+                // Verify EF tracking state
+                var origVal = ticketEntry.OriginalValues.GetValue<int>("Version");
+                var currVal = ticketEntry.CurrentValues.GetValue<int>("Version");
+                System.Diagnostics.Debug.WriteLine($"[VERSION-INTERCEPTOR] EF Tracking - Original: {origVal}, Current: {currVal}");
             }
         }
     }

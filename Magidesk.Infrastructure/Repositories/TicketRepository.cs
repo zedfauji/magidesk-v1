@@ -251,44 +251,49 @@ public class TicketRepository : ITicketRepository
             // without manual state management.
             var entry = _context.Entry(ticket);
             
-            Console.WriteLine($"[DIAGNOSTIC-REPO] UpdateAsync called - TicketId: {ticket.Id}, Version: {ticket.Version}, EntryState: {entry.State}");
+            System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] UpdateAsync called - TicketId: {ticket.Id}, Version: {ticket.Version}, EntryState: {entry.State}");
             
             if (entry.State == EntityState.Detached)
             {
-                Console.WriteLine($"[DIAGNOSTIC-REPO] Entity is Detached. Calling Update() to attach.");
-                // If it IS detached (e.g. from a different scope or created manually), attach it.
+                System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] Entity is Detached. Calling Update() to attach.");
                 _context.Tickets.Update(ticket);
             }
             else if (entry.State == EntityState.Unchanged)
             {
-                Console.WriteLine($"[DIAGNOSTIC-REPO] Entity is Unchanged. Marking as Modified.");
-                // Ensure the root is marked as Modified to trigger checking
-                // (though typically manipulating children triggers it anyway)
+                System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] Entity is Unchanged. Marking as Modified.");
                 entry.State = EntityState.Modified;
             }
             else
             {
-                Console.WriteLine($"[DIAGNOSTIC-REPO] Entity state is {entry.State}. Proceeding to SaveChanges.");
+                 System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] Entity state is {entry.State}. Proceeding to SaveChanges.");
             }
 
-            Console.WriteLine($"[DIAGNOSTIC-REPO] Calling SaveChangesAsync...");
+            // Log Version Tracking Info
+            if (entry.State == EntityState.Modified || entry.State == EntityState.Unchanged) // Should be modified by now or naturally
+            {
+                var origVersion = entry.OriginalValues.GetValue<int>("Version");
+                var currVersion = entry.CurrentValues.GetValue<int>("Version");
+                var dbVal = await entry.GetDatabaseValuesAsync(cancellationToken);
+                var dbVersion = dbVal?.GetValue<int>("Version");
+
+                System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] Pre-Save Version Check: Original={origVersion}, Current={currVersion}, DB_Actual={dbVersion}");
+            }
+
+            System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] Calling SaveChangesAsync...");
             await _context.SaveChangesAsync(cancellationToken);
-            Console.WriteLine($"[DIAGNOSTIC-REPO] SaveChangesAsync completed successfully!");
+            System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] SaveChangesAsync completed successfully!");
         }
         catch (DbUpdateConcurrencyException ex)
         {
-            Console.WriteLine($"[DIAGNOSTIC-REPO] DbUpdateConcurrencyException caught!");
-            Console.WriteLine($"[DIAGNOSTIC-REPO] Exception Message: {ex.Message}");
-            Console.WriteLine($"[DIAGNOSTIC-REPO] Affected Entities: {ex.Entries?.Count ?? 0}");
+            System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] DbUpdateConcurrencyException caught!");
+            System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] Exception Message: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] Affected Entities: {ex.Entries?.Count ?? 0}");
             
             if (ex.Entries != null && ex.Entries.Any())
             {
                 foreach (var entry in ex.Entries)
                 {
-                    if (entry.Entity is Ticket t)
-                    {
-                        Console.WriteLine($"[DIAGNOSTIC-REPO] Failed Ticket - ID: {t.Id}, Version: {t.Version}");
-                    }
+                    System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] Failed Entity Type: {entry.Entity.GetType().Name}, State: {entry.State}");
                 }
             }
             
@@ -315,6 +320,43 @@ public class TicketRepository : ITicketRepository
     public void ClearChangeTracker()
     {
         _context.ChangeTracker.Clear();
+    }
+
+    public void MarkOrderLineAsAdded(OrderLine orderLine)
+    {
+        // 1. Mark the OrderLine itself as Added
+        _context.Entry(orderLine).State = EntityState.Added;
+
+        // 2. Explicitly mark Owned Entities (Money types) as Added
+        //    This is required because forcing State=Added on the root entity
+        //    does NOT automatically propagate to Owned Types when they are treated as separate entries internally.
+        
+        var entry = _context.Entry(orderLine);
+        
+        // Mark all Money properties
+        if (entry.Reference(o => o.UnitPrice).TargetEntry != null)
+            entry.Reference(o => o.UnitPrice).TargetEntry!.State = EntityState.Added;
+            
+        if (entry.Reference(o => o.SubtotalAmount).TargetEntry != null)
+            entry.Reference(o => o.SubtotalAmount).TargetEntry!.State = EntityState.Added;
+            
+        if (entry.Reference(o => o.SubtotalAmountWithoutModifiers).TargetEntry != null)
+            entry.Reference(o => o.SubtotalAmountWithoutModifiers).TargetEntry!.State = EntityState.Added;
+            
+        if (entry.Reference(o => o.DiscountAmount).TargetEntry != null)
+            entry.Reference(o => o.DiscountAmount).TargetEntry!.State = EntityState.Added;
+            
+        if (entry.Reference(o => o.TaxAmount).TargetEntry != null)
+            entry.Reference(o => o.TaxAmount).TargetEntry!.State = EntityState.Added;
+            
+        if (entry.Reference(o => o.TaxAmountWithoutModifiers).TargetEntry != null)
+            entry.Reference(o => o.TaxAmountWithoutModifiers).TargetEntry!.State = EntityState.Added;
+            
+        if (entry.Reference(o => o.TotalAmount).TargetEntry != null)
+            entry.Reference(o => o.TotalAmount).TargetEntry!.State = EntityState.Added;
+            
+        if (entry.Reference(o => o.TotalAmountWithoutModifiers).TargetEntry != null)
+            entry.Reference(o => o.TotalAmountWithoutModifiers).TargetEntry!.State = EntityState.Added;
     }
 }
 

@@ -1,0 +1,197 @@
+=== MAGIDESK FORENSIC INVESTIGATION TOOL ===
+[SETUP] DbContext Created. Hash: 28880957
+[SETUP] Interceptor Retrieved from DI. Hash: 58602024
+
+--- PHASE 1: CREATE TICKET ---
+[ACTION] Saving Ticket (Insert)...
+[STATE] Ticket Inserted. Version: 1
+
+--- PHASE 2: ADD ORDER LINE ---
+[ACTION] Adding OrderLine to Ticket...
+[DEBUG] ChangeTracker State BEFORE Save:
+[DEBUG] ChangeTracker DebugView:
+Ticket {Id: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    Id: '9b53b27c-a170-424e-86fb-6034b5376a44' PK
+    ActiveDate: '1/20/2026 11:03:51 PM' Originally '1/20/2026 11:03:51 PM'
+    AssignedDriverId: <null>
+    ClosedAt: <null>
+    ClosedBy: <null>
+    CreatedAt: '1/20/2026 11:03:51 PM'
+    CreatedBy: '5e5474e3-3ff5-4f54-b582-cc7710fa59cf'
+    CustomerId: <null>
+    CustomerWillPickup: 'False'
+    DeliveryAddress: <null>
+    DeliveryDate: <null>
+    DispatchedTime: <null>
+    ExtraDeliveryInfo: <null>
+    GlobalId: <null>
+    HeldAt: <null>
+    HeldBy: <null>
+    HoldReason: <null>
+    IsBarTab: 'False'
+    IsReOpened: 'False'
+    IsTaxExempt: 'False'
+    Note: <null>
+    NumberOfGuests: 1
+    OpenedAt: '1/20/2026 11:03:51 PM' Originally <null>
+    OrderTypeId: '403f3716-5349-441f-88dd-2a97d4c610eb'
+    PriceIncludesTax: 'False'
+    Properties: 'System.Collections.Generic.Dictionary`2[System.String,System...' Originally 'System.Collections.Generic.Dictionary`2[System.String,System...'
+    ReadyTime: <null>
+    SessionId: <null>
+    ShiftId: '9a9c57ab-72d2-426b-91ce-448985b65bb0'
+    Status: 'Open' Originally 'Draft'
+    TableNumbers: 'System.Collections.Generic.List`1[System.Int32]' Originally 'System.Collections.Generic.List`1[System.Int32]'
+    TerminalId: '95581d2b-ae41-42ce-881c-a6a69d76c957'
+    TicketNumber: 1001
+    Version: 1
+    VoidedBy: <null>
+  AdjustmentAmount: {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44}
+  AdvanceAmount: {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44}
+  DeliveryChargeAmount: {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44}
+  DiscountAmount: <not found>
+  Discounts: []
+  DueAmount: <not found>
+  Gratuity: <null>
+  OrderLines: [<not found>]
+  PaidAmount: <not found>
+  Payments: []
+  ServiceChargeAmount: {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44}
+  SubtotalAmount: <not found>
+  TaxAmount: <not found>
+  TotalAmount: <not found>
+Ticket.AdjustmentAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.AdvanceAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.DeliveryChargeAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.DiscountAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.DueAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.PaidAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.ServiceChargeAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.SubtotalAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.TaxAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.TotalAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+
+[DEBUG] ChangeTracker DebugView:
+Ticket {Id: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    Id: '9b53b27c-a170-424e-86fb-6034b5376a44' PK
+    ActiveDate: '1/20/2026 11:03:51 PM' Originally '1/20/2026 11:03:51 PM'
+    AssignedDriverId: <null>
+    ClosedAt: <null>
+    ClosedBy: <null>
+    CreatedAt: '1/20/2026 11:03:51 PM'
+    CreatedBy: '5e5474e3-3ff5-4f54-b582-cc7710fa59cf'
+    CustomerId: <null>
+    CustomerWillPickup: 'False'
+    DeliveryAddress: <null>
+    DeliveryDate: <null>
+    DispatchedTime: <null>
+    ExtraDeliveryInfo: <null>
+    GlobalId: <null>
+    HeldAt: <null>
+    HeldBy: <null>
+    HoldReason: <null>
+    IsBarTab: 'False'
+    IsReOpened: 'False'
+    IsTaxExempt: 'False'
+    Note: <null>
+    NumberOfGuests: 1
+    OpenedAt: '1/20/2026 11:03:51 PM' Originally <null>
+    OrderTypeId: '403f3716-5349-441f-88dd-2a97d4c610eb'
+    PriceIncludesTax: 'False'
+    Properties: 'System.Collections.Generic.Dictionary`2[System.String,System...' Originally 'System.Collections.Generic.Dictionary`2[System.String,System...'
+    ReadyTime: <null>
+    SessionId: <null>
+    ShiftId: '9a9c57ab-72d2-426b-91ce-448985b65bb0'
+    Status: 'Open' Originally 'Draft'
+    TableNumbers: 'System.Collections.Generic.List`1[System.Int32]' Originally 'System.Collections.Generic.List`1[System.Int32]'
+    TerminalId: '95581d2b-ae41-42ce-881c-a6a69d76c957'
+    TicketNumber: 1001
+    Version: 1
+    VoidedBy: <null>
+  AdjustmentAmount: {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44}
+  AdvanceAmount: {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44}
+  DeliveryChargeAmount: {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44}
+  DiscountAmount: <not found>
+  Discounts: []
+  DueAmount: <not found>
+  Gratuity: <null>
+  OrderLines: [<not found>]
+  PaidAmount: <not found>
+  Payments: []
+  ServiceChargeAmount: {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44}
+  SubtotalAmount: <not found>
+  TaxAmount: <not found>
+  TotalAmount: <not found>
+Ticket.AdjustmentAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.AdvanceAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.DeliveryChargeAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.DiscountAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.DueAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.PaidAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.ServiceChargeAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.SubtotalAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.TaxAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+Ticket.TotalAmount#Money {TicketId: 9b53b27c-a170-424e-86fb-6034b5376a44} Unchanged
+    TicketId: '9b53b27c-a170-424e-86fb-6034b5376a44' PK FK
+    Amount: 0
+    Currency: 'USD'
+
+[ACTION] Saving Changes (Update)...
+[ERROR] Save Failed: DbUpdateConcurrencyException - Attempted to update or delete an entity that does not exist in the store.

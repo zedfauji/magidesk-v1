@@ -44,6 +44,7 @@ public partial class OrderPageViewModel : ViewModelBase
     private Guid? _tableId;
     private System.Timers.Timer? _timeUpdateTimer;
     private List<ProductViewModel> _allProducts = new();
+    private Microsoft.UI.Xaml.XamlRoot? _xamlRoot; // Store XamlRoot for dialogs
 
     public OrderPageViewModel(
         IQueryHandler<GetTicketQuery, TicketDto?> getTicketHandler,
@@ -251,6 +252,14 @@ public partial class OrderPageViewModel : ViewModelBase
                 ex.ToString());
         }
     }
+    
+    /// <summary>
+    /// Sets the XamlRoot for dialogs. Must be called from the View after it's loaded.
+    /// </summary>
+    public void SetXamlRoot(Microsoft.UI.Xaml.XamlRoot xamlRoot)
+    {
+        _xamlRoot = xamlRoot;
+    }
 
     /// <summary>
     /// Refreshes the current ticket data from the repository.
@@ -385,8 +394,10 @@ public partial class OrderPageViewModel : ViewModelBase
                 // Add categories from database
                 if (dbCategories != null)
                 {
+                    _logger.LogInformation("Adding {Count} categories from database:", dbCategories.Count());
                     foreach (var category in dbCategories.Where(c => c.IsActive).OrderBy(c => c.SortOrder))
                     {
+                        _logger.LogInformation("  Category from DB: '{Name}'", category.Name);
                         Categories.Add(new ProductCategoryViewModel 
                         { 
                             Name = category.Name, 
@@ -513,6 +524,14 @@ public partial class OrderPageViewModel : ViewModelBase
                         IsAvailable = item.IsActive
                     });
                 }
+                
+                // Log first 5 products with their actual category names for debugging
+                _logger.LogInformation("Sample products loaded:");
+                foreach (var product in _allProducts.Take(5))
+                {
+                    _logger.LogInformation("  Product: {Name}, Category: '{Category}', Subcategory: '{Subcategory}'", 
+                        product.Name, product.CategoryName, product.SubcategoryName);
+                }
 
                 // Apply initial filter
                 FilterProducts();
@@ -624,9 +643,14 @@ public partial class OrderPageViewModel : ViewModelBase
                 };
                 
                 // Set XamlRoot for the dialog
-                if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
+                if (_xamlRoot != null)
                 {
-                    dialog.XamlRoot = element.XamlRoot;
+                    dialog.XamlRoot = _xamlRoot;
+                }
+                else
+                {
+                    _logger.LogError("XamlRoot is null - dialog may not display correctly");
+                    throw new InvalidOperationException("XamlRoot must be set before showing dialogs. Call SetXamlRoot() from the View.");
                 }
                 
                 // Set close action
@@ -747,9 +771,14 @@ public partial class OrderPageViewModel : ViewModelBase
                         var dialog = new Magidesk.Views.Dialogs.ModifierSelectionDialog(modifierViewModel);
                         
                         // Set XamlRoot for the dialog
-                        if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
+                        if (_xamlRoot != null)
                         {
-                            dialog.XamlRoot = element.XamlRoot;
+                            dialog.XamlRoot = _xamlRoot;
+                        }
+                        else
+                        {
+                            _logger.LogError("XamlRoot is null - cannot show modifier dialog");
+                            throw new InvalidOperationException("XamlRoot must be set before showing dialogs.");
                         }
                         
                         await dialog.ShowAsync();

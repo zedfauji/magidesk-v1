@@ -71,7 +71,17 @@ public interface ITicketRepository
     /// Clears the Entity Framework change tracker. 
     /// Useful for retry policies to ensure fresh entity fetching.
     /// </summary>
+    /// <summary>
+    /// Clears the Entity Framework change tracker. 
+    /// Useful for retry policies to ensure fresh entity fetching.
+    /// </summary>
     void ClearChangeTracker();
+
+    /// <summary>
+    /// Explicitly marks an OrderLine as Added in the Change Tracker.
+    /// This fixes concurrency issues where new OrderLines are incorrectly detected as Modified.
+    /// </summary>
+    void MarkOrderLineAsAdded(OrderLine orderLine);
 }
 
 /// <summary>

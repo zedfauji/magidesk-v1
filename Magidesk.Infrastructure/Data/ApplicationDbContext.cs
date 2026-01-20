@@ -80,12 +80,20 @@ public class ApplicationDbContext : DbContext
     public DbSet<Services.PerformanceMetricEntity> PerformanceMetrics { get; set; } = null!;
     // FractionalModifier is part of Set<MenuModifier> via Inheritance
 
+
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
         
-        // Register interceptor to auto-increment Version field for concurrency
-        optionsBuilder.AddInterceptors(new VersionIncrementInterceptor());
+        // NOTE: VersionIncrementInterceptor is registered in DbContextFactory ONLY.
+        // Do NOT add it here - OnConfiguring is called AFTER the factory passes options,
+        // which would result in double-registration and the interceptor firing twice
+        // per SaveChanges, causing Version to increment by 2 instead of 1.
+
+        // Enable SQL Logging
+        optionsBuilder.LogTo(msg => System.Diagnostics.Debug.WriteLine(msg), Microsoft.Extensions.Logging.LogLevel.Information)
+                      .EnableSensitiveDataLogging();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

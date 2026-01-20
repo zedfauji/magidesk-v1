@@ -19,6 +19,16 @@ public sealed partial class SettlePageView : Page
         ViewModel = App.Services.GetRequiredService<SettlePageViewModel>();
         DataContext = ViewModel;
         
+        // Set XamlRoot for dialogs once the page is loaded
+        this.Loaded += (s, e) =>
+        {
+            if (this.XamlRoot != null)
+            {
+                ViewModel.SetXamlRoot(this.XamlRoot);
+                System.Diagnostics.Debug.WriteLine("SettlePageView - XamlRoot set on ViewModel");
+            }
+        };
+        
         System.Diagnostics.Debug.WriteLine("SettlePageView constructor - ViewModel created");
     }
 

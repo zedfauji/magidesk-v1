@@ -18,6 +18,16 @@ public sealed partial class OrderPageView : Page
         ViewModel = App.Services.GetRequiredService<OrderPageViewModel>();
         DataContext = ViewModel;
         
+        // Set XamlRoot for dialogs once the page is loaded
+        this.Loaded += (s, e) =>
+        {
+            if (this.XamlRoot != null)
+            {
+                ViewModel.SetXamlRoot(this.XamlRoot);
+                System.Diagnostics.Debug.WriteLine("OrderPageView - XamlRoot set on ViewModel");
+            }
+        };
+        
         System.Diagnostics.Debug.WriteLine("OrderPageView constructor - ViewModel created");
     }
 
