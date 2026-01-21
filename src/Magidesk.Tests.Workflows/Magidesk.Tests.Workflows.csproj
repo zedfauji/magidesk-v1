@@ -12,12 +12,16 @@
     <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
     <!-- Fix for "Windows App SDK requires Microsoft.Windows.SDK.NET.Ref" error -->
     <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
+    <UseWinUI>true</UseWinUI>
+    <EnableMsixTooling>true</EnableMsixTooling>
+    <WindowsPackageType>None</WindowsPackageType>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="xunit" Version="2.5.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
@@ -29,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Magidesk.Presentation.csproj" />
+    <ProjectReference Include="..\Magidesk.Presentation\Magidesk.Presentation.csproj" />
     <ProjectReference Include="..\Magidesk.Application\Magidesk.Application.csproj" />
     <ProjectReference Include="..\Magidesk.Domain\Magidesk.Domain.csproj" />
     <ProjectReference Include="..\Magidesk.Infrastructure\Magidesk.Infrastructure.csproj" />

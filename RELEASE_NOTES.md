@@ -1,20 +1,29 @@
-# Release Notes
+# Release Notes - Structural Baseline v1.0
 
-## Version 0.1.0 (Beta)
-*Released: January 2026*
+**Date:** 2026-01-21
+**Type:** Infrastructure / Non-Breaking Change
 
-### 🆕 New Features
-- **Initial Release**: The first public version of Magidesk POS!
-- **Table Designer**: Create your own floor plans with drag-and-drop tables. Supports round and square tables.
-- **Database Setup Wizard**: Easy first-time setup screen to connect to your data.
-- **Smart Startup**: The system checks connections automatically before letting users log in.
-- **Secure Configuration**: Your database passwords are now fully encrypted.
+## Summary
+This release establishes the Canonical Directory Structure for the Magidesk POS system. It eliminates root repository clutter and enforces a standard Clean Architecture layout without altering application logic or external dependencies.
 
-### 🐛 Fixes & Improvements
-- Improved the speed of logging in.
-- Fixed issues where the "Login Failed" message would appear incorrectly.
-- Better error messages when the internet/network connection is lost.
+## Changes
 
-### 📝 Known Issues
-- The Table Designer may occasionally show fewer tables than expected immediately after loading. Refresh the page to fix this.
-- Very large floor plans (100+ tables) might be slow on older computers.
+### 1. Source Code Reorganization
+*   **Canonical Source Root**: All source code moved to `src/`.
+*   **Library Projects**: `Magidesk.Domain`, `Magidesk.Application`, `Magidesk.Infrastructure`, `Magidesk.Migrations`, `Magidesk.Api` moved to `src/`.
+*   **Presentation Layer**: Root-level WinUI artifacts (`App.xaml`, `ViewModels`, `Views`) consolidated into `src/Magidesk.Presentation/`.
+*   **Solution File**: `Magidesk.sln` moved to `src/` and updated.
+
+### 2. Artifact Cleanup
+*   **Documentation**: All `.md` files moved to `docs/`.
+*   **Scripts**: Database and utility scripts (`*.sql`, `*.ps1`, `*.sh`) moved to `scripts/`.
+*   **Diagnostics**: Logs and trace files moved to `diagnostics/`.
+*   **Archival**: Legacy build artifacts (`bin`/`obj`) and deprecated folders (`WPA`) moved to `archive/`.
+
+### 3. Build & Stability
+*   **Ignored Files**: Updated `.gitignore` to exclude `logs/`, `artifacts/`, `*.zip`, `*.bak`, `*.tmp`.
+*   **Build Status**: The solution builds successfully with existing warnings (no new regressions introduced).
+
+## Risk Assessment
+*   **Low Risk**: No C# logic was modified. References were preserved via relative path strategies or explicit project file updates.
+*   **Safe for Production**: This structure is a purely organizational change to support future development and does not impact runtime behavior.

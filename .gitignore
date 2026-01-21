@@ -101,3 +101,10 @@ audits/
 **/obj/
 archive/_root_pollution/
 archive/_orphan_build_artifacts/
+
+# Release Finalization
+logs/
+artifacts/
+*.zip
+*.bak
+*.tmp
