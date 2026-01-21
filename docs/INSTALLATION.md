@@ -1,42 +1,68 @@
-# Installation Guide
+# Magidesk POS - Installation Guide for Bar Staff
 
-**Applies to:** Magidesk POS v0.1.0+
-**Audience:** System Administrators / Owners
-
-## System Requirements
-
-Before you begin, ensure your computer meets these requirements:
-
-- **Operating System:** Windows 10 (Build 1809 or newer) or Windows 11.
-- **Processor:** Intel Core i3 or equivalent (i5 recommended for busy bars).
-- **Memory (RAM):** 4 GB minimum (8 GB recommended).
-- **Storage:** At least 500 MB free space.
-- **Display:** Touchscreen monitor recommended (1920x1080 resolution preferred).
+**Read this before starting.** This guide will help you set up the Point of Sale system on a new computer.
 
 ---
 
-## Installation Steps
+## 1. Before You Start (Checklist)
 
-### 1. Download the Installer
-Download the latest `Magidesk-Setup.exe` from the release page or the link provided by your vendor.
+Do not attempt installation until you have all of the following:
 
-### 2. Run the Installer
-1. Double-click `Magidesk-Setup.exe`.
-2. Generally, you can accept the default settings by clicking **Next**.
-3. If Windows prompts you ("User Account Control"), click **Yes** to allow the installation.
-4. The installer will place a shortcut on your Desktop and in the Start Menu.
-
-### 3. Database Requirement
-Magidesk requires a **PostgreSQL** database to store your sales and menu data.
-- If you are setting up the **Main Server** (the first computer): You must install PostgreSQL separately if it's not already installed.
-- If this is a **Secondary Terminal**: You just need to know the IP address of your Main Server.
-
-> **Note:** The Magidesk installer does *not* install PostgreSQL automatically. If you need help installing the database engine, please refer to the specific Database Installation Guide provided by your support team.
+*   [ ] **The Right Computer**: A touch-screen terminal running Windows 10 or Windows 11.
+*   [ ] **Power & Internet**: The computer must be plugged in and connected to your store's WiFi or Ethernet.
+*   [ ] **Database Info**: You need a piece of paper with these 4 items (ask your manager):
+    *   Server Name (Host)
+    *   Database Name
+    *   Username
+    *   Password
+*   [ ] **Terminal ID**: A unique name for this screen (e.g., "Bar-1", "Patio-2").
 
 ---
 
-## Next Steps
+## 2. Installing the App
 
-Once installed, launch **Magidesk POS** from your desktop. You will be greeted by the **Database Setup Wizard**.
+1.  **Download/Copy the Installer**:
+    *   Locate the file named `MagideskInstaller.exe` (usually on a USB drive or in your Downloads folder).
 
-👉 **Proceed to: [Database Setup Guide](DATABASE_SETUP.md)**
+2.  **Run the Installer**:
+    *   Double-click `MagideskInstaller.exe`.
+    *   If Windows asks "Do you want to allow this app to make changes?", click **Yes**.
+
+3.  **Follow the Steps**:
+    *   Click **Next** on the Welcome screen.
+    *   Accept the default location by clicking **Next**.
+
+4.  **Enter Database Connection**:
+    *   The screen will ask for those 4 items from your checklist (Host, Name, User, Password).
+    *   Type them in carefully.
+    *   Click **Next**.
+
+5.  **Finish**:
+    *   Wait for the green bar to finish.
+    *   Click **Finish**.
+
+---
+
+## 3. First Run
+
+1.  Look for the **Magidesk POS** icon on your desktop.
+2.  Double-click it to start.
+3.  If the app opens and asks for your PIN, **Success!** You are done.
+
+---
+
+## 4. Troubleshooting (What if it breaks?)
+
+**"Connection Failed" Error**
+*   **Check**: Is the internet working? Open a web browser to check.
+*   **Check**: Did you type the password correctly? Re-run the installer to try again.
+
+**"Access Denied" Error**
+*   **Check**: You must be an "Administrator" on the computer to install this. Ask the store owner.
+
+**App won't open at all**
+*   **Action**: Restart the computer and try opening it one more time.
+
+**Still Stuck?**
+*   Call Support at: **555-0199**
+*   Tell them: "I am trying to install a new terminal and getting error [Read the Screen]"
