@@ -526,12 +526,12 @@ public partial class OrderPageViewModel : ViewModelBase
                 }
                 
                 // Log first 5 products with their actual category names for debugging
-                _logger.LogInformation("Sample products loaded:");
-                foreach (var product in _allProducts.Take(5))
-                {
-                    _logger.LogInformation("  Product: {Name}, Category: '{Category}', Subcategory: '{Subcategory}'", 
-                        product.Name, product.CategoryName, product.SubcategoryName);
-                }
+                // _logger.LogInformation("Sample products loaded:");
+                // foreach (var product in _allProducts.Take(5))
+                // {
+                //     _logger.LogInformation("  Product: {Name}, Category: '{Category}', Subcategory: '{Subcategory}'", 
+                //         product.Name, product.CategoryName, product.SubcategoryName);
+                // }
 
                 // Apply initial filter
                 FilterProducts();
@@ -591,12 +591,12 @@ public partial class OrderPageViewModel : ViewModelBase
                     SelectedCategory.Name, beforeCount, query.Count());
                 
                 // Debug: Log first few products and their categories
-                var sampleProducts = query.Take(3).ToList();
-                foreach (var p in sampleProducts)
-                {
-                    _logger.LogInformation("  Sample product: {Name}, Category: {Category}, Subcategory: {Subcategory}", 
-                        p.Name, p.CategoryName, p.SubcategoryName);
-                }
+                // var sampleProducts = query.Take(3).ToList();
+                // foreach (var p in sampleProducts)
+                // {
+                //     _logger.LogInformation("  Sample product: {Name}, Category: {Category}, Subcategory: {Subcategory}", 
+                //         p.Name, p.CategoryName, p.SubcategoryName);
+                // }
             }
 
             // Filter by subcategory

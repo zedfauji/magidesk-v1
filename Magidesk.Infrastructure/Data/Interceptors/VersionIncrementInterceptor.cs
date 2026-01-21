@@ -57,14 +57,14 @@ public class VersionIncrementInterceptor : SaveChangesInterceptor
         // Prevent re-entrance: If we're already executing, skip (EF's change detection triggered us recursively)
         if (_isExecuting)
         {
-            System.Diagnostics.Debug.WriteLine("[VERSION-INTERCEPTOR] Re-entrance detected - skipping");
+// System.Diagnostics.Debug.WriteLine("[VERSION-INTERCEPTOR] Re-entrance detected - skipping");
             return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
 
         try
         {
             _isExecuting = true;
-            System.Diagnostics.Debug.WriteLine("[VERSION-INTERCEPTOR] SavingChangesAsync intercepted!");
+// System.Diagnostics.Debug.WriteLine("[VERSION-INTERCEPTOR] SavingChangesAsync intercepted!");
             IncrementVersionForModifiedEntities(eventData);
             return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
@@ -87,13 +87,13 @@ public class VersionIncrementInterceptor : SaveChangesInterceptor
             var ticket = ticketEntry.Entity;
             var shouldIncrementVersion = false;
 
-            System.Diagnostics.Debug.WriteLine($"[VERSION-INTERCEPTOR] Examining Ticket {ticket.Id}, State: {ticketEntry.State}, Current Version: {ticket.Version}");
+// System.Diagnostics.Debug.WriteLine($"[VERSION-INTERCEPTOR] Examining Ticket {ticket.Id}, State: {ticketEntry.State}, Current Version: {ticket.Version}");
 
             // Case 1: Ticket itself is Modified
             if (ticketEntry.State == EntityState.Modified)
             {
                 shouldIncrementVersion = true;
-                System.Diagnostics.Debug.WriteLine($"[VERSION-INTERCEPTOR] Ticket {ticket.Id} is Modified");
+// System.Diagnostics.Debug.WriteLine($"[VERSION-INTERCEPTOR] Ticket {ticket.Id} is Modified");
             }
             // Case 2: Ticket is Unchanged but has Added/Deleted children (e.g., OrderLines, Payments)
             else if (ticketEntry.State == EntityState.Unchanged)
@@ -108,7 +108,7 @@ public class VersionIncrementInterceptor : SaveChangesInterceptor
                     shouldIncrementVersion = true;
                     // Mark the ticket as Modified so EF Core updates it
                     ticketEntry.State = EntityState.Modified;
-                    System.Diagnostics.Debug.WriteLine($"[VERSION-INTERCEPTOR] Ticket {ticket.Id} has Added/Deleted children, marking as Modified");
+// System.Diagnostics.Debug.WriteLine($"[VERSION-INTERCEPTOR] Ticket {ticket.Id} has Added/Deleted children, marking as Modified");
                 }
             }
 
@@ -116,12 +116,12 @@ public class VersionIncrementInterceptor : SaveChangesInterceptor
             {
                 var oldVersion = ticket.Version;
                 ticket.Version++;
-                System.Diagnostics.Debug.WriteLine($"[VERSION-INTERCEPTOR] Incremented ticket {ticket.Id} version: {oldVersion} → {ticket.Version}");
+System.Diagnostics.Debug.WriteLine($"[VERSION-INTERCEPTOR] Incremented ticket {ticket.Id} version: {oldVersion} → {ticket.Version}");
                 
                 // Verify EF tracking state
                 var origVal = ticketEntry.OriginalValues.GetValue<int>("Version");
                 var currVal = ticketEntry.CurrentValues.GetValue<int>("Version");
-                System.Diagnostics.Debug.WriteLine($"[VERSION-INTERCEPTOR] EF Tracking - Original: {origVal}, Current: {currVal}");
+System.Diagnostics.Debug.WriteLine($"[VERSION-INTERCEPTOR] EF Tracking - Original: {origVal}, Current: {currVal}");
             }
         }
     }

@@ -68,10 +68,9 @@ public class GratuityService : IGratuityService
         // Check if ticket already has a gratuity
         if (ticket.Gratuity != null)
         {
-            // Accumulate the new amount to existing gratuity
-            // This prevents EF Core from attempting DELETE+INSERT which causes concurrency issues
-            // Example: Existing $3.40 + New $2.00 = $5.40
-            ticket.Gratuity.AddToAmount(amount);
+            // OPTION A: REPLACE existing gratuity amount (Non-cumulative)
+            // Previously used AddToAmount which caused double-charging when re-applying tips
+            ticket.Gratuity.UpdateAmount(amount);
             
             // Recalculate totals since gratuity amount changed
             ticket.CalculateTotals();

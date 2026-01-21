@@ -587,6 +587,12 @@ public partial class SettlePageViewModel : ViewModelBase
                 // Create Dialog
                 var dialog = new GratuitySelectionDialog(viewModel);
                 
+                // Ensure XamlRoot is set if available
+                if (_xamlRoot != null)
+                {
+                    dialog.XamlRoot = _xamlRoot;
+                }
+                
                 // Use NavigationService to show dialog (handles XamlRoot automatically)
                 await _navigationService.ShowDialogAsync(dialog);
 
@@ -642,11 +648,50 @@ public partial class SettlePageViewModel : ViewModelBase
         {
             _logger.LogInformation("Split payment requested for ticket {TicketId}", _ticketId);
             
-            // TODO: Implement split payment dialog integration
-            // The SplitPaymentViewModel requires proper initialization and dialog workflow
-            await _dialogService.ShowMessageAsync(
-                "Split Payment",
-                "Split payment feature is available but requires dialog integration.\n\nPlease use the command handler directly or implement the full dialog workflow.");
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var processSplitPaymentHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<ProcessSplitPaymentCommand, ProcessSplitPaymentResult>>();
+                
+                var viewModel = new SplitPaymentViewModel(
+                    processSplitPaymentHandler,
+                    _userService);
+                
+                // Initialize with current Balance Due to ensuring we split the remaining amount
+                // We assume default currency USD as per other methods in this VM
+                var amountToSplit = new Money(BalanceDue, "USD");
+                viewModel.Initialize(_ticket.Id, amountToSplit);
+                
+                var dialog = new SplitPaymentDialog(viewModel);
+                
+                // Show Dialog
+                await _navigationService.ShowDialogAsync(dialog);
+                
+                if (viewModel.IsSuccess)
+                {
+                    _logger.LogInformation("Split payment successful for ticket {TicketId}", _ticketId);
+                    
+                    if (viewModel.ChangeAmount > Money.Zero())
+                    {
+                         await _dialogService.ShowMessageAsync(
+                            "Payment Complete",
+                            $"Split payment processed successfully.\n\nChange Due: {viewModel.ChangeAmount:C2}");
+                    }
+                    else
+                    {
+                         await _dialogService.ShowMessageAsync(
+                            "Payment Complete",
+                            "Split payment processed successfully.");
+                    }
+                    
+                    await LoadTicketAsync();
+                    
+                    // If ticket is fully settled (or overpaid), navigate back
+                    if (BalanceDue <= 0)
+                    {
+                        _navigationService.GoBack();
+                    }
+                }
+            }
         }
         catch (Exception ex)
         {
@@ -667,11 +712,42 @@ public partial class SettlePageViewModel : ViewModelBase
         {
             _logger.LogInformation("Apply discount requested for ticket {TicketId}", _ticketId);
             
-            // TODO: Implement discount selection dialog integration
-            // The DiscountSelectionViewModel requires proper initialization and manager authorization workflow
-            await _dialogService.ShowMessageAsync(
-                "Apply Discount",
-                "Discount selection feature is available but requires dialog integration.\n\nPlease use the command handler directly or implement the full dialog workflow.");
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var discountRepository = scope.ServiceProvider.GetRequiredService<IDiscountRepository>();
+                var applyDiscountHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<ApplyDiscountCommand>>();
+                var userService = scope.ServiceProvider.GetRequiredService<IUserService>();
+                var managerPinDialog = scope.ServiceProvider.GetRequiredService<ManagerPinDialogViewModel>();
+                
+                // Create ViewModel for discount selection dialog
+                var viewModel = new DiscountSelectionViewModel(
+                    discountRepository,
+                    applyDiscountHandler,
+                    userService,
+                    managerPinDialog);
+                
+                // Initialize with ticket information
+                viewModel.TicketId = _ticket.Id;
+                viewModel.TicketTotal = new Money(_ticket.TotalAmount, "USD");
+                
+                // Create and show dialog
+                var dialog = new DiscountSelectionDialog(viewModel);
+                
+                // Use NavigationService to show dialog (handles XamlRoot automatically)
+                await _navigationService.ShowDialogAsync(dialog);
+                
+                if (viewModel.IsSuccess)
+                {
+                    _logger.LogInformation("Discount applied successfully to ticket {TicketId}", _ticketId);
+                    
+                    await _dialogService.ShowMessageAsync(
+                        "Discount Applied",
+                        $"Discount has been applied to ticket #{_ticket.TicketNumber}.");
+                    
+                    // Reload ticket to get updated totals
+                    await LoadTicketAsync();
+                }
+            }
         }
         catch (Exception ex)
         {

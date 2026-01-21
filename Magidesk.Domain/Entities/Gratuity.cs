@@ -50,6 +50,7 @@ public class Gratuity
     /// Adds to the existing gratuity amount.
     /// Used when accumulating multiple tips for the same ticket.
     /// </summary>
+    [Obsolete("Use UpdateAmount instead to replace the gratuity amount.")]
     public void AddToAmount(Money additionalAmount)
     {
         if (additionalAmount < Money.Zero())
@@ -58,6 +59,20 @@ public class Gratuity
         }
 
         Amount = Amount + additionalAmount;
+    }
+
+    /// <summary>
+    /// Updates the gratuity amount to a new value.
+    /// Used when changing the tip amount (e.g., from 20% to 25%).
+    /// </summary>
+    public void UpdateAmount(Money newAmount)
+    {
+        if (newAmount < Money.Zero())
+        {
+            throw new Exceptions.BusinessRuleViolationException("Gratuity amount cannot be negative.");
+        }
+
+        Amount = newAmount;
     }
 
     public void MarkAsPaid()

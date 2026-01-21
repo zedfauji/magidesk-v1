@@ -18,6 +18,7 @@ using Magidesk.Application.Queries.Reports;
 using Magidesk.Application.Services.Reports;
 using Magidesk.Presentation.ViewModels.Dialogs;
 using Magidesk.Application.Queries;
+using Microsoft.Extensions.Logging;
 
 namespace Magidesk.Presentation;
 
@@ -64,6 +65,10 @@ public partial class App : Microsoft.UI.Xaml.Application
         try {
             Host = Microsoft.Extensions.Hosting.Host
                 .CreateDefaultBuilder()
+                .ConfigureLogging(logging =>
+                {
+                    logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.Warning);
+                })
                 .ConfigureServices(services =>
                 {
                     StartupLogger.Log("App - ConfigureServices Start");

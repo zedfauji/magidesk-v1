@@ -121,6 +121,7 @@ public partial class GratuitySelectionViewModel : ObservableObject
     {
         if (value != null)
         {
+            _logger.LogInformation("Selected suggestion changed to {SuggestionLabel} ({Amount})", value.Label, value.Amount);
             IsCustomAmountMode = false;
             CustomAmount = string.Empty;
             UpdateTotalDisplay();
@@ -131,6 +132,7 @@ public partial class GratuitySelectionViewModel : ObservableObject
     {
         if (!string.IsNullOrWhiteSpace(value))
         {
+            _logger.LogInformation("Custom amount changed to {Value}", value);
             IsCustomAmountMode = true;
             SelectedSuggestion = null;
             UpdateTotalDisplay();
@@ -145,7 +147,8 @@ public partial class GratuitySelectionViewModel : ObservableObject
 
             if (IsCustomAmountMode && decimal.TryParse(CustomAmount, out var customValue))
             {
-                gratuityAmount = new Money(customValue);
+                // Fix: Ensure we use the same currency as the subtotal to prevent mismatches
+                gratuityAmount = new Money(customValue, _subtotal.Currency);
             }
             else if (SelectedSuggestion != null)
             {
@@ -159,9 +162,11 @@ public partial class GratuitySelectionViewModel : ObservableObject
 
             var total = _subtotal + gratuityAmount;
             TotalWithGratuityDisplay = total.ToString();
+            _logger.LogInformation("Updated total display: {Total} (Subtotal: {Subtotal} + Tip: {Tip})", total, _subtotal, gratuityAmount);
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError(ex, "Error updating total display. Subtotal: {Subtotal}, CustomAmount: {CustomAmount}", _subtotal, CustomAmount);
             TotalWithGratuityDisplay = _subtotal.ToString();
         }
     }
@@ -183,7 +188,7 @@ public partial class GratuitySelectionViewModel : ObservableObject
                     ShowError("Please enter a valid tip amount.");
                     return;
                 }
-                gratuityAmount = new Money(customValue);
+                gratuityAmount = new Money(customValue, _subtotal.Currency);
             }
             else if (SelectedSuggestion != null)
             {

@@ -2,7 +2,9 @@ using Magidesk.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using Magidesk.Infrastructure.Data.Interceptors;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Magidesk.Infrastructure.Data;
 
@@ -35,7 +37,8 @@ public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<Applicati
         optionsBuilder.UseNpgsql(
             DatabaseConnection.GetConnectionString(),
             npgsqlOptions => npgsqlOptions.MigrationsAssembly("Magidesk.Migrations"))
-        .AddInterceptors(new VersionIncrementInterceptor());
+        .AddInterceptors(new VersionIncrementInterceptor())
+        .ConfigureWarnings(w => w.Ignore(RelationalEventId.CommandExecuted));
 
         return new ApplicationDbContext(optionsBuilder.Options);
     }
@@ -79,7 +82,8 @@ public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<Applicati
         optionsBuilder.UseNpgsql(
             connectionString,
             npgsqlOptions => npgsqlOptions.MigrationsAssembly("Magidesk.Migrations"))
-        .AddInterceptors(new VersionIncrementInterceptor());
+        .AddInterceptors(new VersionIncrementInterceptor())
+        .ConfigureWarnings(w => w.Ignore(RelationalEventId.CommandExecuted));
 
         return new ApplicationDbContext(optionsBuilder.Options);
     }

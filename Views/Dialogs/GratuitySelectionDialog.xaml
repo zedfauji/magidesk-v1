@@ -213,7 +213,7 @@
                            VerticalAlignment="Center"/>
                 
                 <TextBlock Grid.Column="1"
-                           Text="{x:Bind ViewModel.TotalWithGratuityDisplay}"
+                           Text="{x:Bind ViewModel.TotalWithGratuityDisplay, Mode=OneWay}"
                            Style="{StaticResource TitleLargeTextBlockStyle}"
                            Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                            VerticalAlignment="Center"/>

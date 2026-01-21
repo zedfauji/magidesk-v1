@@ -245,58 +245,54 @@ public class TicketRepository : ITicketRepository
     {
         try
         {
-            // Simplified Safe Update Pattern for Tracked Entities
-            // Since we removed AsNoTracking, the entity and its graph are likely already tracked.
-            // EF Core Change Tracking will automatically detect additions to collections (Payments, OrderLines)
-            // without manual state management.
-            var entry = _context.Entry(ticket);
+            // EF Core change detection pattern for tracked aggregate roots:
+            // The ticket entity is already tracked from GetByIdAsync().
+            // EF Core's change tracker automatically detects property modifications
+            // when SaveChangesAsync() is called. No explicit Update() needed.
+            // 
+            // IMPORTANT: Do NOT call _context.Tickets.Update(ticket) here!
+            // Update() marks the ENTIRE aggregate graph (including Gratuity, OrderLines, etc.)
+            // as Modified, causing EF to generate UPDATE statements for unchanged child entities.
+            // This breaks optimistic concurrency and causes DbUpdateConcurrencyException.
             
-            System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] UpdateAsync called - TicketId: {ticket.Id}, Version: {ticket.Version}, EntryState: {entry.State}");
+            // CORRECTIVE LOGIC: Ensure Gratuity is Added, not Modified, if it's new
+            if (ticket.Gratuity != null)
+            {
+                var gratuityEntry = _context.Entry(ticket.Gratuity);
+                if (gratuityEntry.State == EntityState.Modified)
+                {
+                    // Check if it actually exists in DB
+                    var exists = await _context.Set<Gratuity>().AnyAsync(g => g.Id == ticket.Gratuity.Id, cancellationToken);
+                    if (!exists)
+                    {
+                        gratuityEntry.State = EntityState.Added;
+                        
+                        // CRITICAL: Must also set the Owned Entity "Amount" to Added
+                        var amountEntry = gratuityEntry.Reference(g => g.Amount).TargetEntry;
+                        if (amountEntry != null)
+                        {
+                            amountEntry.State = EntityState.Added;
+                        }
+                    }
+                }
+                else if (gratuityEntry.State == EntityState.Detached)
+                {
+                    gratuityEntry.State = EntityState.Added;
+                    
+                    // CRITICAL: Must also set the Owned Entity "Amount" to Added
+                    var amountEntry = gratuityEntry.Reference(g => g.Amount).TargetEntry;
+                    if (amountEntry != null)
+                    {
+                        amountEntry.State = EntityState.Added;
+                    }
+                }
+            }
+
             
-            if (entry.State == EntityState.Detached)
-            {
-                System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] Entity is Detached. Calling Update() to attach.");
-                _context.Tickets.Update(ticket);
-            }
-            else if (entry.State == EntityState.Unchanged)
-            {
-                System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] Entity is Unchanged. Marking as Modified.");
-                entry.State = EntityState.Modified;
-            }
-            else
-            {
-                 System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] Entity state is {entry.State}. Proceeding to SaveChanges.");
-            }
-
-            // Log Version Tracking Info
-            if (entry.State == EntityState.Modified || entry.State == EntityState.Unchanged) // Should be modified by now or naturally
-            {
-                var origVersion = entry.OriginalValues.GetValue<int>("Version");
-                var currVersion = entry.CurrentValues.GetValue<int>("Version");
-                var dbVal = await entry.GetDatabaseValuesAsync(cancellationToken);
-                var dbVersion = dbVal?.GetValue<int>("Version");
-
-                System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] Pre-Save Version Check: Original={origVersion}, Current={currVersion}, DB_Actual={dbVersion}");
-            }
-
-            System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] Calling SaveChangesAsync...");
             await _context.SaveChangesAsync(cancellationToken);
-            System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] SaveChangesAsync completed successfully!");
         }
         catch (DbUpdateConcurrencyException ex)
         {
-            System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] DbUpdateConcurrencyException caught!");
-            System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] Exception Message: {ex.Message}");
-            System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] Affected Entities: {ex.Entries?.Count ?? 0}");
-            
-            if (ex.Entries != null && ex.Entries.Any())
-            {
-                foreach (var entry in ex.Entries)
-                {
-                    System.Diagnostics.Debug.WriteLine($"[DIAGNOSTIC-REPO] Failed Entity Type: {entry.Entity.GetType().Name}, State: {entry.State}");
-                }
-            }
-            
             throw new Domain.Exceptions.ConcurrencyException(
                 $"Ticket {ticket.Id} was modified by another process. Please refresh and try again.",
                 ex);
