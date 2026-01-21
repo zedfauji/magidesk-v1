@@ -310,15 +310,27 @@ This specification defines the requirements for redesigning the Settle Page and 
 
 ### Requirement 21: Session Management
 
-**User Story:** As a manager, I want to start and end POS sessions, so that I can track cash drawer activity and shifts.
+**User Story:** As a manager, I want to start, pause, resume, and end POS sessions, so that I can track cash drawer activity and shifts with accurate timing.
 
 #### Acceptance Criteria
 
 1. THE Order_Page SHALL provide a "Start Session" button in the footer
 2. THE Order_Page SHALL provide an "End Session" button in the footer
-3. WHEN the "Start Session" button is pressed, THE Order_Page SHALL initiate a new session
-4. WHEN the "End Session" button is pressed, THE Order_Page SHALL close the current session
-5. THE Order_Page SHALL display session control buttons with icons and labels
+3. WHEN no session is active, THE Order_Page SHALL display the "Start Session" button
+4. WHEN no session is active, THE Order_Page SHALL disable the "End Session" button
+5. WHEN the "Start Session" button is pressed, THE Order_Page SHALL initiate a new session and change the button to "Pause Session"
+6. WHEN a session is active, THE Order_Page SHALL enable the "End Session" button
+7. WHEN the "Pause Session" button is pressed, THE Order_Page SHALL pause the current session and change the button to "Resume Session"
+8. WHEN the "Resume Session" button is pressed, THE Order_Page SHALL resume the paused session and change the button to "Pause Session"
+9. WHEN the "End Session" button is pressed, THE Order_Page SHALL close the current session and reset the button to "Start Session"
+10. THE Order_Page SHALL display session control buttons with icons and labels
+11. THE Order_Page SHALL maintain session state (not started, active, paused) throughout the application lifecycle
+12. WHEN a session is active or paused, THE Order_Page SHALL display the session duration in HH:MM:SS timer format
+13. WHEN a session is paused, THE Order_Page SHALL stop incrementing the session duration timer
+14. WHEN a paused session is resumed, THE Order_Page SHALL continue incrementing the session duration from where it was paused
+15. WHEN the "End Session" button is pressed, THE Order_Page SHALL calculate the total session duration
+16. WHEN a session is ended, THE Order_Page SHALL add an expense line item to the current order based on the session duration
+17. THE Order_Page SHALL update the session duration display in real-time every second while the session is active
 
 ### Requirement 22: Advanced Order Operations
 

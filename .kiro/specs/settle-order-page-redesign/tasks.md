@@ -264,9 +264,36 @@ The implementation will proceed in phases:
     - _Requirements: 16.3, 16.4_
 
   - [x] 5.19 Implement session management commands
-    - Implement StartSessionCommand (start new POS session)
-    - Implement EndSessionCommand (end current POS session)
-    - _Requirements: 21.3, 21.4_
+    - Wire up existing `StartTableSessionCommand`, `PauseTableSessionCommand`, `ResumeTableSessionCommand`, and `EndTableSessionCommand`
+    - Implement ToggleSessionCommand that delegates to appropriate existing command based on state
+    - Implement session state tracking derived from `Ticket.SessionStatus`
+    - Implement session duration tracking using DispatcherTimer (updates every second)
+    - Get session duration from `TableSession.GetBillableTime()` via ticket
+    - Update SessionButtonText based on current state
+    - Update IsEndSessionEnabled based on current state
+    - Update SessionDurationDisplay in HH:MM:SS format
+    - Note: `EndTableSessionCommand` already handles duration calculation and expense generation
+    - _Requirements: 21.3, 21.4, 21.5, 21.6, 21.7, 21.8, 21.9, 21.10, 21.11, 21.12, 21.13, 21.14, 21.15, 21.16, 21.17_
+
+  - [ ] 5.19a Write property test for session state transitions
+    - **Property 20: Session State Transitions**
+    - **Validates: Requirements 21.3, 21.4, 21.5, 21.6, 21.7, 21.8, 21.9**
+
+  - [ ] 5.19b Write property test for session button text
+    - **Property 21: Session Button Text**
+    - **Validates: Requirements 21.3, 21.5, 21.7, 21.8**
+
+  - [ ] 5.19c Write property test for session duration calculation
+    - **Property 22: Session Duration Calculation**
+    - **Validates: Requirements 21.12, 21.13, 21.14, 21.15**
+
+  - [ ] 5.19d Write property test for session duration display format
+    - **Property 23: Session Duration Display Format**
+    - **Validates: Requirements 21.12**
+
+  - [ ] 5.19e Write property test for session expense generation
+    - **Property 24: Session Expense Generation**
+    - **Validates: Requirements 21.16**
 
   - [x] 5.20 Implement advanced operation commands
     - Implement ReprintCommand (reprint ticket)
@@ -316,13 +343,15 @@ The implementation will proceed in phases:
     - _Requirements: 17.1, 17.2, 17.3, 17.4, 17.5, 18.1, 18.3, 18.4, 18.5, 19.1, 19.2, 19.3, 19.4, 19.5, 19.6, 19.7, 19.8, 19.9, 19.10_
 
   - [x] 6.4 Implement footer with advanced operations
-    - Create session control buttons (START SESSION, END SESSION)
+    - Create session control buttons (dynamic button text based on state: "Start Session"/"Pause Session"/"Resume Session", "End Session")
+    - Display session duration timer in HH:MM:SS format when session is active or paused
+    - Bind End Session button IsEnabled to IsEndSessionEnabled property
     - Add vertical divider
     - Create advanced operation buttons (REPRINT, VOID, DISCOUNT, FIRE TICKET)
     - Make buttons horizontally scrollable
     - Add hover color effects
     - Display order statistics (Items: X, Wait: XX:XX)
-    - _Requirements: 21.1, 21.2, 21.5, 22.1, 22.2, 22.3, 22.4, 22.5, 22.6, 22.7, 22.8, 22.9, 23.1, 23.2, 23.3, 23.4_
+    - _Requirements: 21.1, 21.2, 21.3, 21.4, 21.5, 21.6, 21.7, 21.8, 21.9, 21.10, 21.12, 21.17, 22.1, 22.2, 22.3, 22.4, 22.5, 22.6, 22.7, 22.8, 22.9, 23.1, 23.2, 23.3, 23.4_
 
   - [x] 6.5 Write UI integration tests for OrderPageView
     - Test data binding correctness

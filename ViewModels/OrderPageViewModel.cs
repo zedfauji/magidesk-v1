@@ -1,10 +1,12 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Magidesk.Application.Commands;
+using Magidesk.Application.Commands.TableSessions;
 using Magidesk.Application.DTOs;
 using Magidesk.Application.Interfaces;
 using Magidesk.Application.Queries;
 using Magidesk.Domain.Entities;
+using Magidesk.Domain.Enumerations;
 using Magidesk.Domain.ValueObjects;
 using Magidesk.Presentation.Services;
 using Magidesk.Presentation.ViewModels.Dialogs;
@@ -31,6 +33,10 @@ public partial class OrderPageViewModel : ViewModelBase
     private readonly ICommandHandler<AddOrderLineCommand, AddOrderLineResult> _addOrderLineHandler;
     private readonly ICommandHandler<RemoveOrderLineCommand> _removeOrderLineHandler;
     private readonly ICommandHandler<CreateTicketCommand, CreateTicketResult> _createTicketHandler;
+    private readonly ICommandHandler<StartTableSessionCommand, StartTableSessionResult> _startTableSessionHandler;
+    private readonly ICommandHandler<PauseTableSessionCommand, PauseTableSessionResult> _pauseTableSessionHandler;
+    private readonly ICommandHandler<ResumeTableSessionCommand, ResumeTableSessionResult> _resumeTableSessionHandler;
+    private readonly ICommandHandler<EndTableSessionCommand, EndTableSessionResult> _endTableSessionHandler;
     private readonly NavigationService _navigationService;
     private readonly IUserService _userService;
     private readonly ITerminalContext _terminalContext;
@@ -43,6 +49,7 @@ public partial class OrderPageViewModel : ViewModelBase
     private TicketDto? _ticket;
     private Guid? _tableId;
     private System.Timers.Timer? _timeUpdateTimer;
+    private System.Timers.Timer? _sessionDurationTimer;
     private List<ProductViewModel> _allProducts = new();
     private Microsoft.UI.Xaml.XamlRoot? _xamlRoot; // Store XamlRoot for dialogs
 
@@ -53,6 +60,10 @@ public partial class OrderPageViewModel : ViewModelBase
         ICommandHandler<AddOrderLineCommand, AddOrderLineResult> addOrderLineHandler,
         ICommandHandler<RemoveOrderLineCommand> removeOrderLineHandler,
         ICommandHandler<CreateTicketCommand, CreateTicketResult> createTicketHandler,
+        ICommandHandler<StartTableSessionCommand, StartTableSessionResult> startTableSessionHandler,
+        ICommandHandler<PauseTableSessionCommand, PauseTableSessionResult> pauseTableSessionHandler,
+        ICommandHandler<ResumeTableSessionCommand, ResumeTableSessionResult> resumeTableSessionHandler,
+        ICommandHandler<EndTableSessionCommand, EndTableSessionResult> endTableSessionHandler,
         NavigationService navigationService,
         IUserService userService,
         ITerminalContext terminalContext,
@@ -66,6 +77,10 @@ public partial class OrderPageViewModel : ViewModelBase
         _addOrderLineHandler = addOrderLineHandler ?? throw new ArgumentNullException(nameof(addOrderLineHandler));
         _removeOrderLineHandler = removeOrderLineHandler ?? throw new ArgumentNullException(nameof(removeOrderLineHandler));
         _createTicketHandler = createTicketHandler ?? throw new ArgumentNullException(nameof(createTicketHandler));
+        _startTableSessionHandler = startTableSessionHandler ?? throw new ArgumentNullException(nameof(startTableSessionHandler));
+        _pauseTableSessionHandler = pauseTableSessionHandler ?? throw new ArgumentNullException(nameof(pauseTableSessionHandler));
+        _resumeTableSessionHandler = resumeTableSessionHandler ?? throw new ArgumentNullException(nameof(resumeTableSessionHandler));
+        _endTableSessionHandler = endTableSessionHandler ?? throw new ArgumentNullException(nameof(endTableSessionHandler));
         _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
         _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         _terminalContext = terminalContext ?? throw new ArgumentNullException(nameof(terminalContext));
@@ -100,7 +115,7 @@ public partial class OrderPageViewModel : ViewModelBase
         PrintOrderCommand = new AsyncRelayCommand(OnPrintOrderAsync);
         NavigateToSettleCommand = new AsyncRelayCommand(OnNavigateToSettleAsync);
         PayNowCommand = new AsyncRelayCommand(OnPayNowAsync);
-        StartSessionCommand = new AsyncRelayCommand(OnStartSessionAsync);
+        ToggleSessionCommand = new AsyncRelayCommand(OnToggleSessionAsync);
         EndSessionCommand = new AsyncRelayCommand(OnEndSessionAsync);
         ReprintCommand = new AsyncRelayCommand(OnReprintAsync);
         VoidTicketCommand = new AsyncRelayCommand(OnVoidTicketAsync);
@@ -119,6 +134,18 @@ public partial class OrderPageViewModel : ViewModelBase
             });
         };
         _timeUpdateTimer.Start();
+
+        // Initialize session duration timer
+        _sessionDurationTimer = new System.Timers.Timer(1000); // Update every second
+        _sessionDurationTimer.Elapsed += (s, e) =>
+        {
+            // Marshal property changes to UI thread
+            _dispatcherQueue.TryEnqueue(() =>
+            {
+                OnPropertyChanged(nameof(SessionDurationDisplay));
+            });
+        };
+        _sessionDurationTimer.Start();
 
         _logger.LogInformation("OrderPageViewModel constructor - All commands initialized");
     }
@@ -182,6 +209,49 @@ public partial class OrderPageViewModel : ViewModelBase
     
     public DateTime CurrentTime => DateTime.Now;
 
+    // Session State
+    public SessionState CurrentSessionState
+    {
+        get
+        {
+            if (_ticket?.SessionStatus == null || !_ticket.HasActiveSession)
+                return SessionState.NotStarted;
+            
+            return _ticket.SessionStatus switch
+            {
+                TableSessionStatus.Active => SessionState.Active,
+                TableSessionStatus.Paused => SessionState.Paused,
+                _ => SessionState.NotStarted
+            };
+        }
+    }
+
+    public bool IsSessionActive => CurrentSessionState == SessionState.Active;
+    
+    public bool IsSessionPaused => CurrentSessionState == SessionState.Paused;
+    
+    public string SessionButtonText => CurrentSessionState switch
+    {
+        SessionState.NotStarted => "Start Session",
+        SessionState.Active => "Pause Session",
+        SessionState.Paused => "Resume Session",
+        _ => "Start Session"
+    };
+    
+    public bool IsEndSessionEnabled => CurrentSessionState == SessionState.Active || CurrentSessionState == SessionState.Paused;
+    
+    public string SessionDurationDisplay
+    {
+        get
+        {
+            if (_ticket?.SessionElapsedTime == null)
+                return "00:00:00";
+            
+            var duration = _ticket.SessionElapsedTime.Value;
+            return $"{(int)duration.TotalHours:D2}:{duration.Minutes:D2}:{duration.Seconds:D2}";
+        }
+    }
+
     // Statistics
     public int TotalItemCount => OrderItems.Sum(item => item.Quantity);
 
@@ -202,7 +272,7 @@ public partial class OrderPageViewModel : ViewModelBase
     public AsyncRelayCommand PrintOrderCommand { get; }
     public AsyncRelayCommand NavigateToSettleCommand { get; }
     public AsyncRelayCommand PayNowCommand { get; }
-    public AsyncRelayCommand StartSessionCommand { get; }
+    public AsyncRelayCommand ToggleSessionCommand { get; }
     public AsyncRelayCommand EndSessionCommand { get; }
     public AsyncRelayCommand ReprintCommand { get; }
     public AsyncRelayCommand VoidTicketCommand { get; }
@@ -316,6 +386,14 @@ public partial class OrderPageViewModel : ViewModelBase
                     OnPropertyChanged(nameof(TicketStartTime));
                     OnPropertyChanged(nameof(WaitTime));
                     OnPropertyChanged(nameof(TotalItemCount));
+                    
+                    // Session state properties
+                    OnPropertyChanged(nameof(CurrentSessionState));
+                    OnPropertyChanged(nameof(IsSessionActive));
+                    OnPropertyChanged(nameof(IsSessionPaused));
+                    OnPropertyChanged(nameof(SessionButtonText));
+                    OnPropertyChanged(nameof(IsEndSessionEnabled));
+                    OnPropertyChanged(nameof(SessionDurationDisplay));
 
                     _logger.LogInformation("Loaded ticket {TicketId} with {ItemCount} items", _ticketId, OrderItems.Count);
                 }
@@ -1567,89 +1645,169 @@ public partial class OrderPageViewModel : ViewModelBase
         }
     }
 
-    private async Task OnStartSessionAsync()
+    private async Task OnToggleSessionAsync()
     {
         try
         {
-            _logger.LogInformation("Start session requested");
+            _logger.LogInformation("Toggle session requested - Current state: {State}", CurrentSessionState);
             
-            if (_userService.CurrentUser == null)
+            switch (CurrentSessionState)
             {
-                _logger.LogError("Cannot start session: no user logged in");
-                await _dialogService.ShowErrorAsync(
-                    "Authentication Error",
-                    "No user is currently logged in. Please log in and try again.");
+                case SessionState.NotStarted:
+                    await StartTableSessionAsync();
+                    break;
+                case SessionState.Active:
+                    await PauseTableSessionAsync();
+                    break;
+                case SessionState.Paused:
+                    await ResumeTableSessionAsync();
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to toggle session");
+            await _dialogService.ShowErrorAsync("Error", $"Failed to toggle session: {ex.Message}");
+        }
+    }
+
+    private async Task StartTableSessionAsync()
+    {
+        try
+        {
+            _logger.LogInformation("Start table session requested");
+            
+            if (!_tableId.HasValue)
+            {
+                _logger.LogWarning("Cannot start session: no table selected");
+                await _dialogService.ShowWarningAsync(
+                    "No Table Selected",
+                    "Please select a table before starting a session.");
                 return;
             }
 
-            if (_terminalContext.TerminalId == null)
+            if (!_ticketId.HasValue)
             {
-                _logger.LogError("Cannot start session: no terminal context");
-                await _dialogService.ShowErrorAsync(
-                    "Terminal Error",
-                    "Terminal context is not available. Please restart the application.");
+                _logger.LogWarning("Cannot start session: no ticket");
+                await _dialogService.ShowWarningAsync(
+                    "No Ticket",
+                    "Please create an order before starting a session.");
                 return;
             }
 
             using (var scope = _serviceScopeFactory.CreateScope())
             {
-                var cashSessionRepository = scope.ServiceProvider.GetRequiredService<ICashSessionRepository>();
+                var tableRepository = scope.ServiceProvider.GetRequiredService<ITableRepository>();
+                var tableTypeRepository = scope.ServiceProvider.GetRequiredService<ITableTypeRepository>();
                 
-                // Check if there's already an active session
-                var activeSession = await cashSessionRepository.GetOpenSessionByTerminalIdAsync(_terminalContext.TerminalId.Value);
-                
-                if (activeSession != null)
+                // Get table information
+                var table = await tableRepository.GetByIdAsync(_tableId.Value);
+                if (table == null)
                 {
-                    _logger.LogWarning("Session already active for terminal {TerminalId}", _terminalContext.TerminalId);
-                    await _dialogService.ShowWarningAsync(
-                        "Session Already Active",
-                        $"There is already an active session on this terminal.\n\nSession started: {activeSession.OpenedAt:g}");
+                    _logger.LogError("Table {TableId} not found", _tableId);
+                    await _dialogService.ShowErrorAsync(
+                        "Table Not Found",
+                        "The selected table could not be found.");
                     return;
                 }
                 
-                // Prompt for starting cash amount - use fully qualified name to avoid ambiguity
-                var cashEntryDialog = new Magidesk.Presentation.Views.Dialogs.CashEntryDialog();
-                
-                // Set XamlRoot for the dialog
-                if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
+                // Get table type for hourly rate
+                var tableType = await tableTypeRepository.GetByIdAsync(table.TableTypeId);
+                if (tableType == null)
                 {
-                    cashEntryDialog.XamlRoot = element.XamlRoot;
+                    _logger.LogError("Table type {TableTypeId} not found", table.TableTypeId);
+                    await _dialogService.ShowErrorAsync(
+                        "Configuration Error",
+                        "Table type configuration is missing.");
+                    return;
                 }
                 
-                cashEntryDialog.ViewModel.Title = "Start Session - Opening Cash";
-                cashEntryDialog.ViewModel.Message = "Enter the opening cash amount for this session";
+                var command = new StartTableSessionCommand(
+                    TableId: _tableId.Value,
+                    TableTypeId: table.TableTypeId,
+                    GuestCount: GuestCount > 0 ? GuestCount : 1,
+                    CustomerId: null,
+                    TicketId: _ticketId.Value,
+                    CreateTicket: false,
+                    UserId: _userService.CurrentUser?.Id,
+                    TerminalId: _terminalContext.TerminalId,
+                    ShiftId: null,
+                    OrderTypeId: null
+                );
                 
-                var dialogResult = await cashEntryDialog.ShowAsync();
+                var result = await _startTableSessionHandler.HandleAsync(command);
                 
-                if (dialogResult == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
-                {
-                    var openingCash = cashEntryDialog.ViewModel.TotalAmount;
-                    
-                    var openSessionHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult>>();
-                    
-                    var command = new OpenCashSessionCommand
-                    {
-                        TerminalId = _terminalContext.TerminalId.Value,
-                        UserId = new UserId(_userService.CurrentUser.Id),
-                        OpeningBalance = new Money(openingCash, "USD"),
-                        ShiftId = Guid.Empty // TODO: Get actual shift ID
-                    };
-                    
-                    var result = await openSessionHandler.HandleAsync(command);
-                    
-                    _logger.LogInformation("Session {SessionId} started with opening cash {OpeningCash}", 
-                        result.CashSessionId, openingCash);
-                    
-                    await _dialogService.ShowMessageAsync(
-                        "Session Started",
-                        $"POS session has been started.\n\nOpening Cash: {openingCash:C2}");
-                }
+                _logger.LogInformation("Table session {SessionId} started for table {TableId}", 
+                    result.SessionId, _tableId);
+                
+                // Reload ticket to get updated session information
+                await LoadTicketAsync();
+                
+                await _dialogService.ShowMessageAsync(
+                    "Session Started",
+                    $"Table session has been started.\n\nHourly Rate: {result.HourlyRate:C2}");
             }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to start session");
+            _logger.LogError(ex, "Failed to start table session");
             await _dialogService.ShowErrorAsync("Error", $"Failed to start session: {ex.Message}");
+        }
+    }
+
+    private async Task PauseTableSessionAsync()
+    {
+        try
+        {
+            _logger.LogInformation("Pause table session requested");
+            
+            if (_ticket?.SessionId == null)
+            {
+                _logger.LogWarning("Cannot pause session: no active session");
+                return;
+            }
+            
+            var command = new PauseTableSessionCommand(_ticket.SessionId.Value);
+            var result = await _pauseTableSessionHandler.HandleAsync(command);
+            
+            _logger.LogInformation("Table session {SessionId} paused at {PausedAt}", 
+                result.SessionId, result.PausedAt);
+            
+            // Reload ticket to get updated session status
+            await LoadTicketAsync();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to pause table session");
+            await _dialogService.ShowErrorAsync("Error", $"Failed to pause session: {ex.Message}");
+        }
+    }
+
+    private async Task ResumeTableSessionAsync()
+    {
+        try
+        {
+            _logger.LogInformation("Resume table session requested");
+            
+            if (_ticket?.SessionId == null)
+            {
+                _logger.LogWarning("Cannot resume session: no paused session");
+                return;
+            }
+            
+            var command = new ResumeTableSessionCommand(_ticket.SessionId.Value);
+            var result = await _resumeTableSessionHandler.HandleAsync(command);
+            
+            _logger.LogInformation("Table session {SessionId} resumed at {ResumedAt}, total paused: {TotalPaused}", 
+                result.SessionId, result.ResumedAt, result.TotalPausedDuration);
+            
+            // Reload ticket to get updated session status
+            await LoadTicketAsync();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to resume table session");
+            await _dialogService.ShowErrorAsync("Error", $"Failed to resume session: {ex.Message}");
         }
     }
 
@@ -1657,99 +1815,51 @@ public partial class OrderPageViewModel : ViewModelBase
     {
         try
         {
-            _logger.LogInformation("End session requested");
+            _logger.LogInformation("End table session requested");
             
-            if (_userService.CurrentUser == null)
+            if (_ticket?.SessionId == null)
             {
-                _logger.LogError("Cannot end session: no user logged in");
-                await _dialogService.ShowErrorAsync(
-                    "Authentication Error",
-                    "No user is currently logged in. Please log in and try again.");
+                _logger.LogWarning("Cannot end session: no active session");
+                await _dialogService.ShowWarningAsync(
+                    "No Active Session",
+                    "There is no active session to end.");
                 return;
             }
 
-            if (_terminalContext.TerminalId == null)
+            // Confirm session end
+            var confirmed = await _dialogService.ShowConfirmationAsync(
+                "End Session",
+                $"End the current table session?\n\nSession Duration: {SessionDurationDisplay}\n\nThis will add the session charges to the order.",
+                "End Session", "Cancel");
+            
+            if (!confirmed)
             {
-                _logger.LogError("Cannot end session: no terminal context");
-                await _dialogService.ShowErrorAsync(
-                    "Terminal Error",
-                    "Terminal context is not available. Please restart the application.");
                 return;
             }
-
-            using (var scope = _serviceScopeFactory.CreateScope())
-            {
-                var cashSessionRepository = scope.ServiceProvider.GetRequiredService<ICashSessionRepository>();
-                
-                // Check if there's an active session
-                var activeSession = await cashSessionRepository.GetOpenSessionByTerminalIdAsync(_terminalContext.TerminalId.Value);
-                
-                if (activeSession == null)
-                {
-                    _logger.LogWarning("No active session for terminal {TerminalId}", _terminalContext.TerminalId);
-                    await _dialogService.ShowWarningAsync(
-                        "No Active Session",
-                        "There is no active session on this terminal.");
-                    return;
-                }
-                
-                // Confirm session end
-                var confirmed = await _dialogService.ShowConfirmationAsync(
-                    "End Session",
-                    $"End the current POS session?\n\nSession started: {activeSession.OpenedAt:g}\n\nThis will close the cash drawer and generate a session report.",
-                    "End Session", "Cancel");
-                
-                if (!confirmed)
-                {
-                    return;
-                }
-                
-                // Prompt for ending cash amount - use fully qualified name to avoid ambiguity
-                var cashEntryDialog = new Magidesk.Presentation.Views.Dialogs.CashEntryDialog();
-                
-                // Set XamlRoot for the dialog
-                if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)
-                {
-                    cashEntryDialog.XamlRoot = element.XamlRoot;
-                }
-                
-                cashEntryDialog.ViewModel.Title = "End Session - Closing Cash";
-                cashEntryDialog.ViewModel.Message = "Enter the closing cash amount for this session";
-                
-                var dialogResult = await cashEntryDialog.ShowAsync();
-                
-                if (dialogResult == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
-                {
-                    var closingCash = cashEntryDialog.ViewModel.TotalAmount;
-                    
-                    var closeSessionHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<CloseCashSessionCommand, CloseCashSessionResult>>();
-                    
-                    var command = new CloseCashSessionCommand
-                    {
-                        CashSessionId = activeSession.Id,
-                        ClosedBy = new UserId(_userService.CurrentUser.Id),
-                        ActualCash = new Money(closingCash, "USD")
-                    };
-                    
-                    var result = await closeSessionHandler.HandleAsync(command);
-                    
-                    _logger.LogInformation("Session {SessionId} ended with closing cash {ClosingCash}", 
-                        activeSession.Id, closingCash);
-                    
-                    var variance = closingCash - result.ExpectedCash.Amount;
-                    var varianceMessage = variance == 0 
-                        ? "Cash drawer balanced perfectly!" 
-                        : $"Cash variance: {variance:C2}";
-                    
-                    await _dialogService.ShowMessageAsync(
-                        "Session Ended",
-                        $"POS session has been closed.\n\nExpected Cash: {result.ExpectedCash.Amount:C2}\nActual Cash: {closingCash:C2}\n\n{varianceMessage}");
-                }
-            }
+            
+            var command = new EndTableSessionCommand(
+                SessionId: _ticket.SessionId.Value,
+                CreateTicket: false, // Add to existing ticket
+                UserId: _userService.CurrentUser?.Id,
+                TerminalId: _terminalContext.TerminalId,
+                ShiftId: null,
+                OrderTypeId: null
+            );
+            
+            var result = await _endTableSessionHandler.HandleAsync(command);
+            
+            _logger.LogInformation("Table session {SessionId} ended", _ticket.SessionId);
+            
+            // Reload ticket to get updated totals with session charges
+            await LoadTicketAsync();
+            
+            await _dialogService.ShowMessageAsync(
+                "Session Ended",
+                $"Table session has been ended.\n\nSession charges have been added to the order.");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to end session");
+            _logger.LogError(ex, "Failed to end table session");
             await _dialogService.ShowErrorAsync("Error", $"Failed to end session: {ex.Message}");
         }
     }
@@ -2035,6 +2145,8 @@ public partial class OrderPageViewModel : ViewModelBase
     {
         _timeUpdateTimer?.Stop();
         _timeUpdateTimer?.Dispose();
+        _sessionDurationTimer?.Stop();
+        _sessionDurationTimer?.Dispose();
     }
 
     #endregion
@@ -2093,4 +2205,14 @@ public class ProductCategoryViewModel
     public string Name { get; set; } = string.Empty;
     public string IconName { get; set; } = string.Empty;
     public ObservableCollection<string> Subcategories { get; set; } = new();
+}
+
+/// <summary>
+/// Represents the state of a table session.
+/// </summary>
+public enum SessionState
+{
+    NotStarted,
+    Active,
+    Paused
 }

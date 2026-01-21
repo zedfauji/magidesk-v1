@@ -77,6 +77,26 @@ OrderPage ──[SETTLE button]──> SettlePageView
 
 ## Components and Interfaces
 
+### Existing Infrastructure
+
+The implementation will leverage existing session management infrastructure from the codebase:
+
+**Domain Layer**:
+- `TableSession` entity with full pause/resume/end support
+- `TableSessionStatus` enum (Active, Paused, Ended)
+- `GetBillableTime()` method that calculates duration excluding paused time
+
+**Application Layer Commands**:
+- `StartTableSessionCommand` - Starts a new table session
+- `PauseTableSessionCommand` - Pauses an active session
+- `ResumeTableSessionCommand` - Resumes a paused session
+- `EndTableSessionCommand` - Ends a session and adds charges to ticket
+
+**Existing ViewModels**:
+- `OrderEntryViewModel` already has `PauseSessionCommand` and `ResumeSessionCommand`
+- `TableMapViewModel` has full session management with dialogs
+- `StartSessionDialogViewModel` and `EndSessionDialogViewModel` for session workflows
+
 ### 1. SettlePageViewModel
 
 **Purpose**: Manages the state and behavior of the Settle Page
@@ -175,6 +195,17 @@ public class OrderPageViewModel : ViewModelBase
     public string SystemStatus { get; }
     public DateTime CurrentTime { get; }
     
+    // Session State
+    public SessionState CurrentSessionState { get; private set; }
+    public bool IsSessionActive { get; }
+    public bool IsSessionPaused { get; }
+    public string SessionButtonText { get; }
+    public bool IsEndSessionEnabled { get; }
+    public TimeSpan SessionDuration { get; private set; }
+    public string SessionDurationDisplay { get; }
+    public DateTime? SessionStartTime { get; private set; }
+    public TimeSpan AccumulatedPausedTime { get; private set; }
+    
     // Statistics
     public int TotalItemCount { get; }
     
@@ -192,13 +223,27 @@ public class OrderPageViewModel : ViewModelBase
     public ICommand PrintOrderCommand { get; }
     public ICommand NavigateToSettleCommand { get; }
     public ICommand PayNowCommand { get; }
-    public ICommand StartSessionCommand { get; }
+    public ICommand ToggleSessionCommand { get; }
     public ICommand EndSessionCommand { get; }
     public ICommand ReprintCommand { get; }
     public ICommand VoidTicketCommand { get; }
     public ICommand ApplyDiscountCommand { get; }
     public ICommand FireTicketCommand { get; }
 }
+
+public enum SessionState
+{
+    NotStarted,
+    Active,
+    Paused
+}
+```
+
+**Implementation Notes**:
+- The ViewModel will use existing `StartTableSessionCommand`, `PauseTableSessionCommand`, `ResumeTableSessionCommand`, and `EndTableSessionCommand` from the Application layer
+- Session duration will be calculated using `TableSession.GetBillableTime()` which already handles pause/resume logic
+- The ViewModel will maintain a timer (DispatcherTimer) to update the duration display every second
+- Session state will be derived from `Ticket.SessionStatus` (from TicketDto)
 ```
 
 **Key Methods**:
@@ -208,6 +253,21 @@ public class OrderPageViewModel : ViewModelBase
 - `FilterProducts()`: Filters products by category, subcategory, and search query
 - `NavigateToSettle()`: Navigates to settle page with current ticket
 - `ProcessImmediatePayment()`: Initiates quick payment flow
+- `ToggleSession()`: Starts, pauses, or resumes session based on current state (uses existing commands)
+- `EndSession()`: Ends the current session using `EndTableSessionCommand`, which automatically calculates duration and adds expense to order
+- `UpdateSessionButtonText()`: Updates button text based on session state ("Start Session", "Pause Session", "Resume Session")
+- `UpdateSessionDuration()`: Updates session duration display in HH:MM:SS format (called every second via DispatcherTimer)
+- `GetSessionDuration()`: Retrieves current billable time from the session entity via ticket
+
+**Session Management Implementation**:
+The session management will reuse existing infrastructure:
+1. Start: Execute `StartTableSessionCommand` with table info
+2. Pause: Execute `PauseTableSessionCommand` with session ID
+3. Resume: Execute `ResumeTableSessionCommand` with session ID
+4. End: Execute `EndTableSessionCommand` which automatically:
+   - Calculates billable time using `TableSession.GetBillableTime()`
+   - Adds expense line item to the ticket
+   - Updates session status to Ended
 
 ### 3. PaymentMethodViewModel
 
@@ -479,6 +539,36 @@ Both ViewModels will use `INotifyPropertyChanged` to update the UI reactively wh
 *For any* ticket, the ticket number should be displayed in the format "Ticket #XXXX" where XXXX is the ticket number.
 
 **Validates: Requirements 12.7**
+
+### Property 20: Session State Transitions
+
+*For any* sequence of session commands (toggle, end), the session state should transition correctly: NotStarted → (toggle) → Active → (toggle) → Paused → (toggle) → Active → (end) → NotStarted, and the End Session button should only be enabled when the session is Active or Paused.
+
+**Validates: Requirements 21.3, 21.4, 21.5, 21.6, 21.7, 21.8, 21.9**
+
+### Property 21: Session Button Text
+
+*For any* session state, the session toggle button text should correctly reflect the next action: "Start Session" when NotStarted, "Pause Session" when Active, and "Resume Session" when Paused.
+
+**Validates: Requirements 21.3, 21.5, 21.7, 21.8**
+
+### Property 22: Session Duration Calculation
+
+*For any* session with start time, pause periods, and resume periods, the calculated session duration should equal the total elapsed time minus the accumulated paused time.
+
+**Validates: Requirements 21.12, 21.13, 21.14, 21.15**
+
+### Property 23: Session Duration Display Format
+
+*For any* session duration, the display should format the duration as HH:MM:SS where HH is hours (zero-padded), MM is minutes (zero-padded), and SS is seconds (zero-padded).
+
+**Validates: Requirements 21.12**
+
+### Property 24: Session Expense Generation
+
+*For any* ended session with a duration, ending the session should add exactly one expense line item to the current order with an amount calculated based on the session duration.
+
+**Validates: Requirements 21.16**
 
 ## Error Handling
 

@@ -664,19 +664,28 @@
                         Orientation="Horizontal"
                         Spacing="8"
                         VerticalAlignment="Center">
-                <!-- Start Session -->
-                <Button Command="{x:Bind ViewModel.StartSessionCommand}"
+                <!-- Toggle Session (Start/Pause/Resume) -->
+                <Button Command="{x:Bind ViewModel.ToggleSessionCommand}"
                         Style="{StaticResource SecondaryButtonStyle}"
                         Padding="12,6"
                         Height="24">
                     <StackPanel Orientation="Horizontal" Spacing="6">
                         <FontIcon Glyph="&#xE768;" FontSize="12"/>
-                        <TextBlock Text="START SESSION" Style="{StaticResource XSmallUppercaseTextStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SessionButtonText, Mode=OneWay}" 
+                                   Style="{StaticResource XSmallUppercaseTextStyle}"/>
                     </StackPanel>
                 </Button>
 
+                <!-- Session Duration Display -->
+                <TextBlock Text="{x:Bind ViewModel.SessionDurationDisplay, Mode=OneWay}"
+                           Style="{StaticResource SmallTextStyle}"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           VerticalAlignment="Center"
+                           Visibility="{x:Bind ViewModel.IsSessionActive, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
                 <!-- End Session -->
                 <Button Command="{x:Bind ViewModel.EndSessionCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsEndSessionEnabled, Mode=OneWay}"
                         Style="{StaticResource SecondaryButtonStyle}"
                         Padding="12,6"
                         Height="24">
