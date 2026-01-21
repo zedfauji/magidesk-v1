@@ -1671,6 +1671,18 @@ public partial class OrderPageViewModel : ViewModelBase
         }
     }
 
+    private async Task OnStartSessionAsync()
+    {
+        // Navigate to dashboard or show dialog to start session
+        // For now, guide user to dashboard as session management is there
+        await _dialogService.ShowMessageAsync(
+            "Start Session",
+            "Please navigate to the Dashboard to start a new shift/session.");
+            
+        // Ideally navigate there:
+        // _navigationService.Navigate(typeof(Views.DashboardPage));
+    }
+
     private async Task StartTableSessionAsync()
     {
         try
@@ -1711,8 +1723,18 @@ public partial class OrderPageViewModel : ViewModelBase
                     return;
                 }
                 
+                // Check if table has a type assigned
+                if (!table.TableTypeId.HasValue)
+                {
+                    _logger.LogError("Table {TableId} has no table type assigned", _tableId);
+                    await _dialogService.ShowErrorAsync(
+                        "Configuration Error",
+                        "The selected table does not have a Table Type assigned. Please configure it in Settings.");
+                    return;
+                }
+
                 // Get table type for hourly rate
-                var tableType = await tableTypeRepository.GetByIdAsync(table.TableTypeId);
+                var tableType = await tableTypeRepository.GetByIdAsync(table.TableTypeId.Value);
                 if (tableType == null)
                 {
                     _logger.LogError("Table type {TableTypeId} not found", table.TableTypeId);
@@ -1724,7 +1746,7 @@ public partial class OrderPageViewModel : ViewModelBase
                 
                 var command = new StartTableSessionCommand(
                     TableId: _tableId.Value,
-                    TableTypeId: table.TableTypeId,
+                    TableTypeId: table.TableTypeId.Value,
                     GuestCount: GuestCount > 0 ? GuestCount : 1,
                     CustomerId: null,
                     TicketId: _ticketId.Value,
