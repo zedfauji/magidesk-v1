@@ -1,4 +1,5 @@
 using Magidesk.Presentation.ViewModels;
+using Magidesk.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -39,8 +40,14 @@ public sealed partial class OrderPageView : Page
 
         try
         {
+            // Handle OrderEntryNavigationContext (from table map)
+            if (e.Parameter is OrderEntryNavigationContext context && context.TicketId.HasValue)
+            {
+                System.Diagnostics.Debug.WriteLine($"OrderPageView.OnNavigatedTo - Initializing with OrderEntryNavigationContext, ticketId: {context.TicketId}");
+                await ViewModel.InitializeAsync(ticketId: context.TicketId.Value);
+            }
             // Initialize ViewModel with navigation parameters if provided
-            if (e.Parameter is (Guid ticketId, Guid tableId))
+            else if (e.Parameter is (Guid ticketId, Guid tableId))
             {
                 System.Diagnostics.Debug.WriteLine($"OrderPageView.OnNavigatedTo - Initializing with ticketId: {ticketId}, tableId: {tableId}");
                 await ViewModel.InitializeAsync(ticketId, tableId);

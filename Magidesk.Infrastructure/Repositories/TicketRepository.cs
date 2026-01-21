@@ -288,6 +288,30 @@ public class TicketRepository : ITicketRepository
                 }
             }
 
+            // CORRECTIVE LOGIC: Ensure new OrderLines (like TimeChargeLine) are Added, not Modified
+            // When ending a session, a new TimeChargeLine is added to the ticket.
+            // EF Core might track this as Modified because the Ticket is Modified.
+            // If we attempt to UPDATE non-existent rows, we get a concurrency exception.
+            if (ticket.OrderLines != null)
+            {
+                foreach (var line in ticket.OrderLines)
+                {
+                    var lineEntry = _context.Entry(line);
+                    if (lineEntry.State == EntityState.Modified || lineEntry.State == EntityState.Detached)
+                    {
+                        // Check if it actually exists in DB
+                        // Optimization: Check Local first to avoid DB hit? No, Local reflects Context which is what we are fighting.
+                        var lineExists = await _context.Set<OrderLine>().AnyAsync(ol => ol.Id == line.Id, cancellationToken);
+                        if (!lineExists)
+                        {
+                            // It's a new line that EF thinks is an update. Force it to Added.
+                            // This includes setting all Owned Entity properties to Added.
+                            MarkOrderLineAsAdded(line);
+                        }
+                    }
+                }
+            }
+
             
             await _context.SaveChangesAsync(cancellationToken);
         }

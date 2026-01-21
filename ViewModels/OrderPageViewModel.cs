@@ -362,6 +362,37 @@ public partial class OrderPageViewModel : ViewModelBase
 
                 if (_ticket != null)
                 {
+                    // Load table information from ticket if available
+                    if (_ticket.TableNumbers != null && _ticket.TableNumbers.Any() && !_tableId.HasValue)
+                    {
+                        // Get the first table number from the ticket
+                        var tableNumber = _ticket.TableNumbers.First();
+                        _logger.LogInformation("Ticket has table number {TableNumber}, loading table details", tableNumber);
+                        
+                        // Get the table ID from the repository using the table number
+                        var tableRepository = scope.ServiceProvider.GetRequiredService<ITableRepository>();
+                        var tables = await tableRepository.GetAllAsync();
+                        var table = tables.FirstOrDefault(t => t.TableNumber == tableNumber);
+                        
+                        if (table != null)
+                        {
+                            _tableId = table.Id;
+                            TableNumber = $"TABLE {table.TableNumber}";
+                            _logger.LogInformation("Loaded table ID {TableId} (Table {TableNumber}) from ticket", _tableId, table.TableNumber);
+                        }
+                        else
+                        {
+                            _logger.LogWarning("Table with number {TableNumber} not found in repository", tableNumber);
+                            TableNumber = $"TABLE {tableNumber}";
+                        }
+                    }
+                    else if (!string.IsNullOrEmpty(_ticket.TableName) && !_tableId.HasValue)
+                    {
+                        // Fallback: use table name if available
+                        TableNumber = _ticket.TableName;
+                        _logger.LogInformation("Using table name from ticket: {TableName}", _ticket.TableName);
+                    }
+                    
                     // Load order items
                     OrderItems.Clear();
                     foreach (var line in _ticket.OrderLines)
@@ -742,12 +773,13 @@ public partial class OrderPageViewModel : ViewModelBase
                     _tableId = viewModel.SelectedTable.Id;
                     TableNumber = $"TABLE {viewModel.SelectedTable.TableNumber}";
                     
-                    _logger.LogInformation("Selected table {TableNumber}", 
-                        viewModel.SelectedTable.TableNumber);
+                    _logger.LogInformation("Selected table {TableNumber} with ID {TableId}", 
+                        viewModel.SelectedTable.TableNumber, _tableId);
                     
-                    // If we have a ticket, assign the table to it
+                    // If we already have a ticket, assign the table to it
                     if (_ticketId.HasValue)
                     {
+                        _logger.LogInformation("Assigning table {TableId} to existing ticket {TicketId}", _tableId, _ticketId);
                         var assignTableHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<AssignTableToTicketCommand, AssignTableToTicketResult>>();
                         
                         var command = new AssignTableToTicketCommand
@@ -758,6 +790,14 @@ public partial class OrderPageViewModel : ViewModelBase
                         
                         await assignTableHandler.HandleAsync(command);
                         await LoadTicketAsync();
+                    }
+                    else
+                    {
+                        // No ticket yet - create one immediately with the selected table
+                        _logger.LogInformation("Creating new ticket for table {TableNumber} (ID: {TableId})", 
+                            viewModel.SelectedTable.TableNumber, _tableId);
+                        await CreateTicketAsync();
+                        _logger.LogInformation("After CreateTicketAsync - _tableId: {TableId}, _ticketId: {TicketId}", _tableId, _ticketId);
                     }
                 }
             }
@@ -1022,6 +1062,9 @@ public partial class OrderPageViewModel : ViewModelBase
 
                 _ticketId = result.TicketId;
                 _logger.LogInformation("Created new ticket {TicketId}", _ticketId);
+                
+                // Reload the ticket to get the full ticket data including table assignment
+                await LoadTicketAsync();
             }
         }
         catch (InvalidOperationException ex)
@@ -1687,7 +1730,7 @@ public partial class OrderPageViewModel : ViewModelBase
     {
         try
         {
-            _logger.LogInformation("Start table session requested");
+            _logger.LogInformation("Start table session requested - _tableId: {TableId}, _ticketId: {TicketId}", _tableId, _ticketId);
             
             if (!_tableId.HasValue)
             {
