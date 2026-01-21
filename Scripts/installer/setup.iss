@@ -30,7 +30,7 @@ Name: "{commonappdata}\Magidesk\Logs"; Permissions: users-modify
 
 [Files]
 ; 1. Core Application Bundle (Publish Output)
-Source: "..\..\src\Magidesk.Presentation\bin\x64\Release\net8.0-windows10.0.19041.0\win-x64\publish\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\..\src\Magidesk.Presentation\bin\Release\net8.0-windows10.0.19041.0\win-x64\publish\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 ; 2. Default Config
 Source: "..\..\src\Magidesk.Presentation\Configuration\appsettings.defaults.json"; DestDir: "{app}"; Flags: ignoreversion
@@ -65,7 +65,7 @@ var
 procedure InitializeWizard;
 begin
   // Create Custom Page for Database Info
-  DbHostPage := CreateInputQueryWizardPage(wpSelectDir,
+  DbHostPage := CreateInputQueryPage(wpSelectDir,
     'Database Configuration', 'Please enter your PostgreSQL connection details.',
     'These will be used to initialize the database and configure the application.');
   
