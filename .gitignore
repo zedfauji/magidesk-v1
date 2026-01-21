@@ -89,3 +89,15 @@ docs/ui/mockups/
 *.cache
 .DS_Store
 Thumbs.db
+
+# Strict Cleanup Rules (Restructure 2026)
+audit*/
+audits/
+.windsurf/
+.kiro/
+.sonarqube/
+.agent/
+**/bin/
+**/obj/
+archive/_root_pollution/
+archive/_orphan_build_artifacts/

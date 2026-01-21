@@ -1,38 +1,125 @@
-# Database Setup Guide
+# Magidesk POS - Database Setup
 
-When you launch Magidesk for the first time, you will see the **Database Setup** screen. This is a one-time process to connect the register to your data.
+## PostgreSQL Configuration
 
-## The Setup Screen
+### Current Status
+- **Primary dev DB**: `magidesk_pos` (exists)
+- **Integration-test DB**: `magidesk_test` (tests create/drop as needed)
+- **User**: `postgres` (password-based in tests by default)
+- **Connection**: Local PostgreSQL server
 
-You will need the following information. If you are unsure, ask your system administrator.
+### Existing Tables
+The database already contains some tables:
+- `Orders`
+- `OrderItems`
+- `payments`
+- `shifts`
+- `tables`
+- `Users`
+- And others...
 
-| Field | Description | Default / Example |
-|-------|-------------|-------------------|
-| **Host** | The IP address or name of the computer running the database. | `localhost` (if on same PC) or `192.168.1.100` |
-| **Port** | The network port for the database. | `5432` |
-| **Database Name** | The name of your data file. | `magidesk_db` |
-| **Username** | The database user account. | `postgres` |
-| **Password** | The secure password for the database. | *(Your secure password)* |
+### Decision Required
+**Question**: Should we:
+1. **Option A**: Use existing tables and migrate them to our domain model?
+2. **Option B**: Create new tables with our domain model and ignore existing ones?
+3. **Option C**: Create new schema (e.g., `magidesk`) and use that?
 
-## Step-by-Step
+**Recommendation**: Option C - Create new schema to avoid conflicts and maintain clean separation.
 
-1. **Enter Details**: Fill in the fields described above.
-2. **Test Connection**: Click the **Test Connection** button.
-   - ✅ **Success**: You will see a green checkmark.
-   - ❌ **Failed**: You will see an error message explaining what is wrong (e.g., "Wrong Password" or "Cannot Find Server"). 
-3. **Run Database Setup**:
-   - If this is a **New Install**, click **Run Database Setup**.
-   - The system will create all necessary tables and standard data for you.
-   - *Wait for the progress bar to reach 100%.*
-4. **Continue**:
-   - Once success is confirmed, clicking **Continue** will take you to the Login screen.
+## Database Schema Plan
 
-> **Security Note:** Your database password is encrypted and stored securely on this computer. You won't need to enter it again unless you reinstall the application.
+### Schema: `magidesk` (proposed)
 
-## Troubleshooting Connections
+#### Core Tables
+- `Tickets` (replaces Orders)
+- `OrderLines` (replaces OrderItems)
+- `Payments` (enhances existing payments)
+- `CashSessions` (new, replaces shifts concept)
+- `Shifts` (reference data)
+- `OrderTypes` (reference data)
+- `Tables` (restaurant tables)
+- `AuditEvents` (new)
 
-- **"Connection Refused"**: Check that the Host IP is correct and the PostgreSQL service is running on the server.
-- **"Password Authentication Failed"**: Double-check your username and password. Case sensitivity matters!
-- **"Database does not exist"**: Ensure you typed the Database Name correctly. Most setups use `magidesk_db`.
+#### Reference Data Tables
+- `MenuItems`
+- `MenuCategories`
+- `MenuGroups`
+- `MenuModifiers`
+- `ModifierGroups`
+- `Discounts`
+- `TaxGroups`
+- `Taxes`
+- `Users`
+- `UserTypes`
 
-👉 **Next Step: [First Run Checklist](FIRST_RUN_CHECKLIST.md)**
+#### Payment Tables
+- `CashTransactions`
+- `CreditCardTransactions`
+- `DebitCardTransactions`
+- `GiftCertificateTransactions`
+- `CustomPaymentTransactions`
+- `RefundTransactions`
+
+#### Cash Management Tables
+- `Payouts`
+- `CashDrops`
+- `DrawerBleeds`
+
+#### Other Tables
+- `Gratuities`
+- `TicketDiscounts`
+- `OrderLineDiscounts`
+- `OrderLineModifiers`
+- `CookingInstructions`
+
+## EF Core Migration Strategy
+
+1. **Initial Migration**: Create all tables in `magidesk` schema
+2. **Incremental Migrations**: Add tables/columns as features are implemented
+3. **Data Migrations**: Seed initial data (order types, shifts, admin user)
+
+## Connection String
+
+### Integration Tests (Magidesk.Infrastructure.Tests)
+
+The repository integration tests use a local Postgres database named `magidesk_test` and will recreate schema during runs.
+
+```
+Host=localhost;Port=5432;Database=magidesk_test;Username=postgres;Password=postgres;
+```
+
+### Dev DB (local)
+
+```
+Host=localhost;Port=5432;Database=magidesk_pos;Username=postgres;Password=;
+```
+
+Or using Npgsql format:
+```
+Server=localhost;Port=5432;Database=magidesk_pos;User Id=postgres;Password=;
+```
+
+## Next Steps
+
+1. **Decide on schema approach** (new schema recommended)
+2. **Create initial EF Core DbContext**
+3. **Create first migration** (will create schema and tables)
+4. **Seed initial data**
+5. **Test connection and migrations**
+
+## Database Naming Conventions
+
+- **Tables**: PascalCase (e.g., `Tickets`, `OrderLines`)
+- **Columns**: PascalCase (e.g., `Id`, `TicketNumber`, `CreatedAt`)
+- **Foreign Keys**: `{Entity}Id` (e.g., `TicketId`, `UserId`)
+- **Indexes**: `IX_{Table}_{Columns}` (e.g., `IX_Tickets_TicketNumber`)
+- **Primary Keys**: `PK_{Table}` (e.g., `PK_Tickets`)
+
+## Constraints
+
+- **Primary Keys**: All tables use `Guid` as primary key
+- **Foreign Keys**: All foreign keys have proper constraints
+- **Unique Constraints**: Ticket numbers, payment transaction IDs
+- **Check Constraints**: Amounts >= 0, quantities > 0
+- **Default Values**: Timestamps, status enums
+
