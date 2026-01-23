@@ -268,6 +268,20 @@ public partial class App : Microsoft.UI.Xaml.Application
             }
             catch (Exception validationEx)
             {
+                StartupLogger.Log($"App - Service Validation Failed: {validationEx.Message}");
+                var inner = validationEx.InnerException;
+                while (inner != null)
+                {
+                    StartupLogger.Log($"App - Inner: {inner.Message}");
+                    if (inner is System.Reflection.ReflectionTypeLoadException rtle)
+                    {
+                        foreach (var loaderEx in rtle.LoaderExceptions)
+                        {
+                            StartupLogger.Log($"App - LoaderError: {loaderEx?.Message}");
+                        }
+                    }
+                    inner = inner.InnerException;
+                }
                 HandleFatalStartupError("Service Validation Failed", validationEx);
                 throw;
             }

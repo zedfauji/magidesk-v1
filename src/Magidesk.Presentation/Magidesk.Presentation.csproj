@@ -40,6 +40,8 @@
         
         <!-- FIX: Disable Trimming to prevent MediatR/DI reflection errors in Release builds -->
         <PublishTrimmed>false</PublishTrimmed>
+        <!-- FIX: Disable ReadyToRun to prevent version mismatch locking -->
+        <PublishReadyToRun>false</PublishReadyToRun>
     </PropertyGroup>
 
     <ItemGroup>
