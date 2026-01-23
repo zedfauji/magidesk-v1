@@ -94,7 +94,7 @@
                         </ListView>
                         
                         <!-- Footer / Bump Button -->
-                        <Button Grid.Row="2" Content="{Binding ElementName=RootPage, Path=DataContext.Localization[KD_BumpOrder]}" HorizontalAlignment="Stretch" Margin="12" 
+                        <Button Grid.Row="2" Content="{Binding ElementName=RootPage, Path=DataContext.Localization[KD_BumpOrder]}" Margin="12" 
                                 Background="{ThemeResource SystemControlBackgroundAccentBrush}" Foreground="White"
                                 Command="{Binding ElementName=RootPage, Path=ViewModel.BumpCommand}" 
                                 CommandParameter="{Binding}"

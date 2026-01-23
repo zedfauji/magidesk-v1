@@ -60,7 +60,7 @@
                     </ListView>
                 </Border>
                 
-                <Button Grid.Row="2" Content="Add Category" HorizontalAlignment="Stretch" Margin="0,8,0,0" Command="{x:Bind ViewModel.AddCategoryCommand}"/>
+                <Button Grid.Row="2" Content="Add Category" Margin="0,8,0,0" Command="{x:Bind ViewModel.AddCategoryCommand}"/>
             </Grid>
 
             <!-- 2. Groups -->
@@ -84,7 +84,7 @@
                     </ListView>
                 </Border>
 
-                <Button Grid.Row="2" Content="Add Group" HorizontalAlignment="Stretch" Margin="0,8,0,0" Command="{x:Bind ViewModel.AddGroupCommand}"/>
+                <Button Grid.Row="2" Content="Add Group" Margin="0,8,0,0" Command="{x:Bind ViewModel.AddGroupCommand}"/>
             </Grid>
             
             <!-- 3. Items -->
@@ -113,7 +113,7 @@
                     </ListView>
                 </Border>
 
-                <Button Grid.Row="2" Content="Add Item" HorizontalAlignment="Stretch" Margin="0,8,0,0" Command="{x:Bind ViewModel.AddItemCommand}"/>
+                <Button Grid.Row="2" Content="Add Item" Margin="0,8,0,0" Command="{x:Bind ViewModel.AddItemCommand}"/>
             </Grid>
 
             <!-- 4. Detail View -->

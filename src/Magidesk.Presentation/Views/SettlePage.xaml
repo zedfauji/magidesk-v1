@@ -131,21 +131,21 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Content="7" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24"/>
-                    <Button Content="8" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" FontSize="24"/>
-                    <Button Content="9" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" FontSize="24"/>
+                    <Button Content="7" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="7" FontSize="24"/>
+                    <Button Content="8" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="8" Grid.Column="1" FontSize="24"/>
+                    <Button Content="9" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="9" Grid.Column="2" FontSize="24"/>
 
-                    <Button Content="4" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" FontSize="24"/>
-                    <Button Content="5" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="1" FontSize="24"/>
-                    <Button Content="6" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="2" FontSize="24"/>
+                    <Button Content="4" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="4" Grid.Row="1" FontSize="24"/>
+                    <Button Content="5" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="5" Grid.Row="1" Grid.Column="1" FontSize="24"/>
+                    <Button Content="6" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="6" Grid.Row="1" Grid.Column="2" FontSize="24"/>
 
-                    <Button Content="1" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" FontSize="24"/>
-                    <Button Content="2" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="1" FontSize="24"/>
-                    <Button Content="3" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="2" FontSize="24"/>
+                    <Button Content="1" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="1" Grid.Row="2" FontSize="24"/>
+                    <Button Content="2" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="2" Grid.Row="2" Grid.Column="1" FontSize="24"/>
+                    <Button Content="3" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="3" Grid.Row="2" Grid.Column="2" FontSize="24"/>
 
-                    <Button Content="C" Command="{x:Bind ViewModel.ClearNumpadCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" FontSize="24" Background="IndianRed" Foreground="White"/>
-                    <Button Content="0" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Grid.Column="1" FontSize="24"/>
-                    <Button Content="." Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="." HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Grid.Column="2" FontSize="24"/>
+                    <Button Content="C" Command="{x:Bind ViewModel.ClearNumpadCommand}" Grid.Row="3" FontSize="24" Background="IndianRed" Foreground="White"/>
+                    <Button Content="0" Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="0" Grid.Row="3" Grid.Column="1" FontSize="24"/>
+                    <Button Content="." Command="{x:Bind ViewModel.NumpadCommand}" CommandParameter="." Grid.Row="3" Grid.Column="2" FontSize="24"/>
                 </Grid>
 
                 <!-- Payment Methods -->
@@ -173,10 +173,9 @@
                         </Grid.ColumnDefinitions>
                         
                         <!-- Row 1: Hold Ticket and Split Payment -->
-                        <Button Grid.Row="0" Grid.Column="0" 
-                                Command="{x:Bind ViewModel.HoldTicketCommand}" 
-                                HorizontalAlignment="Stretch" 
-                                Background="Orange" 
+                        <Button Grid.Row="0" Grid.Column="0"
+                                Command="{x:Bind ViewModel.HoldTicketCommand}"
+                                Background="Orange"
                                 Foreground="White"
                                 IsEnabled="{x:Bind ViewModel.CanHoldTicket, Mode=OneWay}">
                             <StackPanel Orientation="Horizontal" Spacing="8">
@@ -184,10 +183,9 @@
                                 <TextBlock Text="Hold Ticket"/>
                             </StackPanel>
                         </Button>
-                        <Button Grid.Row="0" Grid.Column="1" 
-                                Command="{x:Bind ViewModel.SplitPaymentCommand}" 
-                                HorizontalAlignment="Stretch" 
-                                Background="DarkCyan" 
+                        <Button Grid.Row="0" Grid.Column="1"
+                                Command="{x:Bind ViewModel.SplitPaymentCommand}"
+                                Background="DarkCyan"
                                 Foreground="White"
                                 IsEnabled="{x:Bind ViewModel.HasDueAmount, Mode=OneWay}">
                             <StackPanel Orientation="Horizontal" Spacing="8">
@@ -198,9 +196,8 @@
                         
                         <!-- Row 2: Apply Discount (spans both columns) -->
                         <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                                Command="{x:Bind ViewModel.ApplyDiscountCommand}" 
-                                HorizontalAlignment="Stretch" 
-                                Background="MediumPurple" 
+                                Command="{x:Bind ViewModel.ApplyDiscountCommand}"
+                                Background="MediumPurple"
                                 Foreground="White">
                             <StackPanel Orientation="Horizontal" Spacing="8">
                                 <FontIcon Glyph="&#xE7BA;" FontSize="16"/> <!-- Discount/Tag icon -->
@@ -210,17 +207,15 @@
                         
                         <!-- Row 3: Reprint Receipt (spans both columns) -->
                         <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                                Content="Reprint Receipt" 
-                                Command="{x:Bind ViewModel.ReprintReceiptCommand}" 
-                                HorizontalAlignment="Stretch" 
-                                Background="LightSlateGray" 
+                                Content="Reprint Receipt"
+                                Command="{x:Bind ViewModel.ReprintReceiptCommand}"
+                                Background="LightSlateGray"
                                 Foreground="White"/>
                         
                         <!-- Row 4: Void Ticket (visible for Open tickets) -->
                         <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
-                                Command="{x:Bind ViewModel.VoidTicketCommand}" 
-                                HorizontalAlignment="Stretch" 
-                                Background="DarkRed" 
+                                Command="{x:Bind ViewModel.VoidTicketCommand}"
+                                Background="DarkRed"
                                 Foreground="White"
                                 IsEnabled="{x:Bind ViewModel.CanVoidTicket, Mode=OneWay}">
                             <StackPanel Orientation="Horizontal" Spacing="8">
@@ -231,9 +226,8 @@
                         
                         <!-- Row 5: Refund Ticket (visible for Paid tickets) -->
                         <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
-                                Command="{x:Bind ViewModel.RefundTicketCommand}" 
-                                HorizontalAlignment="Stretch" 
-                                Background="Crimson" 
+                                Command="{x:Bind ViewModel.RefundTicketCommand}"
+                                Background="Crimson"
                                 Foreground="White"
                                 IsEnabled="{x:Bind ViewModel.CanRefundTicket, Mode=OneWay}">
                             <StackPanel Orientation="Horizontal" Spacing="8">
@@ -250,10 +244,10 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Content="TEST WAIT" Command="{x:Bind ViewModel.TestWaitCommand}" Height="48" HorizontalAlignment="Stretch" Background="Orange" Foreground="Black"/>
-                        <Button Grid.Column="1" Content="Next $" Command="{x:Bind ViewModel.NextAmountCommand}" Height="48" HorizontalAlignment="Stretch" Background="LightSlateGray" Foreground="White"/>
-                        <Button Grid.Column="2" Content="{Binding Localization[PAY_NoSale], Mode=OneWay}" Command="{x:Bind ViewModel.NoSaleCommand}" Height="48" HorizontalAlignment="Stretch" Background="DarkRed" Foreground="White"/>
-                        <Button Grid.Column="3" Content="{Binding Localization[PAY_Exact], Mode=OneWay}" Command="{x:Bind ViewModel.ExactAmountCommand}" Height="48" HorizontalAlignment="Stretch" Background="DarkGreen" Foreground="White" IsEnabled="{x:Bind ViewModel.HasDueAmount, Mode=OneWay}"/>
+                        <Button Content="TEST WAIT" Command="{x:Bind ViewModel.TestWaitCommand}" Height="48" Background="Orange" Foreground="Black"/>
+                        <Button Grid.Column="1" Content="Next $" Command="{x:Bind ViewModel.NextAmountCommand}" Height="48" Background="LightSlateGray" Foreground="White"/>
+                        <Button Grid.Column="2" Content="{Binding Localization[PAY_NoSale], Mode=OneWay}" Command="{x:Bind ViewModel.NoSaleCommand}" Height="48" Background="DarkRed" Foreground="White"/>
+                        <Button Grid.Column="3" Content="{Binding Localization[PAY_Exact], Mode=OneWay}" Command="{x:Bind ViewModel.ExactAmountCommand}" Height="48" Background="DarkGreen" Foreground="White" IsEnabled="{x:Bind ViewModel.HasDueAmount, Mode=OneWay}"/>
                     </Grid>
 
                     <!-- F-0043: Quick Cash Buttons -->
@@ -271,13 +265,13 @@
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 
-                                <Button Content="$1" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="1" Height="40" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
-                                <Button Grid.Column="1" Content="$5" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="5" Height="40" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
-                                <Button Grid.Column="2" Content="$10" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="10" Height="40" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
+                                <Button Content="$1" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="1" Height="40" Background="LightGray" Foreground="Black"/>
+                                <Button Grid.Column="1" Content="$5" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="5" Height="40" Background="LightGray" Foreground="Black"/>
+                                <Button Grid.Column="2" Content="$10" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="10" Height="40" Background="LightGray" Foreground="Black"/>
                                 
-                                <Button Grid.Row="1" Content="$20" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="20" Height="40" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
-                                <Button Grid.Row="1" Grid.Column="1" Content="$50" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="50" Height="40" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
-                                <Button Grid.Row="1" Grid.Column="2" Content="$100" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="100" Height="40" HorizontalAlignment="Stretch" Background="LightGray" Foreground="Black"/>
+                                <Button Grid.Row="1" Content="$20" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="20" Height="40" Background="LightGray" Foreground="Black"/>
+                                <Button Grid.Row="1" Grid.Column="1" Content="$50" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="50" Height="40" Background="LightGray" Foreground="Black"/>
+                                <Button Grid.Row="1" Grid.Column="2" Content="$100" Command="{x:Bind ViewModel.QuickCashCommand}" CommandParameter="100" Height="40" Background="LightGray" Foreground="Black"/>
                             </Grid>
                         </StackPanel>
                     </Border>
