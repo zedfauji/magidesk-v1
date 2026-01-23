@@ -109,20 +109,16 @@ public class KitchenPrintService : IKitchenPrintService
                 
                 if (mapping == null)
                 {
-                    var msg = $"No printer mapping found for PrinterGroup {printerGroupId} on Terminal {terminalId}. Lines skipped.";
-                    _logger.LogWarning(msg);
-                    errors.Add(msg);
-                    overallSuccess = false; 
-                    continue; 
+                    var msg = $"No printer mapping found for PrinterGroup '{printerGroup?.Name ?? printerGroupId.ToString()}' on Terminal '{terminalId}'.";
+                    _logger.LogError(msg);
+                    throw new Domain.Exceptions.PrintingContractViolationException("MappingExists", msg, $"TerminalId={terminalId}, GroupId={printerGroupId}");
                 }
 
                 if (string.IsNullOrEmpty(mapping.PhysicalPrinterName))
                 {
-                    var msg = $"PhysicalPrinterName is empty for Group {printerGroupId}.";
-                    _logger.LogWarning(msg);
-                    errors.Add(msg);
-                    overallSuccess = false;
-                    continue;
+                    var msg = $"PhysicalPrinterName is empty for Group '{printerGroup?.Name ?? printerGroupId.ToString()}'.";
+                    _logger.LogError(msg);
+                    throw new Domain.Exceptions.PrintingContractViolationException("PhysicalPrinterDefined", msg, mapping.Id.ToString());
                 }
 
                 // Resolve Printer Group Behavior

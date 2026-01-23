@@ -60,10 +60,18 @@ public class ReceiptPrintService : IReceiptPrintService
             // 1. Resolve Printer Context
             var (mapping, group) = await ResolveReceiptPrinterContextAsync(cancellationToken);
             
-            if (mapping == null || string.IsNullOrEmpty(mapping.PhysicalPrinterName))
+            if (mapping == null)
             {
-                _logger.LogWarning($"Receipt printing skipped: No Receipt Printer mapped for Terminal {_terminalContext.TerminalIdentity}");
-                return false;
+               var msg = $"No Receipt Printer mapped for Terminal {_terminalContext.TerminalIdentity} (Id: {_terminalContext.TerminalId}).";
+               _logger.LogError(msg);
+               throw new Domain.Exceptions.PrintingContractViolationException("MappingExists", msg, "ReceiptGroup");
+            }
+
+            if (string.IsNullOrEmpty(mapping.PhysicalPrinterName))
+            {
+                var msg = "Receipt Printer Mapping exists but PhysicalPrinterName is configured as empty.";
+                _logger.LogError(msg);
+                throw new Domain.Exceptions.PrintingContractViolationException("PhysicalPrinterDefined", msg);
             }
 
             // 2. Resolve Server Name
@@ -178,7 +186,10 @@ public class ReceiptPrintService : IReceiptPrintService
         var groups = await _printerGroupRepository.GetAllAsync(cancellationToken);
         var receiptGroup = groups.FirstOrDefault(g => g.Type == PrinterType.Receipt);
 
-        if (receiptGroup == null) return (null, null);
+        if (receiptGroup == null)
+        { 
+             throw new Domain.Exceptions.PrintingContractViolationException("GroupExists", "System Configuration Error: No Printer Group of type 'Receipt' is defined.");
+        }
 
         var mappings = await _printerMappingRepository.GetByTerminalIdAsync(terminalId, cancellationToken);
         var mapping = mappings.FirstOrDefault(m => m.PrinterGroupId == receiptGroup.Id);

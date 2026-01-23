@@ -258,6 +258,13 @@ public partial class SystemConfigViewModel : ViewModelBase
 
     private async Task SavePrintersAsync()
     {
+        var validationErrors = ValidatePrinters();
+        if (validationErrors.Any())
+        {
+            await _navigationService.ShowErrorAsync("Validation Error", string.Join("\n", validationErrors));
+            return;
+        }
+
         IsBusy = true;
         StatusMessage = "Saving printer settings...";
         try
@@ -279,6 +286,41 @@ public partial class SystemConfigViewModel : ViewModelBase
         {
             IsBusy = false;
         }
+    }
+
+    private List<string> ValidatePrinters()
+    {
+        var errors = new List<string>();
+
+        // 1. Receipt Group Check
+        if (!PrinterGroups.Any(g => g.Type == PrinterType.Receipt))
+        {
+            errors.Add("System Error: A Printer Group of type 'Receipt' is required.");
+        }
+
+        // 2. Group Name Check
+        foreach (var group in PrinterGroups)
+        {
+            if (string.IsNullOrWhiteSpace(group.Name))
+            {
+                errors.Add("All Printer Groups must have a name.");
+            }
+        }
+
+        // 3. Mapping Check
+        // We strictly require every group to be mapped on this terminal
+        foreach (var group in PrinterGroups)
+        {
+            var mapping = PrinterMappings.FirstOrDefault(m => m.PrinterGroupId == group.Id);
+            
+            // Note: PrinterMappingDto maps PhysicalPrinterName to PrinterName
+            if (mapping == null || string.IsNullOrWhiteSpace(mapping.PrinterName))
+            {
+                errors.Add($"Printer Group '{group.Name}' is not mapped to a physical printer on this terminal.");
+            }
+        }
+
+        return errors;
     }
 
     private async Task SaveCardConfigurationAsync()
