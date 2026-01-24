@@ -293,7 +293,7 @@ public partial class SystemConfigViewModel : ViewModelBase
         var errors = new List<string>();
 
         // 1. Receipt Group Check
-        if (!PrinterGroups.Any(g => g.Type == PrinterType.Receipt))
+        if (!PrinterGroups.Any(g => g.PrinterType == PrinterType.Receipt))
         {
             errors.Add("System Error: A Printer Group of type 'Receipt' is required.");
         }

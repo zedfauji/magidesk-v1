@@ -35,116 +35,160 @@ public class EndTableSessionCommandHandler : ICommandHandler<EndTableSessionComm
         EndTableSessionCommand command,
         CancellationToken cancellationToken = default)
     {
-        // 1. Get session
-        var session = await _sessionRepository.GetByIdAsync(command.SessionId);
-        if (session == null)
+        int maxRetries = 3;
+        int cleanupRetryDelay = 100;
+
+        for (int i = 0; i < maxRetries; i++)
         {
-            throw new InvalidOperationException($"Session {command.SessionId} not found.");
-        }
-
-        // 2. Validate session not already ended
-        if (session.Status == TableSessionStatus.Ended)
-        {
-            throw new InvalidOperationException($"Session {command.SessionId} has already ended.");
-        }
-
-        // 3. Get table
-        var table = await _tableRepository.GetByIdAsync(session.TableId);
-        if (table == null)
-        {
-            throw new InvalidOperationException($"Table {session.TableId} not found.");
-        }
-
-        // 4. Calculate billable time
-        var billableTime = session.GetBillableTime();
-
-        // 5. Calculate charge using PricingService
-        var totalCharge = _pricingService.CalculateTimeCharge(billableTime, session.HourlyRate);
-
-        // 6. End session (domain method enforces invariants)
-        session.End(totalCharge);
-
-        // 7. Create or update ticket with time line item
-        Guid? ticketId = null;
-        
-        // Check if session is already linked to a ticket (Feature C.1)
-        if (session.TicketId.HasValue)
-        {
-             await AddTimeChargeToTicketAsync(session.TicketId.Value, session, totalCharge, billableTime, cancellationToken);
-             ticketId = session.TicketId.Value;
-        }
-        else if (command.CreateTicket)
-        {
-            ticketId = await CreateTicketWithTimeChargeAsync(session, totalCharge, billableTime, command, cancellationToken);
-            // Ensure session is linked to the new ticket
-            session.LinkToTicket(ticketId.Value);
-        }
-        else
-        {
-             // CRITICAL FIX: If CreateTicket=false but no linked ticket, this is an error state
-             // This should not happen in normal workflow, but we should handle it gracefully
-             _logger.LogError("Session {SessionId} ended without ticket creation and no linked ticket. Time charges will be lost!", session.Id);
-             throw new InvalidOperationException($"Cannot end session {session.Id}: No linked ticket and CreateTicket=false. Time charges cannot be applied.");
-        }
-
-        // 8. Save session (persists End state and Ticket Link)
-        // Note: UpdateAsync now relies on standard EF Core change tracking.
-        await _sessionRepository.UpdateAsync(session);
-
-        // 9. Update table status
-        // The table should remain occupied until the ticket is settled
-        if (ticketId.HasValue)
-        {
-            // Get the ticket to check if it has any charges
-            var ticket = await _ticketRepository.GetByIdAsync(ticketId.Value, cancellationToken);
-            if (ticket != null && ticket.TotalAmount.Amount > 0)
+            try
             {
-                // Table should remain occupied (Seat status) until ticket is settled
-                // If table doesn't already have this ticket assigned, assign it
-                if (table.CurrentTicketId != ticketId.Value)
+                // Start a transaction to ensure Ticket, Session, and Table are updated atomically
+                using var transaction = await _ticketRepository.BeginTransactionAsync(cancellationToken);
+
+                // 1. Get session
+                var session = await _sessionRepository.GetByIdAsync(command.SessionId);
+                if (session == null)
                 {
-                    table.AssignTicket(ticketId.Value);
+                    throw new InvalidOperationException($"Session {command.SessionId} not found.");
+                }
+
+                // 2. Validate session not already ended
+                if (session.Status == TableSessionStatus.Ended)
+                {
+                    // Idempotency check: if already ended, we might have succeeded in a previous retry or concurrent call.
+                    // Return the existing result if possible, or throw if it's a true double-submission.
+                    // For now, logging and treating as success or throwing based on context. 
+                    // Given this is a void/command, we'll throw to inform the caller, or if we want to be robust we could checking if the ticket has the charge.
+                    // But standard logic is:
+                    _logger.LogWarning($"Session {command.SessionId} is already ended.");
+                    
+                    // If we are retrying, this might mean we succeeded on the previous attempt but failed to commit/return?
+                    // No, if commit succeeded, we wouldn't be in the catch block.
+                    // So this means another process did it. We can probably just return success or fetch the result.
+                    // For safety, let's treat it as "Already Done" exception or just proceed.
+                    // Throwing allows the UI to handle it.
+                    throw new InvalidOperationException($"Session {command.SessionId} has already ended.");
+                }
+
+                // 3. Get table
+                var table = await _tableRepository.GetByIdAsync(session.TableId);
+                if (table == null)
+                {
+                    throw new InvalidOperationException($"Table {session.TableId} not found.");
+                }
+
+                // 4. Calculate billable time
+                var billableTime = session.GetBillableTime();
+
+                // 5. Calculate charge using PricingService
+                var totalCharge = _pricingService.CalculateTimeCharge(billableTime, session.HourlyRate);
+
+                // 6. End session (domain method enforces invariants)
+                session.End(totalCharge);
+
+                // 7. Create or update ticket with time line item
+                Guid? ticketId = null;
+                
+                // Check if session is already linked to a ticket (Feature C.1)
+                if (session.TicketId.HasValue)
+                {
+                     await AddTimeChargeToTicketAsync(session.TicketId.Value, session, totalCharge, billableTime, cancellationToken);
+                     ticketId = session.TicketId.Value;
+                }
+                else if (command.CreateTicket)
+                {
+                    ticketId = await CreateTicketWithTimeChargeAsync(session, totalCharge, billableTime, command, cancellationToken);
+                    // Ensure session is linked to the new ticket
+                    session.LinkToTicket(ticketId.Value);
+                }
+                else
+                {
+                     // CRITICAL FIX: If CreateTicket=false but no linked ticket, this is an error state
+                     // This should not happen in normal workflow, but we should handle it gracefully
+                     _logger.LogError("Session {SessionId} ended without ticket creation and no linked ticket. Time charges will be lost!", session.Id);
+                     throw new InvalidOperationException($"Cannot end session {session.Id}: No linked ticket and CreateTicket=false. Time charges cannot be applied.");
+                }
+
+                // 8. Save session (persists End state and Ticket Link)
+                // Note: UpdateAsync now relies on standard EF Core change tracking.
+                await _sessionRepository.UpdateAsync(session);
+
+                // 9. Update table status
+                // The table should remain occupied until the ticket is settled
+                if (ticketId.HasValue)
+                {
+                    // Get the ticket to check if it has any charges
+                    var ticket = await _ticketRepository.GetByIdAsync(ticketId.Value, cancellationToken);
+                    if (ticket != null && ticket.TotalAmount.Amount > 0)
+                    {
+                        // Table should remain occupied (Seat status) until ticket is settled
+                        // If table doesn't already have this ticket assigned, assign it
+                        if (table.CurrentTicketId != ticketId.Value)
+                        {
+                            table.AssignTicket(ticketId.Value);
+                        }
+                        
+                        _logger.LogInformation("Table {TableNumber} remains as Seat - has ticket {TicketId} with charges {Amount}", 
+                            table.TableNumber, ticketId, ticket.TotalAmount.Amount);
+                    }
+                    else
+                    {
+                        // No charges, safe to mark available (customer paid or empty)
+                        if (table.CurrentTicketId.HasValue)
+                        {
+                            table.ReleaseTicket();
+                        }
+                        table.MarkAvailable();
+                        _logger.LogInformation("Table {TableNumber} marked as Available - no charges on ticket", table.TableNumber);
+                    }
+                }
+                else
+                {
+                    // No ticket, mark available
+                    if (table.CurrentTicketId.HasValue)
+                    {
+                        table.ReleaseTicket();
+                    }
+                    table.MarkAvailable();
+                    _logger.LogInformation("Table {TableNumber} marked as Available - no ticket", table.TableNumber);
                 }
                 
-                _logger.LogInformation("Table {TableNumber} remains as Seat - has ticket {TicketId} with charges {Amount}", 
-                    table.TableNumber, ticketId, ticket.TotalAmount.Amount);
+                await _tableRepository.UpdateAsync(table, cancellationToken);
+
+                // Commit Transaction
+                await transaction.CommitAsync(cancellationToken);
+
+                _logger.LogInformation(
+                    "Ended session {SessionId} for table {TableId}. Duration: {Duration}, Charge: {Charge}",
+                    session.Id, session.TableId, billableTime, totalCharge);
+
+                // 10. Return result
+                return new EndTableSessionResult(
+                    session.Id,
+                    ticketId,
+                    billableTime,
+                    totalCharge,
+                    session.EndTime!.Value
+                );
             }
-            else
+            catch (Domain.Exceptions.ConcurrencyException ex)
             {
-                // No charges, safe to mark available (customer paid or empty)
-                if (table.CurrentTicketId.HasValue)
-                {
-                    table.ReleaseTicket();
-                }
-                table.MarkAvailable();
-                _logger.LogInformation("Table {TableNumber} marked as Available - no charges on ticket", table.TableNumber);
+                _logger.LogWarning(ex, "Concurrency conflict during EndTableSession. Retry {Retry}/{MaxRetries}", i + 1, maxRetries);
+                if (i == maxRetries - 1) throw;
+                
+                // Clear ChangeTracker to avoid stale entries on retry
+                _ticketRepository.ClearChangeTracker();
+                
+                await Task.Delay(cleanupRetryDelay, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error ending table session {SessionId}", command.SessionId);
+                throw;
             }
         }
-        else
-        {
-            // No ticket, mark available
-            if (table.CurrentTicketId.HasValue)
-            {
-                table.ReleaseTicket();
-            }
-            table.MarkAvailable();
-            _logger.LogInformation("Table {TableNumber} marked as Available - no ticket", table.TableNumber);
-        }
-        
-        await _tableRepository.UpdateAsync(table, cancellationToken);
 
-        _logger.LogInformation(
-            "Ended session {SessionId} for table {TableId}. Duration: {Duration}, Charge: {Charge}",
-            session.Id, session.TableId, billableTime, totalCharge);
-
-        // 10. Return result
-        return new EndTableSessionResult(
-            session.Id,
-            ticketId,
-            billableTime,
-            totalCharge,
-            session.EndTime!.Value
-        );
+        throw new Domain.Exceptions.ConcurrencyException("Failed to end session after max retries due to concurrency conflicts.");
     }
 
     private async Task AddTimeChargeToTicketAsync(

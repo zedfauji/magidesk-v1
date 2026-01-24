@@ -104,6 +104,13 @@ public class KitchenPrintService : IKitchenPrintService
                 var printerGroupId = group.Key;
                 var groupLines = group.ToList();
 
+                // Resolve Printer Group Behavior
+                var printerGroup = await _printerGroupRepository.GetByIdAsync(printerGroupId ?? Guid.Empty, cancellationToken);
+                if (printerGroup == null)
+                {
+                    _logger.LogWarning($"PrinterGroup {printerGroupId} not found in DB. Using defaults.");
+                }
+
                 // Find mapping
                 var mapping = mappings.FirstOrDefault(m => m.PrinterGroupId == printerGroupId);
                 
@@ -119,13 +126,6 @@ public class KitchenPrintService : IKitchenPrintService
                     var msg = $"PhysicalPrinterName is empty for Group '{printerGroup?.Name ?? printerGroupId.ToString()}'.";
                     _logger.LogError(msg);
                     throw new Domain.Exceptions.PrintingContractViolationException("PhysicalPrinterDefined", msg, mapping.Id.ToString());
-                }
-
-                // Resolve Printer Group Behavior
-                var printerGroup = await _printerGroupRepository.GetByIdAsync(printerGroupId ?? Guid.Empty, cancellationToken);
-                if (printerGroup == null)
-                {
-                    _logger.LogWarning($"PrinterGroup {printerGroupId} not found in DB. Using defaults.");
                 }
 
                 // Determine Cut Behavior
