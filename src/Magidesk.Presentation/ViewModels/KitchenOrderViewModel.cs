@@ -22,14 +22,14 @@ public class KitchenOrderViewModel : ViewModelBase
     {
         get
         {
-            var span = DateTime.UtcNow - _order.Timestamp;
+            var span = DateTime.UtcNow - _order.SentToKitchenAt;
             if (span.TotalMinutes < 1) return "Just now";
             if (span.TotalHours < 1) return $"{span.Minutes}m ago";
             return $"{span.Hours}h {span.Minutes}m ago";
         }
     }
     
-    public bool IsLate => (DateTime.UtcNow - _order.Timestamp).TotalMinutes > 20;
+    public bool IsLate => (DateTime.UtcNow - _order.SentToKitchenAt).TotalMinutes > 20;
     
     public bool IsDoneStatus => _order.Status == KitchenStatus.Done;
 

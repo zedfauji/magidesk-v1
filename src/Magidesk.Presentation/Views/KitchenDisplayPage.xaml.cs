@@ -2,6 +2,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Magidesk.Presentation.ViewModels;
 using Microsoft.Extensions.DependencyInjection; // Ensure this is available
+using Microsoft.UI.Xaml;
 
 namespace Magidesk.Presentation.Views;
 
@@ -27,5 +28,27 @@ public sealed partial class KitchenDisplayPage : Page
     {
         base.OnNavigatedFrom(e);
         ViewModel.StopPolling();
+    }
+
+    private void BumpButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button button && button.Tag is KitchenOrderViewModel order)
+        {
+            if (ViewModel.BumpCommand.CanExecute(order))
+            {
+                ViewModel.BumpCommand.Execute(order);
+            }
+        }
+    }
+
+    private void DeliveredButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button button && button.Tag is KitchenOrderViewModel order)
+        {
+            if (ViewModel.MarkAsDeliveredCommand.CanExecute(order))
+            {
+                ViewModel.MarkAsDeliveredCommand.Execute(order);
+            }
+        }
     }
 }
