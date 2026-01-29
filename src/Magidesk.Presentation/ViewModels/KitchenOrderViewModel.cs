@@ -33,6 +33,45 @@ public class KitchenOrderViewModel : ViewModelBase
     
     public bool IsDoneStatus => _order.Status == KitchenStatus.Done;
 
+    /// <summary>
+    /// Gets the preparation time text for display.
+    /// Shows elapsed time if order is in progress, or total time if delivered.
+    /// </summary>
+    public string PreparationTimeText
+    {
+        get
+        {
+            var prepTime = _order.PreparationTime;
+            
+            if (prepTime.HasValue)
+            {
+                // Order is delivered, show total prep time
+                return FormatTimeSpan(prepTime.Value);
+            }
+            
+            // Order is in progress, show elapsed time
+            var elapsed = DateTime.UtcNow - _order.SentToKitchenAt;
+            return FormatTimeSpan(elapsed);
+        }
+    }
+
+    /// <summary>
+    /// Gets the color for preparation time display based on elapsed time.
+    /// Green (< 15m), Yellow (15-30m), Red (> 30m)
+    /// </summary>
+    public string PreparationTimeColor
+    {
+        get
+        {
+            var elapsed = _order.PreparationTime ?? (DateTime.UtcNow - _order.SentToKitchenAt);
+            var minutes = elapsed.TotalMinutes;
+            
+            if (minutes < 15) return "#28A745"; // Green
+            if (minutes < 30) return "#FFC107"; // Yellow
+            return "#DC3545"; // Red
+        }
+    }
+
     public ObservableCollection<KitchenOrderItemViewModel> Items { get; } = new();
 
     public KitchenOrderViewModel(KitchenOrder order)
@@ -42,6 +81,19 @@ public class KitchenOrderViewModel : ViewModelBase
         {
             Items.Add(new KitchenOrderItemViewModel(item));
         }
+    }
+
+    /// <summary>
+    /// Formats a TimeSpan for display.
+    /// Examples: "5m", "23m", "1h 15m"
+    /// </summary>
+    private string FormatTimeSpan(TimeSpan span)
+    {
+        if (span.TotalHours >= 1)
+        {
+            return $"{(int)span.TotalHours}h {span.Minutes}m";
+        }
+        return $"{(int)span.TotalMinutes}m";
     }
 }
 

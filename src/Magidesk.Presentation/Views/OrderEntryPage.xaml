@@ -199,7 +199,36 @@
                             
                             <!-- Name and Modifiers -->
                             <StackPanel>
-                                <TextBlock Text="{x:Bind MenuItemName}" FontWeight="SemiBold" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis"/>
+                                <!-- Item Name with Badges -->
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <TextBlock Text="{x:Bind MenuItemName}" FontWeight="SemiBold" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis"/>
+                                    
+                                    <!-- Sent to Kitchen Badge -->
+                                    <Border Background="#6C757D" 
+                                            CornerRadius="3" 
+                                            Padding="4,2"
+                                            Visibility="{x:Bind PrintedToKitchen, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <FontIcon Glyph="&#xE73E;" FontSize="10" Foreground="White"/>
+                                            <TextBlock Text="Sent" 
+                                                       FontSize="10" 
+                                                       Foreground="White"
+                                                       FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                    </Border>
+                                    
+                                    <!-- Kitchen Status Badge -->
+                                    <Border Background="{x:Bind KitchenStatusColor}" 
+                                            CornerRadius="3" 
+                                            Padding="6,2"
+                                            Visibility="{x:Bind ShouldPrintToKitchen, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                        <TextBlock Text="{x:Bind KitchenStatusText}" 
+                                                   FontSize="10" 
+                                                   Foreground="White"
+                                                   FontWeight="SemiBold"/>
+                                    </Border>
+                                </StackPanel>
+                                
                                  <ItemsControl ItemsSource="{x:Bind Modifiers}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>

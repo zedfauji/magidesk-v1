@@ -38,10 +38,10 @@ public class OrderLineDto
             : "Not Sent";
     
     public string KitchenStatusColor => DeliveredAt.HasValue 
-        ? "Green" 
+        ? "#28A745" // Green
         : SentToKitchenAt.HasValue 
-            ? "Orange" 
-            : "Gray";
+            ? "#FD7E14" // Orange
+            : "#6C757D"; // Gray
     
     // Time Charges (F-C.2)
     public TimeSpan? Duration { get; set; }

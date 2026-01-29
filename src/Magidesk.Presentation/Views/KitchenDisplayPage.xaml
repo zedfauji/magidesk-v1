@@ -67,7 +67,28 @@
                                 <TextBlock Text="{Binding TableNumber}" FontWeight="Bold" FontSize="18"/>
                                 <TextBlock Text="{Binding ServerName}" FontSize="12" Opacity="0.7"/>
                             </StackPanel>
-                            <TextBlock Grid.Column="1" Text="{Binding TimeAgo}" Foreground="{ThemeResource SystemControlForegroundAccentBrush}" FontWeight="SemiBold"/>
+                            
+                            <!-- Right side: Time info -->
+                            <StackPanel Grid.Column="1" Spacing="4">
+                                <TextBlock Text="{Binding TimeAgo}" 
+                                           Foreground="{ThemeResource SystemControlForegroundAccentBrush}" 
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Right"/>
+                                
+                                <!-- Preparation Time Badge -->
+                                <Border Background="{Binding PreparationTimeColor}" 
+                                        CornerRadius="4" 
+                                        Padding="8,4"
+                                        HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <FontIcon Glyph="&#xE916;" FontSize="12" Foreground="White"/>
+                                        <TextBlock Text="{Binding PreparationTimeText}" 
+                                                   FontWeight="Bold" 
+                                                   FontSize="12"
+                                                   Foreground="White"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
                         </Grid>
                         
                         <!-- Body -->
