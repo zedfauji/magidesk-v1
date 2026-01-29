@@ -114,6 +114,18 @@
   <data name="OE_SelectTicketPrompt" xml:space="preserve">
     <value>Select a ticket from the switchboard or create a new ticket</value>
   </data>
+  <data name="OE_SentBadge" xml:space="preserve">
+    <value>Sent</value>
+  </data>
+  <data name="OE_StatusNotSent" xml:space="preserve">
+    <value>Not Sent</value>
+  </data>
+  <data name="OE_StatusInKitchen" xml:space="preserve">
+    <value>In Kitchen</value>
+  </data>
+  <data name="OE_StatusDelivered" xml:space="preserve">
+    <value>Delivered</value>
+  </data>
 
   <!-- Back Office -->
   <data name="BO_Title" xml:space="preserve">
@@ -286,6 +298,9 @@
   </data>
   <data name="KD_Never" xml:space="preserve">
     <value>Never</value>
+  </data>
+  <data name="KD_PrepTime" xml:space="preserve">
+    <value>Prep</value>
   </data>
 
   <!-- Payment (SettlePage) -->

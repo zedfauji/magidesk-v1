@@ -114,6 +114,18 @@
   <data name="OE_SelectTicketPrompt" xml:space="preserve">
     <value>Sélectionnez un ticket ou créez-en un nouveau</value>
   </data>
+  <data name="OE_SentBadge" xml:space="preserve">
+    <value>Envoyé</value>
+  </data>
+  <data name="OE_StatusNotSent" xml:space="preserve">
+    <value>Non Envoyé</value>
+  </data>
+  <data name="OE_StatusInKitchen" xml:space="preserve">
+    <value>En Cuisine</value>
+  </data>
+  <data name="OE_StatusDelivered" xml:space="preserve">
+    <value>Livré</value>
+  </data>
 
   <!-- Back Office -->
   <data name="BO_Title" xml:space="preserve">
@@ -286,6 +298,9 @@
   </data>
   <data name="KD_Never" xml:space="preserve">
     <value>Jamais</value>
+  </data>
+  <data name="KD_PrepTime" xml:space="preserve">
+    <value>Prép</value>
   </data>
 
   <!-- Payment (SettlePage) -->

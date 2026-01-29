@@ -31,6 +31,8 @@ public class OrderLineDto
     public DateTime? DeliveredAt { get; set; }
     
     // Computed properties for UI
+    // TODO: Future enhancement - Move status text localization to ViewModel layer
+    // Currently hardcoded strings are acceptable for DTO layer
     public string KitchenStatusText => DeliveredAt.HasValue 
         ? "Delivered" 
         : SentToKitchenAt.HasValue 
