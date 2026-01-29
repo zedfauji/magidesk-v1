@@ -215,6 +215,7 @@ public partial class OrderEntryViewModel : ViewModelBase
     public ICommand IncrementQuantityCommand { get; }
     public ICommand DecrementQuantityCommand { get; }
     public ICommand RemoveItemCommand { get; }
+    public ICommand RefreshTicketCommand { get; }
 
     private readonly IPrintingService _printingService;
     private readonly Services.IOrderEntryDialogService _orderEntryDialogService;
@@ -306,6 +307,7 @@ public partial class OrderEntryViewModel : ViewModelBase
         DecrementQuantityCommand = new AsyncRelayCommand<OrderLineDto>(DecrementQuantityAsync);
         RemoveItemCommand = new AsyncRelayCommand<OrderLineDto>(RemoveItemAsync);
         SetQuantityCommand = new AsyncRelayCommand(SetQuantityAsync);
+        RefreshTicketCommand = new AsyncRelayCommand(RefreshTicketAsync);
         
         PrintTicketCommand = new AsyncRelayCommand(PrintTicketAsync);
         AddMiscItemCommand = new AsyncRelayCommand(AddMiscItemAsync);
@@ -1199,6 +1201,36 @@ public partial class OrderEntryViewModel : ViewModelBase
         else
         {
             System.Diagnostics.Debug.WriteLine($"Successfully loaded ticket #{Ticket.TicketNumber} with {Ticket.OrderLines.Count} items");
+        }
+    }
+
+    private async Task RefreshTicketAsync()
+    {
+        if (Ticket == null) return;
+        
+        IsBusy = true;
+        try
+        {
+            System.Diagnostics.Debug.WriteLine($"Refreshing ticket: {Ticket.Id}");
+            await LoadTicketAsync(Ticket.Id);
+            System.Diagnostics.Debug.WriteLine("Ticket refreshed successfully");
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error refreshing ticket: {ex.Message}");
+            
+            var dialog = new ContentDialog
+            {
+                Title = "Refresh Error",
+                Content = $"Could not refresh ticket.\nReason: {ex.Message}",
+                CloseButtonText = "OK",
+                XamlRoot = App.MainWindowInstance.Content.XamlRoot
+            };
+            await _navigationService.ShowDialogAsync(dialog);
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
 
