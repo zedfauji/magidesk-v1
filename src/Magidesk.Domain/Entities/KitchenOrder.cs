@@ -15,6 +15,15 @@ public class KitchenOrder
     
     public Guid? PrinterGroupId { get; private set; }
     
+    // Lifecycle timestamps
+    public DateTime SentToKitchenAt { get; private set; }
+    public DateTime? DeliveredAt { get; private set; }
+    
+    // Calculated property for preparation time
+    public TimeSpan? PreparationTime => DeliveredAt.HasValue 
+        ? DeliveredAt.Value - SentToKitchenAt 
+        : null;
+    
     private readonly List<KitchenOrderItem> _items = new();
     public IReadOnlyCollection<KitchenOrderItem> Items => _items.AsReadOnly();
 
@@ -28,6 +37,7 @@ public class KitchenOrder
         TableNumber = tableNumber;
         PrinterGroupId = printerGroupId;
         Timestamp = DateTime.UtcNow;
+        SentToKitchenAt = DateTime.UtcNow;
         Status = KitchenStatus.New;
     }
 
@@ -52,5 +62,16 @@ public class KitchenOrder
     public void Void()
     {
         Status = KitchenStatus.Void;
+    }
+
+    public void MarkAsDelivered()
+    {
+        if (Status != KitchenStatus.Done)
+        {
+            throw new Domain.Exceptions.BusinessRuleViolationException("Order must be Done before marking as Delivered");
+        }
+        
+        Status = KitchenStatus.Delivered;
+        DeliveredAt = DateTime.UtcNow;
     }
 }

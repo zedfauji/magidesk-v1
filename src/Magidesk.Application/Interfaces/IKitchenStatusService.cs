@@ -14,4 +14,9 @@ public interface IKitchenStatusService
     /// Voids the kitchen order.
     /// </summary>
     Task VoidOrderAsync(Guid kitchenOrderId);
+
+    /// <summary>
+    /// Marks the kitchen order as delivered (Done -> Delivered).
+    /// </summary>
+    Task MarkAsDeliveredAsync(Guid kitchenOrderId);
 }

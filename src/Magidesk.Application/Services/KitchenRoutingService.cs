@@ -38,6 +38,24 @@ public class KitchenRoutingService : IKitchenRoutingService
 
         if (!itemsToRoute.Any()) return new List<Guid>();
 
+        // Idempotency Check: Filter out items that have already been routed
+        var unroutedItems = new List<Magidesk.Application.DTOs.OrderLineDto>();
+        foreach (var item in itemsToRoute)
+        {
+            if (!await _kitchenOrderRepository.IsTicketItemRoutedAsync(item.Id))
+            {
+                unroutedItems.Add(item);
+            }
+        }
+        
+        if (!unroutedItems.Any()) 
+        {
+             _logger.LogInformation("All valid items for ticket {TicketId} have already been routed. Skipping duplicate routing.", ticket.Id);
+             return new List<Guid>();
+        }
+
+        itemsToRoute = unroutedItems;
+
         // 2. Fetch Helper Data
         var serverName = !string.IsNullOrEmpty(ticket.OwnerName) ? ticket.OwnerName : "Unknown Server";
         var tableNumber = !string.IsNullOrEmpty(ticket.TableName) ? ticket.TableName : "No Table";
@@ -156,6 +174,8 @@ public class KitchenRoutingService : IKitchenRoutingService
                 PrintedToKitchen = ol.PrintedToKitchen,
                 PrinterGroupId = ol.PrinterGroupId,
                 Instructions = ol.Instructions,
+                SentToKitchenAt = ol.SentToKitchenAt,
+                DeliveredAt = ol.DeliveredAt,
                 Modifiers = ol.Modifiers.Select(m => new OrderLineModifierDto
                 {
                     Id = m.Id,

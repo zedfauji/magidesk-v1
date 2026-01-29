@@ -53,6 +53,7 @@ namespace Magidesk.Presentation.ViewModels;
     public ICommand BumpCommand { get; }
     public ICommand RefreshCommand { get; }
     public ICommand ToggleHistoryCommand { get; }
+    public ICommand MarkAsDeliveredCommand { get; }
 
     private bool _isHistoryMode;
     public bool IsHistoryMode
@@ -90,6 +91,7 @@ namespace Magidesk.Presentation.ViewModels;
         BumpCommand = new AsyncRelayCommand<KitchenOrderViewModel>(BumpOrderAsync);
         RefreshCommand = new AsyncRelayCommand(LoadOrdersAsync);
         ToggleHistoryCommand = new RelayCommand(() => IsHistoryMode = !IsHistoryMode);
+        MarkAsDeliveredCommand = new AsyncRelayCommand<KitchenOrderViewModel>(MarkAsDeliveredAsync);
         
         _lastUpdated = Localization["KD_Never"];
 
@@ -176,8 +178,11 @@ namespace Magidesk.Presentation.ViewModels;
         }
     }
 
+        private readonly System.Threading.SemaphoreSlim _loadingLock = new(1, 1);
+
     public async Task LoadStationsAsync()
     {
+        await _loadingLock.WaitAsync();
         try
         {
             var groups = await _printerGroupRepository.GetAllAsync();
@@ -190,17 +195,37 @@ namespace Magidesk.Presentation.ViewModels;
             var savedId = _settingsService.GetSelectedStationId();
             if (savedId.HasValue)
             {
-                SelectedStation = System.Linq.Enumerable.FirstOrDefault(AvailableStations, s => s.Id == savedId.Value);
+                var station = System.Linq.Enumerable.FirstOrDefault(AvailableStations, s => s.Id == savedId.Value);
+                if (SelectedStation != station)
+                {
+                    // Update field directly to avoid triggering setter re-entry if we wanted, 
+                    // but setter triggers LoadOrdersAsync which is now locked too.
+                    // Ideally we set backing field and load manually to control flow.
+                    if (SetProperty(ref _selectedStation, station, nameof(SelectedStation)))
+                    {
+                         _settingsService.SetSelectedStationId(station?.Id);
+                         // Don't fire LoadOrdersAsync here, we will do it in InitializeAsync anyway
+                         // But if user changes it later, we need to.
+                         // For now, let the setter fire it, the lock will handle it.
+                    }
+                }
             }
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Failed to load stations: {ex.Message}");
         }
+        finally
+        {
+            _loadingLock.Release();
+        }
     }
     
     public async Task LoadOrdersAsync()
     {
+        // If we can't get the lock immediately (e.g. another load is in progress), 
+        // we should wait.
+        await _loadingLock.WaitAsync();
         try
         {
             IEnumerable<Magidesk.Domain.Entities.KitchenOrder> fetchedOrders;
@@ -277,9 +302,14 @@ namespace Magidesk.Presentation.ViewModels;
             
             LastUpdated = DateTime.Now.ToString("HH:mm:ss");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             LastUpdated = "Error connecting";
+            System.Diagnostics.Debug.WriteLine($"LoadOrders Error: {ex.Message}");
+        }
+        finally
+        {
+            _loadingLock.Release();
         }
     }
     
@@ -332,6 +362,37 @@ namespace Magidesk.Presentation.ViewModels;
             };
             
             // Set XamlRoot if available
+            if (App.MainWindowInstance?.Content?.XamlRoot != null)
+            {
+                dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
+            }
+            
+            await dialog.ShowAsync();
+        }
+    }
+
+    private async Task MarkAsDeliveredAsync(KitchenOrderViewModel? vm)
+    {
+        if (vm == null) return;
+        
+        if (IsHistoryMode) return;
+
+        try
+        {
+            await _statusService.MarkAsDeliveredAsync(vm.Id);
+            await LoadOrdersAsync();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Mark As Delivered Error: {ex.Message}");
+            
+            var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+            {
+                Title = "Error",
+                Content = $"Failed to mark order as delivered: {ex.Message}",
+                CloseButtonText = "OK"
+            };
+            
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
             {
                 dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;

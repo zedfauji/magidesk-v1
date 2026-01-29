@@ -55,4 +55,18 @@ public class KitchenOrderRepository : IKitchenOrderRepository
             .Take(limit)
             .ToListAsync();
     }
+
+    public async Task<bool> IsTicketItemRoutedAsync(Guid ticketItemId)
+    {
+        // Check if any kitchen order item exists for this ticket item ID
+        // And ensure the parent order is not Voided (if we want to allow re-sending voided items)
+        return await _context.Set<Domain.Entities.KitchenOrderItem>()
+            .AnyAsync(koi => koi.TicketItemId == ticketItemId);
+            
+        // Note: Currently we don't join with KitchenOrder to check status because
+        // we ideally shouldn't duplicate even if voided without explicit action?
+        // But for safety against duplicates, ANY existence is enough to say "it was routed".
+        // If a user *wants* to re-send, they might need a specific "Re-send" command that bypasses this,
+        // or we rely on the fact that Voiding usually means "Don't Make", not "Make Again".
+    }
 }

@@ -28,6 +28,27 @@ public interface IOrderNotificationService
     Task NotifyOrderStatusChangeAsync(Guid kitchenOrderId, KitchenStatus newStatus, string tableNumber, string serverName);
 
     /// <summary>
+    /// Notifies KDS when a new order is created and routed to kitchen.
+    /// This triggers real-time updates on kitchen display screens.
+    /// </summary>
+    /// <param name="kitchenOrderId">The newly created kitchen order ID</param>
+    /// <param name="tableNumber">The table number for the order</param>
+    /// <param name="serverName">The server responsible for the table</param>
+    /// <returns>Task representing the async operation</returns>
+    Task NotifyOrderCreatedAsync(Guid kitchenOrderId, string tableNumber, string serverName);
+
+    /// <summary>
+    /// Notifies POS when an order is delivered from kitchen.
+    /// This triggers real-time updates on order entry screens.
+    /// </summary>
+    /// <param name="kitchenOrderId">The kitchen order that was delivered</param>
+    /// <param name="ticketId">The ticket ID associated with the order</param>
+    /// <param name="tableNumber">The table number for the order</param>
+    /// <param name="preparationTime">Time taken from sent to kitchen to delivered</param>
+    /// <returns>Task representing the async operation</returns>
+    Task NotifyOrderDeliveredAsync(Guid kitchenOrderId, Guid ticketId, string tableNumber, TimeSpan preparationTime);
+
+    /// <summary>
     /// Subscribes a terminal/user to receive notifications for specific tables or all tables.
     /// </summary>
     /// <param name="terminalId">The terminal ID to receive notifications</param>

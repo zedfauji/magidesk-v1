@@ -26,6 +26,23 @@ public class OrderLineDto
     public bool PrintedToKitchen { get; set; }
     public Guid? PrinterGroupId { get; set; }
     
+    // Lifecycle timestamps
+    public DateTime? SentToKitchenAt { get; set; }
+    public DateTime? DeliveredAt { get; set; }
+    
+    // Computed properties for UI
+    public string KitchenStatusText => DeliveredAt.HasValue 
+        ? "Delivered" 
+        : SentToKitchenAt.HasValue 
+            ? "In Kitchen" 
+            : "Not Sent";
+    
+    public string KitchenStatusColor => DeliveredAt.HasValue 
+        ? "Green" 
+        : SentToKitchenAt.HasValue 
+            ? "Orange" 
+            : "Gray";
+    
     // Time Charges (F-C.2)
     public TimeSpan? Duration { get; set; }
     public decimal? HourlyRate { get; set; }

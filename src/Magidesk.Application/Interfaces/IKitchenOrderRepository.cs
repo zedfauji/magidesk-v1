@@ -12,4 +12,5 @@ public interface IKitchenOrderRepository
     Task UpdateAsync(KitchenOrder kitchenOrder);
     Task<IEnumerable<KitchenOrder>> GetActiveOrdersAsync();
     Task<IEnumerable<KitchenOrder>> GetCompletedOrdersAsync(int limit = 50);
+    Task<bool> IsTicketItemRoutedAsync(Guid ticketItemId);
 }

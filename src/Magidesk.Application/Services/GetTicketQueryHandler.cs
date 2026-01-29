@@ -140,6 +140,10 @@ public class GetTicketQueryHandler : IQueryHandler<GetTicketQuery, TicketDto?>
             SeatNumber = orderLine.SeatNumber,
             TreatAsSeat = orderLine.TreatAsSeat,
             
+            // Lifecycle timestamps
+            SentToKitchenAt = orderLine.SentToKitchenAt,
+            DeliveredAt = orderLine.DeliveredAt,
+            
             // F-C.2: Time Charges
             Duration = orderLine.Duration,
             HourlyRate = orderLine.HourlyRate,

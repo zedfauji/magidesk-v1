@@ -46,6 +46,10 @@ public class OrderLine
     // F-0036: Cooking Instructions
     public string? Instructions { get; private set; }
     
+    // Lifecycle timestamps
+    public DateTime? SentToKitchenAt { get; private set; }
+    public DateTime? DeliveredAt { get; private set; }
+    
     // Seat
     public int? SeatNumber { get; private set; }
     public bool TreatAsSeat { get; private set; }
@@ -317,6 +321,7 @@ public class OrderLine
         }
 
         PrintedToKitchen = true;
+        SentToKitchenAt = DateTime.UtcNow;
 
         // Also mark modifiers as printed
         foreach (var modifier in _modifiers.Where(m => m.ShouldPrintToKitchen))
@@ -366,6 +371,19 @@ public class OrderLine
              throw new BusinessRuleViolationException("Seat number cannot be negative.");
         }
         SeatNumber = seatNumber;
+    }
+
+    /// <summary>
+    /// Marks this order line as delivered from kitchen.
+    /// </summary>
+    public void MarkAsDelivered()
+    {
+        if (!PrintedToKitchen)
+        {
+            throw new BusinessRuleViolationException("Order line must be sent to kitchen before marking as delivered");
+        }
+        
+        DeliveredAt = DateTime.UtcNow;
     }
 }
 

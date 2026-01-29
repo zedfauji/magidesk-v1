@@ -30,6 +30,8 @@ public class KitchenOrderViewModel : ViewModelBase
     }
     
     public bool IsLate => (DateTime.UtcNow - _order.Timestamp).TotalMinutes > 20;
+    
+    public bool IsDoneStatus => _order.Status == KitchenStatus.Done;
 
     public ObservableCollection<KitchenOrderItemViewModel> Items { get; } = new();
 

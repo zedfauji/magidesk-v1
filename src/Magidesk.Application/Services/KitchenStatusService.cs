@@ -85,4 +85,31 @@ public class KitchenStatusService : IKitchenStatusService
         _logger.LogInformation("Kitchen order {KitchenOrderId} voided (was {PreviousStatus})", 
             kitchenOrderId, previousStatus);
     }
+
+    public async Task MarkAsDeliveredAsync(Guid kitchenOrderId)
+    {
+        var order = await _kitchenOrderRepository.GetByIdAsync(kitchenOrderId);
+        if (order == null)
+        {
+            throw new Exception($"Kitchen Order not found: {kitchenOrderId}");
+        }
+
+        // Mark as delivered
+        order.MarkAsDelivered();
+        await _kitchenOrderRepository.UpdateAsync(order);
+
+        // Calculate preparation time
+        var prepTime = order.PreparationTime ?? TimeSpan.Zero;
+
+        // Send notification to POS
+        await _notificationService.NotifyOrderDeliveredAsync(
+            kitchenOrderId,
+            order.TicketId,
+            order.TableNumber,
+            prepTime);
+
+        _logger.LogInformation(
+            "Kitchen order {KitchenOrderId} marked as delivered. Prep time: {PrepTime}s",
+            kitchenOrderId, prepTime.TotalSeconds);
+    }
 }

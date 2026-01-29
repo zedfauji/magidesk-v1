@@ -67,6 +67,46 @@ public class OrderNotificationService : IOrderNotificationService
         await BroadcastNotificationAsync(notification);
     }
 
+    public async Task NotifyOrderCreatedAsync(Guid kitchenOrderId, string tableNumber, string serverName)
+    {
+        _logger.LogInformation("New order notification: Kitchen Order {KitchenOrderId}, Table {TableNumber}, Server {ServerName}", 
+            kitchenOrderId, tableNumber, serverName);
+
+        var notification = new OrderNotification
+        {
+            Id = Guid.NewGuid(),
+            Type = NotificationType.OrderCreated,
+            KitchenOrderId = kitchenOrderId,
+            TableNumber = tableNumber,
+            ServerName = serverName,
+            Message = $"New order for Table {tableNumber}",
+            Timestamp = DateTime.UtcNow
+        };
+
+        await BroadcastNotificationAsync(notification);
+    }
+
+    public async Task NotifyOrderDeliveredAsync(Guid kitchenOrderId, Guid ticketId, string tableNumber, TimeSpan preparationTime)
+    {
+        _logger.LogInformation(
+            "Order delivered notification: Kitchen Order {KitchenOrderId}, Ticket {TicketId}, Table {TableNumber}, Prep Time {PrepTime}s", 
+            kitchenOrderId, ticketId, tableNumber, preparationTime.TotalSeconds);
+
+        var notification = new OrderNotification
+        {
+            Id = Guid.NewGuid(),
+            Type = NotificationType.OrderDelivered,
+            KitchenOrderId = kitchenOrderId,
+            TicketId = ticketId,
+            TableNumber = tableNumber,
+            Message = $"Order for Table {tableNumber} is ready (Prep time: {preparationTime.TotalMinutes:F1} min)",
+            Timestamp = DateTime.UtcNow,
+            PreparationTime = preparationTime
+        };
+
+        await BroadcastNotificationAsync(notification);
+    }
+
     public async Task SubscribeToNotificationsAsync(Guid terminalId, Guid userId, string[]? tableNumbers = null)
     {
         var subscription = new NotificationSubscription
@@ -150,11 +190,13 @@ public class OrderNotification
     public Guid Id { get; set; }
     public NotificationType Type { get; set; }
     public Guid KitchenOrderId { get; set; }
+    public Guid TicketId { get; set; }
     public string TableNumber { get; set; } = string.Empty;
     public string ServerName { get; set; } = string.Empty;
     public KitchenStatus? Status { get; set; }
     public string Message { get; set; } = string.Empty;
     public DateTime Timestamp { get; set; }
+    public TimeSpan? PreparationTime { get; set; }
 }
 
 /// <summary>
@@ -163,5 +205,7 @@ public class OrderNotification
 public enum NotificationType
 {
     OrderReady,
-    StatusChange
+    StatusChange,
+    OrderCreated,
+    OrderDelivered
 }
