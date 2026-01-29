@@ -102,6 +102,10 @@ public partial class App : Microsoft.UI.Xaml.Application
             
             // UI Services
             services.AddSingleton<Magidesk.Presentation.Services.LocalizationService>();
+            services.AddSingleton<Magidesk.Presentation.Services.IKdsSettingsService, Magidesk.Presentation.Services.KdsSettingsService>();
+            
+            // Register Client-Side NoOp Publisher to satisfy dependency
+            services.AddSingleton<Magidesk.Application.Interfaces.IKitchenNotificationPublisher, Magidesk.Presentation.Services.NoOpKitchenNotificationPublisher>();
 
                     // ViewModels
                     StartupLogger.Log("App - Registering ViewModels...");

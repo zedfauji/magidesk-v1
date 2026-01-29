@@ -16,6 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor(); // Required for Http implementations
 builder.Services.AddMemoryCache(); // Required for EnhancedCachingService
+builder.Services.AddSignalR();
+builder.Services.AddSingleton<Magidesk.Application.Interfaces.IKitchenNotificationPublisher, Magidesk.Api.Services.SignalRKitchenNotificationPublisher>();
 
 // Add CORS policy
 builder.Services.AddCors(options =>
@@ -67,5 +69,6 @@ app.UseAuthentication(); // If using JWT
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<Magidesk.Api.Hubs.KitchenHub>("/hubs/kitchen");
 
 app.Run();

@@ -18,19 +18,23 @@ public class ProcessPaymentCommandHandler : ICommandHandler<ProcessPaymentComman
     private readonly ICashSessionRepository _cashSessionRepository;
     private readonly IAuditEventRepository _auditEventRepository;
     private readonly PaymentDomainService _paymentDomainService;
+    private readonly IReceiptPrintService _receiptPrintService;
 
     public ProcessPaymentCommandHandler(
         ITicketRepository ticketRepository,
         IPaymentRepository paymentRepository,
         ICashSessionRepository cashSessionRepository,
+        // Duplicate removed
         IAuditEventRepository auditEventRepository,
-        PaymentDomainService paymentDomainService)
+        PaymentDomainService paymentDomainService,
+        IReceiptPrintService receiptPrintService)
     {
         _ticketRepository = ticketRepository;
         _paymentRepository = paymentRepository;
         _cashSessionRepository = cashSessionRepository;
         _auditEventRepository = auditEventRepository;
         _paymentDomainService = paymentDomainService;
+        _receiptPrintService = receiptPrintService;
     }
 
     public async Task<ProcessPaymentResult> HandleAsync(ProcessPaymentCommand command, CancellationToken cancellationToken = default)
@@ -189,6 +193,12 @@ public class ProcessPaymentCommandHandler : ICommandHandler<ProcessPaymentComman
             correlationId: correlationId);
 
         await _auditEventRepository.AddAsync(auditEvent, cancellationToken);
+
+        // Auto-print receipt after successful payment (Fix for TKT-P008)
+        // We use Fire-and-Forget pattern or dependent await?
+        // Since we are in a CommandHandler, we should just await it to ensure it's sent to spooler.
+        // The service handles exceptions so it won't crash the successful payment response.
+        await _receiptPrintService.PrintPaymentReceiptAsync(payment, ticket, command.ProcessedBy.Value, cancellationToken);
 
         return new ProcessPaymentResult
         {

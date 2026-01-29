@@ -14,14 +14,18 @@ namespace Magidesk.Application.Services;
 public class OrderNotificationService : IOrderNotificationService
 {
     private readonly ILogger<OrderNotificationService> _logger;
+    private readonly IKitchenNotificationPublisher _publisher;
     
     // In-memory storage for notification subscriptions
     // In a production system, this would be stored in Redis or database for multi-terminal support
     private readonly ConcurrentDictionary<Guid, NotificationSubscription> _subscriptions = new();
 
-    public OrderNotificationService(ILogger<OrderNotificationService> logger)
+    public OrderNotificationService(
+        ILogger<OrderNotificationService> logger,
+        IKitchenNotificationPublisher publisher)
     {
         _logger = logger;
+        _publisher = publisher;
     }
 
     public async Task NotifyOrderReadyAsync(Guid kitchenOrderId, string tableNumber, string serverName)
@@ -91,22 +95,26 @@ public class OrderNotificationService : IOrderNotificationService
 
     private async Task BroadcastNotificationAsync(OrderNotification notification)
     {
+        // 1. Publish to external systems (SignalR)
+        try 
+        {
+            await _publisher.PublishAsync(notification);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to publish notification {NotificationId} to SignalR", notification.Id);
+        }
+
+        // 2. Process legacy in-memory subscriptions (if any)
         foreach (var subscription in _subscriptions.Values)
         {
             // Check if subscription should receive this notification
             if (ShouldReceiveNotification(subscription, notification))
             {
-                // In a real implementation, this would send the notification via SignalR, WebSocket, or similar
-                // For now, we'll log it and store it for the UI to poll
                 _logger.LogInformation("Broadcasting notification {NotificationId} to terminal {TerminalId}: {Message}", 
                     notification.Id, subscription.TerminalId, notification.Message);
-                
-                // TODO: Implement actual notification delivery mechanism
-                // This could be SignalR hub, WebSocket, or in-memory event system
             }
         }
-        
-        await Task.CompletedTask;
     }
 
     private static bool ShouldReceiveNotification(NotificationSubscription subscription, OrderNotification notification)

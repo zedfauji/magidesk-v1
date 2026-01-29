@@ -13,17 +13,20 @@ public class KitchenOrder
     public DateTime Timestamp { get; private set; }
     public KitchenStatus Status { get; private set; }
     
+    public Guid? PrinterGroupId { get; private set; }
+    
     private readonly List<KitchenOrderItem> _items = new();
     public IReadOnlyCollection<KitchenOrderItem> Items => _items.AsReadOnly();
 
     protected KitchenOrder() { } // For EF Core
 
-    public KitchenOrder(Guid ticketId, string serverName, string tableNumber)
+    public KitchenOrder(Guid ticketId, string serverName, string tableNumber, Guid? printerGroupId)
     {
         Id = Guid.NewGuid();
         TicketId = ticketId;
         ServerName = serverName;
         TableNumber = tableNumber;
+        PrinterGroupId = printerGroupId;
         Timestamp = DateTime.UtcNow;
         Status = KitchenStatus.New;
     }

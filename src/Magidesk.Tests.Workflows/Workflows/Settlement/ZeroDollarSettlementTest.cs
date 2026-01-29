@@ -21,6 +21,7 @@ public class ZeroDollarSettlementTest
         var paymentRepository = new Mock<IPaymentRepository>();
         var cashSessionRepository = new Mock<ICashSessionRepository>();
         var auditEventRepository = new Mock<IAuditEventRepository>();
+        var receiptPrintService = new Mock<IReceiptPrintService>();
         
         var paymentDomainService = new Magidesk.Domain.DomainServices.PaymentDomainService(); 
 
@@ -29,7 +30,8 @@ public class ZeroDollarSettlementTest
             paymentRepository.Object,
             cashSessionRepository.Object,
             auditEventRepository.Object,
-            paymentDomainService
+            paymentDomainService,
+            receiptPrintService.Object
         );
 
         var userId = new UserId(Guid.NewGuid());

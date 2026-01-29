@@ -91,4 +91,14 @@ internal sealed class InMemoryTicketRepository : ITicketRepository
     {
         return Task.FromResult<ITransaction>(new NoOpTransaction());
     }
+
+    public void ClearChangeTracker()
+    {
+        // No-op for in-memory
+    }
+
+    public void MarkOrderLineAsAdded(OrderLine orderLine)
+    {
+        // No-op for in-memory
+    }
 }

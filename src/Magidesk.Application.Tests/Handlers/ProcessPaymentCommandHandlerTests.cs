@@ -9,6 +9,9 @@ using Magidesk.Domain.ValueObjects;
 
 namespace Magidesk.Application.Tests.Handlers;
 
+using Moq;
+using Magidesk.Application.Interfaces;
+
 public class ProcessPaymentCommandHandlerTests
 {
     [Fact]
@@ -19,8 +22,11 @@ public class ProcessPaymentCommandHandlerTests
         var cashSessions = new InMemoryCashSessionRepository();
         var audits = new InMemoryAuditEventRepository();
         var paymentDomain = new PaymentDomainService();
+        var receiptPrintService = new Mock<IReceiptPrintService>();
+        receiptPrintService.Setup(r => r.PrintTicketReceiptAsync(It.IsAny<Ticket>(), It.IsAny<Guid?>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
+        receiptPrintService.Setup(r => r.PrintPaymentReceiptAsync(It.IsAny<Payment>(), It.IsAny<Ticket>(), It.IsAny<Guid?>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
-        var handler = new ProcessPaymentCommandHandler(tickets, payments, cashSessions, audits, paymentDomain);
+        var handler = new ProcessPaymentCommandHandler(tickets, payments, cashSessions, audits, paymentDomain, receiptPrintService.Object);
 
         var userId = new UserId(Guid.NewGuid());
         var terminalId = Guid.NewGuid();
@@ -65,7 +71,9 @@ public class ProcessPaymentCommandHandlerTests
         var audits = new InMemoryAuditEventRepository();
         var paymentDomain = new PaymentDomainService();
 
-        var handler = new ProcessPaymentCommandHandler(tickets, payments, cashSessions, audits, paymentDomain);
+        var receiptPrintService = new Mock<IReceiptPrintService>();
+
+        var handler = new ProcessPaymentCommandHandler(tickets, payments, cashSessions, audits, paymentDomain, receiptPrintService.Object);
 
         var cmd = new ProcessPaymentCommand
         {

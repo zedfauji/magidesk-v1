@@ -1,10 +1,16 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Magidesk.Application.Interfaces;
 using Microsoft.UI.Dispatching; // For DispatcherQueue (Timer replacement for WinUI)
 using CommunityToolkit.Mvvm.Input;
+using Magidesk.Domain.Entities;
+using Magidesk.Presentation.Services;
+using Magidesk.Application.Services; // For OrderNotification DTO
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace Magidesk.Presentation.ViewModels;
 
@@ -13,11 +19,29 @@ namespace Magidesk.Presentation.ViewModels;
     {
         private readonly IKitchenOrderRepository _repository;
         private readonly IKitchenStatusService _statusService;
-        private readonly IOrderNotificationService _notificationService;
+
+        private readonly IPrinterGroupRepository _printerGroupRepository;
+        private readonly IKdsSettingsService _settingsService;
         private readonly DispatcherQueue _dispatcherQueue;
         private readonly DispatcherQueueTimer _timer;
+        private HubConnection? _hubConnection;
 
         public ObservableCollection<KitchenOrderViewModel> Orders { get; } = new();
+        public ObservableCollection<PrinterGroup> AvailableStations { get; } = new();
+
+        private PrinterGroup? _selectedStation;
+        public PrinterGroup? SelectedStation
+        {
+            get => _selectedStation;
+            set
+            {
+                if (SetProperty(ref _selectedStation, value))
+                {
+                    _settingsService.SetSelectedStationId(value?.Id);
+                    _ = LoadOrdersAsync();
+                }
+            }
+        }
         
         private string _lastUpdated = "Never";
         public string LastUpdated
@@ -44,19 +68,23 @@ namespace Magidesk.Presentation.ViewModels;
         }
     }
 
-    public Services.LocalizationService Localization { get; }
+    public Magidesk.Presentation.Services.LocalizationService Localization { get; }
 
     public string ViewTitle => IsHistoryMode ? "KD_HistoryTitle" : "KD_Title";
 
     public KitchenDisplayViewModel(
         IKitchenOrderRepository repository,
         IKitchenStatusService statusService,
-        IOrderNotificationService notificationService,
-        Services.LocalizationService localizationService)
+
+        IPrinterGroupRepository printerGroupRepository,
+        IKdsSettingsService settingsService,
+        Magidesk.Presentation.Services.LocalizationService localizationService)
     {
         _repository = repository;
         _statusService = statusService;
-        _notificationService = notificationService;
+
+        _printerGroupRepository = printerGroupRepository;
+        _settingsService = settingsService;
         Localization = localizationService;
         
         BumpCommand = new AsyncRelayCommand<KitchenOrderViewModel>(BumpOrderAsync);
@@ -65,14 +93,109 @@ namespace Magidesk.Presentation.ViewModels;
         
         _lastUpdated = Localization["KD_Never"];
 
-        // Setup Polling Timer (every 10 seconds)
+        // Setup Polling Timer (Fallback - 60 seconds)
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         if (_dispatcherQueue != null)
         {
             _timer = _dispatcherQueue.CreateTimer();
-            _timer.Interval = TimeSpan.FromSeconds(10);
+            _timer.Interval = TimeSpan.FromSeconds(60); 
             _timer.Tick += (s, e) => _ = LoadOrdersAsync();
-            _timer.Start();
+            // Do NOT start timer here. It will be started by SignalR fallback if needed.
+        }
+
+        // Initialize Sequentially to avoid DbContext concurrency issues (NpgsqlOperationInProgressException)
+        _ = InitializeAsync();
+    }
+
+    private async Task InitializeAsync()
+    {
+        try
+        {
+            await LoadStationsAsync(); // 1. Load Stations (Required for filtering)
+            await LoadOrdersAsync();   // 2. Initial Order Load (Show data immediately)
+            await InitializeSignalRAsync(); // 3. Start Realtime (Might enable polling fallback)
+        }
+        catch (System.Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"KDS Initialization Failed: {ex.Message}");
+            // Ensure polling is active if everything else fails
+            _dispatcherQueue.TryEnqueue(() => _timer?.Start());
+        }
+    }
+
+    private async Task InitializeSignalRAsync()
+    {
+        try
+        {
+            var baseUrl = _settingsService.GetApiBaseUrl().TrimEnd('/');
+            _hubConnection = new HubConnectionBuilder()
+                .WithUrl($"{baseUrl}/hubs/kitchen")
+                .WithAutomaticReconnect()
+                .Build();
+
+            _hubConnection.On<OrderNotification>("OrderUpdated", (notification) =>
+            {
+                // Dispatch to UI Thread
+                _dispatcherQueue.TryEnqueue(() => 
+                {
+                     // In the future: Check notification.KitchenOrderId or Type to opt-out
+                     _ = LoadOrdersAsync(); 
+                });
+            });
+
+            _hubConnection.Closed += async (error) => 
+            {
+                System.Diagnostics.Debug.WriteLine($"SignalR Closed: {error?.Message}. Starting Polling.");
+                _dispatcherQueue.TryEnqueue(() => _timer.Start());
+                await Task.CompletedTask;
+            };
+
+            _hubConnection.Reconnecting += (error) =>
+            {
+                System.Diagnostics.Debug.WriteLine($"SignalR Reconnecting: {error?.Message}. Starting Polling.");
+                _dispatcherQueue.TryEnqueue(() => _timer.Start());
+                return Task.CompletedTask;
+            };
+
+            _hubConnection.Reconnected += (connectionId) =>
+            {
+                System.Diagnostics.Debug.WriteLine("SignalR Reconnected. Stopping Polling.");
+                _dispatcherQueue.TryEnqueue(() => _timer.Stop());
+                return Task.CompletedTask;
+            };
+
+            await _hubConnection.StartAsync();
+            System.Diagnostics.Debug.WriteLine("KDS Connected to SignalR Hub. Stopping Polling.");
+            _dispatcherQueue.TryEnqueue(() => _timer.Stop());
+        }
+        catch (Exception ex)
+        {
+             System.Diagnostics.Debug.WriteLine($"SignalR Connection Failed: {ex.Message}");
+             // Fallback to polling is already active from Constructor
+             _dispatcherQueue.TryEnqueue(() => _timer.Start());
+        }
+    }
+
+    public async Task LoadStationsAsync()
+    {
+        try
+        {
+            var groups = await _printerGroupRepository.GetAllAsync();
+            AvailableStations.Clear();
+            foreach (var group in groups)
+            {
+                AvailableStations.Add(group);
+            }
+
+            var savedId = _settingsService.GetSelectedStationId();
+            if (savedId.HasValue)
+            {
+                SelectedStation = System.Linq.Enumerable.FirstOrDefault(AvailableStations, s => s.Id == savedId.Value);
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Failed to load stations: {ex.Message}");
         }
     }
     
@@ -80,7 +203,7 @@ namespace Magidesk.Presentation.ViewModels;
     {
         try
         {
-            System.Collections.Generic.IEnumerable<Magidesk.Domain.Entities.KitchenOrder> fetchedOrders;
+            IEnumerable<Magidesk.Domain.Entities.KitchenOrder> fetchedOrders;
 
             if (IsHistoryMode)
             {
@@ -91,19 +214,71 @@ namespace Magidesk.Presentation.ViewModels;
                 fetchedOrders = await _repository.GetActiveOrdersAsync();
             }
             
-            // Simple approach: Clear and Add. 
-            // Better approach for UI stability: Merge/Update, but MVP first.
-            Orders.Clear();
-            foreach (var order in fetchedOrders)
+            // Filter by station if selected
+            if (SelectedStation != null)
             {
-                Orders.Add(new KitchenOrderViewModel(order));
+                fetchedOrders = fetchedOrders.Where(o => o.PrinterGroupId == SelectedStation.Id);
+            }
+            
+            var fetchedList = fetchedOrders.ToList();
+
+            // Sync collection (Smart Merge)
+            for (int i = 0; i < fetchedList.Count; i++)
+            {
+                var newOrder = fetchedList[i];
+                var newVM = new KitchenOrderViewModel(newOrder);
+
+                if (i >= Orders.Count)
+                {
+                    // Append new item
+                    Orders.Add(newVM);
+                }
+                else
+                {
+                    var existingVM = Orders[i];
+                    if (existingVM.Id == newOrder.Id)
+                    {
+                         // Update in place (Replace to refresh content like Status/TimeAgo)
+                         Orders[i] = newVM;
+                    }
+                    else
+                    {
+                        // ID Mismatch - Check if existing item is elsewhere in current orders
+                        var matchIndex = -1;
+                        for (int j = i + 1; j < Orders.Count; j++)
+                        {
+                            if (Orders[j].Id == newOrder.Id)
+                            {
+                                matchIndex = j;
+                                break;
+                            }
+                        }
+
+                        if (matchIndex != -1)
+                        {
+                            // Move to current position (restores order)
+                            Orders.Move(matchIndex, i);
+                            Orders[i] = newVM; // Update content
+                        }
+                        else
+                        {
+                            // New item, insert here
+                            Orders.Insert(i, newVM);
+                        }
+                    }
+                }
+            }
+
+            // Remove extra items (stale orders)
+            while (Orders.Count > fetchedList.Count)
+            {
+                Orders.RemoveAt(Orders.Count - 1);
             }
             
             LastUpdated = DateTime.Now.ToString("HH:mm:ss");
         }
         catch (Exception)
         {
-            // Handle error (maybe set status property)
             LastUpdated = "Error connecting";
         }
     }
@@ -112,12 +287,20 @@ namespace Magidesk.Presentation.ViewModels;
     public void StartPolling()
     {
         if (_timer != null && !_timer.IsRunning) _timer.Start();
+        if (_hubConnection != null && _hubConnection.State == HubConnectionState.Disconnected)
+        {
+             _ = _hubConnection.StartAsync();
+        }
         _ = LoadOrdersAsync(); // Initial Load
     }
 
     public void StopPolling()
     {
         if (_timer != null && _timer.IsRunning) _timer.Stop();
+        if (_hubConnection != null)
+        {
+            _ = _hubConnection.StopAsync();
+        }
     }
 
     private async Task BumpOrderAsync(KitchenOrderViewModel? vm)

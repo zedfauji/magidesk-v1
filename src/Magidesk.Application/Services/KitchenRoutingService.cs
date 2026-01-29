@@ -44,34 +44,39 @@ public class KitchenRoutingService : IKitchenRoutingService
 
         var createdOrderIds = new List<Guid>();
 
-        // Logic Simplification: Currently treating entire ticket route as one KitchenOrder
-        // In the future, we might split by Station (PrinterGroupId) here.
-        
-        var kitchenOrder = new KitchenOrder(
-            ticket.Id,
-            serverName, 
-            tableNumber 
-        );
+        // Group items by PrinterGroupId (Station)
+        var itemsByStation = itemsToRoute.GroupBy(i => i.PrinterGroupId);
 
-        foreach (var item in itemsToRoute)
+        foreach (var stationGroup in itemsByStation)
         {
-            var modifiers = item.Modifiers.Select(m => m.Name).ToList();
+            var printerGroupId = stationGroup.Key;
             
-            kitchenOrder.AddItem(
-                item.Id,
-                item.MenuItemName,
-                (int)item.Quantity,
-                item.PrinterGroupId ?? Guid.Empty, 
-                modifiers
+            var kitchenOrder = new KitchenOrder(
+                ticket.Id,
+                serverName, 
+                tableNumber,
+                printerGroupId
             );
+
+            foreach (var item in stationGroup)
+            {
+                var modifiers = item.Modifiers.Select(m => m.Name).ToList();
+                
+                kitchenOrder.AddItem(
+                    item.Id,
+                    item.MenuItemName,
+                    (int)item.Quantity,
+                    printerGroupId ?? Guid.Empty, // Destination inside item matches group
+                    modifiers
+                );
+            }
+
+            await _kitchenOrderRepository.AddAsync(kitchenOrder);
+            createdOrderIds.Add(kitchenOrder.Id);
         }
-
-        await _kitchenOrderRepository.AddAsync(kitchenOrder);
         
-        createdOrderIds.Add(kitchenOrder.Id);
-
-        _logger.LogInformation("Routed {ItemCount} items to kitchen for ticket {TicketId}, created kitchen order {KitchenOrderId}", 
-            itemsToRoute.Count, ticket.Id, kitchenOrder.Id);
+        _logger.LogInformation("Routed {ItemCount} items to kitchen for ticket {TicketId}, created {OrderCount} kitchen orders ({OrderIds})", 
+            itemsToRoute.Count, ticket.Id, createdOrderIds.Count, string.Join(", ", createdOrderIds));
 
         return createdOrderIds;
     }

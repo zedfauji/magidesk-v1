@@ -101,6 +101,10 @@ public static class FullPosSeeder
         db.CashSessions.Add(openCashSession);
         await db.SaveChangesAsync(cancellationToken);
 
+        // =========================
+        // PRODUCTION BUILD - MOCK DATA DISABLED
+        // =========================
+        /*
         // Seed a few historical cash sessions (closed, with variance)
         await SeedHistoricalCashSessionsAsync(
             db,
@@ -162,6 +166,7 @@ public static class FullPosSeeder
         // STEP 12 — REPORTING HISTORY (Labor)
         // =========================
         await SeedAttendanceHistoryAsync(db, users, shifts, options, cancellationToken);
+        */
 
         // Final counts
         var counts = new Dictionary<string, int>
@@ -1200,7 +1205,7 @@ public static class FullPosSeeder
                 // Kitchen order on some tickets
                 if (ticket.OrderLines.Any() && i % 3 == 0)
                 {
-                    var ko = new KitchenOrder(ticket.Id, $"{server.FirstName} {server.LastName}", ticket.TableNumbers.Any() ? ticket.TableNumbers.First().ToString() : "ToGo");
+                    var ko = new KitchenOrder(ticket.Id, $"{server.FirstName} {server.LastName}", ticket.TableNumbers.Any() ? ticket.TableNumbers.First().ToString() : "ToGo", null);
                     foreach (var ol in ticket.OrderLines.Where(x => x.ShouldPrintToKitchen))
                     {
                         ko.AddItem(ol.Id, ol.MenuItemName, (int)Math.Ceiling(ol.Quantity), ol.PrinterGroupId ?? Guid.Empty, ol.Modifiers.Select(m => m.Name).ToList());
@@ -1660,7 +1665,7 @@ public static class FullPosSeeder
                     var serverName = $"{server.FirstName} {server.LastName}";
                     var tableName = ticket.TableNumbers.Any() ? ticket.TableNumbers.First().ToString() : "ToGo";
 
-                    var ko = new KitchenOrder(ticket.Id, serverName, tableName);
+                    var ko = new KitchenOrder(ticket.Id, serverName, tableName, null);
                     foreach (var ol in ticket.OrderLines.Where(x => x.ShouldPrintToKitchen))
                     {
                         ko.AddItem(

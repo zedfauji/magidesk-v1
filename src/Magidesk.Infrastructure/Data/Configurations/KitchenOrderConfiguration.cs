@@ -20,6 +20,9 @@ public class KitchenOrderConfiguration : IEntityTypeConfiguration<KitchenOrder>
             .IsRequired()
             .HasMaxLength(50);
 
+        builder.Property(x => x.PrinterGroupId)
+            .IsRequired(false);
+
         builder.Property(x => x.Status)
             .HasConversion<string>()
             .IsRequired();

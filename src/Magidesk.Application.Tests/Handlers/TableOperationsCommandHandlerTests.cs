@@ -70,7 +70,7 @@ public class TableOperationsCommandHandlerTests
         result.MergedTableIds.Should().Contain(primaryTableId);
         result.MergedTableIds.Should().Contain(secondaryTableId1);
         result.MergedTableIds.Should().Contain(secondaryTableId2);
-        result.CombinedCharges.Should().Be(60m);
+        result.TotalCharge.Should().Be(60m);
         result.StaffId.Should().Be(staffId);
         
         _tableOperationsServiceMock.Verify(s => s.MergeTablesAsync(
@@ -120,19 +120,13 @@ public class TableOperationsCommandHandlerTests
         var staffId = Guid.NewGuid();
         var reason = "Group wants separate bills";
         
-        var chargeAllocation = new Dictionary<Guid, decimal>
+        var splitAllocations = new List<TableSplitAllocationInfo>
         {
-            { tableId1, 60m },
-            { tableId2, 40m }
+            new(tableId1, 0.6m, 3), // 60/100 = 0.6
+            new(tableId2, 0.4m, 2)  // 40/100 = 0.4
         };
         
-        var guestAllocation = new Dictionary<Guid, int>
-        {
-            { tableId1, 3 },
-            { tableId2, 2 }
-        };
-        
-        var command = new SplitTablesCommand(mergedSessionId, chargeAllocation, guestAllocation, reason, staffId);
+        var command = new SplitTablesCommand(mergedSessionId, splitAllocations, reason, staffId);
         
         var resultingSessionIds = new[] { Guid.NewGuid(), Guid.NewGuid() };
         
@@ -176,19 +170,13 @@ public class TableOperationsCommandHandlerTests
     public async Task SplitHandler_ShouldThrowArgumentException_WhenChargeAllocationDoesNotSumTo100()
     {
         // Arrange
-        var chargeAllocation = new Dictionary<Guid, decimal>
+        var splitAllocations = new List<TableSplitAllocationInfo>
         {
-            { Guid.NewGuid(), 60m },
-            { Guid.NewGuid(), 30m } // Only sums to 90%
+            new(Guid.NewGuid(), 0.6m, 3),
+            new(Guid.NewGuid(), 0.3m, 2)
         };
         
-        var guestAllocation = new Dictionary<Guid, int>
-        {
-            { Guid.NewGuid(), 3 },
-            { Guid.NewGuid(), 2 }
-        };
-        
-        var command = new SplitTablesCommand(Guid.NewGuid(), chargeAllocation, guestAllocation, "reason", Guid.NewGuid());
+        var command = new SplitTablesCommand(Guid.NewGuid(), splitAllocations, "reason", Guid.NewGuid());
 
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(() => _splitHandler.HandleAsync(command));
@@ -198,9 +186,11 @@ public class TableOperationsCommandHandlerTests
     public async Task SplitHandler_ShouldThrowArgumentException_WhenMergedSessionIdIsEmpty()
     {
         // Arrange
-        var chargeAllocation = new Dictionary<Guid, decimal> { { Guid.NewGuid(), 100m } };
-        var guestAllocation = new Dictionary<Guid, int> { { Guid.NewGuid(), 2 } };
-        var command = new SplitTablesCommand(Guid.Empty, chargeAllocation, guestAllocation, "reason", Guid.NewGuid());
+        var splitAllocations = new List<TableSplitAllocationInfo>
+        {
+            new(Guid.NewGuid(), 1.0m, 2)
+        };
+        var command = new SplitTablesCommand(Guid.Empty, splitAllocations, "reason", Guid.NewGuid());
 
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(() => _splitHandler.HandleAsync(command));
@@ -210,9 +200,8 @@ public class TableOperationsCommandHandlerTests
     public async Task SplitHandler_ShouldThrowArgumentException_WhenChargeAllocationIsEmpty()
     {
         // Arrange
-        var chargeAllocation = new Dictionary<Guid, decimal>();
-        var guestAllocation = new Dictionary<Guid, int> { { Guid.NewGuid(), 2 } };
-        var command = new SplitTablesCommand(Guid.NewGuid(), chargeAllocation, guestAllocation, "reason", Guid.NewGuid());
+        var splitAllocations = new List<TableSplitAllocationInfo>();
+        var command = new SplitTablesCommand(Guid.NewGuid(), splitAllocations, "reason", Guid.NewGuid());
 
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(() => _splitHandler.HandleAsync(command));
@@ -222,9 +211,11 @@ public class TableOperationsCommandHandlerTests
     public async Task SplitHandler_ShouldThrowInvalidOperationException_WhenOperationFails()
     {
         // Arrange
-        var chargeAllocation = new Dictionary<Guid, decimal> { { Guid.NewGuid(), 100m } };
-        var guestAllocation = new Dictionary<Guid, int> { { Guid.NewGuid(), 2 } };
-        var command = new SplitTablesCommand(Guid.NewGuid(), chargeAllocation, guestAllocation, "reason", Guid.NewGuid());
+        var splitAllocations = new List<TableSplitAllocationInfo>
+        {
+            new(Guid.NewGuid(), 1.0m, 2)
+        };
+        var command = new SplitTablesCommand(Guid.NewGuid(), splitAllocations, "reason", Guid.NewGuid());
         
         var failureResult = TableOperationResult.InvalidOperation("Cannot split session that is not merged");
         
