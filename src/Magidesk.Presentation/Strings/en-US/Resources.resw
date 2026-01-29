@@ -278,6 +278,9 @@
   <data name="KD_BumpOrder" xml:space="preserve">
     <value>BUMP ORDER</value>
   </data>
+  <data name="KD_MarkDelivered" xml:space="preserve">
+    <value>DELIVERED</value>
+  </data>
   <data name="KD_NoActiveOrders" xml:space="preserve">
     <value>No Active Orders</value>
   </data>
