@@ -119,7 +119,7 @@ public class KitchenRoutingServiceTests
             k.TicketId == ticketDto.Id && 
             k.PrinterGroupId == kitchenGroupId &&
             k.Items.Count == 1 &&
-            k.Items.First().MenuItemName == "Burger"
+            k.Items.First().ItemName == "Burger"
         )), Times.Once);
 
         // Verify Bar Order
@@ -127,7 +127,7 @@ public class KitchenRoutingServiceTests
             k.TicketId == ticketDto.Id && 
             k.PrinterGroupId == barGroupId &&
             k.Items.Count == 1 &&
-            k.Items.First().MenuItemName == "Beer"
+            k.Items.First().ItemName == "Beer"
         )), Times.Once);
 
         // Verify total calls

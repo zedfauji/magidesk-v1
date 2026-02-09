@@ -94,25 +94,24 @@ public class EquipmentCommandHandlerTests
         var notes = "Weekly maintenance check";
         var staffId = Guid.NewGuid();
         
-        var command = new ScheduleMaintenanceCommand(equipmentId, scheduledDate, maintenanceType, notes, staffId);
+        var command = new ScheduleMaintenanceCommand(new[] { equipmentId }, scheduledDate, maintenanceType, notes, staffId);
 
         // Act
         var result = await _maintenanceHandler.HandleAsync(command);
 
         // Assert
         result.Should().NotBeNull();
-        result.EquipmentId.Should().Be(equipmentId);
-        result.ScheduledDate.Should().Be(scheduledDate);
-        result.MaintenanceType.Should().Be(maintenanceType);
-        result.Status.Should().Be("Scheduled");
+        result.EquipmentIds.Should().ContainSingle().Which.Should().Be(equipmentId);
+        result.MaintenanceDate.Should().Be(scheduledDate);
         result.ScheduledAt.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(1));
+        result.StaffId.Should().Be(staffId);
     }
 
     [Fact]
     public async Task ScheduleMaintenanceHandler_ShouldThrowArgumentException_WhenEquipmentIdIsEmpty()
     {
         // Arrange
-        var command = new ScheduleMaintenanceCommand(Guid.Empty, DateTime.UtcNow.AddDays(1), "maintenance");
+        var command = new ScheduleMaintenanceCommand(new[] { Guid.Empty }, DateTime.UtcNow.AddDays(1), "maintenance", null, Guid.NewGuid());
 
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(() => _maintenanceHandler.HandleAsync(command));
@@ -122,7 +121,7 @@ public class EquipmentCommandHandlerTests
     public async Task ScheduleMaintenanceHandler_ShouldThrowArgumentException_WhenScheduledDateIsInPast()
     {
         // Arrange
-        var command = new ScheduleMaintenanceCommand(Guid.NewGuid(), DateTime.UtcNow.AddDays(-1), "maintenance");
+        var command = new ScheduleMaintenanceCommand(new[] { Guid.NewGuid() }, DateTime.UtcNow.AddDays(-1), "maintenance", null, Guid.NewGuid());
 
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(() => _maintenanceHandler.HandleAsync(command));
@@ -135,7 +134,7 @@ public class EquipmentCommandHandlerTests
     public async Task ScheduleMaintenanceHandler_ShouldThrowArgumentException_WhenMaintenanceTypeIsInvalid(string invalidMaintenanceType)
     {
         // Arrange
-        var command = new ScheduleMaintenanceCommand(Guid.NewGuid(), DateTime.UtcNow.AddDays(1), invalidMaintenanceType);
+        var command = new ScheduleMaintenanceCommand(new[] { Guid.NewGuid() }, DateTime.UtcNow.AddDays(1), invalidMaintenanceType, null, Guid.NewGuid());
 
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(() => _maintenanceHandler.HandleAsync(command));

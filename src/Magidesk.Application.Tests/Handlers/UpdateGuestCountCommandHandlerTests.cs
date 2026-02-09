@@ -35,7 +35,7 @@ public class UpdateGuestCountCommandHandlerTests
         var newGuestCount = 4;
         var previousGuestCount = 2;
         
-        var command = new UpdateGuestCountCommand(sessionId, newGuestCount, staffId, "More players joined");
+        var command = new UpdateGuestCountCommand(sessionId, newGuestCount, staffId);
         
         var session = TableSession.Start(Guid.NewGuid(), Guid.NewGuid(), 15m, previousGuestCount);
         var sessionType = typeof(TableSession);

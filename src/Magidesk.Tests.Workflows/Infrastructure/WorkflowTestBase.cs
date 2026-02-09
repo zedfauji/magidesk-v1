@@ -115,7 +115,7 @@ namespace Magidesk.Tests.Workflows.Infrastructure
             services.AddTransient<LoginViewModel>();
             services.AddTransient<CashSessionViewModel>();
             services.AddTransient<ShiftExplorerViewModel>();
-            services.AddTransient<OrderEntryViewModel>();
+            // services.AddTransient<OrderEntryViewModel>(); // Deleted - tests disabled
             services.AddTransient<SwitchboardViewModel>();
 
             ServiceProvider = services.BuildServiceProvider();

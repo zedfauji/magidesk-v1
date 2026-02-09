@@ -29,6 +29,7 @@ public class PrintToKitchenCommandHandlerPropertyTests
     private readonly Mock<IKitchenRoutingService> _mockRoutingService;
     private readonly Mock<IAuditEventRepository> _mockAuditRepository;
     private readonly Mock<IOrderNotificationService> _mockNotificationService;
+    private readonly Mock<IUserService> _mockUserService;
     private readonly Mock<ILogger<PrintToKitchenCommandHandler>> _mockLogger;
 
     public PrintToKitchenCommandHandlerPropertyTests()
@@ -38,6 +39,7 @@ public class PrintToKitchenCommandHandlerPropertyTests
         _mockRoutingService = new Mock<IKitchenRoutingService>();
         _mockAuditRepository = new Mock<IAuditEventRepository>();
         _mockNotificationService = new Mock<IOrderNotificationService>();
+        _mockUserService = new Mock<IUserService>();
         _mockLogger = new Mock<ILogger<PrintToKitchenCommandHandler>>();
     }
 
@@ -93,6 +95,7 @@ public class PrintToKitchenCommandHandlerPropertyTests
                     _mockRoutingService.Object,
                     _mockAuditRepository.Object,
                     _mockNotificationService.Object,
+                    _mockUserService.Object,
                     _mockLogger.Object);
 
                 var command = new PrintToKitchenCommand { TicketId = ticket.Id };
@@ -158,6 +161,7 @@ public class PrintToKitchenCommandHandlerPropertyTests
                     _mockRoutingService.Object,
                     _mockAuditRepository.Object,
                     _mockNotificationService.Object,
+                    _mockUserService.Object,
                     _mockLogger.Object);
 
                 var command = new PrintToKitchenCommand { TicketId = ticket.Id };
@@ -316,6 +320,7 @@ public class PrintToKitchenCommandHandlerPropertyTests
             _mockRoutingService.Object,
             _mockAuditRepository.Object,
             _mockNotificationService.Object,
+            _mockUserService.Object,
             _mockLogger.Object);
 
         var command = new PrintToKitchenCommand { TicketId = ticket.Id };

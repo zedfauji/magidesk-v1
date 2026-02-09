@@ -85,7 +85,7 @@ public class GameHistoryRepositoryTests : IDisposable
 
         var history1 = GameHistory.Create(Guid.NewGuid(), tableId, GameType.EightBall, fromDate.AddDays(1), 2);
         var history2 = GameHistory.Create(Guid.NewGuid(), tableId, GameType.NineBall, fromDate.AddDays(3), 3);
-        var history3 = GameHistory.Create(Guid.NewGuid(), tableId, GameType.Straight, fromDate.AddDays(-10), 2); // Outside range
+        var history3 = GameHistory.Create(Guid.NewGuid(), tableId, GameType.StraightPool, fromDate.AddDays(-10), 2); // Outside range
 
         history1.EndGame(new Money(20.00m));
         history2.EndGame(new Money(30.00m));
