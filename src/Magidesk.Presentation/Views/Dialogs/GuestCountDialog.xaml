@@ -5,7 +5,7 @@
     xmlns:local="using:Magidesk.Views.Dialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="using:Magidesk.ViewModels"
+    xmlns:vm="using:Magidesk.Presentation.ViewModels"
     mc:Ignorable="d"
     Title="Enter Number of Guests"
     PrimaryButtonText="OK"

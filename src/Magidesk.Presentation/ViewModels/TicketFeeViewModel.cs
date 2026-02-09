@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.ObjectModel;
 
-namespace Magidesk.ViewModels;
+namespace Magidesk.Presentation.ViewModels;
 
 public enum TicketFeeType
 {

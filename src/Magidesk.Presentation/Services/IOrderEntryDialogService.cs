@@ -1,12 +1,11 @@
-using Magidesk.ViewModels;
-using Magidesk.ViewModels.Dialogs;
+using Magidesk.Presentation.ViewModels;
 using Magidesk.Presentation.ViewModels.Dialogs;
 
 namespace Magidesk.Presentation.Services
 {
     public interface IOrderEntryDialogService
     {
-        Task ShowModifierSelectionAsync(ModifierSelectionViewModel viewModel);
+        Task ShowModifierSelectionAsync(Magidesk.Presentation.ViewModels.Dialogs.ModifierSelectionViewModel viewModel);
         Task ShowCookingInstructionAsync(CookingInstructionViewModel viewModel);
         Task ShowAddOnSelectionAsync(AddOnSelectionViewModel viewModel);
         Task ShowComboSelectionAsync(ComboSelectionViewModel viewModel);

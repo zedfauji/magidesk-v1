@@ -1,18 +1,17 @@
 using System;
 using System.Threading.Tasks;
-using Magidesk.ViewModels;
-using Magidesk.ViewModels.Dialogs;
+using Magidesk.Presentation.ViewModels;
 using Magidesk.Presentation.ViewModels.Dialogs;
-using Magidesk.Views.Dialogs;
+using Magidesk.Presentation.Views.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 
 namespace Magidesk.Presentation.Services
 {
     public class OrderEntryDialogService : IOrderEntryDialogService
     {
-        public async Task ShowModifierSelectionAsync(ModifierSelectionViewModel viewModel)
+        public async Task ShowModifierSelectionAsync(Magidesk.Presentation.ViewModels.Dialogs.ModifierSelectionViewModel viewModel)
         {
-            var dialog = new Magidesk.Views.Dialogs.ModifierSelectionDialog(viewModel);
+            var dialog = new Magidesk.Presentation.Views.Dialogs.ModifierSelectionDialog(viewModel);
             
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
             {
@@ -23,7 +22,7 @@ namespace Magidesk.Presentation.Services
 
         public async Task ShowCookingInstructionAsync(CookingInstructionViewModel viewModel)
         {
-            var dialog = new Magidesk.Views.Dialogs.CookingInstructionDialog { ViewModel = viewModel };
+            var dialog = new Magidesk.Presentation.Views.Dialogs.CookingInstructionDialog { ViewModel = viewModel };
             
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
             {
@@ -38,7 +37,7 @@ namespace Magidesk.Presentation.Services
 
         public async Task ShowAddOnSelectionAsync(AddOnSelectionViewModel viewModel)
         {
-            var dialog = new Magidesk.Views.Dialogs.AddOnSelectionDialog(viewModel);
+            var dialog = new Magidesk.Presentation.Views.Dialogs.AddOnSelectionDialog(viewModel);
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
             {
                 dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
@@ -49,7 +48,7 @@ namespace Magidesk.Presentation.Services
 
         public async Task ShowComboSelectionAsync(ComboSelectionViewModel viewModel)
         {
-            var dialog = new Magidesk.Views.Dialogs.ComboSelectionDialog(viewModel);
+            var dialog = new Magidesk.Presentation.Views.Dialogs.ComboSelectionDialog(viewModel);
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
             {
                 dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
@@ -60,7 +59,7 @@ namespace Magidesk.Presentation.Services
 
         public async Task ShowPizzaModifierAsync(PizzaModifierViewModel viewModel)
         {
-            var dialog = new Magidesk.Views.Dialogs.PizzaModifierDialog { ViewModel = viewModel };
+            var dialog = new Magidesk.Presentation.Views.Dialogs.PizzaModifierDialog { ViewModel = viewModel };
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
             {
                 dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
@@ -71,7 +70,7 @@ namespace Magidesk.Presentation.Services
 
         public async Task ShowPriceEntryAsync(PriceEntryViewModel viewModel)
         {
-            var dialog = new Magidesk.Views.Dialogs.PriceEntryDialog { ViewModel = viewModel };
+            var dialog = new Magidesk.Presentation.Views.Dialogs.PriceEntryDialog { ViewModel = viewModel };
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
             {
                 dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
@@ -83,7 +82,7 @@ namespace Magidesk.Presentation.Services
 
         public async Task ShowSizeSelectionAsync(SizeSelectionViewModel viewModel)
         {
-            var dialog = new Magidesk.Views.Dialogs.SizeSelectionDialog { ViewModel = viewModel };
+            var dialog = new Magidesk.Presentation.Views.Dialogs.SizeSelectionDialog { ViewModel = viewModel };
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
             {
                 dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
@@ -94,7 +93,7 @@ namespace Magidesk.Presentation.Services
 
         public async Task ShowItemSearchAsync(ItemSearchViewModel viewModel)
         {
-            var dialog = new Magidesk.Views.Dialogs.ItemSearchDialog { ViewModel = viewModel };
+            var dialog = new Magidesk.Presentation.Views.Dialogs.ItemSearchDialog { ViewModel = viewModel };
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
             {
                 dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
@@ -118,7 +117,7 @@ namespace Magidesk.Presentation.Services
 
         public async Task ShowSeatSelectionAsync(SeatSelectionViewModel viewModel)
         {
-            var dialog = new Magidesk.Views.Dialogs.SeatSelectionDialog { ViewModel = viewModel };
+            var dialog = new Magidesk.Presentation.Views.Dialogs.SeatSelectionDialog { ViewModel = viewModel };
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
             {
                 dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;

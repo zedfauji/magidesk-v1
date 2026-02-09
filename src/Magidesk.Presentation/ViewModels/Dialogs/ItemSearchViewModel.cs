@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Magidesk.Application.Interfaces;
 using Magidesk.Domain.Entities;
-using Magidesk.ViewModels;
+using Magidesk.Presentation.ViewModels;
 
 namespace Magidesk.Presentation.ViewModels.Dialogs;
 

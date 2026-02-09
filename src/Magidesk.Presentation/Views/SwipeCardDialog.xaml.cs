@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 
-namespace Magidesk.Views
+namespace Magidesk.Presentation.Views
 {
     public sealed partial class SwipeCardDialog : ContentDialog
     {

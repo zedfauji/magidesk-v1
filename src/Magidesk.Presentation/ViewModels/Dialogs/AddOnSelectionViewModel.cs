@@ -7,7 +7,7 @@ using Magidesk.Application.Interfaces;
 using Magidesk.Domain.Entities;
 using Magidesk.Domain.Enumerations;
 
-namespace Magidesk.ViewModels.Dialogs;
+namespace Magidesk.Presentation.ViewModels.Dialogs;
 
 public partial class AddOnSelectionViewModel : ObservableObject
 {

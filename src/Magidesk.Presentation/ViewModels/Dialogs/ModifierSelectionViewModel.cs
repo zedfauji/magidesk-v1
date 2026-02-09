@@ -6,7 +6,7 @@ using Magidesk.Application.DTOs;
 using Magidesk.Domain.Enumerations;
 using Magidesk.Application.Interfaces;
 
-namespace Magidesk.ViewModels.Dialogs;
+namespace Magidesk.Presentation.ViewModels.Dialogs;
 
 public partial class ModifierSelectionViewModel : ObservableObject
 {

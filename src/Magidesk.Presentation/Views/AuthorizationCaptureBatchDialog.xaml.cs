@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using Magidesk.Presentation.ViewModels;
 using Magidesk.Presentation;
 
-namespace Magidesk.Views
+namespace Magidesk.Presentation.Views
 {
     public sealed partial class AuthorizationCaptureBatchDialog : ContentDialog
     {

@@ -2,7 +2,7 @@ using Magidesk.Presentation.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 
-namespace Magidesk.Views;
+namespace Magidesk.Presentation.Views;
 
 public sealed partial class PaymentProcessWaitDialog : ContentDialog
 {

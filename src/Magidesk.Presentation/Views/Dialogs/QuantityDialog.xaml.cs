@@ -1,7 +1,7 @@
 using Magidesk.Presentation.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 
-namespace Magidesk.Views;
+namespace Magidesk.Presentation.Views.Dialogs;
 
 public sealed partial class QuantityDialog : ContentDialog
 {

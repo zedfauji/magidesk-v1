@@ -147,6 +147,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ISystemInitializationService, SystemInitializationService>();
         services.AddScoped<ISystemService, SystemService>();
         services.AddScoped<IBackupService, Services.PostgresBackupService>();
+        services.AddSingleton<IErrorReportingService, Services.ErrorReportingService>();
 
         // Enhanced Infrastructure Services for Table & Game Management
         services.AddScoped<IAlertService, Services.AlertService>();

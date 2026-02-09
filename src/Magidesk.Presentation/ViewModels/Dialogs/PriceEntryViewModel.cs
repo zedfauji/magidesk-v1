@@ -1,6 +1,6 @@
 using System;
 using System.Windows.Input;
-using Magidesk.ViewModels;
+using Magidesk.Presentation.ViewModels;
 
 namespace Magidesk.Presentation.ViewModels.Dialogs;
 

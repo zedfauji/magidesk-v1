@@ -21,6 +21,14 @@ public class BooleanToStringConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)
     {
-        throw new NotImplementedException();
+        if (value is string stringValue && parameter is string paramString)
+        {
+            var options = paramString.Split('|');
+            if (options.Length == 2)
+            {
+                return stringValue == options[0];
+            }
+        }
+        return DependencyProperty.UnsetValue;
     }
 }

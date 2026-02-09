@@ -1,7 +1,7 @@
 using Microsoft.UI.Xaml.Controls;
-using Magidesk.ViewModels.Dialogs;
+using Magidesk.Presentation.ViewModels.Dialogs;
 
-namespace Magidesk.Views.Dialogs;
+namespace Magidesk.Presentation.Views.Dialogs;
 
 public sealed partial class AddOnSelectionDialog : ContentDialog
 {

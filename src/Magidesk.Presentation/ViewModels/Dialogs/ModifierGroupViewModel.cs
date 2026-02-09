@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Magidesk.Domain.Entities;
 
-namespace Magidesk.ViewModels.Dialogs;
+namespace Magidesk.Presentation.ViewModels.Dialogs;
 
 public partial class ModifierGroupViewModel : ObservableObject
 {

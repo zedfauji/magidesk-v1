@@ -7,7 +7,7 @@ using Magidesk.Application.DTOs;
 using Magidesk.Application.Interfaces;
 using Magidesk.Domain.Entities;
 
-namespace Magidesk.ViewModels.Dialogs;
+namespace Magidesk.Presentation.ViewModels.Dialogs;
 
 public partial class ComboSelectionViewModel : ObservableObject
 {

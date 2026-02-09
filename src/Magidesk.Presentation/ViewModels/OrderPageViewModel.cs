@@ -11,9 +11,9 @@ using Magidesk.Domain.ValueObjects;
 using Magidesk.Presentation.Services;
 using Magidesk.Presentation.ViewModels.Dialogs;
 using Magidesk.Presentation.Views.Dialogs;
-using Magidesk.ViewModels;
-using Magidesk.Views;
-using Magidesk.Views.Dialogs;
+using Magidesk.Presentation.ViewModels;
+using Magidesk.Presentation.Views;
+using Magidesk.Presentation.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
@@ -746,7 +746,7 @@ public partial class OrderPageViewModel : ViewModelBase
                 await viewModel.InitializeAsync();
                 
                 // Create Dialog
-                var dialog = new Magidesk.Views.Dialogs.TableSelectionDialog
+                var dialog = new Magidesk.Presentation.Views.Dialogs.TableSelectionDialog
                 {
                     DataContext = viewModel
                 };
@@ -882,11 +882,11 @@ public partial class OrderPageViewModel : ViewModelBase
                         };
 
                         // Show modifier selection dialog
-                        var modifierViewModel = new Magidesk.ViewModels.Dialogs.ModifierSelectionViewModel(
+                        var modifierViewModel = new Magidesk.Presentation.ViewModels.Dialogs.ModifierSelectionViewModel(
                             menuRepository, 
                             tempOrderLine);
                         
-                        var dialog = new Magidesk.Views.Dialogs.ModifierSelectionDialog(modifierViewModel);
+                var dialog = new Magidesk.Presentation.Views.Dialogs.ModifierSelectionDialog(modifierViewModel);
                         
                         // Set XamlRoot for the dialog
                         if (_xamlRoot != null)
@@ -1166,11 +1166,11 @@ public partial class OrderPageViewModel : ViewModelBase
                 };
 
                 // Show modifier selection dialog
-                var modifierViewModel = new Magidesk.ViewModels.Dialogs.ModifierSelectionViewModel(
+                var modifierViewModel = new Magidesk.Presentation.ViewModels.Dialogs.ModifierSelectionViewModel(
                     menuRepository, 
                     orderLineDto);
                 
-                var dialog = new Magidesk.Views.Dialogs.ModifierSelectionDialog(modifierViewModel);
+                var dialog = new Magidesk.Presentation.Views.Dialogs.ModifierSelectionDialog(modifierViewModel);
                 
                 // Set XamlRoot for the dialog
                 if (Microsoft.UI.Xaml.Window.Current?.Content is Microsoft.UI.Xaml.FrameworkElement element)

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Magidesk.Domain.Entities;
-using Magidesk.ViewModels;
+using Magidesk.Presentation.ViewModels;
 
 namespace Magidesk.Presentation.ViewModels.Dialogs;
 

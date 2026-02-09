@@ -1,7 +1,7 @@
-using Magidesk.ViewModels;
+using Magidesk.Presentation.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 
-namespace Magidesk.Views.Dialogs;
+namespace Magidesk.Presentation.Views.Dialogs;
 
 public sealed partial class MiscItemDialog : ContentDialog
 {

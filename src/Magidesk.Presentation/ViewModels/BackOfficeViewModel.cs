@@ -92,7 +92,7 @@ public partial class BackOfficeViewModel : ViewModelBase
 
     private async Task CaptureBatchAsync()
     {
-        var dialog = new Magidesk.Views.AuthorizationCaptureBatchDialog();
+        var dialog = new Magidesk.Presentation.Views.AuthorizationCaptureBatchDialog();
         await _navigationService.ShowDialogAsync(dialog);
     }
     

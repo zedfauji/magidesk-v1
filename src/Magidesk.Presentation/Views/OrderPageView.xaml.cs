@@ -1,5 +1,5 @@
 using Magidesk.Presentation.ViewModels;
-using Magidesk.ViewModels;
+using Magidesk.Presentation.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;

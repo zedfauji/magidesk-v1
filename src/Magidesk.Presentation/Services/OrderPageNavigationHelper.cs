@@ -3,35 +3,24 @@ using System;
 namespace Magidesk.Presentation.Services;
 
 /// <summary>
-/// Helper service to determine which order page to navigate to based on feature flags.
-/// Centralizes the logic for switching between old and new UI.
+/// Helper service to determine which order page to navigate to.
+/// Hard-wired to use the redesigned OrderPageView and SettlePageView.
 /// </summary>
 public class OrderPageNavigationHelper
 {
-    private readonly IFeatureFlagService _featureFlagService;
-
-    public OrderPageNavigationHelper(IFeatureFlagService featureFlagService)
-    {
-        _featureFlagService = featureFlagService ?? throw new ArgumentNullException(nameof(featureFlagService));
-    }
-
     /// <summary>
-    /// Gets the appropriate order page type based on feature flags.
+    /// Gets the order page type (always OrderPageView).
     /// </summary>
     public Type GetOrderPageType()
     {
-        return _featureFlagService.UseRedesignedOrderPages
-            ? typeof(Magidesk.Presentation.Views.OrderPageView)
-            : typeof(Magidesk.Presentation.Views.OrderEntryPage);
+        return typeof(Magidesk.Presentation.Views.OrderPageView);
     }
 
     /// <summary>
-    /// Gets the appropriate settle page type based on feature flags.
+    /// Gets the settle page type (always SettlePageView).
     /// </summary>
     public Type GetSettlePageType()
     {
-        return _featureFlagService.UseRedesignedOrderPages
-            ? typeof(Magidesk.Presentation.Views.SettlePageView)
-            : typeof(Magidesk.Presentation.Views.SettlePage);
+        return typeof(Magidesk.Presentation.Views.SettlePageView);
     }
 }

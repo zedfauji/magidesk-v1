@@ -19,6 +19,7 @@ using Magidesk.Application.Services.Reports;
 using Magidesk.Presentation.ViewModels.Dialogs;
 using Magidesk.Application.Queries;
 using Microsoft.Extensions.Logging;
+using Magidesk.Presentation.DependencyInjection;
 
 namespace Magidesk.Presentation;
 
@@ -72,173 +73,16 @@ public partial class App : Microsoft.UI.Xaml.Application
                 .ConfigureServices(services =>
                 {
                     StartupLogger.Log("App - ConfigureServices Start");
-                    // Application + Infrastructure composition root
+                    
+                    // Application + Infrastructure + Presentation composition root
                     services.AddApplication();
                     StartupLogger.Log("App - AddApplication Success");
+                    
                     services.AddInfrastructure();
                     StartupLogger.Log("App - AddInfrastructure Success");
-
-                    // UI services
-                    services.AddSingleton<NavigationService>();
-                    services.AddSingleton<IDefaultViewRoutingService, DefaultViewRoutingService>();
-                    services.AddSingleton<IOrderEntryDialogService, OrderEntryDialogService>();
-                    services.AddSingleton<ISwitchboardDialogService, SwitchboardDialogService>();
-                    services.AddSingleton<IDialogService, WindowsDialogService>();
-                    services.AddSingleton<IEnhancedDialogService, EnhancedDialogService>();
-                    services.AddSingleton<IErrorReportingService, ErrorReportingService>();
-                    services.AddSingleton<IUserService, UserService>();
-                    services.AddSingleton<Magidesk.Application.Interfaces.ITerminalContext, TerminalContext>();
                     
-                    // Feature flags and navigation helpers
-                    services.AddSingleton<IFeatureFlagService, FeatureFlagService>();
-                    services.AddSingleton<OrderPageNavigationHelper>();
-            // Printing
-            services.AddSingleton<Magidesk.Application.Interfaces.IPrintingService, Infrastructure.Services.PrintingService>();
-            services.AddSingleton<Magidesk.Application.Interfaces.IRawPrintService, Infrastructure.Printing.WindowsPrintingService>();
-            services.AddScoped<Magidesk.Application.Interfaces.IKitchenPrintService, Infrastructure.Printing.KitchenPrintService>(); // Real Implementation
-            services.AddSingleton<Magidesk.Application.Interfaces.ICashDrawerService, Infrastructure.Services.CashDrawerService>();
-            services.AddTransient<Magidesk.Application.Interfaces.ICommandHandler<Magidesk.Application.Commands.OpenCashDrawerCommand>, Magidesk.Application.Commands.OpenCashDrawerCommandHandler>();
-            services.AddScoped<Magidesk.Application.Interfaces.IReceiptPrintService, Infrastructure.Printing.ReceiptPrintService>(); // Real Implementation
-            
-            // UI Services
-            services.AddSingleton<Magidesk.Presentation.Services.LocalizationService>();
-            services.AddSingleton<Magidesk.Presentation.Services.IKdsSettingsService, Magidesk.Presentation.Services.KdsSettingsService>();
-            
-            // Register Client-Side NoOp Publisher to satisfy dependency
-            services.AddSingleton<Magidesk.Application.Interfaces.IKitchenNotificationPublisher, Magidesk.Presentation.Services.NoOpKitchenNotificationPublisher>();
-
-                    // ViewModels
-                    StartupLogger.Log("App - Registering ViewModels...");
-                    services.AddTransient<Magidesk.Presentation.ViewModels.OrderEntryViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.BackOfficeViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.MenuEditorViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.ModifierEditorViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.InventoryViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.CashSessionViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.TicketViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.PaymentViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.DiscountTaxViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.PrintViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.TicketManagementViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.DrawerPullReportViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.SalesReportsViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.UserManagementViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.RoleManagementViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.SettingsViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.OrderTypeExplorerViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.ShiftExplorerViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.SwitchboardViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.OrderTypeSelectionViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.ModifierSelectionViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.SplitTicketViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.TableMapViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.TableExplorerViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.DatabaseSetupViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.TableDesignerViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.VendorManagementViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.PurchaseOrderViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.SettleViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.SettlePageViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.OrderPageViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.SystemConfigViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.KitchenDisplayViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.LoginViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.ShiftStartViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.CashDropManagementViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.VoidTicketViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.RefundTicketViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.OpenTicketsListViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.PaymentProcessWaitViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.SwipeCardViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.AuthorizationCodeViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.AuthorizationCaptureBatchViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.GuestCountViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.ManagerFunctionsViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.GroupSettleTicketSelectionViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.GroupSettleTicketViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.HeldTicketsViewModel>();
-                    
-                    // Dialog ViewModels
-                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.ConfirmationDialogViewModel>();
-                    services.AddTransient<Magidesk.Presentation.Views.Dialogs.ConfirmationDialog>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.TableSelectionViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.NotesDialogViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.ManagerPinDialogViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.CashEntryDialogViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.StartSessionDialogViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.EndSessionDialogViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.HoldTicketDialogViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.SplitPaymentViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.DiscountSelectionViewModel>();
-                    services.AddTransient<Magidesk.Presentation.Views.Dialogs.ManagerPinDialog>();
-                    services.AddTransient<TableDesignerViewModel>();
-                    services.AddTransient<FloorManagementViewModel>();
-                    services.AddTransient<ExportImportManagementViewModel>();
-                    services.AddTransient<ServerSectionManagementViewModel>();
-                    services.AddTransient<DiscountManagementViewModel>();
-                    services.AddTransient<PromotionScheduleDialogViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.PrintTemplatesViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.TemplateEditorViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.CustomerListViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.MemberProfileViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.MemberCheckInViewModel>();
-                    services.AddTransient<Magidesk.Presentation.Views.Dialogs.MemberCheckInDialog>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.CustomerSearchViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.CategoryTreeViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.ErrorManagementViewModel>();
-                    
-                    // Missing Dialog ViewModels (Fix for Table Map Interaction)
-                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.SessionControlDialogViewModel>();
-                    services.AddTransient<Magidesk.Presentation.ViewModels.Dialogs.TableOperationsDialogViewModel>();
-                    
-                    // Language Selection (F-0110)
-                    services.AddTransient<Magidesk.Presentation.ViewModels.LanguageSelectionViewModel>();
-                    services.AddTransient<Magidesk.Presentation.Views.LanguageSelectionDialog>();
-
-                    // Query handlers
-                    services.AddScoped<IQueryHandler<GetServerProductivityReportQuery, ServerProductivityReportDto>, GetServerProductivityReportQueryHandler>();
-                    services.AddScoped<IQueryHandler<GetHourlyLaborReportQuery, HourlyLaborReportDto>, GetHourlyLaborReportQueryHandler>();
-                    services.AddScoped<IQueryHandler<GetTipReportQuery, TipReportDto>, GetTipReportQueryHandler>();
-                    services.AddScoped<IQueryHandler<GetDiscountsQuery, IEnumerable<DiscountDto>>, GetDiscountsQueryHandler>();
-                    services.AddScoped<IQueryHandler<GetPromotionSchedulesQuery, IEnumerable<PromotionScheduleDto>>, GetPromotionSchedulesQueryHandler>();
-                    services.AddScoped<IQueryHandler<CalculateRefundPreviewQuery, RefundPreviewDto>, CalculateRefundPreviewQueryHandler>();
-
-                    // Command handlers
-                    services.AddTransient<ICommandHandler<GroupSettleCommand, GroupSettleResult>, GroupSettleCommandHandler>();
-                    services.AddTransient<ICommandHandler<SplitBySeatCommand, SplitBySeatResult>, SplitBySeatCommandHandler>();
-                    services.AddTransient<ICommandHandler<CloseCashSessionCommand, CloseCashSessionResult>, CloseCashSessionCommandHandler>();
-                    services.AddTransient<ICommandHandler<ChangeSeatCommand>, ChangeSeatCommandHandler>();
-                    services.AddTransient<ICommandHandler<MergeTicketsCommand>, MergeTicketsCommandHandler>();
-                    services.AddTransient<ICommandHandler<ChangeTableCommand, ChangeTableResult>, ChangeTableCommandHandler>();
-                    services.AddTransient<ICommandHandler<SetCustomerCommand, SetCustomerResult>, SetCustomerCommandHandler>();
-                    services.AddTransient<ICommandHandler<AddPromotionScheduleCommand, AddPromotionScheduleResult>, AddPromotionScheduleCommandHandler>();
-                    services.AddTransient<ICommandHandler<DeletePromotionScheduleCommand, DeletePromotionScheduleResult>, DeletePromotionScheduleCommandHandler>();
-
-                    // Table Session Commands (Missing Registrations)
-                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.UpdateGuestCountCommand, Magidesk.Application.Commands.TableSessions.UpdateGuestCountResult>, Magidesk.Application.Commands.TableSessions.UpdateGuestCountCommandHandler>();
-                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.EndTableSessionCommand, Magidesk.Application.Commands.TableSessions.EndTableSessionResult>, Magidesk.Application.Commands.TableSessions.EndTableSessionCommandHandler>();
-                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.PauseTableSessionCommand, Magidesk.Application.Commands.TableSessions.PauseTableSessionResult>, Magidesk.Application.Commands.TableSessions.PauseTableSessionCommandHandler>();
-                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.ResumeTableSessionCommand, Magidesk.Application.Commands.TableSessions.ResumeTableSessionResult>, Magidesk.Application.Commands.TableSessions.ResumeTableSessionCommandHandler>();
-                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.StartTableSessionCommand, Magidesk.Application.Commands.TableSessions.StartTableSessionResult>, Magidesk.Application.Commands.TableSessions.StartTableSessionCommandHandler>();
-                    
-                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.AdjustSessionTimeCommand, Magidesk.Application.Commands.TableSessions.AdjustSessionTimeResult>, Magidesk.Application.Commands.TableSessions.AdjustSessionTimeCommandHandler>();
-                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.TransferSessionCommand, Magidesk.Application.Commands.TableSessions.TransferSessionResult>, Magidesk.Application.Commands.TableSessions.TransferSessionCommandHandler>();
-                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.EnhancedPauseSessionCommand, Magidesk.Application.Commands.TableSessions.EnhancedPauseSessionResult>, Magidesk.Application.Commands.TableSessions.EnhancedPauseSessionCommandHandler>();
-                    services.AddTransient<ICommandHandler<Magidesk.Application.Commands.TableSessions.EnhancedResumeSessionCommand, Magidesk.Application.Commands.TableSessions.EnhancedResumeSessionResult>, Magidesk.Application.Commands.TableSessions.EnhancedResumeSessionCommandHandler>();
-                    
-                    // User Management (TECH-U003)
-                    services.AddTransient<ICommandHandler<CreateUserCommand, CreateUserResult>, CreateUserCommandHandler>();
-                    services.AddTransient<ICommandHandler<UpdateUserCommand, UpdateUserResult>, UpdateUserCommandHandler>();
-                    services.AddTransient<ICommandHandler<DeleteUserCommand, DeleteUserResult>, DeleteUserCommandHandler>();
-                    services.AddTransient<IRequestHandler<CheckInMemberCommand, CheckInMemberResult>, CheckInMemberCommandHandler>();
-                    
-                    services.AddTransient<ITableRepository, TableRepository>();
-                    services.AddTransient<ITableLayoutRepository, TableLayoutRepository>();
-                    services.AddTransient<IFloorRepository, FloorRepository>();
-
-                    // Domain services
-                    services.AddTransient<BatchPaymentDomainService>();
-                    services.AddSingleton<IEventPublisher, EventPublisher>();
+                    services.AddPresentation();
+                    StartupLogger.Log("App - AddPresentation Success");
 
                     StartupLogger.Log("App - ConfigureServices End");
                 })

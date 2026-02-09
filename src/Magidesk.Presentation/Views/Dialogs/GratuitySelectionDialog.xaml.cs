@@ -1,7 +1,7 @@
 using Microsoft.UI.Xaml.Controls;
-using Magidesk.ViewModels;
+using Magidesk.Presentation.ViewModels;
 
-namespace Magidesk.Views.Dialogs;
+namespace Magidesk.Presentation.Views.Dialogs;
 
 /// <summary>
 /// Dialog for selecting and applying gratuity/tips to a ticket.

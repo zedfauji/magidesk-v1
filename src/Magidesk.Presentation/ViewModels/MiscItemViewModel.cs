@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Magidesk.Domain.ValueObjects;
 using System;
 
-namespace Magidesk.ViewModels;
+namespace Magidesk.Presentation.ViewModels;
 
 public partial class MiscItemViewModel : ObservableObject
 {

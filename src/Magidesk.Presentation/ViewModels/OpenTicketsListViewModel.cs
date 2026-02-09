@@ -14,7 +14,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace Magidesk.Presentation.ViewModels;
 
-using Magidesk.Views;
+using Magidesk.Presentation.Views;
 
 public class OpenTicketsListViewModel : ViewModelBase
 {

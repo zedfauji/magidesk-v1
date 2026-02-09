@@ -7,7 +7,7 @@ using Magidesk.Domain.ValueObjects;
 using CommunityToolkit.Mvvm.Input;
 using Magidesk.Presentation.Views;
 using Microsoft.UI.Xaml.Controls;
-using Magidesk.Views;
+using Magidesk.Presentation.Views;
 using Magidesk.Application.Commands.Security; // For AuthorizeManagerCommand
 using AuthorizationResult = Magidesk.Application.DTOs.Security.AuthorizationResult;
 

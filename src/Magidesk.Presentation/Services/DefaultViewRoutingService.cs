@@ -27,24 +27,21 @@ public sealed class DefaultViewRoutingService : IDefaultViewRoutingService
 {
     private readonly ITerminalContext _terminalContext;
     private readonly IServiceScopeFactory _scopeFactory;
-    private readonly IFeatureFlagService _featureFlagService;
 
     // In a full implementation, these would come from a TerminalConfig entity.
     // For now, we use simple conventions:
     // - Terminal name containing "KDS" defaults to KitchenDisplayPage
-    // - Terminal name containing "BAR" defaults to OrderEntryPage (bar tab workflow)
+    // - Terminal name containing "BAR" defaults to OrderPageView (bar tab workflow)
     // - Otherwise, default to SwitchboardPage (home)
     private const string KdsTerminalKeyword = "KDS";
     private const string BarTerminalKeyword = "BAR";
 
     public DefaultViewRoutingService(
         ITerminalContext terminalContext,
-        IServiceScopeFactory scopeFactory,
-        IFeatureFlagService featureFlagService)
+        IServiceScopeFactory scopeFactory)
     {
         _terminalContext = terminalContext;
         _scopeFactory = scopeFactory;
-        _featureFlagService = featureFlagService;
     }
 
     public async Task<Type> GetDefaultViewTypeAsync(Guid? terminalId)
@@ -96,10 +93,8 @@ public sealed class DefaultViewRoutingService : IDefaultViewRoutingService
 
     private Type GetOrderPageType()
     {
-        // Use feature flag to determine which order page to use
-        return _featureFlagService.UseRedesignedOrderPages
-            ? typeof(Magidesk.Presentation.Views.OrderPageView)
-            : typeof(Magidesk.Presentation.Views.OrderEntryPage);
+        // Always use the redesigned OrderPageView
+        return typeof(Magidesk.Presentation.Views.OrderPageView);
     }
 
     private bool IsKdsTerminal()

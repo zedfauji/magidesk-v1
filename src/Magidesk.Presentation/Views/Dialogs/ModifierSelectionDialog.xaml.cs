@@ -1,7 +1,7 @@
-using Magidesk.ViewModels.Dialogs;
+using Magidesk.Presentation.ViewModels.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 
-namespace Magidesk.Views.Dialogs;
+namespace Magidesk.Presentation.Views.Dialogs;
 
 public sealed partial class ModifierSelectionDialog : ContentDialog
 {

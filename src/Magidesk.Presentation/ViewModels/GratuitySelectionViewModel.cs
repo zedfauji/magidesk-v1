@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Magidesk.ViewModels;
+namespace Magidesk.Presentation.ViewModels;
 
 /// <summary>
 /// ViewModel for gratuity selection dialog.

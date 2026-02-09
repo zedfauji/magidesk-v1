@@ -9,7 +9,7 @@ using Magidesk.Application.Interfaces;
 using Magidesk.Application.Queries;
 using Magidesk.Presentation.Services;
 using Magidesk.Presentation.Views;
-using Magidesk.Views;
+using Magidesk.Presentation.Views;
 
 namespace Magidesk.Presentation.ViewModels;
 

@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Magidesk.Domain.Enumerations;
 
-namespace Magidesk.ViewModels.Dialogs;
+namespace Magidesk.Presentation.ViewModels.Dialogs;
 
 public partial class ModifierItemViewModel : ObservableObject
 {

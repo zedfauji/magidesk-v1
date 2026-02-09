@@ -166,7 +166,7 @@ public partial class HeldTicketsViewModel : ViewModelBase
         {
             // Navigate to settle page to view ticket details
             _navigationService.Navigate(
-                typeof(Magidesk.Presentation.Views.SettlePage),
+                typeof(Magidesk.Presentation.Views.SettlePageView),
                 ticket.Id
             );
         }
