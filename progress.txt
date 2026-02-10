@@ -2,3 +2,17 @@ Task 1: COMPLETE - Define IUserContextService interface in Application layer
 - Created IUserContextService.cs in src/Magidesk.Application/Interfaces/
 - Interface includes three methods: GetCurrentUserId(), IsInRole(string), RequireManagerOverrideAsync(string)
 - Interface compiles successfully (build errors are pre-existing IUserService stub issues, not related to new interface)
+
+Task 2: COMPLETE - Implement UserContextService in Presentation layer
+- UserService.cs already implements IUserContextService interface
+- Located in src/Magidesk.Presentation/Services/UserService.cs
+- Tracks logged-in user via _currentUser field
+- All three interface methods implemented correctly
+- Fixed HttpUserService.cs in API layer to also implement IUserContextService methods
+- Build passes with zero errors (117 warnings are pre-existing)
+
+Task 3: COMPLETE - Register UserContextService in DI as Singleton
+- UserService already registered as Singleton in ServiceCollectionExtensions.cs
+- Registered for both IUserService and IUserContextService interfaces (lines 45-47)
+- No temporary identity hacks found to remove
+- Build passes with zero errors

@@ -56,4 +56,24 @@ public class HttpUserService : IUserService
         // No-op for API currently, or could write to User Profile in DB
         return Task.CompletedTask;
     }
+
+    public Guid GetCurrentUserId()
+    {
+        return CurrentUser?.Id ?? Guid.Empty;
+    }
+
+    public bool IsInRole(string role)
+    {
+        if (CurrentUser == null || string.IsNullOrWhiteSpace(role))
+            return false;
+
+        return CurrentUser.RoleName?.Equals(role, StringComparison.OrdinalIgnoreCase) ?? false;
+    }
+
+    public Task<bool> RequireManagerOverrideAsync(string reason)
+    {
+        // Manager override is not applicable in API context
+        // This would need to be handled by the client application
+        return Task.FromResult(false);
+    }
 }
