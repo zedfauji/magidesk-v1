@@ -30,4 +30,19 @@ public class StubUserService : IUserService
     {
         return Task.CompletedTask;
     }
+
+    public Guid GetCurrentUserId()
+    {
+        return CurrentUser?.Id ?? Guid.Empty;
+    }
+
+    public bool IsInRole(string role)
+    {
+        return CurrentUser?.RoleName?.Equals(role, StringComparison.OrdinalIgnoreCase) ?? false;
+    }
+
+    public Task<bool> RequireManagerOverrideAsync(string reason)
+    {
+        return Task.FromResult(true); // Stub always succeeds
+    }
 }
