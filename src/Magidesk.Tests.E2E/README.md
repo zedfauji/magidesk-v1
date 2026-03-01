@@ -19,9 +19,11 @@ This project contains automated UI tests that launch the full Magidesk.Presentat
 Magidesk.Tests.E2E/
 ├── Infrastructure/
 │   ├── ApplicationLauncher.cs    # Launches and manages the app process
-│   └── BaseE2ETest.cs            # Base class for all E2E tests
+│   ├── BaseE2ETest.cs            # Base class for all E2E tests
+│   └── WaitHelpers.cs            # Deterministic waiting strategies
 └── Tests/
-    └── SmokeTests.cs             # Basic smoke tests
+    ├── SmokeTests.cs             # Basic smoke tests
+    └── WaitHelpersExampleTests.cs # Examples of proper wait patterns
 ```
 
 ## Key Components
@@ -40,8 +42,20 @@ Provides:
 - Automatic application launch before each test
 - Database reset capability (override `ResetDatabase()`)
 - Main window access via `MainWindow` property
-- Helper methods for waiting (`WaitUntil`, `WaitForElement`)
 - Automatic cleanup after each test
+
+### WaitHelpers
+
+Deterministic waiting strategies with detailed error messages:
+- `WaitUntil` - Wait for custom condition
+- `WaitForElementByAutomationId` - Find element by AutomationId
+- `WaitForElementByName` - Find element by Name
+- `WaitForElementByControlType` - Find element by ControlType
+- `WaitForElementEnabled` - Wait for element to become enabled
+- `WaitForElementToDisappear` - Wait for element to disappear
+- `WaitForWindowByTitle` - Find window by title
+
+All methods use retry + timeout pattern with 100ms polling interval and fail fast with actionable error messages.
 
 ## Running Tests
 
@@ -83,16 +97,18 @@ public class MyFeatureTests : BaseE2ETest
     public void MyTest()
     {
         // Arrange - MainWindow is already available
-        var button = MainWindow.FindFirstDescendant(cf => 
-            cf.ByAutomationId("MyButtonId"));
+        var button = WaitHelpers.WaitForElementByAutomationId(
+            MainWindow!,
+            "MyButtonId",
+            TimeSpan.FromSeconds(10));
 
         // Act
         button.Click();
 
         // Assert
-        var result = WaitForElement(
-            () => MainWindow.FindFirstDescendant(cf => 
-                cf.ByAutomationId("ResultId")),
+        var result = WaitHelpers.WaitForElementByAutomationId(
+            MainWindow!,
+            "ResultId",
             TimeSpan.FromSeconds(5));
         
         Assert.NotNull(result);
@@ -103,10 +119,38 @@ public class MyFeatureTests : BaseE2ETest
 ### Best Practices
 
 1. **Use AutomationIds**: Always prefer AutomationId over Name or ClassName for element lookup
-2. **Wait for elements**: Use `WaitForElement` or `WaitUntil` instead of `Thread.Sleep`
-3. **Isolate tests**: Each test gets a fresh application instance
-4. **Clean state**: Override `ResetDatabase()` to ensure clean test state
-5. **Meaningful assertions**: Assert on behavior, not implementation details
+2. **Use WaitHelpers**: NEVER use `Thread.Sleep` - always use WaitHelpers methods
+3. **Fail fast**: WaitHelpers provide detailed error messages with element context
+4. **Isolate tests**: Each test gets a fresh application instance
+5. **Clean state**: Override `ResetDatabase()` to ensure clean test state
+6. **Meaningful assertions**: Assert on behavior, not implementation details
+
+### WaitHelpers Examples
+
+```csharp
+// Wait for element by AutomationId (preferred)
+var button = WaitHelpers.WaitForElementByAutomationId(
+    MainWindow!, "LoginButton", TimeSpan.FromSeconds(10));
+
+// Wait for element by Name
+var label = WaitHelpers.WaitForElementByName(
+    MainWindow!, "Welcome", TimeSpan.FromSeconds(5));
+
+// Wait for custom condition
+WaitHelpers.WaitUntil(
+    () => MainWindow!.Title.Contains("Ready"),
+    TimeSpan.FromSeconds(10),
+    "Window title did not update to Ready state");
+
+// Wait for element to become enabled
+WaitHelpers.WaitForElementEnabled(button, TimeSpan.FromSeconds(5));
+
+// Wait for element to disappear
+WaitHelpers.WaitForElementToDisappear(
+    () => MainWindow!.FindFirstDescendant(cf => cf.ByAutomationId("LoadingSpinner")),
+    TimeSpan.FromSeconds(10),
+    "Loading spinner");
+```
 
 ## Notes
 

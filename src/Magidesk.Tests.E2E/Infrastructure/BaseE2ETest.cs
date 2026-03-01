@@ -69,37 +69,7 @@ public abstract class BaseE2ETest : IDisposable
         return exePath;
     }
 
-    /// <summary>
-    /// Waits for a condition to be true with a timeout.
-    /// </summary>
-    protected static void WaitUntil(Func<bool> condition, TimeSpan timeout, string? errorMessage = null)
-    {
-        var endTime = DateTime.UtcNow.Add(timeout);
 
-        while (DateTime.UtcNow < endTime)
-        {
-            if (condition())
-                return;
-
-            Task.Delay(100).Wait();
-        }
-
-        throw new TimeoutException(errorMessage ?? $"Condition was not met within {timeout.TotalSeconds} seconds.");
-    }
-
-    /// <summary>
-    /// Waits for an element to exist with a timeout.
-    /// </summary>
-    protected static T WaitForElement<T>(Func<T?> elementGetter, TimeSpan timeout) where T : class
-    {
-        T? element = null;
-        WaitUntil(
-            () => (element = elementGetter()) != null,
-            timeout,
-            "Element did not appear within the timeout period.");
-        
-        return element!;
-    }
 
     public void Dispose()
     {
