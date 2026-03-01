@@ -14,12 +14,14 @@ public sealed class PaymentViewModel : ViewModelBase
     private readonly IQueryHandler<GetTicketQuery, TicketDto?> _getTicket;
     private readonly ICommandHandler<ProcessPaymentCommand, ProcessPaymentResult> _processPayment;
     private readonly NavigationService _navigationService;
+    private readonly IUserContextService _userContextService;
+    private readonly ITerminalContext _terminalContext;
 
     private TicketDto? _ticket;
     private string _ticketIdText = string.Empty;
 
-    private string _processedByText = Guid.Empty.ToString();
-    private string _terminalIdText = Guid.Empty.ToString();
+    private string _processedByText = string.Empty;
+    private string _terminalIdText = string.Empty;
     private string _cashSessionIdText = string.Empty;
 
     private string _amountText = "0";
@@ -32,17 +34,24 @@ public sealed class PaymentViewModel : ViewModelBase
     public PaymentViewModel(
         IQueryHandler<GetTicketQuery, TicketDto?> getTicket,
         ICommandHandler<ProcessPaymentCommand, ProcessPaymentResult> processPayment,
-        NavigationService navigationService)
+        NavigationService navigationService,
+        IUserContextService userContextService,
+        ITerminalContext terminalContext)
     {
         _getTicket = getTicket;
         _processPayment = processPayment;
         _navigationService = navigationService;
+        _userContextService = userContextService;
+        _terminalContext = terminalContext;
 
         Title = "Payment";
 
         LoadTicketCommand = new AsyncRelayCommand(LoadTicketAsync);
         CashPayCommand = new AsyncRelayCommand(CashPayAsync);
         GoBackCommand = new RelayCommand(GoBack);
+
+        ProcessedByText = _userContextService.GetCurrentUserId().ToString();
+        TerminalIdText = _terminalContext.TerminalId?.ToString() ?? string.Empty;
     }
 
     public TicketDto? Ticket

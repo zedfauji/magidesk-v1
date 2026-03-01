@@ -42,7 +42,9 @@ public static class ServiceCollectionExtensions
         // ===================================================================
         // UI SERVICES (Singleton - shared state across app)
         // ===================================================================
-        services.AddSingleton<IUserService, UserService>();
+        services.AddSingleton<UserService>();
+        services.AddSingleton<IUserService>(sp => sp.GetRequiredService<UserService>());
+        services.AddSingleton<IUserContextService>(sp => sp.GetRequiredService<UserService>());
         services.AddSingleton<Magidesk.Application.Interfaces.ITerminalContext, TerminalContext>();
         services.AddSingleton<IFeatureFlagService, FeatureFlagService>();
         services.AddSingleton<LocalizationService>();
@@ -128,6 +130,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<SplitPaymentViewModel>();
         services.AddTransient<DiscountSelectionViewModel>();
         services.AddTransient<SessionControlDialogViewModel>();
+        services.AddTransient<ManagerOverrideDialogViewModel>();
         services.AddTransient<TableOperationsDialogViewModel>();
         services.AddTransient<PromotionScheduleDialogViewModel>();
 
@@ -136,6 +139,7 @@ public static class ServiceCollectionExtensions
         // ===================================================================
         services.AddTransient<Views.Dialogs.ConfirmationDialog>();
         services.AddTransient<Views.Dialogs.ManagerPinDialog>();
+        services.AddTransient<Views.Dialogs.ManagerOverrideDialog>();
         services.AddTransient<Views.Dialogs.MemberCheckInDialog>();
         services.AddTransient<Views.LanguageSelectionDialog>();
 

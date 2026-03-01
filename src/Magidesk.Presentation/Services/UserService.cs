@@ -74,57 +74,29 @@ public class UserService : IUserService, IUserContextService
         return _currentUser.RoleName?.Equals(role, StringComparison.OrdinalIgnoreCase) ?? false;
     }
 
-    public async Task<bool> RequireManagerOverrideAsync(string reason)
+    public async Task<ManagerOverrideResult> RequireManagerOverrideAsync(string reason)
     {
         try
         {
-            // Get the ManagerOverrideDialogViewModel from DI
-            var dialogViewModel = _serviceProvider.GetRequiredService<ViewModels.Dialogs.ManagerOverrideDialogViewModel>();
+            // Use the existing ManagerPinDialog for authorization
+            var dialog = new Views.Dialogs.ManagerPinDialog();
             
-            // Track override success via event
-            bool overrideSuccessful = false;
-            EventHandler<ViewModels.Dialogs.ManagerOverrideEventArgs>? handler = null;
-            handler = (sender, args) =>
+            // Set XamlRoot from the main window
+            if (App.MainWindowInstance?.Content is Microsoft.UI.Xaml.FrameworkElement element)
             {
-                overrideSuccessful = args.Success;
-            };
-            
-            dialogViewModel.OverrideCompleted += handler;
-            
-            try
-            {
-                // Initialize the dialog with minimal parameters
-                dialogViewModel.Initialize(
-                    Guid.Empty, // sessionId - not needed for general override
-                    "General Override", // tableName
-                    ViewModels.Dialogs.ManagerOverrideType.ForceEnd, // Default type
-                    TimeSpan.Zero, // currentSessionTime
-                    0m); // currentCharge
-
-                // Create and show the dialog
-                var dialog = new Views.Dialogs.ManagerOverrideDialog(dialogViewModel);
-                
-                // Set XamlRoot from the main window
-                if (App.MainWindowInstance?.Content is Microsoft.UI.Xaml.FrameworkElement element)
-                {
-                    dialog.XamlRoot = element.XamlRoot;
-                }
-
-                var result = await dialog.ShowAsync();
-                
-                // Return true if the override was successful (event was fired with success)
-                return result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary && overrideSuccessful;
+                dialog.XamlRoot = element.XamlRoot;
             }
-            finally
-            {
-                // Clean up event handler
-                dialogViewModel.OverrideCompleted -= handler;
-            }
+            
+            var result = await dialog.ShowForOperationAsync(reason);
+            
+            return new ManagerOverrideResult(
+                result?.Authorized ?? false, 
+                result?.AuthorizingUserId);
         }
         catch
         {
             // If dialog fails to show or any error occurs, deny the override
-            return false;
+            return new ManagerOverrideResult(false, null);
         }
     }
 }

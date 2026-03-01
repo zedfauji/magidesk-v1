@@ -18,7 +18,7 @@ public class CashDropManagementViewModel : ViewModelBase
     private readonly ICashSessionRepository _cashSessionRepository;
     private readonly NavigationService _navigationService;
     private readonly ISecurityService _securityService; // To get usernames if needed
-    private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
     private readonly ITerminalContext _terminalContext;
     private readonly ICashBalanceTrackingService _cashBalanceService;
 
@@ -51,14 +51,14 @@ public class CashDropManagementViewModel : ViewModelBase
         ICashSessionRepository cashSessionRepository,
         NavigationService navigationService,
         ISecurityService securityService,
-        IUserService userService,
+        IUserContextService userContextService,
         ITerminalContext terminalContext,
         ICashBalanceTrackingService cashBalanceService)
     {
         _cashSessionRepository = cashSessionRepository;
         _navigationService = navigationService;
         _securityService = securityService;
-        _userService = userService;
+        _userContextService = userContextService;
         _terminalContext = terminalContext;
         _cashBalanceService = cashBalanceService;
 
@@ -130,7 +130,8 @@ public class CashDropManagementViewModel : ViewModelBase
 
         if (result == ContentDialogResult.Primary)
         {
-            if (_terminalContext.TerminalId == null || _userService.CurrentUser?.Id == null)
+            var userId = _userContextService.GetCurrentUserId();
+            if (_terminalContext.TerminalId == null || userId == Guid.Empty)
             {
                 var errorDialog = new Views.Dialogs.ConfirmationDialog();
                 errorDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
@@ -160,7 +161,6 @@ public class CashDropManagementViewModel : ViewModelBase
             try
             {
                 var terminalId = _terminalContext.TerminalId.Value;
-                var userId = _userService.CurrentUser.Id;
                 var moneyAmount = new Magidesk.Domain.ValueObjects.Money(amount);
 
                 var session = await _cashSessionRepository.GetOpenSessionByTerminalIdAsync(terminalId);

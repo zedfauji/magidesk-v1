@@ -102,6 +102,7 @@ public class TableMapViewModel : ViewModelBase
     public AsyncRelayCommand<ServerAssignmentEventArgs> AssignServerCommand { get; }
 
     private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
     private readonly ITicketCreationService _ticketCreationService;
     private readonly IServiceScopeFactory _serviceScopeFactory;
     private readonly ITerminalContext _terminalContext;
@@ -115,6 +116,7 @@ public class TableMapViewModel : ViewModelBase
         ICommandHandler<ChangeTableCommand, ChangeTableResult> changeTable,
         NavigationService navigationService,
         IUserService userService,
+        IUserContextService userContextService,
         ITicketCreationService ticketCreationService,
         IServiceScopeFactory serviceScopeFactory,
         ITerminalContext terminalContext,
@@ -126,6 +128,7 @@ public class TableMapViewModel : ViewModelBase
         _changeTable = changeTable;
         _navigationService = navigationService;
         _userService = userService;
+        _userContextService = userContextService;
         _ticketCreationService = ticketCreationService;
         _serviceScopeFactory = serviceScopeFactory;
         _terminalContext = terminalContext;
@@ -249,7 +252,7 @@ public class TableMapViewModel : ViewModelBase
                 {
                     TicketId = SourceTicketId.Value,
                     NewTableId = table.Id,
-                    UserId = new UserId(Guid.Parse("00000000-0000-0000-0000-000000000001")) // TODO: Current User
+                    UserId = new UserId(_userContextService.GetCurrentUserId())
                 });
 
                 if (result.Success)
@@ -304,7 +307,7 @@ public class TableMapViewModel : ViewModelBase
              {
                  IsBusy = true;
                  
-                 if (_userService.CurrentUser?.Id == null) return;
+                 if (_userContextService.GetCurrentUserId() == Guid.Empty) return;
                  
                  // Check if there's already an open ticket for this table
                  using (var scope = _serviceScopeFactory.CreateScope())
@@ -342,7 +345,7 @@ public class TableMapViewModel : ViewModelBase
                  if (confirmResult == ContentDialogResult.Primary)
                  {
                      // User confirmed - create new ticket
-                     var ticketId = await _ticketCreationService.CreateTicketForTableAsync(table.Id, _userService.CurrentUser.Id);
+                     var ticketId = await _ticketCreationService.CreateTicketForTableAsync(table.Id, _userContextService.GetCurrentUserId());
                      
                      // Navigate with new Ticket ID
                      _navigationService.Navigate(_orderPageNavigationHelper.GetOrderPageType(), new OrderEntryNavigationContext(ticketId, true));
@@ -713,7 +716,7 @@ public class TableMapViewModel : ViewModelBase
                 tableTypeName, 
                 hourlyRate, 
                 ticketId: null, // No ticket yet
-                userId: _userService.CurrentUser?.Id,
+                userId: _userContextService.GetCurrentUserId(),
                 terminalId: _terminalContext.TerminalId,
                 shiftId: currentShiftId,
                 orderTypeId: Guid.Parse("00000000-0000-0000-0000-000000000001"), // DEFAULT
@@ -759,7 +762,7 @@ public class TableMapViewModel : ViewModelBase
                 duration, 
                 hourlyRate, 
                 totalCharge,
-                userId: _userService.CurrentUser?.Id,
+                userId: _userContextService.GetCurrentUserId(),
                 terminalId: _terminalContext.TerminalId,
                 hasExistingTicket: true);
             
@@ -867,7 +870,7 @@ public class TableMapViewModel : ViewModelBase
     {
         try 
         {
-            if (_userService.CurrentUser == null) 
+            if (_userContextService.GetCurrentUserId() == Guid.Empty) 
             {
                 CanAdjustTime = false;
                 return;
@@ -876,7 +879,7 @@ public class TableMapViewModel : ViewModelBase
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var securityService = scope.ServiceProvider.GetRequiredService<ISecurityService>();
-                var userId = new UserId(_userService.CurrentUser.Id);
+                var userId = new UserId(_userContextService.GetCurrentUserId());
                 CanAdjustTime = await securityService.HasPermissionAsync(userId, UserPermission.AdjustSessionTime);
             }
         }

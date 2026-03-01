@@ -18,7 +18,7 @@ namespace Magidesk.Presentation.ViewModels.Dialogs;
 public partial class SplitPaymentViewModel : ViewModelBase
 {
     private readonly ICommandHandler<ProcessSplitPaymentCommand, ProcessSplitPaymentResult> _processSplitPaymentHandler;
-    private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
 
     [ObservableProperty]
     private Money _ticketTotal = Money.Zero();
@@ -60,10 +60,10 @@ public partial class SplitPaymentViewModel : ViewModelBase
 
     public SplitPaymentViewModel(
         ICommandHandler<ProcessSplitPaymentCommand, ProcessSplitPaymentResult> processSplitPaymentHandler,
-        IUserService userService)
+        IUserContextService userContextService)
     {
         _processSplitPaymentHandler = processSplitPaymentHandler;
-        _userService = userService;
+        _userContextService = userContextService;
     }
 
     /// <summary>
@@ -169,8 +169,8 @@ public partial class SplitPaymentViewModel : ViewModelBase
             return false;
         }
 
-        var currentUser = _userService.CurrentUser;
-        if (currentUser == null)
+        var userId = _userContextService.GetCurrentUserId();
+        if (userId == Guid.Empty)
         {
             ErrorMessage = "No user logged in.";
             return false;
@@ -188,7 +188,7 @@ public partial class SplitPaymentViewModel : ViewModelBase
             var command = new ProcessSplitPaymentCommand(
                 TicketId,
                 paymentEntries,
-                new UserId(currentUser.Id)
+                new UserId(userId)
             );
 
             var result = await _processSplitPaymentHandler.HandleAsync(command);

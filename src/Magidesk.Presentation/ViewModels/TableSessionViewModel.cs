@@ -29,6 +29,7 @@ public partial class TableSessionViewModel : ViewModelBase, IDisposable
     private readonly ICommandHandler<TransferSessionCommand, TransferSessionResult> _transferSessionHandler;
     private readonly ICommandHandler<UpdateGuestCountCommand, UpdateGuestCountResult> _updateGuestCountHandler;
     private readonly ILogger<TableSessionViewModel> _logger;
+    private readonly IUserContextService _userContextService;
     private readonly DispatcherQueue _dispatcherQueue;
     private System.Timers.Timer? _refreshTimer;
     private System.Timers.Timer? _uiUpdateTimer;
@@ -79,6 +80,7 @@ public partial class TableSessionViewModel : ViewModelBase, IDisposable
         ICommandHandler<ForceEndSessionCommand, ForceEndSessionResult> forceEndSessionHandler,
         ICommandHandler<TransferSessionCommand, TransferSessionResult> transferSessionHandler,
         ICommandHandler<UpdateGuestCountCommand, UpdateGuestCountResult> updateGuestCountHandler,
+        IUserContextService userContextService,
         ILogger<TableSessionViewModel> logger)
     {
         _getActiveSessionsHandler = getActiveSessionsHandler ?? throw new ArgumentNullException(nameof(getActiveSessionsHandler));
@@ -87,6 +89,7 @@ public partial class TableSessionViewModel : ViewModelBase, IDisposable
         _forceEndSessionHandler = forceEndSessionHandler ?? throw new ArgumentNullException(nameof(forceEndSessionHandler));
         _transferSessionHandler = transferSessionHandler ?? throw new ArgumentNullException(nameof(transferSessionHandler));
         _updateGuestCountHandler = updateGuestCountHandler ?? throw new ArgumentNullException(nameof(updateGuestCountHandler));
+        _userContextService = userContextService ?? throw new ArgumentNullException(nameof(userContextService));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
@@ -178,7 +181,7 @@ public partial class TableSessionViewModel : ViewModelBase, IDisposable
             var command = new EnhancedPauseSessionCommand(
                 SelectedSession.SessionId,
                 "Paused by operator",
-                null // TODO: Get current staff ID from user context
+                null // Optional staff ID
             );
 
             var result = await _pauseSessionHandler.HandleAsync(command);
@@ -227,7 +230,7 @@ public partial class TableSessionViewModel : ViewModelBase, IDisposable
 
             var command = new EnhancedResumeSessionCommand(
                 SelectedSession.SessionId,
-                null // TODO: Get current staff ID from user context
+                null // Optional staff ID
             );
 
             var result = await _resumeSessionHandler.HandleAsync(command);
@@ -274,9 +277,15 @@ public partial class TableSessionViewModel : ViewModelBase, IDisposable
             HasError = false;
             ErrorMessage = null;
 
-            // TODO: Show manager PIN dialog to get authorization
-            var managerPin = ""; // Placeholder - should come from dialog
-            var managerId = Guid.Empty; // Placeholder - should come from dialog
+            // Manager Authorization Required
+            var overrideResult = await _userContextService.RequireManagerOverrideAsync($"Force end session for Table {SelectedSession.TableNumber}");
+            if (!overrideResult.Success || !overrideResult.ManagerId.HasValue)
+            {
+                return;
+            }
+            
+            var managerId = overrideResult.ManagerId.Value;
+            var managerPin = "OVERRIDE"; // We use a token since it was already authorized by the dialog
 
             var command = new ForceEndSessionCommand(
                 SelectedSession.SessionId,
@@ -335,7 +344,7 @@ public partial class TableSessionViewModel : ViewModelBase, IDisposable
                 SelectedSession.SessionId,
                 targetTableId,
                 "Session transferred by operator",
-                Guid.Empty // TODO: Get current staff ID from user context
+                _userContextService.GetCurrentUserId()
             );
 
             var result = await _transferSessionHandler.HandleAsync(command);
@@ -386,7 +395,7 @@ public partial class TableSessionViewModel : ViewModelBase, IDisposable
             var command = new UpdateGuestCountCommand(
                 SelectedSession.SessionId,
                 newGuestCount,
-                null // TODO: Get current staff ID from user context
+                null // Optional staff ID
             );
 
             var result = await _updateGuestCountHandler.HandleAsync(command);

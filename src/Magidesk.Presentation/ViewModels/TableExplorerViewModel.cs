@@ -19,6 +19,7 @@ public class TableExplorerViewModel : ViewModelBase
     private readonly NavigationService _navigationService;
     private readonly ITicketCreationService _ticketCreationService;
     private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
     private readonly OrderPageNavigationHelper _orderPageNavigationHelper;
 
     public ObservableCollection<TableDto> AllTables { get; } = new();
@@ -45,12 +46,14 @@ public class TableExplorerViewModel : ViewModelBase
         NavigationService navigationService,
         ITicketCreationService ticketCreationService,
         IUserService userService,
+        IUserContextService userContextService,
         OrderPageNavigationHelper orderPageNavigationHelper)
     {
         _getTableMap = getTableMap;
         _navigationService = navigationService;
         _ticketCreationService = ticketCreationService;
         _userService = userService;
+        _userContextService = userContextService;
         _orderPageNavigationHelper = orderPageNavigationHelper;
 
         Title = "Table Explorer";
@@ -111,9 +114,9 @@ public class TableExplorerViewModel : ViewModelBase
             {
                 IsBusy = true;
                 
-                if (_userService.CurrentUser?.Id == null) return;
+                if (_userContextService.GetCurrentUserId() == Guid.Empty) return;
 
-                var ticketId = await _ticketCreationService.CreateTicketForTableAsync(table.Id, _userService.CurrentUser.Id);
+                var ticketId = await _ticketCreationService.CreateTicketForTableAsync(table.Id, _userContextService.GetCurrentUserId());
                 
                 _navigationService.Navigate(_orderPageNavigationHelper.GetOrderPageType(), new OrderEntryNavigationContext(ticketId, true));
             }

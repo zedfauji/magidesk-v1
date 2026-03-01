@@ -17,6 +17,7 @@ namespace Magidesk.Presentation.ViewModels.Dialogs;
 public partial class ManagerOverrideDialogViewModel : ViewModelBase
 {
     private readonly IManagerOverrideService _managerOverrideService;
+    private readonly IUserContextService _userContextService;
     private readonly ILogger<ManagerOverrideDialogViewModel> _logger;
 
     [ObservableProperty]
@@ -119,9 +120,11 @@ public partial class ManagerOverrideDialogViewModel : ViewModelBase
 
     public ManagerOverrideDialogViewModel(
         IManagerOverrideService managerOverrideService,
+        IUserContextService userContextService,
         ILogger<ManagerOverrideDialogViewModel> logger)
     {
         _managerOverrideService = managerOverrideService ?? throw new ArgumentNullException(nameof(managerOverrideService));
+        _userContextService = userContextService ?? throw new ArgumentNullException(nameof(userContextService));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         AuthorizeCommand = new AsyncRelayCommand(AuthorizeAsync, () => !string.IsNullOrWhiteSpace(ManagerPin) && !IsLoading);
@@ -182,8 +185,8 @@ public partial class ManagerOverrideDialogViewModel : ViewModelBase
                 return;
             }
 
-            // For now, use a placeholder user ID - in real implementation, get from current user context
-            var userId = Guid.NewGuid(); // TODO: Get from IUserService
+            // Get current requesting user ID from context
+            var userId = _userContextService.GetCurrentUserId();
             
             var result = await _managerOverrideService.ValidateManagerAuthorizationAsync(ManagerPin, userId);
 
@@ -196,7 +199,7 @@ public partial class ManagerOverrideDialogViewModel : ViewModelBase
             }
 
             IsAuthorized = true;
-            AuthorizedManagerId = userId; // TODO: Get actual manager ID from result
+            AuthorizedManagerId = result.Data?.ManagerId;
             
             _logger.LogInformation("Manager authorization successful for override type {OverrideType} on session {SessionId}",
                 OverrideType, SessionId);
@@ -293,7 +296,7 @@ public partial class ManagerOverrideDialogViewModel : ViewModelBase
 
             // Notify completion
             OverrideCompleted?.Invoke(this, new ManagerOverrideEventArgs(
-                SessionId, OverrideType, true, $"{OverrideTypeDisplay} applied successfully"));
+                SessionId, OverrideType, true, $"{OverrideTypeDisplay} applied successfully", AuthorizedManagerId));
 
             RequestClose?.Invoke(this, EventArgs.Empty);
         }
@@ -390,11 +393,14 @@ public class ManagerOverrideEventArgs : EventArgs
     public bool Success { get; }
     public string Message { get; }
 
-    public ManagerOverrideEventArgs(Guid sessionId, ManagerOverrideType overrideType, bool success, string message)
+    public ManagerOverrideEventArgs(Guid sessionId, ManagerOverrideType overrideType, bool success, string message, Guid? managerId = null)
     {
         SessionId = sessionId;
         OverrideType = overrideType;
         Success = success;
         Message = message;
+        ManagerId = managerId;
     }
+
+    public Guid? ManagerId { get; }
 }

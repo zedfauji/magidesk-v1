@@ -13,14 +13,14 @@ public sealed class CashSessionViewModel : ViewModelBase
     private readonly IQueryHandler<GetCurrentCashSessionQuery, GetCurrentCashSessionResult> _getCurrent;
     private readonly ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult> _open;
     private readonly ICommandHandler<CloseCashSessionCommand, CloseCashSessionResult> _close;
-    private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
     private readonly ITerminalContext _terminalContext;
     private readonly NavigationService _navigationService;
 
     private CashSessionDto? _current;
-    private string _userIdText = Guid.Empty.ToString();
-    private string _terminalIdText = Guid.Empty.ToString();
-    private string _shiftIdText = Guid.Empty.ToString();
+    private string _userIdText = string.Empty;
+    private string _terminalIdText = string.Empty;
+    private string _shiftIdText = string.Empty;
     private string _openingBalanceText = "0";
     private string _actualCashText = "0";
     private string? _error;
@@ -29,14 +29,14 @@ public sealed class CashSessionViewModel : ViewModelBase
         IQueryHandler<GetCurrentCashSessionQuery, GetCurrentCashSessionResult> getCurrent,
         ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult> open,
         ICommandHandler<CloseCashSessionCommand, CloseCashSessionResult> close,
-        IUserService userService,
+        IUserContextService userContextService,
         ITerminalContext terminalContext,
         NavigationService navigationService)
     {
         _getCurrent = getCurrent;
         _open = open;
         _close = close;
-        _userService = userService;
+        _userContextService = userContextService;
         _terminalContext = terminalContext;
         _navigationService = navigationService;
 
@@ -47,15 +47,9 @@ public sealed class CashSessionViewModel : ViewModelBase
 
         Title = "Cash Session";
 
-        if (_userService.CurrentUser?.Id != null)
-        {
-            UserIdText = _userService.CurrentUser.Id.ToString();
-        }
-
-        if (_terminalContext.TerminalId != null)
-        {
-            TerminalIdText = _terminalContext.TerminalId.Value.ToString();
-        }
+        UserIdText = _userContextService.GetCurrentUserId().ToString();
+        TerminalIdText = _terminalContext.TerminalId?.ToString() ?? string.Empty;
+        ShiftIdText = string.Empty; // To be loaded
     }
 
     public AsyncRelayCommand RefreshCommand { get; }

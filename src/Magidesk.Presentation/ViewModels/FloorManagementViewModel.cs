@@ -19,6 +19,7 @@ public partial class FloorManagementViewModel : ViewModelBase
     private readonly ITableLayoutRepository _tableLayoutRepository;
     private readonly NavigationService _navigationService;
     private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
     private readonly ISecurityService _securityService;
 
     [ObservableProperty]
@@ -60,12 +61,14 @@ public partial class FloorManagementViewModel : ViewModelBase
         ITableLayoutRepository tableLayoutRepository,
         NavigationService navigationService,
         IUserService userService,
+        IUserContextService userContextService,
         ISecurityService securityService)
     {
         _floorRepository = floorRepository;
         _tableLayoutRepository = tableLayoutRepository;
         _navigationService = navigationService;
         _userService = userService;
+        _userContextService = userContextService;
         _securityService = securityService;
 
         CreateFloorCommand = new AsyncRelayCommand(CreateFloorAsync);
@@ -253,10 +256,11 @@ public partial class FloorManagementViewModel : ViewModelBase
     {
         if (SelectedFloor == null) return;
 
-        if (_userService.CurrentUser == null) return;
+        var currentUserId = _userContextService.GetCurrentUserId();
+        if (currentUserId == Guid.Empty) return;
 
         var hasPermission = await _securityService.HasPermissionAsync(
-            new UserId(_userService.CurrentUser.Id),
+            new UserId(currentUserId),
             UserPermission.ManageTableLayout);
 
         if (hasPermission)

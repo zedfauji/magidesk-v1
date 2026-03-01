@@ -15,6 +15,7 @@ public class RefundTicketViewModel : ViewModelBase
 {
     private readonly ICommandHandler<RefundTicketCommand> _refundTicketHandler;
     private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
     private readonly ITerminalContext _terminalContext;
 
     private TicketDto _ticket;
@@ -63,10 +64,12 @@ public class RefundTicketViewModel : ViewModelBase
     public RefundTicketViewModel(
         ICommandHandler<RefundTicketCommand> refundTicketHandler,
         IUserService userService,
+        IUserContextService userContextService,
         ITerminalContext terminalContext)
     {
         _refundTicketHandler = refundTicketHandler;
         _userService = userService;
+        _userContextService = userContextService;
         _terminalContext = terminalContext;
         
         // Manual Command Initialization
@@ -132,8 +135,8 @@ public class RefundTicketViewModel : ViewModelBase
 
         try
         {
-            var currentUser = _userService.CurrentUser;
-            if (currentUser == null)
+            var currentUserId = _userContextService.GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
             {
                  ErrorMessage = "No user logged in.";
                  HasError = true;
@@ -152,7 +155,7 @@ public class RefundTicketViewModel : ViewModelBase
                 TicketId = Ticket.Id,
                 Amount = new Magidesk.Domain.ValueObjects.Money(refundAmount),
                 Reason = SelectedReason,
-                RefundedBy = new Magidesk.Domain.ValueObjects.UserId(currentUser.Id),
+                RefundedBy = new Magidesk.Domain.ValueObjects.UserId(currentUserId),
                 AuthorizedBy = new Magidesk.Domain.ValueObjects.UserId(authResult.AuthorizingUserId!.Value)
             };
 

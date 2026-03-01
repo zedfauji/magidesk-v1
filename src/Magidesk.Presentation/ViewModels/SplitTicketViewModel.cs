@@ -19,6 +19,7 @@ public class SplitTicketViewModel : ViewModelBase
     private readonly ICommandHandler<SplitTicketCommand, SplitTicketResult> _splitTicketHandler;
     private readonly ICommandHandler<SplitBySeatCommand, SplitBySeatResult> _splitBySeatHandler;
     private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
     private readonly ITerminalContext _terminalContext;
     private readonly ICashSessionRepository _cashSessionRepository;
 
@@ -184,12 +185,14 @@ public class SplitTicketViewModel : ViewModelBase
         ICommandHandler<SplitTicketCommand, SplitTicketResult> splitTicketHandler,
         ICommandHandler<SplitBySeatCommand, SplitBySeatResult> splitBySeatHandler,
         IUserService userService,
+        IUserContextService userContextService,
         ITerminalContext terminalContext,
         ICashSessionRepository cashSessionRepository)
     {
         _splitTicketHandler = splitTicketHandler;
         _splitBySeatHandler = splitBySeatHandler;
         _userService = userService;
+        _userContextService = userContextService;
         _terminalContext = terminalContext;
         _cashSessionRepository = cashSessionRepository;
 
@@ -390,8 +393,8 @@ public class SplitTicketViewModel : ViewModelBase
 
         try
         {
-            var currentUser = _userService.CurrentUser;
-            if (currentUser == null)
+            var currentUserId = _userContextService.GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
             {
                 ErrorMessage = "No user logged in.";
                 HasError = true;
@@ -419,7 +422,7 @@ public class SplitTicketViewModel : ViewModelBase
             {
                 OriginalTicketId = OriginalTicket.Id,
                 OrderLineIdsToSplit = SplitItems.Select(x => x.Id).ToList(),
-                SplitBy = new UserId(currentUser.Id),
+                SplitBy = new UserId(currentUserId),
                 TerminalId = terminalId,
                 ShiftId = session.Id,
                 OrderTypeId = OriginalTicket.OrderTypeId,
@@ -459,8 +462,8 @@ public class SplitTicketViewModel : ViewModelBase
 
         try
         {
-            var currentUser = _userService.CurrentUser;
-            if (currentUser == null)
+            var currentUserId = _userContextService.GetCurrentUserId();
+            if (currentUserId == Guid.Empty)
             {
                 ErrorMessage = "No user logged in.";
                 HasError = true;
@@ -487,7 +490,7 @@ public class SplitTicketViewModel : ViewModelBase
             var command = new SplitBySeatCommand
             {
                 OriginalTicketId = OriginalTicket.Id,
-                ProcessedBy = new UserId(currentUser.Id),
+                ProcessedBy = new UserId(currentUserId),
                 TerminalId = terminalId,
                 GlobalId = Guid.NewGuid().ToString()
             };

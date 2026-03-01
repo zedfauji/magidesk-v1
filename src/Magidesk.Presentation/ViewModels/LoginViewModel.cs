@@ -305,7 +305,7 @@ public class LoginViewModel : ViewModelBase
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Username = user.Username,
-                    TerminalId = _terminalContext.TerminalId ?? Guid.Empty,
+                    TerminalId = _terminalContext.TerminalId,
                     PreferredLanguage = user.PreferredLanguage,
                     RoleName = user.Role?.Name ?? "Unknown"
                 };

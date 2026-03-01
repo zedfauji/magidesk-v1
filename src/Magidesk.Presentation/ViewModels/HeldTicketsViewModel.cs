@@ -22,6 +22,7 @@ public partial class HeldTicketsViewModel : ViewModelBase
     private readonly IQueryHandler<GetHeldTicketsQuery, IEnumerable<HeldTicketDto>> _getHeldTickets;
     private readonly ICommandHandler<ReleaseHeldTicketCommand> _releaseTicketHandler;
     private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
     private readonly Services.NavigationService _navigationService;
     private readonly ILogger<HeldTicketsViewModel> _logger;
 
@@ -44,12 +45,14 @@ public partial class HeldTicketsViewModel : ViewModelBase
         IQueryHandler<GetHeldTicketsQuery, IEnumerable<HeldTicketDto>> getHeldTickets,
         ICommandHandler<ReleaseHeldTicketCommand> releaseTicketHandler,
         IUserService userService,
+        IUserContextService userContextService,
         Services.NavigationService navigationService,
         ILogger<HeldTicketsViewModel> logger)
     {
         _getHeldTickets = getHeldTickets;
         _releaseTicketHandler = releaseTicketHandler;
         _userService = userService;
+        _userContextService = userContextService;
         _navigationService = navigationService;
         _logger = logger;
 
@@ -109,7 +112,7 @@ public partial class HeldTicketsViewModel : ViewModelBase
     /// </summary>
     private bool CanReleaseTicket(HeldTicketDto? ticket)
     {
-        return ticket != null && _userService.CurrentUser != null;
+        return ticket != null && _userContextService.GetCurrentUserId() != Guid.Empty;
     }
 
     /// <summary>
@@ -117,7 +120,7 @@ public partial class HeldTicketsViewModel : ViewModelBase
     /// </summary>
     private async Task ReleaseTicketAsync(HeldTicketDto? ticket)
     {
-        if (ticket == null || _userService.CurrentUser == null)
+        if (ticket == null || _userContextService.GetCurrentUserId() == Guid.Empty)
         {
             return;
         }
@@ -130,7 +133,7 @@ public partial class HeldTicketsViewModel : ViewModelBase
         {
             var command = new ReleaseHeldTicketCommand(
                 ticket.Id,
-                new UserId(_userService.CurrentUser.Id)
+                new UserId(_userContextService.GetCurrentUserId())
             );
 
             await _releaseTicketHandler.HandleAsync(command);

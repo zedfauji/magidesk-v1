@@ -24,6 +24,7 @@ public partial class EquipmentManagementDialogViewModel : ViewModelBase
     private readonly ICommandHandler<ScheduleMaintenanceCommand, ScheduleMaintenanceResult> _scheduleMaintenanceHandler;
     private readonly IQueryHandler<GetAvailableEquipmentQuery, IEnumerable<EquipmentDto>> _getAvailableEquipmentHandler;
     private readonly IQueryHandler<GetTableEquipmentQuery, IEnumerable<EquipmentDto>> _getTableEquipmentHandler;
+    private readonly IUserContextService _userContextService;
     private readonly ILogger<EquipmentManagementDialogViewModel> _logger;
 
     [ObservableProperty]
@@ -77,6 +78,7 @@ public partial class EquipmentManagementDialogViewModel : ViewModelBase
         ICommandHandler<ScheduleMaintenanceCommand, ScheduleMaintenanceResult> scheduleMaintenanceHandler,
         IQueryHandler<GetAvailableEquipmentQuery, IEnumerable<EquipmentDto>> getAvailableEquipmentHandler,
         IQueryHandler<GetTableEquipmentQuery, IEnumerable<EquipmentDto>> getTableEquipmentHandler,
+        IUserContextService userContextService,
         ILogger<EquipmentManagementDialogViewModel> logger)
     {
         _assignEquipmentHandler = assignEquipmentHandler ?? throw new ArgumentNullException(nameof(assignEquipmentHandler));
@@ -85,6 +87,7 @@ public partial class EquipmentManagementDialogViewModel : ViewModelBase
         _scheduleMaintenanceHandler = scheduleMaintenanceHandler ?? throw new ArgumentNullException(nameof(scheduleMaintenanceHandler));
         _getAvailableEquipmentHandler = getAvailableEquipmentHandler ?? throw new ArgumentNullException(nameof(getAvailableEquipmentHandler));
         _getTableEquipmentHandler = getTableEquipmentHandler ?? throw new ArgumentNullException(nameof(getTableEquipmentHandler));
+        _userContextService = userContextService ?? throw new ArgumentNullException(nameof(userContextService));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         LoadEquipmentCommand = new AsyncRelayCommand(LoadEquipmentAsync);
@@ -200,7 +203,7 @@ public partial class EquipmentManagementDialogViewModel : ViewModelBase
             }
 
             var equipmentIds = SelectedAvailableEquipment.Select(e => e.Id).ToList();
-            var staffId = Guid.NewGuid(); // TODO: Get from current user context
+            var staffId = _userContextService.GetCurrentUserId();
 
             var command = new AssignEquipmentCommand(TableId, equipmentIds, staffId);
             var result = await _assignEquipmentHandler.HandleAsync(command);
@@ -247,7 +250,7 @@ public partial class EquipmentManagementDialogViewModel : ViewModelBase
             }
 
             var equipmentIds = SelectedAssignedEquipment.Select(e => e.Id).ToList();
-            var staffId = Guid.NewGuid(); // TODO: Get from current user context
+            var staffId = _userContextService.GetCurrentUserId();
 
             var command = new UnassignEquipmentCommand(TableId, equipmentIds, staffId);
             var result = await _unassignEquipmentHandler.HandleAsync(command);
@@ -294,7 +297,7 @@ public partial class EquipmentManagementDialogViewModel : ViewModelBase
             }
 
             var equipmentIds = SelectedAssignedEquipment.Select(e => e.Id).ToList();
-            var staffId = Guid.NewGuid(); // TODO: Get from current user context
+            var staffId = _userContextService.GetCurrentUserId();
 
             var command = new UpdateEquipmentStatusCommand(equipmentIds, newStatus, staffId);
             var result = await _updateStatusHandler.HandleAsync(command);
@@ -347,7 +350,7 @@ public partial class EquipmentManagementDialogViewModel : ViewModelBase
             }
 
             var equipmentIds = SelectedAssignedEquipment.Select(e => e.Id).ToList();
-            var staffId = Guid.NewGuid(); // TODO: Get from current user context
+            var staffId = _userContextService.GetCurrentUserId();
 
             var command = new ScheduleMaintenanceCommand(equipmentIds, MaintenanceDate, "Routine Maintenance", MaintenanceNotes, staffId);
             var result = await _scheduleMaintenanceHandler.HandleAsync(command);

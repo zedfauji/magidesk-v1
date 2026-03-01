@@ -13,7 +13,7 @@ public sealed partial class ShiftStartViewModel : ViewModelBase
 {
     private readonly IShiftRepository _shiftRepository;
     private readonly ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult> _openSessionHandler;
-    private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
     private readonly ITerminalContext _terminalContext;
 
     private ObservableCollection<Shift> _availableShifts = new();
@@ -64,12 +64,12 @@ public sealed partial class ShiftStartViewModel : ViewModelBase
     public ShiftStartViewModel(
         IShiftRepository shiftRepository,
         ICommandHandler<OpenCashSessionCommand, OpenCashSessionResult> openSessionHandler,
-        IUserService userService,
+        IUserContextService userContextService,
         ITerminalContext terminalContext)
     {
         _shiftRepository = shiftRepository;
         _openSessionHandler = openSessionHandler;
-        _userService = userService;
+        _userContextService = userContextService;
         _terminalContext = terminalContext;
 
         ConfirmCommand = new CommunityToolkit.Mvvm.Input.AsyncRelayCommand(ConfirmAsync, CanConfirm);
@@ -115,14 +115,14 @@ public sealed partial class ShiftStartViewModel : ViewModelBase
     private async Task ConfirmAsync()
     {
         if (!CanConfirm()) return;
-        if (_userService.CurrentUser == null || _terminalContext.TerminalId == null) return;
+        if (_userContextService.GetCurrentUserId() == Guid.Empty || _terminalContext.TerminalId == null) return;
 
         IsBusy = true;
         try
         {
             var command = new OpenCashSessionCommand
             {
-                UserId = new UserId(_userService.CurrentUser.Id),
+                UserId = new UserId(_userContextService.GetCurrentUserId()),
                 TerminalId = _terminalContext.TerminalId.Value,
                 ShiftId = SelectedShift!.Id,
                 OpeningBalance = new Money((decimal)OpeningBalance)

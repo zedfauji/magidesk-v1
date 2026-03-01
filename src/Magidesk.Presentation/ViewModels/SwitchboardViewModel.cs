@@ -34,6 +34,7 @@ public class SwitchboardViewModel : ViewModelBase
     private readonly IAttendanceRepository _attendanceRepository;
     private readonly ICommandHandler<CreateTicketCommand, CreateTicketResult> _createTicketHandler;
     private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
     private readonly ITerminalContext _terminalContext;
     private readonly OrderPageNavigationHelper _orderPageNavigationHelper;
 
@@ -160,6 +161,7 @@ public class SwitchboardViewModel : ViewModelBase
         IAttendanceRepository attendanceRepository,
         ICommandHandler<CreateTicketCommand, CreateTicketResult> createTicketHandler,
         IUserService userService,
+        IUserContextService userContextService,
         ITerminalContext terminalContext,
         ISecurityService securityService,
         IAesEncryptionService encryptionService,
@@ -180,6 +182,7 @@ public class SwitchboardViewModel : ViewModelBase
         _attendanceRepository = attendanceRepository;
         _createTicketHandler = createTicketHandler;
         _userService = userService;
+        _userContextService = userContextService;
         _terminalContext = terminalContext;
         _securityService = securityService;
         _encryptionService = encryptionService;
@@ -383,19 +386,7 @@ public class SwitchboardViewModel : ViewModelBase
             }
 
             // 2. Resolve Context (no fallback IDs)
-            if (_userService.CurrentUser?.Id == null)
-            {
-                await _navigationService.ShowErrorAsync("Action Required", "No current user is set. Please login again.");
-                return;
-            }
-
-            if (_terminalContext.TerminalId == null)
-            {
-                await _navigationService.ShowErrorAsync("Action Required", "Terminal identity is not initialized. Please restart the application.");
-                return;
-            }
-
-            var userId = _userService.CurrentUser.Id;
+            var userId = _userContextService.GetCurrentUserId();
             var terminalId = _terminalContext.TerminalId.Value;
 
             // Resolve Shift (Active Session) - must exist
@@ -403,7 +394,8 @@ public class SwitchboardViewModel : ViewModelBase
             if (session == null)
             {
                 // F-0060: Shift Start Dialog
-                var shiftStartVm = new ShiftStartViewModel(_shiftRepository, _openSessionHandler, _userService, _terminalContext);
+                // Note: ShiftStartViewModel might still need IUserService for other reasons, but we use IUserContextService for current user ID
+                var shiftStartVm = new ShiftStartViewModel(_shiftRepository, _openSessionHandler, _userContextService, _terminalContext);
                 
                 await _switchboardDialogService.ShowShiftStartAsync(shiftStartVm);
 
@@ -598,12 +590,7 @@ public class SwitchboardViewModel : ViewModelBase
             var amount = new Magidesk.Domain.ValueObjects.Money(dialog.Amount);
             var reason = dialog.Reason;
 
-            if (_userService.CurrentUser?.Id == null || _terminalContext.TerminalId == null)
-            {
-                return;
-            }
-
-            var userId = _userService.CurrentUser.Id;
+            var userId = _userContextService.GetCurrentUserId();
             var terminalId = _terminalContext.TerminalId.Value;
 
             try
@@ -638,12 +625,7 @@ public class SwitchboardViewModel : ViewModelBase
     }
     private async Task ClockInAsync()
     {
-         if (_userService.CurrentUser?.Id == null)
-         {
-             return;
-         }
-
-         var userId = _userService.CurrentUser.Id;
+         var userId = _userContextService.GetCurrentUserId();
          var command = new ClockInCommand { UserId = userId };
          try 
          {
@@ -658,12 +640,7 @@ public class SwitchboardViewModel : ViewModelBase
 
     private async Task ClockOutAsync()
     {
-         if (_userService.CurrentUser?.Id == null)
-         {
-             return;
-         }
-
-         var userId = _userService.CurrentUser.Id;
+         var userId = _userContextService.GetCurrentUserId();
          var command = new ClockOutCommand { UserId = userId };
          try 
          {
@@ -682,6 +659,7 @@ public class SwitchboardViewModel : ViewModelBase
     private void InitializeUserContext()
     {
         // Set current user name
+        // We still use _userService for FullName as IUserContextService doesn't expose it
         CurrentUserName = _userService.CurrentUser != null 
             ? $"{_userService.CurrentUser.FirstName} {_userService.CurrentUser.LastName}"
             : "Unknown User";

@@ -29,6 +29,7 @@ public partial class SettlePageViewModel : ViewModelBase
     private readonly ICommandHandler<SetTaxExemptCommand, SetTaxExemptResult> _setTaxExemptHandler;
     private readonly NavigationService _navigationService;
     private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
     private readonly ITerminalContext _terminalContext;
     private readonly ICashSessionRepository _cashSessionRepository;
     private readonly IServiceScopeFactory _serviceScopeFactory;
@@ -49,6 +50,7 @@ public partial class SettlePageViewModel : ViewModelBase
         ICommandHandler<SetTaxExemptCommand, SetTaxExemptResult> setTaxExemptHandler,
         NavigationService navigationService,
         IUserService userService,
+        IUserContextService userContextService,
         ITerminalContext terminalContext,
         ICashSessionRepository cashSessionRepository,
         IServiceScopeFactory serviceScopeFactory,
@@ -60,6 +62,7 @@ public partial class SettlePageViewModel : ViewModelBase
         _setTaxExemptHandler = setTaxExemptHandler ?? throw new ArgumentNullException(nameof(setTaxExemptHandler));
         _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
         _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+        _userContextService = userContextService ?? throw new ArgumentNullException(nameof(userContextService));
         _terminalContext = terminalContext ?? throw new ArgumentNullException(nameof(terminalContext));
         _cashSessionRepository = cashSessionRepository ?? throw new ArgumentNullException(nameof(cashSessionRepository));
         _serviceScopeFactory = serviceScopeFactory ?? throw new ArgumentNullException(nameof(serviceScopeFactory));
@@ -348,7 +351,7 @@ public partial class SettlePageViewModel : ViewModelBase
             return;
         }
 
-        if (_userService.CurrentUser == null)
+        if (_userContextService.GetCurrentUserId() == Guid.Empty)
         {
             _logger.LogError("Cannot process payment: no user logged in");
             await _dialogService.ShowErrorAsync(
@@ -376,7 +379,7 @@ public partial class SettlePageViewModel : ViewModelBase
                 var processPaymentHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<ProcessPaymentCommand, ProcessPaymentResult>>();
                 var cashSessionRepository = scope.ServiceProvider.GetRequiredService<ICashSessionRepository>();
 
-                var userId = _userService.CurrentUser.Id;
+                var userId = _userContextService.GetCurrentUserId();
                 var terminalId = _terminalContext.TerminalId.Value;
                 var currency = "USD"; // Default currency
 
@@ -553,11 +556,12 @@ public partial class SettlePageViewModel : ViewModelBase
                 var availableServers = new ObservableCollection<ServerItem>();
                 
                 // Add current user
-                if (_userService.CurrentUser != null)
+                var currentUserId = _userContextService.GetCurrentUserId();
+                if (currentUserId != Guid.Empty)
                 {
                     availableServers.Add(new ServerItem(
-                        new UserId(_userService.CurrentUser.Id),
-                        _userService.CurrentUser.FullName));
+                        new UserId(currentUserId),
+                        _userService.CurrentUser?.FullName ?? "Current User"));
                 }
                 
                 // Add ticket creator if different
@@ -581,7 +585,7 @@ public partial class SettlePageViewModel : ViewModelBase
                     _ticket.Id,
                     $"#{_ticket.TicketNumber}",
                     new Money(_ticket.SubtotalAmount, "USD"),
-                    new UserId(_userService.CurrentUser!.Id),
+                    new UserId(_userContextService.GetCurrentUserId()),
                     availableServers);
                 
                 // Create Dialog
@@ -654,7 +658,7 @@ public partial class SettlePageViewModel : ViewModelBase
                 
                 var viewModel = new SplitPaymentViewModel(
                     processSplitPaymentHandler,
-                    _userService);
+                    _userContextService);
                 
                 // Initialize with current Balance Due to ensuring we split the remaining amount
                 // We assume default currency USD as per other methods in this VM
@@ -723,7 +727,7 @@ public partial class SettlePageViewModel : ViewModelBase
                 var viewModel = new DiscountSelectionViewModel(
                     discountRepository,
                     applyDiscountHandler,
-                    userService,
+                    _userContextService,
                     managerPinDialog);
                 
                 // Initialize with ticket information
@@ -814,7 +818,7 @@ public partial class SettlePageViewModel : ViewModelBase
             return;
         }
 
-        if (_userService.CurrentUser == null)
+        if (_userContextService.GetCurrentUserId() == Guid.Empty)
         {
             _logger.LogError("Cannot toggle tax exempt: no user logged in");
             await _dialogService.ShowErrorAsync(
@@ -833,7 +837,7 @@ public partial class SettlePageViewModel : ViewModelBase
             {
                 TicketId = _ticket.Id,
                 IsTaxExempt = newTaxExemptStatus,
-                ModifiedBy = new UserId(_userService.CurrentUser.Id)
+                ModifiedBy = new UserId(_userContextService.GetCurrentUserId())
             };
 
             var result = await _setTaxExemptHandler.HandleAsync(command);

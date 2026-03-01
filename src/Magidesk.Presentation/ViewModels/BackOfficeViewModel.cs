@@ -12,6 +12,7 @@ public partial class BackOfficeViewModel : ViewModelBase
 {
     private readonly NavigationService _navigationService;
     private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
     private readonly ISecurityService _securityService;
     private string _headerText = "BO_Title"; // Default Key
     private Type _currentPageType;
@@ -37,11 +38,13 @@ public partial class BackOfficeViewModel : ViewModelBase
     public BackOfficeViewModel(
         NavigationService navigationService,
         IUserService userService,
+        IUserContextService userContextService,
         ISecurityService securityService,
         Services.LocalizationService localizationService)
     {
         _navigationService = navigationService;
         _userService = userService;
+        _userContextService = userContextService;
         _securityService = securityService;
         Localization = localizationService;
         
@@ -66,10 +69,11 @@ public partial class BackOfficeViewModel : ViewModelBase
         NavigationItems.Add(new NavigationItem("BO_Nav_TableMap", "BO_Nav_TableMap_Desc", "\uE8F1", typeof(TableMapPage), Localization));
         NavigationItems.Add(new NavigationItem("BO_Nav_TableExplorer", "BO_Nav_TableExplorer_Desc", "\uE179", typeof(TableExplorerPage), Localization));
         
-        if (_userService.CurrentUser != null)
+        var currentUserId = _userContextService.GetCurrentUserId();
+        if (currentUserId != Guid.Empty)
         {
             var hasDesignerPermission = await _securityService.HasPermissionAsync(
-                new UserId(_userService.CurrentUser.Id), 
+                new UserId(currentUserId), 
                 UserPermission.ManageTableLayout);
 
             if (hasDesignerPermission)

@@ -20,10 +20,11 @@ public interface IUserContextService
     bool IsInRole(string role);
     
     /// <summary>
-    /// Requires a manager override for a sensitive operation.
-    /// Shows the manager override dialog and returns true if override was successful.
+    /// Triggers a manager override process. 
+    /// Returns a result containing whether it was successful and the authorizing manager's ID.
     /// </summary>
     /// <param name="reason">The reason for requiring manager override</param>
-    /// <returns>True if manager override was successful, false otherwise</returns>
-    Task<bool> RequireManagerOverrideAsync(string reason);
+    Task<ManagerOverrideResult> RequireManagerOverrideAsync(string reason);
 }
+
+public record ManagerOverrideResult(bool Success, Guid? ManagerId);

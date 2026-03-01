@@ -15,6 +15,7 @@ namespace Magidesk.Presentation.ViewModels
         private readonly NavigationService _navigationService;
         private readonly ICashSessionRepository _cashSessionRepository;
         private readonly IUserService _userService;
+        private readonly IUserContextService _userContextService;
         private readonly ITerminalContext _terminalContext;
         private readonly ICommandHandler<ClockInCommand> _clockInHandler;
         private readonly ICommandHandler<ClockOutCommand> _clockOutHandler;
@@ -24,6 +25,7 @@ namespace Magidesk.Presentation.ViewModels
             NavigationService navigationService,
             ICashSessionRepository cashSessionRepository,
             IUserService userService,
+            IUserContextService userContextService,
             ITerminalContext terminalContext,
             ICommandHandler<CloseCashSessionCommand, CloseCashSessionResult> closeSessionHandler,
             ICommandHandler<ClockInCommand> clockInHandler,
@@ -32,6 +34,7 @@ namespace Magidesk.Presentation.ViewModels
             _navigationService = navigationService;
             _cashSessionRepository = cashSessionRepository;
             _userService = userService;
+            _userContextService = userContextService;
             _terminalContext = terminalContext;
             _closeSessionHandler = closeSessionHandler;
             _clockInHandler = clockInHandler;
@@ -94,7 +97,7 @@ namespace Magidesk.Presentation.ViewModels
             CloseAction?.Invoke();
             await Task.Delay(100);
 
-            if (_userService.CurrentUser?.Id == null) 
+            if (_userContextService.GetCurrentUserId() == Guid.Empty) 
             {
                 var errorDialog = new Views.Dialogs.ConfirmationDialog();
                 errorDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
@@ -128,7 +131,7 @@ namespace Magidesk.Presentation.ViewModels
                 if (result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
                 {
                     // Clock In
-                    await _clockInHandler.HandleAsync(new ClockInCommand { UserId = _userService.CurrentUser.Id });
+                    await _clockInHandler.HandleAsync(new ClockInCommand { UserId = _userContextService.GetCurrentUserId() });
                     
                     var successDialog = new Views.Dialogs.ConfirmationDialog();
                     successDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
@@ -140,12 +143,12 @@ namespace Magidesk.Presentation.ViewModels
                         "",
                         "✅",
                         "Success",
-                        $"Time: {DateTime.Now:g}\nUser: {_userService.CurrentUser.FirstName} {_userService.CurrentUser.LastName}");
+                        $"Time: {DateTime.Now:g}\nUser: {_userService.CurrentUser?.FirstName} {_userService.CurrentUser?.LastName}");
                 }
                 else if (result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Secondary)
                 {
                     // Clock Out
-                    await _clockOutHandler.HandleAsync(new ClockOutCommand { UserId = _userService.CurrentUser.Id });
+                    await _clockOutHandler.HandleAsync(new ClockOutCommand { UserId = _userContextService.GetCurrentUserId() });
 
                     var successDialog = new Views.Dialogs.ConfirmationDialog();
                     successDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
@@ -157,7 +160,7 @@ namespace Magidesk.Presentation.ViewModels
                         "",
                         "✅",
                         "Success",
-                        $"Time: {DateTime.Now:g}\nUser: {_userService.CurrentUser.FirstName} {_userService.CurrentUser.LastName}");
+                        $"Time: {DateTime.Now:g}\nUser: {_userService.CurrentUser?.FirstName} {_userService.CurrentUser?.LastName}");
                 }
             }
             catch (Exception ex)
@@ -195,7 +198,7 @@ namespace Magidesk.Presentation.ViewModels
             await Task.Delay(100);
 
             // F-0061: End Shift
-            if (_userService.CurrentUser?.Id == null || _terminalContext.TerminalId == null)
+            if (_userContextService.GetCurrentUserId() == Guid.Empty || _terminalContext.TerminalId == null)
             {
                 var errorDialog = new Views.Dialogs.ConfirmationDialog();
                 errorDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
@@ -252,7 +255,7 @@ namespace Magidesk.Presentation.ViewModels
                 }
 
                 // Create ViewModel manually to pass session
-                var vm = new Dialogs.ShiftEndViewModel(session, _userService.CurrentUser.Id, _closeSessionHandler);
+                var vm = new Dialogs.ShiftEndViewModel(session, _userContextService.GetCurrentUserId(), _closeSessionHandler);
                 var dialog = new Views.Dialogs.ShiftEndDialog(vm);
                 dialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
                 

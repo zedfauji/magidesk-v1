@@ -17,7 +17,7 @@ namespace Magidesk.Presentation.ViewModels.Dialogs;
 public partial class HoldTicketDialogViewModel : ViewModelBase
 {
     private readonly ICommandHandler<HoldTicketCommand> _holdTicketHandler;
-    private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
 
     [ObservableProperty]
     private string _holdReason = string.Empty;
@@ -50,10 +50,10 @@ public partial class HoldTicketDialogViewModel : ViewModelBase
 
     public HoldTicketDialogViewModel(
         ICommandHandler<HoldTicketCommand> holdTicketHandler,
-        IUserService userService)
+        IUserContextService userContextService)
     {
         _holdTicketHandler = holdTicketHandler;
-        _userService = userService;
+        _userContextService = userContextService;
     }
 
     /// <summary>
@@ -87,8 +87,8 @@ public partial class HoldTicketDialogViewModel : ViewModelBase
             return false;
         }
 
-        var currentUser = _userService.CurrentUser;
-        if (currentUser == null)
+        var userId = _userContextService.GetCurrentUserId();
+        if (userId == Guid.Empty)
         {
             ErrorMessage = "No user logged in.";
             return false;
@@ -102,7 +102,7 @@ public partial class HoldTicketDialogViewModel : ViewModelBase
             var command = new HoldTicketCommand(
                 TicketId,
                 finalReason,
-                new UserId(currentUser.Id)
+                new UserId(userId)
             );
 
             await _holdTicketHandler.HandleAsync(command);

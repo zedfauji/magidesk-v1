@@ -14,7 +14,7 @@ namespace Magidesk.Presentation.ViewModels;
 public class VoidTicketViewModel : ViewModelBase
 {
     private readonly ICommandHandler<VoidTicketCommand> _voidTicketHandler;
-    private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
 
     private TicketDto _ticket;
     public TicketDto Ticket
@@ -61,10 +61,10 @@ public class VoidTicketViewModel : ViewModelBase
 
     public VoidTicketViewModel(
         ICommandHandler<VoidTicketCommand> voidTicketHandler,
-        IUserService userService)
+        IUserContextService userContextService)
     {
         _voidTicketHandler = voidTicketHandler;
-        _userService = userService;
+        _userContextService = userContextService;
         
         // Manual Command Initialization
         VoidCommand = new AsyncRelayCommand<object?>(VoidAsync, CanVoid);
@@ -120,11 +120,8 @@ public class VoidTicketViewModel : ViewModelBase
         }
 
         // Manager Authorization Required
-        var authDialog = App.Services.GetRequiredService<Views.Dialogs.ManagerPinDialog>();
-        authDialog.XamlRoot = App.MainWindowInstance.Content.XamlRoot;
-        
-        var authResult = await authDialog.ShowForOperationAsync($"Void Ticket #{Ticket.TicketNumber}");
-        if (authResult == null || !authResult.Authorized)
+        var overrideResult = await _userContextService.RequireManagerOverrideAsync($"Void Ticket #{Ticket.TicketNumber}");
+        if (!overrideResult.Success || !overrideResult.ManagerId.HasValue)
         {
             // Authorization failed or cancelled - do not proceed
             return;
@@ -132,8 +129,8 @@ public class VoidTicketViewModel : ViewModelBase
 
         try
         {
-            var currentUser = _userService.CurrentUser;
-            if (currentUser == null)
+            var userId = _userContextService.GetCurrentUserId();
+            if (userId == Guid.Empty)
             {
                  ErrorMessage = "No user logged in.";
                  HasError = true;
@@ -143,8 +140,8 @@ public class VoidTicketViewModel : ViewModelBase
             var command = new VoidTicketCommand
             {
                 TicketId = Ticket.Id,
-                VoidedBy = new Magidesk.Domain.ValueObjects.UserId(currentUser.Id),
-                AuthorizedBy = new Magidesk.Domain.ValueObjects.UserId(authResult.AuthorizingUserId!.Value),
+                VoidedBy = new Magidesk.Domain.ValueObjects.UserId(userId),
+                AuthorizedBy = new Magidesk.Domain.ValueObjects.UserId(overrideResult.ManagerId.Value), 
                 Reason = SelectedReason
             };
 
@@ -161,7 +158,7 @@ public class VoidTicketViewModel : ViewModelBase
                 "",
                 "✅",
                 "Success",
-                $"Total voided: {totalAmount:C}\nAuthorized by: {authResult.AuthorizingUserName}");
+                $"Total voided: {totalAmount:C}\nAuthorized by: Manager");
 
             if (dialog is ContentDialog cd)
             {

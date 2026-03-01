@@ -23,6 +23,7 @@ public class OpenTicketsListViewModel : ViewModelBase
     private readonly ICommandHandler<TransferTicketCommand> _transferTicketHandler;
     private readonly NavigationService _navigationService;
     private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
     private readonly OrderPageNavigationHelper _orderPageNavigationHelper;
 
     private ObservableCollection<TicketDto> _tickets = new();
@@ -73,6 +74,7 @@ public class OpenTicketsListViewModel : ViewModelBase
         ICommandHandler<TransferTicketCommand> transferTicketHandler,
         NavigationService navigationService,
         IUserService userService,
+        IUserContextService userContextService,
         OrderPageNavigationHelper orderPageNavigationHelper)
     {
         _getOpenTicketsHandler = getOpenTicketsHandler;
@@ -80,6 +82,7 @@ public class OpenTicketsListViewModel : ViewModelBase
         _transferTicketHandler = transferTicketHandler;
         _navigationService = navigationService;
         _userService = userService;
+        _userContextService = userContextService;
         _orderPageNavigationHelper = orderPageNavigationHelper;
 
         ResumeCommand = new AsyncRelayCommand(ResumeAsync, () => SelectedTicket != null);
@@ -141,7 +144,7 @@ public class OpenTicketsListViewModel : ViewModelBase
         {
             try
             {
-                if (_userService.CurrentUser?.Id == null)
+                if (_userContextService.GetCurrentUserId() == Guid.Empty)
                 {
                     return;
                 }
@@ -150,7 +153,7 @@ public class OpenTicketsListViewModel : ViewModelBase
                 {
                     TicketId = SelectedTicket.Id,
                     NewOwnerId = new UserId(selectedUser.Id),
-                    TransferredBy = _userService.CurrentUser.Id
+                    TransferredBy = _userContextService.GetCurrentUserId()
                 };
 
                 await _transferTicketHandler.HandleAsync(command);

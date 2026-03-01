@@ -24,6 +24,7 @@ public partial class TableOperationsDialogViewModel : ViewModelBase
     private readonly ICommandHandler<TransferSessionCommand, TransferSessionResult> _transferSessionHandler;
     private readonly IQueryHandler<GetAvailableTablesQuery, IEnumerable<TableDto>> _getAvailableTablesHandler;
     private readonly ITableOperationsService _tableOperationsService;
+    private readonly IUserContextService _userContextService;
     private readonly ILogger<TableOperationsDialogViewModel> _logger;
 
     [ObservableProperty]
@@ -125,6 +126,7 @@ public partial class TableOperationsDialogViewModel : ViewModelBase
         ICommandHandler<TransferSessionCommand, TransferSessionResult> transferSessionHandler,
         IQueryHandler<GetAvailableTablesQuery, IEnumerable<TableDto>> getAvailableTablesHandler,
         ITableOperationsService tableOperationsService,
+        IUserContextService userContextService,
         ILogger<TableOperationsDialogViewModel> logger)
     {
         _mergeTablesHandler = mergeTablesHandler ?? throw new ArgumentNullException(nameof(mergeTablesHandler));
@@ -132,6 +134,7 @@ public partial class TableOperationsDialogViewModel : ViewModelBase
         _transferSessionHandler = transferSessionHandler ?? throw new ArgumentNullException(nameof(transferSessionHandler));
         _getAvailableTablesHandler = getAvailableTablesHandler ?? throw new ArgumentNullException(nameof(getAvailableTablesHandler));
         _tableOperationsService = tableOperationsService ?? throw new ArgumentNullException(nameof(tableOperationsService));
+        _userContextService = userContextService ?? throw new ArgumentNullException(nameof(userContextService));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         LoadAvailableTablesCommand = new AsyncRelayCommand(LoadAvailableTablesAsync);
@@ -389,7 +392,7 @@ public partial class TableOperationsDialogViewModel : ViewModelBase
 
     private async Task ExecuteMergeOperationAsync()
     {
-        var staffId = Guid.NewGuid(); // TODO: Get from current user context
+        var staffId = _userContextService.GetCurrentUserId();
         var command = new MergeTablesCommand(PrimaryTableId, SelectedTables.Select(t => t.Id).ToList(), OperationReason, staffId);
         var result = await _mergeTablesHandler.HandleAsync(command);
 
@@ -406,7 +409,7 @@ public partial class TableOperationsDialogViewModel : ViewModelBase
     {
         var allocations = SplitAllocations.Select(a => new TableSplitAllocationInfo(
             a.TargetTableId, a.AllocatedAmount, a.GuestCount)).ToList();
-        var staffId = Guid.NewGuid(); // TODO: Get from current user context
+        var staffId = _userContextService.GetCurrentUserId();
 
         var command = new SplitTablesCommand(PrimaryTableId, allocations, OperationReason, staffId);
         var result = await _splitTablesHandler.HandleAsync(command);
@@ -423,7 +426,7 @@ public partial class TableOperationsDialogViewModel : ViewModelBase
     private async Task ExecuteTransferOperationAsync()
     {
         var targetTable = SelectedTables.First();
-        var staffId = Guid.NewGuid(); // TODO: Get from current user context
+        var staffId = _userContextService.GetCurrentUserId();
 
         var command = new TransferSessionCommand(PrimarySessionId!.Value, targetTable.Id, OperationReason, staffId);
         var result = await _transferSessionHandler.HandleAsync(command);

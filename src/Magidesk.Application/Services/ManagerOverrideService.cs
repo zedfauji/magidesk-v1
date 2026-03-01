@@ -68,7 +68,7 @@ public class ManagerOverrideService : IManagerOverrideService
                 return OverrideResult.Unauthorized();
             }
 
-            return OverrideResult.Success();
+            return OverrideResult.Success(new OverrideData(Guid.Empty, OverrideType.TimeAdjustment, string.Empty, string.Empty, manager.Id, DateTime.UtcNow));
         }
         catch (Exception ex)
         {

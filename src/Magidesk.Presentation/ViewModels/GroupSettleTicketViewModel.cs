@@ -17,6 +17,7 @@ namespace Magidesk.Presentation.ViewModels
     {
         private readonly ICommandHandler<GroupSettleCommand, GroupSettleResult> _groupSettleHandler;
         private readonly IUserService _userService;
+        private readonly IUserContextService _userContextService;
         private readonly ITerminalContext _terminalContext;
 
         private ObservableCollection<GroupSettleTicketDto> _selectedTickets = new();
@@ -72,11 +73,13 @@ namespace Magidesk.Presentation.ViewModels
         public GroupSettleTicketViewModel(
             ICommandHandler<GroupSettleCommand, GroupSettleResult> groupSettleHandler,
             IUserService userService,
+            IUserContextService userContextService,
             ITerminalContext terminalContext)
         {
             Title = "Group Settlement";
             _groupSettleHandler = groupSettleHandler;
             _userService = userService;
+            _userContextService = userContextService;
             _terminalContext = terminalContext;
         }
 
@@ -132,7 +135,7 @@ namespace Magidesk.Presentation.ViewModels
                 }
 
                 // Create GroupSettleCommand
-                if (_userService.CurrentUser?.Id == null)
+                if (_userContextService.GetCurrentUserId() == Guid.Empty)
                 {
                     Error = "No current user is set. Please login again.";
                     return;
@@ -150,7 +153,7 @@ namespace Magidesk.Presentation.ViewModels
                     Amount = new Money(CombinedTotal, "USD"),
                     TenderAmount = new Money(tenderAmount, "USD"),
                     PaymentType = paymentType,
-                    ProcessedBy = _userService.CurrentUser.Id,
+                    ProcessedBy = _userContextService.GetCurrentUserId(),
                     TerminalId = _terminalContext.TerminalId.Value,
                     GlobalId = Guid.NewGuid().ToString()
                 };

@@ -26,8 +26,8 @@ public class StubUserService : IUserService
         return CurrentUser?.RoleName?.Equals(role, StringComparison.OrdinalIgnoreCase) ?? false;
     }
 
-    public Task<bool> RequireManagerOverrideAsync(string reason)
+    public Task<ManagerOverrideResult> RequireManagerOverrideAsync(string reason)
     {
-        return Task.FromResult(true); // Stub always succeeds
+        return Task.FromResult(new ManagerOverrideResult(true, Guid.NewGuid())); // Stub always succeeds
     }
 }

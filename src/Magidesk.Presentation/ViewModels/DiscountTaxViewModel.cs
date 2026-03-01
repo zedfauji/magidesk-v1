@@ -14,10 +14,11 @@ public sealed class DiscountTaxViewModel : ViewModelBase
     private readonly ICommandHandler<SetDeliveryChargeCommand, SetDeliveryChargeResult> _setDeliveryCharge;
     private readonly ICommandHandler<SetAdjustmentCommand, SetAdjustmentResult> _setAdjustment;
     private readonly ICommandHandler<SetAdvancePaymentCommand, SetAdvancePaymentResult> _setAdvance;
+    private readonly IUserContextService _userContextService;
 
     private TicketDto? _ticket;
     private string _ticketIdText = string.Empty;
-    private string _processedByText = Guid.Empty.ToString();
+    private string _processedByText = string.Empty;
 
     private string _serviceChargeText = "0";
     private string _deliveryChargeText = "0";
@@ -32,13 +33,15 @@ public sealed class DiscountTaxViewModel : ViewModelBase
         ICommandHandler<SetServiceChargeCommand, SetServiceChargeResult> setServiceCharge,
         ICommandHandler<SetDeliveryChargeCommand, SetDeliveryChargeResult> setDeliveryCharge,
         ICommandHandler<SetAdjustmentCommand, SetAdjustmentResult> setAdjustment,
-        ICommandHandler<SetAdvancePaymentCommand, SetAdvancePaymentResult> setAdvance)
+        ICommandHandler<SetAdvancePaymentCommand, SetAdvancePaymentResult> setAdvance,
+        IUserContextService userContextService)
     {
         _getTicket = getTicket;
         _setServiceCharge = setServiceCharge;
         _setDeliveryCharge = setDeliveryCharge;
         _setAdjustment = setAdjustment;
         _setAdvance = setAdvance;
+        _userContextService = userContextService;
 
         Title = "Discount & Tax";
 
@@ -47,6 +50,8 @@ public sealed class DiscountTaxViewModel : ViewModelBase
         SetDeliveryChargeUiCommand = new AsyncRelayCommand(SetDeliveryChargeAsync);
         SetAdjustmentUiCommand = new AsyncRelayCommand(SetAdjustmentAsync);
         SetAdvanceUiCommand = new AsyncRelayCommand(SetAdvanceAsync);
+
+        ProcessedByText = _userContextService.GetCurrentUserId().ToString();
     }
 
     public TicketDto? Ticket

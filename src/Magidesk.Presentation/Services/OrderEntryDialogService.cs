@@ -1,7 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Magidesk.Presentation.ViewModels;
-using Magidesk.Presentation.ViewModels.Dialogs;
 using Magidesk.Presentation.Views.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 
@@ -20,7 +18,7 @@ namespace Magidesk.Presentation.Services
             }
         }
 
-        public async Task ShowCookingInstructionAsync(CookingInstructionViewModel viewModel)
+        public async Task ShowCookingInstructionAsync(Magidesk.Presentation.ViewModels.Dialogs.CookingInstructionViewModel viewModel)
         {
             var dialog = new Magidesk.Presentation.Views.Dialogs.CookingInstructionDialog { ViewModel = viewModel };
             
@@ -35,7 +33,7 @@ namespace Magidesk.Presentation.Services
             }
         }
 
-        public async Task ShowAddOnSelectionAsync(AddOnSelectionViewModel viewModel)
+        public async Task ShowAddOnSelectionAsync(Magidesk.Presentation.ViewModels.Dialogs.AddOnSelectionViewModel viewModel)
         {
             var dialog = new Magidesk.Presentation.Views.Dialogs.AddOnSelectionDialog(viewModel);
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
@@ -46,7 +44,7 @@ namespace Magidesk.Presentation.Services
             }
         }
 
-        public async Task ShowComboSelectionAsync(ComboSelectionViewModel viewModel)
+        public async Task ShowComboSelectionAsync(Magidesk.Presentation.ViewModels.Dialogs.ComboSelectionViewModel viewModel)
         {
             var dialog = new Magidesk.Presentation.Views.Dialogs.ComboSelectionDialog(viewModel);
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
@@ -57,7 +55,7 @@ namespace Magidesk.Presentation.Services
             }
         }
 
-        public async Task ShowPizzaModifierAsync(PizzaModifierViewModel viewModel)
+        public async Task ShowPizzaModifierAsync(Magidesk.Presentation.ViewModels.Dialogs.PizzaModifierViewModel viewModel)
         {
             var dialog = new Magidesk.Presentation.Views.Dialogs.PizzaModifierDialog { ViewModel = viewModel };
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
@@ -68,7 +66,7 @@ namespace Magidesk.Presentation.Services
             }
         }
 
-        public async Task ShowPriceEntryAsync(PriceEntryViewModel viewModel)
+        public async Task ShowPriceEntryAsync(Magidesk.Presentation.ViewModels.Dialogs.PriceEntryViewModel viewModel)
         {
             var dialog = new Magidesk.Presentation.Views.Dialogs.PriceEntryDialog { ViewModel = viewModel };
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
@@ -80,7 +78,7 @@ namespace Magidesk.Presentation.Services
             }
         }
 
-        public async Task ShowSizeSelectionAsync(SizeSelectionViewModel viewModel)
+        public async Task ShowSizeSelectionAsync(Magidesk.Presentation.ViewModels.Dialogs.SizeSelectionViewModel viewModel)
         {
             var dialog = new Magidesk.Presentation.Views.Dialogs.SizeSelectionDialog { ViewModel = viewModel };
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
@@ -91,7 +89,7 @@ namespace Magidesk.Presentation.Services
             }
         }
 
-        public async Task ShowItemSearchAsync(ItemSearchViewModel viewModel)
+        public async Task ShowItemSearchAsync(Magidesk.Presentation.ViewModels.Dialogs.ItemSearchViewModel viewModel)
         {
             var dialog = new Magidesk.Presentation.Views.Dialogs.ItemSearchDialog { ViewModel = viewModel };
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
@@ -102,7 +100,7 @@ namespace Magidesk.Presentation.Services
             }
         }
 
-        public async Task ShowTicketFeeAsync(TicketFeeViewModel viewModel)
+        public async Task ShowTicketFeeAsync(Magidesk.Presentation.ViewModels.TicketFeeViewModel viewModel)
         {
             var dialog = new TicketFeeDialog(viewModel);
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
@@ -115,7 +113,7 @@ namespace Magidesk.Presentation.Services
             }
         }
 
-        public async Task ShowSeatSelectionAsync(SeatSelectionViewModel viewModel)
+        public async Task ShowSeatSelectionAsync(Magidesk.Presentation.ViewModels.Dialogs.SeatSelectionViewModel viewModel)
         {
             var dialog = new Magidesk.Presentation.Views.Dialogs.SeatSelectionDialog { ViewModel = viewModel };
             if (App.MainWindowInstance?.Content?.XamlRoot != null)
@@ -126,7 +124,7 @@ namespace Magidesk.Presentation.Services
             }
         }
 
-        public async Task ShowMiscItemAsync(MiscItemViewModel viewModel)
+        public async Task ShowMiscItemAsync(Magidesk.Presentation.ViewModels.MiscItemViewModel viewModel)
         {
             var dialog = new MiscItemDialog(viewModel);
             if (App.MainWindowInstance?.Content?.XamlRoot != null)

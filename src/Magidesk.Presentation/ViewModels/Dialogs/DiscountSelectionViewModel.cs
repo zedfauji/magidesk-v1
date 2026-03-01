@@ -19,7 +19,7 @@ public partial class DiscountSelectionViewModel : ViewModelBase
 {
     private readonly IDiscountRepository _discountRepository;
     private readonly ICommandHandler<ApplyDiscountCommand> _applyDiscountHandler;
-    private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
     private readonly ManagerPinDialogViewModel _managerPinDialog;
 
     [ObservableProperty]
@@ -50,12 +50,12 @@ public partial class DiscountSelectionViewModel : ViewModelBase
     public DiscountSelectionViewModel(
         IDiscountRepository discountRepository,
         ICommandHandler<ApplyDiscountCommand> applyDiscountHandler,
-        IUserService userService,
+        IUserContextService userContextService,
         ManagerPinDialogViewModel managerPinDialog)
     {
         _discountRepository = discountRepository;
         _applyDiscountHandler = applyDiscountHandler;
-        _userService = userService;
+        _userContextService = userContextService;
         _managerPinDialog = managerPinDialog;
     }
 
@@ -101,8 +101,8 @@ public partial class DiscountSelectionViewModel : ViewModelBase
             return false;
         }
 
-        var currentUser = _userService.CurrentUser;
-        if (currentUser == null)
+        var userId = _userContextService.GetCurrentUserId();
+        if (userId == Guid.Empty)
         {
             ErrorMessage = "No user logged in.";
             return false;
@@ -145,7 +145,7 @@ public partial class DiscountSelectionViewModel : ViewModelBase
             {
                 TicketId = TicketId,
                 DiscountId = SelectedDiscount.Id,
-                AppliedBy = new UserId(currentUser.Id),
+                AppliedBy = new UserId(userId),
                 AuthorizedBy = authorizedBy
             };
 

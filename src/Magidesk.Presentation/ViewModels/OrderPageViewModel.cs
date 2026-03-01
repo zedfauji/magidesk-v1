@@ -39,6 +39,7 @@ public partial class OrderPageViewModel : ViewModelBase
     private readonly ICommandHandler<EndTableSessionCommand, EndTableSessionResult> _endTableSessionHandler;
     private readonly NavigationService _navigationService;
     private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
     private readonly ITerminalContext _terminalContext;
     private readonly IServiceScopeFactory _serviceScopeFactory;
     private readonly IDialogService _dialogService;
@@ -69,6 +70,7 @@ public partial class OrderPageViewModel : ViewModelBase
         ITerminalContext terminalContext,
         IServiceScopeFactory serviceScopeFactory,
         IDialogService dialogService,
+        IUserContextService userContextService,
         ILogger<OrderPageViewModel> logger)
     {
         _getTicketHandler = getTicketHandler ?? throw new ArgumentNullException(nameof(getTicketHandler));
@@ -86,6 +88,7 @@ public partial class OrderPageViewModel : ViewModelBase
         _terminalContext = terminalContext ?? throw new ArgumentNullException(nameof(terminalContext));
         _serviceScopeFactory = serviceScopeFactory ?? throw new ArgumentNullException(nameof(serviceScopeFactory));
         _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
+        _userContextService = userContextService ?? throw new ArgumentNullException(nameof(userContextService));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         // Get the dispatcher queue for the current thread (must be called from UI thread)
@@ -838,6 +841,13 @@ public partial class OrderPageViewModel : ViewModelBase
 
             if (!_ticketId.HasValue)
             {
+               if (_userContextService.GetCurrentUserId() == Guid.Empty)
+            {
+                await _dialogService.ShowWarningAsync(
+                    "User Not Found",
+                    "No current user is set. Please login again.");
+                return;
+            }
                 _logger.LogError("Failed to create ticket");
                 await _dialogService.ShowErrorAsync(
                     "Error",
@@ -957,8 +967,8 @@ public partial class OrderPageViewModel : ViewModelBase
                     TaxRate = menuItem.TaxRate,
                     CategoryName = menuItem.Category?.Name,
                     GroupName = menuItem.Group?.Name,
-                    AddedBy = _userService.CurrentUser != null 
-                        ? new UserId(_userService.CurrentUser.Id) 
+                    AddedBy = _userContextService.GetCurrentUserId() != Guid.Empty
+                        ? new UserId(_userContextService.GetCurrentUserId()) 
                         : null,
                     Modifiers = selectedModifiers
                 };
@@ -1054,7 +1064,7 @@ public partial class OrderPageViewModel : ViewModelBase
                 var command = new CreateTicketCommand
                 {
                     TableId = _tableId,
-                    CreatedBy = new UserId(_userService.CurrentUser.Id),
+                    CreatedBy = new UserId(_userContextService.GetCurrentUserId()),
                     TerminalId = _terminalContext.TerminalId.Value
                 };
 
@@ -1385,10 +1395,10 @@ public partial class OrderPageViewModel : ViewModelBase
                     {
                         OriginalTicketId = _ticketId.Value,
                         OrderLineIdsToSplit = orderLinesToMove,
-                        SplitBy = new UserId(_userService.CurrentUser!.Id),
+                        SplitBy = new UserId(_userContextService.GetCurrentUserId()),
                         TerminalId = _terminalContext.TerminalId!.Value,
-                        ShiftId = Guid.Empty, // TODO: Get actual shift ID
-                        OrderTypeId = Guid.Empty // TODO: Get actual order type ID
+                        ShiftId = ticket.ShiftId,
+                        OrderTypeId = ticket.OrderTypeId
                     };
                     
                     var result = await splitTicketHandler.HandleAsync(command);
@@ -1794,7 +1804,7 @@ public partial class OrderPageViewModel : ViewModelBase
                     CustomerId: null,
                     TicketId: _ticketId.Value,
                     CreateTicket: false,
-                    UserId: _userService.CurrentUser?.Id,
+                    UserId: _userContextService.GetCurrentUserId() != Guid.Empty ? _userContextService.GetCurrentUserId() : null,
                     TerminalId: _terminalContext.TerminalId,
                     ShiftId: null,
                     OrderTypeId: null
@@ -1905,7 +1915,7 @@ public partial class OrderPageViewModel : ViewModelBase
             var command = new EndTableSessionCommand(
                 SessionId: _ticket.SessionId.Value,
                 CreateTicket: false, // Add to existing ticket
-                UserId: _userService.CurrentUser?.Id,
+                UserId: _userContextService.GetCurrentUserId() != Guid.Empty ? _userContextService.GetCurrentUserId() : null,
                 TerminalId: _terminalContext.TerminalId,
                 ShiftId: null,
                 OrderTypeId: null
@@ -1998,7 +2008,7 @@ public partial class OrderPageViewModel : ViewModelBase
             {
                 var ticketRepository = scope.ServiceProvider.GetRequiredService<ITicketRepository>();
                 var voidTicketHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<VoidTicketCommand>>();
-                var userService = scope.ServiceProvider.GetRequiredService<IUserService>();
+                var userContextService = scope.ServiceProvider.GetRequiredService<IUserContextService>();
                 
                 // Load the ticket to pass to the dialog
                 var ticket = await ticketRepository.GetByIdAsync(_ticketId.Value);
@@ -2022,7 +2032,7 @@ public partial class OrderPageViewModel : ViewModelBase
                 };
                 
                 // Create ViewModel for void ticket dialog with required dependencies
-                var viewModel = new VoidTicketViewModel(voidTicketHandler, userService);
+                var viewModel = new VoidTicketViewModel(voidTicketHandler, userContextService);
                 viewModel.Initialize(ticketDto);
                 
                 // Create Dialog
@@ -2081,7 +2091,7 @@ public partial class OrderPageViewModel : ViewModelBase
                 var discountRepository = scope.ServiceProvider.GetRequiredService<IDiscountRepository>();
                 var ticketRepository = scope.ServiceProvider.GetRequiredService<ITicketRepository>();
                 var applyDiscountHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<ApplyDiscountCommand>>();
-                var userService = scope.ServiceProvider.GetRequiredService<IUserService>();
+                var userContextService = scope.ServiceProvider.GetRequiredService<IUserContextService>();
                 var managerPinDialog = scope.ServiceProvider.GetRequiredService<ManagerPinDialogViewModel>();
                 
                 // Load the ticket
@@ -2100,7 +2110,7 @@ public partial class OrderPageViewModel : ViewModelBase
                 var viewModel = new DiscountSelectionViewModel(
                     discountRepository,
                     applyDiscountHandler,
-                    userService,
+                    userContextService,
                     managerPinDialog);
                 
                 // Set ticket information

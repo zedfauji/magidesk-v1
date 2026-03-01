@@ -1,21 +1,22 @@
-using Magidesk.Presentation.ViewModels;
-using Magidesk.Presentation.ViewModels.Dialogs;
+using System.Threading.Tasks;
+
+// No usings for ViewModels to avoid ambiguity
 
 namespace Magidesk.Presentation.Services
 {
     public interface IOrderEntryDialogService
     {
         Task ShowModifierSelectionAsync(Magidesk.Presentation.ViewModels.Dialogs.ModifierSelectionViewModel viewModel);
-        Task ShowCookingInstructionAsync(CookingInstructionViewModel viewModel);
-        Task ShowAddOnSelectionAsync(AddOnSelectionViewModel viewModel);
-        Task ShowComboSelectionAsync(ComboSelectionViewModel viewModel);
-        Task ShowPizzaModifierAsync(PizzaModifierViewModel viewModel);
-        Task ShowPriceEntryAsync(PriceEntryViewModel viewModel);
-        Task ShowSizeSelectionAsync(SizeSelectionViewModel viewModel);
-        Task ShowItemSearchAsync(ItemSearchViewModel viewModel);
-        Task ShowTicketFeeAsync(TicketFeeViewModel viewModel);
-        Task ShowSeatSelectionAsync(SeatSelectionViewModel viewModel);
-        Task ShowMiscItemAsync(MiscItemViewModel viewModel);
+        Task ShowCookingInstructionAsync(Magidesk.Presentation.ViewModels.Dialogs.CookingInstructionViewModel viewModel);
+        Task ShowAddOnSelectionAsync(Magidesk.Presentation.ViewModels.Dialogs.AddOnSelectionViewModel viewModel);
+        Task ShowComboSelectionAsync(Magidesk.Presentation.ViewModels.Dialogs.ComboSelectionViewModel viewModel);
+        Task ShowPizzaModifierAsync(Magidesk.Presentation.ViewModels.Dialogs.PizzaModifierViewModel viewModel);
+        Task ShowPriceEntryAsync(Magidesk.Presentation.ViewModels.Dialogs.PriceEntryViewModel viewModel);
+        Task ShowSizeSelectionAsync(Magidesk.Presentation.ViewModels.Dialogs.SizeSelectionViewModel viewModel);
+        Task ShowItemSearchAsync(Magidesk.Presentation.ViewModels.Dialogs.ItemSearchViewModel viewModel);
+        Task ShowTicketFeeAsync(Magidesk.Presentation.ViewModels.TicketFeeViewModel viewModel);
+        Task ShowSeatSelectionAsync(Magidesk.Presentation.ViewModels.Dialogs.SeatSelectionViewModel viewModel);
+        Task ShowMiscItemAsync(Magidesk.Presentation.ViewModels.MiscItemViewModel viewModel);
         Task ShowErrorAsync(string title, string message);
     }
 }

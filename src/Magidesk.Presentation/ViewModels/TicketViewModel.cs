@@ -15,15 +15,17 @@ public sealed class TicketViewModel : ViewModelBase
     private readonly IQueryHandler<GetTicketQuery, TicketDto?> _getTicket;
     private readonly IMenuRepository _menuRepository;
     private readonly Services.NavigationService _navigationService;
+    private readonly IUserContextService _userContextService;
+    private readonly ITerminalContext _terminalContext;
 
     private TicketDto? _ticket;
-    private string _createdByText = Guid.Empty.ToString();
-    private string _terminalIdText = Guid.Empty.ToString();
-    private string _shiftIdText = Guid.Empty.ToString();
-    private string _orderTypeIdText = Guid.Empty.ToString();
+    private string _createdByText = string.Empty;
+    private string _terminalIdText = string.Empty;
+    private string _shiftIdText = string.Empty;
+    private string _orderTypeIdText = string.Empty;
     private string _ticketIdText = string.Empty;
 
-    private string _menuItemIdText = Guid.Empty.ToString();
+    private string _menuItemIdText = string.Empty;
     private string _menuItemName = "Test Item";
     private string _quantityText = "1";
     private string _unitPriceText = "10";
@@ -37,7 +39,9 @@ public sealed class TicketViewModel : ViewModelBase
         ICommandHandler<PrintToKitchenCommand, PrintToKitchenResult> printToKitchen,
         IQueryHandler<GetTicketQuery, TicketDto?> getTicket,
         IMenuRepository menuRepository,
-        Services.NavigationService navigationService)
+        Services.NavigationService navigationService,
+        IUserContextService userContextService,
+        ITerminalContext terminalContext)
     {
         _createTicket = createTicket;
         _addOrderLine = addOrderLine;
@@ -45,6 +49,8 @@ public sealed class TicketViewModel : ViewModelBase
         _getTicket = getTicket;
         _menuRepository = menuRepository;
         _navigationService = navigationService;
+        _userContextService = userContextService;
+        _terminalContext = terminalContext;
 
         Title = "Ticket";
 
@@ -55,6 +61,11 @@ public sealed class TicketViewModel : ViewModelBase
         SplitTicketUiCommand = new AsyncRelayCommand(SplitTicketAsync);
         MoveTableUiCommand = new RelayCommand(MoveTable);
         SettleUiCommand = new RelayCommand(Settle);
+
+        CreatedByText = _userContextService.GetCurrentUserId().ToString();
+        TerminalIdText = _terminalContext.TerminalId?.ToString() ?? string.Empty;
+        ShiftIdText = string.Empty; // To be loaded
+        OrderTypeIdText = Guid.Empty.ToString(); // Default placeholder
     }
 
     private void MoveTable()

@@ -70,10 +70,10 @@ public class HttpUserService : IUserService
         return CurrentUser.RoleName?.Equals(role, StringComparison.OrdinalIgnoreCase) ?? false;
     }
 
-    public Task<bool> RequireManagerOverrideAsync(string reason)
+    public Task<ManagerOverrideResult> RequireManagerOverrideAsync(string reason)
     {
         // Manager override is not applicable in API context
         // This would need to be handled by the client application
-        return Task.FromResult(false);
+        return Task.FromResult(new ManagerOverrideResult(false, null));
     }
 }
