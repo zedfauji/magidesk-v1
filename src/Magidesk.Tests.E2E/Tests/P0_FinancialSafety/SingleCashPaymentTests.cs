@@ -16,7 +16,7 @@ public class SingleCashPaymentTests : BaseE2ETest
     {
     }
 
-    [Fact(Skip = "Requires application UI to be fully implemented with correct AutomationIds")]
+    [Fact]
     public void CompleteCashPayment_ShouldUpdateCashDrawerBalance()
     {
         // Arrange
@@ -25,10 +25,8 @@ public class SingleCashPaymentTests : BaseE2ETest
         var orderEntry = new OrderEntryPage(MainWindow!);
         var settlement = new SettlementPage(MainWindow!);
 
-        // Act - Login
-        loginPage.EnterUsername("admin");
-        loginPage.EnterPassword("admin123");
-        loginPage.ClickLogin();
+        // Act - Login with manager PIN
+        loginPage.LoginWithPin("1234");
 
         // Act - Navigate to order entry
         switchboard.NavigateToOrderEntry();
@@ -50,16 +48,14 @@ public class SingleCashPaymentTests : BaseE2ETest
         Assert.Equal(ticketTotal, settlement.GetAmountPaid());
     }
 
-    [Fact(Skip = "Requires application UI to be fully implemented with correct AutomationIds")]
+    [Fact]
     public void CashPayment_PaymentTotalEqualsTicketTotal()
     {
         // This test validates the business invariant:
         // Payment total must equal ticket total for successful payment
         
         var loginPage = new LoginPage(MainWindow!);
-        loginPage.EnterUsername("admin");
-        loginPage.EnterPassword("admin123");
-        loginPage.ClickLogin();
+        loginPage.LoginWithPin("1234");
 
         var switchboard = new SwitchboardPage(MainWindow!);
         switchboard.NavigateToOrderEntry();

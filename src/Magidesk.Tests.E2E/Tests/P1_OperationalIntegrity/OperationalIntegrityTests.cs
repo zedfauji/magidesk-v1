@@ -18,13 +18,11 @@ public class OperationalIntegrityTests : BaseE2ETest
     }
 
     // Discount Application Tests
-    [Fact(Skip = "Requires application UI to be fully implemented")]
+    [Fact]
     public void ApplyDiscount_ShouldReduceTicketTotal()
     {
         var loginPage = new LoginPage(MainWindow!);
-        loginPage.EnterUsername("admin");
-        loginPage.EnterPassword("admin123");
-        loginPage.ClickLogin();
+        loginPage.LoginWithPin("1234");
 
         var switchboard = new SwitchboardPage(MainWindow!);
         switchboard.NavigateToOrderEntry();
@@ -40,13 +38,11 @@ public class OperationalIntegrityTests : BaseE2ETest
     }
 
     // Modifier Selection Tests
-    [Fact(Skip = "Requires application UI to be fully implemented")]
+    [Fact]
     public void AddModifier_ShouldIncreaseItemPrice()
     {
         var loginPage = new LoginPage(MainWindow!);
-        loginPage.EnterUsername("admin");
-        loginPage.EnterPassword("admin123");
-        loginPage.ClickLogin();
+        loginPage.LoginWithPin("1234");
 
         var switchboard = new SwitchboardPage(MainWindow!);
         switchboard.NavigateToOrderEntry();
@@ -62,13 +58,11 @@ public class OperationalIntegrityTests : BaseE2ETest
     }
 
     // Cash Session Tests
-    [Fact(Skip = "Requires application UI to be fully implemented")]
+    [Fact]
     public void OpenCashSession_WithStartingCash_ShouldSetExpectedCash()
     {
         var loginPage = new LoginPage(MainWindow!);
-        loginPage.EnterUsername("admin");
-        loginPage.EnterPassword("admin123");
-        loginPage.ClickLogin();
+        loginPage.LoginWithPin("1234");
 
         var switchboard = new SwitchboardPage(MainWindow!);
         switchboard.NavigateToCashSession();
@@ -80,13 +74,11 @@ public class OperationalIntegrityTests : BaseE2ETest
         Assert.Equal(100.00m, cashSession.GetExpectedCash());
     }
 
-    [Fact(Skip = "Requires application UI to be fully implemented")]
+    [Fact]
     public void CloseCashSession_ShouldCompareExpectedVsActual()
     {
         var loginPage = new LoginPage(MainWindow!);
-        loginPage.EnterUsername("admin");
-        loginPage.EnterPassword("admin123");
-        loginPage.ClickLogin();
+        loginPage.LoginWithPin("1234");
 
         var switchboard = new SwitchboardPage(MainWindow!);
         switchboard.NavigateToCashSession();
@@ -97,13 +89,11 @@ public class OperationalIntegrityTests : BaseE2ETest
         Assert.Equal("Closed", cashSession.GetSessionStatus());
     }
 
-    [Fact(Skip = "Requires application UI to be fully implemented")]
+    [Fact]
     public void RecordCashDrop_ShouldReduceExpectedCash()
     {
         var loginPage = new LoginPage(MainWindow!);
-        loginPage.EnterUsername("admin");
-        loginPage.EnterPassword("admin123");
-        loginPage.ClickLogin();
+        loginPage.LoginWithPin("1234");
 
         var switchboard = new SwitchboardPage(MainWindow!);
         switchboard.NavigateToCashSession();
@@ -118,13 +108,11 @@ public class OperationalIntegrityTests : BaseE2ETest
     }
 
     // Ticket Management Tests
-    [Fact(Skip = "Requires application UI to be fully implemented")]
+    [Fact]
     public void HoldAndRecallTicket_ShouldPreserveTicketData()
     {
         var loginPage = new LoginPage(MainWindow!);
-        loginPage.EnterUsername("admin");
-        loginPage.EnterPassword("admin123");
-        loginPage.ClickLogin();
+        loginPage.LoginWithPin("1234");
 
         var switchboard = new SwitchboardPage(MainWindow!);
         switchboard.NavigateToOrderEntry();
@@ -140,14 +128,14 @@ public class OperationalIntegrityTests : BaseE2ETest
         Assert.Equal(originalTotal, recalledTotal);
     }
 
-    [Fact(Skip = "Requires application UI to be fully implemented")]
+    [Fact]
     public void SplitTicket_ShouldCreateMultipleTickets()
     {
         // Placeholder for ticket split workflow test
         Assert.True(true, "Placeholder for split ticket test");
     }
 
-    [Fact(Skip = "Requires application UI to be fully implemented")]
+    [Fact]
     public void MergeTickets_ShouldCombineTicketTotals()
     {
         // Placeholder for ticket merge workflow test
@@ -155,7 +143,7 @@ public class OperationalIntegrityTests : BaseE2ETest
     }
 
     // Table Assignment Tests
-    [Fact(Skip = "Requires application UI to be fully implemented")]
+    [Fact]
     public void AssignTable_ShouldUpdateTableStatus()
     {
         // Placeholder for table assignment workflow test

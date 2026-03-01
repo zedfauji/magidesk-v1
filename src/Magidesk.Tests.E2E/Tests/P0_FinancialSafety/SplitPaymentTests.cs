@@ -13,13 +13,11 @@ public class SplitPaymentTests : BaseE2ETest
     {
     }
 
-    [Fact(Skip = "Requires application UI to be fully implemented")]
+    [Fact]
     public void SplitPayment_CashAndCredit_ShouldEqualTicketTotal()
     {
         var loginPage = new LoginPage(MainWindow!);
-        loginPage.EnterUsername("admin");
-        loginPage.EnterPassword("admin123");
-        loginPage.ClickLogin();
+        loginPage.LoginWithPin("1234");
 
         var switchboard = new SwitchboardPage(MainWindow!);
         switchboard.NavigateToOrderEntry();

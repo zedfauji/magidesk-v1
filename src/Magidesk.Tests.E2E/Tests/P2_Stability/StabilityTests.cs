@@ -18,12 +18,11 @@ public class StabilityTests : BaseE2ETest
     }
 
     // Rapid Click Tests
-    [Fact(Skip = "Requires application UI to be fully implemented")]
+    [Fact]
     public void RapidButtonClicking_ShouldProcessOnlyOnce()
     {
         var loginPage = new LoginPage(MainWindow!);
-        loginPage.EnterUsername("admin");
-        loginPage.EnterPassword("admin123");
+        loginPage.EnterPin("1234");
         
         // Simulate rapid clicking
         for (int i = 0; i < 5; i++)
@@ -36,13 +35,11 @@ public class StabilityTests : BaseE2ETest
     }
 
     // Navigation Stress Tests
-    [Fact(Skip = "Requires application UI to be fully implemented")]
+    [Fact]
     public void RapidPageSwitching_ShouldNotCrash()
     {
         var loginPage = new LoginPage(MainWindow!);
-        loginPage.EnterUsername("admin");
-        loginPage.EnterPassword("admin123");
-        loginPage.ClickLogin();
+        loginPage.LoginWithPin("1234");
 
         var switchboard = new SwitchboardPage(MainWindow!);
         
@@ -59,13 +56,11 @@ public class StabilityTests : BaseE2ETest
     }
 
     // Large Ticket Tests
-    [Fact(Skip = "Requires application UI to be fully implemented")]
+    [Fact]
     public void LargeTicket_With50Items_ShouldCalculateCorrectly()
     {
         var loginPage = new LoginPage(MainWindow!);
-        loginPage.EnterUsername("admin");
-        loginPage.EnterPassword("admin123");
-        loginPage.ClickLogin();
+        loginPage.LoginWithPin("1234");
 
         var switchboard = new SwitchboardPage(MainWindow!);
         switchboard.NavigateToOrderEntry();
@@ -86,7 +81,7 @@ public class StabilityTests : BaseE2ETest
     }
 
     // Crash Recovery Tests
-    [Fact(Skip = "Requires application UI to be fully implemented")]
+    [Fact]
     public void ApplicationRestart_ShouldRecoverState()
     {
         // Placeholder for crash recovery test

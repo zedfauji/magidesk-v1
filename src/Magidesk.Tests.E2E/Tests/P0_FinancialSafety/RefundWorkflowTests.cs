@@ -13,7 +13,7 @@ public class RefundWorkflowTests : BaseE2ETest
     {
     }
 
-    [Fact(Skip = "Requires application UI to be fully implemented")]
+    [Fact]
     public void RefundPayment_ShouldUpdateCashDrawerBalance()
     {
         // Test refund workflow with receipt generation
