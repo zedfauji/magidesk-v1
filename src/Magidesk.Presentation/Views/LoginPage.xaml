@@ -58,7 +58,8 @@
                           SelectionMode="Single"
                           IsItemClickEnabled="True"
                           HorizontalAlignment="Center"
-                          MaxWidth="700">
+                          MaxWidth="700"
+                          AutomationProperties.AutomationId="UserSelectionGridView">
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <ItemsWrapGrid Orientation="Horizontal" 
@@ -138,7 +139,8 @@
                                HorizontalAlignment="Center" 
                                MinHeight="40"
                                VerticalAlignment="Center"
-                               FontFamily="Consolas"/>
+                               FontFamily="Consolas"
+                               AutomationProperties.AutomationId="PinDisplayTextBlock"/>
                 </Border>
 
                 <!-- Error Message -->
@@ -146,7 +148,8 @@
                            Foreground="{ThemeResource SystemFillColorCriticalBrush}" 
                            HorizontalAlignment="Center" 
                            TextWrapping="Wrap" 
-                           MinHeight="20"/>
+                           MinHeight="20"
+                           AutomationProperties.AutomationId="ErrorMessageTextBlock"/>
 
                 <!-- Numeric Keypad -->
                 <Grid RowSpacing="8" ColumnSpacing="8">
@@ -171,7 +174,8 @@
                             VerticalAlignment="Stretch" 
                             FontSize="24"
                             FontWeight="SemiBold"
-                            AutomationProperties.Name="Digit 1"/>
+                            AutomationProperties.Name="Digit 1"
+                            AutomationProperties.AutomationId="Digit1Button"/>
                     <Button Grid.Row="0" Grid.Column="1" 
                             Content="2" 
                             Command="{x:Bind ViewModel.AppendDigitCommand}" 
@@ -180,7 +184,8 @@
                             VerticalAlignment="Stretch" 
                             FontSize="24"
                             FontWeight="SemiBold"
-                            AutomationProperties.Name="Digit 2"/>
+                            AutomationProperties.Name="Digit 2"
+                            AutomationProperties.AutomationId="Digit2Button"/>
                     <Button Grid.Row="0" Grid.Column="2" 
                             Content="3" 
                             Command="{x:Bind ViewModel.AppendDigitCommand}" 
@@ -189,7 +194,8 @@
                             VerticalAlignment="Stretch" 
                             FontSize="24"
                             FontWeight="SemiBold"
-                            AutomationProperties.Name="Digit 3"/>
+                            AutomationProperties.Name="Digit 3"
+                            AutomationProperties.AutomationId="Digit3Button"/>
 
                     <!-- Row 2: 4, 5, 6 -->
                     <Button Grid.Row="1" Grid.Column="0" 
@@ -200,7 +206,8 @@
                             VerticalAlignment="Stretch" 
                             FontSize="24"
                             FontWeight="SemiBold"
-                            AutomationProperties.Name="Digit 4"/>
+                            AutomationProperties.Name="Digit 4"
+                            AutomationProperties.AutomationId="Digit4Button"/>
                     <Button Grid.Row="1" Grid.Column="1" 
                             Content="5" 
                             Command="{x:Bind ViewModel.AppendDigitCommand}" 
@@ -209,7 +216,8 @@
                             VerticalAlignment="Stretch" 
                             FontSize="24"
                             FontWeight="SemiBold"
-                            AutomationProperties.Name="Digit 5"/>
+                            AutomationProperties.Name="Digit 5"
+                            AutomationProperties.AutomationId="Digit5Button"/>
                     <Button Grid.Row="1" Grid.Column="2" 
                             Content="6" 
                             Command="{x:Bind ViewModel.AppendDigitCommand}" 
@@ -218,7 +226,8 @@
                             VerticalAlignment="Stretch" 
                             FontSize="24"
                             FontWeight="SemiBold"
-                            AutomationProperties.Name="Digit 6"/>
+                            AutomationProperties.Name="Digit 6"
+                            AutomationProperties.AutomationId="Digit6Button"/>
 
                     <!-- Row 3: 7, 8, 9 -->
                     <Button Grid.Row="2" Grid.Column="0" 
@@ -229,7 +238,8 @@
                             VerticalAlignment="Stretch" 
                             FontSize="24"
                             FontWeight="SemiBold"
-                            AutomationProperties.Name="Digit 7"/>
+                            AutomationProperties.Name="Digit 7"
+                            AutomationProperties.AutomationId="Digit7Button"/>
                     <Button Grid.Row="2" Grid.Column="1" 
                             Content="8" 
                             Command="{x:Bind ViewModel.AppendDigitCommand}" 
@@ -238,7 +248,8 @@
                             VerticalAlignment="Stretch" 
                             FontSize="24"
                             FontWeight="SemiBold"
-                            AutomationProperties.Name="Digit 8"/>
+                            AutomationProperties.Name="Digit 8"
+                            AutomationProperties.AutomationId="Digit8Button"/>
                     <Button Grid.Row="2" Grid.Column="2" 
                             Content="9" 
                             Command="{x:Bind ViewModel.AppendDigitCommand}" 
@@ -247,14 +258,16 @@
                             VerticalAlignment="Stretch" 
                             FontSize="24"
                             FontWeight="SemiBold"
-                            AutomationProperties.Name="Digit 9"/>
+                            AutomationProperties.Name="Digit 9"
+                            AutomationProperties.AutomationId="Digit9Button"/>
 
                     <!-- Row 4: Backspace, 0, Enter -->
                     <Button Grid.Row="3" Grid.Column="0" 
                             Command="{x:Bind ViewModel.RemoveLastDigitCommand}" 
                             HorizontalAlignment="Stretch" 
                             VerticalAlignment="Stretch"
-                            AutomationProperties.Name="Backspace">
+                            AutomationProperties.Name="Backspace"
+                            AutomationProperties.AutomationId="BackspaceButton">
                         <FontIcon Glyph="&#xE750;" 
                                   FontFamily="Segoe Fluent Icons"
                                   FontSize="20"/>
@@ -267,14 +280,16 @@
                             VerticalAlignment="Stretch" 
                             FontSize="24"
                             FontWeight="SemiBold"
-                            AutomationProperties.Name="Digit 0"/>
+                            AutomationProperties.Name="Digit 0"
+                            AutomationProperties.AutomationId="Digit0Button"/>
                     <Button Grid.Row="3" Grid.Column="2" 
                             Command="{x:Bind ViewModel.LoginCommand}" 
                             Background="{ThemeResource SystemControlBackgroundAccentBrush}" 
                             Foreground="White" 
                             HorizontalAlignment="Stretch" 
                             VerticalAlignment="Stretch"
-                            AutomationProperties.Name="Login">
+                            AutomationProperties.Name="Login"
+                            AutomationProperties.AutomationId="LoginButton">
                         <FontIcon Glyph="&#xE73E;" 
                                   FontFamily="Segoe Fluent Icons"
                                   FontSize="20"/>
@@ -299,7 +314,8 @@
                             MinWidth="120" 
                             Height="44" 
                             FontSize="13"
-                            AutomationProperties.Name="Clock In Out"/>
+                            AutomationProperties.Name="Clock In Out"
+                            AutomationProperties.AutomationId="ClockInOutButton"/>
                     <Button Content="{Binding Localization[Button_Language], Mode=OneWay, FallbackValue='Language'}" 
                             Command="{x:Bind ViewModel.ChangeLanguageCommand}" 
                             Background="#1565C0" 
@@ -307,7 +323,8 @@
                             MinWidth="120" 
                             Height="44" 
                             FontSize="13"
-                            AutomationProperties.Name="Change Language"/>
+                            AutomationProperties.Name="Change Language"
+                            AutomationProperties.AutomationId="ChangeLanguageButton"/>
                     <Button Content="{Binding Localization[Button_Shutdown], Mode=OneWay, FallbackValue='Shutdown'}" 
                             Command="{x:Bind ViewModel.ShutdownCommand}" 
                             Background="DarkRed" 
@@ -315,7 +332,8 @@
                             MinWidth="120" 
                             Height="44" 
                             FontSize="13"
-                            AutomationProperties.Name="Shutdown"/>
+                            AutomationProperties.Name="Shutdown"
+                            AutomationProperties.AutomationId="ShutdownButton"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -342,7 +360,8 @@
                     Background="Transparent"
                     BorderThickness="0"
                     Padding="12"
-                    AutomationProperties.Name="Settings">
+                    AutomationProperties.Name="Settings"
+                    AutomationProperties.AutomationId="SettingsButton">
                 <StackPanel Orientation="Horizontal" Spacing="8">
                     <FontIcon Glyph="&#xE713;" 
                               FontFamily="Segoe Fluent Icons"
