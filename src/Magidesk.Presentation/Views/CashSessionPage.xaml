@@ -37,22 +37,22 @@
                 <StackPanel Orientation="Horizontal" Spacing="12">
                     <TextBox Header="TerminalId" Width="220" Text="{Binding TerminalIdText, Mode=TwoWay}" />
                     <TextBox Header="ShiftId" Width="220" Text="{Binding ShiftIdText, Mode=TwoWay}" />
-                    <TextBox Header="Opening Balance" Width="140" Text="{Binding OpeningBalanceText, Mode=TwoWay}" />
-                    <Button Content="Open" Command="{Binding OpenCommand}" />
+                    <TextBox AutomationProperties.AutomationId="StartingCashTextBox" Header="Opening Balance" Width="140" Text="{Binding OpeningBalanceText, Mode=TwoWay}" />
+                    <Button AutomationProperties.AutomationId="OpenSessionButton" Content="Open" Command="{Binding OpenCommand}" />
                 </StackPanel>
 
                 <TextBlock Text="Current Session" FontSize="18" />
                 <StackPanel Spacing="6">
-                    <TextBlock Text="{Binding CurrentStatusText}" />
+                    <TextBlock AutomationProperties.AutomationId="SessionStatusDisplay" Text="{Binding CurrentStatusText}" />
                     <TextBlock Text="{Binding CurrentSessionIdText}" />
                     <TextBlock Text="{Binding CurrentOpenedAtText}" />
-                    <TextBlock Text="{Binding CurrentExpectedCashText}" />
+                    <TextBlock AutomationProperties.AutomationId="ExpectedCashDisplay" Text="{Binding CurrentExpectedCashText}" />
                 </StackPanel>
 
                 <TextBlock Text="Close Session" FontSize="18" />
                 <StackPanel Orientation="Horizontal" Spacing="12">
-                    <TextBox Header="Actual Cash" Width="140" Text="{Binding ActualCashText, Mode=TwoWay}" />
-                    <Button Content="Close" Command="{Binding CloseCommand}" />
+                    <TextBox AutomationProperties.AutomationId="ActualCashTextBox" Header="Actual Cash" Width="140" Text="{Binding ActualCashText, Mode=TwoWay}" />
+                    <Button AutomationProperties.AutomationId="CloseSessionButton" Content="Close" Command="{Binding CloseCommand}" />
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

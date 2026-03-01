@@ -108,7 +108,8 @@
                                        Style="{StaticResource CaptionTextBlockStyle}"
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
                             <TextBlock Text="{x:Bind ViewModel.CurrentUserName, Mode=OneWay}" 
-                                       Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                                       Style="{StaticResource BodyStrongTextBlockStyle}"
+                                       AutomationProperties.AutomationId="CurrentUserDisplay"/>
                         </StackPanel>
 
                         <StackPanel Spacing="4">
@@ -116,7 +117,8 @@
                                        Style="{StaticResource CaptionTextBlockStyle}"
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
                             <TextBlock Text="{x:Bind ViewModel.TerminalId, Mode=OneWay}" 
-                                       Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                                       Style="{StaticResource BodyStrongTextBlockStyle}"
+                                       AutomationProperties.AutomationId="TerminalIdDisplay"/>
                         </StackPanel>
 
                         <StackPanel Spacing="4">
@@ -124,7 +126,8 @@
                                        Style="{StaticResource CaptionTextBlockStyle}"
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
                             <TextBlock Text="{x:Bind ViewModel.ShiftStatus, Mode=OneWay}" 
-                                       Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                                       Style="{StaticResource BodyStrongTextBlockStyle}"
+                                       AutomationProperties.AutomationId="ShiftStatusDisplay"/>
                         </StackPanel>
                     </StackPanel>
 
@@ -141,7 +144,8 @@
                                            FontWeight="SemiBold"/>
                                 <TextBlock Text="{x:Bind ViewModel.OpenTicketCount, Mode=OneWay}" 
                                            Foreground="White" 
-                                           FontWeight="Bold"/>
+                                           FontWeight="Bold"
+                                           AutomationProperties.AutomationId="OpenTicketCountDisplay"/>
                             </StackPanel>
                         </Border>
 
@@ -157,7 +161,8 @@
                                            FontWeight="SemiBold"/>
                                 <TextBlock Text="{x:Bind ViewModel.ActiveSessionCount, Mode=OneWay}" 
                                            Foreground="White" 
-                                           FontWeight="Bold"/>
+                                           FontWeight="Bold"
+                                           AutomationProperties.AutomationId="ActiveSessionCountDisplay"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>

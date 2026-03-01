@@ -115,7 +115,8 @@
                         <TextBlock Text="Total Amount" 
                                    Style="{StaticResource LabelTextStyle}"/>
                         <TextBlock Text="{x:Bind ViewModel.TotalAmount, Mode=OneWay, Converter={StaticResource CurrencyConverter}}"
-                                   Style="{StaticResource HeadingXLTextStyle}"/>
+                                   Style="{StaticResource HeadingXLTextStyle}"
+                                   AutomationProperties.AutomationId="TicketTotalDisplay"/>
                     </StackPanel>
 
                     <!-- Tax Amount -->
@@ -132,7 +133,8 @@
                                    Style="{StaticResource LabelTextStyle}"/>
                         <TextBlock Text="{x:Bind ViewModel.PaidAmount, Mode=OneWay, Converter={StaticResource CurrencyConverter}}"
                                    Style="{StaticResource HeadingXLTextStyle}"
-                                   Foreground="{StaticResource AccentGreenBrush}"/>
+                                   Foreground="{StaticResource AccentGreenBrush}"
+                                   AutomationProperties.AutomationId="AmountPaidDisplay"/>
                     </StackPanel>
 
                     <!-- Separator -->
@@ -146,7 +148,8 @@
                                    Style="{StaticResource LabelUppercaseTextStyle}"
                                    Foreground="{StaticResource PrimaryBlueBrush}"/>
                         <TextBlock Text="{x:Bind ViewModel.BalanceDue, Mode=OneWay, Converter={StaticResource CurrencyConverter}}"
-                                   Style="{StaticResource Display4XLTextStyle}"/>
+                                   Style="{StaticResource Display4XLTextStyle}"
+                                   AutomationProperties.AutomationId="AmountDueDisplay"/>
                     </StackPanel>
                 </StackPanel>
 
@@ -178,7 +181,8 @@
                             <TextBlock Text="{x:Bind ViewModel.TenderAmountDisplay, Mode=OneWay}"
                                        Style="{StaticResource Display6XLTextStyle}"
                                        HorizontalAlignment="Center"
-                                       TextAlignment="Center"/>
+                                       TextAlignment="Center"
+                                       AutomationProperties.AutomationId="PaymentAmountTextBox"/>
                         </StackPanel>
                     </Border>
 
@@ -349,6 +353,7 @@
                                     Command="{x:Bind ViewModel.SplitPaymentCommand}"
                                     Style="{StaticResource QuickActionButtonStyle}"
                                     Margin="4,0,0,4"
+                                    AutomationProperties.AutomationId="SplitPaymentButton"
                                     AutomationProperties.Name="Split Payment">
                                 <StackPanel Spacing="4">
                                     <FontIcon Glyph="&#xE8F8;" FontSize="16"/>
@@ -456,6 +461,7 @@
                                     CommandParameter="{x:Bind enums:PaymentType.Cash}"
                                     Style="{StaticResource CashPaymentButtonStyle}"
                                     HorizontalAlignment="Stretch"
+                                    AutomationProperties.AutomationId="ProcessPaymentButton"
                                     AutomationProperties.Name="Pay with Cash">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -477,6 +483,7 @@
                                     CommandParameter="{x:Bind enums:PaymentType.CreditCard}"
                                     Style="{StaticResource CreditCardPaymentButtonStyle}"
                                     HorizontalAlignment="Stretch"
+                                    AutomationProperties.AutomationId="ProcessCreditCardPaymentButton"
                                     AutomationProperties.Name="Pay with Credit Card">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -498,6 +505,7 @@
                                     CommandParameter="{x:Bind enums:PaymentType.GiftCertificate}"
                                     Style="{StaticResource GiftCardPaymentButtonStyle}"
                                     HorizontalAlignment="Stretch"
+                                    AutomationProperties.AutomationId="ProcessGiftCardPaymentButton"
                                     AutomationProperties.Name="Pay with Gift Card">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
