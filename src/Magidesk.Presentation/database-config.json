@@ -1,0 +1,9 @@
+{
+  "DatabaseConfiguration": {
+    "Host": "localhost",
+    "Port": 5432,
+    "Database": "magidesk_test",
+    "Username": "postgres",
+    "Password": "postgres"
+  }
+}
