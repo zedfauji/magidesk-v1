@@ -4,9 +4,9 @@
 
 -- Delete transactional data in dependency order (child tables first)
 
--- Kitchen orders
-DELETE FROM kitchen_order_items;
-DELETE FROM kitchen_orders;
+-- Kitchen orders (check if tables exist first)
+DELETE FROM kitchen_order_items WHERE EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'kitchen_order_items');
+DELETE FROM kitchen_orders WHERE EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'kitchen_orders');
 
 -- Payments and related
 DELETE FROM gratuities;
