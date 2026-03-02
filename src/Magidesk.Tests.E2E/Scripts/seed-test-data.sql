@@ -3,9 +3,9 @@
 -- This script is executed after database reset to ensure baseline configuration exists
 
 -- Seed default roles if not exists
-INSERT INTO "Roles" ("Id", "Name")
-VALUES ('00000000-0000-0000-0000-000000000001'::uuid, 'Manager')
-ON CONFLICT DO NOTHING;
+INSERT INTO "Roles" ("Id", "Name", "Permissions")
+VALUES ('00000000-0000-0000-0000-000000000001'::uuid, 'Manager', 0)
+ON CONFLICT ("Id") DO NOTHING;
 
 -- Seed manager user with PIN 1234 if not exists
 INSERT INTO "Users" (
@@ -26,36 +26,74 @@ VALUES (
     '00000000-0000-0000-0000-000000000001'::uuid,
     true
 )
-ON CONFLICT DO NOTHING;
+ON CONFLICT ("Id") DO NOTHING;
 
 -- Seed default terminal if not exists
 INSERT INTO "Terminals" (
     "Id",
-    "TerminalNumber",
     "Name",
-    "IsActive"
+    "TerminalKey",
+    "Location",
+    "HasCashDrawer",
+    "OpeningBalance",
+    "CurrentBalance",
+    "AutoLogOut",
+    "AutoLogOutTime",
+    "ShowGuestSelection",
+    "ShowTableSelection",
+    "KitchenMode",
+    "DefaultFontSize",
+    "DefaultFontFamily"
 )
 VALUES (
     '00000000-0000-0000-0000-000000000003'::uuid,
-    1,
     'Terminal 1',
-    true
+    'TERM001',
+    'Main Floor',
+    true,
+    0.00,
+    0.00,
+    false,
+    0,
+    false,
+    false,
+    false,
+    '14',
+    'Segoe UI'
 )
-ON CONFLICT DO NOTHING;
+ON CONFLICT ("Id") DO NOTHING;
 
 -- Seed restaurant configuration if not exists
 INSERT INTO "RestaurantConfigurations" (
     "Id",
-    "RestaurantName",
-    "TaxRate",
-    "ReducedTaxRate",
-    "CurrencyCode"
+    "Name",
+    "Address",
+    "Phone",
+    "Email",
+    "Website",
+    "ReceiptFooterMessage",
+    "TaxId",
+    "Capacity",
+    "CurrencySymbol",
+    "DefaultGratuityPercentage",
+    "IsKioskMode",
+    "ServiceChargePercentage",
+    "ZipCode"
 )
 VALUES (
     1,
     'Test Restaurant',
-    0.10,
-    0.05,
-    'USD'
+    '123 Test St',
+    '555-1234',
+    'test@restaurant.com',
+    'www.testrestaurant.com',
+    'Thank you for your visit!',
+    'TAX123',
+    100,
+    '$',
+    0.15,
+    false,
+    0.00,
+    '12345'
 )
-ON CONFLICT DO NOTHING;
+ON CONFLICT ("Id") DO NOTHING;
