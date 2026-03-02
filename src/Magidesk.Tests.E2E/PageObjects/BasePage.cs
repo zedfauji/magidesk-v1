@@ -25,9 +25,24 @@ public abstract class BasePage
             DefaultTimeout);
     }
 
+    protected AutomationElement FindElementByName(string name)
+    {
+        return Infrastructure.WaitHelpers.WaitForElementByName(
+            Window,
+            name,
+            DefaultTimeout);
+    }
+
     protected void ClickButton(string automationId)
     {
         var button = FindElement(automationId);
+        Infrastructure.WaitHelpers.WaitForElementEnabled(button, DefaultTimeout);
+        button.AsButton().Invoke();
+    }
+
+    protected void ClickButtonByName(string name)
+    {
+        var button = FindElementByName(name);
         Infrastructure.WaitHelpers.WaitForElementEnabled(button, DefaultTimeout);
         button.AsButton().Invoke();
     }

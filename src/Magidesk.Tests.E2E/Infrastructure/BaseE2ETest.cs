@@ -91,18 +91,27 @@ public abstract class BaseE2ETest : IDisposable
         // Fall back to relative path
         var testAssemblyPath = AppContext.BaseDirectory;
         var srcDirectory = Path.GetFullPath(Path.Combine(testAssemblyPath, "..", "..", "..", ".."));
-        var presentationBinPath = Path.Combine(srcDirectory, "Magidesk.Presentation", "bin", "Debug", "net8.0-windows");
-        var exePath = Path.Combine(presentationBinPath, "Magidesk.Presentation.exe");
-
-        if (!File.Exists(exePath))
+        var presentationBinDebugPath = Path.Combine(srcDirectory, "Magidesk.Presentation", "bin", "Debug");
+        
+        // Try net8.0-windows10.0.19041.0 first (full TFM), then fall back to net8.0-windows
+        var possiblePaths = new[]
         {
-            throw new FileNotFoundException(
-                $"Magidesk.Presentation.exe not found at expected path: {exePath}. " +
-                "Please ensure the Presentation project has been built in Debug configuration. " +
-                "Alternatively, set the MAGIDESK_APP_PATH environment variable.");
+            Path.Combine(presentationBinDebugPath, "net8.0-windows10.0.19041.0", "Magidesk.Presentation.exe"),
+            Path.Combine(presentationBinDebugPath, "net8.0-windows", "Magidesk.Presentation.exe")
+        };
+
+        foreach (var exePath in possiblePaths)
+        {
+            if (File.Exists(exePath))
+            {
+                return exePath;
+            }
         }
 
-        return exePath;
+        throw new FileNotFoundException(
+            $"Magidesk.Presentation.exe not found at any expected path. Tried: {string.Join(", ", possiblePaths)}. " +
+            "Please ensure the Presentation project has been built in Debug configuration. " +
+            "Alternatively, set the MAGIDESK_APP_PATH environment variable.");
     }
 
     public void Dispose()
