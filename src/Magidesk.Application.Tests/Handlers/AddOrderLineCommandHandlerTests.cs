@@ -18,9 +18,10 @@ public class AddOrderLineCommandHandlerTests
         var audits = new InMemoryAuditEventRepository();
         var stockMovements = new InMemoryStockMovementRepository();
         var kitchenRouting = new StubKitchenRoutingService();
+        var orderNotifications = new StubOrderNotificationService();
         var userService = new StubUserService();
         var logger = NullLogger<AddOrderLineCommandHandler>.Instance;
-        var handler = new AddOrderLineCommandHandler(tickets, menu, audits, stockMovements, kitchenRouting, userService, logger);
+        var handler = new AddOrderLineCommandHandler(tickets, menu, audits, stockMovements, kitchenRouting, orderNotifications, userService, logger);
 
         var userId = new UserId(Guid.NewGuid());
         var ticketNumber = await tickets.GetNextTicketNumberAsync();
@@ -55,9 +56,10 @@ public class AddOrderLineCommandHandlerTests
         var audits = new InMemoryAuditEventRepository();
         var stockMovements = new InMemoryStockMovementRepository();
         var kitchenRouting = new StubKitchenRoutingService();
+        var orderNotifications = new StubOrderNotificationService();
         var userService = new StubUserService();
         var logger = NullLogger<AddOrderLineCommandHandler>.Instance;
-        var handler = new AddOrderLineCommandHandler(tickets, menu, audits, stockMovements, kitchenRouting, userService, logger);
+        var handler = new AddOrderLineCommandHandler(tickets, menu, audits, stockMovements, kitchenRouting, orderNotifications, userService, logger);
 
         var cmd = new AddOrderLineCommand
         {

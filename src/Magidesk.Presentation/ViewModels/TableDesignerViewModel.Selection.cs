@@ -1,4 +1,19 @@
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Magidesk.Application.Commands;
+using Magidesk.Application.DTOs;
+using Magidesk.Application.Interfaces;
+using Magidesk.Domain.Enumerations;
+using Magidesk.Presentation.Services;
+using Windows.Foundation;
+using MediatR;
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -96,7 +111,7 @@ public partial class TableDesignerViewModel
         foreach (var table in Tables)
         {
             var tableRect = new Rect(table.X, table.Y, table.Width, table.Height);
-            
+
             // Check if table intersects with selection rectangle
             if (RectIntersects(selectionRect, tableRect))
             {

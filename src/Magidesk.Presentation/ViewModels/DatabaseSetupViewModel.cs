@@ -31,8 +31,6 @@ public partial class DatabaseSetupViewModel : ObservableObject
         Port = 5432;
     }
 
-    #region Properties
-
     [ObservableProperty]
     private string _host = "localhost";
 
@@ -87,10 +85,6 @@ public partial class DatabaseSetupViewModel : ObservableObject
     public bool CanRunSetup => ConnectionTestPassed && !IsSeedingDatabase;
 
     public bool CanContinueToApp => SeedingCompleted;
-
-    #endregion
-
-    #region Commands
 
     [RelayCommand(CanExecute = nameof(CanTestConnection))]
     private async Task TestConnectionAsync()
@@ -227,10 +221,6 @@ public partial class DatabaseSetupViewModel : ObservableObject
         _logger.LogInformation("User continuing to application after successful setup");
     }
 
-    #endregion
-
-    #region Event Handlers
-
     private void OnSeedingProgressChanged(object? sender, SeedingProgressEventArgs e)
     {
         SeedingProgressMessage = e.Message;
@@ -242,6 +232,4 @@ public partial class DatabaseSetupViewModel : ObservableObject
     partial void OnDatabaseNameChanged(string value) => TestConnectionCommand.NotifyCanExecuteChanged();
     partial void OnUsernameChanged(string value) => TestConnectionCommand.NotifyCanExecuteChanged();
     partial void OnPasswordChanged(string value) => TestConnectionCommand.NotifyCanExecuteChanged();
-
-    #endregion
 }

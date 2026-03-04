@@ -17,6 +17,7 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
     private readonly IAuditEventRepository _auditEventRepository;
     private readonly IRepository<StockMovement> _stockMovementRepository;
     private readonly IKitchenRoutingService _kitchenRoutingService;
+    private readonly IOrderNotificationService _orderNotificationService;
     private readonly IUserService _userService;
     private readonly ILogger<AddOrderLineCommandHandler> _logger;
 
@@ -26,6 +27,7 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
         IAuditEventRepository auditEventRepository,
         IRepository<StockMovement> stockMovementRepository,
         IKitchenRoutingService kitchenRoutingService,
+        IOrderNotificationService orderNotificationService,
         IUserService userService,
         ILogger<AddOrderLineCommandHandler> logger)
     {
@@ -34,6 +36,7 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
         _auditEventRepository = auditEventRepository;
         _stockMovementRepository = stockMovementRepository;
         _kitchenRoutingService = kitchenRoutingService;
+        _orderNotificationService = orderNotificationService;
         _userService = userService;
         _logger = logger;
     }
@@ -190,6 +193,22 @@ public class AddOrderLineCommandHandler : ICommandHandler<AddOrderLineCommand, A
                         {
                             _logger.LogInformation("Automatically routed order line {OrderLineId} to kitchen for ticket {TicketId}", 
                                 orderLine.Id, ticket.Id);
+
+                            // S000-04: Notify KDS after successful auto-route
+                            // Fire-and-forget: notification failure must NOT affect the order line result
+                            try
+                            {
+                                var tableNumber = string.Join(", ", ticket.TableNumbers);
+                                var serverName = _userService.CurrentUser?.FullName ?? "Unknown";
+                                await _orderNotificationService.NotifyOrderCreatedAsync(ticket.Id, tableNumber, serverName);
+                                _logger.LogInformation("KDS notification sent for auto-routed order line {OrderLineId} on ticket {TicketId}",
+                                    orderLine.Id, ticket.Id);
+                            }
+                            catch (Exception notifyEx)
+                            {
+                                _logger.LogError(notifyEx, "KDS notification failed for order line {OrderLineId} on ticket {TicketId}. Order line was added successfully.",
+                                    orderLine.Id, ticket.Id);
+                            }
                         }
                         else
                         {

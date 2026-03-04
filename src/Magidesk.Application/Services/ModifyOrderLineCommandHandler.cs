@@ -13,13 +13,16 @@ public class ModifyOrderLineCommandHandler : ICommandHandler<ModifyOrderLineComm
 {
     private readonly ITicketRepository _ticketRepository;
     private readonly IAuditEventRepository _auditEventRepository;
+    private readonly IUserContextService _userContextService;
 
     public ModifyOrderLineCommandHandler(
         ITicketRepository ticketRepository,
-        IAuditEventRepository auditEventRepository)
+        IAuditEventRepository auditEventRepository,
+        IUserContextService userContextService)
     {
         _ticketRepository = ticketRepository;
         _auditEventRepository = auditEventRepository;
+        _userContextService = userContextService;
     }
 
     public async Task HandleAsync(ModifyOrderLineCommand command, CancellationToken cancellationToken = default)
@@ -79,7 +82,7 @@ public class ModifyOrderLineCommandHandler : ICommandHandler<ModifyOrderLineComm
             AuditEventType.Modified,
             nameof(OrderLine),
             orderLine.Id,
-            Guid.Empty, // Would need to get from context
+            _userContextService.GetCurrentUserId(),
             System.Text.Json.JsonSerializer.Serialize(new { Quantity = orderLine.Quantity, Action = "Modified" }),
             $"Order line {command.OrderLineId} modified in ticket {ticket.TicketNumber}",
             correlationId: correlationId);

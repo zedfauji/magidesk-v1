@@ -21,6 +21,7 @@ namespace Magidesk.Tests.Workflows.Infrastructure
         protected Mock<IAesEncryptionService> MockEncryptionService { get; } = new();
         protected Mock<NavigationService> MockNavigationService { get; private set; }
         protected Mock<IUserService> MockUserService { get; } = new();
+        protected Mock<IUserContextService> MockUserContextService { get; } = new();
         protected Mock<ICommandHandler<ClockInCommand>> MockClockInHandler { get; } = new();
         protected Mock<ICommandHandler<ClockOutCommand>> MockClockOutHandler { get; } = new();
         protected Mock<IAttendanceRepository> MockAttendanceRepository { get; } = new();
@@ -71,6 +72,12 @@ namespace Magidesk.Tests.Workflows.Infrastructure
             services.AddSingleton(MockEncryptionService.Object);
             services.AddSingleton(MockNavigationService.Object);
             services.AddSingleton(MockUserService.Object);
+
+            // S000-02: Register IUserContextService mock — required by CashSessionViewModel
+            MockUserContextService.Setup(x => x.GetCurrentUserId()).Returns(new Guid("11111111-1111-1111-1111-111111111111"));
+            MockUserContextService.Setup(x => x.IsInRole(It.IsAny<string>())).Returns(false);
+            services.AddSingleton(MockUserContextService.Object);
+
             services.AddSingleton(MockClockInHandler.Object);
             services.AddSingleton(MockClockOutHandler.Object);
             services.AddSingleton(MockAttendanceRepository.Object);

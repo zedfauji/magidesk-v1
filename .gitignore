@@ -96,7 +96,6 @@ audits/
 .windsurf/
 .kiro/
 .sonarqube/
-.agent/
 **/bin/
 **/obj/
 archive/_root_pollution/

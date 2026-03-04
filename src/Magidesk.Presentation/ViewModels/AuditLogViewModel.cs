@@ -59,8 +59,6 @@ public partial class AuditLogViewModel : ViewModelBase
         LastPageCommand = new AsyncRelayCommand(LastPageAsync, () => CurrentPage < TotalPages);
     }
 
-    #region Properties
-
     public DateTimeOffset StartDate
     {
         get => _startDate;
@@ -186,10 +184,6 @@ public partial class AuditLogViewModel : ViewModelBase
         "Refund"
     };
 
-    #endregion
-
-    #region Commands
-
     public AsyncRelayCommand LoadAuditLogsCommand { get; }
     public AsyncRelayCommand SearchCommand { get; }
     public RelayCommand ClearFiltersCommand { get; }
@@ -198,10 +192,6 @@ public partial class AuditLogViewModel : ViewModelBase
     public AsyncRelayCommand PreviousPageCommand { get; }
     public AsyncRelayCommand FirstPageCommand { get; }
     public AsyncRelayCommand LastPageCommand { get; }
-
-    #endregion
-
-    #region Methods
 
     /// <summary>
     /// Initializes the view model by loading users and initial audit logs.
@@ -408,8 +398,6 @@ public partial class AuditLogViewModel : ViewModelBase
 
         return value.Replace("\"", "\"\"");
     }
-
-    #endregion
 }
 
 /// <summary>

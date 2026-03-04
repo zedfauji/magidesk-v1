@@ -1,4 +1,19 @@
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Magidesk.Application.Commands;
+using Magidesk.Application.DTOs;
+using Magidesk.Application.Interfaces;
+using Magidesk.Domain.Enumerations;
+using Magidesk.Presentation.Services;
+using Windows.Foundation;
+using MediatR;
+
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -68,9 +83,9 @@ public partial class TableDesignerViewModel
     /// </summary>
     public bool CanSave()
     {
-        return IsDirty && 
-               !string.IsNullOrWhiteSpace(LayoutName) && 
-               Tables.Any() && 
+        return IsDirty &&
+               !string.IsNullOrWhiteSpace(LayoutName) &&
+               Tables.Any() &&
                !HasValidationErrors;
     }
 

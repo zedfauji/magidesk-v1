@@ -16,17 +16,20 @@ public class ApplyDiscountCommandHandler : ICommandHandler<ApplyDiscountCommand>
     private readonly IAuditEventRepository _auditEventRepository;
     private readonly Domain.DomainServices.DiscountDomainService _discountDomainService;
     private readonly IDiscountRepository _discountRepository;
+    private readonly IUserContextService _userContextService;
 
     public ApplyDiscountCommandHandler(
         ITicketRepository ticketRepository,
         IAuditEventRepository auditEventRepository,
         Domain.DomainServices.DiscountDomainService discountDomainService,
-        IDiscountRepository discountRepository)
+        IDiscountRepository discountRepository,
+        IUserContextService userContextService)
     {
         _ticketRepository = ticketRepository;
         _auditEventRepository = auditEventRepository;
         _discountDomainService = discountDomainService;
         _discountRepository = discountRepository;
+        _userContextService = userContextService;
     }
 
     public async Task HandleAsync(ApplyDiscountCommand command, CancellationToken cancellationToken = default)
@@ -278,7 +281,7 @@ public class ApplyDiscountCommandHandler : ICommandHandler<ApplyDiscountCommand>
         // Create OrderLineDiscount snapshot
         var lineDiscount = OrderLineDiscount.Create(
             line.Id,
-            Guid.Empty,
+            _userContextService.GetCurrentUserId(),
             name,
             type,
             value,
@@ -312,7 +315,7 @@ public class ApplyDiscountCommandHandler : ICommandHandler<ApplyDiscountCommand>
 
         var ticketDiscount = TicketDiscount.Create(
             ticket.Id,
-            Guid.Empty,
+            _userContextService.GetCurrentUserId(),
             name,
             type,
             value,

@@ -22,6 +22,7 @@ public class SessionControlService : ISessionControlService
     private readonly IAuditEventRepository _auditEventRepository;
     private readonly Domain.Services.IPricingService _pricingService;
     private readonly IUserService _userService;
+    private readonly IUserContextService _userContextService;
 
     public SessionControlService(
         ITableSessionRepository sessionRepository,
@@ -29,7 +30,8 @@ public class SessionControlService : ISessionControlService
         ITableTypeRepository tableTypeRepository,
         IAuditEventRepository auditEventRepository,
         Domain.Services.IPricingService pricingService,
-        IUserService userService)
+        IUserService userService,
+        IUserContextService userContextService)
     {
         _sessionRepository = sessionRepository ?? throw new ArgumentNullException(nameof(sessionRepository));
         _tableRepository = tableRepository ?? throw new ArgumentNullException(nameof(tableRepository));
@@ -37,6 +39,7 @@ public class SessionControlService : ISessionControlService
         _auditEventRepository = auditEventRepository ?? throw new ArgumentNullException(nameof(auditEventRepository));
         _pricingService = pricingService ?? throw new ArgumentNullException(nameof(pricingService));
         _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+        _userContextService = userContextService ?? throw new ArgumentNullException(nameof(userContextService));
     }
 
     /// <inheritdoc />
@@ -64,7 +67,7 @@ public class SessionControlService : ISessionControlService
             await _sessionRepository.UpdateAsync(session);
 
             // Log audit event
-            var userId = _userService.CurrentUser?.Id ?? Guid.Empty;
+            var userId = _userContextService.GetCurrentUserId();
             var auditEvent = AuditEvent.Create(
                 AuditEventType.StatusChanged,
                 "TableSession",
@@ -116,7 +119,7 @@ public class SessionControlService : ISessionControlService
             await _sessionRepository.UpdateAsync(session);
 
             // Log audit event
-            var userId = _userService.CurrentUser?.Id ?? Guid.Empty;
+            var userId = _userContextService.GetCurrentUserId();
             var auditEvent = AuditEvent.Create(
                 AuditEventType.StatusChanged,
                 "TableSession",
@@ -179,7 +182,7 @@ public class SessionControlService : ISessionControlService
             await _sessionRepository.UpdateAsync(session);
 
             // Log audit event
-            var userId = _userService.CurrentUser?.Id ?? Guid.Empty;
+            var userId = _userContextService.GetCurrentUserId();
             var auditEvent = AuditEvent.Create(
                 AuditEventType.Modified,
                 "TableSession",
@@ -290,7 +293,7 @@ public class SessionControlService : ISessionControlService
             await _sessionRepository.AddAsync(transferredSession);
 
             // Log audit events
-            var userId = _userService.CurrentUser?.Id ?? Guid.Empty;
+            var userId = _userContextService.GetCurrentUserId();
             var correlationId = Guid.NewGuid();
             
             var endAuditEvent = AuditEvent.Create(

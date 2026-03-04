@@ -14,17 +14,20 @@ public class RemoveOrderLineCommandHandler : ICommandHandler<RemoveOrderLineComm
     private readonly IAuditEventRepository _auditEventRepository;
     private readonly IMenuRepository _menuRepository;
     private readonly IRepository<StockMovement> _stockMovementRepository;
+    private readonly IUserContextService _userContextService;
 
     public RemoveOrderLineCommandHandler(
         ITicketRepository ticketRepository,
         IAuditEventRepository auditEventRepository,
         IMenuRepository menuRepository,
-        IRepository<StockMovement> stockMovementRepository)
+        IRepository<StockMovement> stockMovementRepository,
+        IUserContextService userContextService)
     {
         _ticketRepository = ticketRepository;
         _auditEventRepository = auditEventRepository;
         _menuRepository = menuRepository;
         _stockMovementRepository = stockMovementRepository;
+        _userContextService = userContextService;
     }
 
     public async Task HandleAsync(RemoveOrderLineCommand command, CancellationToken cancellationToken = default)
@@ -48,10 +51,10 @@ public class RemoveOrderLineCommandHandler : ICommandHandler<RemoveOrderLineComm
                   
                   var movement = StockMovement.Create(
                      menuItem.Id,
-                     (int)orderLine.Quantity, // Method takes change amount POSITIVE for return
-                     StockMovementType.Return, // Or Adjustment? Return seems semantic.
+                     (int)orderLine.Quantity,
+                     StockMovementType.Return,
                      $"Removed from Ticket #{ticket.TicketNumber}",
-                     Guid.Empty // Assuming current user context not passed in command? 
+                     _userContextService.GetCurrentUserId()
                                 // Actually Command usually has UserId but RemoveOrderLineCommand might not?
                                 // Let's check Command definition. Assume Empty for now or update Command later.
                   );
@@ -76,7 +79,7 @@ public class RemoveOrderLineCommandHandler : ICommandHandler<RemoveOrderLineComm
             AuditEventType.Modified,
             nameof(Domain.Entities.Ticket),
             ticket.Id,
-            Guid.Empty, // Would need to get from context
+            _userContextService.GetCurrentUserId(),
             System.Text.Json.JsonSerializer.Serialize(new { OrderLineId = command.OrderLineId, Action = "Removed" }),
             $"Order line removed from ticket {ticket.TicketNumber}",
             correlationId: correlationId);

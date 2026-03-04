@@ -1,0 +1,19 @@
+#!/bin/sh
+# Guard: block commits to ralph-loop-* branches
+# -----------------------------------------------
+# Copy this file to .git/hooks/pre-commit and mark executable:
+#   cp .agent/scripts/pre-commit-branch-guard .git/hooks/pre-commit
+#   chmod +x .git/hooks/pre-commit
+#
+branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+if echo "$branch" | grep -qE '^ralph-loop-'; then
+  echo ""
+  echo "❌ ERROR: Commits to 'ralph-loop-*' branches are blocked."
+  echo "   The ralph-loop framework creates throwaway branches that cause repo drift."
+  echo "   Switch to 'develop' or a named feature branch before committing:"
+  echo ""
+  echo "     git checkout develop"
+  echo "     # or: git checkout -b feature/your-feature-name"
+  echo ""
+  exit 1
+fi

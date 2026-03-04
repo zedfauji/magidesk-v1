@@ -26,6 +26,7 @@ public class SessionControlServiceTests
     private readonly Mock<IAuditEventRepository> _auditEventRepositoryMock;
     private readonly Mock<Domain.Services.IPricingService> _pricingServiceMock;
     private readonly Mock<IUserService> _userServiceMock;
+    private readonly Mock<IUserContextService> _userContextServiceMock;
     private readonly SessionControlService _sessionControlService;
 
     public SessionControlServiceTests()
@@ -36,6 +37,8 @@ public class SessionControlServiceTests
         _auditEventRepositoryMock = new Mock<IAuditEventRepository>();
         _pricingServiceMock = new Mock<Domain.Services.IPricingService>();
         _userServiceMock = new Mock<IUserService>();
+        _userContextServiceMock = new Mock<IUserContextService>();
+        _userContextServiceMock.Setup(x => x.GetCurrentUserId()).Returns(new Guid("11111111-1111-1111-1111-111111111111"));
 
         _sessionControlService = new SessionControlService(
             _sessionRepositoryMock.Object,
@@ -43,7 +46,8 @@ public class SessionControlServiceTests
             _tableTypeRepositoryMock.Object,
             _auditEventRepositoryMock.Object,
             _pricingServiceMock.Object,
-            _userServiceMock.Object);
+            _userServiceMock.Object,
+            _userContextServiceMock.Object);
     }
 
     /// <summary>
