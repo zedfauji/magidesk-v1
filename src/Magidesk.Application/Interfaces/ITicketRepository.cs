@@ -82,6 +82,15 @@ public interface ITicketRepository
     /// This fixes concurrency issues where new OrderLines are incorrectly detected as Modified.
     /// </summary>
     void MarkOrderLineAsAdded(OrderLine orderLine);
+
+    /// <summary>
+    /// Checks if any active tickets (orders) reference menu items that use the specified inventory item in their recipes.
+    /// Used to prevent deletion of inventory items that are currently in use.
+    /// </summary>
+    /// <param name="itemId">The inventory item ID to check.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>True if any active tickets reference the inventory item; otherwise, false.</returns>
+    Task<bool> HasActiveOrdersWithItemAsync(Guid itemId, CancellationToken cancellationToken = default);
 }
 
 /// <summary>

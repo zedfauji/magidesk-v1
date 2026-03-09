@@ -287,38 +287,33 @@ public sealed class ApplicationLauncher : IDisposable
                 "Could not locate src directory. Ensure the test project is in the correct location relative to the Presentation project.");
         }
 
-        // Build path to Presentation executable
-        var exePath = Path.Combine(
-            currentDir.FullName,
-            "Magidesk.Presentation",
-            "bin",
-            "Debug",
-            "net8.0-windows10.0.19041.0",
-            "win-x64",
-            "Magidesk.Presentation.exe");
+        var tfm = "net8.0-windows10.0.19041.0";
+        var presentationDir = Path.Combine(currentDir.FullName, "Magidesk.Presentation", "bin");
 
-        if (!File.Exists(exePath))
+        // Probe candidate paths in priority order (most specific → least specific)
+        var candidatePaths = new[]
         {
-            // Try without platform-specific subdirectory
-            exePath = Path.Combine(
-                currentDir.FullName,
-                "Magidesk.Presentation",
-                "bin",
-                "Debug",
-                "net8.0-windows10.0.19041.0",
-                "Magidesk.Presentation.exe");
+            // x86 build output (dotnet build -p:Platform=x86)
+            Path.Combine(presentationDir, "x86", "Debug", tfm, "win-x86", "Magidesk.Presentation.exe"),
+            // x64 build output (dotnet build -p:Platform=x64)
+            Path.Combine(presentationDir, "Debug", tfm, "win-x64", "Magidesk.Presentation.exe"),
+            Path.Combine(presentationDir, "x64", "Debug", tfm, "win-x64", "Magidesk.Presentation.exe"),
+            // Any-CPU / no platform subdirectory
+            Path.Combine(presentationDir, "Debug", tfm, "Magidesk.Presentation.exe"),
+        };
+
+        foreach (var candidate in candidatePaths)
+        {
+            if (File.Exists(candidate))
+                return candidate;
         }
 
-        if (!File.Exists(exePath))
-        {
-            throw new FileNotFoundException(
-                $"Magidesk.Presentation.exe not found at expected location: {exePath}. " +
-                "Ensure the Presentation project is built in Debug configuration. " +
-                "Alternatively, set the MAGIDESK_APP_PATH environment variable to the executable path.",
-                exePath);
-        }
-
-        return exePath;
+        throw new FileNotFoundException(
+            $"Magidesk.Presentation.exe not found at any expected location. Tried:\n" +
+            string.Join("\n", candidatePaths) + "\n" +
+            "Ensure the Presentation project is built in Debug configuration. " +
+            "Alternatively, set the MAGIDESK_APP_PATH environment variable to the executable path.",
+            candidatePaths[0]);
     }
 }
 

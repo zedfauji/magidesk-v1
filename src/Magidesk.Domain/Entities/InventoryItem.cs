@@ -10,10 +10,13 @@ public class InventoryItem
     public decimal StockQuantity { get; private set; }
     public decimal ReorderPoint { get; private set; }
     public bool IsActive { get; private set; }
+    public Guid? CategoryId { get; private set; }
+    public string? SkuCode { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
 
     private InventoryItem() { } // EF Core
 
-    public static InventoryItem Create(string name, string unit, decimal stockQuantity, decimal reorderPoint)
+    public static InventoryItem Create(string name, string unit, decimal stockQuantity, decimal reorderPoint, string? skuCode = null, Guid? categoryId = null)
     {
         if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name cannot be empty");
         
@@ -24,7 +27,10 @@ public class InventoryItem
             Unit = unit,
             StockQuantity = stockQuantity,
             ReorderPoint = reorderPoint,
-            IsActive = true
+            IsActive = true,
+            SkuCode = skuCode,
+            CategoryId = categoryId,
+            CreatedAt = DateTimeOffset.UtcNow
         };
     }
 
@@ -49,4 +55,10 @@ public class InventoryItem
     public void Activate() => IsActive = true;
     
     public void Deactivate() => IsActive = false;
+
+    public void AssignCategory(Guid categoryId) => CategoryId = categoryId;
+
+    public void ClearCategory() => CategoryId = null;
+
+    public void UpdateSkuCode(string? skuCode) => SkuCode = skuCode;
 }

@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
+using FluentValidation;
 using Magidesk.Application.Services;
 using Magidesk.Application.Interfaces;
 using Magidesk.Application.Commands;
@@ -210,6 +211,24 @@ public static class ServiceCollectionExtensions
         
         // Stock Management Services (G.3)
         services.AddScoped<ILowStockAlertService, LowStockAlertService>();
+
+        // Inventory Management Handlers (Sprint 002)
+        services.AddScoped<ICommandHandler<Queries.GetInventoryItemsPagedQuery, DTOs.InventoryItemPagedResultDto>, Queries.GetInventoryItemsPagedQueryHandler>();
+        services.AddScoped<ICommandHandler<Queries.GetInventoryCategoriesQuery, IReadOnlyList<DTOs.InventoryCategoryDto>>, Queries.GetInventoryCategoriesQueryHandler>();
+        services.AddScoped<ICommandHandler<Commands.BulkUpdateInventoryItemsCommand>, Commands.BulkUpdateInventoryItemsCommandHandler>();
+        services.AddScoped<IValidator<Commands.BulkUpdateInventoryItemsCommand>, Commands.BulkUpdateInventoryItemsCommandValidator>();
+
+        // Inventory CRUD Handlers (Tasks 2.4.1-2.4.3)
+        // Note: The following handlers implement MediatR's IRequestHandler<TRequest, TResponse> directly
+        // and are automatically registered by MediatR's assembly scanning (RegisterServicesFromAssembly above).
+        // No explicit registration is required:
+        // - CreateInventoryItemCommandHandler
+        // - UpdateInventoryItemCommandHandler
+        // - DeleteInventoryItemCommandHandler
+        // - CreateCategoryCommandHandler
+        // - UpdateCategoryCommandHandler
+        // - DeleteCategoryCommandHandler
+        // - GetInventoryItemByIdQueryHandler
 
         // Report Performance Optimization Services
         services.AddScoped<IReportCacheService, Services.Reports.ReportCacheService>();

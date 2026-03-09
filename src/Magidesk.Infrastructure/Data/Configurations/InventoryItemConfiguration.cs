@@ -26,5 +26,19 @@ public class InventoryItemConfiguration : IEntityTypeConfiguration<InventoryItem
 
         builder.Property(x => x.IsActive)
             .IsRequired();
+
+        builder.Property(x => x.SkuCode)
+            .HasMaxLength(50);
+
+        builder.Property(x => x.CreatedAt)
+            .IsRequired();
+
+        builder.Property(x => x.CategoryId);
+
+        builder.HasOne<InventoryCategory>()
+            .WithMany()
+            .HasForeignKey(x => x.CategoryId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

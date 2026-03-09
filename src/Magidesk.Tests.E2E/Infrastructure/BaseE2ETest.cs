@@ -88,16 +88,30 @@ public abstract class BaseE2ETest : IDisposable
             return envPath;
         }
 
-        // Fall back to relative path
-        var testAssemblyPath = AppContext.BaseDirectory;
-        var srcDirectory = Path.GetFullPath(Path.Combine(testAssemblyPath, "..", "..", "..", ".."));
-        var presentationBinDebugPath = Path.Combine(srcDirectory, "Magidesk.Presentation", "bin", "Debug");
-        
-        // Try net8.0-windows10.0.19041.0 first (full TFM), then fall back to net8.0-windows
+        // Walk up from the test assembly directory to find the 'src' folder
+        // (depth varies by platform: x86 = 5 levels, x64/AnyCPU = 4 levels)
+        var currentDir = new DirectoryInfo(AppContext.BaseDirectory);
+        while (currentDir != null && currentDir.Name != "src")
+            currentDir = currentDir.Parent;
+
+        if (currentDir == null)
+        {
+            throw new FileNotFoundException(
+                "Could not locate the 'src' directory by walking up from the test assembly location. " +
+                "Ensure the test project is in the correct location relative to the Presentation project.");
+        }
+
+        var presentationBinPath = Path.Combine(currentDir.FullName, "Magidesk.Presentation", "bin");
+        const string tfm = "net8.0-windows10.0.19041.0";
+
+        // Probe in priority order: x86 → x64 → any-CPU → legacy path
         var possiblePaths = new[]
         {
-            Path.Combine(presentationBinDebugPath, "net8.0-windows10.0.19041.0", "Magidesk.Presentation.exe"),
-            Path.Combine(presentationBinDebugPath, "net8.0-windows", "Magidesk.Presentation.exe")
+            Path.Combine(presentationBinPath, "x86", "Debug", tfm, "win-x86", "Magidesk.Presentation.exe"),
+            Path.Combine(presentationBinPath, "Debug", tfm, "win-x64", "Magidesk.Presentation.exe"),
+            Path.Combine(presentationBinPath, "x64", "Debug", tfm, "win-x64", "Magidesk.Presentation.exe"),
+            Path.Combine(presentationBinPath, "Debug", tfm, "Magidesk.Presentation.exe"),
+            Path.Combine(presentationBinPath, "Debug", "net8.0-windows", "Magidesk.Presentation.exe"),
         };
 
         foreach (var exePath in possiblePaths)

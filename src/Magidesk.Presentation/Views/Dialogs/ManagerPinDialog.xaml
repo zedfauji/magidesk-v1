@@ -9,6 +9,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    AutomationProperties.AutomationId="ManagerPinDialog"
     Title="Manager Authorization Required"
     PrimaryButtonText="Authorize"
     CloseButtonText="Cancel"
@@ -81,7 +82,8 @@
             </Grid.ColumnDefinitions>
 
             <!-- Row 1: 1, 2, 3 -->
-            <Button Grid.Row="0" Grid.Column="0" 
+            <Button Grid.Row="0" Grid.Column="0"
+                    AutomationProperties.AutomationId="Pin_1"
                     Content="1" 
                     Command="{x:Bind ViewModel.AppendDigitCommand}" 
                     CommandParameter="1" 
@@ -90,7 +92,8 @@
                     FontSize="24"
                     MinWidth="44"
                     MinHeight="44"/>
-            <Button Grid.Row="0" Grid.Column="1" 
+            <Button Grid.Row="0" Grid.Column="1"
+                    AutomationProperties.AutomationId="Pin_2"
                     Content="2" 
                     Command="{x:Bind ViewModel.AppendDigitCommand}" 
                     CommandParameter="2" 
@@ -99,7 +102,8 @@
                     FontSize="24"
                     MinWidth="44"
                     MinHeight="44"/>
-            <Button Grid.Row="0" Grid.Column="2" 
+            <Button Grid.Row="0" Grid.Column="2"
+                    AutomationProperties.AutomationId="Pin_3"
                     Content="3" 
                     Command="{x:Bind ViewModel.AppendDigitCommand}" 
                     CommandParameter="3" 
@@ -110,7 +114,8 @@
                     MinHeight="44"/>
 
             <!-- Row 2: 4, 5, 6 -->
-            <Button Grid.Row="1" Grid.Column="0" 
+            <Button Grid.Row="1" Grid.Column="0"
+                    AutomationProperties.AutomationId="Pin_4"
                     Content="4" 
                     Command="{x:Bind ViewModel.AppendDigitCommand}" 
                     CommandParameter="4" 
@@ -119,7 +124,8 @@
                     FontSize="24"
                     MinWidth="44"
                     MinHeight="44"/>
-            <Button Grid.Row="1" Grid.Column="1" 
+            <Button Grid.Row="1" Grid.Column="1"
+                    AutomationProperties.AutomationId="Pin_5"
                     Content="5" 
                     Command="{x:Bind ViewModel.AppendDigitCommand}" 
                     CommandParameter="5" 
@@ -128,7 +134,8 @@
                     FontSize="24"
                     MinWidth="44"
                     MinHeight="44"/>
-            <Button Grid.Row="1" Grid.Column="2" 
+            <Button Grid.Row="1" Grid.Column="2"
+                    AutomationProperties.AutomationId="Pin_6"
                     Content="6" 
                     Command="{x:Bind ViewModel.AppendDigitCommand}" 
                     CommandParameter="6" 
@@ -139,7 +146,8 @@
                     MinHeight="44"/>
 
             <!-- Row 3: 7, 8, 9 -->
-            <Button Grid.Row="2" Grid.Column="0" 
+            <Button Grid.Row="2" Grid.Column="0"
+                    AutomationProperties.AutomationId="Pin_7"
                     Content="7" 
                     Command="{x:Bind ViewModel.AppendDigitCommand}" 
                     CommandParameter="7" 
@@ -148,7 +156,8 @@
                     FontSize="24"
                     MinWidth="44"
                     MinHeight="44"/>
-            <Button Grid.Row="2" Grid.Column="1" 
+            <Button Grid.Row="2" Grid.Column="1"
+                    AutomationProperties.AutomationId="Pin_8"
                     Content="8" 
                     Command="{x:Bind ViewModel.AppendDigitCommand}" 
                     CommandParameter="8" 
@@ -157,7 +166,8 @@
                     FontSize="24"
                     MinWidth="44"
                     MinHeight="44"/>
-            <Button Grid.Row="2" Grid.Column="2" 
+            <Button Grid.Row="2" Grid.Column="2"
+                    AutomationProperties.AutomationId="Pin_9"
                     Content="9" 
                     Command="{x:Bind ViewModel.AppendDigitCommand}" 
                     CommandParameter="9" 
@@ -168,7 +178,8 @@
                     MinHeight="44"/>
 
             <!-- Row 4: Clear, 0, Backspace -->
-            <Button Grid.Row="3" Grid.Column="0" 
+            <Button Grid.Row="3" Grid.Column="0"
+                    AutomationProperties.AutomationId="Pin_Clear"
                     Content="Clear" 
                     Command="{x:Bind ViewModel.ClearCommand}" 
                     Background="DarkOrange" 
@@ -178,7 +189,8 @@
                     FontSize="18"
                     MinWidth="44"
                     MinHeight="44"/>
-            <Button Grid.Row="3" Grid.Column="1" 
+            <Button Grid.Row="3" Grid.Column="1"
+                    AutomationProperties.AutomationId="Pin_0"
                     Content="0" 
                     Command="{x:Bind ViewModel.AppendDigitCommand}" 
                     CommandParameter="0" 
@@ -187,7 +199,8 @@
                     FontSize="24"
                     MinWidth="44"
                     MinHeight="44"/>
-            <Button Grid.Row="3" Grid.Column="2" 
+            <Button Grid.Row="3" Grid.Column="2"
+                    AutomationProperties.AutomationId="Pin_Backspace"
                     Content="⌫" 
                     Command="{x:Bind ViewModel.RemoveLastDigitCommand}" 
                     HorizontalAlignment="Stretch" 

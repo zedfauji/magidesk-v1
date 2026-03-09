@@ -54,6 +54,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Role> Roles { get; set; } = null!;
     public DbSet<InventoryItem> InventoryItems { get; set; } = null!;
+    public DbSet<InventoryCategory> InventoryCategories { get; set; } = null!;
     public DbSet<AttendanceHistory> AttendanceHistories { get; set; } = null!;
     public DbSet<RestaurantConfiguration> RestaurantConfigurations { get; set; } = null!;
     public DbSet<Terminal> Terminals { get; set; } = null!;
@@ -144,6 +145,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new MenuCategoryConfiguration());
         modelBuilder.ApplyConfiguration(new MenuGroupConfiguration());
         modelBuilder.ApplyConfiguration(new InventoryItemConfiguration());
+        modelBuilder.ApplyConfiguration(new InventoryCategoryConfiguration());
         modelBuilder.ApplyConfiguration(new AttendanceHistoryConfiguration());
         modelBuilder.ApplyConfiguration(new PrinterGroupConfiguration());
         modelBuilder.ApplyConfiguration(new PrinterMappingConfiguration());

@@ -72,6 +72,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IModifierGroupRepository, ModifierGroupRepository>();
         services.AddScoped<IMenuModifierRepository, MenuModifierRepository>();
         services.AddScoped<IInventoryItemRepository, InventoryItemRepository>();
+        services.AddScoped<IInventoryCategoryRepository, InventoryCategoryRepository>();
         services.AddScoped<IRestaurantConfigurationRepository, RestaurantConfigurationRepository>();
         services.AddScoped<ITerminalRepository, TerminalRepository>();
         services.AddScoped<IPrinterGroupRepository, PrinterGroupRepository>();

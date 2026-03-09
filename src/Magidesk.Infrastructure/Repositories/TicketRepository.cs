@@ -342,6 +342,26 @@ public class TicketRepository : ITicketRepository
         _context.ChangeTracker.Clear();
     }
 
+    public async Task<bool> HasActiveOrdersWithItemAsync(Guid itemId, CancellationToken cancellationToken = default)
+    {
+        // Active tickets are those not in terminal states (Paid, Closed, Voided, Refunded)
+        // Check if any active ticket has order lines referencing menu items that use this inventory item in their recipes
+        var hasActiveOrders = await _context.Tickets
+            .Where(t => t.Status != Domain.Enumerations.TicketStatus.Paid
+                     && t.Status != Domain.Enumerations.TicketStatus.Closed
+                     && t.Status != Domain.Enumerations.TicketStatus.Voided
+                     && t.Status != Domain.Enumerations.TicketStatus.Refunded)
+            .SelectMany(t => t.OrderLines)
+            .Join(_context.Set<MenuItem>(),
+                orderLine => orderLine.MenuItemId,
+                menuItem => menuItem.Id,
+                (orderLine, menuItem) => menuItem)
+            .SelectMany(menuItem => menuItem.RecipeLines)
+            .AnyAsync(recipeLine => recipeLine.InventoryItemId == itemId, cancellationToken);
+
+        return hasActiveOrders;
+    }
+
     public void MarkOrderLineAsAdded(OrderLine orderLine)
     {
         // 1. Mark the OrderLine itself as Added

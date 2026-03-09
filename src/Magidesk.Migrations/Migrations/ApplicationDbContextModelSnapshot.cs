@@ -18,7 +18,7 @@ namespace Magidesk.Migrations.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -658,7 +658,7 @@ namespace Magidesk.Migrations.Migrations
                     b.ToTable("InventoryAdjustments");
                 });
 
-            modelBuilder.Entity("Magidesk.Domain.Entities.InventoryItem", b =>
+            modelBuilder.Entity("Magidesk.Domain.Entities.InventoryCategory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -672,8 +672,45 @@ namespace Magidesk.Migrations.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<Guid?>("ParentCategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentCategoryId");
+
+                    b.ToTable("InventoryCategories", (string)null);
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.InventoryItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
                     b.Property<decimal>("ReorderPoint")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("SkuCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<decimal>("StockQuantity")
                         .HasColumnType("decimal(18,2)");
@@ -684,6 +721,8 @@ namespace Magidesk.Migrations.Migrations
                         .HasColumnType("character varying(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("InventoryItems");
                 });
@@ -1115,7 +1154,7 @@ namespace Magidesk.Migrations.Migrations
 
                     b.ToTable("MenuModifiers", "magidesk");
 
-                    b.HasDiscriminator().HasValue("MenuModifier");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("MenuModifier");
 
                     b.UseTphMappingStrategy();
                 });
@@ -3636,6 +3675,22 @@ namespace Magidesk.Migrations.Migrations
                         .IsRequired();
 
                     b.Navigation("InventoryItem");
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.InventoryCategory", b =>
+                {
+                    b.HasOne("Magidesk.Domain.Entities.InventoryCategory", null)
+                        .WithMany()
+                        .HasForeignKey("ParentCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Magidesk.Domain.Entities.InventoryItem", b =>
+                {
+                    b.HasOne("Magidesk.Domain.Entities.InventoryCategory", null)
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("Magidesk.Domain.Entities.KitchenOrderItem", b =>

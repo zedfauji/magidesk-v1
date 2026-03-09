@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Page
     x:Class="Magidesk.Presentation.Views.InventoryPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -5,106 +6,312 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:Magidesk.Presentation.Converters"
+    xmlns:dto="using:Magidesk.Application.DTOs"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <UserControl.Resources>
-        <!-- Converters assumed available globally or via alias -->
-    </UserControl.Resources>
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Page.Resources>
 
     <Grid Padding="24">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <StackPanel Grid.Row="0" Margin="0,0,0,24">
-            <TextBlock Text="{x:Bind ViewModel.Title}" Style="{StaticResource TitleTextBlockStyle}"/>
-            <TextBlock Text="Manage ingredients and stock levels." Style="{StaticResource BodyTextBlockStyle}" Opacity="0.6"/>
-        </StackPanel>
-
-        <!-- Content -->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="0" Margin="0,0,0,24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="350"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <!-- List -->
-            <Grid Grid.Column="0" Margin="0,0,24,0" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="12">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="2">
+                <TextBlock Text="Inventory Management" Style="{StaticResource TitleTextBlockStyle}"/>
+                <TextBlock Text="Manage inventory items and stock levels." Style="{StaticResource BodyTextBlockStyle}" Opacity="0.6"/>
+            </StackPanel>
 
-                <TextBlock Text="Items" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,12"/>
-
-                <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.InventoryItems}" SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=TwoWay}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="0,8">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold"/>
-                                    <TextBlock Text="{Binding Unit}" Opacity="0.6" FontSize="12"/>
-                                </StackPanel>
-                                <StackPanel Grid.Column="1" HorizontalAlignment="Right">
-                                    <TextBlock Text="{Binding StockQuantity}" HorizontalAlignment="Right"/>
-                                    <TextBlock Text="In Stock" Opacity="0.6" FontSize="10" HorizontalAlignment="Right"/>
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-
-                <Button Grid.Row="2" Command="{x:Bind ViewModel.AddItemCommand}" Content="Add Item" Margin="0,12,0,0"/>
-            </Grid>
-
-            <!-- Details -->
-            <Grid Grid.Column="1" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="24"
-                  Visibility="{x:Bind ViewModel.IsEditing, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                <StackPanel Spacing="16">
-                    <TextBlock Text="Edit Inventory Item" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    
-                    <TextBox Header="Name" Text="{x:Bind ViewModel.EditingName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox Header="Unit (e.g. oz, kg, count)" Text="{x:Bind ViewModel.EditingUnit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    
-                    <Grid ColumnSpacing="16">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Header="Stock Quantity" Text="{x:Bind ViewModel.EditingStock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" InputScope="Number"/>
-                        <TextBox Grid.Column="1" Header="Reorder Point" Text="{x:Bind ViewModel.EditingReorder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" InputScope="Number"/>
-                    </Grid>
-
-                    <TextBox Header="Adjustment Reason (Required for stock changes)" 
-                             PlaceholderText="e.g. Broken, Wastage, Received Order"
-                             Text="{x:Bind ViewModel.AdjustmentReason, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
-                    <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,24,0,0">
-                        <Button Command="{x:Bind ViewModel.SaveCommand}" Content="Save Changes" Style="{StaticResource AccentButtonStyle}"/>
-                        <Button Command="{x:Bind ViewModel.DeleteCommand}" Content="Delete" Style="{StaticResource DefaultButtonStyle}"/>
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
-
-            <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="16"
-                        Visibility="{x:Bind ViewModel.IsEditing, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Reverse}">
-                <FontIcon Glyph="&#xE70F;" FontSize="48" Foreground="Gray"/>
-                <TextBlock Text="Select an item to edit details" Foreground="Gray" Style="{StaticResource SubtitleTextBlockStyle}"/>
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Top">
+                <Button
+                    AutomationProperties.AutomationId="InventoryAddItemButton"
+                    Content="Add Item"
+                    Command="{x:Bind ViewModel.OpenCreateItemCommand}"
+                    Style="{StaticResource AccentButtonStyle}"/>
+                <Button
+                    AutomationProperties.AutomationId="InventoryManageCategoriesButton"
+                    Content="Manage Categories"
+                    Command="{x:Bind ViewModel.OpenCategoryManagementCommand}"/>
             </StackPanel>
         </Grid>
 
-        <!-- Footer -->
-        <Border Grid.Row="2" Margin="0,12,0,0">
-            <TextBlock Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}" Style="{StaticResource CaptionTextBlockStyle}"/>
+        <!-- Search Bar -->
+        <TextBox
+            Grid.Row="1"
+            AutomationProperties.AutomationId="InventorySearchBox"
+            Text="{x:Bind ViewModel.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            PlaceholderText="Search by name or SKU..."
+            Margin="0,0,0,16"/>
+
+        <!-- Filter Ribbon -->
+        <StackPanel
+            Grid.Row="2"
+            Orientation="Horizontal"
+            Spacing="12"
+            Margin="0,0,0,16">
+            <RadioButton
+                AutomationProperties.AutomationId="InventoryFilterAll"
+                Content="All"
+                IsChecked="{x:Bind ViewModel.IsFilterAll, Mode=OneWay}"
+                GroupName="InventoryFilter"
+                Click="OnFilterAllClick"/>
+            <RadioButton
+                AutomationProperties.AutomationId="InventoryFilterLowStock"
+                Content="Low Stock"
+                IsChecked="{x:Bind ViewModel.IsFilterLowStock, Mode=OneWay}"
+                GroupName="InventoryFilter"
+                Click="OnFilterLowStockClick"/>
+            <RadioButton
+                AutomationProperties.AutomationId="InventoryFilterOutOfStock"
+                Content="Out of Stock"
+                IsChecked="{x:Bind ViewModel.IsFilterOutOfStock, Mode=OneWay}"
+                GroupName="InventoryFilter"
+                Click="OnFilterOutOfStockClick"/>
+            <RadioButton
+                AutomationProperties.AutomationId="InventoryFilterRecentlyAdded"
+                Content="Recently Added"
+                IsChecked="{x:Bind ViewModel.IsFilterRecentlyAdded, Mode=OneWay}"
+                GroupName="InventoryFilter"
+                Click="OnFilterRecentlyAddedClick"/>
+        </StackPanel>
+
+        <!-- Main Content Grid: Category Panel (left) + Item List (right) -->
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30*"/>
+                <ColumnDefinition Width="70*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Category TreeView (Left Column) -->
+            <Border
+                Grid.Column="0"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="8"
+                Margin="0,0,12,0"
+                Padding="12">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Text="Categories"
+                        Style="{StaticResource SubtitleTextBlockStyle}"
+                        Margin="0,0,0,12"/>
+
+                    <ListBox
+                        Grid.Row="1"
+                        AutomationProperties.AutomationId="InventoryCategoryList"
+                        ItemsSource="{x:Bind ViewModel.Categories, Mode=OneWay}"
+                        SelectionChanged="OnCategorySelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="dto:InventoryCategoryDto">
+                                <TextBlock Text="{x:Bind Name}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+
+            <!-- Item List (Right Column) -->
+            <Border
+                Grid.Column="1"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="8"
+                Padding="12">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Column Headers -->
+                    <Grid
+                        Grid.Row="0"
+                        Padding="0,0,0,12"
+                        BorderThickness="0,0,0,1"
+                        BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="1" Text="Name" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="2" Text="SKU" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="3" Text="Stock" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="4" Text="Reorder Point" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="5" Text="Actions" FontWeight="SemiBold"/>
+                    </Grid>
+
+                    <!-- Items ListView -->
+                    <ListView
+                        Grid.Row="1"
+                        AutomationProperties.AutomationId="InventoryItemList"
+                        ItemsSource="{x:Bind ViewModel.InventoryItems, Mode=OneWay}"
+                        SelectionMode="None">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="dto:InventoryItemDto">
+                                <Grid Padding="0,8" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <CheckBox
+                                        Grid.Column="0"
+                                        Click="OnItemCheckBoxClick"
+                                        Tag="{x:Bind}"
+                                        Margin="0,0,12,0"/>
+
+                                    <Button
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="4"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Padding="0"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        Click="OnItemRowClick"
+                                        Tag="{x:Bind Id}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock
+                                                Grid.Column="0"
+                                                Text="{x:Bind Name}"
+                                                VerticalAlignment="Center"/>
+
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                Text="{x:Bind SkuCode}"
+                                                VerticalAlignment="Center"/>
+
+                                            <TextBlock
+                                                Grid.Column="2"
+                                                Text="{x:Bind StockQuantity}"
+                                                VerticalAlignment="Center"/>
+
+                                            <TextBlock
+                                                Grid.Column="3"
+                                                Text="{x:Bind ReorderPoint}"
+                                                VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </Button>
+
+                                    <Button
+                                        Grid.Column="5"
+                                        AutomationProperties.AutomationId="InventoryDeleteItemButton"
+                                        Content="&#xE74D;"
+                                        FontFamily="Segoe MDL2 Assets"
+                                        Click="OnDeleteItemClick"
+                                        Tag="{x:Bind Id}"
+                                        Background="Transparent"
+                                        ToolTipService.ToolTip="Delete item"
+                                        Margin="8,0,0,0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Bulk Action Bar -->
+        <Border
+            Grid.Row="4"
+            AutomationProperties.AutomationId="InventoryBulkEditBar"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            CornerRadius="8"
+            Padding="12"
+            Margin="0,12,0,0"
+            Visibility="{x:Bind ViewModel.IsBulkEditBarVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+            <StackPanel Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                <TextBlock
+                    Text="{x:Bind ViewModel.SelectedItems.Count, Mode=OneWay}"
+                    Style="{StaticResource BodyTextBlockStyle}"/>
+                <TextBlock
+                    Text="items selected"
+                    Style="{StaticResource BodyTextBlockStyle}"/>
+                <Button
+                    AutomationProperties.AutomationId="InventoryBulkEditButton"
+                    Content="Bulk Edit"
+                    Command="{x:Bind ViewModel.OpenBulkEditCommand}"
+                    Style="{StaticResource AccentButtonStyle}"/>
+            </StackPanel>
         </Border>
+
+        <!-- Pagination Row -->
+        <StackPanel
+            Grid.Row="5"
+            Orientation="Horizontal"
+            Spacing="12"
+            Margin="0,12,0,0"
+            VerticalAlignment="Center">
+            <Button
+                AutomationProperties.AutomationId="InventoryPreviousPageButton"
+                Content="Previous"
+                Command="{x:Bind ViewModel.PreviousPageCommand}"
+                IsEnabled="{x:Bind ViewModel.HasPreviousPage, Mode=OneWay}"/>
+            <TextBlock
+                AutomationProperties.AutomationId="InventoryCurrentPage"
+                Text="{x:Bind ViewModel.CurrentPage, Mode=OneWay}"
+                VerticalAlignment="Center"/>
+            <TextBlock
+                Text="of"
+                VerticalAlignment="Center"/>
+            <TextBlock
+                AutomationProperties.AutomationId="InventoryTotalCount"
+                Text="{x:Bind ViewModel.TotalCount, Mode=OneWay}"
+                VerticalAlignment="Center"/>
+            <Button
+                AutomationProperties.AutomationId="InventoryNextPageButton"
+                Content="Next"
+                Command="{x:Bind ViewModel.NextPageCommand}"
+                IsEnabled="{x:Bind ViewModel.HasNextPage, Mode=OneWay}"/>
+            <TextBlock
+                AutomationProperties.AutomationId="InventoryStatusMessage"
+                Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}"
+                Style="{StaticResource CaptionTextBlockStyle}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Margin="12,0,0,0"/>
+        </StackPanel>
     </Grid>
 </Page>

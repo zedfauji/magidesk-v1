@@ -60,6 +60,8 @@ public static class ServiceCollectionExtensions
         services.AddTransient<MenuEditorViewModel>();
         services.AddTransient<ModifierEditorViewModel>();
         services.AddTransient<InventoryViewModel>();
+        // InventoryBulkEditViewModel is created directly in the bulk edit dialog with selectedItems
+        services.AddTransient<InventoryBulkEditViewModel>();
         services.AddTransient<CashSessionViewModel>();
         services.AddTransient<TicketViewModel>();
         services.AddTransient<PaymentViewModel>();
@@ -133,6 +135,9 @@ public static class ServiceCollectionExtensions
         services.AddTransient<ManagerOverrideDialogViewModel>();
         services.AddTransient<TableOperationsDialogViewModel>();
         services.AddTransient<PromotionScheduleDialogViewModel>();
+        services.AddTransient<CreateInventoryItemViewModel>();
+        services.AddTransient<EditInventoryItemViewModel>();
+        services.AddTransient<CategoryManagementViewModel>();
 
         // ===================================================================
         // DIALOG VIEWS (Transient - new instance per dialog)

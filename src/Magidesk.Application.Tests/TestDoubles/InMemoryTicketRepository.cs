@@ -101,4 +101,10 @@ internal sealed class InMemoryTicketRepository : ITicketRepository
     {
         // No-op for in-memory
     }
+
+    public Task<bool> HasActiveOrdersWithItemAsync(Guid itemId, CancellationToken cancellationToken = default)
+    {
+        // For testing purposes, return false (no active orders with this item)
+        return Task.FromResult(false);
+    }
 }

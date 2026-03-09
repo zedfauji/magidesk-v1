@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Magidesk.Application.Interfaces;
+using Magidesk.Application.Queries;
 using Magidesk.Domain.Entities;
 using Magidesk.Infrastructure.Data;
 
@@ -57,11 +58,66 @@ public class InventoryItemRepository : IInventoryItemRepository
             // InventoryItem has IsActive. I should set IsActive = false;
             // But if I want true delete:
             // _context.InventoryItems.Remove(item);
-            
+
             // Let's do Soft Delete to be safe with IsActive
             item.Deactivate();
             _context.InventoryItems.Update(item);
             await _context.SaveChangesAsync(cancellationToken);
         }
+    }
+
+    public async Task<(IReadOnlyList<InventoryItem> Items, int TotalCount)> GetPagedAsync(
+        string? searchTerm,
+        InventoryFilterType filter,
+        Guid? categoryId,
+        int skip,
+        int take,
+        CancellationToken cancellationToken = default)
+    {
+        IQueryable<InventoryItem> query = _context.InventoryItems.Where(x => x.IsActive);
+
+        if (categoryId != null)
+        {
+            query = query.Where(x => x.CategoryId == categoryId);
+        }
+
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            query = query.Where(x =>
+                EF.Functions.ILike(x.Name, $"%{searchTerm}%") ||
+                (x.SkuCode != null && EF.Functions.ILike(x.SkuCode, $"%{searchTerm}%")));
+        }
+
+        query = filter switch
+        {
+            InventoryFilterType.LowStock => query.Where(x => x.StockQuantity <= x.ReorderPoint && x.StockQuantity > 0),
+            InventoryFilterType.OutOfStock => query.Where(x => x.StockQuantity == 0),
+            InventoryFilterType.RecentlyAdded => query.Where(x => x.CreatedAt >= DateTimeOffset.UtcNow.AddDays(-30)),
+            InventoryFilterType.None => query,
+            _ => query
+        };
+
+        var totalCount = await query.CountAsync(cancellationToken);
+        var items = await query
+            .OrderBy(x => x.Name)
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync(cancellationToken);
+
+        return (items.AsReadOnly(), totalCount);
+    }
+
+    public async Task<InventoryItem?> GetBySkuCodeAsync(string skuCode, CancellationToken cancellationToken = default)
+    {
+        return await _context.InventoryItems
+            .AsNoTracking()
+            .FirstOrDefaultAsync(i => i.SkuCode != null && EF.Functions.ILike(i.SkuCode, skuCode), cancellationToken);
+    }
+
+    public async Task<int> CountActiveItemsByCategoryAsync(Guid categoryId, CancellationToken cancellationToken = default)
+    {
+        return await _context.InventoryItems
+            .Where(i => i.IsActive && i.CategoryId == categoryId)
+            .CountAsync(cancellationToken);
     }
 }

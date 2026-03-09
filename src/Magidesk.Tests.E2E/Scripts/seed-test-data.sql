@@ -5,7 +5,7 @@
 -- Seed default roles if not exists
 INSERT INTO "Roles" ("Id", "Name", "Permissions")
 VALUES ('00000000-0000-0000-0000-000000000001'::uuid, 'Manager', 0)
-ON CONFLICT ("Id") DO NOTHING;
+ON CONFLICT ("Name") DO NOTHING;
 
 -- Seed manager user with PIN 1234 if not exists
 INSERT INTO "Users" (
@@ -26,7 +26,7 @@ VALUES (
     '00000000-0000-0000-0000-000000000001'::uuid,
     true
 )
-ON CONFLICT ("Id") DO NOTHING;
+ON CONFLICT ("Username") DO NOTHING;
 
 -- Seed default terminal if not exists
 INSERT INTO "Terminals" (
