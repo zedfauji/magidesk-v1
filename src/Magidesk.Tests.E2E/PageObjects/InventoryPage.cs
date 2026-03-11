@@ -1,220 +1,107 @@
 using FlaUI.Core.AutomationElements;
-using FlaUI.Core.Conditions;
-using FlaUI.Core.Definitions;
 
 namespace Magidesk.Tests.E2E.PageObjects;
 
 /// <summary>
-/// Page object for the Inventory Management page.
-/// Wraps interactions with search, filtering, category selection,
-/// item listing, pagination, and bulk edit.
+/// Page object for inventory management operations.
 /// </summary>
 public sealed class InventoryPage : BasePage
 {
-    // Automation IDs matching InventoryPage.xaml
-    private const string SearchBoxId = "InventorySearchBox";
-    private const string FilterAllId = "InventoryFilterAll";
-    private const string FilterLowStockId = "InventoryFilterLowStock";
-    private const string FilterOutOfStockId = "InventoryFilterOutOfStock";
-    private const string FilterRecentlyAddedId = "InventoryFilterRecentlyAdded";
-    private const string CategoryListId = "InventoryCategoryList";
-    private const string ItemListId = "InventoryItemList";
-    private const string PreviousPageButtonId = "InventoryPreviousPageButton";
-    private const string NextPageButtonId = "InventoryNextPageButton";
-    private const string StatusMessageId = "InventoryStatusMessage";
-    private const string TotalCountId = "InventoryTotalCount";
-    private const string BulkEditBarId = "InventoryBulkEditBar";
-    private const string BulkEditButtonId = "InventoryBulkEditButton";
+    // Inventory control AutomationIds
+    private const string ItemNameTextBoxId = "ItemNameTextBox";
+    private const string StockLevelTextBlockId = "StockLevelTextBlock";
+    private const string QuantityTextBoxId = "QuantityTextBox";
+    private const string ReasonTextBoxId = "ReasonTextBox";
+    private const string AdjustInventoryButtonId = "AdjustInventoryButton";
+    
+    // Purchase order controls
+    private const string VendorTextBoxId = "VendorTextBox";
+    private const string CreatePurchaseOrderButtonId = "CreatePurchaseOrderButton";
+    private const string PurchaseOrderNumberTextBoxId = "PurchaseOrderNumberTextBox";
+    private const string ReceivePurchaseOrderButtonId = "ReceivePurchaseOrderButton";
+    
+    // Search and alerts
+    private const string SearchTextBoxId = "SearchTextBox";
+    private const string SearchButtonId = "SearchButton";
+    private const string LowStockAlertsListId = "LowStockAlertsList";
 
     public InventoryPage(Window window) : base(window)
     {
     }
 
     /// <summary>
-    /// Waits for the Inventory page to finish loading by waiting for the
-    /// status message element to appear. Call after navigation.
+    /// Gets the current stock level for an inventory item.
     /// </summary>
-    public void WaitForPageLoaded()
+    /// <param name="itemName">The name of the inventory item.</param>
+    /// <returns>The current stock quantity.</returns>
+    public int GetStockLevel(string itemName)
     {
-        // Status message is the last element populated when page loads
-        Infrastructure.WaitHelpers.WaitForElementByAutomationId(Window, StatusMessageId, DefaultTimeout);
+        EnterText(ItemNameTextBoxId, itemName);
+        var stockText = GetText(StockLevelTextBlockId);
+        return int.Parse(stockText);
     }
 
     /// <summary>
-    /// Gets the current status message text (e.g. "Loaded 10 items (Page 1)").
+    /// Adjusts inventory quantity with a reason.
     /// </summary>
-    public string GetStatusMessage() => GetText(StatusMessageId);
-
-    /// <summary>
-    /// Gets the total item count displayed in the pagination row.
-    /// </summary>
-    public int GetTotalCount()
+    /// <param name="itemName">The name of the inventory item.</param>
+    /// <param name="quantity">The quantity adjustment (positive or negative).</param>
+    /// <param name="reason">The reason for the adjustment.</param>
+    public void AdjustInventory(string itemName, int quantity, string reason)
     {
-        var text = GetText(TotalCountId);
-        return int.TryParse(text, out var count) ? count : 0;
+        EnterText(ItemNameTextBoxId, itemName);
+        EnterText(QuantityTextBoxId, quantity.ToString());
+        EnterText(ReasonTextBoxId, reason);
+        ClickButton(AdjustInventoryButtonId);
     }
 
     /// <summary>
-    /// Types a search term into the search box. Triggers the debounced search.
+    /// Creates a purchase order with vendor and items.
     /// </summary>
-    public void SearchFor(string term)
+    /// <param name="vendor">The vendor name.</param>
+    /// <param name="items">Array of tuples containing item name and quantity.</param>
+    public void CreatePurchaseOrder(string vendor, params (string item, int quantity)[] items)
     {
-        var searchBox = FindElement(SearchBoxId);
-        Infrastructure.WaitHelpers.WaitForElementEnabled(searchBox, DefaultTimeout);
-        searchBox.AsTextBox().Text = term;
-        // Allow debounce (300 ms defined in ViewModel) + render time
-        Thread.Sleep(600);
-    }
-
-    /// <summary>
-    /// Clears the search box.
-    /// </summary>
-    public void ClearSearch()
-    {
-        var searchBox = FindElement(SearchBoxId);
-        Infrastructure.WaitHelpers.WaitForElementEnabled(searchBox, DefaultTimeout);
-        searchBox.AsTextBox().Text = string.Empty;
-        Thread.Sleep(600);
-    }
-
-    /// <summary>
-    /// Clicks the "All" filter radio button.
-    /// </summary>
-    public void SelectFilterAll() => ClickButton(FilterAllId);
-
-    /// <summary>
-    /// Clicks the "Low Stock" filter radio button.
-    /// </summary>
-    public void SelectFilterLowStock() => ClickButton(FilterLowStockId);
-
-    /// <summary>
-    /// Clicks the "Out of Stock" filter radio button.
-    /// </summary>
-    public void SelectFilterOutOfStock() => ClickButton(FilterOutOfStockId);
-
-    /// <summary>
-    /// Clicks the "Recently Added" filter radio button.
-    /// </summary>
-    public void SelectFilterRecentlyAdded() => ClickButton(FilterRecentlyAddedId);
-
-    /// <summary>
-    /// Returns whether the "All" filter radio button is currently checked.
-    /// </summary>
-    public bool IsFilterAllSelected()
-    {
-        var radio = FindElement(FilterAllId).AsRadioButton();
-        return radio.IsChecked;
-    }
-
-    /// <summary>
-    /// Returns whether the "Low Stock" filter radio button is currently checked.
-    /// </summary>
-    public bool IsFilterLowStockSelected()
-    {
-        var radio = FindElement(FilterLowStockId).AsRadioButton();
-        return radio.IsChecked;
-    }
-
-    /// <summary>
-    /// Counts the number of items currently visible in the inventory ListView.
-    /// Returns -1 if the list element cannot be found.
-    /// </summary>
-    public int GetInventoryItemCount()
-    {
-        try
+        EnterText(VendorTextBoxId, vendor);
+        
+        foreach (var (item, quantity) in items)
         {
-            var list = FindElement(ItemListId).AsListBox();
-            return list.Items.Length;
+            EnterText(ItemNameTextBoxId, item);
+            EnterText(QuantityTextBoxId, quantity.ToString());
         }
-        catch
-        {
-            return -1;
-        }
+        
+        ClickButton(CreatePurchaseOrderButtonId);
     }
 
     /// <summary>
-    /// Selects a category by its display name in the category ListBox panel.
+    /// Receives a purchase order and updates inventory.
     /// </summary>
-    public void SelectCategory(string categoryName)
+    /// <param name="poNumber">The purchase order number.</param>
+    public void ReceivePurchaseOrder(string poNumber)
     {
-        var list = FindElement(CategoryListId).AsListBox();
-        var item = list.Items.FirstOrDefault(i => i.Text == categoryName);
-        if (item is null)
-            throw new InvalidOperationException($"Category '{categoryName}' was not found in the category list.");
-        item.Select();
-        Thread.Sleep(500); // Allow filter to apply
+        EnterText(PurchaseOrderNumberTextBoxId, poNumber);
+        ClickButton(ReceivePurchaseOrderButtonId);
     }
 
     /// <summary>
-    /// Returns whether the bulk edit action bar is visible on screen.
+    /// Gets the list of low stock alerts.
     /// </summary>
-    public bool IsBulkEditBarVisible()
+    /// <returns>Enumerable of item names with low stock.</returns>
+    public IEnumerable<string> GetLowStockAlerts()
     {
-        try
-        {
-            var bar = Window.FindFirstDescendant(cf => cf.ByAutomationId(BulkEditBarId));
-            return bar != null && bar.IsAvailable && !bar.IsOffscreen;
-        }
-        catch
-        {
-            return false;
-        }
+        var alertsList = FindElement(LowStockAlertsListId);
+        var items = alertsList.FindAllChildren();
+        
+        return items.Select(item => item.Name).ToList();
     }
 
     /// <summary>
-    /// Returns whether the "Next" pagination button is currently enabled.
+    /// Searches for an inventory item.
     /// </summary>
-    public bool IsNextPageEnabled()
+    /// <param name="searchTerm">The search term.</param>
+    public void SearchInventoryItem(string searchTerm)
     {
-        try
-        {
-            return FindElement(NextPageButtonId).IsEnabled;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
-    /// <summary>
-    /// Returns whether the "Previous" pagination button is currently enabled.
-    /// </summary>
-    public bool IsPreviousPageEnabled()
-    {
-        try
-        {
-            return FindElement(PreviousPageButtonId).IsEnabled;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
-    /// <summary>
-    /// Clicks "Next" to advance to the next page of results.
-    /// </summary>
-    public void GoToNextPage()
-    {
-        ClickButton(NextPageButtonId);
-        Thread.Sleep(500);
-    }
-
-    /// <summary>
-    /// Clicks "Previous" to go back to the previous page of results.
-    /// </summary>
-    public void GoToPreviousPage()
-    {
-        ClickButton(PreviousPageButtonId);
-        Thread.Sleep(500);
-    }
-
-    /// <summary>
-    /// Clicks the "Bulk Edit" action button in the bulk action bar.
-    /// Requires that at least one item is selected.
-    /// </summary>
-    public void ClickBulkEdit()
-    {
-        ClickButton(BulkEditButtonId);
+        EnterText(SearchTextBoxId, searchTerm);
+        ClickButton(SearchButtonId);
     }
 }
