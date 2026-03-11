@@ -107,3 +107,6 @@ artifacts/
 *.zip
 *.bak
 *.tmp
+
+# XAML Build Automation Logs
+diagnostics/build-logs/

@@ -16,13 +16,18 @@ EXECUTION RULES:
 - Fix in place, no redesigns, no parallel implementations
 
 VERIFICATION (after every task):
-- dotnet build must succeed
+- Run .\build-xaml.ps1 — NOT dotnet build
+- Read diagnostics\build-logs\build_summary_LATEST.txt for result
+- Task is only complete when build_summary_LATEST.txt shows BUILD RESULT: SUCCESS
+- dotnet build is BANNED — it misses WinUI 3 XAML compiler errors (MC*, WMC*, XBF*)
+- If the same build error appears 3 times in a row, STOP and report to owner
 
 STOP CONDITIONS:
 - All TASKS in PRD.md are completed
-- Build passes with zero errors
+- .\build-xaml.ps1 passes with zero errors
 
 FAILURE CONDITIONS:
-- Build failure
+- Build failure (as reported by .\build-xaml.ps1)
 - Violation of PRD constraints
 - Introduction of new TODOs or Guid.Empty
+- Using dotnet build instead of .\build-xaml.ps1
