@@ -27,7 +27,8 @@ public sealed class FailureCaptureSystem
         string testName,
         Exception exception,
         Window? mainWindow,
-        string? connectionString)
+        string? connectionString,
+        Guid executionId = default)
     {
         try
         {
@@ -38,10 +39,10 @@ public sealed class FailureCaptureSystem
             Directory.CreateDirectory(artifactPath);
 
             CaptureFailureInfo(artifactPath, testName, exception, timestamp);
-            CaptureScreenshot(artifactPath, mainWindow);
-            CaptureUITree(artifactPath, mainWindow);
-            CaptureProcessState(artifactPath, mainWindow);
-            CaptureDatabaseSnapshot(artifactPath, connectionString);
+            CaptureScreenshot(artifactPath, mainWindow, connectionString, executionId);
+            CaptureUITree(artifactPath, mainWindow, connectionString, executionId);
+            CaptureProcessState(artifactPath, mainWindow, connectionString, executionId);
+            CaptureDatabaseSnapshot(artifactPath, connectionString, executionId);
 
             Console.WriteLine($"Failure artifacts captured to: {artifactPath}");
         }
@@ -85,7 +86,7 @@ public sealed class FailureCaptureSystem
         }
     }
 
-    private void CaptureScreenshot(string artifactPath, Window? mainWindow)
+    private void CaptureScreenshot(string artifactPath, Window? mainWindow, string? connectionString, Guid executionId)
     {
         try
         {
@@ -98,6 +99,13 @@ public sealed class FailureCaptureSystem
             var screenshot = mainWindow.Capture();
             var screenshotPath = Path.Combine(artifactPath, "screenshot.png");
             screenshot.Save(screenshotPath, System.Drawing.Imaging.ImageFormat.Png);
+
+            // Insert artifact record into database
+            if (executionId != Guid.Empty && !string.IsNullOrWhiteSpace(connectionString))
+            {
+                var fileInfo = new FileInfo(screenshotPath);
+                InsertArtifactRecord(connectionString, executionId, "Screenshot", screenshotPath, fileInfo.Length);
+            }
         }
         catch (Exception ex)
         {
@@ -105,7 +113,7 @@ public sealed class FailureCaptureSystem
         }
     }
 
-    private void CaptureUITree(string artifactPath, Window? mainWindow)
+    private void CaptureUITree(string artifactPath, Window? mainWindow, string? connectionString, Guid executionId)
     {
         try
         {
@@ -123,6 +131,13 @@ public sealed class FailureCaptureSystem
             writer.WriteLine("<UITree>");
             CaptureElementTree(writer, mainWindow, 0);
             writer.WriteLine("</UITree>");
+
+            // Insert artifact record into database
+            if (executionId != Guid.Empty && !string.IsNullOrWhiteSpace(connectionString))
+            {
+                var fileInfo = new FileInfo(uiTreePath);
+                InsertArtifactRecord(connectionString, executionId, "UITree", uiTreePath, fileInfo.Length);
+            }
         }
         catch (Exception ex)
         {
@@ -157,7 +172,7 @@ public sealed class FailureCaptureSystem
         }
     }
 
-    private void CaptureProcessState(string artifactPath, Window? mainWindow)
+    private void CaptureProcessState(string artifactPath, Window? mainWindow, string? connectionString, Guid executionId)
     {
         try
         {
@@ -189,7 +204,15 @@ public sealed class FailureCaptureSystem
                 WriteIndented = true
             });
 
-            File.WriteAllText(Path.Combine(artifactPath, "process-state.json"), json);
+            var processStatePath = Path.Combine(artifactPath, "process-state.json");
+            File.WriteAllText(processStatePath, json);
+
+            // Insert artifact record into database
+            if (executionId != Guid.Empty && !string.IsNullOrWhiteSpace(connectionString))
+            {
+                var fileInfo = new FileInfo(processStatePath);
+                InsertArtifactRecord(connectionString, executionId, "ProcessState", processStatePath, fileInfo.Length);
+            }
         }
         catch (Exception ex)
         {
@@ -197,7 +220,7 @@ public sealed class FailureCaptureSystem
         }
     }
 
-    private void CaptureDatabaseSnapshot(string artifactPath, string? connectionString)
+    private void CaptureDatabaseSnapshot(string artifactPath, string? connectionString, Guid executionId)
     {
         try
         {
@@ -237,10 +260,57 @@ public sealed class FailureCaptureSystem
 
                 writer.WriteLine();
             }
+
+            writer.Close();
+
+            // Insert artifact record into database
+            if (executionId != Guid.Empty)
+            {
+                var fileInfo = new FileInfo(snapshotPath);
+                InsertArtifactRecord(connectionString, executionId, "DatabaseSnapshot", snapshotPath, fileInfo.Length);
+            }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error capturing database snapshot: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Inserts an artifact record into the test_artifacts table.
+    /// </summary>
+    private void InsertArtifactRecord(string connectionString, Guid executionId, string artifactType, string filePath, long fileSizeBytes)
+    {
+        try
+        {
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            const string sql = @"
+                INSERT INTO test_artifacts (
+                    execution_id,
+                    artifact_type,
+                    file_path,
+                    file_size_bytes
+                )
+                VALUES (
+                    @executionId,
+                    @artifactType,
+                    @filePath,
+                    @fileSizeBytes
+                )";
+
+            using var command = new NpgsqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@executionId", executionId);
+            command.Parameters.AddWithValue("@artifactType", artifactType);
+            command.Parameters.AddWithValue("@filePath", filePath);
+            command.Parameters.AddWithValue("@fileSizeBytes", fileSizeBytes);
+
+            command.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error inserting artifact record for {artifactType}: {ex.Message}");
         }
     }
 

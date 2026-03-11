@@ -24,6 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Magidesk.Tests.Workflows\Magidesk.Tests.Workflows.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Scripts\*.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
