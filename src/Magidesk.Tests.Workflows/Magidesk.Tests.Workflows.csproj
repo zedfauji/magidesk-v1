@@ -10,6 +10,7 @@
     <Platforms>x86;x64</Platforms>
     <PlatformTarget>x86</PlatformTarget>
     <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <!-- Fix for "Windows App SDK requires Microsoft.Windows.SDK.NET.Ref" error -->
     <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
     <UseWinUI>true</UseWinUI>
@@ -23,6 +24,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="Npgsql" Version="8.0.8" />
     <PackageReference Include="xunit" Version="2.5.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
