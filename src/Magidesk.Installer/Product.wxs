@@ -17,6 +17,9 @@
     
     <MediaTemplate EmbedCab="yes" />
 
+    <!-- Icon definition - extracted from Magidesk.exe -->
+    <Icon Id="MagideskIcon.exe" SourceFile="$(var.StagingDir)\app\Magidesk.exe" />
+
     <!-- Installation directory -->
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFiles64Folder">
@@ -35,12 +38,32 @@
       <!-- Application files harvested by Heat.exe -->
       <ComponentGroupRef Id="ApplicationFiles" />
       
+      <!-- Directory permissions (Task 9.2) -->
+      <ComponentRef Id="InstallFolderPermissions" />
+      
+      <!-- Shortcuts (Task 10.1) -->
+      <ComponentGroupRef Id="ShortcutsComponentGroup" />
+      
       <!-- Additional component references will be added as we create them -->
     </Feature>
 
+    <!-- Custom Actions -->
+    <Binary Id="CustomActions" SourceFile="$(var.Magidesk.Installer.CustomActions.TargetDir)Magidesk.Installer.CustomActions.CA.dll" />
+    
+    <CustomAction Id="CA_VerifyFileCopy"
+                  BinaryKey="CustomActions"
+                  DllEntry="VerifyFileCopy"
+                  Execute="immediate"
+                  Return="check" />
+
     <!-- Custom action execution sequence will be defined in task 17.2 -->
     <InstallExecuteSequence>
-      <!-- Custom actions will be added in later tasks -->
+      <!-- Verify critical files after InstallFiles completes (Task 9.3) -->
+      <Custom Action="CA_VerifyFileCopy" After="InstallFiles">
+        NOT Installed
+      </Custom>
+      
+      <!-- Additional custom actions will be added in later tasks -->
     </InstallExecuteSequence>
 
   </Product>

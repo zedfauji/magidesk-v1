@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util">
+  <Fragment>
+    <!--
+      Directory Permissions Component
+      
+      This component configures file permissions for the installation directory
+      (C:\Program Files\Magidesk) to meet security requirements.
+      
+      Requirements: 10.4
+      - Read and execute permissions for all users (Users group)
+      - Full control for Administrators
+      
+      Implementation:
+      - Uses PermissionEx element from WiX Util extension
+      - Permissions are set on the INSTALLFOLDER directory
+      - Applied during installation via CreateFolder element
+    -->
+    
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="InstallFolderPermissions" Guid="A1B2C3D4-E5F6-4A5B-8C9D-0E1F2A3B4C5D">
+        <!--
+          CreateFolder ensures the directory exists and allows us to set permissions.
+          Even though the directory will be created by file installation, we need
+          this element to attach permission settings.
+        -->
+        <CreateFolder>
+          <!--
+            Grant Read & Execute permissions to the Users group (all users)
+            
+            Permissions breakdown:
+            - Read: View files and subdirectories
+            - ReadExtendedAttributes: Read extended file attributes
+            - Execute: Run executable files
+            - ReadPermissions: View security information
+            
+            This allows all users to run the application but not modify it.
+          -->
+          <util:PermissionEx User="Users"
+                             Read="yes"
+                             ReadExtendedAttributes="yes"
+                             Execute="yes"
+                             ReadPermissions="yes" />
+          
+          <!--
+            Grant Full Control to the Administrators group
+            
+            Permissions: All rights including modify, delete, change permissions
+            
+            This allows administrators to update, uninstall, or reconfigure
+            the application.
+          -->
+          <util:PermissionEx User="Administrators"
+                             GenericAll="yes" />
+        </CreateFolder>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

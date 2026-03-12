@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   <Fragment>
-    <!-- Shortcuts component -->
-    <!-- Will be implemented in task 10.1 -->
+    <!-- 
+      Shortcuts component for Desktop and Start Menu
+      Task 10.1: Create desktop and start menu shortcuts
+      Requirements: 11.1, 11.2
+    -->
     
     <ComponentGroup Id="ShortcutsComponentGroup">
       <!-- Desktop shortcut -->
@@ -17,7 +20,7 @@
         <RegistryValue Root="HKCU" Key="Software\Magidesk\POS" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
       </Component>
 
-      <!-- Start Menu shortcut -->
+      <!-- Start Menu shortcut under "Magidesk" folder -->
       <Component Id="StartMenuShortcut" Directory="ApplicationProgramsFolder" Guid="*">
         <Shortcut Id="StartMenuShortcut"
                   Name="Magidesk POS"
