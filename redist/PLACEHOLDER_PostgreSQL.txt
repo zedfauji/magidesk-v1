@@ -1,0 +1,8 @@
+This is a placeholder for the PostgreSQL 16 binaries ZIP.
+
+Expected filename: postgresql-16-windows-x64.zip
+Download from: https://www.enterprisedb.com/download-postgresql-binaries
+
+IMPORTANT: Download the BINARIES ZIP, not the full installer.
+
+After downloading, delete this placeholder file.

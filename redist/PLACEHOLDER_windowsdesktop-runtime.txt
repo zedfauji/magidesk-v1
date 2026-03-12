@@ -1,0 +1,6 @@
+This is a placeholder for the .NET 8 Desktop Runtime installer.
+
+Expected filename: windowsdesktop-runtime-8.0.*-win-x64.exe
+Download from: https://dotnet.microsoft.com/en-us/download/dotnet/8.0
+
+After downloading, delete this placeholder file.

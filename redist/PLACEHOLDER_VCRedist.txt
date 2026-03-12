@@ -1,0 +1,6 @@
+This is a placeholder for the Visual C++ Redistributable.
+
+Expected filename: VC_redist.x64.exe
+Download from: https://aka.ms/vs/17/release/vc_redist.x64.exe
+
+After downloading, delete this placeholder file.

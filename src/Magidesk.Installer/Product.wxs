@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  
+  <Product Id="*"
+           Name="Magidesk POS"
+           Language="1033"
+           Version="0.1.0.0"
+           Manufacturer="Magidesk"
+           UpgradeCode="YOUR-PRODUCT-UPGRADE-CODE-GUID-HERE">
+    
+    <Package InstallerVersion="500"
+             Compressed="yes"
+             InstallScope="perMachine"
+             Platform="x64" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- Installation directory -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="INSTALLFOLDER" Name="Magidesk" />
+      </Directory>
+      
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="Magidesk" />
+      </Directory>
+      
+      <Directory Id="DesktopFolder" Name="Desktop" />
+    </Directory>
+
+    <!-- Features -->
+    <Feature Id="ProductFeature" Title="Magidesk POS" Level="1">
+      <!-- Component references will be added as we create them -->
+    </Feature>
+
+    <!-- Custom action execution sequence will be defined in task 17.2 -->
+    <InstallExecuteSequence>
+      <!-- Custom actions will be added in later tasks -->
+    </InstallExecuteSequence>
+
+  </Product>
+</Wix>

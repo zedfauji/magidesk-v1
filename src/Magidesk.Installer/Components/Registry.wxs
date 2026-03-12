@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+    <!-- Registry component for ARP (Add/Remove Programs) registration -->
+    <!-- Will be implemented in task 10.2 -->
+    
+    <ComponentGroup Id="RegistryComponentGroup">
+      <Component Id="RegistryEntries" Directory="INSTALLFOLDER" Guid="*">
+        <!-- ARP Display Name -->
+        <RegistryValue Root="HKLM" 
+                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" 
+                       Name="DisplayName" 
+                       Type="string" 
+                       Value="Magidesk POS" 
+                       KeyPath="yes" />
+        
+        <!-- ARP Display Version -->
+        <RegistryValue Root="HKLM" 
+                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" 
+                       Name="DisplayVersion" 
+                       Type="string" 
+                       Value="[ProductVersion]" />
+        
+        <!-- ARP Publisher -->
+        <RegistryValue Root="HKLM" 
+                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" 
+                       Name="Publisher" 
+                       Type="string" 
+                       Value="Magidesk" />
+        
+        <!-- ARP Install Location -->
+        <RegistryValue Root="HKLM" 
+                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" 
+                       Name="InstallLocation" 
+                       Type="string" 
+                       Value="[INSTALLFOLDER]" />
+        
+        <!-- ARP Uninstall String -->
+        <RegistryValue Root="HKLM" 
+                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" 
+                       Name="UninstallString" 
+                       Type="string" 
+                       Value="MsiExec.exe /X[ProductCode]" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+    <!-- PostgreSQL installation component -->
+    <!-- Will be implemented in task 5 (PostgreSQL installation custom action) -->
+    
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Directory Id="PostgreSQLDir" Name="PostgreSQL">
+        <Directory Id="PostgreSQL16Dir" Name="16" />
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

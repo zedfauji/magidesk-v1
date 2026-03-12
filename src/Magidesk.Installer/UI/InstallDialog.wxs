@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+    <!-- Custom installation dialog -->
+    <!-- Will be implemented in task 18.1 -->
+  </Fragment>
+</Wix>

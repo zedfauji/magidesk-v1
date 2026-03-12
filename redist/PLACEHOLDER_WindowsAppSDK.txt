@@ -1,0 +1,6 @@
+This is a placeholder for the Windows App SDK 1.6 Runtime.
+
+Expected filename: Microsoft.WindowsAppRuntime.1.6.msix
+Download from: https://aka.ms/windowsappsdk/1.6/latest/windowsappruntimeinstall-x64.exe
+
+After downloading, delete this placeholder file.

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:bal="http://wixtoolset.org/schemas/v4/wxs/bal"
+     xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util">
+  
+  <Bundle Name="Magidesk POS"
+          Version="0.1.0.0"
+          Manufacturer="Magidesk"
+          UpgradeCode="YOUR-UPGRADE-CODE-GUID-HERE"
+          IconSourceFile="icon.ico">
+    
+    <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
+      <bal:WixStandardBootstrapperApplication
+        LicenseFile="license.rtf"
+        LogoFile="logo.png"
+        ThemeFile="theme.xml"
+        LocalizationFile="localization.wxl" />
+    </BootstrapperApplicationRef>
+
+    <Chain>
+      <!-- .NET 8 Desktop Runtime x64 -->
+      <ExePackage Id="NetRuntime"
+                  SourceFile="..\..\build\installer\staging\prerequisites\windowsdesktop-runtime-8.0-win-x64.exe"
+                  InstallCommand="/install /quiet /norestart"
+                  RepairCommand="/repair /quiet /norestart"
+                  UninstallCommand="/uninstall /quiet /norestart"
+                  PerMachine="yes"
+                  Permanent="yes"
+                  Vital="yes">
+        <!-- Detection logic will be added in task 4.1 -->
+      </ExePackage>
+
+      <!-- Windows App SDK 1.6 -->
+      <MsiPackage Id="WinAppSDK"
+                  SourceFile="..\..\build\installer\staging\prerequisites\Microsoft.WindowsAppRuntime.1.6.msix"
+                  PerMachine="yes"
+                  Permanent="yes"
+                  Vital="yes">
+        <!-- Detection logic will be added in task 4.2 -->
+      </MsiPackage>
+
+      <!-- VC++ Redistributable x64 -->
+      <ExePackage Id="VCRedist"
+                  SourceFile="..\..\build\installer\staging\prerequisites\VC_redist.x64.exe"
+                  InstallCommand="/install /quiet /norestart"
+                  RepairCommand="/repair /quiet /norestart"
+                  UninstallCommand="/uninstall /quiet /norestart"
+                  PerMachine="yes"
+                  Permanent="yes"
+                  Vital="yes">
+        <!-- Detection logic will be added in task 4.3 -->
+      </ExePackage>
+
+      <!-- Main Magidesk MSI -->
+      <MsiPackage Id="MagideskMsi"
+                  SourceFile="$(var.Magidesk.Installer.TargetPath)"
+                  Vital="yes"
+                  PerMachine="yes" />
+    </Chain>
+  </Bundle>
+</Wix>

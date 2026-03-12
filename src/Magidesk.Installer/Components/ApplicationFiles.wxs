@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+    <!-- Application files component will be populated using Heat.exe in task 9.1 -->
+    <!-- This file will harvest the published application files -->
+  </Fragment>
+</Wix>

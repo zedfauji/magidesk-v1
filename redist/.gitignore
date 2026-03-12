@@ -1,0 +1,8 @@
+# Ignore all downloaded prerequisite files (they are large binaries)
+*.exe
+*.msix
+*.zip
+
+# Keep the README and scripts
+!README.md
+!.gitignore
