@@ -44,6 +44,9 @@
       <!-- Shortcuts (Task 10.1) -->
       <ComponentGroupRef Id="ShortcutsComponentGroup" />
       
+      <!-- ARP Registration (Task 10.2) -->
+      <ComponentGroupRef Id="RegistryComponentGroup" />
+      
       <!-- Additional component references will be added as we create them -->
     </Feature>
 

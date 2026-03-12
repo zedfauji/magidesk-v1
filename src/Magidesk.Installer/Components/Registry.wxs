@@ -1,46 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   <Fragment>
-    <!-- Registry component for ARP (Add/Remove Programs) registration -->
-    <!-- Will be implemented in task 10.2 -->
+    <!--
+      Add/Remove Programs (ARP) Registry Component
+      
+      This component registers the application in Windows Add/Remove Programs
+      (Control Panel → Programs and Features) with proper metadata.
+      
+      Task 10.2: Implement ARP registration
+      Requirements: 11.3, 11.4
+    -->
     
     <ComponentGroup Id="RegistryComponentGroup">
-      <Component Id="RegistryEntries" Directory="INSTALLFOLDER" Guid="*">
-        <!-- ARP Display Name -->
-        <RegistryValue Root="HKLM" 
-                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" 
-                       Name="DisplayName" 
-                       Type="string" 
-                       Value="Magidesk POS" 
+      <Component Id="ARPRegistration" Directory="INSTALLFOLDER" Guid="*">
+        <!--
+          ARP Display Name
+          The name shown in Add/Remove Programs
+        -->
+        <RegistryValue Root="HKLM"
+                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]"
+                       Name="DisplayName"
+                       Type="string"
+                       Value="Magidesk POS"
                        KeyPath="yes" />
         
-        <!-- ARP Display Version -->
-        <RegistryValue Root="HKLM" 
-                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" 
-                       Name="DisplayVersion" 
-                       Type="string" 
+        <!--
+          ARP Display Version
+          The version shown in Add/Remove Programs
+        -->
+        <RegistryValue Root="HKLM"
+                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]"
+                       Name="DisplayVersion"
+                       Type="string"
                        Value="[ProductVersion]" />
         
-        <!-- ARP Publisher -->
-        <RegistryValue Root="HKLM" 
-                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" 
-                       Name="Publisher" 
-                       Type="string" 
+        <!--
+          ARP Publisher
+          The publisher/manufacturer shown in Add/Remove Programs
+        -->
+        <RegistryValue Root="HKLM"
+                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]"
+                       Name="Publisher"
+                       Type="string"
                        Value="Magidesk" />
         
-        <!-- ARP Install Location -->
-        <RegistryValue Root="HKLM" 
-                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" 
-                       Name="InstallLocation" 
-                       Type="string" 
+        <!--
+          ARP Display Icon
+          The icon shown in Add/Remove Programs (uses Magidesk.exe icon)
+        -->
+        <RegistryValue Root="HKLM"
+                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]"
+                       Name="DisplayIcon"
+                       Type="string"
+                       Value="[INSTALLFOLDER]Magidesk.exe,0" />
+        
+        <!--
+          ARP Install Location
+          The installation directory shown in Add/Remove Programs
+        -->
+        <RegistryValue Root="HKLM"
+                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]"
+                       Name="InstallLocation"
+                       Type="string"
                        Value="[INSTALLFOLDER]" />
         
-        <!-- ARP Uninstall String -->
-        <RegistryValue Root="HKLM" 
-                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" 
-                       Name="UninstallString" 
-                       Type="string" 
+        <!--
+          ARP Uninstall String
+          The command executed when user clicks "Uninstall"
+          WiX automatically sets this, but we include it for completeness
+        -->
+        <RegistryValue Root="HKLM"
+                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]"
+                       Name="UninstallString"
+                       Type="string"
                        Value="MsiExec.exe /X[ProductCode]" />
+        
+        <!--
+          ARP No Modify
+          Prevents "Modify" button from appearing (we don't support modify)
+        -->
+        <RegistryValue Root="HKLM"
+                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]"
+                       Name="NoModify"
+                       Type="integer"
+                       Value="1" />
+        
+        <!--
+          ARP No Repair
+          Prevents "Repair" button from appearing (we don't support repair)
+        -->
+        <RegistryValue Root="HKLM"
+                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]"
+                       Name="NoRepair"
+                       Type="integer"
+                       Value="1" />
+        
+        <!--
+          ARP Help Link
+          Optional: Link to help/support page
+        -->
+        <RegistryValue Root="HKLM"
+                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]"
+                       Name="HelpLink"
+                       Type="string"
+                       Value="https://magidesk.com/support" />
+        
+        <!--
+          ARP URL Info About
+          Optional: Link to product information page
+        -->
+        <RegistryValue Root="HKLM"
+                       Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]"
+                       Name="URLInfoAbout"
+                       Type="string"
+                       Value="https://magidesk.com" />
       </Component>
     </ComponentGroup>
   </Fragment>
