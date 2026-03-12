@@ -6,7 +6,7 @@
            Language="1033"
            Version="0.1.0.0"
            Manufacturer="Magidesk"
-           UpgradeCode="YOUR-PRODUCT-UPGRADE-CODE-GUID-HERE">
+           UpgradeCode="B8C7D6E5-F4A3-4B2C-9D8E-7F6A5B4C3D2E">
     
     <Package InstallerVersion="500"
              Compressed="yes"
@@ -18,7 +18,7 @@
     <MediaTemplate EmbedCab="yes" />
 
     <!-- Icon definition - extracted from Magidesk.exe -->
-    <Icon Id="MagideskIcon.exe" SourceFile="$(var.StagingDir)\app\Magidesk.exe" />
+    <Icon Id="MagideskIcon.exe" SourceFile="$(var.AppSourceDir)\Magidesk.exe" />
 
     <!-- Installation directory -->
     <Directory Id="TARGETDIR" Name="SourceDir">

@@ -21,16 +21,10 @@
   <Bundle Name="Magidesk POS"
           Version="0.1.0.0"
           Manufacturer="Magidesk"
-          UpgradeCode="A1B2C3D4-E5F6-4A5B-8C9D-0E1F2A3B4C5D"
-          IconSourceFile="icon.ico">
+          UpgradeCode="A1B2C3D4-E5F6-4A5B-8C9D-0E1F2A3B4C5D">
     
-    <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
-      <bal:WixStandardBootstrapperApplication
-        LicenseFile="license.rtf"
-        LogoFile="logo.png"
-        ThemeFile="theme.xml"
-        LocalizationFile="localization.wxl" />
-    </BootstrapperApplicationRef>
+    <!-- Use standard bootstrapper without custom UI for now -->
+    <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.Foundation" />
 
     <!-- 
       Prerequisite Detection Registry Searches
