@@ -88,7 +88,7 @@ Write-Host ""
 # ============================================================================
 Write-Host "[3/6] Generating EF Core migration bundle..." -ForegroundColor Yellow
 
-$InfrastructureProject = "$SolutionDir\src\Magidesk.Infrastructure\Magidesk.Infrastructure.csproj"
+$MigrationsProject = "$SolutionDir\src\Magidesk.Migrations\Magidesk.Migrations.csproj"
 $ToolsDir = "$StagingDir\tools"
 $BundlePath = "$ToolsDir\efbundle.exe"
 
@@ -96,9 +96,11 @@ New-Item -ItemType Directory -Path $ToolsDir -Force | Out-Null
 
 Write-Host "  Running: dotnet ef migrations bundle" -ForegroundColor Gray
 
+# Use Magidesk.Migrations as the project (where migrations are stored)
+# Use Magidesk.Migrations as startup project (it has the design-time factory)
 dotnet ef migrations bundle `
-    --project $InfrastructureProject `
-    --startup-project $PresentationProject `
+    --project $MigrationsProject `
+    --startup-project $MigrationsProject `
     --output $BundlePath `
     --configuration $Configuration `
     --force `
