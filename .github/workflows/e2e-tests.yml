@@ -1,0 +1,48 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  e2e-tests:
+    runs-on: self-hosted
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+    
+    - name: Setup Database
+      run: |
+        powershell -File Scripts/db/setup-test-db.ps1
+    
+    - name: Restore dependencies
+      run: dotnet restore src/Magidesk.sln
+    
+    - name: Build
+      run: dotnet build src/Magidesk.sln --no-restore
+    
+    - name: Run P0 Tests
+      run: dotnet test src/Magidesk.Tests.E2E/Magidesk.Tests.E2E.csproj --filter "Priority=P0" --logger "trx;LogFileName=test-results.trx" --logger "junit;LogFileName=test-results.xml"
+      continue-on-error: false
+    
+    - name: Run P1 Tests
+      run: dotnet test src/Magidesk.Tests.E2E/Magidesk.Tests.E2E.csproj --filter "Priority=P1" --logger "trx;LogFileName=test-results-p1.trx"
+      continue-on-error: true
+    
+    - name: Publish Test Results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: test-results
+        path: |
+          **/TestResults/**
+          **/test-results*.trx
+          **/test-results*.xml
+        retention-days: 30

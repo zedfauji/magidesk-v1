@@ -39,6 +39,13 @@ public sealed class MenuConfigPage : BasePage
     private const string CategoryIdTextBoxId = "CategoryIdTextBox";
     private const string NewPositionTextBoxId = "NewPositionTextBox";
     private const string ReorderCategoryButtonId = "ReorderCategoryButton";
+    
+    // Search and retrieval controls
+    private const string SearchTextBoxId = "SearchTextBox";
+    private const string SearchButtonId = "SearchButton";
+    private const string ItemNameDisplayId = "ItemNameDisplay";
+    private const string ItemPriceDisplayId = "ItemPriceDisplay";
+    private const string ItemCategoryDisplayId = "ItemCategoryDisplay";
 
     public MenuConfigPage(Window window) : base(window)
     {
@@ -146,5 +153,43 @@ public sealed class MenuConfigPage : BasePage
         EnterText(CategoryIdTextBoxId, categoryId);
         EnterText(NewPositionTextBoxId, newPosition.ToString());
         ClickButton(ReorderCategoryButtonId);
+    }
+
+    /// <summary>
+    /// Searches for a menu item by name.
+    /// </summary>
+    /// <param name="itemName">The item name to search for.</param>
+    public void SearchMenuItem(string itemName)
+    {
+        EnterText(SearchTextBoxId, itemName);
+        ClickButton(SearchButtonId);
+    }
+
+    /// <summary>
+    /// Gets the displayed menu item name from the search results.
+    /// </summary>
+    /// <returns>The menu item name.</returns>
+    public string GetMenuItemName()
+    {
+        return GetText(ItemNameDisplayId);
+    }
+
+    /// <summary>
+    /// Gets the displayed menu item price from the search results.
+    /// </summary>
+    /// <returns>The menu item price.</returns>
+    public decimal GetMenuItemPrice()
+    {
+        var priceText = GetText(ItemPriceDisplayId);
+        return decimal.TryParse(priceText, out var price) ? price : 0m;
+    }
+
+    /// <summary>
+    /// Gets the displayed menu item category from the search results.
+    /// </summary>
+    /// <returns>The menu item category.</returns>
+    public string GetMenuItemCategory()
+    {
+        return GetText(ItemCategoryDisplayId);
     }
 }
