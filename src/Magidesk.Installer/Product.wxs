@@ -32,7 +32,10 @@
 
     <!-- Features -->
     <Feature Id="ProductFeature" Title="Magidesk POS" Level="1">
-      <!-- Component references will be added as we create them -->
+      <!-- Application files harvested by Heat.exe -->
+      <ComponentGroupRef Id="ApplicationFiles" />
+      
+      <!-- Additional component references will be added as we create them -->
     </Feature>
 
     <!-- Custom action execution sequence will be defined in task 17.2 -->
