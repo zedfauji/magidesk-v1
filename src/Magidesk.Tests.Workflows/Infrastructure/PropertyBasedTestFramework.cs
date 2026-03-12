@@ -137,13 +137,20 @@ public class PropertyBasedTestFramework : IPropertyBasedTestFramework
     /// <returns>Configured FsCheck Config instance.</returns>
     private static Config CreateConfiguration(int iterations, string? tag)
     {
-        var config = Config.Quick.WithMaxTest(iterations);
-        
-        if (!string.IsNullOrWhiteSpace(tag))
-        {
-            // Add tag to configuration name for traceability in test output
-            config = config.WithName(tag);
-        }
+        // Start with Quick config and modify MaxTest
+        var config = new Config(
+            maxTest: iterations,
+            maxFail: Config.Quick.MaxFail,
+            replay: Config.Quick.Replay,
+            name: tag ?? Config.Quick.Name,
+            startSize: Config.Quick.StartSize,
+            endSize: Config.Quick.EndSize,
+            quietOnSuccess: Config.Quick.QuietOnSuccess,
+            every: Config.Quick.Every,
+            everyShrink: Config.Quick.EveryShrink,
+            arbitrary: Config.Quick.Arbitrary,
+            runner: Config.Quick.Runner
+        );
 
         return config;
     }

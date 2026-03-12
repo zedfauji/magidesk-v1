@@ -108,7 +108,7 @@ public class TestDataGeneratorsTests
         var generator = TestDataGenerators.TicketGenerator();
         
         // Act
-        var tickets = generator.Generator.Sample(10, 10);
+        var tickets = generator.Generator.Sample(10, 10).ToList();
         
         // Assert
         tickets.Should().HaveCount(10);
@@ -122,7 +122,7 @@ public class TestDataGeneratorsTests
         var generator = TestDataGenerators.MenuItemGenerator();
         
         // Act
-        var items = generator.Generator.Sample(50, 50);
+        var items = generator.Generator.Sample(50, 50).ToList();
         
         // Assert
         items.Should().HaveCount(50);
@@ -137,7 +137,7 @@ public class TestDataGeneratorsTests
         var generator = TestDataGenerators.CashSessionGenerator();
         
         // Act - Generate 100 samples to verify invariant
-        var sessions = generator.Generator.Sample(100, 100);
+        var sessions = generator.Generator.Sample(100, 100).ToList();
         
         // Assert - Verify ending balance calculation for all samples
         foreach (var session in sessions)

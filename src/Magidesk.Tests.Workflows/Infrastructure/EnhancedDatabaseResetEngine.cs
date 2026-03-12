@@ -80,8 +80,8 @@ public class EnhancedDatabaseResetEngine : IEnhancedDatabaseResetEngine
                     new NpgsqlParameter("@y", 100.0),
                     new NpgsqlParameter("@width", 120.0),
                     new NpgsqlParameter("@height", 80.0),
-                    new NpgsqlParameter("@shape", 0), // Rectangle
-                    new NpgsqlParameter("@status", 0), // Available
+                    new NpgsqlParameter("@shape", (object)0), // Rectangle
+                    new NpgsqlParameter("@status", (object)0), // Available
                     new NpgsqlParameter("@tableTypeId", tableTypeId),
                     new NpgsqlParameter("@now", DateTime.UtcNow));
             }
@@ -152,9 +152,9 @@ public class EnhancedDatabaseResetEngine : IEnhancedDatabaseResetEngine
                     new NpgsqlParameter("@y", ((tableNumberOnFloor - 1) / 5) * 200.0),
                     new NpgsqlParameter("@width", 150.0),
                     new NpgsqlParameter("@height", 150.0),
-                    new NpgsqlParameter("@shape", 1), // Circle
+                    new NpgsqlParameter("@shape", (object)1), // Circle
                     new NpgsqlParameter("@floorId", floorId),
-                    new NpgsqlParameter("@status", 0), // Available
+                    new NpgsqlParameter("@status", (object)0), // Available
                     new NpgsqlParameter("@now", DateTime.UtcNow));
             }
 
