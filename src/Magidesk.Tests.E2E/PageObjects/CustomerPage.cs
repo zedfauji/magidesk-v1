@@ -123,4 +123,45 @@ public sealed class CustomerPage : BasePage
         EnterText(PointsToRedeemTextBoxId, points.ToString());
         ClickButton(RedeemPointsButtonId);
     }
+
+    /// <summary>
+    /// Gets the customer name from the currently displayed customer profile.
+    /// </summary>
+    /// <returns>The customer name.</returns>
+    public string GetCustomerName()
+    {
+        return GetText(CustomerNameTextBoxId);
+    }
+
+    /// <summary>
+    /// Gets the customer phone from the currently displayed customer profile.
+    /// </summary>
+    /// <returns>The customer phone number.</returns>
+    public string GetCustomerPhone()
+    {
+        return GetText(CustomerPhoneTextBoxId);
+    }
+
+    /// <summary>
+    /// Gets the customer email from the currently displayed customer profile.
+    /// </summary>
+    /// <returns>The customer email address.</returns>
+    public string GetCustomerEmail()
+    {
+        return GetText(CustomerEmailTextBoxId);
+    }
+
+    /// <summary>
+    /// Updates an existing customer profile.
+    /// </summary>
+    /// <param name="name">Customer name.</param>
+    /// <param name="phone">Customer phone number.</param>
+    /// <param name="email">Customer email address.</param>
+    public void UpdateCustomer(string name, string phone, string email)
+    {
+        EnterText(CustomerNameTextBoxId, name);
+        EnterText(CustomerPhoneTextBoxId, phone);
+        EnterText(CustomerEmailTextBoxId, email);
+        ClickButton(CreateCustomerButtonId); // Reuse create button for update
+    }
 }

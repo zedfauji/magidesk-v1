@@ -16,6 +16,9 @@ public sealed class OrderEntryPage : BasePage
     private const string SettlementButtonId = "SettlementButton";
     private const string TicketTotalTextBlockId = "TicketTotalTextBlock";
     private const string ItemCountTextBlockId = "ItemCountTextBlock";
+    private const string SendToKitchenButtonId = "SendToKitchenButton";
+    private const string VoidTicketButtonId = "VoidTicketButton";
+    private const string PendingKitchenItemsIndicatorId = "PendingKitchenItemsIndicator";
 
     public OrderEntryPage(Window window) : base(window)
     {
@@ -80,5 +83,37 @@ public sealed class OrderEntryPage : BasePage
     {
         var countText = GetText(ItemCountTextBlockId);
         return int.Parse(countText);
+    }
+
+    public void SendToKitchen()
+    {
+        try
+        {
+            ClickButton(SendToKitchenButtonId);
+        }
+        catch (InvalidOperationException)
+        {
+            // Button may not exist if items are automatically sent to kitchen
+            // or if there are no kitchen items on the ticket
+        }
+    }
+
+    public void VoidTicket()
+    {
+        ClickButton(VoidTicketButtonId);
+    }
+
+    public bool HasPendingKitchenItems()
+    {
+        try
+        {
+            var indicator = FindElement(PendingKitchenItemsIndicatorId);
+            return indicator != null && indicator.IsEnabled;
+        }
+        catch (InvalidOperationException)
+        {
+            // Indicator not found means no pending items
+            return false;
+        }
     }
 }

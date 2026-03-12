@@ -99,6 +99,12 @@ public sealed class SwitchboardPage : BasePage
         NavigateToBackOffice();
     }
 
+    public void NavigateToCustomerManagement()
+    {
+        // Customer management is accessed through Manager Functions or Back Office
+        NavigateToManagerFunctions();
+    }
+
     public string GetCurrentUserName()
     {
         return GetText("CurrentUserDisplay");
