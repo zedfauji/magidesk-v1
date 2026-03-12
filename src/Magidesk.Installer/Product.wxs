@@ -18,7 +18,7 @@
     <MediaTemplate EmbedCab="yes" />
 
     <!-- Icon definition - extracted from Magidesk.exe -->
-    <Icon Id="MagideskIcon.exe" SourceFile="$(var.AppSourceDir)\Magidesk.exe" />
+    <Icon Id="MagideskIcon.exe" SourceFile="..\..\build\installer\staging\app\Magidesk.Presentation.exe" />
 
     <!-- Installation directory -->
     <Directory Id="TARGETDIR" Name="SourceDir">

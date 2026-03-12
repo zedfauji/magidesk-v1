@@ -175,7 +175,7 @@
         Validates: Requirements 1.1
       -->
       <MsiPackage Id="MagideskMsi"
-                  SourceFile="$(var.Magidesk.Installer.TargetPath)"
+                  SourceFile="bin\$(Configuration)\net8.0-windows\Magidesk.msi"
                   Vital="yes"
                   PerMachine="yes" />
     </Chain>

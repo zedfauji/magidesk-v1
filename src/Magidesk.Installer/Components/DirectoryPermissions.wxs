@@ -31,17 +31,14 @@
             
             Permissions breakdown:
             - Read: View files and subdirectories
-            - ReadExtendedAttributes: Read extended file attributes
-            - Execute: Run executable files
-            - ReadPermissions: View security information
+            - GenericRead: Standard read access
+            - GenericExecute: Standard execute access
             
             This allows all users to run the application but not modify it.
           -->
           <util:PermissionEx User="Users"
-                             Read="yes"
-                             ReadExtendedAttributes="yes"
-                             Execute="yes"
-                             ReadPermissions="yes" />
+                             GenericRead="yes"
+                             GenericExecute="yes" />
           
           <!--
             Grant Full Control to the Administrators group

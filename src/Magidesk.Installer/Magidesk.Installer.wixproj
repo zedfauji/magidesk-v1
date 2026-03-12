@@ -1,7 +1,7 @@
 <Project Sdk="WixToolset.Sdk/5.0.0">
   <PropertyGroup>
-    <OutputName>MagideskSetup</OutputName>
-    <OutputType>Bundle</OutputType>
+    <OutputName>Magidesk</OutputName>
+    <OutputType>Package</OutputType>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
     <LangVersion>latest</LangVersion>
@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Bundle.wxs" />
     <Compile Include="Product.wxs" />
     <Compile Include="Components\**\*.wxs" />
     <Compile Include="UI\**\*.wxs" />
@@ -43,7 +42,8 @@
     - -gg: Generate GUIDs now (stable GUIDs for components)
     - -sfrag: Suppress Fragment element generation (we provide it in the template)
     - -srd: Suppress root directory element (we use INSTALLFOLDER)
-    - -var: Use preprocessor variable for source paths
+    - -scom: Suppress COM registration
+    - -sreg: Suppress registry harvesting
     - -out: Output file path
     
     This target runs before the Compile target to ensure the harvested components
@@ -57,14 +57,9 @@
            Text="Application staging directory not found: $(AppSourceDir). Please run the build script to publish the application first." />
     
     <!-- Run Heat.exe to harvest application files -->
-    <Exec Command="heat dir &quot;$(AppSourceDir)&quot; -cg ApplicationFiles -dr INSTALLFOLDER -gg -sfrag -srd -var var.AppSourceDir -out &quot;$(MSBuildProjectDirectory)\Components\ApplicationFiles.wxs&quot;"
+    <Exec Command="heat dir &quot;$(AppSourceDir)&quot; -cg ApplicationFiles -dr INSTALLFOLDER -gg -sfrag -srd -scom -sreg -out &quot;$(MSBuildProjectDirectory)\Components\ApplicationFiles.wxs&quot;"
           WorkingDirectory="$(MSBuildProjectDirectory)" />
     
     <Message Text="Application files harvested successfully." Importance="high" />
   </Target>
-
-  <!-- Define preprocessor variable for Heat.exe -->
-  <ItemGroup>
-    <WixVariable Include="AppSourceDir" Value="$(AppSourceDir)" />
-  </ItemGroup>
 </Project>
