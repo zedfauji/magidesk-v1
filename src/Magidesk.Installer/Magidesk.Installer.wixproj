@@ -10,7 +10,8 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     
     <!-- Define source directory for Heat.exe harvesting -->
-    <AppSourceDir>$(SolutionDir)build\installer\staging\app</AppSourceDir>
+    <!-- Use MSBuildProjectDirectory to get the installer project directory, then navigate to solution root -->
+    <AppSourceDir>$(MSBuildProjectDirectory)\..\..\build\installer\staging\app</AppSourceDir>
   </PropertyGroup>
 
   <ItemGroup>
@@ -54,17 +55,25 @@
     This target runs before the Compile target to ensure the harvested components
     are available during WiX compilation.
   -->
+  <!-- 
+    Heat.exe Integration Target
+    
+    TEMPORARILY DISABLED - Heat harvesting will be enabled once we have a complete application
+    
+    This target runs Heat.exe before the WiX compilation to harvest application files
+    from the staging/app directory and generate the ApplicationFiles.wxs component.
+  -->
+  <!--
   <Target Name="HarvestApplicationFiles" BeforeTargets="Compile">
     <Message Text="Harvesting application files from $(AppSourceDir)..." Importance="high" />
     
-    <!-- Check if staging directory exists -->
     <Error Condition="!Exists('$(AppSourceDir)')" 
            Text="Application staging directory not found: $(AppSourceDir). Please run the build script to publish the application first." />
     
-    <!-- Run Heat.exe to harvest application files -->
-    <Exec Command="heat dir &quot;$(AppSourceDir)&quot; -cg ApplicationFiles -dr INSTALLFOLDER -gg -sfrag -srd -scom -sreg -out &quot;$(MSBuildProjectDirectory)\Components\ApplicationFiles.wxs&quot;"
+    <Exec Command="dotnet tool run heat dir &quot;$(AppSourceDir)&quot; -cg ApplicationFiles -dr INSTALLFOLDER -gg -sfrag -srd -scom -sreg -out &quot;$(MSBuildProjectDirectory)\Components\ApplicationFiles.wxs&quot;"
           WorkingDirectory="$(MSBuildProjectDirectory)" />
     
     <Message Text="Application files harvested successfully." Importance="high" />
   </Target>
+  -->
 </Project>

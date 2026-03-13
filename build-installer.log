@@ -1,0 +1,114 @@
+  Determining projects to restore...
+  Restored C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Domain\Magidesk.Domain.csproj (in 64 ms).
+  Restored C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Application\Magidesk.Application.csproj (in 163 ms).
+  Restored C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Infrastructure\Magidesk.Infrastructure.csproj (in 170 ms).
+  Restored C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\Magidesk.Migrations.csproj (in 170 ms).
+  Restored C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Presentation\Magidesk.Presentation.csproj (in 248 ms).
+  Sonar: (Magidesk.Domain.csproj) The analysis targets file not found: C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\bin\targets\SonarQube.Integration.targets
+  Magidesk.Domain -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Domain\bin\Release\net8.0\Magidesk.Domain.dll
+  Sonar: (Magidesk.Application.csproj) The analysis targets file not found: C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\bin\targets\SonarQube.Integration.targets
+  Magidesk.Application -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Application\bin\Release\net8.0\Magidesk.Application.dll
+  Sonar: (Magidesk.Infrastructure.csproj) The analysis targets file not found: C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\bin\targets\SonarQube.Integration.targets
+  Magidesk.Infrastructure -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Infrastructure\bin\Release\net8.0\Magidesk.Infrastructure.dll
+  Sonar: (Magidesk.Migrations.csproj) The analysis targets file not found: C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\bin\targets\SonarQube.Integration.targets
+  Magidesk.Migrations -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\bin\Release\net8.0\Magidesk.Migrations.dll
+  Sonar: (Magidesk.Presentation.csproj) The analysis targets file not found: C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\bin\targets\SonarQube.Integration.targets
+  Magidesk.Presentation -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Presentation\bin\Release\net8.0-windows10.0.19041.0\Magidesk.Presentation.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:13.43
+  Determining projects to restore...
+  Restored C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Domain\Magidesk.Domain.csproj (in 69 ms).
+  Restored C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Application\Magidesk.Application.csproj (in 153 ms).
+  Restored C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Infrastructure\Magidesk.Infrastructure.csproj (in 167 ms).
+  Restored C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\Magidesk.Migrations.csproj (in 167 ms).
+  Restored C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Presentation\Magidesk.Presentation.csproj (in 245 ms).
+  Sonar: (Magidesk.Domain.csproj) The analysis targets file not found: C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\bin\targets\SonarQube.Integration.targets
+  Magidesk.Domain -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Domain\bin\Release\net8.0\Magidesk.Domain.dll
+  Sonar: (Magidesk.Application.csproj) The analysis targets file not found: C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\bin\targets\SonarQube.Integration.targets
+  Magidesk.Application -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Application\bin\Release\net8.0\Magidesk.Application.dll
+  Sonar: (Magidesk.Infrastructure.csproj) The analysis targets file not found: C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\bin\targets\SonarQube.Integration.targets
+  Magidesk.Infrastructure -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Infrastructure\bin\Release\net8.0\Magidesk.Infrastructure.dll
+  Sonar: (Magidesk.Migrations.csproj) The analysis targets file not found: C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\bin\targets\SonarQube.Integration.targets
+  Magidesk.Migrations -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\bin\Release\net8.0\Magidesk.Migrations.dll
+  Sonar: (Magidesk.Presentation.csproj) The analysis targets file not found: C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\bin\targets\SonarQube.Integration.targets
+  Magidesk.Presentation -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Presentation\bin\Release\net8.0-windows10.0.19041.0\win-x64\Magidesk.Presentation.dll
+C:\Program Files\dotnet\sdk\10.0.101\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Publish.targets(217,5): warning NETSDK1198: A publish profile with the name 'win-AnyCPU.pubxml' was not found in the project. Set the PublishProfile property to a valid file name. [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Presentation\Magidesk.Presentation.csproj]
+  Magidesk.Presentation -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\build\installer\staging\app\
+Using project 'C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\Magidesk.Migrations.csproj'.
+Using startup project 'C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\Magidesk.Migrations.csproj'.
+dotnet msbuild /property:Configuration=Release /getProperty:ProjectName /getProperty:AssemblyName /getProperty:DesignAssembly /getProperty:Language /getProperty:OutputPath /getProperty:PlatformTarget /getProperty:ProjectAssetsFile /getProperty:ProjectDir /getProperty:RootNamespace /getProperty:RuntimeFrameworkVersion /getProperty:TargetFileName /getProperty:TargetFrameworkMoniker /getProperty:Nullable /getProperty:TargetFramework /getProperty:TargetPlatformIdentifier /getProperty:Platform /t:ResolvePackageAssets /getItem:RuntimeCopyLocalItems "C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\Magidesk.Migrations.csproj"
+dotnet msbuild /property:Configuration=Release /getProperty:ProjectName /getProperty:AssemblyName /getProperty:DesignAssembly /getProperty:Language /getProperty:OutputPath /getProperty:PlatformTarget /getProperty:ProjectAssetsFile /getProperty:ProjectDir /getProperty:RootNamespace /getProperty:RuntimeFrameworkVersion /getProperty:TargetFileName /getProperty:TargetFrameworkMoniker /getProperty:Nullable /getProperty:TargetFramework /getProperty:TargetPlatformIdentifier /getProperty:Platform /t:ResolvePackageAssets /getItem:RuntimeCopyLocalItems "C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\Magidesk.Migrations.csproj"
+Build started...
+dotnet build "C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\Magidesk.Migrations.csproj" --configuration Release /verbosity:quiet /nologo /p:PublishAot=false
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.97
+
+Build succeeded.
+dotnet exec --depsfile "C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\bin\Release\net8.0\Magidesk.Migrations.deps.json" --additionalprobingpath C:\Users\giris\.nuget\packages --additionalprobingpath "C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages" --runtimeconfig "C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\bin\Release\net8.0\Magidesk.Migrations.runtimeconfig.json" C:\Users\giris\.dotnet\tools\.store\dotnet-ef\10.0.2\dotnet-ef\10.0.2\tools\net8.0\any\tools\net8.0\any\ef.dll migrations bundle --output "C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\build\installer\staging\tools\efbundle.exe" --force --assembly "C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\bin\Release\net8.0\Magidesk.Migrations.dll" --project "C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\Magidesk.Migrations.csproj" --startup-assembly "C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\bin\Release\net8.0\Magidesk.Migrations.dll" --startup-project "C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\Magidesk.Migrations.csproj" --project-dir "C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\\" --root-namespace Magidesk.Migrations --language C# --framework net8.0 --design-assembly C:\Users\giris\.nuget\packages\microsoft.entityframeworkcore.design\8.0.0\lib\net8.0\Microsoft.EntityFrameworkCore.Design.dll --configuration Release --nullable --working-dir "C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk" --verbose
+Using assembly 'Magidesk.Migrations'.
+Using startup assembly 'Magidesk.Migrations'.
+Using application base 'C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\bin\Release\net8.0'.
+Using working directory 'C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations'.
+Using root namespace 'Magidesk.Migrations'.
+Using project directory 'C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\'.
+Remaining arguments: .
+Finding DbContext classes...
+Finding IDesignTimeDbContextFactory implementations...
+Found IDesignTimeDbContextFactory implementation 'MigrationsContextFactory'.
+Found DbContext 'ApplicationDbContext'.
+Finding application service provider in assembly 'Magidesk.Migrations'...
+Finding Microsoft.Extensions.Hosting service provider...
+No static method 'CreateHostBuilder(string[])' was found on class 'Program'.
+No application service provider was found.
+Finding DbContext classes in the project...
+Using DbContext factory 'MigrationsContextFactory'.
+Using context 'ApplicationDbContext'.
+Creating DbConnection.
+Created DbConnection. (10ms).
+'ApplicationDbContext' disposed.
+Disposing connection to database 'magidesk_new' on server 'tcp://localhost:5432'.
+Disposed connection to database 'magidesk_new' on server 'tcp://localhost:5432' (0ms).
+Building bundle...
+dotnet publish --runtime win-x64 --output C:\Users\giris\AppData\Local\Temp\siw5j1fd.kcq\publish --no-self-contained --configuration Release --disable-build-servers
+  Determining projects to restore...
+  Restored C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Domain\Magidesk.Domain.csproj (in 61 ms).
+  Restored C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Application\Magidesk.Application.csproj (in 148 ms).
+  Restored C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Infrastructure\Magidesk.Infrastructure.csproj (in 163 ms).
+  Restored C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\Magidesk.Migrations.csproj (in 163 ms).
+  Restored C:\Users\giris\AppData\Local\Temp\siw5j1fd.kcq\efbundle.csproj (in 185 ms).
+  Magidesk.Domain -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Domain\bin\Release\net8.0\Magidesk.Domain.dll
+  Magidesk.Application -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Application\bin\Release\net8.0\Magidesk.Application.dll
+  Magidesk.Infrastructure -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Infrastructure\bin\Release\net8.0\Magidesk.Infrastructure.dll
+  Magidesk.Migrations -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Migrations\bin\Release\net8.0\Magidesk.Migrations.dll
+  efbundle -> C:\Users\giris\AppData\Local\Temp\siw5j1fd.kcq\bin\Release\net8.0\win-x64\efbundle.dll
+  efbundle -> C:\Users\giris\AppData\Local\Temp\siw5j1fd.kcq\publish\
+
+Done. Migrations Bundle: C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\build\installer\staging\tools\efbundle.exe
+Don't forget to copy appsettings.json alongside your bundle if you need it to apply migrations.
+  Determining projects to restore...
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Installer.CustomActions\Magidesk.Installer.CustomActions.csproj : warning NU1903: Package 'Npgsql' 8.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-x9vc-6hfv-hg8c [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Installer\Magidesk.Installer.wixproj]
+  All projects are up-to-date for restore.
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Installer.CustomActions\Magidesk.Installer.CustomActions.csproj : warning NU1903: Package 'Npgsql' 8.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-x9vc-6hfv-hg8c
+  Sonar: (Magidesk.Installer.CustomActions.csproj) The analysis targets file not found: C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\bin\targets\SonarQube.Integration.targets
+  Magidesk.Installer.CustomActions -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Installer.CustomActions\bin\Release\net8.0-windows\Magidesk.Installer.CustomActions.dll
+  Sonar: (Magidesk.Installer.wixproj) The analysis targets file not found: C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\.sonarqube\bin\targets\SonarQube.Integration.targets
+obj\x64\Release\Magidesk.msi : warning WIX1076: ICE71: The Media table has no entries. [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Installer\Magidesk.Installer.wixproj]
+  Magidesk.Installer -> C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Installer\bin\x64\Release\Magidesk.msi
+
+Build succeeded.
+
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Installer.CustomActions\Magidesk.Installer.CustomActions.csproj : warning NU1903: Package 'Npgsql' 8.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-x9vc-6hfv-hg8c [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Installer\Magidesk.Installer.wixproj]
+C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Installer.CustomActions\Magidesk.Installer.CustomActions.csproj : warning NU1903: Package 'Npgsql' 8.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-x9vc-6hfv-hg8c
+obj\x64\Release\Magidesk.msi : warning WIX1076: ICE71: The Media table has no entries. [C:\Users\giris\Documents\Code\Redesign-POS\Windows Based POS\Magidesk\src\Magidesk.Installer\Magidesk.Installer.wixproj]
+    3 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.78
