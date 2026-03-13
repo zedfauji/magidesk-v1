@@ -203,35 +203,33 @@ Write-Host "  WiX installer built successfully" -ForegroundColor Green
 Write-Host ""
 
 # ============================================================================
-# Step 6: Verify Bundle Completeness
+# Step 6: Verify Installer Output
 # ============================================================================
-Write-Host "[6/6] Verifying bundle completeness..." -ForegroundColor Yellow
+Write-Host "[6/6] Verifying installer output..." -ForegroundColor Yellow
 
-$BundleOutput = "$SolutionDir\src\Magidesk.Installer\bin\$Configuration\net8.0-windows\MagideskSetup.exe"
+# The project is currently configured to build a Package (MSI), not a Bundle (EXE)
+# Look for Magidesk.msi in the x64/Release output directory
+$InstallerOutput = "$SolutionDir\src\Magidesk.Installer\bin\x64\$Configuration\Magidesk.msi"
 
-if (-not (Test-Path $BundleOutput)) {
-    Write-Error "Bundle not found: $BundleOutput"
+if (-not (Test-Path $InstallerOutput)) {
+    Write-Error "Installer not found: $InstallerOutput"
     Write-Error "WiX build may have failed silently"
     exit 1
 }
 
-$BundleSize = (Get-Item $BundleOutput).Length
-$BundleSizeMB = [math]::Round($BundleSize / 1MB, 2)
+$InstallerSize = (Get-Item $InstallerOutput).Length
+$InstallerSizeMB = [math]::Round($InstallerSize / 1MB, 2)
 
-if ($BundleSize -lt 100MB) {
-    Write-Warning "Bundle size is suspiciously small: $BundleSizeMB MB"
-    Write-Warning "Expected size: 200-400 MB"
-    Write-Warning "Bundle may be incomplete"
-} else {
-    Write-Host "  Bundle size: $BundleSizeMB MB" -ForegroundColor Gray
-}
-
-Write-Host "  Bundle location: $BundleOutput" -ForegroundColor Green
+Write-Host "  Installer size: $InstallerSizeMB MB" -ForegroundColor Gray
+Write-Host "  Installer location: $InstallerOutput" -ForegroundColor Green
 Write-Host ""
 
 # ============================================================================
 # Build Complete
 # ============================================================================
 Write-Host "=== Build Complete ===" -ForegroundColor Green
-Write-Host "Installer bundle: $BundleOutput" -ForegroundColor Cyan
-Write-Host "Bundle size: $BundleSizeMB MB" -ForegroundColor Cyan
+Write-Host "Installer package: $InstallerOutput" -ForegroundColor Cyan
+Write-Host "Installer size: $InstallerSizeMB MB" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "NOTE: This is an MSI package (not a Bundle/EXE)." -ForegroundColor Yellow
+Write-Host "Prerequisites (.NET 8, Windows App SDK, VC++ Redistributable) must be installed separately." -ForegroundColor Yellow
