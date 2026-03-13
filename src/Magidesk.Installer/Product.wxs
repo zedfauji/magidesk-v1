@@ -47,7 +47,7 @@
     </Feature>
 
     <!-- Custom Actions -->
-    <Binary Id="CustomActions" SourceFile="$(var.Magidesk.Installer.CustomActions.TargetDir)Magidesk.Installer.CustomActions.dll" />
+    <Binary Id="CustomActions" SourceFile="$(var.Magidesk.Installer.CustomActions.TargetPath)" />
     
     <CustomAction Id="CA_VerifyFileCopy"
                   BinaryRef="CustomActions"
