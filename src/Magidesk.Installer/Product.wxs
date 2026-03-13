@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   
-  <Product Id="*"
-           Name="Magidesk POS"
+  <Package Name="Magidesk POS"
            Language="1033"
            Version="0.1.0.0"
            Manufacturer="Magidesk"
-           UpgradeCode="B8C7D6E5-F4A3-4B2C-9D8E-7F6A5B4C3D2E">
-    
-    <Package InstallerVersion="500"
-             Compressed="yes"
-             InstallScope="perMachine"
-             Platform="x64" />
+           UpgradeCode="B8C7D6E5-F4A3-4B2C-9D8E-7F6A5B4C3D2E"
+           InstallerVersion="500"
+           Compressed="yes"
+           Scope="perMachine">
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     
@@ -19,19 +16,18 @@
 
     <!-- Icon definition - extracted from Magidesk.exe -->
     <Icon Id="MagideskIcon.exe" SourceFile="..\..\build\installer\staging\app\Magidesk.Presentation.exe" />
+    <Property Id="ARPPRODUCTICON" Value="MagideskIcon.exe" />
 
     <!-- Installation directory -->
-    <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="ProgramFiles64Folder">
-        <Directory Id="INSTALLFOLDER" Name="Magidesk" />
-      </Directory>
-      
-      <Directory Id="ProgramMenuFolder">
-        <Directory Id="ApplicationProgramsFolder" Name="Magidesk" />
-      </Directory>
-      
-      <Directory Id="DesktopFolder" Name="Desktop" />
-    </Directory>
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="Magidesk" />
+    </StandardDirectory>
+    
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="ApplicationProgramsFolder" Name="Magidesk" />
+    </StandardDirectory>
+    
+    <StandardDirectory Id="DesktopFolder" />
 
     <!-- Features -->
     <Feature Id="ProductFeature" Title="Magidesk POS" Level="1">
@@ -51,10 +47,10 @@
     </Feature>
 
     <!-- Custom Actions -->
-    <Binary Id="CustomActions" SourceFile="$(var.Magidesk.Installer.CustomActions.TargetDir)Magidesk.Installer.CustomActions.CA.dll" />
+    <Binary Id="CustomActions" SourceFile="$(var.Magidesk.Installer.CustomActions.TargetDir)Magidesk.Installer.CustomActions.dll" />
     
     <CustomAction Id="CA_VerifyFileCopy"
-                  BinaryKey="CustomActions"
+                  BinaryRef="CustomActions"
                   DllEntry="VerifyFileCopy"
                   Execute="immediate"
                   Return="check" />
@@ -62,12 +58,10 @@
     <!-- Custom action execution sequence will be defined in task 17.2 -->
     <InstallExecuteSequence>
       <!-- Verify critical files after InstallFiles completes (Task 9.3) -->
-      <Custom Action="CA_VerifyFileCopy" After="InstallFiles">
-        NOT Installed
-      </Custom>
+      <Custom Action="CA_VerifyFileCopy" After="InstallFiles" Condition="NOT Installed" />
       
       <!-- Additional custom actions will be added in later tasks -->
     </InstallExecuteSequence>
 
-  </Product>
+  </Package>
 </Wix>

@@ -6,6 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
     <LangVersion>latest</LangVersion>
     
+    <!-- Disable auto-inclusion of .wxs files so we can control exactly what gets compiled -->
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    
     <!-- Define source directory for Heat.exe harvesting -->
     <AppSourceDir>$(SolutionDir)build\installer\staging\app</AppSourceDir>
   </PropertyGroup>
@@ -16,17 +19,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Explicitly list all .wxs files to compile -->
     <Compile Include="Product.wxs" />
-    <Compile Include="Components\**\*.wxs" />
-    <Compile Include="UI\**\*.wxs" />
+    <Compile Include="Components\ApplicationFiles.wxs" />
+    <Compile Include="Components\DirectoryPermissions.wxs" />
+    <Compile Include="Components\PostgreSQL.wxs" />
+    <Compile Include="Components\Registry.wxs" />
+    <Compile Include="Components\Shortcuts.wxs" />
+    <Compile Include="UI\InstallDialog.wxs" />
+    <Compile Include="UI\ProgressDialog.wxs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Magidesk.Installer.CustomActions\Magidesk.Installer.CustomActions.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="..\..\build\installer\staging\**\*" />
   </ItemGroup>
 
   <!-- 
