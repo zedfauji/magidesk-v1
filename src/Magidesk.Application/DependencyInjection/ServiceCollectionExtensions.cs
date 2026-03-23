@@ -235,6 +235,14 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IMemoryOptimizationService, Services.Reports.MemoryOptimizationService>();
         services.AddScoped<IReportExportService, Services.Reports.ReportExportService>();
 
+        // Auto-Update Handlers (Sprint 003)
+        // Note: The following handlers implement MediatR's IRequestHandler<TRequest, TResponse> directly
+        // and are automatically registered by MediatR's assembly scanning (RegisterServicesFromAssembly above).
+        // No explicit registration required:
+        // - CheckForUpdatesQueryHandler
+        // - ApplyUpdateCommandHandler
+        // IUpdateService is registered by the Infrastructure layer.
+
         return services;
     }
 }
