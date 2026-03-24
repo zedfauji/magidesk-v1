@@ -48,10 +48,6 @@ public sealed class DefaultViewRoutingService : IDefaultViewRoutingService
     {
         try
         {
-            // TEMPORARY: Always return SwitchboardPage to fix the auto-redirect issue
-            // TODO: Re-enable proper routing once OrderTypes are properly seeded
-            return typeof(Magidesk.Presentation.Views.SwitchboardPage);
-
             // Rule 1: KDS terminals default to KitchenDisplayPage
             if (IsKdsTerminal())
             {
