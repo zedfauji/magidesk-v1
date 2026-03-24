@@ -292,10 +292,11 @@ public class CashBalanceTrackingService : ICashBalanceTrackingService, IDisposab
 
     private CashBalanceDto CreateBalanceDto(Domain.Entities.CashSession session, Guid terminalId)
     {
-        var totalCashSales = session.Payments?.Where(p => p.PaymentType == Domain.Enumerations.PaymentType.Cash).Sum(p => p.Amount.Amount) ?? 0m;
+        var totalCashSales = session.Payments?.Where(p => p.PaymentType == Domain.Enumerations.PaymentType.Cash && p.TransactionType == Domain.Enumerations.TransactionType.Credit).Sum(p => p.Amount.Amount) ?? 0m;
         var totalCashDrops = session.CashDrops?.Sum(d => d.Amount.Amount) ?? 0m;
         var totalDrawerBleeds = session.DrawerBleeds?.Sum(b => b.Amount.Amount) ?? 0m;
-        var totalCashRefunds = 0m; // TODO: Calculate from refund payments
+        // NOTE: Found refunds are represented by TransactionType.Debit with positive Amount instead of IsRefund flag.
+        var totalCashRefunds = session.Payments?.Where(p => p.PaymentType == Domain.Enumerations.PaymentType.Cash && p.TransactionType == Domain.Enumerations.TransactionType.Debit).Sum(p => p.Amount.Amount) ?? 0m;
 
         return new CashBalanceDto
         {
@@ -306,7 +307,7 @@ public class CashBalanceTrackingService : ICashBalanceTrackingService, IDisposab
             TotalCashDrops = totalCashDrops,
             TotalDrawerBleeds = totalDrawerBleeds,
             TotalCashRefunds = totalCashRefunds,
-            CurrentBalance = session.OpeningBalance.Amount + totalCashSales - totalCashDrops - totalDrawerBleeds + totalCashRefunds,
+            CurrentBalance = session.OpeningBalance.Amount + totalCashSales - totalCashDrops - totalDrawerBleeds - totalCashRefunds,
             LastUpdated = DateTime.UtcNow,
             IsActive = !session.ClosedAt.HasValue
         };
