@@ -221,5 +221,21 @@ public class TaxDomainServiceTests
         breakdown["State Tax"].Amount.Should().Be(10m);
         breakdown["City Tax"].Amount.Should().Be(5.50m); // (100 + 10) * 0.05
     }
+
+    [Fact]
+    public void TaxDomainService_WhenRateIs16Percent_CalculatesCorrectly()
+    {
+        // Arrange
+        var taxRate = new TaxRate(0.16m, "IVA");
+        var subtotal = new Money(100.00m);
+
+        // Act
+        var taxAmount = _taxDomainService.CalculateTax(subtotal, taxRate);
+        var totalWithTax = _taxDomainService.CalculateTotalAmountWithTax(subtotal, taxRate);
+
+        // Assert
+        taxAmount.Amount.Should().Be(16.00m);
+        totalWithTax.Amount.Should().Be(116.00m);
+    }
 }
 
