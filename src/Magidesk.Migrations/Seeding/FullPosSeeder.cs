@@ -407,36 +407,28 @@ public static class FullPosSeeder
         ApplicationDbContext db,
         CancellationToken cancellationToken)
     {
-        var dineIn = OrderType.Create("DINE IN", "DINE_IN", defaultTerminalRole: "BAR", closeOnPaid: false, allowSeatBasedOrder: true, allowToAddTipsLater: true);
-        dineIn.SetProperty("RequiresTable", "true");
+        // Bola8 order types with stable Guids as per spec
+        var dineIn   = OrderType.CreateWithId(new Guid("a1b2c3d4-0001-0000-0000-000000000001"), "Dine-in",  "DINE_IN",  defaultTerminalRole: "BAR");
+        var table    = OrderType.CreateWithId(new Guid("a1b2c3d4-0002-0000-0000-000000000001"), "Table",    "TABLE",    defaultTerminalRole: "BAR");
+        var takeaway = OrderType.CreateWithId(new Guid("a1b2c3d4-0003-0000-0000-000000000001"), "Takeaway", "TAKEAWAY", defaultTerminalRole: "BAR");
+        var kitchen  = OrderType.CreateWithId(new Guid("a1b2c3d4-0004-0000-0000-000000000001"), "Kitchen",  "KITCHEN",  defaultTerminalRole: "KDS");
 
-        var takeOut = OrderType.Create("TAKE OUT", "TAKE_OUT", defaultTerminalRole: "BAR", closeOnPaid: true);
-        takeOut.SetProperty("RequiresCustomer", "false");
-
-        var pickUp = OrderType.Create("PICK UP", "PICK_UP", defaultTerminalRole: "BAR", closeOnPaid: true);
-        pickUp.SetProperty("RequiresCustomer", "true");
-
-        var delivery = OrderType.Create("DELIVERY", "DELIVERY", defaultTerminalRole: "BAR", closeOnPaid: false);
-        delivery.SetProperty("RequiresCustomer", "true");
-
-        var barTab = OrderType.Create("BAR TAB", "BAR_TAB", defaultTerminalRole: "BAR", isBarTab: true, allowToAddTipsLater: true);
-
-        // Bola8-specific order types with stable Guids
-        var bola8DineIn   = OrderType.CreateWithId(new Guid("10000000-0000-0000-0000-000000000001"), "Dine-in",  "DINE_IN",  defaultTerminalRole: "BAR");
-        var bola8Table    = OrderType.CreateWithId(new Guid("10000000-0000-0000-0000-000000000002"), "Table",    "TABLE",    defaultTerminalRole: "BAR");
-        var bola8Takeaway = OrderType.CreateWithId(new Guid("10000000-0000-0000-0000-000000000003"), "Takeaway", "TAKEAWAY", defaultTerminalRole: "BAR");
-        var bola8Kitchen  = OrderType.CreateWithId(new Guid("10000000-0000-0000-0000-000000000004"), "Kitchen",  "KITCHEN",  defaultTerminalRole: "KDS");
-
-        db.OrderTypes.AddRange(dineIn, takeOut, pickUp, delivery, barTab, bola8DineIn, bola8Table, bola8Takeaway, bola8Kitchen);
+        db.OrderTypes.AddRange(dineIn, table, takeaway, kitchen);
         await db.SaveChangesAsync(cancellationToken);
 
         return new Dictionary<string, OrderType>
         {
-            ["DINE IN"] = dineIn,
-            ["TAKE OUT"] = takeOut,
-            ["PICK UP"] = pickUp,
-            ["DELIVERY"] = delivery,
-            ["BAR TAB"] = barTab
+            // Bola8 canonical keys
+            ["Dine-in"]  = dineIn,
+            ["Table"]    = table,
+            ["Takeaway"] = takeaway,
+            ["Kitchen"]  = kitchen,
+            // Legacy aliases so downstream seeder methods resolve without modification
+            ["DINE IN"]  = dineIn,
+            ["TAKE OUT"] = takeaway,
+            ["PICK UP"]  = takeaway,
+            ["BAR TAB"]  = table,
+            ["DELIVERY"] = takeaway,
         };
     }
 
