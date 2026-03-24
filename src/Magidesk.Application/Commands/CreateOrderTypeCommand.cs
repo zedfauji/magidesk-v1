@@ -6,6 +6,8 @@ namespace Magidesk.Application.Commands;
 public class CreateOrderTypeCommand
 {
     public string Name { get; set; } = null!;
+    public string Code { get; set; } = string.Empty;
+    public string? DefaultTerminalRole { get; set; }
     public bool CloseOnPaid { get; set; }
     public bool AllowSeatBasedOrder { get; set; }
     public bool AllowToAddTipsLater { get; set; }

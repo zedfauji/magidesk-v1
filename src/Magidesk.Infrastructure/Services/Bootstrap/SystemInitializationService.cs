@@ -96,14 +96,14 @@ namespace Magidesk.Infrastructure.Services.Bootstrap
                 if (!await _dbContext.OrderTypes.AnyAsync())
                 {
                     _logger.LogInformation("Seeding Order Types...");
-                    var dineIn = Magidesk.Domain.Entities.OrderType.Create("Dine In", isActive: true);
+                    var dineIn = Magidesk.Domain.Entities.OrderType.Create("Dine In", "DINE_IN", isActive: true);
                     dineIn.SetProperty("RequiresTable", "true");
                     // dineIn.SetProperty("RequiresCustomer", "false"); // Optional
 
-                    var takeOut = Magidesk.Domain.Entities.OrderType.Create("Take Out", isActive: true);
+                    var takeOut = Magidesk.Domain.Entities.OrderType.Create("Take Out", "TAKE_OUT", isActive: true);
                     takeOut.SetProperty("RequiresTable", "false");
 
-                    var quickService = Magidesk.Domain.Entities.OrderType.Create("Quick Service", isActive: true);
+                    var quickService = Magidesk.Domain.Entities.OrderType.Create("Quick Service", "QUICK_SERVICE", isActive: true);
                     quickService.SetProperty("RequiresTable", "false");
 
                     _dbContext.OrderTypes.AddRange(dineIn, takeOut, quickService);
@@ -204,11 +204,11 @@ namespace Magidesk.Infrastructure.Services.Bootstrap
                     
                     // Fix MenuItem.Create signature and Value Object usage
                     // MenuItem.Create(name, Money, taxRate)
-                    var coke = Magidesk.Domain.Entities.MenuItem.Create("Coke", new Magidesk.Domain.ValueObjects.Money(2.50m), 0.08m);
+                    var coke = Magidesk.Domain.Entities.MenuItem.Create("Coke", new Magidesk.Domain.ValueObjects.Money(2.50m), 0.16m);
                     coke.SetCategory(bevCat.Id);
                     coke.SetGroup(softDrinksGroup.Id);
 
-                    var burger = Magidesk.Domain.Entities.MenuItem.Create("Cheeseburger", new Magidesk.Domain.ValueObjects.Money(12.00m), 0.08m);
+                    var burger = Magidesk.Domain.Entities.MenuItem.Create("Cheeseburger", new Magidesk.Domain.ValueObjects.Money(12.00m), 0.16m);
                     burger.SetCategory(foodCat.Id);
                     burger.SetGroup(burgersGroup.Id);
                     

@@ -6,7 +6,7 @@ namespace Magidesk.Application.Tests.TestDoubles;
 
 internal sealed class StubPaymentGateway : IPaymentGateway
 {
-    public Task<AuthorizationResult> AuthorizeAsync(CreditCardPayment payment, string cardNumber, string? cardHolderName = null, string? expirationDate = null, string? cvv = null, CancellationToken cancellationToken = default)
+    public Task<AuthorizationResult> AuthorizeAsync(CreditCardPayment payment, string cardToken, CancellationToken cancellationToken = default)
         => Task.FromResult(new AuthorizationResult { Success = true, AuthorizationCode = "AUTH", ReferenceNumber = "REF", CardType = "VISA", LastFourDigits = "1111" });
 
     public Task<CaptureResult> CaptureAsync(CreditCardPayment payment, Money? amount = null, CancellationToken cancellationToken = default)

@@ -14,7 +14,7 @@ public class OrderTypeTests
         var name = "Dine In";
 
         // Act
-        var orderType = OrderType.Create(name);
+        var orderType = OrderType.Create(name, "DINE_IN");
 
         // Assert
         orderType.Should().NotBeNull();
@@ -40,7 +40,7 @@ public class OrderTypeTests
         var isActive = false;
 
         // Act
-        var orderType = OrderType.Create(name, closeOnPaid, allowSeatBasedOrder, allowToAddTipsLater, isBarTab, isActive);
+        var orderType = OrderType.Create(name, "BAR_TAB", closeOnPaid: closeOnPaid, allowSeatBasedOrder: allowSeatBasedOrder, allowToAddTipsLater: allowToAddTipsLater, isBarTab: isBarTab, isActive: isActive);
 
         // Assert
         orderType.Name.Should().Be(name);
@@ -55,7 +55,7 @@ public class OrderTypeTests
     public void OrderType_Create_WithEmptyName_ShouldThrowException()
     {
         // Act
-        var act = () => OrderType.Create("");
+        var act = () => OrderType.Create("", "");
 
         // Assert
         act.Should().Throw<BusinessRuleViolationException>()
@@ -66,7 +66,7 @@ public class OrderTypeTests
     public void OrderType_Create_WithWhitespaceName_ShouldThrowException()
     {
         // Act
-        var act = () => OrderType.Create("   ");
+        var act = () => OrderType.Create("   ", "");
 
         // Assert
         act.Should().Throw<BusinessRuleViolationException>()
@@ -77,7 +77,7 @@ public class OrderTypeTests
     public void OrderType_UpdateName_WithValidName_ShouldUpdateName()
     {
         // Arrange
-        var orderType = OrderType.Create("Old Name");
+        var orderType = OrderType.Create("Old Name", "OLD_NAME");
         var newName = "New Name";
 
         // Act
@@ -91,7 +91,7 @@ public class OrderTypeTests
     public void OrderType_UpdateName_WithEmptyName_ShouldThrowException()
     {
         // Arrange
-        var orderType = OrderType.Create("Test Name");
+        var orderType = OrderType.Create("Test Name", "TEST_NAME");
 
         // Act
         var act = () => orderType.UpdateName("");
@@ -105,7 +105,7 @@ public class OrderTypeTests
     public void OrderType_SetCloseOnPaid_ShouldUpdateCloseOnPaid()
     {
         // Arrange
-        var orderType = OrderType.Create("Test");
+        var orderType = OrderType.Create("Test", "TEST");
 
         // Act
         orderType.SetCloseOnPaid(true);
@@ -118,7 +118,7 @@ public class OrderTypeTests
     public void OrderType_SetAllowSeatBasedOrder_ShouldUpdateAllowSeatBasedOrder()
     {
         // Arrange
-        var orderType = OrderType.Create("Test");
+        var orderType = OrderType.Create("Test", "TEST");
 
         // Act
         orderType.SetAllowSeatBasedOrder(true);
@@ -131,7 +131,7 @@ public class OrderTypeTests
     public void OrderType_SetAllowToAddTipsLater_ShouldUpdateAllowToAddTipsLater()
     {
         // Arrange
-        var orderType = OrderType.Create("Test");
+        var orderType = OrderType.Create("Test", "TEST");
 
         // Act
         orderType.SetAllowToAddTipsLater(true);
@@ -144,7 +144,7 @@ public class OrderTypeTests
     public void OrderType_SetIsBarTab_ShouldUpdateIsBarTab()
     {
         // Arrange
-        var orderType = OrderType.Create("Test");
+        var orderType = OrderType.Create("Test", "TEST");
 
         // Act
         orderType.SetIsBarTab(true);
@@ -157,7 +157,7 @@ public class OrderTypeTests
     public void OrderType_Activate_ShouldSetIsActiveToTrue()
     {
         // Arrange
-        var orderType = OrderType.Create("Test", isActive: false);
+        var orderType = OrderType.Create("Test", "TEST", isActive: false);
 
         // Act
         orderType.Activate();
@@ -170,7 +170,7 @@ public class OrderTypeTests
     public void OrderType_Deactivate_ShouldSetIsActiveToFalse()
     {
         // Arrange
-        var orderType = OrderType.Create("Test", isActive: true);
+        var orderType = OrderType.Create("Test", "TEST", isActive: true);
 
         // Act
         orderType.Deactivate();
@@ -183,7 +183,7 @@ public class OrderTypeTests
     public void OrderType_SetProperty_ShouldAddProperty()
     {
         // Arrange
-        var orderType = OrderType.Create("Test");
+        var orderType = OrderType.Create("Test", "TEST");
         var key = "testKey";
         var value = "testValue";
 
@@ -200,7 +200,7 @@ public class OrderTypeTests
     public void OrderType_SetProperty_WithEmptyKey_ShouldThrowException()
     {
         // Arrange
-        var orderType = OrderType.Create("Test");
+        var orderType = OrderType.Create("Test", "TEST");
 
         // Act
         var act = () => orderType.SetProperty("", "value");
@@ -214,7 +214,7 @@ public class OrderTypeTests
     public void OrderType_RemoveProperty_ShouldRemoveProperty()
     {
         // Arrange
-        var orderType = OrderType.Create("Test");
+        var orderType = OrderType.Create("Test", "TEST");
         var key = "testKey";
         orderType.SetProperty(key, "value");
 
@@ -230,7 +230,7 @@ public class OrderTypeTests
     public void OrderType_GetProperty_WithNonExistentKey_ShouldReturnNull()
     {
         // Arrange
-        var orderType = OrderType.Create("Test");
+        var orderType = OrderType.Create("Test", "TEST");
 
         // Act
         var result = orderType.GetProperty("nonExistent");
@@ -243,7 +243,7 @@ public class OrderTypeTests
     public void OrderType_SetProperty_ShouldUpdateExistingProperty()
     {
         // Arrange
-        var orderType = OrderType.Create("Test");
+        var orderType = OrderType.Create("Test", "TEST");
         var key = "testKey";
         orderType.SetProperty(key, "oldValue");
 

@@ -26,6 +26,8 @@ public class CreateOrderTypeCommandHandler : ICommandHandler<CreateOrderTypeComm
         // Create order type
         var orderType = OrderType.Create(
             command.Name,
+            command.Code,
+            command.DefaultTerminalRole,
             command.CloseOnPaid,
             command.AllowSeatBasedOrder,
             command.AllowToAddTipsLater,
