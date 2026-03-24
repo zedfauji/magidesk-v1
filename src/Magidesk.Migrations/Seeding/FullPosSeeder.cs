@@ -407,21 +407,27 @@ public static class FullPosSeeder
         ApplicationDbContext db,
         CancellationToken cancellationToken)
     {
-        var dineIn = OrderType.Create("DINE IN", closeOnPaid: false, allowSeatBasedOrder: true, allowToAddTipsLater: true);
+        var dineIn = OrderType.Create("DINE IN", "DINE_IN", defaultTerminalRole: "BAR", closeOnPaid: false, allowSeatBasedOrder: true, allowToAddTipsLater: true);
         dineIn.SetProperty("RequiresTable", "true");
 
-        var takeOut = OrderType.Create("TAKE OUT", closeOnPaid: true);
+        var takeOut = OrderType.Create("TAKE OUT", "TAKE_OUT", defaultTerminalRole: "BAR", closeOnPaid: true);
         takeOut.SetProperty("RequiresCustomer", "false");
 
-        var pickUp = OrderType.Create("PICK UP", closeOnPaid: true);
+        var pickUp = OrderType.Create("PICK UP", "PICK_UP", defaultTerminalRole: "BAR", closeOnPaid: true);
         pickUp.SetProperty("RequiresCustomer", "true");
 
-        var delivery = OrderType.Create("DELIVERY", closeOnPaid: false);
+        var delivery = OrderType.Create("DELIVERY", "DELIVERY", defaultTerminalRole: "BAR", closeOnPaid: false);
         delivery.SetProperty("RequiresCustomer", "true");
 
-        var barTab = OrderType.Create("BAR TAB", isBarTab: true, allowToAddTipsLater: true);
+        var barTab = OrderType.Create("BAR TAB", "BAR_TAB", defaultTerminalRole: "BAR", isBarTab: true, allowToAddTipsLater: true);
 
-        db.OrderTypes.AddRange(dineIn, takeOut, pickUp, delivery, barTab);
+        // Bola8-specific order types with stable Guids
+        var bola8DineIn   = OrderType.CreateWithId(new Guid("10000000-0000-0000-0000-000000000001"), "Dine-in",  "DINE_IN",  defaultTerminalRole: "BAR");
+        var bola8Table    = OrderType.CreateWithId(new Guid("10000000-0000-0000-0000-000000000002"), "Table",    "TABLE",    defaultTerminalRole: "BAR");
+        var bola8Takeaway = OrderType.CreateWithId(new Guid("10000000-0000-0000-0000-000000000003"), "Takeaway", "TAKEAWAY", defaultTerminalRole: "BAR");
+        var bola8Kitchen  = OrderType.CreateWithId(new Guid("10000000-0000-0000-0000-000000000004"), "Kitchen",  "KITCHEN",  defaultTerminalRole: "KDS");
+
+        db.OrderTypes.AddRange(dineIn, takeOut, pickUp, delivery, barTab, bola8DineIn, bola8Table, bola8Takeaway, bola8Kitchen);
         await db.SaveChangesAsync(cancellationToken);
 
         return new Dictionary<string, OrderType>

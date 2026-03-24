@@ -13,6 +13,8 @@ public class OrderType
 
     public Guid Id { get; private set; }
     public string Name { get; private set; } = null!;
+    public string Code { get; private set; } = string.Empty;
+    public string? DefaultTerminalRole { get; private set; }
     public bool CloseOnPaid { get; private set; }
     public bool AllowSeatBasedOrder { get; private set; }
     public bool AllowToAddTipsLater { get; private set; }
@@ -32,6 +34,8 @@ public class OrderType
     /// </summary>
     public static OrderType Create(
         string name,
+        string code = "",
+        string? defaultTerminalRole = null,
         bool closeOnPaid = false,
         bool allowSeatBasedOrder = false,
         bool allowToAddTipsLater = false,
@@ -47,6 +51,42 @@ public class OrderType
         {
             Id = Guid.NewGuid(),
             Name = name,
+            Code = code,
+            DefaultTerminalRole = defaultTerminalRole,
+            CloseOnPaid = closeOnPaid,
+            AllowSeatBasedOrder = allowSeatBasedOrder,
+            AllowToAddTipsLater = allowToAddTipsLater,
+            IsBarTab = isBarTab,
+            IsActive = isActive,
+            Version = 1
+        };
+    }
+
+    /// <summary>
+    /// Creates a new order type with a specific ID (useful for seeding).
+    /// </summary>
+    public static OrderType CreateWithId(
+        Guid id,
+        string name,
+        string code = "",
+        string? defaultTerminalRole = null,
+        bool closeOnPaid = false,
+        bool allowSeatBasedOrder = false,
+        bool allowToAddTipsLater = false,
+        bool isBarTab = false,
+        bool isActive = true)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new Exceptions.BusinessRuleViolationException("Order type name cannot be empty.");
+        }
+
+        return new OrderType
+        {
+            Id = id,
+            Name = name,
+            Code = code,
+            DefaultTerminalRole = defaultTerminalRole,
             CloseOnPaid = closeOnPaid,
             AllowSeatBasedOrder = allowSeatBasedOrder,
             AllowToAddTipsLater = allowToAddTipsLater,

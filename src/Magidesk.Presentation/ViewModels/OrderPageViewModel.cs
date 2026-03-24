@@ -45,9 +45,11 @@ public partial class OrderPageViewModel : ViewModelBase
     private readonly IDialogService _dialogService;
     private readonly ILogger<OrderPageViewModel> _logger;
     private readonly DispatcherQueue _dispatcherQueue;
+    private readonly ITaxConfigurationService _taxConfigurationService;
 
     private Guid? _ticketId;
     private TicketDto? _ticket;
+    private decimal _taxRate = 0m;
     private Guid? _tableId;
     private System.Timers.Timer? _timeUpdateTimer;
     private System.Timers.Timer? _sessionDurationTimer;
@@ -71,7 +73,8 @@ public partial class OrderPageViewModel : ViewModelBase
         IServiceScopeFactory serviceScopeFactory,
         IDialogService dialogService,
         IUserContextService userContextService,
-        ILogger<OrderPageViewModel> logger)
+        ILogger<OrderPageViewModel> logger,
+        ITaxConfigurationService taxConfigurationService)
     {
         _getTicketHandler = getTicketHandler ?? throw new ArgumentNullException(nameof(getTicketHandler));
         _getMenuItemsHandler = getMenuItemsHandler ?? throw new ArgumentNullException(nameof(getMenuItemsHandler));
@@ -90,6 +93,7 @@ public partial class OrderPageViewModel : ViewModelBase
         _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
         _userContextService = userContextService ?? throw new ArgumentNullException(nameof(userContextService));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _taxConfigurationService = taxConfigurationService ?? throw new ArgumentNullException(nameof(taxConfigurationService));
 
         // Get the dispatcher queue for the current thread (must be called from UI thread)
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
@@ -170,7 +174,7 @@ public partial class OrderPageViewModel : ViewModelBase
     [ObservableProperty]
     private decimal _taxAmount;
 
-    public decimal TaxRate => 0.08m; // 8% tax rate - TODO: Get from configuration
+    public decimal TaxRate => _taxRate;
 
     [ObservableProperty]
     private decimal _total;
@@ -223,6 +227,8 @@ public partial class OrderPageViewModel : ViewModelBase
 
             _ticketId = ticketId;
             _tableId = tableId;
+
+            _taxRate = await _taxConfigurationService.GetCurrentRateAsync("MX");
 
             await LoadCategoriesAsync();
             _logger.LogInformation("Categories loaded");
