@@ -70,15 +70,15 @@ public partial class App : Microsoft.UI.Xaml.Application
                 {
                     logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.Warning);
                 })
-                .ConfigureServices(services =>
+                .ConfigureServices((context, services) =>
                 {
                     StartupLogger.Log("App - ConfigureServices Start");
-                    
+
                     // Application + Infrastructure + Presentation composition root
                     services.AddApplication();
                     StartupLogger.Log("App - AddApplication Success");
-                    
-                    services.AddInfrastructure();
+
+                    services.AddInfrastructure(context.Configuration);
                     StartupLogger.Log("App - AddInfrastructure Success");
                     
                     services.AddPresentation();

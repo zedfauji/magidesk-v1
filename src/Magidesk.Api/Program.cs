@@ -33,7 +33,7 @@ builder.Services.AddCors(options =>
 });
 
 // 1. Wire Layers (assuming extensions exist, otherwise fallback to assembly scanning)
-builder.Services.AddInfrastructure();
+builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication(); 
 // Note: If AddApplication is missing, we must scan manually. 
 // Assuming it exists based on "Magidesk.Application" check earlier (saw DependencyInjection folder).

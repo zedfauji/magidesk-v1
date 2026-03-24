@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Magidesk.Application.Interfaces;
 using Magidesk.Application.Services.Reports;
@@ -30,7 +31,7 @@ public static class ServiceCollectionExtensions
     /// Adds Infrastructure layer services to the service collection.
     /// </summary>
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         // Register Database Setup Services FIRST (needed by DbContext)
         services.AddSingleton<IDatabaseConfigurationService, DatabaseConfigurationService>();
@@ -128,6 +129,7 @@ public static class ServiceCollectionExtensions
 
         // Register payment gateway (using mock for development)
         services.AddScoped<IPaymentGateway, MockPaymentGateway>();
+        services.AddScoped<ITaxConfigurationService, TaxConfigurationService>();
 
         // Register print services
         services.AddScoped<IRawPrintService, WindowsPrintingService>();
@@ -157,6 +159,20 @@ public static class ServiceCollectionExtensions
 
         // Report Performance Optimization Services
         services.AddScoped<IReportOptimizationService, Services.ReportOptimizationService>();
+
+        // Update settings
+        services.Configure<Services.UpdateSettings>(
+            configuration.GetSection(Services.UpdateSettings.SectionName));
+
+        // HTTP client for GitHub asset downloads
+        services.AddHttpClient("GitHubDownload", client =>
+        {
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("Magidesk-POS-Updater/1.0");
+            client.Timeout = TimeSpan.FromMinutes(10);
+        });
+
+        // Update service
+        services.AddScoped<IUpdateService, Services.GithubUpdateService>();
 
         // Printing Layout Adapters
         services.AddTransient<Thermal58mmAdapter>();

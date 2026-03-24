@@ -17,6 +17,7 @@ public class ApplicationDbContext : DbContext
     }
 
     // DbSets
+    public DbSet<TaxConfiguration> TaxConfigurations => Set<TaxConfiguration>();
     public DbSet<Ticket> Tickets { get; set; } = null!;
     public DbSet<OrderLine> OrderLines { get; set; } = null!;
     public DbSet<Payment> Payments { get; set; } = null!;
@@ -102,6 +103,7 @@ public class ApplicationDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         // Apply entity configurations
+        modelBuilder.ApplyConfiguration(new TaxConfigurationEntityConfig());
         modelBuilder.ApplyConfiguration(new TicketConfiguration());
         modelBuilder.ApplyConfiguration(new OrderLineConfiguration());
         modelBuilder.ApplyConfiguration(new PaymentConfiguration());
